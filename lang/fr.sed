@@ -1,3 +1,3 @@
 # $Id$
-s/@REJECTPOSTS@/Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this./
-s/@ONLYSUBSCRIBERS@/Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included./
+s/@REJECTPOSTS@/J'ai été malheureusement configuré pour rejeter vos messages.  Contactez <#L#>-owner@<#H#> si vous avez des questions a ce sujet./
+s/@ONLYSUBSCRIBERS@/Seuls les abonnés peuvent poster des messages. Si vous êtes abonné, faites suivre ce message a <#L#>-owner@<#H#> pour que votre nouvelle adresse soit prise en compte./

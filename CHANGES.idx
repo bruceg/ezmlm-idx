@@ -28,6 +28,9 @@ cn_GB,cs,pl,ru,da,pt_BR,pt
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
+=========================
+-Updated ezmlmrc.fr.  Thanks Jean-Marc Lasgouttes.
+
 ezmlm-idx-0.42, 20040114 (New maintainer: Bruce Guenter <bruceg@em.ca>)
 =======================================================================
 -The ezmlmrc.* files were broken into two parts, to make them easier to
