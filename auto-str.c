@@ -25,7 +25,7 @@ char **argv;
   value = argv[2];
   if (!value) _exit(100);
 
-  puts("char ");
+  puts("const char ");
   puts(name);
   puts("[] = \"\\\n");
 
