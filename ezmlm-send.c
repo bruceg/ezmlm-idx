@@ -731,7 +731,9 @@ char **argv;
           }
         } else if (line.len == 1) {	/* end of content desc */
           flagbadpart = 0;		/* default type, so ok */
+          flagfoundokpart = 1;		/* this is part of a multipart msg */
           flagseenext = 0;		/* done thinking about it */
+          qa_put(lines.s,lines.len);	/* saved lines */
         } else				/* save line in cont desc */
           if (!stralloc_cat(&lines,&line)) die_nomem();
       }
