@@ -1,6 +1,8 @@
+/* Public domain, from daemontools-0.76. */
+
 #include "fmt.h"
 
-unsigned int fmt_uint(s,u) register char *s; register unsigned int u;
+unsigned int fmt_uint(register char *s,register unsigned int u)
 {
-  register unsigned long l; l = u; return fmt_ulong(s,l);
+  return fmt_ulong(s,u);
 }

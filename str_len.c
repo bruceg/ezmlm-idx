@@ -1,9 +1,10 @@
+/* Public domain, from daemontools-0.76. */
+
 #include "str.h"
 
-unsigned int str_len(s)
-register char *s;
+unsigned int str_len(const char *s)
 {
-  register char *t;
+  register const char *t;
 
   t = s;
   for (;;) {

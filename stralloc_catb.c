@@ -1,10 +1,9 @@
+/* Public domain, from daemontools-0.76. */
+
 #include "stralloc.h"
 #include "byte.h"
 
-int stralloc_catb(sa,s,n)
-stralloc *sa;
-char *s;
-unsigned int n;
+int stralloc_catb(stralloc *sa,const char *s,unsigned int n)
 {
   if (!sa->s) return stralloc_copyb(sa,s,n);
   if (!stralloc_readyplus(sa,n + 1)) return 0;

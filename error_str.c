@@ -1,10 +1,11 @@
+/* Public domain, from daemontools-0.76. */
+
 #include <errno.h>
 #include "error.h"
 
 #define X(e,s) if (i == e) return s;
 
-char *error_str(i)
-int i;
+const char *error_str(int i)
 {
   X(0,"no error")
   X(error_intr,"interrupted system call")
@@ -20,11 +21,13 @@ int i;
   X(error_pipe,"broken pipe")
   X(error_perm,"permission denied")
   X(error_acces,"access denied")
+  X(error_nodevice,"device not configured")
+  X(error_proto,"protocol error")
+  X(error_isdir,"is a directory")
+  X(error_connrefused,"connection refused")
+  X(error_notdir,"not a directory")
 #ifdef ESRCH
   X(ESRCH,"no such process")
-#endif
-#ifdef ENXIO
-  X(ENXIO,"device not configured")
 #endif
 #ifdef E2BIG
   X(E2BIG,"argument list too long")
@@ -55,12 +58,6 @@ int i;
 #endif
 #ifdef ENODEV
   X(ENODEV,"device does not support operation")
-#endif
-#ifdef ENOTDIR
-  X(ENOTDIR,"not a directory")
-#endif
-#ifdef EISDIR
-  X(EISDIR,"is a directory")
 #endif
 #ifdef EINVAL
   X(EINVAL,"invalid argument")
@@ -164,9 +161,6 @@ int i;
 #ifdef ETOOMANYREFS
   X(ETOOMANYREFS,"too many references")
 #endif
-#ifdef ECONNREFUSED
-  X(ECONNREFUSED,"connection refused")
-#endif
 #ifdef ELOOP
   X(ELOOP,"symbolic link loop")
 #endif
@@ -262,9 +256,6 @@ int i;
 #endif
 #ifdef ECOMM
   X(ECOMM,"communication error")
-#endif
-#ifdef EPROTO
-  X(EPROTO,"protocol error")
 #endif
 #ifdef EMULTIHOP
   X(EMULTIHOP,"multihop attempted")

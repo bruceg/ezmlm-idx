@@ -1,8 +1,8 @@
+/* Public domain, from daemontools-0.76. */
+
 #include "str.h"
 
-int str_diff(s,t)
-register char *s;
-register char *t;
+int str_diff(register const char *s,register const char *t)
 {
   register char x;
 

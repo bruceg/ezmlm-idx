@@ -1,3 +1,4 @@
+/* Public domain, from ezmlm-0.53. */
 /* sgetopt.c, sgetopt.h: (yet another) improved getopt clone, outer layer
 D. J. Bernstein, djb@pobox.com.
 Depends on subgetopt.h, substdio.h, subfd.h.

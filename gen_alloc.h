@@ -1,3 +1,5 @@
+/* Public domain, from daemontools-0.76. */
+
 #ifndef GEN_ALLOC_H
 #define GEN_ALLOC_H
 

@@ -1,3 +1,5 @@
+/* Public domain, from daemontools-0.76. */
+
 #ifndef BYTE_H
 #define BYTE_H
 

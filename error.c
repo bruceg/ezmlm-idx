@@ -1,3 +1,5 @@
+/* Public domain, from daemontools-0.76. */
+
 #include <errno.h>
 #include "error.h"
 
@@ -17,7 +19,7 @@ ENOMEM;
 -2;
 #endif
 
-int error_noent =
+int error_noent = 
 #ifdef ENOENT
 ENOENT;
 #else
@@ -94,9 +96,37 @@ EACCES;
 -13;
 #endif
 
+int error_nodevice =
+#ifdef ENXIO
+ENXIO;
+#else
+-14;
+#endif
+
+int error_proto =
+#ifdef EPROTO
+EPROTO;
+#else
+-15;
+#endif
+
+int error_isdir =
+#ifdef EISDIR
+EISDIR;
+#else
+-16;
+#endif
+
+int error_connrefused =
+#ifdef ECONNREFUSED
+ECONNREFUSED;
+#else
+-17;
+#endif
+
 int error_notdir =
 #ifdef ENOTDIR
 ENOTDIR;
 #else
--14;
+-18;
 #endif

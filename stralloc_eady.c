@@ -1,3 +1,5 @@
+/* Public domain, from daemontools-0.76. */
+
 #include "alloc.h"
 #include "stralloc.h"
 #include "gen_allocdefs.h"

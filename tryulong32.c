@@ -1,4 +1,7 @@
-void main()
+/* Public domain, from djbdns-1.05. */
+/* As per http://cr.yp.to/djbdns/res-disaster.html */
+
+int main()
 {
   unsigned long u;
   u = 1;

@@ -1101,13 +1101,16 @@ make-load warn-auto.sh systype
 	chmod 755 load
 
 lock.a: \
-makelib lock_ex.o
-	./makelib lock.a lock_ex.o
+makelib lock_ex.o lock_exnb.o
+	./makelib lock.a lock_ex.o lock_exnb.o
 
 lock_ex.o: \
-compile lock_ex.c lock_ex.c lock_ex.c lock_ex.c hasflock.h lock_ex.c \
-lock.h lock_ex.c
+compile lock_ex.c hasflock.h lock.h
 	./compile lock_ex.c
+
+lock_exnb.o: \
+compile lock_exnb.c hasflock.h lock.h
+	./compile lock_exnb.c
 
 log.o: \
 compile log.c substdio.h log.c readwrite.h log.c stralloc.h \
@@ -1356,11 +1359,11 @@ stralloc.3
 stralloc.a: \
 makelib stralloc_eady.o stralloc_pend.o stralloc_copy.o \
 stralloc_opys.o stralloc_opyb.o stralloc_cat.o stralloc_cats.o \
-stralloc_catb.o stralloc_arts.o
+stralloc_catb.o stralloc_arts.o stralloc_num.o
 	./makelib stralloc.a stralloc_eady.o stralloc_pend.o \
 	stralloc_copy.o stralloc_opys.o stralloc_opyb.o \
 	stralloc_cat.o stralloc_cats.o stralloc_catb.o \
-	stralloc_arts.o
+	stralloc_arts.o stralloc_num.o
 
 stralloc_arts.o: \
 compile stralloc_arts.c byte.h stralloc_arts.c str.h stralloc_arts.c \
@@ -1392,6 +1395,10 @@ compile stralloc_eady.c alloc.h stralloc_eady.c stralloc.h \
 gen_alloc.h stralloc.h stralloc_eady.c gen_allocdefs.h \
 gen_allocdefs.h gen_allocdefs.h stralloc_eady.c
 	./compile stralloc_eady.c
+
+stralloc_num.o: \
+compile stralloc_num.c alloc.h stralloc.h
+	./compile stralloc_num.c
 
 stralloc_opyb.o: \
 compile stralloc_opyb.c stralloc.h gen_alloc.h stralloc.h \

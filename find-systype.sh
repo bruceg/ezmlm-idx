@@ -1,3 +1,6 @@
+# Public domain, from djbdns-1.05.
+# As per http://cr.yp.to/djbdns/res-disaster.html
+
 # oper-:arch-:syst-:chip-:kern-
 # oper = operating system type; e.g., sunos-4.1.4
 # arch = machine language; e.g., sparc
@@ -15,6 +18,7 @@
 # the idea here is to include ALL useful available information.
 
 exec 2>/dev/null
+
 sys="`uname -s | tr '/:[A-Z]' '..[a-z]'`"
 if [ x"$sys" != x ]
 then
@@ -23,25 +27,9 @@ then
   unamev="`uname -v | tr /: ..`"
 
   case "$sys" in
-  bsd.os)
+  bsd.os|freebsd|netbsd|openbsd)
     # in bsd 4.4, uname -v does not have useful info.
     # in bsd 4.4, uname -m is arch, not chip.
-    oper="$sys-$unamer"
-    arch="$unamem"
-    syst=""
-    chip="`sysctl -n hw.model`"
-    kern=""
-    ;;
-  freebsd)
-    # see above about bsd 4.4
-    oper="$sys-$unamer"
-    arch="$unamem"
-    syst=""
-    chip="`sysctl -n hw.model`" # hopefully
-    kern=""
-    ;;
-  netbsd)
-    # see above about bsd 4.4
     oper="$sys-$unamer"
     arch="$unamem"
     syst=""
@@ -94,8 +82,8 @@ then
     ;;
   esac
 else
-  $CC -c trycpp.c
-  $LD -o trycpp trycpp.o
+  gcc -c trycpp.c
+  gcc -o trycpp trycpp.o
   case `./trycpp` in
   nextstep)
     oper="nextstep-`hostinfo | sed -n 's/^[ 	]*NeXT Mach \([^:]*\):.*$/\1/p'`"
@@ -140,5 +128,19 @@ i686)
   # STOP SAYING THAT! (Linux)
   chip=ppro
 esac
+
+if gcc -c x86cpuid.c
+then
+  if gcc -o x86cpuid x86cpuid.o
+  then
+    x86cpuid="`./x86cpuid | tr /: ..`"
+    case "$x86cpuid" in
+      ?*)
+        chip="$x86cpuid"
+        ;;
+    esac
+  fi
+fi
+rm -f x86cpuid x86cpuid.o
 
 echo "$oper-:$arch-:$syst-:$chip-:$kern-" | tr ' [A-Z]' '.[a-z]'

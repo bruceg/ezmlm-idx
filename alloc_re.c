@@ -1,3 +1,5 @@
+/* Public domain, from daemontools-0.76. */
+
 #include "alloc.h"
 #include "byte.h"
 

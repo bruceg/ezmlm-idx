@@ -1,6 +1,8 @@
+/* Public domain, from daemontools-0.76. */
+
 #include <signal.h>
 
-void main()
+main()
 {
   struct sigaction sa;
   sa.sa_handler = 0;

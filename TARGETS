@@ -137,6 +137,7 @@ issub.o
 load
 lock.a
 lock_ex.o
+lock_exnb.o
 log.o
 logmsg.o
 make-compile
@@ -181,6 +182,7 @@ stralloc_catb.o
 stralloc_cats.o
 stralloc_copy.o
 stralloc_eady.o
+stralloc_num.o
 stralloc_opyb.o
 stralloc_opys.o
 stralloc_pend.o

@@ -1,10 +1,9 @@
+/* Public domain, from daemontools-0.76. */
+
 #include "stralloc.h"
 #include "byte.h"
 
-int stralloc_copyb(sa,s,n)
-stralloc *sa;
-char *s;
-unsigned int n;
+int stralloc_copyb(stralloc *sa,const char *s,unsigned int n)
 {
   if (!stralloc_ready(sa,n + 1)) return 0;
   byte_copy(sa->s,n,s);

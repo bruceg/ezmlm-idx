@@ -1,3 +1,5 @@
+/* Public domain, from daemontools-0.76. */
+
 #include "byte.h"
 
 int byte_diff(s,n,t)

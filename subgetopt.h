@@ -1,3 +1,5 @@
+/* Public domain, from daemontools-0.76. */
+
 #ifndef SUBGETOPT_H
 #define SUBGETOPT_H
 
@@ -13,12 +15,12 @@
 
 #define SUBGETOPTDONE -1
 
-extern int subgetopt();
-extern char *subgetoptarg;
+extern int subgetopt(int,const char *const *,const char *);
+extern const char *subgetoptarg;
 extern int subgetoptind;
 extern int subgetoptpos;
 extern int subgetoptproblem;
-extern char *subgetoptprogname;
+extern const char *subgetoptprogname;
 extern int subgetoptdone;
 
 #endif
