@@ -12,6 +12,7 @@ auto_cron.c
 auto_cron.o
 auto_qmail.c
 auto_qmail.o
+auto_version.c
 auto_version.o
 byte_chr.o
 byte_copy.o
