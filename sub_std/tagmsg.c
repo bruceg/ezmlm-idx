@@ -19,15 +19,15 @@ void tagmsg(dir,msgnum,seed,action,hashout,bodysize,chunk,fatal)
 /* first char of action is used to make cookie differ between messages,   */
 /* the key is the secret list key. */
 
-char *dir;			/* db base dir */
+const char *dir;		/* db base dir */
 unsigned long msgnum;		/* number of this message */
-char *seed;			/* seed. NULL ok, but less entropy */
-char *action;			/* to make it certain the cookie differs from*/
+const char *seed;		/* seed. NULL ok, but less entropy */
+const char *action;		/* to make it certain the cookie differs from*/
 				/* one used for a digest */
 char *hashout;			/* calculated hash goes here */
 unsigned long bodysize;
 unsigned long chunk;
-char *fatal;
+const char *fatal;
 {
   unsigned int i;
 

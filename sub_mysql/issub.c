@@ -16,8 +16,7 @@
 #include "errtxt.h"
 #include <mysql.h>
 
-static void die_nomem(fatal)
-char *fatal;
+static void die_nomem(const char *fatal)
 {
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
@@ -36,16 +35,16 @@ const char *issub(dbname,userhost,tab,fatal)
 /* be NULL        */
 /* NOTE: The returned pointer is NOT VALID after a subsequent call to issub!*/
 
-char *dbname;		/* directory to basedir */
-char *userhost;
-char *tab;		/* override table name */
-char *fatal;
+const char *dbname;		/* directory to basedir */
+const char *userhost;
+const char *tab;		/* override table name */
+const char *fatal;
 
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
   const char *ret;
-  char *table;
+  const char *table;
   unsigned long *lengths;
 
   int fd;

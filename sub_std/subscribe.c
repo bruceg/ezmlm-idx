@@ -69,15 +69,15 @@ int subscribe(dbname,userhost,flagadd,comment,event,flagmysql,
 /* prevent users from subscribing them (although the cookie mechanism would  */
 /* prevent the resulting duplicate message from being distributed. */
 
-char *dbname;
-char *userhost;
+const char *dbname;
+const char *userhost;
 int flagadd;
-char *comment;
-char *event;
+const char *comment;
+const char *event;
 int flagmysql;
 int forcehash;
-char *tab;
-char *fatal;
+const char *tab;
+const char *fatal;
 {
   int fdlock;
 

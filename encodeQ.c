@@ -11,7 +11,7 @@ static void die_nomem(fatal)
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
 
-static char *hexchar = "0123456789ABCDEF";
+static const char hexchar[] = "0123456789ABCDEF";
 
 void encodeQ(indata,n,outdata,fatal)
 char *indata;

@@ -22,13 +22,13 @@ static stralloc line = {0};
 static stralloc fn = {0};
 
 static void die_nomem(fatal)
-char *fatal;
+const char *fatal;
 {
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
 
 static void die_write(fatal)
-char *fatal;
+const char *fatal;
 {
   strerr_die3x(111,fatal,ERR_WRITE,"stdout");
 }
@@ -42,12 +42,12 @@ unsigned long putsubs(dbname,hash_lo,hash_hi,
 /* (char* string, unsigned int length). It will be called once per address  */
 /* and should take care of newline or whatever needed for the output form.  */
 
-char *dbname;		/* database base dir */
+const char *dbname;	/* database base dir */
 unsigned long hash_lo;
 unsigned long hash_hi;
 int subwrite();		/* write function. */
 int flagsql;
-char *fatal;		/* fatal error string */
+const char *fatal;	/* fatal error string */
 
 {
 

@@ -100,7 +100,7 @@ char *local = 0;
 char *host = 0;
 char *home = 0;
 char *banner = 0;
-char *charset = 0;
+const char *charset = 0;
 char *stylesheet = 0;
 char *cmd;
 char strnum[FMT_ULONG];
@@ -168,9 +168,9 @@ struct datetime dt;
 char inbuf[4096];
 substdio ssin;
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_syntax(char *s)
+void die_syntax(const char *s)
 {
   strerr_die4x(100,FATAL,ERR_SYNTAX,"config file: ",s);
 }
@@ -191,7 +191,7 @@ void oputs(const char *s)
 }
 
 /* this error is for things that happen only if program logic is screwed up */
-void die_prog(char *s) { strerr_die5x(100,FATAL,"program error (please send bug report to bugs@ezmlm.org): ",s," Command: ",cmd); }
+void die_prog(const char *s) { strerr_die5x(100,FATAL,"program error (please send bug report to bugs@ezmlm.org): ",s," Command: ",cmd); }
 
 /* If we already issued a header than this will look ugly */
 void cgierr(const char *s,const char *s1,const char *s2)
@@ -491,7 +491,7 @@ int checkhash(const char *s)
   return 1;
 }
 
-int makefn(stralloc *sa,char item, unsigned long n, char *hash)
+int makefn(stralloc *sa,char item,unsigned long n,const char *hash)
 {
   if (!stralloc_copys(sa,"archive/")) die_nomem();
   if (item == ITEM_MESSAGE) {
@@ -522,14 +522,14 @@ int makefn(stralloc *sa,char item, unsigned long n, char *hash)
 }
 
 void alink(struct msginfo *infop,char item,char axis,unsigned long msg,
-		char *data,unsigned int l)
+	   const char *data,unsigned int l)
 /* links with targets other msg -> msg. If the link is for author, we    */
 /* still supply subject, since most navigation at the message level will */
 /* be along threads rather than author and we don't have an author index.*/
 {
-  char *cp;
+  const char *cp;
 
-  cp = (char *) 0;
+  cp = (const char *) 0;
 	/* this should be separate routine. Works because all index views */
 	/* have at least a subject link */
   if (axis == ITEM_SUBJECT && infop->target == msg)
@@ -742,7 +742,7 @@ void msglinks(struct msginfo *infop)
 #define SPC_BASE 1
 #define SPC_BANNER 2
 
-void html_header(char *t,char *s, unsigned int l,char *class,int flagspecial)
+void html_header(const char *t,const char *s,unsigned int l,const char *class,int flagspecial)
 /* flagspecial: 0x1 => robot index; no style sheet, no BASE */
 /* flagspecial: 0x2 => banner, if available */
 {

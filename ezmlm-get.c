@@ -46,7 +46,7 @@ int flagpublic = 2;		/* 0 = non-public, 1 = public, 2 = respect*/
 				/* dir/public. */
 char flagcd = '\0';		/* default: don't use quoted-printable */
 int flagsub = 0;		/* =1 subscribers only for get/index/thread */
-char *digsz =
+const char *digsz =
 		"from\\to\\subject\\reply-to\\date\\message-id\\cc\\"
 		"mime-version\\content-type\\content-transfer-encoding";
 
@@ -681,7 +681,7 @@ unsigned long from,to; stralloc *subj; int factype; char format;
 {
   msgentry *pmsgt;
   subentry *psubt;
-  char *cp;
+  const char *cp;
   int ffirstmsg;
   unsigned int len;
   unsigned long msg;
@@ -799,7 +799,7 @@ char **argv;
 {
   char *def;
   char *local;
-  char *action = "";
+  const char *action = "";
   char *psz;
   const char *err;
   int fd;

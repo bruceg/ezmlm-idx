@@ -410,7 +410,7 @@ char **argv;
   if (hashp) {		/* scrap bad cookies */
       if ((ret = checktag(workdir,msgnum,0L,"x",(char *) 0,hashp))) {
         if (*ret)
-	  strerr_die2x(111,FATAL,*ret);
+	  strerr_die2x(111,FATAL,ret);
 	else
 	  die_trash();
       } else if (flagreceipt) {

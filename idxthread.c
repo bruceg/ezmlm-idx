@@ -78,13 +78,14 @@ static void newsub(psubt,subject,sublen,msg,fatal)
 /* allocates space and copies in subject, and puts a pointer to it in   */
 /* the entry. */
 subentry *psubt;
-char *subject;
+const char *subject;
 unsigned int sublen;
 unsigned long msg;
 char *fatal;
 {
-  register char *cpfrom, *cpto;
-  register unsigned int cpno;
+  const char *cpfrom;
+  char *cpto;
+  unsigned int cpno;
 
   psubt->higher = (subentry *) 0;
   psubt->lower = (subentry *) 0;
@@ -226,7 +227,7 @@ void idx_mkthreads(pmsgtable,psubtable,pauthtable,pdatetable,
   psubnext = *psubtable;	/* dummy node to get tree going. Basically, */
   psubt = &sdummy;		/* assure that subject > psubt-sub and that */
   init_dummy(fatal);		/* below ok unless HASHLEN > 40 */
-  psubt->sub = "                                       ";
+  psubt->sub = (char*)"                                       ";
   psubt->sublen = 40;		/* there is something to hold psubt->higher */
   psubt->higher = (subentry *) 0;
   psubt->lower = (subentry *) 0;
@@ -460,7 +461,7 @@ char *fatal;			/* Program-specific */
   pauthnext = *pauthtable;
   pautht = &adummy;
   init_dummy();
-  pautht->auth = "                     ";
+  pautht->auth = (char*)"                     ";
   pautht->authlen = 21;
   pautht->higher = (authentry *) 0;
   pautht->lower = (authentry *) 0;

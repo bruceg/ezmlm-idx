@@ -24,14 +24,14 @@ static substdio ssin;
 static char inbuf[256];
 
 static void die_nomem(fatal)
-char *fatal;
+const char *fatal;
 {
   strerr_die2x(100,fatal,ERR_NOMEM);
 }
 
 static void lineout(subwrite,fatal)
 int subwrite();
-char *fatal;
+const char *fatal;
 {
   struct datetime dt;
   (void) scan_ulong(line.s,&when);
@@ -50,18 +50,18 @@ void searchlog(dir,search,subwrite,fatal)
 /* search. A '_' is search is a wildcard. Any other non-alphanum/'.' char */
 /* is replaced by a '_' */
 
-char *dir;		/* work directory */
-char *search;		/* search string */
+const char *dir;	/* work directory */
+char *search;	/* search string */
 int subwrite();		/* output fxn */
-char *fatal;		/* fatal */
+const char *fatal;	/* fatal */
 {
 
-  register unsigned char x;
-  register unsigned char y;
-  register unsigned char *cp;
-  register unsigned char *cpsearch;
-  unsigned register char *cps;
-  unsigned register char ch;
+  unsigned char x;
+  unsigned char y;
+  unsigned char *cp;
+  unsigned char *cpsearch;
+  unsigned char *cps;
+  unsigned char ch;
   unsigned char *cplast, *cpline;
   unsigned int searchlen;
   int fd,match;

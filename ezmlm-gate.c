@@ -149,7 +149,7 @@ char **argv;
   if (moddir && !ret) {			/* if exit 0 and moddir, add issub */
     pmod = (char *) 0;
     while (moddir && !pmod && sender) {
-      pmod = issub(moddir,sender,(char *) 0,FATAL);
+      pmod = issub(moddir,sender,(char *)0,FATAL);
       closesql();
       moddir = argv[optind++];
     }

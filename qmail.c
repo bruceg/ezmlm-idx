@@ -15,15 +15,15 @@
 #include "stralloc.h"
 #include "idx.h"
 
-static char *binqqargs[2] = { PROG_QMAIL_QUEUE, 0 } ;
+static const char *binqqargs[2] = { PROG_QMAIL_QUEUE, 0 } ;
 
 int qmail_open(struct qmail *qq, const stralloc *sa)
 {
   int pim[2];
   int pie[2];
   unsigned i,j;
-  char *cp;
-  char **cpp;
+  const char *cp;
+  const char **cpp;
 
   qq->msgbytes = 0L;
   if (pipe(pim) == -1) return -1;
@@ -47,7 +47,7 @@ int qmail_open(struct qmail *qq, const stralloc *sa)
 	for (i = 0; i < sa->len; i++) {
 	  if (sa->s[i] == '\0') j++;
 	}				/* make space */
-	if (!(cpp = (char **) alloc(j * sizeof (char *)))) _exit(51);
+	if (!(cpp = (const char **) alloc(j * sizeof (char *)))) _exit(51);
 	cpp[0] = PROG_QMAIL_QMQPC;
 	cp = sa->s;
 	j = 1;
@@ -57,10 +57,10 @@ int qmail_open(struct qmail *qq, const stralloc *sa)
 	  cp = sa->s + i + 1;
 	}
 	cpp[j] = (char *) 0;
-	execv(*cpp,cpp);
+	execv(*cpp,(char**)cpp);
 	_exit(120);
       }
-      execv(*binqqargs,binqqargs);
+      execv(*binqqargs,(char**)binqqargs);
       _exit(120);
   }
 

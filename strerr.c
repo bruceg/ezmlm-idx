@@ -3,8 +3,7 @@
 
 static stralloc sa = {0};
 
-char *strerr(se)
-struct strerr *se;
+const char *strerr(const struct strerr *se)
 {
   strerr_sysinit();
  

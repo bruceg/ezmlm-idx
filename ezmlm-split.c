@@ -31,8 +31,8 @@
 
 int flagdo = 1;		/* default is manager function */
 
-char *sender;
-char *split;
+const char *sender;
+const char *split;
 stralloc outhost = {0};
 stralloc inlocal = {0};
 stralloc outlocal = {0};
@@ -85,7 +85,8 @@ int findname()
 /* returns 1 if a matching line was found, 0 otherwise. name will contain */
 /* the correct list address in either case */
 {
-  char *cpat,*cp,*cpname,*cp1,*cp2,*cplast;
+  char *cpat,*cp,*cp1,*cp2,*cplast;
+  const char *cpname;
   unsigned long u;
   uint32 h;
   unsigned char hash,hash_hi,hash_lo;

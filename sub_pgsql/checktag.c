@@ -24,16 +24,16 @@ const char *checktag (dir,num,listno,action,seed,hash)
 /* (NULL), else returns "". If error, returns error string. */
 
 
-char *dir;				/* the db base dir */
+const char *dir;			/* the db base dir */
 unsigned long num;			/* message number */
 unsigned long listno;			/* bottom of range => slave */
-char *action;
-char *seed;				/* cookie base */
-char *hash;				/* cookie */
+const char *action;
+const char *seed;			/* cookie base */
+const char *hash;			/* cookie */
 {
   PGresult *result;
   /*  int row; */
-  char *table = (char *) 0;
+  const char *table = (char *) 0;
   const char *r;
 
   if ((r = opensql(dir,&table))) {

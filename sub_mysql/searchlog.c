@@ -27,15 +27,14 @@ static struct datetime dt;
 static substdio ssin;
 static char inbuf[256];
 
-static void die_nomem(fatal)
-char *fatal;
+static void die_nomem(const char *fatal)
 {
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
 
 static void lineout(subwrite,fatal)
 int subwrite();
-char *fatal;
+const char *fatal;
 {
   (void) scan_ulong(line.s,&when);
   datetime_tai(&dt,when);		/* there is always at least a '\n' */
@@ -54,10 +53,10 @@ void searchlog(dir,search,subwrite,fatal)
 /* is replaced by a '_'. mysql version. Falls back on "manual" search of  */
 /* local Log if no mysql connect info. */
 
-char *dir;		/* work directory */
+const char *dir;	/* work directory */
 char *search;		/* search string */
 int subwrite();		/* output fxn */
-char *fatal;		/* fatal */
+const char *fatal;	/* fatal */
 {
 
   register unsigned char x;
@@ -73,11 +72,11 @@ char *fatal;		/* fatal */
 
   MYSQL_RES *result;
   MYSQL_ROW row;
-  char *table = (char *) 0;
-  char **ptable = &table;
+  const char *table = (char *) 0;
+  const char **ptable = &table;
   unsigned long *lengths;
 
-  if (!search) search = "";	/* defensive */
+  if (!search) search = (char*)"";	/* defensive */
   searchlen = str_len(search);
   case_lowerb(search,searchlen);
   cps = (unsigned char *) search;

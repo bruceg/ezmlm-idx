@@ -160,7 +160,7 @@ void copy(struct qmail *qqp,
 			 die_nomem(fatal);
           switch(line.s[pos+2]) {
             case 'A':
-	      if (q == 'H') strerr_die(111,ERR_SUBST_UNSAFE);
+	      if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
               if (!stralloc_cats(&outline,target)) die_nomem(fatal);
               break;
             case 'R':
@@ -176,7 +176,7 @@ void copy(struct qmail *qqp,
               if (!stralloc_cat(&outline,&outhost)) die_nomem(fatal);
               break;
             case 't':
-	      if (q == 'H') strerr_die(111,ERR_SUBST_UNSAFE);
+	      if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
               if (!stralloc_cats(&outline,verptarget)) die_nomem(fatal);
               break;
             case 'n':

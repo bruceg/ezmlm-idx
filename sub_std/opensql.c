@@ -5,8 +5,8 @@
 #include "subscribe.h"
 
 const char *opensql(dbname,table)
-char *dbname;	/* database directory */
-char **table;	/* table root_name */
+const char *dbname;	/* database directory */
+const char **table;	/* table root_name */
 
 {
 	return 0;

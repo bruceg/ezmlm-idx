@@ -21,7 +21,7 @@
 #include "auto_version.h"
 
 			/* defaults. All other flags are false = 0 */
-char  *defflags="ap";		/* archived list -a */
+const char *defflags="ap";	/* archived list -a */
 				/* public list -p */
 				/* no ezmlm-archive -I */
 				/* no text edit for remote admin -D */

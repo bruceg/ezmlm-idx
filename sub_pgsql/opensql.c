@@ -13,7 +13,7 @@ static stralloc myp = {0};
 static stralloc ers = {0};
 static stralloc fn = {0};
 static stralloc ourdb = {0};
-static char *ourtable = (char *) 0;
+static const char *ourtable = (char *) 0;
 
 const char *opensql(dbname,table)
 /* reads the file dbname/sql, and if the file exists, parses it into the    */
@@ -23,15 +23,15 @@ const char *opensql(dbname,table)
 /* left alone. If *table is not null, it overrides the table in the sql     */
 /* file. If we already opended dbname the cached info is used, rather than  */
 /* rereading the file. Note that myp is static and all pointers point to it.*/
-char *dbname;	/* database directory */
-char **table;	/* table root_name */
+const char *dbname;	/* database directory */
+const char **table;	/* table root_name */
 
 {
-  char *host = (char *) 0;
-  char *port = (char *) 0;
-  char *db = "ezmlm";		/* default */
-  char *user = (char *) 0;
-  char *pw = (char *) 0;
+  const char *host = (char *) 0;
+  const char *port = (char *) 0;
+  const char *db = "ezmlm";		/* default */
+  const char *user = (char *) 0;
+  const char *pw = (char *) 0;
   unsigned int j;
 
   if (!stralloc_copys(&fn,dbname)) return ERR_NOMEM;
@@ -63,20 +63,20 @@ char **table;	/* table root_name */
   if (!stralloc_0(&myp)) return ERR_NOMEM;
   host = myp.s;
   if (myp.s[j = str_chr(myp.s,':')]) {
-    port = myp.s + j++;
-    *(port++) = '\0';
+    port = myp.s + j;
+    myp.s[j++] = '\0';
     if (myp.s[j += str_chr(myp.s+j,':')]) {
-      user = myp.s + j++;
-      *(user++) = '\0';
+      user = myp.s + j;
+      myp.s[j++] = '\0';
       if (myp.s[j += str_chr(myp.s+j,':')]) {
-        pw = myp.s + j++;
-	*(pw++) = '\0';
+        pw = myp.s + j;
+	myp.s[j++] = '\0';
 	if (myp.s[j += str_chr(myp.s+j,':')]) {
-          db = myp.s + j++;
-	  *(db++) = '\0';
+          db = myp.s + j;
+	  myp.s[j++] = '\0';
 	  if (myp.s[j += str_chr(myp.s+j,':')]) {
-	    ourtable = myp.s + j++;
-	    *(ourtable++) = '\0';
+	    ourtable = myp.s + j;
+	    myp.s[j++] = '\0';
 	  }
 	}
       }

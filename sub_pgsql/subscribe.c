@@ -21,8 +21,7 @@
 #include <unistd.h>
 #include <libpq-fe.h>
 
-static void die_nomem(fatal)
-char *fatal;
+static void die_nomem(const char *fatal)
 {
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
@@ -36,14 +35,12 @@ static stralloc fnnew = {0};
 static stralloc fn = {0};
 static stralloc fnlock = {0};
 
-void die_read(fatal)
-char *fatal;
+void die_read(const char *fatal)
 {
   strerr_die4sys(111,fatal,ERR_READ,fn.s,": ");
 }
 
-void die_write(fatal)
-char *fatal;
+void die_write(const char *fatal)
 {
   strerr_die4sys(111,fatal,ERR_WRITE,fnnew.s,": ");
 }
@@ -72,15 +69,15 @@ int subscribe(dbname,userhost,flagadd,comment,event,flagsql,
 /* prevent users from subscribing them (although the cookie mechanism would  */
 /* prevent the resulting duplicate message from being distributed. */
 
-char *dbname;
-char *userhost;
+const char *dbname;
+const char *userhost;
 int flagadd;
-char *comment;
-char *event;
+const char *comment;
+const char *event;
 int flagsql;
 int forcehash;
-char *tab;
-char *fatal;
+const char *tab;
+const char *fatal;
 {
   int fdlock;
 
@@ -89,8 +86,8 @@ char *fatal;
   char *cpat;
   char szhash[3] = "00";
   const char *r = (char *) 0;
-  char *table = (char *) 0;
-  char **ptable = &table;
+  const char *table = (char *) 0;
+  const char **ptable = &table;
 
   unsigned int j;
   uint32 h,lch;

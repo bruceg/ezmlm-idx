@@ -5,7 +5,7 @@
 #include "errtxt.h"
 
 const char *logmsg(dir,num,listno,subs,done)
-char *dir;
+const char *dir;
 unsigned long num;
 unsigned long listno;
 unsigned long subs;

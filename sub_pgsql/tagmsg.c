@@ -16,8 +16,7 @@ static stralloc key = {0};
 static char hash[COOKIE];
 static char strnum[FMT_ULONG];	/* message number as sz */
 
-static void die_nomem(fatal)
-char *fatal;
+static void die_nomem(const char *fatal)
 {
   strerr_die2x(100,fatal,ERR_NOMEM);
 }
@@ -30,19 +29,19 @@ void tagmsg(dir,msgnum,seed,action,hashout,bodysize,chunk,fatal)
 /* table_cookie where table and other data is taken from dir/sql. We log  */
 /* arrival of the message (done=0). */
 
-char *dir;			/* db base dir */
+const char *dir;		/* db base dir */
 unsigned long msgnum;		/* number of this message */
-char *seed;			/* seed. NULL ok, but less entropy */
-char *action;			/* to make it certain the cookie differs from*/
+const char *seed;		/* seed. NULL ok, but less entropy */
+const char *action;		/* to make it certain the cookie differs from*/
 				/* one used for a digest */
 char *hashout;			/* calculated hash goes here */
 unsigned long bodysize;
 unsigned long chunk;
-char *fatal;
+const char *fatal;
 {
   PGresult *result;
   PGresult *result2; /* Need for dupicate check */
-  char *table = (char *) 0;
+  const char *table = (char *) 0;
   const char *ret;
   unsigned int i;
 

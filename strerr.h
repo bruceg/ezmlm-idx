@@ -11,11 +11,24 @@ struct strerr
 ;
 
 extern struct strerr strerr_sys;
-extern void strerr_sysinit();
+extern void strerr_sysinit(void);
 
-extern char *strerr();
-extern void strerr_warn();
-extern void strerr_die();
+extern const char *strerr(const struct strerr *se);
+extern void strerr_warn(const char *x1,
+			const char *x2,
+			const char *x3,
+			const char *x4,
+			const char *x5,
+			const char *x6,
+			const struct strerr *se);
+extern void strerr_die(int e,
+		       const char *x1,
+		       const char *x2,
+		       const char *x3,
+		       const char *x4,
+		       const char *x5,
+		       const char *x6,
+		       const struct strerr *se);
 
 #define STRERR(r,se,a) \
 { se.who = 0; se.x = a; se.y = 0; se.z = 0; return r; }

@@ -28,16 +28,14 @@ static stralloc fn = {0};
 static substdio ss;
 static char ssbuf[512];
 
-const char *issub(dbname,userhost,tab,fatal)
+const char *issub(const char *dbname,		/* directory to basedir */
+		  const char *userhost,
+		  const char *tab,		/* override table name */
+		  const char *fatal)
 /* Returns (char *) to match if userhost is in the subscriber database     */
 /* dbname, 0 otherwise. dbname is a base directory for a list and may NOT  */
 /* be NULL        */
 /* NOTE: The returned pointer is NOT VALID after a subsequent call to issub!*/
-
-char *dbname;		/* directory to basedir */
-char *userhost;
-char *tab;		/* override table name */
-char *fatal;
 
 {
 

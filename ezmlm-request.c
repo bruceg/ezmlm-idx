@@ -61,7 +61,7 @@ char *userhost = (char *) 0;
 char *listlocal = (char *) 0;
 char *listhost = (char *) 0;
 const char *cfname = (char *) 0;
-char *command = "help";
+char *command = (char*)"help";
 stralloc line = {0};
 stralloc qline = {0};
 stralloc usr = {0};
@@ -340,9 +340,9 @@ char **argv;
     if (!local) strerr_die2x(100,FATAL,ERR_NOLOCAL);
     len = str_len(local);
     if (len >= 8 && !case_diffb(local + len - 8,8,"-return-")) {
-      action = "return-";	/* our bounce with qmail<1.02 */
+      action = (char*)"return-";	/* our bounce with qmail<1.02 */
     } else
-      action = "";		/* list-mdomo-xxx won't work for older lists */
+      action = (char*)"";	/* list-mdomo-xxx won't work for older lists */
   } else {			/* older qmail versions */
     local = env_get("LOCAL");
     if (!local) strerr_die2x(100,FATAL,ERR_NOLOCAL);
