@@ -33,7 +33,7 @@ grephdr_list() {
 grephdr_manage() {
   grephdr_std
   grephdr_list
-  grephdr date: ".. ... .... ..:..:.. [-+]...."
+  grephdr date: "..* ... .... ..:..:.. [-+]...."
   grephdr from: "${LOC}-help@${HOST}"
   grephdr to: "test@example.org"
   grephdr content-type: "text/plain; charset=.*"
