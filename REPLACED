@@ -1,0 +1,17 @@
+ezmlm-list.c
+ezmlm-make.1
+ezmlm-make.c
+ezmlm-manage.1
+ezmlm-manage.c
+ezmlm-reject.1
+ezmlm-reject.c
+ezmlm-return.c
+ezmlm-send.c
+ezmlm-sub.c
+ezmlm-unsub.c
+ezmlm-warn.c
+issub.c
+qmail.c
+qmail.h
+subscribe.c
+subscribe.h
