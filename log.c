@@ -16,11 +16,8 @@ static char num[FMT_ULONG];
 static stralloc line = {0};
 static stralloc fn = {0};
 
-void log(dir,event,addr,comment)
-char *dir;
-char *event;
-char *addr;
-char *comment;
+void logaddr(const char *dir,const char *event,
+	     const char *addr,const char *comment)
 {
   char ch;
   int fd;

@@ -1,4 +1,4 @@
-/*$Id: subscribe.c,v 1.5 1999/10/12 23:38:36 lindberg Exp $*/
+/*$Id$*/
 #include "stralloc.h"
 #include "getln.h"
 #include "readwrite.h"
@@ -187,7 +187,7 @@ char *fatal;
       close(fdlock);
       if (flagadd ^ flagwasthere) {
         if (!stralloc_0(&addr)) die_nomem(fatal);
-        log(dbname,event,addr.s+1,comment);
+        logaddr(dbname,event,addr.s+1,comment);
         return 1;
       }
       return 0;
@@ -235,7 +235,7 @@ char *fatal;
     close(fdlock);
     if (flagadd ^ flagwasthere) {
       if (!stralloc_0(&addr)) die_nomem(fatal);
-      log(dbname,event,addr.s+1,comment);
+      logaddr(dbname,event,addr.s+1,comment);
       return 1;
     }
     return 0;

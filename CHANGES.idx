@@ -33,6 +33,7 @@ in the next version.
 -Fixed bug in ezmlm-request when dealing with continuation lines.
  Thanks Sami Farin.
 -Replaced many library with public-domain sources.
+-Fixed "log" function conflicting with built-in math function.
 
 ezmlm-idx-0.42, 20040114 (New maintainer: Bruce Guenter <bruceg@em.ca>)
 =======================================================================

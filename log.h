@@ -1,6 +1,7 @@
 #ifndef LOG_H
 #define LOG_H
 
-extern void log();
+extern void logaddr(const char *dir,const char *event,
+		    const char *addr,const char *comment);
 
 #endif
