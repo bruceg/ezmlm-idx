@@ -1141,6 +1141,7 @@ makehash.c makehash.h surf.h uint32.h stralloc.h
 makelang: \
 makelang.sh warn-auto.sh
 	cat warn-auto.sh makelang.sh >makelang
+	chmod 755 makelang
 
 makelib: \
 make-makelib warn-auto.sh systype

@@ -143,6 +143,7 @@ make-compile
 make-load
 make-makelib
 makehash.o
+makelang
 makelib
 mime.a
 now.o
