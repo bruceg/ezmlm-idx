@@ -502,7 +502,7 @@ fi
 	{ ${ECHO} "mkdir for sinkdir failed"; exit 100; }
   ${ECHO} "${SINKDIR}/" > "$DOT-$SINK"
 # link for qmail version testing 
-  ${ECHO} '|${ECHO} $DEFAULT >' "${DIR}/default" > "$DOT-$SINK-default"
+  ${ECHO} '|echo $DEFAULT >' "${DIR}/default" > "$DOT-$SINK-default"
   ${ECHO} "${SINKDIR}/" >> "$DOT-$SINK-default"
 
   ${MKDIR} "$MODDIR" "$MODDIR/new" "$MODDIR/cur" "$MODDIR/tmp" || \
