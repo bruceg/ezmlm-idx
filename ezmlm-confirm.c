@@ -54,7 +54,6 @@ static stralloc outlocal = {0};
 static stralloc key = {0};
 static stralloc mailinglist = {0};
 static stralloc to = {0};
-static stralloc send = {0};
 static stralloc sendopt = {0};
 static datetime_sec when;
 
@@ -132,7 +131,6 @@ void main(int argc, char **argv)
   int child;
   int opt;
   const char *cp;
-  int wstat;
 
   (void) umask(022);
   sig_pipeignore();

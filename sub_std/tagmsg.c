@@ -9,16 +9,9 @@
 #include "subscribe.h"
 #include "makehash.h"
 
-static stralloc line = {0};
 static stralloc key = {0};
 static char hash[COOKIE];
 static char strnum[FMT_ULONG];	/* message number as sz */
-
-static void die_nomem(fatal)
-char *fatal;
-{
-  strerr_die2x(100,fatal,ERR_NOMEM);
-}
 
 void tagmsg(dir,msgnum,seed,action,hashout,bodysize,chunk,fatal)
 /* This routine creates a cookie from num,seed and the */

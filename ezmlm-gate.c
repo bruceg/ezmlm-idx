@@ -72,7 +72,7 @@ char **argv;
   int opt;
   int ret = 0;
   int dontact = 0;
-  unsigned int i,j,k;
+  unsigned int i,j;
   const char *program;
   stralloc *opts;
 

@@ -197,7 +197,6 @@ char **argv;
   unsigned int pos,i;
   int child;
   int opt;
-  const char *command;
   char *cp,*cpnext,*cpfirst,*cplast,*cpafter;
 
   (void) umask(022);

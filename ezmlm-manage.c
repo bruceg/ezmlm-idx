@@ -533,8 +533,6 @@ void doconfirm(act)
 /* is not ACTION_SC or ACTION_TC, it is assumed to be an unsubscribe conf.*/
 char *act;	/* first letter of desired confirm request only as STRING! */
 {
-  unsigned int i;
-
   strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
   cookie(hash,key.s,key.len-flagdig,strnum,target.s,act);
   if (!stralloc_copy(&confirm,&outlocal)) die_nomem();

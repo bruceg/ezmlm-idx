@@ -25,13 +25,9 @@ char *fatal;
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
 static stralloc line = {0};
-static stralloc domain = {0};
-static stralloc logline = {0};
-static stralloc quoted = {0};
 static stralloc fnnew = {0};
 static stralloc fn = {0};
 static stralloc fnlock = {0};
-static char szh[FMT_ULONG];
 
 void die_read(fatal)
 char *fatal;
@@ -80,8 +76,6 @@ char *tab;
 char *fatal;
 {
   int fdlock;
-
-  char szhash[3] = "00";
 
   unsigned int j;
   uint32 h,lch;

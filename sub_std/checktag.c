@@ -9,8 +9,6 @@
 #include "subscribe.h"
 
 static stralloc key = {0};
-static stralloc line = {0};
-static stralloc quoted = {0};
 static char strnum[FMT_ULONG];
 static char newcookie[COOKIE];
 

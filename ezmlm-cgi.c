@@ -219,8 +219,6 @@ unsigned int decode_charset(register char *s, register unsigned int l)
 /* that charset is empty or likely invalid. CS_NONE are charsets for which  */
 /* we don't need to do anything special. */
 {
-  unsigned int r;
-
   if (case_startb(s,l,"iso-8859") || case_startb(s,l,"us-ascii") ||
 	case_startb(s,l,"utf"))	/* at the moment, we can do utf-8 right */
     return CS_NONE;		/* what is utf-7 (used by OE)? */
@@ -1379,8 +1377,8 @@ void show_part(struct msginfo *infop,int flagshowheaders,
   int whatheader;
   int flaggoodfield;
   int flaghtml;
-  int btype,i;
-  unsigned int colpos,l,pos;
+  int btype;
+  unsigned int colpos,l;
   char linetype;
 
   flaginheader = 1;

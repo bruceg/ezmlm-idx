@@ -22,11 +22,9 @@ char *fatal;
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
 static stralloc line = {0};
-static stralloc quoted = {0};
 static stralloc fn = {0};
 static substdio ss;
 static char ssbuf[512];
-static char szh[FMT_ULONG];
 
 const char *issub(dbname,userhost,tab,fatal)
 /* Returns (char *) to match if userhost is in the subscriber database     */

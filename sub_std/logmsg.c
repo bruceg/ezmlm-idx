@@ -4,9 +4,6 @@
 #include "subscribe.h"
 #include "errtxt.h"
 
-static stralloc logline = {0};
-static strnum[FMT_ULONG];
-
 const char *logmsg(dir,num,listno,subs,done)
 char *dir;
 unsigned long num;

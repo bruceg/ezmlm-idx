@@ -89,7 +89,6 @@ int idx_get_trimsubject()
 /*          3 - reply & prefix */
 /* No terminal '\n' in any of the strallocs! */
 {
-char *cp;
 int foundsubject = 0;
 int issubject = 0;
 int isfrom = 0;

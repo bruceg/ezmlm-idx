@@ -15,8 +15,6 @@ static substdio ssin;
 static char inbuf[512];
 char strnum[FMT_ULONG];
 static stralloc line = {0};
-static stralloc domains = {0};
-static stralloc quoted = {0};
 static stralloc fn = {0};
 
 static void die_nomem(fatal)

@@ -54,7 +54,6 @@ char **argv;
   unsigned int pos;
   unsigned long num, loopnum, when;
   unsigned long loopwhen = 0L;
-  unsigned long numwhen = 0L;
   int fd,fdlock;
 
   (void) umask(022);

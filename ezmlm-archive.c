@@ -85,7 +85,7 @@ unsigned long from,to;
   unsigned long subnum;
   unsigned long authnum;
   unsigned long msgnum;
-  unsigned int pos,l;
+  unsigned int pos;
   unsigned int startdate,nextdate;
   unsigned int startmsg,nextmsg;
   int fd = -1;
