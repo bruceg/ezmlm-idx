@@ -86,6 +86,15 @@ WC='wc'
 WHOAMI='whoami'
 
 ###################### END CONFIRGRABLE ITEMS #########################
+if prompt | grep n > /dev/null 2>&1; then
+	prompt() {
+		${ECHO} "$*\c"
+	}
+else
+	prompt() {
+		${ECHO} -n "$*"
+	}
+fi
 SQLUSER=''	# must be empty
 ARR='-------------------->'
 ALLOW='allow'
@@ -293,9 +302,9 @@ send_test()
 ############################
 sleep_5()
 {
-  sleep 1; ${ECHO} -n "."; sleep 1; ${ECHO} -n "."
-  sleep 1; ${ECHO} -n "."; sleep 1; ${ECHO} -n "."
-  sleep 1; ${ECHO} -n "${1}"
+  sleep 1; prompt "."; sleep 1; prompt "."
+  sleep 1; prompt "."; sleep 1; prompt "."
+  sleep 1; prompt "${1}"
   return 0
 }
 
@@ -304,7 +313,7 @@ sleep_5()
 ################################
 wait_test()
 {
-${ECHO} -n "max 35s for delivery: "
+prompt "max 35s for delivery: "
 sleep_5 5s
 TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
 if [ -z "$TSTMSG" ]; then
@@ -410,7 +419,7 @@ if [ "$SECT" = "1" ]; then
 ##############
 # ezmlm-make #
 ##############
-  ${ECHO} -n "ezmlm-make (1/2):     "
+  prompt "ezmlm-make (1/2):     "
 
 # edit non-existant list
   ${EZBIN}/ezmlm-make -e -C${EZBIN}/ezmlmrc "${DIR}" "${DOT}" \
@@ -437,7 +446,7 @@ if [ "$SECT" = "1" ]; then
   ${EZBIN}/ezmlm-make -ed -C${EZBIN}/ezmlmrc "${DIR}" "$DOT" "$LOC" "$HOST" \
 	>/dev/null 2>&1 || \
 	{ ${ECHO} "failed without DIR/config: 0.313 bug, fixed in 0.314."
-	  ${ECHO} -n "ezmlm-make ......     "
+	  prompt "ezmlm-make ......     "
 	  BUG="${BUG} config"
 	}
   ${MV} "${DIR}/config~" "${DIR}/config"
@@ -446,7 +455,7 @@ if [ "$SECT" = "1" ]; then
 	{ ${ECHO} "no ezmlm-weed in bouncer"; exit 100; }
   ${GREP} "ezmlm-return" "${DIR}/bouncer" >/dev/null 2>&1 || \
 	{ ${ECHO} "no ezmlm-return in bouncer: 0.32 bug, fixed in 0.321."
-	  ${ECHO} -n "ezmlm-make ......     "
+	  prompt "ezmlm-make ......     "
 	  BUG="${BUG} return"
 	}
 # digest/bouncer only for >=0.32
@@ -458,7 +467,7 @@ if [ "$SECT" = "1" ]; then
 	{ ${ECHO} "no ezmlm-weed in bouncer"; exit 100; }
     ${GREP} "ezmlm-return" "${DIR}/digest/bouncer" >/dev/null 2>&1 || \
 	{ ${ECHO} "no ezmlm-return in digest/bouncer: 0.32 bug, OK in 0.321."
-	  ${ECHO} -n "ezmlm-make ......     "
+	  prompt "ezmlm-make ......     "
 	  BUG="${BUG} return"
 	}
   fi
@@ -466,7 +475,7 @@ if [ "$SECT" = "1" ]; then
 
 # Add sql files for sql testing
 RDBMS='STD'
-${ECHO} -n "Using RDBMS support:  "
+prompt "Using RDBMS support:  "
 if [ $USESQL ]; then
   ${EZBIN}/ezmlm-make -+6 "$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
 	-C${EZBIN}/ezmlmrc "${DIR}"|| \
@@ -538,7 +547,7 @@ else
 	fi
 fi
 
-${ECHO} -n "testing for qmail:    "
+prompt "testing for qmail:    "
 if [ "$QMVER" = "n" ]; then
 	${ECHO} ">=1.02"
 else
@@ -600,7 +609,7 @@ if [ "$SECT" = "1" ]; then
 #####################
 # test ezmlm-reject #
 #####################
-  ${ECHO} -n "ezmlm-reject:         "
+  prompt "ezmlm-reject:         "
   FROM="$EZTEST"
   TO="$EZTEST-__tstlist@$HOST"
   SUBJECT="test"
@@ -741,7 +750,7 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
   ${ECHO} "text/html" > "${DIR}"/mimereject
   OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1` && \
 	{ ${ECHO} "err with text after boundary: 0.30 bug fixed in 0.322"
-	  ${ECHO} -n "ezmlm-reject.......   "
+	  prompt "ezmlm-reject.......   "
 	  BUG="${BUG} reject_bound"
 	}
 
@@ -783,7 +792,7 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
 # ezmlm-sub/unsub/list/issubn #
 ###############################
 
-  ${ECHO} -n "ezmlm-[un|is]sub[n]:  "
+  prompt "ezmlm-[un|is]sub[n]:  "
 
   SENDER="XYZZY@HOst"; export SENDER
 
@@ -861,7 +870,7 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
 ##############
 # ezmlm-send #
 ##############
-  ${ECHO} -n "ezmlm-send (1/2):     "
+  prompt "ezmlm-send (1/2):     "
 
   SENDER="${SND}@$HOST"; export SENDER
   ${EZBIN}/ezmlm-sub "${DIR}" "$SENDER"
@@ -905,7 +914,7 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
   ${ECHO} "text/html" > "${DIR}"/mimeremove
   make_message | ${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1  || \
 	{ ${ECHO} "err with text after boundary: 0.30 bug fixed in 0.322"
-	  ${ECHO} -n "ezmlm-send.........   "
+	  prompt "ezmlm-send.........   "
 	  BUG="${BUG} send_bound"
 	}
 # restore
@@ -945,7 +954,7 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
 ################
 # ezmlm-tstdig #
 ################
-  ${ECHO} -n "ezmlm-tstdig:         "
+  prompt "ezmlm-tstdig:         "
 
   ${EZBIN}/ezmlm-tstdig -k2 -m5 -t1 "${DIR}" || \
 	{ ${ECHO} "-t1 failed"; exit 100; }
@@ -970,7 +979,7 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
   fi
   ${EZBIN}/ezmlm-tstdig -k2 -m5 -t0 "${DIR}" || \
 	{ ${ECHO} "err with -digest- in mgr pos: 0.31 bug fixed in 0.321"
-	  ${ECHO} -n "ezmlm-tstdig.......   "
+	  prompt "ezmlm-tstdig.......   "
 	  BUG="${BUG} digest"
 	}
   LOCAL=''; export LOCAL
@@ -985,7 +994,7 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
   ${EZBIN}/ezmlm-tstdig -k1 -m5 -t0 "${DIR}" > "${ERR}" 2>&1 || \
 	{
 	 ${ECHO} "problem with DEFAULT unset: 0.32 bug, OK in 0.321."
-	 ${ECHO} -n "ezmlm-tstdig.......   "
+	 prompt "ezmlm-tstdig.......   "
 	  BUG="${BUG} tstdig"
 	}
   ${ECHO} "OK"
@@ -994,7 +1003,7 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
 # ezmlm-weed #
 ##############
 
-  ${ECHO} -n "ezmlm-weed:           "
+  prompt "ezmlm-weed:           "
 
   ${ECHO} "Subject: test" | ${EZBIN}/ezmlm-weed || \
 	{ ${ECHO} "failed to accept good message"; exit 100; }
@@ -1006,7 +1015,7 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
 ##############
 # ezmlm-make #
 ##############
-  ${ECHO} -n "ezmlm-make (2/2):     "
+  prompt "ezmlm-make (2/2):     "
 
 # make sure a few ezmlm-make switches work
   ${EZBIN}/ezmlm-make -+qkgu -C${EZBIN}/ezmlmrc "${DIR}" || \
@@ -1067,7 +1076,7 @@ ${ECHO} "OK"
 # ezmlm-clean #
 ###############
 
-  ${ECHO} -n "ezmlm-clean (1/2):    "
+  prompt "ezmlm-clean (1/2):    "
 
 # clean1 should be silently removed (no -x).
 # clean2 should result in a message
@@ -1115,7 +1124,7 @@ EOF
 # ezmlm-store #
 ###############
 
-  ${ECHO} -n "ezmlm-store (1/2):    "
+  prompt "ezmlm-store (1/2):    "
 
   SENDER="${SND}@$HOST"; export SENDER
   ${EZBIN}/ezmlm-sub "${DIR}/mod" "$SENDER"
@@ -1172,7 +1181,7 @@ EOF
 ################
 # ezmlm-return #
 ################
-  ${ECHO} -n "ezmlm-return:         "
+  prompt "ezmlm-return:         "
 
   SENDER="${BNC}@$HOST"; export SENDER
   HOST="$HOST"; export HOST
@@ -1229,7 +1238,7 @@ EOF
 ##############
 # ezmlm-warn #
 ##############
-  ${ECHO} -n "ezmlm-warn (1/3):     "
+  prompt "ezmlm-warn (1/3):     "
 
 # should send a warning
   ${EZBIN}/ezmlm-warn -t0 "${DIR}" >"${ERR}" 2>&1 || \
@@ -1247,7 +1256,7 @@ EOF
 ################
 # ezmlm-manage #
 ################
-  ${ECHO} -n "ezmlm-manage (1/4):   "
+  prompt "ezmlm-manage (1/4):   "
 
   LOCAL="$LOC-unsubscribe"; export LOCAL
   if [ "$QMVER" = "n" ]; then
@@ -1275,7 +1284,7 @@ EOF
   ${EZBIN}/ezmlm-manage "${DIR}" </dev/null >/dev/null 2>&1 && \
 	{
 	 ${ECHO} "Deny open to regular subscribers: 0.31 bug, OK in 0.321."
-	 ${ECHO} -n "ezmlm-manage ...      "
+	 prompt "ezmlm-manage ...      "
 	 BUG="${BUG} deny"
 	}
   SENDER="${MOD}@$HOST"; export SENDER
@@ -1293,7 +1302,7 @@ EOF
   ${EZBIN}/ezmlm-manage "${DIR}" </dev/null > "${ERR}" 2>&1 && \
 	{
 	 ${ECHO} "Deny even without remote/modsub: 0.31 bug, OK in 0.321."
-	 ${ECHO} -n "ezmlm-manage ...      "
+	 prompt "ezmlm-manage ...      "
 	 BUG="${BUG} deny"
 	}
 
@@ -1350,7 +1359,7 @@ EOF
 #################
 # ezmlm-request #
 #################
-  ${ECHO} -n "ezmlm-request (1/2):  "
+  prompt "ezmlm-request (1/2):  "
 
   SENDER="${SND}@$HOST"; export SENDER
   LOCAL="$LOC-request"; export LOCAL
@@ -1384,7 +1393,7 @@ EOF
 # ezmlm-split #
 ###############
 if [ "$QMVER" = "n" ]; then
-  ${ECHO} -n "ezmlm-split (1/2):    "
+  prompt "ezmlm-split (1/2):    "
 # set up split file
   ${ECHO} "edu:1:26:l1@h1" > "${DIR}/split"
   ${ECHO} "edu:27:52:l2@h2" >> "${DIR}/split"
@@ -1441,7 +1450,7 @@ if [ "$SECT" -le "2" ]; then
 #############
 # ezmlm-idx #
 #############
-  ${ECHO} -n "ezmlm-idx:            "
+  prompt "ezmlm-idx:            "
   ${RM} -f "${DIR}/archive/0/index" "${DIR}/indexed"
   ${EZBIN}/ezmlm-idx "${DIR}" >"${ERR}" 2>&1 || \
 	{ ${ECHO} "failed to run"; exit 100; }
@@ -1456,7 +1465,7 @@ if [ "$SECT" -le "2" ]; then
 #############
 # ezmlm-get #
 #############
-${ECHO} -n "ezmlm-get (1/2):      "
+prompt "ezmlm-get (1/2):      "
 
 # blast digest recipient account with all these excerpts.
 ${EZBIN}/ezmlm-sub "${DIR}/digest" "${DIG}@$HOST"
@@ -1708,7 +1717,7 @@ ${ECHO} "OK"
 ##############
 # ezmlm-send #
 ##############
-${ECHO} -n "ezmlm-send (2/2):     "
+prompt "ezmlm-send (2/2):     "
 MSG1=`${GREP} -l "msg1" $SINKDIR/new/*` || \
 	{ ${ECHO} "failed to deliver message 1 to subscriber"; \
 	exit 100; }
@@ -1772,7 +1781,7 @@ ${ECHO} "OK"
 # ezmlm-clean #
 ###############
 
-${ECHO} -n "ezmlm-clean (2/2):    "
+prompt "ezmlm-clean (2/2):    "
 
 ${GREP} "clean1" ${DIGDIR}/new/* >/dev/null 2>&1 && \
 	{ ${ECHO} "removal of non-x mod queue entry 1 wasn't silent"; exit 100; }
@@ -1798,7 +1807,7 @@ ${ECHO} "OK"
 ###############
 # ezmlm-store #
 ###############
-${ECHO} -n "ezmlm-store (2/2):    "
+prompt "ezmlm-store (2/2):    "
 
 MOD1=`${GREP} -l "mod1" $SINKDIR/new/* 2>/dev/null`
 if [ -z "$MOD1" ]; then
@@ -1822,7 +1831,7 @@ ${ECHO} "OK"
 ################
 # ezmlm-manage #
 ################
-${ECHO} -n "ezmlm-manage (2/4):   "
+prompt "ezmlm-manage (2/4):   "
 
 # check digest-subscribe and list-unsubscribe replies
 SUB1=`${GREP} -l 'sub1' $MANDIR/new/*` || \
@@ -1937,7 +1946,7 @@ ${ECHO} "OK"
 # ezmlm-moderate #
 ##################
 
-${ECHO} -n "ezmlm-moderate (1/2): "
+prompt "ezmlm-moderate (1/2): "
 
 # MOD1 and MOD3 are defined from ezmlm-store testing
 
@@ -2030,7 +2039,7 @@ ${EZBIN}/ezmlm-unsub "${DIR}" "${SND}@$HOST"
 ##############
 # ezmlm-warn #
 ##############
-${ECHO} -n "ezmlm-warn (2/3):     "
+prompt "ezmlm-warn (2/3):     "
 
 ${EZBIN}/ezmlm-warn -t0 "${DIR}" >"${ERR}" 2>&1 || \
 	{ ${ECHO} "failed with normal bounce for warning"; exit 100; }
@@ -2044,7 +2053,7 @@ ${ECHO} "OK"
 # ezmlm-request #
 #################
 
-  ${ECHO} -n "ezmlm-request (2/2):  "
+  prompt "ezmlm-request (2/2):  "
 
   ${GREP} "$LOC-qqqq-$SND=$HOST" "${REQ}" >/dev/null || \
 	{ ${ECHO} "'qqqq' subject query rewriting failed"; exit 100; }
@@ -2068,7 +2077,7 @@ if [ "$SECT" -le "3" ]; then
 # ezmlm-split #
 ###############
 if [ "$QMVER" = "n" ]; then
-  ${ECHO} -n "ezmlm-split (2/2):    "
+  prompt "ezmlm-split (2/2):    "
 
 # we know that ezmlm-manage works. A bounce would go to MODDIR, so a
 # message in SINKDIR means that the request was forwarded to ezmlm-manage,
@@ -2092,7 +2101,7 @@ fi
 # ezmlm-moderate #
 ##################
 
-  ${ECHO} -n "ezmlm-moderate (2/2): "
+  prompt "ezmlm-moderate (2/2): "
 
   MOD1=`${GREP} -l "mod1" $SINKDIR/new/* | head -1` || \
 	{ ${ECHO} "failed to send rejection notice for message mod1"; exit 100; }
@@ -2116,7 +2125,7 @@ fi
 ################
 # ezmlm-manage #
 ################
-  ${ECHO} -n "ezmlm-manage (3/4):   "
+  prompt "ezmlm-manage (3/4):   "
 
   SENDER="${MOD}@$HOST"; export SENDER
   ${EZBIN}/ezmlm-issubn "${DIR}" && \
@@ -2179,7 +2188,7 @@ fi
 #############
 # ezmlm-get #
 #############
-  ${ECHO} -n "ezmlm-get (2/2):      "
+  prompt "ezmlm-get (2/2):      "
 
 # index1/get1/thread1 should bounce and will not be looked for
 # index2 ... should be in DIG@HOST's inbox
@@ -2238,7 +2247,7 @@ if [ "$SECT" -le "4" ]; then
 ##############
 # ezmlm-warn #
 ##############
-  ${ECHO} -n "ezmlm-warn (3/3):     "
+  prompt "ezmlm-warn (3/3):     "
 
   SENDER="${BNC}@${HOST}"
   export SENDER
@@ -2252,7 +2261,7 @@ if [ "$SECT" -le "4" ]; then
 ################
 # ezmlm-manage #
 ################
-  ${ECHO} -n "ezmlm-manage (4/4):   "
+  prompt "ezmlm-manage (4/4):   "
 
   ${GREP} "#NEW_TEXT#" "${DIR}/text/test" >/dev/null 2>&1 || \
 	{ ${ECHO} "edit4 failed to update text file"; exit 100; }
