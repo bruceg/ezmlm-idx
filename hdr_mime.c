@@ -2,12 +2,12 @@
 
 #include "hdr.h"
 #include "qmail.h"
-#include "cookie.h"
+#include "makehash.h"
 #include "stralloc.h"
 #include "str.h"
 
 extern struct qmail qq;
-extern char boundary[COOKIE];
+extern char boundary[HASHLEN];
 extern stralloc charset;
 
 void hdr_ctype(const char *ctype)
@@ -15,14 +15,17 @@ void hdr_ctype(const char *ctype)
 
   qmail_puts(&qq,"Content-Type: ");
   qmail_puts(&qq,ctype);
-  if (charset.s && charset.len > 0) {
+  if (str_diffn(ctype, "text/", 5) == 0
+      && charset.s != 0
+      && charset.len > 0) {
+    /* text/something, needs a charset */
     qmail_puts(&qq,"; charset=");
     qmail_puts(&qq,charset.s);
   }
   if (str_diffn(ctype, "multipart/", 10) == 0) {
-    /* multipart/something */
-    qmail_puts(&qq,";\n\tboundary=");
-    qmail_put(&qq,boundary,COOKIE);
+    /* multipart/something, needs a boundary */
+    qmail_puts(&qq,"; boundary=");
+    qmail_put(&qq,boundary,HASHLEN);
   }
   qmail_puts(&qq,"\n");
 }
