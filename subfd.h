@@ -3,6 +3,6 @@
 
 #include "substdio.h"
 
-extern substdio *subfderr;
+extern substdio *const subfderr;
 
 #endif
