@@ -289,7 +289,7 @@ ezmlm-cgi.1
 	nroff -man ezmlm-cgi.1 > ezmlm-cgi.0
 
 ezmlm-cgi.o: \
-compile ezmlm-cgi.c alloc.h error.h stralloc.h gen_alloc.h str.h \
+compile ezmlm-cgi.c alloc.h direntry.h error.h stralloc.h gen_alloc.h str.h \
 sig.h slurp.h getconf.h strerr.h getln.h substdio.h readwrite.h env.h \
 makehash.h fmt.h strerr.h errtxt.h idx.h idxthread.h mime.h \
 constmap.h sgetopt.h subgetopt.h datetime.h now.h fork.h wait.h
