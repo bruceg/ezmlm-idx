@@ -14,7 +14,7 @@ extern int subscribe(char *dir,char *username,int flagadd,char *from,
 	char *event, int flagmysql, int forcehash,
 	char *table_override, char *FATAL);
 
-extern char *issub(char *dir,char *username, char *table_override, char *FATAL);
+extern const char *issub(char *dir,char *username, char *table_override, char *FATAL);
 
 extern unsigned long putsubs(char *dir,
 	unsigned long hash_lo, unsigned long hash_hi,
@@ -26,15 +26,15 @@ extern void tagmsg(char *dir, unsigned long msgnum,
 	char *seed, char *action, char *hashout,
 	unsigned long bodysize, unsigned long chunk, char *fatal);
 
-extern char *logmsg(char *dir, unsigned long msgnum, unsigned long,
+extern const char *logmsg(char *dir, unsigned long msgnum, unsigned long,
 	unsigned long subs, int done);
 
-extern char *checktag(char *dir, unsigned long msgnum, unsigned long listno,
+extern const char *checktag(char *dir, unsigned long msgnum, unsigned long listno,
 	char *action, char *seed, char *hash);
 
 extern void searchlog(char *dir, char *search, int subwrite(), char *fatal);
 
-extern char *opensql(char *dir, char **table);
+extern const char *opensql(char *dir, char **table);
 
 extern void closesql();
 

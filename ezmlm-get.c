@@ -112,7 +112,7 @@ char archtype=' ';
 
 /* for mods on non-public lists (needed for future fuzzy sub dbs) */
 stralloc mod = {0};		/* moderator addr for non-public lists */
-char *pmod = (char *) 0;	/* pointer to above */
+const char *pmod = (char *) 0;	/* pointer to above */
 
 /* for digest */
 stralloc ddir = {0};

@@ -43,7 +43,7 @@ char *fatal;
   PGresult *result;
   PGresult *result2; /* Need for dupicate check */
   char *table = (char *) 0;
-  char *ret;
+  const char *ret;
   unsigned int i;
 
   strnum[fmt_ulong(strnum,msgnum)] = '\0';	/* message nr ->string*/

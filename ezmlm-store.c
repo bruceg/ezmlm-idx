@@ -156,7 +156,7 @@ char **argv;
   int flaginheader;
   int flagmodpost;
   int flagremote;
-  char *pmod;
+  const char *pmod;
   const char *err;
   int opt;
   unsigned int i;

@@ -359,7 +359,7 @@ char **argv;
   int fdlock;
   char *sender;
   char *mlheader = (char *) 0;
-  char *ret;
+  const char *ret;
   const char *err;
   int flagmlwasthere;
   int flaglistid = 0;	/* no listid header added */

@@ -64,7 +64,7 @@ char *fatal;		/* fatal */
   unsigned char *cplast, *cpline;
   unsigned int searchlen;
   int fd,match;
-  char *ret;
+  const char *ret;
 
   MYSQL_RES *result;
   MYSQL_ROW row;

@@ -680,7 +680,7 @@ char **argv;
   char *action;
   char *x, *y;
   char *fname;
-  char *pmod;
+  const char *pmod;
   const char *err;
   char *cp,*cpfirst,*cplast,*cpnext,*cpafter;
   int flagmod;

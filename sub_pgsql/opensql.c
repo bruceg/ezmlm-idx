@@ -12,7 +12,7 @@ static stralloc fn = {0};
 static stralloc ourdb = {0};
 static char *ourtable = (char *) 0;
 
-char *opensql(dbname,table)
+const char *opensql(dbname,table)
 /* reads the file dbname/sql, and if the file exists, parses it into the    */
 /* components. The string should be host:port:user:pw:db:table.         If  */
 /* the file does not exists, returns "". On success returns NULL. On error  */

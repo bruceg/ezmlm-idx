@@ -11,7 +11,7 @@ static stralloc fn = {0};
 static stralloc ourdb = {0};
 static char *ourtable = (char *) 0;
 
-char *opensql(dbname,table)
+const char *opensql(dbname,table)
 /* reads the file dbname/sql, and if the file exists, parses it into the    */
 /* components. The string should be host:port:user:pw:db:table.         If  */
 /* the file does not exists, returns "". On success returns NULL. On error  */
@@ -91,7 +91,7 @@ char **table;	/* table root_name */
     if (!*table) return ERR_NO_TABLE;
   }
   if (!psql) {
-    if (!((MYSQL *) psql = mysql_init((MYSQL *) 0)))
+    if (!(psql = mysql_init((MYSQL *) 0)))
 	 return ERR_NOMEM;					/* init */
     if (!(mysql_real_connect((MYSQL *) psql, host, user, pw, db,
 	(unsigned int) port, 0, CLIENT_COMPRESS)))		/* conn */

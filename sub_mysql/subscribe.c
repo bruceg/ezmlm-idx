@@ -87,7 +87,7 @@ char *fatal;
   MYSQL_ROW row;
   char *cp,*cpafter,*cpat;
   char szhash[3] = "00";
-  char *r = (char *) 0;
+  const char *r = (char *) 0;
   char *table = (char *) 0;
   char **ptable = &table;
 

@@ -252,7 +252,7 @@ char **argv;
   char *local;
   char *action;
   char *def;
-  char *ret;
+  const char *ret;
   char *cp;
   unsigned long msgnum;
   unsigned long cookiedate;

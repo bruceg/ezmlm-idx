@@ -17,7 +17,7 @@
 
 static stralloc line = {0};
 static stralloc outline = {0};
-static date[DATE822FMT];
+static char date[DATE822FMT];
 static datetime_sec when;
 static struct datetime dt;
 static substdio ssin;
@@ -65,7 +65,7 @@ char *fatal;		/* fatal */
   unsigned char *cplast, *cpline;
   unsigned int searchlen;
   int fd,match;
-  char *ret;
+  const char *ret;
 
   PGresult *result;
   int row_nr;

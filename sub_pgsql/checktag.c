@@ -12,10 +12,10 @@
 
 static stralloc key = {0};
 static stralloc line = {0};
-static strnum[FMT_ULONG];
-static newcookie[COOKIE];
+static char strnum[FMT_ULONG];
+static char newcookie[COOKIE];
 
-char *checktag (dir,num,listno,action,seed,hash)
+const char *checktag (dir,num,listno,action,seed,hash)
 /* reads dir/sql. If not present, returns success (NULL). If dir/sql is    */
 /* present, checks hash against the cookie table. If match, returns success*/
 /* (NULL), else returns "". If error, returns error string. */
@@ -31,7 +31,7 @@ char *hash;				/* cookie */
   PGresult *result;
   /*  int row; */
   char *table = (char *) 0;
-  char *r;
+  const char *r;
 
   if ((r = opensql(dir,&table))) {
     if (*r) return r;
@@ -83,7 +83,7 @@ char *hash;				/* cookie */
     if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) return ERR_NOMEM;
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return ERR_NOMEM;
     if (!stralloc_cats(&line," and cookie='")) return ERR_NOMEM;
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash))) return ERR_NOMEM;
+    if (!stralloc_catb(&line,strnum,fmt_str(strnum,hash))) return ERR_NOMEM;
     if (!stralloc_cats(&line,"'")) return ERR_NOMEM;
 
     if (!stralloc_0(&line)) return ERR_NOMEM;

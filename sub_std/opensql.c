@@ -10,7 +10,7 @@ static stralloc fn = {0};
 static stralloc ourdb = {0};
 static char *ourtable = (char *) 0;
 
-char *opensql(dbname,table)
+const char *opensql(dbname,table)
 char *dbname;	/* database directory */
 char **table;	/* table root_name */
 

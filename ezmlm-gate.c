@@ -39,7 +39,7 @@ char szchar[2] = "-";
   char *sendargs[4];
   int child;
   int wstat;
-  char *pmod;
+  const char *pmod;
 
 int mailprog(s)
   char *s;

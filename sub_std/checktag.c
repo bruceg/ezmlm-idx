@@ -14,7 +14,7 @@ static stralloc quoted = {0};
 static char strnum[FMT_ULONG];
 static char newcookie[COOKIE];
 
-char *checktag (dir,num,listno,action,seed,hash)
+const char *checktag (dir,num,listno,action,seed,hash)
 /* reads dir/sql. If not present, checks that the hash of seed matches */
 /* hash and returns success (NULL). If not match returns "". If error, */
 /* returns error string */

@@ -62,7 +62,7 @@ char *fatal;		/* fatal error string */
   int match;
   unsigned int pos = 0;
   unsigned int hashpos;
-  char *ret = (char *) 0;
+  const char *ret = (char *) 0;
 
   if (!flagsql || (ret = opensql(dbname,&table))) {
     if (flagsql && *ret) strerr_die2x(111,fatal,ret);

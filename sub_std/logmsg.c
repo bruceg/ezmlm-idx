@@ -7,7 +7,7 @@
 static stralloc logline = {0};
 static strnum[FMT_ULONG];
 
-char *logmsg(dir,num,listno,subs,done)
+const char *logmsg(dir,num,listno,subs,done)
 char *dir;
 unsigned long num;
 unsigned long listno;

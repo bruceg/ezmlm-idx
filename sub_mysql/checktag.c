@@ -15,7 +15,7 @@ static stralloc quoted = {0};
 static char strnum[FMT_ULONG];
 static char newcookie[COOKIE];
 
-char *checktag (dir,num,listno,action,seed,hash)
+const char *checktag (dir,num,listno,action,seed,hash)
 /* reads dir/sql. If not present, returns success (NULL). If dir/sql is    */
 /* present, checks hash against the cookie table. If match, returns success*/
 /* (NULL), else returns "". If error, returns error string. */
@@ -30,7 +30,7 @@ char *hash;				/* cookie */
   MYSQL_RES *result;
   MYSQL_ROW row;
   char *table = (char *) 0;
-  char *r;
+  const char *r;
 
   if ((r = opensql(dir,&table))) {
     if (*r) return r;

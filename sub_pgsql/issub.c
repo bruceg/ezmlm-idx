@@ -28,7 +28,7 @@ static stralloc fn = {0};
 static substdio ss;
 static char ssbuf[512];
 
-char *issub(dbname,userhost,tab,fatal)
+const char *issub(dbname,userhost,tab,fatal)
 /* Returns (char *) to match if userhost is in the subscriber database     */
 /* dbname, 0 otherwise. dbname is a base directory for a list and may NOT  */
 /* be NULL        */
@@ -41,7 +41,7 @@ char *fatal;
 
 {
   PGresult *result;
-  char *ret;
+  const char *ret;
   char *table;
 
   int fd;
