@@ -1,3 +1,5 @@
+/* Public domain, from ezmlm-0.53. */
+
 #ifndef SGETOPT_H
 #define SGETOPT_H
 
@@ -14,8 +16,8 @@
 
 #include "subgetopt.h"
 
-extern int sgetoptmine();
+extern int sgetoptmine(int,const char *const *,const char *);
 extern int sgetopterr;
-extern char *sgetoptprogname;
+extern const char *sgetoptprogname;
 
 #endif

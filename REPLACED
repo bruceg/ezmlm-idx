@@ -59,6 +59,7 @@ scan_ulong.c
 seek.h
 seek_set.c
 sgetopt.c
+sgetopt.h
 str.h
 str_chr.c
 str_diff.c
