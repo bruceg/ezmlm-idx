@@ -1377,8 +1377,8 @@ void show_part(struct msginfo *infop,int flagshowheaders,
   int whatheader;
   int flaggoodfield;
   int flaghtml;
-  int btype;
-  unsigned int colpos,l;
+  int btype,i;
+  unsigned int colpos;
   char linetype;
 
   flaginheader = 1;
