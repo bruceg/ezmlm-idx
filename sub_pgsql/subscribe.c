@@ -21,6 +21,8 @@
 #include <unistd.h>
 #include <libpq-fe.h>
 
+extern PGconn *pgsql;
+
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
 static stralloc line = {0};
@@ -276,9 +278,9 @@ int subscribe(const char *dbname,
       if (!stralloc_cat(&line,&addr)) die_nomem();	/* addr */
       if (!stralloc_cats(&line,"$'")) die_nomem();
       if (!stralloc_0(&line)) die_nomem();
-      result = PQexec(psql,line.s);
+      result = PQexec(pgsql,line.s);
       if (result == NULL)
-	strerr_die2x(111,FATAL,PQerrorMessage(psql));
+	strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
       if (PQresultStatus(result) != PGRES_TUPLES_OK)
 	strerr_die2x(111,FATAL,PQresultErrorMessage(result));
 
@@ -296,9 +298,9 @@ int subscribe(const char *dbname,
 	if (!stralloc_cats(&line,szhash)) die_nomem();	/* hash */
 	if (!stralloc_cats(&line,")")) die_nomem();
 	if (!stralloc_0(&line)) die_nomem();
-	result = PQexec(psql,line.s);
+	result = PQexec(pgsql,line.s);
 	if (result == NULL)
-	  strerr_die2x(111,FATAL,PQerrorMessage(psql));
+	  strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
 	if (PQresultStatus(result) != PGRES_COMMAND_OK)
 	  strerr_die2x(111,FATAL,PQresultErrorMessage(result));
       }
@@ -316,9 +318,9 @@ int subscribe(const char *dbname,
       }
       
       if (!stralloc_0(&line)) die_nomem();
-      result = PQexec(psql,line.s);
+      result = PQexec(pgsql,line.s);
       if (result == NULL)
-	strerr_die2x(111,FATAL,PQerrorMessage(psql));
+	strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
       if (PQresultStatus(result) != PGRES_COMMAND_OK)
 	strerr_die2x(111,FATAL,PQresultErrorMessage(result));
       if (atoi(PQcmdTuples(result))<1)
@@ -349,7 +351,7 @@ int subscribe(const char *dbname,
     if (!stralloc_cats(&logline,"')")) die_nomem();
 
     if (!stralloc_0(&logline)) die_nomem();
-    result = PQexec(psql,logline.s);		/* log (ignore errors) */
+    result = PQexec(pgsql,logline.s);		/* log (ignore errors) */
     PQclear(result);
 
     if (!stralloc_0(&addr))

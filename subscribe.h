@@ -60,6 +60,4 @@ extern const char *opensql(const char *dir,const char **table);
 
 extern void closesql(void);
 
-extern void *psql;		/* contains SQL handle */
-
 #endif

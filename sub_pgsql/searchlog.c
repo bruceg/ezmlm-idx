@@ -18,6 +18,8 @@
 #include <unistd.h>
 #include <libpq-fe.h>
 
+extern PGconn *pgsql;
+
 extern void die_write(void);
 
 static stralloc line = {0};
@@ -142,9 +144,9 @@ void searchlog(const char *dir,		/* work directory */
     if (!stralloc_cats(&line," ORDER by tai")) die_nomem();
       
     if (!stralloc_0(&line)) die_nomem();  
-    result = PQexec(psql,line.s);
+    result = PQexec(pgsql,line.s);
     if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage(psql));
+      strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
     if (PQresultStatus(result) != PGRES_TUPLES_OK)
       strerr_die2x(111,FATAL,PQresultErrorMessage(result));
     

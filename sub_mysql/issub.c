@@ -17,6 +17,8 @@
 #include "idx.h"
 #include <mysql.h>
 
+extern MYSQL *mysql;
+
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
 static stralloc line = {0};
@@ -140,10 +142,10 @@ const char *issub(const char *dbname,		/* directory to basedir */
 	mysql_escape_string(quoted.s,userhost,addr.len))) die_nomem();
     if (!stralloc_cats(&line,"'"))
 		die_nomem();
-    if (mysql_real_query((MYSQL *) psql,line.s,line.len))	/* query */
-		strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
-    if (!(result = mysql_use_result((MYSQL *) psql)))
-		strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+    if (mysql_real_query(mysql,line.s,line.len))	/* query */
+		strerr_die2x(111,FATAL,mysql_error(mysql));
+    if (!(result = mysql_use_result(mysql)))
+		strerr_die2x(111,FATAL,mysql_error(mysql));
     row = mysql_fetch_row(result);
     ret = (char *) 0;
     if (!row) {		/* we need to return the actual address as other */
@@ -151,10 +153,10 @@ const char *issub(const char *dbname,		/* directory to basedir */
 			/* to make sure to send to e.g the correct moderator*/
 			/* address. */
       if (!mysql_eof(result))
-		strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+		strerr_die2x(111,FATAL,mysql_error(mysql));
     } else {
       if (!(lengths = mysql_fetch_lengths(result)))
-		strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+		strerr_die2x(111,FATAL,mysql_error(mysql));
       if (!stralloc_copyb(&line,row[0],lengths[0])) die_nomem();
       if (!stralloc_0(&line)) die_nomem();
       ret = line.s;

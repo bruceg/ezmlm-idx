@@ -17,6 +17,8 @@
 #include <unistd.h>
 #include <libpq-fe.h>
 
+extern PGconn *pgsql;
+
 static substdio ssin;
 static char inbuf[512];
 char strnum[FMT_ULONG];
@@ -101,9 +103,9 @@ unsigned long putsubs(const char *dbname,	/* database base dir */
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_hi)))
       die_nomem();
     if (!stralloc_0(&line)) die_nomem();
-    result = PQexec(psql,line.s);
+    result = PQexec(pgsql,line.s);
     if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage(psql));
+      strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
     if (PQresultStatus(result) != PGRES_TUPLES_OK)
       strerr_die2x(111,FATAL,PQresultErrorMessage(result));
 

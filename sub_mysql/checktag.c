@@ -12,6 +12,8 @@
 #include "subscribe.h"
 #include <mysql.h>
 
+extern MYSQL *mysql;
+
 static stralloc key = {0};
 static stralloc line = {0};
 static stralloc quoted = {0};
@@ -64,15 +66,15 @@ const char *checktag (const char *dir,		/* the db base dir */
       if (!stralloc_cats(&line," AND msgnum=")) return ERR_NOMEM;
       if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return ERR_NOMEM;
       if (!stralloc_cats(&line," AND done > 3")) return ERR_NOMEM;
-      if (mysql_real_query((MYSQL *) psql,line.s,line.len) != 0)
-	return mysql_error((MYSQL *) psql);			/* query */
-      if (!(result = mysql_use_result((MYSQL *) psql)))		/* use result */
-	return mysql_error((MYSQL *) psql);
+      if (mysql_real_query(mysql,line.s,line.len) != 0)
+	return mysql_error(mysql);			/* query */
+      if (!(result = mysql_use_result(mysql)))		/* use result */
+	return mysql_error(mysql);
       if ((row = mysql_fetch_row(result)))
 	return "";					/*already done */
       else						/* no result */
         if (!mysql_eof(result))
-	  return mysql_error((MYSQL *) psql);
+	  return mysql_error(mysql);
       mysql_free_result(result);			/* free res */
     }
 
@@ -86,13 +88,13 @@ const char *checktag (const char *dir,		/* the db base dir */
     if (!stralloc_cat(&line,&quoted)) return ERR_NOMEM;
     if (!stralloc_cats(&line,"'")) return ERR_NOMEM;
 
-    if (mysql_real_query((MYSQL *) psql,line.s,line.len) != 0)	/* select */
-	return mysql_error((MYSQL *) psql);
-    if (!(result = mysql_use_result((MYSQL *) psql)))
-	return mysql_error((MYSQL *) psql);
+    if (mysql_real_query(mysql,line.s,line.len) != 0)	/* select */
+	return mysql_error(mysql);
+    if (!(result = mysql_use_result(mysql)))
+	return mysql_error(mysql);
     if (!mysql_fetch_row(result)) {
     if (!mysql_eof(result))		/* some error occurred */
-	return mysql_error((MYSQL *) psql);
+	return mysql_error(mysql);
       mysql_free_result(result);	/* eof => query ok, but null result*/
       return "";			/* not parent => perm error */
     }

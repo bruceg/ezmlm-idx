@@ -15,7 +15,7 @@ static stralloc fn = {0};
 static stralloc ourdb = {0};
 static const char *ourtable = (char *) 0;
 
-void *psql = (void *) 0;
+MYSQL *mysql = 0;
 
 const char *opensql(const char *dbname,	/* database directory */
 		    const char **table)	/* table root_name */
@@ -94,12 +94,12 @@ const char *opensql(const char *dbname,	/* database directory */
     else *table = ourtable;
     if (!*table) return ERR_NO_TABLE;
   }
-  if (!psql) {
-    if (!(psql = mysql_init((MYSQL *) 0)))
+  if (!mysql) {
+    if (!(mysql = mysql_init((MYSQL *) 0)))
 	 return ERR_NOMEM;					/* init */
-    if (!(mysql_real_connect((MYSQL *) psql, host, user, pw, db,
+    if (!(mysql_real_connect(mysql, host, user, pw, db,
 	(unsigned int) port, 0, CLIENT_COMPRESS)))		/* conn */
-		return mysql_error((MYSQL *) psql);
+		return mysql_error(mysql);
   }
   return (char *) 0;
 }
@@ -107,8 +107,9 @@ const char *opensql(const char *dbname,	/* database directory */
 void closesql(void)
 /* close connection to SQL server, if open */
 {
-	if (psql) mysql_close((MYSQL *) psql);
-	psql = (void *) 0;			/* destroy pointer */
-	ourdb.len = 0;				/* destroy cache */
-	return;
+  if (mysql)
+    mysql_close(mysql);
+  mysql = 0;					/* destroy pointer */
+  ourdb.len = 0;				/* destroy cache */
+  return;
 }

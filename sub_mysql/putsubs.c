@@ -17,9 +17,11 @@
 #include "idx.h"
 #include <mysql.h>
 
+extern MYSQL *mysql;
+
 static substdio ssin;
 static char inbuf[512];
-char strnum[FMT_ULONG];
+static char strnum[FMT_ULONG];
 static stralloc line = {0};
 static stralloc fn = {0};
 
@@ -100,20 +102,20 @@ unsigned long putsubs(const char *dbname,	/* database base dir */
     if (!stralloc_cats(&line," AND ")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_hi)))
 		die_nomem();
-    if (mysql_real_query((MYSQL *) psql,line.s,line.len))	/* query */
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
-    if (!(result = mysql_use_result((MYSQL *) psql)))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+    if (mysql_real_query(mysql,line.s,line.len))	/* query */
+	strerr_die2x(111,FATAL,mysql_error(mysql));
+    if (!(result = mysql_use_result(mysql)))
+	strerr_die2x(111,FATAL,mysql_error(mysql));
     no = 0;
     while ((row = mysql_fetch_row(result))) {
 	/* this is safe even if someone messes with the address field def */
     if (!(lengths = mysql_fetch_lengths(result)))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+	strerr_die2x(111,FATAL,mysql_error(mysql));
       if (subwrite(row[0],lengths[0]) == -1) die_write();
       no++;					/* count for list-list fxn */
     }
     if (!mysql_eof(result))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+	strerr_die2x(111,FATAL,mysql_error(mysql));
     mysql_free_result(result);
     return no;
   }

@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <libpq-fe.h>
 
+extern PGconn *pgsql;
+
 static stralloc logline = {0};
 static char strnum[FMT_ULONG];
 
@@ -49,9 +51,9 @@ const char *logmsg(const char *dir,
   if (!stralloc_append(&logline,")")) return ERR_NOMEM;
 
   if (!stralloc_0(&logline)) return ERR_NOMEM;
-  result = PQexec(psql,logline.s);
+  result = PQexec(pgsql,logline.s);
   if(result==NULL)
-    return (PQerrorMessage(psql));
+    return (PQerrorMessage(pgsql));
   if(PQresultStatus(result) != PGRES_COMMAND_OK) { /* Check if duplicate */
     if (!stralloc_copys(&logline,"SELECT msgnum FROM ")) return ERR_NOMEM;
     if (!stralloc_cats(&logline,table)) return ERR_NOMEM;
@@ -66,9 +68,9 @@ const char *logmsg(const char *dir,
       return ERR_NOMEM;
     /* Query */
     if (!stralloc_0(&logline)) return ERR_NOMEM;
-    result2 = PQexec(psql,logline.s);
+    result2 = PQexec(pgsql,logline.s);
     if (result2 == NULL)
-      return (PQerrorMessage(psql));
+      return (PQerrorMessage(pgsql));
     if (PQresultStatus(result2) != PGRES_TUPLES_OK)
       return (char *) (PQresultErrorMessage(result2));
     /* No duplicate, return ERROR from first query */

@@ -15,7 +15,7 @@ static stralloc fn = {0};
 static stralloc ourdb = {0};
 static const char *ourtable = (char *) 0;
 
-void *psql = (void *) 0;
+PGconn *pgsql = 0;
 
 const char *opensql(const char *dbname,	/* database directory */
 		    const char **table)	/* table root_name */
@@ -93,12 +93,12 @@ const char *opensql(const char *dbname,	/* database directory */
     else *table = ourtable;
     if (!*table) return ERR_NO_TABLE;
   }
-  if (!psql) {
+  if (!pgsql) {
     /* Make connection to database */
-    psql = PQsetdbLogin( host, port, NULL, NULL, db, user, pw);
+    pgsql = PQsetdbLogin( host, port, NULL, NULL, db, user, pw);
     /* Check  to see that the backend connection was successfully made */
-    if (PQstatus(psql) == CONNECTION_BAD)
-      return PQerrorMessage(psql);
+    if (PQstatus(pgsql) == CONNECTION_BAD)
+      return PQerrorMessage(pgsql);
   }
   return (char *) 0;
 }
@@ -106,7 +106,8 @@ const char *opensql(const char *dbname,	/* database directory */
 void closesql(void)
 /* close connection to SQL server, if open */
 {
-  if (psql) PQfinish(psql);
-  psql = (void *) 0; /* Destroy pointer */
+  if (pgsql)
+    PQfinish(pgsql);
+  pgsql = 0;		/* Destroy pointer */
   return;
 }

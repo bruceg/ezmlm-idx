@@ -12,6 +12,8 @@
 #include <mysql.h>
 #include <mysqld_error.h>
 
+extern MYSQL *mysql;
+
 static stralloc line = {0};
 static stralloc key = {0};
 static char hash[COOKIE];
@@ -71,9 +73,9 @@ void tagmsg(const char *dir,		/* db base dir */
     if (!stralloc_cats(&line,",")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,chunk))) die_nomem();
     if (!stralloc_cats(&line,")")) die_nomem();
-    if (mysql_real_query((MYSQL *) psql,line.s,line.len) != 0)
-      if (mysql_errno((MYSQL *) psql) != ER_DUP_ENTRY)	/* ignore dups */
-        strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql)); /* cookie query */
+    if (mysql_real_query(mysql,line.s,line.len) != 0)
+      if (mysql_errno(mysql) != ER_DUP_ENTRY)	/* ignore dups */
+        strerr_die2x(111,FATAL,mysql_error(mysql)); /* cookie query */
 
     if (! (ret = logmsg(dir,msgnum,0L,0L,1))) return;	/* log done=1*/
     if (*ret) strerr_die2x(111,FATAL,ret);

@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <libpq-fe.h>
 
+extern PGconn *pgsql;
+
 static stralloc line = {0};
 static stralloc key = {0};
 static char hash[COOKIE];
@@ -75,9 +77,9 @@ void tagmsg(const char *dir,		/* db base dir */
     if (!stralloc_cats(&line,")")) die_nomem();
     
     if (!stralloc_0(&line)) die_nomem();
-    result = PQexec(psql,line.s);
+    result = PQexec(pgsql,line.s);
     if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage(psql));
+      strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
     if (PQresultStatus(result) != PGRES_COMMAND_OK) { /* Possible tuplicate */
       if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
       if (!stralloc_cats(&line,table)) die_nomem();	  
@@ -86,9 +88,9 @@ void tagmsg(const char *dir,		/* db base dir */
 	die_nomem();
       /* Query */
       if (!stralloc_0(&line)) die_nomem();
-      result2 = PQexec(psql,line.s);
+      result2 = PQexec(pgsql,line.s);
       if (result2 == NULL)
-	strerr_die2x(111,FATAL,PQerrorMessage(psql));
+	strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
       if (PQresultStatus(result2) != PGRES_TUPLES_OK)
 	strerr_die2x(111,FATAL,PQresultErrorMessage(result2));
       /* No duplicate, return ERROR from first query */

@@ -16,6 +16,8 @@
 #include <unistd.h>
 #include <libpq-fe.h>
 
+extern PGconn *pgsql;
+
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
 static stralloc line = {0};
@@ -135,9 +137,9 @@ const char *issub(const char *dbname,		/* directory to basedir */
     if (!stralloc_cats(&line,"$'")) die_nomem();
 
     if (!stralloc_0(&line)) die_nomem();
-    result = PQexec(psql,line.s);
+    result = PQexec(pgsql,line.s);
     if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage(psql));
+      strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
     if (PQresultStatus(result) != PGRES_TUPLES_OK )
       strerr_die2x(111,FATAL,PQresultErrorMessage(result));
 

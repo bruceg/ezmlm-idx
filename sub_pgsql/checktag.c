@@ -13,6 +13,8 @@
 #include <unistd.h>
 #include <libpq-fe.h>
 
+extern PGconn *pgsql;
+
 static stralloc key = {0};
 static stralloc line = {0};
 static char strnum[FMT_ULONG];
@@ -66,9 +68,9 @@ const char *checktag (const char *dir,		/* the db base dir */
       if (!stralloc_cats(&line," AND done > 3")) return ERR_NOMEM;
 
       if (!stralloc_0(&line)) return ERR_NOMEM;
-      result = PQexec( psql, line.s );
+      result = PQexec( pgsql, line.s );
       if(result == NULL)
-	return (PQerrorMessage(psql));
+	return (PQerrorMessage(pgsql));
       if( PQresultStatus(result) != PGRES_TUPLES_OK)
 	return (char *) (PQresultErrorMessage(result));
       if( PQntuples(result) > 0 ) {
@@ -87,9 +89,9 @@ const char *checktag (const char *dir,		/* the db base dir */
     if (!stralloc_cats(&line,"'")) return ERR_NOMEM;
 
     if (!stralloc_0(&line)) return ERR_NOMEM;
-    result = PQexec(psql,line.s);
+    result = PQexec(pgsql,line.s);
     if (result == NULL)
-      return (PQerrorMessage(psql));
+      return (PQerrorMessage(pgsql));
     if (PQresultStatus(result) != PGRES_TUPLES_OK)
       return (char *) (PQresultErrorMessage(result));
     if(PQntuples(result) < 0) {

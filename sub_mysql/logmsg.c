@@ -6,6 +6,8 @@
 #include <mysql.h>
 #include <mysqld_error.h>
 
+extern MYSQL *mysql;
+
 static stralloc logline = {0};
 static char strnum[FMT_ULONG];
 
@@ -45,8 +47,8 @@ const char *logmsg(const char *dir,
   if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) return ERR_NOMEM;
   if (!stralloc_append(&logline,")")) return ERR_NOMEM;
 
-  if (mysql_real_query((MYSQL *) psql,logline.s,logline.len))	/* log query */
-    if (mysql_errno((MYSQL *) psql) != ER_DUP_ENTRY)	/* ignore dups */
-	return mysql_error((MYSQL *) psql);
+  if (mysql_real_query(mysql,logline.s,logline.len))	/* log query */
+    if (mysql_errno(mysql) != ER_DUP_ENTRY)	/* ignore dups */
+	return mysql_error(mysql);
   return (char *) 0;
 }

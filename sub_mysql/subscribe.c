@@ -22,6 +22,8 @@
 #include <mysql.h>
 #include <mysqld_error.h>
 
+extern MYSQL *mysql;
+
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
 static stralloc line = {0};
@@ -280,27 +282,27 @@ int subscribe(const char *dbname,
       if (!stralloc_copys(&line,"LOCK TABLES ")) die_nomem();
       if (!stralloc_cats(&line,table)) die_nomem();
       if (!stralloc_cats(&line," WRITE")) die_nomem();
-      if (mysql_real_query((MYSQL *) psql,line.s,line.len))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+      if (mysql_real_query(mysql,line.s,line.len))
+	strerr_die2x(111,FATAL,mysql_error(mysql));
       if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
       if (!stralloc_cats(&line,table)) die_nomem();
       if (!stralloc_cats(&line," WHERE address='")) die_nomem();
       if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
       if (!stralloc_cats(&line,"'")) die_nomem();
-      if (mysql_real_query((MYSQL *) psql,line.s,line.len))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
-      if (!(result = mysql_use_result((MYSQL *) psql)))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+      if (mysql_real_query(mysql,line.s,line.len))
+	strerr_die2x(111,FATAL,mysql_error(mysql));
+      if (!(result = mysql_use_result(mysql)))
+	strerr_die2x(111,FATAL,mysql_error(mysql));
       if ((row = mysql_fetch_row(result))) {			/* there */
 	while (mysql_fetch_row(result));			/* use'm up */
 	mysql_free_result(result);
-	if (mysql_query((MYSQL *) psql,"UNLOCK TABLES"))
-	  strerr_die2x(111,"FATAL",mysql_error((MYSQL *) psql));
+	if (mysql_query(mysql,"UNLOCK TABLES"))
+	  strerr_die2x(111,"FATAL",mysql_error(mysql));
         return 0;						/* there */
       } else {							/* not there */
 	mysql_free_result(result);
-	if (mysql_errno((MYSQL *) psql))			/* or ERROR */
-	  strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+	if (mysql_errno(mysql))			/* or ERROR */
+	  strerr_die2x(111,FATAL,mysql_error(mysql));
 	if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
 	if (!stralloc_cats(&line,table)) die_nomem();
 	if (!stralloc_cats(&line," (address,hash) VALUES ('"))
@@ -309,10 +311,10 @@ int subscribe(const char *dbname,
 	if (!stralloc_cats(&line,"',")) die_nomem();
 	if (!stralloc_cats(&line,szhash)) die_nomem();	/* hash */
 	if (!stralloc_cats(&line,")")) die_nomem();
-        if (mysql_real_query((MYSQL *) psql,line.s,line.len))	/* INSERT */
-	  strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
-	if (mysql_query((MYSQL *) psql,"UNLOCK TABLES"))
-	  strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+        if (mysql_real_query(mysql,line.s,line.len))	/* INSERT */
+	  strerr_die2x(111,FATAL,mysql_error(mysql));
+	if (mysql_query(mysql,"UNLOCK TABLES"))
+	  strerr_die2x(111,FATAL,mysql_error(mysql));
       }
     } else {							/* unsub */
       if (!stralloc_copys(&line,"DELETE FROM ")) die_nomem();
@@ -326,9 +328,9 @@ int subscribe(const char *dbname,
         if (!stralloc_cats(&line,"' AND hash BETWEEN 0 AND 52"))
 		die_nomem();
       }
-      if (mysql_real_query((MYSQL *) psql,line.s,line.len))
-	  strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
-      if (mysql_affected_rows((MYSQL *) psql) == 0)
+      if (mysql_real_query(mysql,line.s,line.len))
+	  strerr_die2x(111,FATAL,mysql_error(mysql));
+      if (mysql_affected_rows(mysql) == 0)
 	return 0;				/* address wasn't there*/
     }
 
@@ -357,7 +359,7 @@ int subscribe(const char *dbname,
     }
     if (!stralloc_cats(&logline,"')")) die_nomem();
 
-    if (mysql_real_query((MYSQL *) psql,logline.s,logline.len))
+    if (mysql_real_query(mysql,logline.s,logline.len))
 		;				/* log (ignore errors) */
     if (!stralloc_0(&addr))
 		;				/* ignore errors */

@@ -18,6 +18,8 @@
 #include "idx.h"
 #include <mysql.h>
 
+extern MYSQL *mysql;
+
 extern void die_write(void);
 
 static stralloc line = {0};
@@ -141,17 +143,17 @@ void searchlog(const char *dir,		/* work directory */
     }	/* ordering by tai which is an index */
       if (!stralloc_cats(&line," ORDER by tai")) die_nomem();
 
-    if (mysql_real_query((MYSQL *) psql,line.s,line.len))	/* query */
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
-    if (!(result = mysql_use_result((MYSQL *) psql)))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+    if (mysql_real_query(mysql,line.s,line.len))	/* query */
+	strerr_die2x(111,FATAL,mysql_error(mysql));
+    if (!(result = mysql_use_result(mysql)))
+	strerr_die2x(111,FATAL,mysql_error(mysql));
     while ((row = mysql_fetch_row(result))) {
     if (!(lengths = mysql_fetch_lengths(result)))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+	strerr_die2x(111,FATAL,mysql_error(mysql));
       if (subwrite(row[0],lengths[0]) == -1) die_write();
     }
     if (!mysql_eof(result))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+	strerr_die2x(111,FATAL,mysql_error(mysql));
     mysql_free_result(result);
   }
 }
