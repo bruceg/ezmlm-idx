@@ -5,8 +5,6 @@ ezmlm-test \- test ezmlm programs
 .SH SYNOPSIS
 .B ezmlm-test
 [
-.B \-on
-][
 .B \-h\fI host
 ][
 .B \-u\fI user
@@ -78,19 +76,6 @@ By default, it is the same as the executing user as
 specified by the
 .B \-u
 switch or the default ``eztest''.
-.TP
-.B \-n
-Test assuming qmail>=1.02 and ezmlm-idx>=0.32. Normally, this is auto-detected.
-This switch is for testing of
-.B ezmlm-test
-and unlikely to be generally useful.
-.TP
-.B \-o
-Test assuming an old (<1.02) version of qmail which does not support
-the DEFAULT environment variable. Normally, this is auto-detected, and
-DEFAULT support is used if qmail>=1.02 and ezmlm-idx>=0.32. The ``old''
-style works with all versions of qmail, but requires adjustments for
-virtual domains. DEFAULT support makes these adjustments unnecessary.
 .TP
 .B \-p\fI sqlpassword
 Test with SQL support, and use
