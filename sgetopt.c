@@ -26,7 +26,7 @@ Documentation in sgetopt.3.
 int opterr = 1;
 const char *optprogname = 0;
 
-int getopt(int argc,const char *const *argv,const char *opts)
+int getopt(int argc,char *const *argv,const char *opts)
 {
   int c;
   const char *s;
@@ -36,7 +36,7 @@ int getopt(int argc,const char *const *argv,const char *opts)
     if (!optprogname) optprogname = "";
     for (s = optprogname;*s;++s) if (*s == '/') optprogname = s + 1;
   }
-  c = subgetopt(argc,argv,opts);
+  c = subgetopt(argc,(const char *const*)argv,opts);
   if (opterr)
     if (c == '?') {
       char chp[2]; chp[0] = optproblem; chp[1] = '\n';
