@@ -702,8 +702,9 @@ mailing list <#L#>@<#H#> .
 
 Quello che segue è una lista dei nomi dei file delle risposte e una breve
 descrizione di quando è utilizzato il loro contenuto. Per modificare un file,
-spedisci semplicemente una e-mail a <#L#>-edit.file, sostituendo 'file' con il
-nome del file. Le istruzioni di modifica sono inviate con il file.
+spedisci semplicemente una e-mail a <#L#>-edit.file@<#H#>,
+sostituendo 'file' con il nome del file. Le istruzioni di modifica sono
+inviate con il file.
 
 File                Utilizzo
 

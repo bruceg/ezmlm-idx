@@ -544,7 +544,6 @@ char *act;	/* first letter of desired confirm request only as STRING! */
   if (!quote2(&quoted,confirm.s)) die_nomem();
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"\n");
-  if (!stralloc_0(&confirm)) die_nomem();
 
   hdr_listsubject2((*act == ACTION_SC[0] || *act == ACTION_UC[0])
 		   ? TXT_USRCONFIRM : TXT_MODCONFIRM,
@@ -973,7 +972,7 @@ char **argv;
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
     if (!pmod)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
-    hdr_listsubject1(TXT_SUB_LOG);
+    hdr_listsubject1((*action == 0) ? TXT_SUB_LOG : TXT_SUB_LOG_SEARCH);
     hdr_ctboundary();
     searchlog(workdir,action,code_subto);
     copybottom();
@@ -1035,7 +1034,6 @@ char **argv;
       if (!quote2(&quoted,confirm.s)) die_nomem();
       qmail_put(&qq,quoted.s,quoted.len);
       qmail_puts(&qq,"\n");
-      if (!stralloc_0(&confirm)) die_nomem();
 
       hdr_listsubject3(TXT_EDIT_RESPONSE,action+len+1,TXT_EDIT_FOR);
       hdr_ctboundary();

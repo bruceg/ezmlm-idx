@@ -125,6 +125,7 @@
 #define TXT_UNSUB_NOP "Not subscribed to "
 #define TXT_SUB_LIST "Subscriber list for "
 #define TXT_SUB_LOG "Subscriber log for "
+#define TXT_SUB_LOG_SEARCH "Log search results for "
 #define TXT_GET_MSG "Archive retrieval from "
 #define TXT_STATUS "Subscription status on "
 #define TXT_INFO_FOR "Information for "

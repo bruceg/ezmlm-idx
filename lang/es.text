@@ -779,9 +779,9 @@ componen la mayoría de las respuestas de la lista de correo
 Lo que sigue es un listado de los ficheros de respuesta y una
 corta indicación de cuando se utilizan sus contenidos. Para
 modificar un fichero, simplemente envíe un correo a
-<#L#>-edit.fichero, sustituyendo 'fichero' por el nombre del
-fichero. Las instrucciones para las modificaciones se envían con
-el fichero.
+<#L#>-edit.fichero@<#H#>, sustituyendo 'fichero' por el nombre
+del fichero. Las instrucciones para las modificaciones se envían
+con el fichero.
 
 File                Use
 

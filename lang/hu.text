@@ -669,8 +669,8 @@ valaszainak legtobbjet befolyasolja.
 
 Alant kovetkezik egy lista a valaszfajlokrol nevuk es rovid leirasuk
 (mikor hasznaljak a tartalmukat) formajaban.  Egy fajl
-szerkesztesehez csak kuldj egy levelet a(z) <#L#>-edit.fajlnev cimre,
-ahol helyettesitsd be a "fajlnev" szot a valodi fajlnevvel.  A
+szerkesztesehez csak kuldj egy levelet a(z) <#L#>-edit.fajlnev@<#H#>
+cimre, ahol helyettesitsd be a "fajlnev" szot a valodi fajlnevvel.  A
 szerkesztesi utasitasokat a szovegfajlban fogod megkapni.
 
 Fajl                Hasznalat

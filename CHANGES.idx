@@ -35,6 +35,12 @@ in the next version.
 -Removed all references to "inhost" which was completely unused but
  still referenced in documentation and tests.
 
+ezmlm-idx-0.435, 20050308
+=========================
+-Fixed string realocation bug in ezmlm-manage.  Thanks Tom Moertel.
+-Tweaked the subscriber log search subject to differentiate it from the
+ complete subscriber log.
+
 ezmlm-idx-0.434, 20050207
 =========================
 -Replaced the generic "ezmlm response" subject with unique subjects.

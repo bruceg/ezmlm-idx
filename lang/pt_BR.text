@@ -693,7 +693,7 @@ respostas da lista <#L#>@<#H#>.
 O que segue é uma lista dos nomes dos arquivos de resposta
 e uma breve descrição de quando os seus conteúdos são usados.
 Para editar um arquivo, simplesmente envie uma mensagem para
-<#L#>-edit.file, substituindo 'file' pelo nome do arquivo.
+<#L#>-edit.file@<#H#>, substituindo 'file' pelo nome do arquivo.
 Instruções para edição serão enviadas com o arquivo texto.
 
 Arquivo             Uso

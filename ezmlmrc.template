@@ -33,7 +33,7 @@
 # tags leading to the reopenining of 'filename' will overwrite the file, not
 # extend it.
 #
-# A set of user-defined command line switches (xX, yY, zZ) are available for
+# A set of user-defined command line switches (xX, zZ) are available for
 # customization.
 #
 # Within the text, certain tags are substituted. Other tags are copied

@@ -676,8 +676,9 @@ tanggapan-tanggapan dari milis <#L#>@<#H#>.
 
 Berikut adalah daftar dari nama-nama file tanggapan beserta keterangan
 singkat tentang kapan mereka digunakan. Untuk mengedit suatu file,
-kirim mail ke <#L#>-edit.file, dengan menggantikan nama file untuk 'file'.
-Instruksi-instruksi pengeditan juga dikirimkan beserta file teksnya.
+kirim mail ke <#L#>-edit.file@<#H#>, dengan menggantikan nama
+file untuk 'file'.  Instruksi-instruksi pengeditan juga dikirimkan
+beserta file teksnya.
 
 File                Kegunaan
 

@@ -669,7 +669,7 @@ de teksten te laten wijzigen van de mailing list manager van de
 
 Hier volgt een overzicht van de teksten en wanneer ze gebruikt worden.
 Om een tekst te wijzigen stuurt u een email naar
-<#L#>-edit.file
+<#L#>-edit.file@<#H#>
 waarbij u 'file' verandert in de naam van de tekst die u wilt
 wijzigen. Instructies worden met de file meegestuurd.
 

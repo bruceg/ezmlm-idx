@@ -733,9 +733,9 @@ liste <#L#>@<#H#>.
 
 Ci-dessous, une liste des fichiers contenant les textes de reponses
 et une breve description de l'utilisation de leur contenu. Pour editer un
-fichier, envoyez simplement un message a <#L#>-edit.fichier, en substituant
-le nom du fichier a 'fichier'. Les instructions d'edition seront envoyees
-avec le fichier de texte.
+fichier, envoyez simplement un message a <#L#>-edit.fichier@<#H#>,
+en substituant le nom du fichier a 'fichier'. Les instructions d'edition
+seront envoyees avec le fichier de texte.
 
 Fichier             Utilisation
 
