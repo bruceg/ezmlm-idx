@@ -76,6 +76,9 @@ ezmlm-confirm.o
 ezmlm-cron
 ezmlm-cron.0
 ezmlm-cron.o
+ezmlm-dispatch
+ezmlm-dispatch.0
+ezmlm-dispatch.o
 ezmlm-gate
 ezmlm-gate.0
 ezmlm-gate.o

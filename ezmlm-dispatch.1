@@ -1,0 +1,100 @@
+.\" $Id$
+.TH ezmlm-dispatch 1
+.SH NAME
+ezmlm-dispatch \- Dispatch an email to other ezmlm programs
+.SH SYNOPSIS
+.B ezmlm-dispatch
+[
+.B -vV
+]
+.I dir
+[
+.I list
+]
+.SH DESCRIPTION
+.B ezmlm-dispatch
+is used in a
+.I .qmail-default
+file to handle delivery to multiple mailing lists in a directory.  It
+assumes each list has been created in a directory of the same name as
+the list's local name.  It examines the value of
+.I $DEFAULT
+set by
+.B qmail-local
+to determine which list the message is destined to, and what file within
+the list directory is to control the message delivery.
+.P
+.RS
+.nf
+.ta 7c 8c
+If the address matches:	Delivery is handled by:
+LIST	\fBLIST/editor\fR
+LIST-owner	\fBLIST/owner\fR
+LIST-owner-digest	\fBLIST/owner\fR
+LIST-digest-return-*	\fBLIST/bouncer\fR
+LIST-return-*	\fBLIST/bouncer\fR
+LIST-confirm-*	\fBLIST/confirmer\fR
+LIST-discard-*	\fBLIST/confirmer\fR
+LIST-accept-*	\fBLIST/moderator\fR
+LIST-reject-*	\fBLIST/moderator\fR
+LIST-*	\fBLIST/manager\fR
+.fi
+.RE
+.P
+If the optional
+.I list
+argument is present, it names the list, and
+.I $DEFAULT
+is only examined for what file is to control the delivery.  This can be
+used to have
+.B ezmlm-dispatch
+control the operations of a single list.
+.SH OPTIONS
+.TP
+.B -v
+Display
+.B ezmlm-dispatch
+version information.
+.TP
+.B -V
+Display
+.B ezmlm-dispatch
+version information.
+.SH RETURN VALUE
+.B ezmlm-dispatch
+exits with the first non-zero exit code from any of the programs it
+executes, or zero otherwise.
+.SH SEE ALSO
+ezmlm-make(1), ezmlm-manage(1), ezmlm-send(1)
+.SH CAVEATS
+For security reasons,
+.B ezmlm-dispatch
+does not allow delivery to any address with a "/" in it.  This will
+break subscribe (and similar) confirmations for senders that use email
+addresses with a "/" in them.
+.P
+In the case of
+.B ezmlm-dispatch
+handling a single list, it is not possible to use the
+.I .qmail-LIST-default
+file hand off control to the
+.B editor
+file for actual list delivery rather than administrative messages.  A
+second
+.I .qmail-LIST
+file will still be necessary in this case.
+.SH RESTRICTIONS
+.B ezmlm-dispatch
+does not support delivery to mbox files or maildirs.
+.P
+.B ezmlm-dispatch
+does not set
+.IR $EXT ,
+.IR $EXT2 ,
+.IR $EXT3 ,
+or
+.I $EXT4
+as
+.B qmail-local
+does when doing local deliveries.  None of the ezmlm programs use these
+environment variables.

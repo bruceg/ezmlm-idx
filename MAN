@@ -15,6 +15,7 @@ c:::644:/man1/:ezmlm-mktab.1:
 c:::644:/man1/:ezmlm-manage.1:
 c:::644:/man1/:ezmlm-moderate.1:
 c:::644:/man1/:ezmlm-confirm.1:
+c:::644:/man1/:ezmlm-dispatch.1:
 c:::644:/man1/:ezmlm-reject.1:
 c:::644:/man1/:ezmlm-request.1:
 c:::644:/man1/:ezmlm-return.1:

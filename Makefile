@@ -289,6 +289,24 @@ makehash.h fmt.h strerr.h errtxt.h idx.h idxthread.h sgetopt.h subgetopt.h \
 scan.h open.h
 	./compile ezmlm-archive.c
 
+ezmlm-dispatch: \
+load ezmlm-dispatch.o getopt.a strerr.a error.a env.a qmail.o substdio.a \
+seek.a wrap.a wait.a str.a alloc.a slurp.o slurpclose.o fmt_ulong.o \
+stralloc.a open.a fd.a auto_version.o auto_qmail.o
+	./load ezmlm-dispatch getopt.a strerr.a error.a env.a qmail.o \
+	substdio.a seek.a wrap.a wait.a str.a alloc.a slurp.o slurpclose.o \
+	fmt_ulong.o stralloc.a open.a fd.a auto_version.o auto_qmail.o
+
+ezmlm-dispatch.0: \
+ezmlm-dispatch.1
+	nroff -man ezmlm-dispatch.1 > ezmlm-dispatch.0
+
+ezmlm-dispatch.o: \
+compile ezmlm-dispatch.c env.h strerr.h sgetopt.h substdio.h subfd.h \
+errtxt.h error.h byte.h fmt.h str.h stralloc.h qmail.h seek.h wrap.h slurp.h \
+auto_version.h
+	./compile ezmlm-dispatch.c
+
 ezmlm-cgi: \
 load ezmlm-cgi.o getconf.o slurpclose.o slurp.o constmap.o getln.a sig.a \
 mime.a strerr.a substdio.a stralloc.a alloc.a error.a str.a fs.a open.a \
@@ -1091,12 +1109,12 @@ open.h byte.h case.h lock.h error.h subscribe.h strerr.h uint32.h fmt.h
 	./compile issub.c
 
 it: \
-symlinks ezmlm-idx ezmlm-accept ezmlm-archive ezmlm-check ezmlm-gate ezmlm-get \
-ezmlm-clean ezmlm-confirm ezmlm-glconf ezmlm-moderate ezmlm-store ezmlm-tstdig \
-ezmlm-make ezmlm-manage ezmlm-send ezmlm-reject ezmlm-return \
-ezmlm-warn ezmlm-weed ezmlm-list ezmlm-sub ezmlm-unsub ezmlm-cgi ezmlm-limit \
-ezmlm-issubn ezmlm-cron ezmlm-request ezmlm-test ezmlm-split ezmlmrc.all \
-ezmlmrc
+symlinks ezmlm-idx ezmlm-accept ezmlm-archive ezmlm-cgi ezmlm-check	 \
+ezmlm-cron ezmlm-dispatch ezmlm-gate ezmlm-get ezmlm-clean ezmlm-confirm \
+ezmlm-glconf ezmlm-issubn ezmlm-limit ezmlm-list ezmlm-make ezmlm-manage \
+ezmlm-moderate ezmlm-reject ezmlm-request ezmlm-return ezmlm-send	 \
+ezmlm-split ezmlm-store ezmlm-sub ezmlm-test ezmlm-tstdig ezmlm-unsub	 \
+ezmlm-warn ezmlm-weed ezmlmrc.all ezmlmrc
 
 load: \
 make-load warn-auto.sh systype
@@ -1166,7 +1184,7 @@ ezmlmsubrc.0 ezmlm-mktab.0 ezmlm-split.0 ezmlm-archive.0 ezmlm-cgi.0 \
 getopt.0 now.0 sgetopt.0 stralloc.0 subfd.0 subgetopt.0 substdio.0 \
 substdio_copy.0 substdio_in.0 substdio_out.0 surf.0 surfpcs.0 wait.0 \
 ezmlm-clean.0 ezmlm-moderate.0 ezmlm-store.0 ezmlm-request.0 ezmlmrc.0 \
-ezmlm-limit.0 ezmlm-confirm.0
+ezmlm-limit.0 ezmlm-confirm.0 ezmlm-dispatch.0
 
 mime.a: \
 makelib concatHDR.o decodeHDR.o unfoldHDR.o \
