@@ -7,6 +7,8 @@ VERSION
 alloc.c
 alloc.h
 alloc_re.c
+auto_bin.h
+auto_qmail.h
 byte.h
 byte_chr.c
 byte_copy.c
@@ -18,6 +20,11 @@ case.h
 case_diffb.c
 case_diffs.c
 case_lowerb.c
+conf-bin
+conf-cc
+conf-ld
+conf-man
+conf-qmail
 direntry.h1
 direntry.h2
 env.c
