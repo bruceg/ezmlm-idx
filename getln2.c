@@ -3,12 +3,8 @@
 #include "byte.h"
 #include "getln.h"
 
-int getln2(ss,sa,cont,clen,sep)
-register substdio *ss;
-register stralloc *sa;
-/*@out@*/char **cont;
-/*@out@*/unsigned int *clen;
-int sep;
+int getln2(substdio *ss,stralloc *sa,
+	   /*@out@*/char **cont,/*@out@*/unsigned int *clen,int sep)
 {
   register char *x;
   register unsigned int i;
