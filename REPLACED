@@ -89,3 +89,5 @@ trywaitp.c
 uint32.h1
 uint32.h2
 warn-auto.sh
+wait.h
+wait_pid.c

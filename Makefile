@@ -122,6 +122,12 @@ compile checktag.c stralloc.h scan.h fmt.h strerr.h cookie.h \
 	errtxt.h subscribe.h conf-sqlcc
 	./compile checktag.c ${SQLCC}
 
+choose: choose.sh warn-auto.sh
+	rm -f choose
+	cat warn-auto.sh choose.sh \
+	> choose
+	chmod 555 choose
+
 case_starts.o: \
 compile case_starts.c case.h
 	./compile case_starts.c
@@ -1064,6 +1070,9 @@ trysgact.c compile load
 	&& echo \#define HASSIGACTION 1 || exit 0 ) > hassgact.h
 	rm -f trysgact.o trysgact
 
+haswaitp.h: choose compile haswaitp.h1 haswaitp.h2 load trywaitp.c
+	./choose cl trywaitp haswaitp.h1 haswaitp.h2 > haswaitp.h
+
 install: \
 load install.o getln.a strerr.a substdio.a stralloc.a alloc.a open.a \
 error.a str.a fs.a
@@ -1548,7 +1557,7 @@ makelib wait_pid.o
 	./makelib wait.a wait_pid.o
 
 wait_pid.o: \
-compile wait_pid.c wait_pid.c wait_pid.c error.h wait_pid.c
+compile wait_pid.c wait_pid.c wait_pid.c error.h haswaitp.h
 	./compile wait_pid.c
 
 yyyymm.a: \

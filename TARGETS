@@ -24,6 +24,7 @@ case_lowerb.o
 case_startb.o
 case_starts.o
 checktag.o
+choose
 compile
 concatHDR.o
 constmap.o
@@ -132,6 +133,7 @@ getln2.o
 getopt.a
 hasflock.h
 hassgact.h
+haswaitp.h
 idxthread.o
 issub.o
 load

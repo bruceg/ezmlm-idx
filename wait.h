@@ -1,3 +1,5 @@
+/* Public domain, from daemontools-0.76. */
+
 #ifndef WAIT_H
 #define WAIT_H
 
