@@ -14,7 +14,7 @@
 #define ERR_READ "unable to read "
 #define ERR_READ_KEY "unable to read key"
 #define ERR_FLUSH "unable to flush "
-#define ERR_SEEK "unalble to seek "
+#define ERR_SEEK "unable to seek "
 #define ERR_SYNC "unable to sync "
 #define ERR_CHMOD "unable to chmod "
 #define ERR_STAT "unable to stat "
