@@ -86,7 +86,7 @@ WC='wc'
 WHOAMI='whoami'
 
 ###################### END CONFIRGRABLE ITEMS #########################
-if prompt | grep n > /dev/null 2>&1; then
+if ${ECHO} -n | grep n > /dev/null 2>&1; then
 	prompt() {
 		${ECHO} "$*\c"
 	}
