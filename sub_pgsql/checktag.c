@@ -18,18 +18,15 @@ static stralloc line = {0};
 static char strnum[FMT_ULONG];
 static char newcookie[COOKIE];
 
-const char *checktag (dir,num,listno,action,seed,hash)
+const char *checktag (const char *dir,		/* the db base dir */
+		      unsigned long num,	/* message number */
+		      unsigned long listno,	/* bottom of range => slave */
+		      const char *action,
+		      const char *seed,		/* cookie base */
+		      const char *hash)		/* cookie */
 /* reads dir/sql. If not present, returns success (NULL). If dir/sql is    */
 /* present, checks hash against the cookie table. If match, returns success*/
 /* (NULL), else returns "". If error, returns error string. */
-
-
-const char *dir;			/* the db base dir */
-unsigned long num;			/* message number */
-unsigned long listno;			/* bottom of range => slave */
-const char *action;
-const char *seed;			/* cookie base */
-const char *hash;			/* cookie */
 {
   PGresult *result;
   /*  int row; */

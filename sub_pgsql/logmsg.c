@@ -9,15 +9,14 @@
 static stralloc logline = {0};
 static char strnum[FMT_ULONG];
 
-const char *logmsg(dir,num,listno,subs,done)
+const char *logmsg(const char *dir,
+		   unsigned long num,
+		   unsigned long listno,
+		   unsigned long subs,
+		   int done)
 /* creates an entry for message num and the list listno and code "done". */
 /* Returns NULL on success, "" if dir/sql was not found, and the error   */
 /* string on error.   NOTE: This routine does nothing for non-sql lists! */
-const char *dir;
-unsigned long num;
-unsigned long listno;
-unsigned long subs;
-int done;
 {
   const char *table = (char *) 0;
   const char *ret;

@@ -15,7 +15,8 @@ static stralloc fn = {0};
 static stralloc ourdb = {0};
 static const char *ourtable = (char *) 0;
 
-const char *opensql(dbname,table)
+const char *opensql(const char *dbname,	/* database directory */
+		    const char **table)	/* table root_name */
 /* reads the file dbname/sql, and if the file exists, parses it into the    */
 /* components. The string should be host:port:user:pw:db:table.         If  */
 /* the file does not exists, returns "". On success returns NULL. On error  */
@@ -23,9 +24,6 @@ const char *opensql(dbname,table)
 /* left alone. If *table is not null, it overrides the table in the sql     */
 /* file. If we already opended dbname the cached info is used, rather than  */
 /* rereading the file. Note that myp is static and all pointers point to it.*/
-const char *dbname;	/* database directory */
-const char **table;	/* table root_name */
-
 {
   const char *host = (char *) 0;
   const char *port = (char *) 0;
@@ -103,11 +101,10 @@ const char **table;	/* table root_name */
   return (char *) 0;
 }
 
-void closesql()
+void closesql(void)
 /* close connection to SQL server, if open */
 {
   if (psql) PQfinish(psql);
   psql = (void *) 0; /* Destroy pointer */
   return;
 }
-
