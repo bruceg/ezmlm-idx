@@ -118,7 +118,7 @@ char textbuf[512];
 substdio sssub;
 char subbuf[512];
 
-void makehash(act)
+void makeacthash(act)
 stralloc *act;					/* has to be 0-terminated  */
 /* act is expected to be -reject-ddddd.ttttt or -accept-ddddd.ttttt        */
 /* The routine will add .hash@outhost to act. act will NOT be 0-terminated */
@@ -280,7 +280,7 @@ char **argv;
   if (!stralloc_cats(&action,flagconfirm?ACTION_DISCARD:ACTION_REJECT)) die_nomem();
   if (!stralloc_cat(&action,&fnbase)) die_nomem();
   if (!stralloc_0(&action)) die_nomem();
-  makehash(&action);
+  makeacthash(&action);
   if (!quote(&quoted,&outlocal)) die_nomem();
   if (!stralloc_copy(&reject,&quoted)) die_nomem();
   if (!stralloc_cat(&reject,&action)) die_nomem();
@@ -290,7 +290,7 @@ char **argv;
   if (!stralloc_cats(&action,flagconfirm?ACTION_CONFIRM:ACTION_ACCEPT)) die_nomem();
   if (!stralloc_cat(&action,&fnbase)) die_nomem();
   if (!stralloc_0(&action)) die_nomem();
-  makehash(&action);
+  makeacthash(&action);
   if (!stralloc_copy(&accept,&quoted)) die_nomem();
   if (!stralloc_cat(&accept,&action)) die_nomem();
   if (!stralloc_0(&accept)) die_nomem();
