@@ -448,17 +448,7 @@ void msg_headers()
     if (flaggoodfield)
       qmail_put(&qq,line.s,line.len);
   }
-  qmail_puts(&qq,"MIME-Version: 1.0\n");
-  if (flagcd) {
-    qmail_puts(&qq,"Content-Type: multipart/mixed; charset=");
-    qmail_puts(&qq,charset.s);
-    qmail_puts(&qq,";\n\tboundary=");
-    qmail_put(&qq,boundary,COOKIE);
-  } else {
-    qmail_puts(&qq,"Content-type: text/plain; charset=");
-    qmail_puts(&qq,charset.s);
-  }
-  qmail_puts(&qq,"\n");
+  hdr_mime(flagcd ? "multipart/mixed" : "text/plain");
 }
 
 int geton(action)

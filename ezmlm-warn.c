@@ -152,15 +152,10 @@ int flagw;
   qmail_puts(&qq,"\nTo: ");
   if (!quote2(&quoted,addr.s)) die_nomem();
   qmail_put(&qq,quoted.s,quoted.len);
-  if (flagcd) {			/* to accomodate transfer-encoding */
-    qmail_puts(&qq,"\nMIME-Version: 1.0\n");
-    qmail_puts(&qq,"Content-Type: multipart/mixed; boundary=");
-    qmail_put(&qq,boundary,COOKIE);
-  } else {
-    qmail_puts(&qq,"\nContent-type: text/plain; charset=");
-    qmail_puts(&qq,charset.s);
-  }
-  qmail_puts(&qq,flagw ? "\nSubject: ezmlm probe\n" : "\nSubject: ezmlm warning\n");
+  qmail_puts(&qq,"\n");
+  /* to accomodate transfer-encoding */
+  hdr_mime(flagcd ? "multipart/mixed" : "text/plain");
+  qmail_puts(&qq,flagw ? "Subject: ezmlm probe\n" : "\nSubject: ezmlm warning\n");
 
   if (flagcd) {			/* first part for QP/base64 multipart msg */
     qmail_puts(&qq,"\n\n--");

@@ -335,20 +335,13 @@ stralloc *subject;
 int factype;		/* action type (AC_THREAD, AC_GET, AC_DIGEST) */
 char format;		/* output format type (see idx.h) */
 {
-  qmail_puts(&qq,"MIME-Version: 1.0\n");
   switch(format) {
     case MIME:
     case VIRGIN:
     case NATIVE:
     case MIXED:
-        qmail_puts(&qq,"Content-Type: multipart/");
-        if (format == MIXED)
-	  qmail_puts(&qq,"mixed");
-        else
-          qmail_puts(&qq,"digest");
-	qmail_puts(&qq,"; boundary=");
-        qmail_put(&qq,boundary,COOKIE);
-	qmail_puts(&qq,"\nSubject: ");
+        hdr_mime((format == MIXED) ? "multipart/mixed" : "multipart/digest");
+	qmail_puts(&qq,"Subject: ");
 	qmail_put(&qq,subject->s,subject->len);
 	qmail_puts(&qq,"\n\n\n--");
         qmail_put(&qq,boundary,COOKIE);
@@ -358,12 +351,11 @@ char format;		/* output format type (see idx.h) */
         qmail_puts(&qq,"\n");
 	break;
     case RFC1153:
-	qmail_puts(&qq,"Content-type: text/plain; charset=");
-	qmail_puts(&qq,charset.s);
-	qmail_puts(&qq,"\nSubject: ");
+        hdr_mime("text/plain");
+	qmail_puts(&qq,"Subject: ");
 	qmail_put(&qq,subject->s,subject->len);
 	qmail_puts(&qq,"\n\n");
-	flagcd = '\0';	/* We make 8-bit messages, not QP/bas64 for rfc1153 */
+	flagcd = '\0';	/* We make 8-bit messages, not QP/base64 for rfc1153 */
         break;		/* Since messages themselves aren't encoded */
     }
     if (!stralloc_cats(subject,"\n\n")) die_nomem();

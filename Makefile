@@ -1030,8 +1030,9 @@ haswaitp.h: choose compile haswaitp.h1 haswaitp.h2 load trywaitp.c
 	./choose cl trywaitp haswaitp.h1 haswaitp.h2 > haswaitp.h
 
 hdr.a: \
-makelib hdr_ctboundary.o hdr_datemsgid.o hdr_transferenc.o
-	./makelib hdr.a hdr_ctboundary.o hdr_datemsgid.o hdr_transferenc.o
+makelib hdr_ctboundary.o hdr_datemsgid.o hdr_mime.o hdr_transferenc.o
+	./makelib hdr.a hdr_ctboundary.o hdr_datemsgid.o hdr_mime.o \
+	hdr_transferenc.o
 
 hdr_ctboundary.o: \
 compile hdr_ctboundary.c hdr.h qmail.h makehash.h stralloc.h
@@ -1041,6 +1042,10 @@ hdr_datemsgid.o: \
 compile hdr_datemsgid.c hdr.h qmail.h makehash.h stralloc.h datetime.h \
 fmt.h date822fmt.h
 	./compile hdr_datemsgid.c
+
+hdr_mime.o: \
+compile hdr_mime.c hdr.h qmail.h cookie.h stralloc.h
+	./compile hdr_mime.c
 
 hdr_transferenc.o: \
 compile hdr_transferenc.c hdr.h qmail.h

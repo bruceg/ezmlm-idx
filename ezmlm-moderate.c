@@ -366,10 +366,9 @@ char **argv;
       } else
         if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
       if (!stralloc_0(&charset)) die_nomem();
-      qmail_puts(&qq,"\nMIME-Version: 1.0\n");
-      qmail_puts(&qq,"Content-Type: multipart/mixed;\n\tboundary=");
-      qmail_put(&qq,boundary,COOKIE);
-      qmail_puts(&qq,"\n\n--");
+      qmail_puts(&qq,"\n");
+      hdr_mime("multipart/mixed");
+      qmail_puts(&qq,"\n--");
       qmail_put(&qq,boundary,COOKIE);
       qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
       qmail_puts(&qq,charset.s);

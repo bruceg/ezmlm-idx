@@ -353,7 +353,7 @@ char **argv;
   } else {
     qmail_puts(&qq,"\nTo: Recipient list not shown: ;");
   }
-  if (!stralloc_copys(&subject,"\nSubject: ")) die_nomem();
+  if (!stralloc_copys(&subject,"Subject: ")) die_nomem();
   if (flagconfirm) {
     if (confirmpost.len) {
       if (!stralloc_cat(&subject,&confirmpost)) die_nomem();
@@ -380,9 +380,8 @@ char **argv;
     } else
       if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
     if (!stralloc_0(&charset)) die_nomem();
-    qmail_puts(&qq,"\nMIME-Version: 1.0\n");
-    qmail_puts(&qq,"Content-Type: multipart/mixed;\n\tboundary=");
-    qmail_put(&qq,boundary,COOKIE);
+    qmail_puts(&qq,"\n");
+    hdr_mime("multipart/mixed");
     qmail_put(&qq,subject.s,subject.len);
     qmail_puts(&qq,"\n\n--");
     qmail_put(&qq,boundary,COOKIE);
