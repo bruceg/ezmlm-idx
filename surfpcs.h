@@ -13,8 +13,8 @@ typedef struct {
 
 #define SURFPCS_LEN 32
 
-extern void surfpcs_init();
-extern void surfpcs_add();
-extern void surfpcs_out();
+extern void surfpcs_init(surfpcs *s,const uint32 k[32]);
+extern void surfpcs_add(surfpcs *s,const unsigned char *x,unsigned int n);
+extern void surfpcs_out(surfpcs *s,unsigned char h[32]);
 
 #endif
