@@ -76,7 +76,7 @@ char **argv;
   if (argv[optind]) {
     while ((addr = argv[optind++]))
       (void) subscribe(dir,addr,0,"","-manual",flagmysql,
-		forcehash,(char *) 0,FATAL);
+		forcehash,(char *) 0);
   } else {
     for (;;) {
       if (getln(&ssin,&line,&match,'\n') == -1)
@@ -96,7 +96,7 @@ char **argv;
 	  *cp = '\0';
       }
       (void) subscribe(dir,line.s,0,"","-manual",flagmysql,
-		forcehash,(char *) 0,FATAL);
+		forcehash,(char *) 0);
     }
   }
   closesql();

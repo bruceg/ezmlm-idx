@@ -27,16 +27,14 @@ static stralloc fnnew = {0};
 static stralloc fn = {0};
 static stralloc fnlock = {0};
 
-void die_read(fatal)
-char *fatal;
+void die_read(void)
 {
-  strerr_die4sys(111,fatal,ERR_READ,fn.s,": ");
+  strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
 }
 
-void die_write(fatal)
-char *fatal;
+void die_write(void)
 {
-  strerr_die4sys(111,fatal,ERR_WRITE,fnnew.s,": ");
+  strerr_die4sys(111,FATAL,ERR_WRITE,fnnew.s,": ");
 }
 
 static int fd;
@@ -46,8 +44,14 @@ static int fdnew;
 static substdio ssnew;
 static char ssnewbuf[256];
 
-int subscribe(dbname,userhost,flagadd,comment,event,flagmysql,
-	forcehash,tab,fatal)
+int subscribe(const char *dbname,
+	      const char *userhost,
+	      int flagadd,
+	      const char *comment,
+	      const char *event,
+	      int flagmysql,
+	      int forcehash,
+	      const char *tab)
 /* add (flagadd=1) or remove (flagadd=0) userhost from the subscr. database  */
 /* dbname. Comment is e.g. the subscriber from line or name. It is added to  */
 /* the log. Event is the action type, e.g. "probe", "manual", etc. The       */
@@ -62,16 +66,6 @@ int subscribe(dbname,userhost,flagadd,comment,event,flagmysql,
 /* used for sublist addresses (to avoid removal) and sublist aliases (to     */
 /* prevent users from subscribing them (although the cookie mechanism would  */
 /* prevent the resulting duplicate message from being distributed. */
-
-const char *dbname;
-const char *userhost;
-int flagadd;
-const char *comment;
-const char *event;
-int flagmysql;
-int forcehash;
-const char *tab;
-const char *fatal;
 {
   int fdlock;
 
@@ -82,16 +76,16 @@ const char *fatal;
   int flagwasthere;
 
   if (userhost[str_chr(userhost,'\n')])
-    strerr_die2x(100,fatal,ERR_ADDR_NL);
+    strerr_die2x(100,FATAL,ERR_ADDR_NL);
 
     if (!stralloc_copys(&addr,"T")) die_nomem();
     if (!stralloc_cats(&addr,userhost)) die_nomem();
     if (addr.len > 401)
-      strerr_die2x(100,fatal,ERR_ADDR_LONG);
+      strerr_die2x(100,FATAL,ERR_ADDR_LONG);
 
     j = byte_rchr(addr.s,addr.len,'@');
     if (j == addr.len)
-      strerr_die2x(100,fatal,ERR_ADDR_AT);
+      strerr_die2x(100,FATAL,ERR_ADDR_AT);
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
     if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
     case_lowerb(lcaddr.s + 1,j - 1);	/* make all-lc version of address */
@@ -126,27 +120,27 @@ const char *fatal;
 
     fdlock = open_append(fnlock.s);
     if (fdlock == -1)
-      strerr_die4sys(111,fatal,ERR_OPEN,fnlock.s,": ");
+      strerr_die4sys(111,FATAL,ERR_OPEN,fnlock.s,": ");
     if (lock_ex(fdlock) == -1)
-      strerr_die4sys(111,fatal,ERR_OBTAIN,fnlock.s,": ");
+      strerr_die4sys(111,FATAL,ERR_OBTAIN,fnlock.s,": ");
 
 				/* do lower case hashed version first */
     fdnew = open_trunc(fnnew.s);
-    if (fdnew == -1) die_write(fatal);
+    if (fdnew == -1) die_write();
     substdio_fdbuf(&ssnew,write,fdnew,ssnewbuf,sizeof(ssnewbuf));
 
     flagwasthere = 0;
 
     fd = open_read(fn.s);
     if (fd == -1) {
-      if (errno != error_noent) { close(fdnew); die_read(fatal); }
+      if (errno != error_noent) { close(fdnew); die_read(); }
     }
     else {
       substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
 
       for (;;) {
         if (getln(&ss,&line,&match,'\0') == -1) {
-	  close(fd); close(fdnew); die_read(fatal);
+	  close(fd); close(fdnew); die_read();
         }
         if (!match) break;
         if (line.len == addr.len)
@@ -156,7 +150,7 @@ const char *fatal;
 	      continue;
 	  }
         if (substdio_bput(&ssnew,line.s,line.len) == -1) {
-	  close(fd); close(fdnew); die_write(fatal);
+	  close(fd); close(fdnew); die_write();
         }
       }
 
@@ -165,15 +159,15 @@ const char *fatal;
 
     if (flagadd && !flagwasthere)
       if (substdio_bput(&ssnew,addr.s,addr.len) == -1) {
-        close(fdnew); die_write(fatal);
+        close(fdnew); die_write();
       }
 
-    if (substdio_flush(&ssnew) == -1) { close(fdnew); die_write(fatal); }
-    if (fsync(fdnew) == -1) { close(fdnew); die_write(fatal); }
+    if (substdio_flush(&ssnew) == -1) { close(fdnew); die_write(); }
+    if (fsync(fdnew) == -1) { close(fdnew); die_write(); }
     close(fdnew);
 
     if (rename(fnnew.s,fn.s) == -1)
-      strerr_die6sys(111,fatal,ERR_MOVE,fnnew.s," to ",fn.s,": ");
+      strerr_die6sys(111,FATAL,ERR_MOVE,fnnew.s," to ",fn.s,": ");
 
     if ((ch == lcch) || flagwasthere) {
       close(fdlock);
@@ -192,18 +186,18 @@ const char *fatal;
     fn.s[fn.len - 2] = ch;
     fnnew.s[fnnew.len - 3] = ch;
     fdnew = open_trunc(fnnew.s);
-    if (fdnew == -1) die_write(fatal);
+    if (fdnew == -1) die_write();
     substdio_fdbuf(&ssnew,write,fdnew,ssnewbuf,sizeof(ssnewbuf));
 
     fd = open_read(fn.s);
     if (fd == -1) {
-      if (errno != error_noent) { close(fdnew); die_read(fatal); }
+      if (errno != error_noent) { close(fdnew); die_read(); }
     } else {
       substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
 
       for (;;) {
         if (getln(&ss,&line,&match,'\0') == -1)
-          { close(fd); close(fdnew); die_read(fatal); }
+          { close(fd); close(fdnew); die_read(); }
         if (!match) break;
         if (line.len == addr.len)
           if (!case_diffb(line.s,line.len,addr.s)) {
@@ -211,18 +205,18 @@ const char *fatal;
             continue;	/* always want to remove from case-sensitive hash */
           }
         if (substdio_bput(&ssnew,line.s,line.len) == -1)
-          { close(fd); close(fdnew); die_write(fatal); }
+          { close(fd); close(fdnew); die_write(); }
       }
 
       close(fd);
     }
 
-    if (substdio_flush(&ssnew) == -1) { close(fdnew); die_write(fatal); }
-    if (fsync(fdnew) == -1) { close(fdnew); die_write(fatal); }
+    if (substdio_flush(&ssnew) == -1) { close(fdnew); die_write(); }
+    if (fsync(fdnew) == -1) { close(fdnew); die_write(); }
     close(fdnew);
 
     if (rename(fnnew.s,fn.s) == -1)
-      strerr_die6sys(111,fatal,ERR_MOVE,fnnew.s," to ",fn.s,": ");
+      strerr_die6sys(111,FATAL,ERR_MOVE,fnnew.s," to ",fn.s,": ");
 
     close(fdlock);
     if (flagadd ^ flagwasthere) {

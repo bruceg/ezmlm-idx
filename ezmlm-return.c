@@ -93,7 +93,7 @@ stralloc *bounce;
   unsigned int wpos;
   unsigned long wdir,wfile;
 
-  if (!issub(workdir,addr,(char *) 0,FATAL)) return;
+  if (!issub(workdir,addr,(char *) 0)) return;
 
   if (!stralloc_copys(&fndate,workdir)) die_nomem();
   if (!stralloc_cats(&fndate,"/bounce/d")) die_nomem();
@@ -145,7 +145,7 @@ stralloc *bounce;
   unsigned int pos;
   unsigned long ddir,dfile;
 
-  if (!issub(workdir,addr,(char *) 0,FATAL)) return;
+  if (!issub(workdir,addr,(char *) 0)) return;
 
   if (!stralloc_copys(&fndate,workdir)) die_nomem();
   if (!stralloc_cats(&fndate,"/bounce/d")) die_nomem();
@@ -358,7 +358,7 @@ char **argv;
       cookie(hash,key.s,key.len,strnum,line.s,"P");
       if (byte_diff(hash,COOKIE,hashcopy)) die_trash();
 
-      (void) subscribe(workdir,line.s,0,"","-probe",1,-1,(char *) 0,FATAL);
+      (void) subscribe(workdir,line.s,0,"","-probe",1,-1,(char *) 0);
       _exit(99);
     }
 

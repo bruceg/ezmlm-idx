@@ -220,15 +220,15 @@ char **argv;
     if (chdir(dir) == -1)
       strerr_die4x(111,FATAL,ERR_SWITCH,dir,": ");
     flagparsemime = 1;		/* only if dir do we have mimeremove/reject */
-    if (getconf_line(&line,"msgsize",0,FATAL,dir)) {
+    if (getconf_line(&line,"msgsize",0,dir)) {
       if (!stralloc_0(&line)) die_nomem();
       len = scan_ulong(line.s,&maxmsgsize);
       if (line.s[len] == ':')
         scan_ulong(line.s+len+1,&minmsgsize);
     }
     if (!flagtook || flagforward) {
-      getconf_line(&outlocal,"outlocal",1,FATAL,dir);
-      getconf_line(&outhost,"outhost",1,FATAL,dir);
+      getconf_line(&outlocal,"outlocal",1,dir);
+      getconf_line(&outhost,"outhost",1,dir);
     }
     if (flagforward) {
       if (!stralloc_copys(&mydtline,"Delivered-To: command forwarder for "))
@@ -250,14 +250,14 @@ char **argv;
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
   if (flagparsemime) {		/* set up MIME parsing */
-    getconf(&mimeremove,"mimeremove",0,FATAL,dir);
+    getconf(&mimeremove,"mimeremove",0,dir);
       constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0);
-    getconf(&mimereject,"mimereject",0,FATAL,dir);
+    getconf(&mimereject,"mimereject",0,dir);
       constmap_init(&mimerejectmap,mimereject.s,mimereject.len,0);
   }
   if (flagheaderreject) {
     if (!dir) die_usage();
-    getconf(&headerreject,"headerreject",1,FATAL,dir);
+    getconf(&headerreject,"headerreject",1,dir);
     constmap_init(&headerrejectmap,headerreject.s,headerreject.len,0);
   }
   for (;;) {

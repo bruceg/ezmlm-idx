@@ -1354,7 +1354,7 @@ void start_message_page(struct msginfo *infop)
 	die_nomem();
   if (!stralloc_cats(&decline,":")) die_nomem();
   if (!stralloc_0(&decline)) die_nomem();
-  decodeHDR(hdr[HDR_SUBJECT - 1].s,hdr[HDR_SUBJECT - 1].len,&line,"",FATAL);
+  decodeHDR(hdr[HDR_SUBJECT - 1].s,hdr[HDR_SUBJECT - 1].len,&line,"");
   if (!mime_current)
     new_mime();			/* allocate */
   else
@@ -1431,7 +1431,7 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 	    oputs("<EM>");
 	    oputs(constmap_get(&headermap,i + 1));
 	    oputs(":</EM>");
-	    decodeHDR(hdr[i].s,hdr[i].len,&line,"",FATAL);
+	    decodeHDR(hdr[i].s,hdr[i].len,&line,"");
 	    if (i == HDR_SUBJECT - 1 && flagtoplevel) {
 	      oputs("<A class=relk href=\"mailto:");
 	      oputs(local);
@@ -1445,10 +1445,10 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 	      int k;
 	      oputs(" ");
 	      k = author_name(&cp,line.s,line.len);
-	      decodeHDR(cp,k,&decline,"",FATAL);
+	      decodeHDR(cp,k,&decline,"");
 	      html_put(decline.s,decline.len);
 	    } else {
-	      decodeHDR(hdr[i].s,hdr[i].len,&decline,"",FATAL);
+	      decodeHDR(hdr[i].s,hdr[i].len,&decline,"");
               html_put(decline.s,decline.len - 1);
 	    }
 	    if (i == HDR_SUBJECT - 1 && flagtoplevel)
@@ -1526,9 +1526,9 @@ void show_part(struct msginfo *infop,int flagshowheaders,
       if (flaggoodfield) {
 	if (mime_current->ctenc) {
 	  if (mime_current->ctenc == CTENC_QP)
-	    decodeQ(line.s,line.len,&decline,FATAL);
+	    decodeQ(line.s,line.len,&decline);
 	  else
-	    decodeB(line.s,line.len,&decline,FATAL);
+	    decodeB(line.s,line.len,&decline);
 	  if (decline.s[decline.len - 1] == '\n') {	/* complete line */
 	    if (!stralloc_copy(&line,&decline)) die_nomem();
 	    decline.len = 0;
@@ -1826,7 +1826,7 @@ void date2msg(struct msginfo *infop)
 
 void findlastmsg(struct msginfo *infop)
 {
-  if (!getconf_line(&line,"num",0,dir,FATAL))
+  if (!getconf_line(&line,"num",0,dir))
     cgierr("Sorry, there are no messages in the archive","","");
   if (!stralloc_0(&line)) die_nomem();
   (void) scan_ulong(line.s,&(infop->target));

@@ -8,8 +8,7 @@
 
 static const char hexchar[16] = "0123456789ABCDEF";
 
-void encodeQ(const char *indata,unsigned int n,stralloc *outdata,
-	     const char *fatal)
+void encodeQ(const char *indata,unsigned int n,stralloc *outdata)
 	/* converts any character with the high order bit set to */
 	/* quoted printable. In: n chars of indata, out: stralloc outdata*/
 {

@@ -90,14 +90,14 @@ char **argv;
 
   if (argv[optind])
     die_usage();	/* avoid common error of putting options after dir */
-  if (!getconf_line(&line,"num",0,FATAL,dir))
+  if (!getconf_line(&line,"num",0,dir))
     _exit(99);		/* no msgs no shirt -> no digest */
   if(!stralloc_0(&line)) die_nomem();
   pos = scan_ulong(line.s,&num);
   if (line.s[pos] == ':')
     scan_ulong(line.s+pos+1,&cumsize);
 
-  if (getconf_line(&line,"dignum",0,FATAL,dir)) {
+  if (getconf_line(&line,"dignum",0,dir)) {
     if(!stralloc_0(&line)) die_nomem();
     pos = scan_ulong(line.s,&dignum);
     if (line.s[pos] == ':')
@@ -135,7 +135,7 @@ char **argv;
         close(fdlock);
         strerr_die2sys(111,FATAL,ERR_OBTAIN_LOCK);
       }
-      getconf_line(&line,"tstdig",0,dir,FATAL);
+      getconf_line(&line,"tstdig",0,dir);
       if (!stralloc_0(&line)) die_nomem();
       scan_ulong(line.s,&tsttime);	/* give digest 1 h to complete */
 					/* nobody does digests more often */

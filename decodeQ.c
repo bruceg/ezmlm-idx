@@ -24,8 +24,7 @@ static const char char16table[128] = {
 
 #define char16enc(c)  (((c) & 0x80) ? -1 : char16table[(int)(c)])
 
-void decodeQ(const char *cpfrom,unsigned int n,stralloc *outdata,
-	     const char *fatal)
+void decodeQ(const char *cpfrom,unsigned int n,stralloc *outdata)
 /* does Q decoding of the string pointed to by cpfrom up to the character */
 /* before the one pointed to by cpnext, and appends the results to outdata */
 {

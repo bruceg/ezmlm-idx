@@ -209,8 +209,8 @@ char **argv;
   if (chdir(dir) == -1)
     strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
 
-  getconf_line(&outhost,"outhost",1,FATAL,dir);
-  getconf_line(&outlocal,"outlocal",1,FATAL,dir);
+  getconf_line(&outhost,"outhost",1,dir);
+  getconf_line(&outlocal,"outlocal",1,dir);
 
   if (flagdo) {
     sender = env_get("SENDER");

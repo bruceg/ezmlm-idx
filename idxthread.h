@@ -11,8 +11,7 @@ extern void idx_mkthread(msgentry **pmsgtable,
 			 unsigned long msg_to,
 			 unsigned long msg_master,
 			 unsigned long msg_latest,
-			 int locked,
-			 const char *fatal);
+			 int locked);
 extern void idx_mkthreads(msgentry **pmsgtable,
 			  subentry **psubtable,
 			  authentry **pauthtable,
@@ -20,14 +19,12 @@ extern void idx_mkthreads(msgentry **pmsgtable,
 			  unsigned long msg_from,
 			  unsigned long msg_to,
 			  unsigned long msg_latest,
-			  int locked,
-			  const char *fatal);
+			  int locked);
 extern void idx_mklist(msgentry **pmsgtable,
 		       subentry **psubtable,
 		       authentry **pauthtable,
 		       unsigned long msg_from,
-		       unsigned long msg_to,
-		       const char *fatal);
+		       unsigned long msg_to);
 extern void idx_destroythread(msgentry *msgtable,
 			      subentry *subtable,
 			      authentry *authtable);

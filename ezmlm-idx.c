@@ -174,9 +174,9 @@ unsigned int pos,pos1;
   }
 
   if (foundsubject) {
-    concatHDR(subject.s,subject.len,&lines,FATAL);	/* make 1 line */
-    decodeHDR(lines.s,lines.len,&line,charset.s,FATAL);	/* decode mime */
-    r= unfoldHDR(line.s,line.len,&subject,charset.s,&prefix,1,FATAL);
+    concatHDR(subject.s,subject.len,&lines);	/* make 1 line */
+    decodeHDR(lines.s,lines.len,&line,charset.s);	/* decode mime */
+    r= unfoldHDR(line.s,line.len,&subject,charset.s,&prefix,1);
 						 /* trim mime */
   }
   else {
@@ -220,13 +220,13 @@ char **argv;
   if (lock_ex(fdlock) == -1)
     strerr_die2sys(100,FATAL,ERR_OBTAIN_LOCK);
 
-  getconf_line(&charset,"charset",0,FATAL,dir);
+  getconf_line(&charset,"charset",0,dir);
   if (!stralloc_0(&charset)) die_nomem();
 
-  getconf_line(&prefix,"prefix",0,FATAL,dir);
+  getconf_line(&prefix,"prefix",0,dir);
 					/* support rfc2047-encoded prefix */
-  decodeHDR(prefix.s,prefix.len,&line,charset.s,FATAL);
-  unfoldHDR(line.s,line.len,&prefix,charset.s,&dummy,0,FATAL);
+  decodeHDR(prefix.s,prefix.len,&line,charset.s);
+  unfoldHDR(line.s,line.len,&prefix,charset.s,&dummy,0);
 					/* need only decoded one */
 
 			/* Get message number */
@@ -303,14 +303,14 @@ char **argv;
       if (!stralloc_cat(&line,&received)) die_nomem();
       if (!stralloc_cats(&line,";")) die_nomem();
 
-      concatHDR(author.s,author.len,&lines,FATAL);
+      concatHDR(author.s,author.len,&lines);
       mkauthhash(lines.s,lines.len,hash);
       if (!stralloc_catb(&line,hash,HASHLEN)) die_nomem();
 
       k = author_name(&cp,lines.s,lines.len);
-      decodeHDR(cp,k,&author,charset.s,FATAL);
+      decodeHDR(cp,k,&author,charset.s);
 
-      (void) unfoldHDR(author.s,author.len,&lines,charset.s,&prefix,0,FATAL);
+      (void) unfoldHDR(author.s,author.len,&lines,charset.s,&prefix,0);
 
       if (!stralloc_cats(&line," ")) die_nomem();
       if (!stralloc_cat(&line,&lines)) die_nomem();

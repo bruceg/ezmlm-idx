@@ -17,23 +17,20 @@ static stralloc key = {0};
 static char hash[COOKIE];
 static char strnum[FMT_ULONG];	/* message number as sz */
 
-void tagmsg(dir,msgnum,seed,action,hashout,bodysize,chunk,fatal)
+void tagmsg(const char *dir,		/* db base dir */
+	    unsigned long msgnum,	/* number of this message */
+	    const char *seed,		/* seed. NULL ok, but less entropy */
+	    const char *action,	/* to make it certain the cookie differs from*/
+				/* one used for a digest */
+	    char *hashout,		/* calculated hash goes here */
+	    unsigned long bodysize,
+	    unsigned long chunk)
 /* This routine creates a cookie from num,seed and the */
 /* list key and returns that cookie in hashout. The use of sender/num and */
 /* first char of action is used to make cookie differ between messages,   */
 /* the key is the secret list key. The cookie will be inserted into       */
 /* table_cookie where table and other data is taken from dir/sql. We log  */
 /* arrival of the message (done=0). */
-
-const char *dir;		/* db base dir */
-unsigned long msgnum;		/* number of this message */
-const char *seed;		/* seed. NULL ok, but less entropy */
-const char *action;		/* to make it certain the cookie differs from*/
-				/* one used for a digest */
-char *hashout;			/* calculated hash goes here */
-unsigned long bodysize;
-unsigned long chunk;
-const char *fatal;
 {
   PGresult *result;
   PGresult *result2; /* Need for dupicate check */
@@ -45,16 +42,16 @@ const char *fatal;
 
     switch(slurp("key",&key,32)) {
       case -1:
-	strerr_die3sys(111,fatal,ERR_READ,"key: ");
+	strerr_die3sys(111,FATAL,ERR_READ,"key: ");
       case 0:
-	strerr_die3x(100,fatal,"key",ERR_NOEXIST);
+	strerr_die3x(100,FATAL,"key",ERR_NOEXIST);
     }
     cookie(hash,key.s,key.len,strnum,seed,action);
     for (i = 0; i < COOKIE; i++)
       hashout[i] = hash[i];
 
   if ((ret = opensql(dir,&table))) {
-    if (*ret) strerr_die2x(111,fatal,ret);
+    if (*ret) strerr_die2x(111,FATAL,ret);
     return;				/* no sql => success */
 
   } else {
@@ -80,7 +77,7 @@ const char *fatal;
     if (!stralloc_0(&line)) die_nomem();
     result = PQexec(psql,line.s);
     if (result == NULL)
-      strerr_die2x(111,fatal,PQerrorMessage(psql));
+      strerr_die2x(111,FATAL,PQerrorMessage(psql));
     if (PQresultStatus(result) != PGRES_COMMAND_OK) { /* Possible tuplicate */
       if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
       if (!stralloc_cats(&line,table)) die_nomem();	  
@@ -91,18 +88,18 @@ const char *fatal;
       if (!stralloc_0(&line)) die_nomem();
       result2 = PQexec(psql,line.s);
       if (result2 == NULL)
-	strerr_die2x(111,fatal,PQerrorMessage(psql));
+	strerr_die2x(111,FATAL,PQerrorMessage(psql));
       if (PQresultStatus(result2) != PGRES_TUPLES_OK)
-	strerr_die2x(111,fatal,PQresultErrorMessage(result2));
+	strerr_die2x(111,FATAL,PQresultErrorMessage(result2));
       /* No duplicate, return ERROR from first query */
       if (PQntuples(result2)<1) 
-	strerr_die2x(111,fatal,PQresultErrorMessage(result));
+	strerr_die2x(111,FATAL,PQresultErrorMessage(result));
       PQclear(result2);
     }
     PQclear(result);
 
     if (! (ret = logmsg(dir,msgnum,0L,0L,1))) return;	/* log done=1*/
-    if (*ret) strerr_die2x(111,fatal,ret);
+    if (*ret) strerr_die2x(111,FATAL,ret);
   }
 
   return;

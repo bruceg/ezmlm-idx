@@ -22,12 +22,12 @@ char strnum[FMT_ULONG];
 
 void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_write()
+void die_write(void)
 {
   strerr_die3sys(111,FATAL,ERR_WRITE,"stdout: ");
 }
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-list: usage: ezmlm-list [-mMnNvV] dir");
 }
@@ -80,12 +80,12 @@ char **argv;
     strerr_die2x(100,FATAL,ERR_SLASH);
 
   if (flagnumber) {
-    n = putsubs(dir,0L,52L,dummywrite,flagmysql,FATAL);
-    if (substdio_put(&ssout,strnum,fmt_ulong(strnum,n)) == -1) die_write(FATAL);
-    if (substdio_put(&ssout,"\n",1) == -1) die_write(FATAL);
+    n = putsubs(dir,0L,52L,dummywrite,flagmysql);
+    if (substdio_put(&ssout,strnum,fmt_ulong(strnum,n)) == -1) die_write();
+    if (substdio_put(&ssout,"\n",1) == -1) die_write();
   } else
-    (void) putsubs(dir,0L,52L,subwrite,flagmysql,FATAL);
-  if (substdio_flush(&ssout) == -1) die_write(FATAL);
+    (void) putsubs(dir,0L,52L,subwrite,flagmysql);
+  if (substdio_flush(&ssout) == -1) die_write();
   closesql();
   _exit(0);
 }

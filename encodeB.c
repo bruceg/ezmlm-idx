@@ -58,8 +58,7 @@ static void dorest(void)
 }   
 
 void encodeB(const unsigned char *indata,unsigned int n,stralloc *outdata,
-	     int control,	/* 1 = init, 2 = flush */
-	     const char *fatal)
+	     int control)	/* 1 = init, 2 = flush */
 	/* converts any character with the high order bit set to */
 	/* base64. In: n chars of indata, out: stralloc outdata  */
 	/* as '=' is not allowed within the block, we cannot flush after */

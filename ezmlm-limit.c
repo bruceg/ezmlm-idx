@@ -90,7 +90,7 @@ char **argv;
 
   if (argv[optind])
     die_usage();	/* avoid common error of putting options after dir */
-  if ((flagmod = getconf_line(&line,"modpost",0,FATAL,dir)))
+  if ((flagmod = getconf_line(&line,"modpost",0,dir)))
     _exit(0);		/* already mod */
 			/* lock for num and for writing loopnum */
   fdlock = open_append("lock");
@@ -99,11 +99,11 @@ char **argv;
   if (lock_ex(fdlock) == -1)
     strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/lock: ");
 
-  if (!getconf_line(&line,"num",0,FATAL,dir))
+  if (!getconf_line(&line,"num",0,dir))
     _exit(99);						/* no msgs */
   if(!stralloc_0(&line)) die_nomem();
   pos = scan_ulong(line.s,&num);			/* current msg */
-  if ((flagloop = getconf_line(&line,fn,0,FATAL,dir))) {
+  if ((flagloop = getconf_line(&line,fn,0,dir))) {
     if(!stralloc_0(&line)) die_nomem();
     pos = scan_ulong(line.s,&loopnum);			/* msg when written */
     if (line.s[pos] == ':')

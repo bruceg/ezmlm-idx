@@ -3,14 +3,14 @@
 
 #include "stralloc.h"
 
-extern void decodeQ(const char *,unsigned int,stralloc *,const char *);
-extern void decodeB(const char *,unsigned int,stralloc *,const char *);
-extern void encodeQ(const char *,unsigned int,stralloc *,const char *);
-extern void encodeB(const unsigned char *,unsigned int,stralloc *,int,const char *);
-extern void decodeHDR(const char *,unsigned int,stralloc *,const char *,const char *);
-extern void concatHDR(char *,unsigned int,stralloc *,const char *);
+extern void decodeQ(const char *,unsigned int,stralloc *);
+extern void decodeB(const char *,unsigned int,stralloc *);
+extern void encodeQ(const char *,unsigned int,stralloc *);
+extern void encodeB(const unsigned char *,unsigned int,stralloc *,int);
+extern void decodeHDR(const char *,unsigned int,stralloc *,const char *);
+extern void concatHDR(char *,unsigned int,stralloc *);
 extern int unfoldHDR(char *,unsigned int,stralloc *,const char *,
-		     stralloc *,int,const char *);
+		     stralloc *,int);
 
 extern unsigned int author_name(char **,char *,unsigned int);
 

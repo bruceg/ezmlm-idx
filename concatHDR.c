@@ -10,8 +10,7 @@
 
 void concatHDR(char *indata,
 	       unsigned int n,
-	       stralloc *outdata,
-	       const char *fatal)
+	       stralloc *outdata)
 /* takes a concatenated string of line and continuation line, trims leading */
 /* and trailing LWSP and collapses line breaks and surrounding LWSP to ' '. */
 /* indata has to end in \n or \0 or this routine will write beyond indata!  */

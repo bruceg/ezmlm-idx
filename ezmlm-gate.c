@@ -127,7 +127,7 @@ char **argv;
   pmod = (char *) 0;
 
   if (queryext) {
-    getconf(&cmds,queryext,1,FATAL,dir);
+    getconf(&cmds,queryext,1,dir);
     i = 0;
     for (j = 0;j < cmds.len; ++j)
       if (!cmds.s[j]) {
@@ -149,7 +149,7 @@ char **argv;
   if (moddir && !ret) {			/* if exit 0 and moddir, add issub */
     pmod = (char *) 0;
     while (moddir && !pmod && sender) {
-      pmod = issub(moddir,sender,(char *)0,FATAL);
+      pmod = issub(moddir,sender,(char *)0);
       closesql();
       moddir = argv[optind++];
     }

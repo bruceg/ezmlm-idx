@@ -199,8 +199,8 @@ char **argv;
   local = env_get("LOCAL");
   if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
-  getconf_line(&outhost,"outhost",1,FATAL,dir);
-  getconf_line(&outlocal,"outlocal",1,FATAL,dir);
+  getconf_line(&outhost,"outhost",1,dir);
+  getconf_line(&outlocal,"outlocal",1,dir);
   workdir = dir;
   /* now see if -digest-return- */
   if (flagdig == 1) {

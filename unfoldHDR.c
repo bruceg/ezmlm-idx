@@ -10,12 +10,7 @@
 
 static stralloc tmpdata = {0};
 
-static int trimre(cpp,cpend,prefix,fatal)
-char **cpp;
-char *cpend;
-stralloc *prefix;
-char *fatal;
-
+static int trimre(char **cpp,char *cpend,stralloc *prefix)
 {
   int r = 0;
   char *cp;
@@ -99,10 +94,7 @@ char *fatal;
   return r;
 }
 
-static int trimend(indata,np,fatal)
-char *indata;
-unsigned int *np;
-const char *fatal;
+static int trimend(char *indata,unsigned int *np)
 	/* looks at indata of length n from the end removing LWSP & '\n' */
 	/* and any trailing '-Reply'. Sets n to new length and returns:  */
 	/* 0 - not reply, 1 - reply. */
@@ -135,8 +127,7 @@ int unfoldHDR(char *indata,
 	      stralloc *outdata,
 	      const char *charset,
 	      stralloc *prefix,
-	      int flagtrimsub,
-	      const char *fatal)
+	      int flagtrimsub)
 	/* takes a header as indata. Removal of reply-indicators is done */
 	/* but removal of line breaks and Q and B decoding should have   */
 	/* been done. Returns a */
@@ -220,7 +211,7 @@ int unfoldHDR(char *indata,
     if (reg != 6) {	/* need to return to us-ascii at the end of the line */
       if (!stralloc_cats(&tmpdata,TOASCII)) die_nomem();
     } else {		/* maybe "-Reply at the end?" */
-      r = trimend(tmpdata.s,&(tmpdata.len),fatal);
+      r = trimend(tmpdata.s,&(tmpdata.len));
     }
 
   } else if (!case_diffb(charset,11,"iso-2022-cn") ||
@@ -272,10 +263,10 @@ int unfoldHDR(char *indata,
     if (state != SI)	/* need to end in ascii */
       if (!stralloc_cats(&tmpdata,TOSI)) die_nomem();
     else		/* ascii end; maybe "-Reply" at the end? */
-      r = trimend(tmpdata.s,&(tmpdata.len),fatal);
+      r = trimend(tmpdata.s,&(tmpdata.len));
 
   } else {		/* other character sets = no special treatment */
-    r = trimend(cp,&n,fatal);		/* -reply */
+    r = trimend(cp,&n);		/* -reply */
     if (!stralloc_copyb(&tmpdata,cp,n)) die_nomem();
   }
 
@@ -283,7 +274,7 @@ int unfoldHDR(char *indata,
   n = tmpdata.len;
   cpend = cp + n - 1;
   if (flagtrimsub) {	 /* remove leading reply indicators & prefix*/
-    r |= trimre(&cp,cpend,prefix,fatal);
+    r |= trimre(&cp,cpend,prefix);
     n = (unsigned int) (cpend-cp+1);
   }
 			/* there shouldn't be '\0' or '\n', but make sure as */

@@ -96,9 +96,9 @@ unsigned int n;
       qmail_put(&qq,s,n);
     else {
       if (flagcd == 'B')
-        encodeB(s,n,&qline,0,FATAL);
+        encodeB(s,n,&qline,0);
       else
-        encodeQ(s,n,&qline,FATAL);
+        encodeQ(s,n,&qline);
       qmail_put(&qq,qline.s,qline.len);
     }
 }
@@ -252,9 +252,9 @@ char **argv;
     case 0:
       strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
   }
-  getconf_line(&mailinglist,"mailinglist",1,FATAL,dir);
-  getconf_line(&outhost,"outhost",1,FATAL,dir);
-  getconf_line(&outlocal,"outlocal",1,FATAL,dir);
+  getconf_line(&mailinglist,"mailinglist",1,dir);
+  getconf_line(&outhost,"outhost",1,dir);
+  getconf_line(&outlocal,"outlocal",1,dir);
   set_cpoutlocal(&outlocal);	/* for copy() */
   set_cpouthost(&outhost);	/* for copy() */
 
@@ -326,7 +326,7 @@ char **argv;
     maketo();			/* extract SENDER from return-path */
 						/* Build message */
     hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
-    if(getconf_line(&line,"listid",0,FATAL,dir))
+    if(getconf_line(&line,"listid",0,dir))
       hdr_add2("List-ID: ",line.s,line.len);
     hdr_datemsgid(when);
     hdr_from("-owner");
@@ -340,7 +340,7 @@ char **argv;
     qmail_put(&qq,outhost.s,outhost.len);
 
     if (flagmime) {
-      if (getconf_line(&charset,"charset",0,FATAL,dir)) {
+      if (getconf_line(&charset,"charset",0,dir)) {
         if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
           if (charset.s[charset.len - 1] == 'B' ||
 		charset.s[charset.len - 1] == 'Q') {
@@ -357,8 +357,8 @@ char **argv;
       hdr_ctype(CTYPE_TEXT);
       hdr_transferenc();
     }
-    copy(&qq,"text/top",flagcd,FATAL);
-    copy(&qq,"text/mod-reject",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
+    copy(&qq,"text/mod-reject",flagcd);
 
     flagcomment = 0;
     flaginheader = 1;
@@ -384,9 +384,9 @@ char **argv;
     }	/* got body */
     if (encin) {
       if (encin == 'B')
-        decodeB(text.s,text.len,&line,FATAL);
+        decodeB(text.s,text.len,&line);
       else
-        decodeQ(text.s,text.len,&line,FATAL);
+        decodeQ(text.s,text.len,&line);
       if (!stralloc_copy(&text,&line)) die_nomem();
     }
     cp = text.s;
@@ -435,7 +435,7 @@ char **argv;
       code_qput(line.s,line.len);
     }
     if (flagcd == 'B') {
-      encodeB("",0,&line,2,FATAL);
+      encodeB("",0,&line,2);
       qmail_put(&qq,line.s,line.len);
     }
     if (flagmime) {

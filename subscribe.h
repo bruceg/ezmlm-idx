@@ -17,20 +17,17 @@ extern int subscribe(const char *dir,
 		     const char *event,
 		     int flagmysql,
 		     int forcehash,
-		     const char *table_override,
-		     const char *FATAL);
+		     const char *table_override);
 
 extern const char *issub(const char *dir,
 			 const char *username,
-			 const char *table_override,
-			 const char *FATAL);
+			 const char *table_override);
 
 extern unsigned long putsubs(const char *dir,
 			     unsigned long hash_lo,
 			     unsigned long hash_hi,
 			     int subwrite(),
-			     int flagsql,
-			     const char *fatal);
+			     int flagsql);
 
 /*		int subwrite(char *string, unsigned int length); */
 
@@ -40,8 +37,7 @@ extern void tagmsg(const char *dir,
 		   const char *action,
 		   char *hashout,
 		   unsigned long bodysize,
-		   unsigned long chunk,
-		   const char *fatal);
+		   unsigned long chunk);
 
 extern const char *logmsg(const char *dir,
 			  unsigned long msgnum,
@@ -58,12 +54,12 @@ extern const char *checktag(const char *dir,
 
 extern void searchlog(const char *dir,
 		      char *search,
-		      int subwrite(),
-		      const char *fatal);
+		      int subwrite());
 
 extern const char *opensql(const char *dir,const char **table);
 
 extern void closesql(void);
 
 extern void *psql;		/* contains SQL handle */
+
 #endif

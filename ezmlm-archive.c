@@ -426,7 +426,7 @@ char **argv;
     strerr_die2sys(111,FATAL,ERR_OBTAIN_LOCK);
   }
 					/* get num */
-  if (!getconf_line(&num,"num",0,FATAL,dir))
+  if (!getconf_line(&num,"num",0,dir))
     strerr_die1x(100,ERR_EMPTY_LIST);
   (void) close(fdlock);
 
@@ -442,7 +442,7 @@ char **argv;
     strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/archive/lock: ");
   }
   if (!flagcreate && !archnum) {	/* adjust archnum (from) / to */
-    if (getconf_line(&num,"archnum",0,FATAL,dir)) {
+    if (getconf_line(&num,"archnum",0,dir)) {
       if (!stralloc_0(&num)) die_nomem();
       (void) scan_ulong(num.s,&archnum);
       archnum++;
@@ -453,8 +453,7 @@ char **argv;
     _exit(0);				/* nothing to do */
 
 					/* do the subject threading */
-  idx_mkthreads(&msgtable,&subtable,&authtable,&datetable,
-	archnum,to,max,0,FATAL);
+  idx_mkthreads(&msgtable,&subtable,&authtable,&datetable,archnum,to,max,0);
 					/* update the index */
   write_threads(msgtable,subtable,authtable,datetable,archnum,to);
 					/* update archnum */

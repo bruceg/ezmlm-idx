@@ -13,8 +13,7 @@
 void decodeHDR(const char *indata,
 	       unsigned int n,
 	       stralloc *outdata,
-	       const char *charset,
-	       const char *fatal)
+	       const char *charset)
 /* decodes indata depending on charset. May put '\n' and '\0' into out */
 /* data and can take them as indata. */
 {
@@ -64,13 +63,13 @@ void decodeHDR(const char *indata,
             case 'b':
             case 'B':
               pos = outdata->len;
-              decodeB(cptxt,cpend-cptxt,outdata,fatal);
+              decodeB(cptxt,cpend-cptxt,outdata);
               cpnext = cpend + 2;
               cpstart = cpnext;
               break;
             case 'q':
             case 'Q':
-              decodeQ(cptxt,cpend-cptxt,outdata,fatal);
+              decodeQ(cptxt,cpend-cptxt,outdata);
               cpnext = cpend + 2;
               cpstart = cpnext;
               break;

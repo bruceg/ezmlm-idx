@@ -261,9 +261,9 @@ int idx_copy_insertsubject()
 			/* set up buffers for indexn */
   substdio_fdbuf(&ssindexn,write,fdindexn,indexnbuf,sizeof(indexnbuf));
 
-  concatHDR(subject.s,subject.len,&lines,FATAL);	/* make 1 line */
-  decodeHDR(lines.s,lines.len,&qline,charset.s,FATAL);	/* decode mime */
-  r = unfoldHDR(qline.s,qline.len,&lines,charset.s,&dcprefix,1,FATAL);
+  concatHDR(subject.s,subject.len,&lines);	/* make 1 line */
+  decodeHDR(lines.s,lines.len,&qline,charset.s);	/* decode mime */
+  r = unfoldHDR(qline.s,qline.len,&lines,charset.s,&dcprefix,1);
 						 /* trim mime */
 
   fdindex = open_read(fnif.s);
@@ -307,16 +307,16 @@ int idx_copy_insertsubject()
   if (!stralloc_cat(&qline,&received)) die_nomem();
   if (!stralloc_cats(&qline,";")) die_nomem();
 
-  concatHDR(from.s,from.len,&lines,FATAL);
+  concatHDR(from.s,from.len,&lines);
   mkauthhash(lines.s,lines.len,hash);
 
   if (!stralloc_catb(&qline,hash,HASHLEN)) die_nomem();
   if (!stralloc_cats(&qline," ")) die_nomem();
 
   k = author_name(&cp,lines.s,lines.len);
-  decodeHDR(cp,k,&from,charset.s,FATAL);
+  decodeHDR(cp,k,&from,charset.s);
 
-  (void) unfoldHDR(from.s,from.len,&lines,charset.s,&dcprefix,0,FATAL);
+  (void) unfoldHDR(from.s,from.len,&lines,charset.s,&dcprefix,0);
   if (!stralloc_cat(&qline,&lines)) die_nomem();
 
   if (!stralloc_cats(&qline,"\n")) die_nomem();
@@ -332,7 +332,7 @@ int idx_copy_insertsubject()
 
 void getcharset()
 {
-    if (getconf_line(&charset,"charset",0,FATAL,dir)) {
+    if (getconf_line(&charset,"charset",0,dir)) {
       if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
         if (charset.s[charset.len - 1] == 'B' ||
 			charset.s[charset.len - 1] == 'Q') {
@@ -418,16 +418,16 @@ char **argv;
   if (lock_ex(fdlock) == -1)
     strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/lock: ");
 
-  flagarchived = getconf_line(&line,"archived",0,FATAL,dir);
-  flagindexed = getconf_line(&line,"indexed",0,FATAL,dir);
+  flagarchived = getconf_line(&line,"archived",0,dir);
+  flagindexed = getconf_line(&line,"indexed",0,dir);
   getcharset();
-  flagprefixed = getconf_line(&prefix,"prefix",0,FATAL,dir);
+  flagprefixed = getconf_line(&prefix,"prefix",0,dir);
   if (prefix.len) {		/* encoding and serial # support */
 				/* no sanity checks - you put '\n' or '\0' */
 				/* into the coded string, you pay */
 
-    decodeHDR(prefix.s,prefix.len,&line,charset.s,FATAL);
-    (void) unfoldHDR(line.s,line.len,&dcprefix,charset.s,&dummy,0,FATAL);
+    decodeHDR(prefix.s,prefix.len,&line,charset.s);
+    (void) unfoldHDR(line.s,line.len,&dcprefix,charset.s,&dummy,0);
     if (!stralloc_copy(&dcprefix,&line)) die_nomem();
     serial = byte_rchr(prefix.s,prefix.len,'#');
   }
@@ -439,9 +439,9 @@ char **argv;
     flagtrailer = 1;
   }
 
-  getconf(&mimeremove,"mimeremove",0,FATAL,dir);
+  getconf(&mimeremove,"mimeremove",0,dir);
 
-  if (getconf_line(&line,"num",0,FATAL,dir)) {	/* Now non-FATAL, def=0 */
+  if (getconf_line(&line,"num",0,dir)) {	/* Now non-FATAL, def=0 */
     if (!stralloc_0(&line)) die_nomem();
     cp = line.s + scan_ulong(line.s,&msgnum);
     ++msgnum;
@@ -450,18 +450,18 @@ char **argv;
   } else
     msgnum = 1L;			/* if num not there */
 
-  getconf_line(&outhost,"outhost",1,FATAL,dir);
-  getconf_line(&outlocal,"outlocal",1,FATAL,dir);
+  getconf_line(&outhost,"outhost",1,dir);
+  getconf_line(&outlocal,"outlocal",1,dir);
   set_cpoutlocal(&outlocal);
   set_cpouthost(&outhost);
-  flagsublist = getconf_line(&sublist,"sublist",0,FATAL,dir);
+  flagsublist = getconf_line(&sublist,"sublist",0,dir);
 
   if (!stralloc_copys(&line,QMQPSERVERS)) die_nomem();
   if (!stralloc_cats(&line,"/0")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
-  (void) getconf(&qmqpservers,line.s,0,FATAL,dir);
+  (void) getconf(&qmqpservers,line.s,0,dir);
 
-  getconf(&headerremove,"headerremove",1,FATAL,dir);
+  getconf(&headerremove,"headerremove",1,dir);
   if (!constmap_init(&headerremovemap,headerremove.s,headerremove.len,0))
 	die_nomem();
 
@@ -527,17 +527,17 @@ char **argv;
       strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
 
   if (!flagsublist) {
-    getconf_line(&mailinglist,"mailinglist",1,FATAL,dir);
+    getconf_line(&mailinglist,"mailinglist",1,dir);
     qa_puts("Mailing-List: ");
     qa_put(mailinglist.s,mailinglist.len);
-    if (getconf_line(&line,"listid",0,FATAL,dir)) {
+    if (getconf_line(&line,"listid",0,dir)) {
       flaglistid = 1;
       qmail_puts(&qq,"\nList-ID: ");
       qmail_put(&qq,line.s,line.len);
     }
     qa_puts("\n");
   }
-  copy(&qq,"headeradd",'H',FATAL);
+  copy(&qq,"headeradd",'H');
   qa_put(mydtline.s,mydtline.len);
 
   flagmlwasthere = 0;
@@ -560,10 +560,10 @@ char **argv;
         if (flagprefixed && !flagsublist) {
           qa_puts("Subject:");
           if (!flagindexed) {		/* non-indexed prefixed lists */
-            concatHDR(subject.s,subject.len,&lines,FATAL);
-            decodeHDR(lines.s,lines.len,&qline,charset.s,FATAL);
+            concatHDR(subject.s,subject.len,&lines);
+            decodeHDR(lines.s,lines.len,&qline,charset.s);
             r = unfoldHDR(qline.s,qline.len,&lines,
-			charset.s,&dcprefix,1,FATAL);
+			charset.s,&dcprefix,1);
           }
           if (!(r & 2)) {
             qmail_puts(&qq," ");
@@ -579,7 +579,7 @@ char **argv;
         }
 		/* do other stuff to do with post header processing here */
 	if (content.len) {		/* get MIME boundary, if exists */
-          concatHDR(content.s,content.len,&qline,FATAL);
+          concatHDR(content.s,content.len,&qline);
           if (!stralloc_copy(&content,&qline)) die_nomem();
 
 	  if (flagtrailer &&		/* trailer only for some multipart */
@@ -692,9 +692,9 @@ char **argv;
 	    hdr_add(boundary.s,boundary.len);
 	    hdr_ctype(CTYPE_TEXT);
             hdr_transferenc();		/* trailer for multipart message */
-	    copy(&qq,"text/trailer",flagcd,FATAL);
+	    copy(&qq,"text/trailer",flagcd);
             if (flagcd == 'B')	{	/* need to do our own flushing */
-              encodeB("",0,&qline,2,FATAL);
+              encodeB("",0,&qline,2);
               qmail_put(&qq,qline.s,qline.len);
             }
 	  }
@@ -736,7 +736,7 @@ char **argv;
   if (!boundary.len && flagtrailer) {
     qmail_puts(&qq,"\n");		/* trailer for non-multipart message */
     if (!encin || encin == 'Q') {	/* can add for QP, but not for base64 */
-      copy(&qq,"text/trailer",encin,FATAL);
+      copy(&qq,"text/trailer",encin);
       qmail_puts(&qq,"\n");		/* no need to flush for plain/QP */
     }
   }
@@ -765,7 +765,7 @@ char **argv;
   }
 
   if (flaglog) {
-    tagmsg(dir,innum,sender,"m",hashout,qq.msgbytes,53L,FATAL);
+    tagmsg(dir,innum,sender,"m",hashout,qq.msgbytes,53L);
     hashout[COOKIE] = '\0';
   }
 
@@ -778,7 +778,7 @@ char **argv;
   if (!stralloc_cats(&line,"-@[]")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   qmail_from(&qq,line.s);			/* envelope sender */
-  subs = putsubs(dir,hash_lo,hash_hi,subto,1,FATAL);	/* subscribers */
+  subs = putsubs(dir,hash_lo,hash_hi,subto,1);	/* subscribers */
   if (flagsublist) hash_lo++;
 
   if (*(err = qmail_close(&qq)) == '\0') {

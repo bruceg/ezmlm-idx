@@ -185,9 +185,9 @@ void main(int argc, char **argv)
     case 0:
       strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
   }
-  getconf_line(&mailinglist,"mailinglist",1,FATAL,dir);
-  getconf_line(&outhost,"outhost",1,FATAL,dir);
-  getconf_line(&outlocal,"outlocal",1,FATAL,dir);
+  getconf_line(&mailinglist,"mailinglist",1,dir);
+  getconf_line(&outhost,"outhost",1,dir);
+  getconf_line(&outlocal,"outlocal",1,dir);
   set_cpoutlocal(&outlocal);	/* for copy() */
   set_cpouthost(&outhost);	/* for copy() */
 

@@ -303,9 +303,9 @@ unsigned int n;
       qmail_put(&qq,s,n);
     else {
       if (flagcd == 'B')
-        encodeB(s,n,&qline,0,FATAL);
+        encodeB(s,n,&qline,0);
       else
-        encodeQ(s,n,&qline,FATAL);
+        encodeQ(s,n,&qline);
       qmail_put(&qq,qline.s,qline.len);
     }
     return 0;		/* always succeeds */
@@ -348,13 +348,13 @@ void to_owner()
 
 void mod_bottom()
 {
-      copy(&qq,"text/mod-sub",flagcd,FATAL);
-      copy(&qq,"text/bottom",flagcd,FATAL);
+      copy(&qq,"text/mod-sub",flagcd);
+      copy(&qq,"text/bottom",flagcd);
       code_qput(TXT_SUPPRESSED,str_len(TXT_SUPPRESSED));
       if (flagcd)
 	hdr_boundary(1);
       if (flagcd == 'B') {
-        encodeB("",0,&line,2,FATAL);	/* flush */
+        encodeB("",0,&line,2);	/* flush */
         qmail_put(&qq,line.s,line.len);
       }
       qmail_from(&qq,from.s);
@@ -368,7 +368,7 @@ void msg_headers()
   unsigned int pos;
 
   hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
-  if(getconf_line(&line,"listid",0,FATAL,dir))
+  if(getconf_line(&line,"listid",0,dir))
     hdr_add2("List-ID: ",line.s,line.len);
   if (!quote(&quoted,&outlocal)) die_nomem();	/* quoted has outlocal */
   qmail_puts(&qq,"List-Help: <mailto:");	/* General rfc2369 headers */
@@ -451,7 +451,7 @@ char *action;
   unsigned char ch;
 
   fl = get_from(target.s,action);		/* try to match up */
-  switch((r = subscribe(workdir,target.s,1,fl,"+",1,-1,(char *) 0,FATAL))) {
+  switch((r = subscribe(workdir,target.s,1,fl,"+",1,-1,(char *) 0))) {
     case 1:
 	    qmail_puts(&qq,"List-Unsubscribe: <mailto:");	/*rfc2369 */
 	    qmail_put(&qq,outlocal.s,outlocal.len);
@@ -486,16 +486,16 @@ char *action;
 	    if (!stralloc_cat(&confirm,&outhost)) die_nomem();
 	    if (!stralloc_0(&confirm)) die_nomem();
 	    set_cpconfirm(confirm.s);			/* for !R in copy */
-            copy(&qq,"text/top",flagcd,FATAL);
-            copy(&qq,"text/sub-ok",flagcd,FATAL);
+            copy(&qq,"text/top",flagcd);
+            copy(&qq,"text/sub-ok",flagcd);
             break;
     default:
             if (str_start(action,ACTION_TC))
               strerr_die2x(0,INFO,ERR_SUB_NOP);
             qmail_puts(&qq,TXT_EZMLM_RESPONSE);
             hdr_ctboundary();
-            copy(&qq,"text/top",flagcd,FATAL);
-            copy(&qq,"text/sub-nop",flagcd,FATAL);
+            copy(&qq,"text/top",flagcd);
+            copy(&qq,"text/sub-nop",flagcd);
             break;
   }
   if (flagdig == FLD_DENY || flagdig == FLD_ALLOW)
@@ -508,7 +508,7 @@ char *action;
 {
   int r;
 
-  switch((r = subscribe(workdir,target.s,0,"","-",1,-1,(char *) 0,FATAL))) {
+  switch((r = subscribe(workdir,target.s,0,"","-",1,-1,(char *) 0))) {
 			/* no comment for unsubscribe */
     case 1:
             qmail_puts(&qq,TXT_GOODBYE);
@@ -518,14 +518,14 @@ char *action;
             qmail_put(&qq,outhost.s,outhost.len);
             qmail_puts(&qq,"\n\n");
             hdr_ctboundary();
-            copy(&qq,"text/top",flagcd,FATAL);
-            copy(&qq,"text/unsub-ok",flagcd,FATAL);
+            copy(&qq,"text/top",flagcd);
+            copy(&qq,"text/unsub-ok",flagcd);
             break;
     default:
             qmail_puts(&qq,TXT_EZMLM_RESPONSE);
             hdr_ctboundary();
-            copy(&qq,"text/top",flagcd,FATAL);
-            copy(&qq,"text/unsub-nop",flagcd,FATAL);
+            copy(&qq,"text/top",flagcd);
+            copy(&qq,"text/unsub-nop",flagcd);
             break;
   }
   if (flagdig == FLD_DENY || flagdig == FLD_ALLOW)
@@ -575,21 +575,21 @@ char *act;	/* first letter of desired confirm request only as STRING! */
   qmail_put(&qq,outhost.s,outhost.len);
   qmail_puts(&qq,"\n");
   hdr_ctboundary();
-    copy(&qq,"text/top",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
 }
 
 void sendtomods()
 {
-  putsubs(moddir.s,0L,52L,subto,1,FATAL);
+  putsubs(moddir.s,0L,52L,subto,1);
 }
 
 void copybottom()
 {
   if (flagbottom || act == AC_HELP) {
-    copy(&qq,"text/bottom",flagcd,FATAL);
+    copy(&qq,"text/bottom",flagcd);
     if (flagcd) {
       if (flagcd == 'B') {
-	encodeB("",0,&line,2,FATAL);	/* flush */
+	encodeB("",0,&line,2);	/* flush */
 	qmail_put(&qq,line.s,line.len);
       }
       hdr_boundary(0);
@@ -609,7 +609,7 @@ void copybottom()
       hdr_boundary(1);
   } else {
     if (flagcd == 'B') {
-      encodeB("",0,&line,2,FATAL);	/* flush even if no bottom */
+      encodeB("",0,&line,2);	/* flush even if no bottom */
       qmail_put(&qq,line.s,line.len);
     }
   }
@@ -698,11 +698,11 @@ char **argv;
     case 0:
       strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
   }
-  getconf_line(&mailinglist,"mailinglist",1,FATAL,dir);
-  getconf_line(&outhost,"outhost",1,FATAL,dir);
-  getconf_line(&outlocal,"outlocal",1,FATAL,dir);
+  getconf_line(&mailinglist,"mailinglist",1,dir);
+  getconf_line(&outhost,"outhost",1,dir);
+  getconf_line(&outlocal,"outlocal",1,dir);
   set_cpouthost(&outhost);
-  if (getconf_line(&charset,"charset",0,FATAL,dir)) {
+  if (getconf_line(&charset,"charset",0,dir)) {
     if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
       if (charset.s[charset.len - 1] == 'B' ||
 		charset.s[charset.len - 1] == 'Q') {
@@ -756,8 +756,8 @@ char **argv;
   set_cptarget(target.s);	/* for copy() */
   make_verptarget();
 
-  flagmod = getconf_line(&modsub,"modsub",0,FATAL,dir);
-  flagremote = getconf_line(&remote,"remote",0,FATAL,dir);
+  flagmod = getconf_line(&modsub,"modsub",0,dir);
+  flagremote = getconf_line(&remote,"remote",0,dir);
 
   if (case_equals(action,ACTION_LISTN) ||
 		case_equals(action,ALT_LISTN))
@@ -796,10 +796,10 @@ char **argv;
 		/* This means that they can be triggered from a SENDER */
 		/* that is not a mod, but never send to a non-mod */
     if (act == AC_NONE || flagdig == FLD_DENY)	/* None of the above */
-      pmod = issub(moddir.s,sender,(char *) 0,FATAL);
+      pmod = issub(moddir.s,sender,(char *) 0);
 				/* sender = moderator? */
     else
-      pmod = issub(moddir.s,target.s,(char *) 0,FATAL);
+      pmod = issub(moddir.s,target.s,(char *) 0);
 				/* target = moderator? */
    } else
      pmod = 0;			/* always 0 for non-mod/remote lists */
@@ -840,18 +840,18 @@ char **argv;
   if (act == AC_SUBSCRIBE) {
     if (pmod && flagremote) {
       doconfirm(ACTION_TC);
-      copy(&qq,"text/mod-sub-confirm",flagcd,FATAL);
+      copy(&qq,"text/mod-sub-confirm",flagcd);
       copybottom();
       qmail_to(&qq,pmod);
     } else if (flagsubconf) {
       doconfirm(ACTION_SC);
-      copy(&qq,"text/sub-confirm",flagcd,FATAL);
+      copy(&qq,"text/sub-confirm",flagcd);
       copybottom();
       qmail_to(&qq,target.s);
     } else if (flagmod) {
       store_from(&fromline,target.s);
       doconfirm(ACTION_TC);
-      copy(&qq,"text/mod-sub-confirm",flagcd,FATAL);
+      copy(&qq,"text/mod-sub-confirm",flagcd);
       copybottom();
       sendtomods();
     } else {				/* normal subscribe, no confirm */
@@ -867,7 +867,7 @@ char **argv;
         store_from(&fromline,target.s);	/* save from line, if requested */
 					/* since transaction not complete */
         doconfirm(ACTION_TC);
-        copy(&qq,"text/mod-sub-confirm",flagcd,FATAL);
+        copy(&qq,"text/mod-sub-confirm",flagcd);
         copybottom();
         sendtomods();
       } else {
@@ -878,7 +878,7 @@ char **argv;
       }
     } else {
       doconfirm(ACTION_SC);
-      copy(&qq,"text/sub-bad",flagcd,FATAL);
+      copy(&qq,"text/sub-bad",flagcd);
       copybottom();
       qmail_to(&qq,target.s);
     }
@@ -893,7 +893,7 @@ char **argv;
       if (!pmod || !flagremote)	/* else anyone can get a good -tc. */
         die_cookie();
       doconfirm(ACTION_TC);
-      copy(&qq,"text/sub-bad",flagcd,FATAL);
+      copy(&qq,"text/sub-bad",flagcd);
       copybottom();
       qmail_to(&qq,pmod);
     }
@@ -902,18 +902,18 @@ char **argv;
     if (flagunsubconf) {
       if (pmod && flagremote) {
         doconfirm(ACTION_VC);
-        copy(&qq,"text/mod-unsub-confirm",flagcd,FATAL);
+        copy(&qq,"text/mod-unsub-confirm",flagcd);
         copybottom();
 	qmail_to(&qq,pmod);
       } else {
         doconfirm(ACTION_UC);
-        copy(&qq,"text/unsub-confirm",flagcd,FATAL);
+        copy(&qq,"text/unsub-confirm",flagcd);
         copybottom();
         qmail_to(&qq,target.s);
       }
     } else if (flagunsubismod && flagmod) {
         doconfirm(ACTION_VC);
-        copy(&qq,"text/mod-unsub-confirm",flagcd,FATAL);
+        copy(&qq,"text/mod-unsub-confirm",flagcd);
         copybottom();
         sendtomods();
     } else {
@@ -930,7 +930,7 @@ char **argv;
 	/* target == sender == a moderator */
       if (flagunsubismod && flagmod) {
         doconfirm(ACTION_VC);
-        copy(&qq,"text/mod-unsub-confirm",flagcd,FATAL);
+        copy(&qq,"text/mod-unsub-confirm",flagcd);
         copybottom();
         sendtomods();
       } else {
@@ -942,7 +942,7 @@ char **argv;
       }
     } else {
       doconfirm(ACTION_UC);
-      copy(&qq,"text/unsub-bad",flagcd,FATAL);
+      copy(&qq,"text/unsub-bad",flagcd);
       copybottom();
       qmail_to(&qq,target.s);
     }
@@ -963,7 +963,7 @@ char **argv;
       if (!pmod || !flagremote)	/* else anyone can get a good -vc. */
         die_cookie();
       doconfirm(ACTION_VC);
-      copy(&qq,"text/unsub-bad",flagcd,FATAL);
+      copy(&qq,"text/unsub-bad",flagcd);
       copybottom();
       qmail_to(&qq,pmod);
     }
@@ -976,13 +976,13 @@ char **argv;
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
     qmail_puts(&qq,TXT_EZMLM_RESPONSE);
     hdr_ctboundary();
-    copy(&qq,"text/top",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
 
     if (act == AC_LIST) {
       (void) code_qput(TXT_LISTMEMBERS,str_len(TXT_LISTMEMBERS));
-      i = putsubs(workdir,0L,52L,code_subto,1,FATAL);
+      i = putsubs(workdir,0L,52L,code_subto,1);
     } else			/* listn */
-      i = putsubs(workdir,0L,52L,dummy_to,1,FATAL);
+      i = putsubs(workdir,0L,52L,dummy_to,1);
 
     (void) code_qput("\n  ======> ",11);
     (void) code_qput(strnum,fmt_ulong(strnum,i));
@@ -999,7 +999,7 @@ char **argv;
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
     qmail_puts(&qq,TXT_EZMLM_RESPONSE);
     hdr_ctboundary();
-    searchlog(workdir,action,code_subto,FATAL);
+    searchlog(workdir,action,code_subto);
     copybottom();
     qmail_to(&qq,pmod);
 
@@ -1070,8 +1070,8 @@ char **argv;
       qmail_put(&qq,outhost.s,outhost.len);
       qmail_puts(&qq,"\n");
       hdr_ctboundary();
-      copy(&qq,"text/top",flagcd,FATAL);
-      copy(&qq,"text/edit-do",flagcd,FATAL);
+      copy(&qq,"text/top",flagcd);
+      copy(&qq,"text/edit-do",flagcd);
       (void) code_qput(TXT_EDIT_START,str_len(TXT_EDIT_START));
       (void) code_qput("\n",1);
       (void) code_qput(text.s,text.len);
@@ -1081,8 +1081,8 @@ char **argv;
     } else {	/* -edit only, so output list of editable files */
       qmail_puts(&qq,TXT_EDIT_LIST);
       hdr_ctboundary();
-      copy(&qq,"text/top",flagcd,FATAL);
-      copy(&qq,"text/edit-list",flagcd,FATAL);
+      copy(&qq,"text/top",flagcd);
+      copy(&qq,"text/edit-list",flagcd);
     }
     qmail_puts(&qq,"\n\n");
     copybottom();
@@ -1150,9 +1150,9 @@ char **argv;
     }
     if (encin) {	/* decode if necessary */
       if (encin == 'B')
-        decodeB(text.s,text.len,&line,FATAL);
+        decodeB(text.s,text.len,&line);
       else
-        decodeQ(text.s,text.len,&line,FATAL);
+        decodeQ(text.s,text.len,&line);
       if (!stralloc_copy(&text,&line)) die_nomem();
     }
     cp = text.s;
@@ -1218,8 +1218,8 @@ char **argv;
     qmail_put(&qq,outhost.s,outhost.len);
     qmail_puts(&qq,"\n");
     hdr_ctboundary();
-    copy(&qq,"text/top",flagcd,FATAL);
-    copy(&qq,"text/edit-done",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
+    copy(&qq,"text/edit-done",flagcd);
     copybottom();
     qmail_to(&qq,sender);	/* not necessarily from mod */
 
@@ -1235,7 +1235,7 @@ char **argv;
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
     qmail_puts(&qq,TXT_EZMLM_RESPONSE);
     hdr_ctboundary();
-    copy(&qq,"text/top",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
 
     pos = str_len(ACTION_GET);
     if (!case_starts(action,ACTION_GET))
@@ -1255,12 +1255,12 @@ char **argv;
       if (errno != error_noent)
 	strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
       else
-        copy(&qq,"text/get-bad",flagcd,FATAL);
+        copy(&qq,"text/get-bad",flagcd);
     else {
       if (fstat(fd,&st) == -1)
-        copy(&qq,"text/get-bad",flagcd,FATAL);
+        copy(&qq,"text/get-bad",flagcd);
       else if (!(st.st_mode & 0100))
-        copy(&qq,"text/get-bad",flagcd,FATAL);
+        copy(&qq,"text/get-bad",flagcd);
       else {
         substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
 	qmail_puts(&qq,"> ");
@@ -1282,7 +1282,7 @@ char **argv;
 		case_starts(action,ALT_QUERY)) {
     qmail_puts(&qq,TXT_EZMLM_RESPONSE);
     hdr_ctboundary();
-    copy(&qq,"text/top",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
     if (pmod) {	/* pmod points to static storage in issub(). Need to do this */
 		/* before calling issub() again */
       if (!stralloc_copys(&to,pmod)) die_nomem();
@@ -1290,10 +1290,10 @@ char **argv;
     } else {
       if (!stralloc_copy(&to,&target)) die_nomem();
     }
-    if (issub(workdir,target.s,(char *) 0,FATAL))
-      copy(&qq,"text/sub-nop",flagcd,FATAL);
+    if (issub(workdir,target.s,(char *) 0))
+      copy(&qq,"text/sub-nop",flagcd);
     else
-      copy(&qq,"text/unsub-nop",flagcd,FATAL);
+      copy(&qq,"text/unsub-nop",flagcd);
     copybottom();
     qmail_to(&qq,to.s);
 
@@ -1301,8 +1301,8 @@ char **argv;
 		case_starts(action,ALT_INFO)) {
     qmail_puts(&qq,TXT_EZMLM_RESPONSE);
     hdr_ctboundary();
-    copy(&qq,"text/top",flagcd,FATAL);
-    copy(&qq,"text/info",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
+    copy(&qq,"text/info",flagcd);
     copybottom();
     qmail_to(&qq,target.s);
 
@@ -1310,17 +1310,17 @@ char **argv;
 		case_starts(action,ALT_FAQ)) {
     qmail_puts(&qq,TXT_EZMLM_RESPONSE);
     hdr_ctboundary();
-    copy(&qq,"text/top",flagcd,FATAL);
-    copy(&qq,"text/faq",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
+    copy(&qq,"text/faq",flagcd);
     copybottom();
     qmail_to(&qq,target.s);
 
   } else if (pmod && (act == AC_HELP)) {
     qmail_puts(&qq,TXT_EZMLM_RESPONSE);
     hdr_ctboundary();
-    copy(&qq,"text/top",flagcd,FATAL);
-    copy(&qq,"text/mod-help",flagcd,FATAL);
-    copy(&qq,"text/help",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
+    copy(&qq,"text/mod-help",flagcd);
+    copy(&qq,"text/help",flagcd);
     copybottom();
     qmail_to(&qq,pmod);
 
@@ -1328,8 +1328,8 @@ char **argv;
     act = AC_HELP;
     qmail_puts(&qq,TXT_EZMLM_RESPONSE);
     hdr_ctboundary();
-    copy(&qq,"text/top",flagcd,FATAL);
-    copy(&qq,"text/help",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
+    copy(&qq,"text/help",flagcd);
     copybottom();
     qmail_to(&qq,sender);
   }

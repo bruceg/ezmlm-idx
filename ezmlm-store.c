@@ -199,12 +199,12 @@ char **argv;
     strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
 
   if (flagconfirm == -1)
-    flagconfirm = getconf_line(&confirmpost,"confirmpost",0,FATAL,dir);
+    flagconfirm = getconf_line(&confirmpost,"confirmpost",0,dir);
   else
-    getconf_line(&confirmpost,"confirmpost",0,FATAL,dir);
+    getconf_line(&confirmpost,"confirmpost",0,dir);
 
-  flagmodpost = getconf_line(&moderators,"modpost",0,FATAL,dir);
-  flagremote = getconf_line(&line,"remote",0,FATAL,dir);
+  flagmodpost = getconf_line(&moderators,"modpost",0,dir);
+  flagremote = getconf_line(&line,"remote",0,dir);
   if (!flagmodpost && !flagconfirm) {	/* not msg-mod. Pipe to ezmlm-send */
     if ((child = wrap_fork(FATAL)) == 0)
       wrap_execbin("/ezmlm-send", &sendopt, dir, FATAL);
@@ -219,7 +219,7 @@ char **argv;
   if (!stralloc_0(&moderators)) die_nomem();
 
   if (sender) {
-      pmod = issub(moderators.s,sender,(char *) 0,FATAL);
+      pmod = issub(moderators.s,sender,(char *) 0);
       closesql();
 				/* sender = moderator? */
   } else
@@ -235,9 +235,9 @@ char **argv;
       strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
   }
 
-  getconf_line(&outhost,"outhost",1,FATAL,dir);
-  getconf_line(&outlocal,"outlocal",1,FATAL,dir);
-  getconf_line(&mailinglist,"mailinglist",1,FATAL,dir);
+  getconf_line(&outhost,"outhost",1,dir);
+  getconf_line(&outlocal,"outlocal",1,dir);
+  getconf_line(&mailinglist,"mailinglist",1,dir);
 
   fdlock = open_append("mod/lock");
   if (fdlock == -1)
@@ -314,7 +314,7 @@ char **argv;
     strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
 
   hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
-  if (getconf_line(&line,"listid",0,FATAL,dir))
+  if (getconf_line(&line,"listid",0,dir))
     hdr_add2("List-ID: ",line.s,line.len);
   hdr_datemsgid(when);
   if (flagconfirm)
@@ -367,7 +367,7 @@ char **argv;
   if (!stralloc_append(&subject,"@")) die_nomem();
   if (!stralloc_cat(&subject,&outhost)) die_nomem();
   if (flagmime) {
-    if (getconf_line(&charset,"charset",0,FATAL,dir)) {
+    if (getconf_line(&charset,"charset",0,dir)) {
       if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
         if (charset.s[charset.len - 1] == 'B' ||
 		charset.s[charset.len - 1] == 'Q') {
@@ -387,9 +387,9 @@ char **argv;
     qmail_put(&qq,subject.s,subject.len);
     qmail_puts(&qq,"\n\n");
   }
-  copy(&qq,flagconfirm?"text/post-confirm":"text/mod-request",flagcd,FATAL);
+  copy(&qq,flagconfirm?"text/post-confirm":"text/mod-request",flagcd);
   if (flagcd == 'B') {
-    encodeB("",0,&line,2,FATAL);
+    encodeB("",0,&line,2);
     qmail_put(&qq,line.s,line.len);
   }
   if (substdio_put(&ssmsg,returnpath.s,returnpath.len) == -1) die_msg();
@@ -462,7 +462,7 @@ char **argv;
       if (!stralloc_cats(&moderators,"/mod")) die_nomem();
       if (!stralloc_0(&moderators)) die_nomem();
     }
-    putsubs(moderators.s,0,52,subto,1,FATAL);
+    putsubs(moderators.s,0,52,subto,1);
   }
 
   if (*(err = qmail_close(&qq)) == '\0') {

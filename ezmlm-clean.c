@@ -111,10 +111,10 @@ void readconfigs()
 /* messages found, that merit a reply to the author. */
 {
 
-  getconf_line(&mailinglist,"mailinglist",1,FATAL,dir);
-  getconf_line(&listid,"listid",0,FATAL,dir);
-  getconf_line(&outhost,"outhost",1,FATAL,dir);
-  getconf_line(&outlocal,"outlocal",1,FATAL,dir);
+  getconf_line(&mailinglist,"mailinglist",1,dir);
+  getconf_line(&listid,"listid",0,dir);
+  getconf_line(&outhost,"outhost",1,dir);
+  getconf_line(&outlocal,"outlocal",1,dir);
   set_cpouthost(&outlocal);
   set_cpoutlocal(&outlocal);
 }
@@ -159,7 +159,7 @@ char *d;
       qmail_puts(&qq, "\n");
       hdr_add2s("To: ",to.s);
       if (flagmime) {
-        if (getconf_line(&charset,"charset",0,FATAL,dir)) {
+        if (getconf_line(&charset,"charset",0,dir)) {
           if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
             if (charset.s[charset.len - 1] == 'B' ||
 		charset.s[charset.len - 1] == 'Q') {
@@ -177,10 +177,10 @@ char *d;
       } else
       qmail_puts(&qq,"\n\n");
 
-      copy(&qq,"text/top",flagcd,FATAL);
-      copy(&qq,"text/mod-timeout",flagcd,FATAL);
+      copy(&qq,"text/top",flagcd);
+      copy(&qq,"text/mod-timeout",flagcd);
       if (flagcd == 'B') {
-        encodeB("",0,&line,2,FATAL);
+        encodeB("",0,&line,2);
         qmail_put(&qq,line.s,line.len);
       }
 
@@ -297,7 +297,7 @@ char **argv;
   if (chdir(dir) == -1)
     strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
 
-  getconf_line(&modtime,"modtime",0,FATAL,dir);
+  getconf_line(&modtime,"modtime",0,dir);
   if (!stralloc_0(&modtime)) die_nomem();
   scan_ulong(modtime.s,&delay);
   if (!delay) delay = DELAY_DEFAULT;

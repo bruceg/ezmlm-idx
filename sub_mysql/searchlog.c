@@ -18,7 +18,7 @@
 #include "idx.h"
 #include <mysql.h>
 
-extern void die_write(const char *fatal);
+extern void die_write(void);
 
 static stralloc line = {0};
 static stralloc outline = {0};
@@ -28,9 +28,7 @@ static struct datetime dt;
 static substdio ssin;
 static char inbuf[256];
 
-static void lineout(subwrite,fatal)
-int subwrite();
-const char *fatal;
+static void lineout(int subwrite())
 {
   (void) scan_ulong(line.s,&when);
   datetime_tai(&dt,when);		/* there is always at least a '\n' */
@@ -39,20 +37,18 @@ const char *fatal;
   if (!stralloc_cats(&outline,": ")) die_nomem();
   if (!stralloc_catb(&outline,line.s,line.len - 1)) die_nomem();
   if (subwrite(outline.s,outline.len) == -1)
-	strerr_die3x(111,fatal,ERR_WRITE,"output");
+	strerr_die3x(111,FATAL,ERR_WRITE,"output");
   return;
 }
 
-void searchlog(dir,search,subwrite,fatal)
+void searchlog(const char *dir,		/* work directory */
+	       char *search,		/* search string */
+	       int subwrite())		/* output fxn */
 /* opens dir/Log, and outputs via subwrite(s,len) any line that matches   */
 /* search. A '_' is search is a wildcard. Any other non-alphanum/'.' char */
 /* is replaced by a '_'. mysql version. Falls back on "manual" search of  */
 /* local Log if no mysql connect info. */
 
-const char *dir;	/* work directory */
-char *search;		/* search string */
-int subwrite();		/* output fxn */
-const char *fatal;	/* fatal */
 {
 
   unsigned char x;
@@ -84,7 +80,7 @@ const char *fatal;	/* fatal */
   }
 
   if ((ret = opensql(dir,ptable))) {
-    if (*ret) strerr_die2x(111,fatal,ret);
+    if (*ret) strerr_die2x(111,FATAL,ret);
 						/* fallback to local log */
   if (!stralloc_copys(&line,dir)) die_nomem();
   if (!stralloc_cats(&line,"/Log")) die_nomem();
@@ -92,17 +88,17 @@ const char *fatal;	/* fatal */
   fd = open_read(line.s);
   if (fd == -1)
     if (errno != error_noent)
-	strerr_die4sys(111,fatal,ERR_OPEN,line.s,": ");
+	strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
     else
-        strerr_die3x(100,fatal,line.s,ERR_NOEXIST);
+        strerr_die3x(100,FATAL,line.s,ERR_NOEXIST);
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
 
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,fatal,ERR_READ_INPUT);
+      strerr_die2sys(111,FATAL,ERR_READ_INPUT);
     if (!match) break;
     if (!searchlen) {
-      lineout(subwrite,fatal);
+      lineout(subwrite);
     } else {
       cpline = (unsigned char *) line.s - 1;
       cplast = cpline + line.len - searchlen; /* line has \0 at the end */
@@ -116,7 +112,7 @@ const char *fatal;	/* fatal */
 	  if (x != y && x != '_') break;		/* '_' = wildcard */
 	}
 	if (!x) {
-	  lineout(subwrite,fatal);
+	  lineout(subwrite);
 	  break;
 	}
       }
@@ -146,16 +142,16 @@ const char *fatal;	/* fatal */
       if (!stralloc_cats(&line," ORDER by tai")) die_nomem();
 
     if (mysql_real_query((MYSQL *) psql,line.s,line.len))	/* query */
-	strerr_die2x(111,fatal,mysql_error((MYSQL *) psql));
+	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
     if (!(result = mysql_use_result((MYSQL *) psql)))
-	strerr_die2x(111,fatal,mysql_error((MYSQL *) psql));
+	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
     while ((row = mysql_fetch_row(result))) {
     if (!(lengths = mysql_fetch_lengths(result)))
-	strerr_die2x(111,fatal,mysql_error((MYSQL *) psql));
-      if (subwrite(row[0],lengths[0]) == -1) die_write(fatal);
+	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
+      if (subwrite(row[0],lengths[0]) == -1) die_write();
     }
     if (!mysql_eof(result))
-	strerr_die2x(111,fatal,mysql_error((MYSQL *) psql));
+	strerr_die2x(111,FATAL,mysql_error((MYSQL *) psql));
     mysql_free_result(result);
   }
 }

@@ -107,9 +107,9 @@ unsigned int n;
       qmail_put(&qq,s,n);
     else {
       if (flagcd == 'B')
-        encodeB(s,n,&qline,0,FATAL);
+        encodeB(s,n,&qline,0);
       else
-        encodeQ(s,n,&qline,FATAL);
+        encodeQ(s,n,&qline);
       qmail_put(&qq,qline.s,qline.len);
     }
 }
@@ -129,7 +129,7 @@ int flagw;
 
   if (getln(&ssin,&addr,&match,'\0') == -1) die_read();
   if (!match) { close(fd); return; }
-  if (!issub(workdir,addr.s,(char *) 0,FATAL)) { close(fd);
+  if (!issub(workdir,addr.s,(char *) 0)) { close(fd);
 			 /*XXX*/unlink(fn.s); return; }
   cookie(hash,"",0,"",addr.s,"");
   if (!stralloc_copys(&fnhash,workdir)) die_nomem();
@@ -143,7 +143,7 @@ int flagw;
     strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
 
   hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
-  if (getconf_line(&line,"listid",0,FATAL,dir))
+  if (getconf_line(&line,"listid",0,dir))
     hdr_add2("\nList-ID: ",line.s,line.len);
   hdr_datemsgid(now());
   if (flagcd) {
@@ -163,14 +163,14 @@ int flagw;
   } else
     qmail_puts(&qq,"\n");
 
-  copy(&qq,"text/top",flagcd,FATAL);
-  copy(&qq,flagw ? "text/bounce-probe" : "text/bounce-warn",flagcd,FATAL);
+  copy(&qq,"text/top",flagcd);
+  copy(&qq,flagw ? "text/bounce-probe" : "text/bounce-warn",flagcd);
 
   if (!flagw) {
     if (flagdig)
-      copy(&qq,"text/dig-bounce-num",flagcd,FATAL);
+      copy(&qq,"text/dig-bounce-num",flagcd);
     else
-      copy(&qq,"text/bounce-num",flagcd,FATAL);
+      copy(&qq,"text/bounce-num",flagcd);
     if (!flagcd) {
       fdhash = open_read(fnhash.s);
       if (fdhash == -1) {
@@ -194,10 +194,10 @@ int flagw;
     }
   }
 
-  copy(&qq,"text/bounce-bottom",flagcd,FATAL);
+  copy(&qq,"text/bounce-bottom",flagcd);
   if (flagcd) {
     if (flagcd == 'B') {
-      encodeB("",0,&line,2,FATAL);
+      encodeB("",0,&line,2);
       qmail_put(&qq,line.s,line.len);	/* flush */
     }
     hdr_boundary(0);
@@ -318,12 +318,12 @@ char **argv;
     case 0:
       strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
   }
-  getconf_line(&outhost,"outhost",1,FATAL,dir);
-  getconf_line(&outlocal,"outlocal",1,FATAL,dir);
+  getconf_line(&outhost,"outhost",1,dir);
+  getconf_line(&outlocal,"outlocal",1,dir);
   if (flagdig)
     if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
-  getconf_line(&mailinglist,"mailinglist",1,FATAL,dir);
-  if (getconf_line(&charset,"charset",0,FATAL,dir)) {
+  getconf_line(&mailinglist,"mailinglist",1,dir);
+  if (getconf_line(&charset,"charset",0,dir)) {
     if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
       if (charset.s[charset.len - 1] == 'B' ||
 		charset.s[charset.len - 1] == 'Q') {

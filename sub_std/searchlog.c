@@ -24,9 +24,7 @@ static datetime_sec when;
 static substdio ssin;
 static char inbuf[256];
 
-static void lineout(subwrite,fatal)
-int subwrite();
-const char *fatal;
+static void lineout(int subwrite())
 {
   struct datetime dt;
   (void) scan_ulong(line.s,&when);
@@ -36,19 +34,16 @@ const char *fatal;
   if (!stralloc_cats(&outline,": ")) die_nomem();
   if (!stralloc_catb(&outline,line.s,line.len - 1)) die_nomem();
   if (subwrite(outline.s,outline.len) == -1)
-	strerr_die3x(111,fatal,ERR_WRITE,"output");
+	strerr_die3x(111,FATAL,ERR_WRITE,"output");
   return;
 }
 
-void searchlog(dir,search,subwrite,fatal)
+void searchlog(const char *dir,		/* work directory */
+	       char *search,		/* search string */
+	       int subwrite())		/* output fxn */
 /* opens dir/Log, and outputs via subwrite(s,len) any line that matches */
 /* search. A '_' is search is a wildcard. Any other non-alphanum/'.' char */
 /* is replaced by a '_' */
-
-const char *dir;	/* work directory */
-char *search;	/* search string */
-int subwrite();		/* output fxn */
-const char *fatal;	/* fatal */
 {
 
   unsigned char x;
@@ -77,17 +72,17 @@ const char *fatal;	/* fatal */
   fd = open_read(line.s);
   if (fd == -1)
     if (errno != error_noent)
-	strerr_die4sys(111,fatal,ERR_OPEN,line.s,": ");
+	strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
     else
-        strerr_die3x(100,fatal,line.s,ERR_NOEXIST);
+        strerr_die3x(100,FATAL,line.s,ERR_NOEXIST);
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
 
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,fatal,ERR_READ_INPUT);
+      strerr_die2sys(111,FATAL,ERR_READ_INPUT);
     if (!match) break;
     if (!searchlen) {
-      lineout(subwrite,fatal);
+      lineout(subwrite);
     } else {		/* simple case-insensitive search */
       cpline = (unsigned char *) line.s - 1;
       cplast = cpline + line.len - searchlen; /* line has \0 at the end */
@@ -101,7 +96,7 @@ const char *fatal;	/* fatal */
 	  if (x != y && x != '_') break;		/* '_' = wildcard */
 	}
 	if (!x) {
-	  lineout(subwrite,fatal);
+	  lineout(subwrite);
 	  break;
 	}
       }

@@ -82,30 +82,28 @@ void set_cpnum(const char *cf)
 
 static struct qmail *qq;
 
-static void codeput(const char *l,unsigned int n,char code,const char *fatal)
+static void codeput(const char *l,unsigned int n,char code)
 {
   if (!code || code == 'H')
     qmail_put(qq,l,n);
   else {
     if (code == 'Q')
-      encodeQ(l,n,&qline,fatal);
+      encodeQ(l,n,&qline);
     else
-      encodeB(l,n,&qline,0,fatal);
+      encodeB(l,n,&qline,0);
     qmail_put(qq,qline.s,qline.len);
   }
 }
 
-static void codeputs(const char *l,char code,const char *fatal)
+static void codeputs(const char *l,char code)
 {
-  codeput(l,str_len(l),code,fatal);
+  codeput(l,str_len(l),code);
 }
 
 void copy(struct qmail *qqp,
 	  const char *fn,	/* text file name */
-	  char q,		/* '\0' for regular output, 'B' for base64, */
+	  char q)		/* '\0' for regular output, 'B' for base64, */
 				/* 'Q' for quoted printable,'H' for header  */
-	  const char *fatal	/* FATAL error string */
-	  )
 {
   int fd;
   int match, done;
@@ -114,26 +112,26 @@ void copy(struct qmail *qqp,
   qq = qqp;
   if ((fd = open_read(fn)) == -1)
     if (errno != error_noent)
-      strerr_die4sys(111,fatal,ERR_OPEN,fn,": ");
+      strerr_die4sys(111,FATAL,ERR_OPEN,fn,": ");
     else
-      strerr_die4sys(100,fatal,ERR_OPEN,fn,": ");
+      strerr_die4sys(100,FATAL,ERR_OPEN,fn,": ");
   substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
   for (;;) {
     if (getln(&sstext,&line,&match,'\n') == -1)
-      strerr_die4sys(111,fatal,ERR_READ,fn,": ");
+      strerr_die4sys(111,FATAL,ERR_READ,fn,": ");
     if (match) {	/* suppress blank line for 'H'eader mode */
       if (line.len == 1 && q == 'H') continue;
       if (line.s[0] == '!') {
 	if (line.s[1] == 'R') {
-	  codeput("   ",3,q,fatal);
-	  codeputs(confirm,q,fatal);
-	  codeput("\n",1,q,fatal);
+	  codeput("   ",3,q);
+	  codeputs(confirm,q);
+	  codeput("\n",1,q);
 	  continue;
 	}
 	if (line.s[1] == 'A') {
-	  codeput("   ",3,q,fatal);
-	  codeputs(target,q,fatal);
-	  codeput("\n",1,q,fatal);
+	  codeput("   ",3,q);
+	  codeputs(target,q);
+	  codeput("\n",1,q);
 	  continue;
 	}
       }
@@ -187,11 +185,11 @@ void copy(struct qmail *qqp,
           ++pos;				/* try next position */
       }
       if (!done)
-        codeput(line.s,line.len,q,fatal);
+        codeput(line.s,line.len,q);
       else {
         if (!stralloc_catb(&outline,line.s+nextpos,line.len-nextpos))
 		die_nomem();		/* remainder */
-        codeput(outline.s,outline.len,q,fatal);
+        codeput(outline.s,outline.len,q);
       }
 
     } else

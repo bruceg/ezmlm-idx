@@ -49,14 +49,14 @@ static authentry adummy;
 int fdlock;
 
 /* NOTE: These do NOT prevent double locking */
-static void lockup(const char *fatal)
+static void lockup(void)
 {
   fdlock = open_append("lock");
   if (fdlock == -1)
-    strerr_die2sys(111,fatal,ERR_OPEN_LOCK);
+    strerr_die2sys(111,FATAL,ERR_OPEN_LOCK);
   if (lock_ex(fdlock) == -1) {
     close(fdlock);
-    strerr_die2sys(111,fatal,ERR_OBTAIN_LOCK);
+    strerr_die2sys(111,FATAL,ERR_OBTAIN_LOCK);
   }
 }
 
@@ -66,7 +66,7 @@ static void unlock(void)
 }
 
 static void newsub(subentry *psubt,const char *subject,unsigned int sublen,
-		   unsigned long msg,const char *fatal)
+		   unsigned long msg)
 /* Initializes subentry pointed to by psubt, adds a '\0' to subject,    */
 /* allocates space and copies in subject, and puts a pointer to it in   */
 /* the entry. */
@@ -92,8 +92,7 @@ static void newsub(subentry *psubt,const char *subject,unsigned int sublen,
 static void newauth(authentry *pautht,		/* entry for current message */
 		    const char *author,/* pointer to author string (not sz!) */
 		    unsigned int authlen,	/* lenth of author */
-		    unsigned long msg,
-		    const char *fatal)		/* sz */
+		    unsigned long msg)		/* sz */
 /* Allocates space for author of length authlen+1 adding a terminal '\0' */
 /* and puts the pointer in pautht->auth. Analog to newsub().             */
 {
@@ -113,8 +112,7 @@ static void newauth(authentry *pautht,		/* entry for current message */
   pautht->authlen = authlen;
 }
 
-static void init_dummy(fatal)
-char *fatal;
+static void init_dummy(void)
 {
   unsigned int i;
 
@@ -132,8 +130,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
 		   unsigned long msg_from,	/* first message in range */
 		   unsigned long msg_to,	/* last message in range */
 		   unsigned long msg_latest,	/* latest message in archive (for locking) */
-		   int locked,			/* if already locked */
-		   const char *fatal)		/* Program-specific */
+		   int locked)			/* if already locked */
 
 /* Threads messages msg_from -> msg_to into pmsgtable & psubtable. When  */
 /* reading the latest index file (containing msg_latest) it locks the    */
@@ -180,7 +177,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
   if (msg_to > msg_latest)
     msg_to = msg_latest;
   if (msg_to < msg_from)
-    strerr_die2x(100,fatal,"Program error: bad range in idx_mkthreads");
+    strerr_die2x(100,FATAL,"Program error: bad range in idx_mkthreads");
   ulmrange = msg_to - msg_from + 1;
   if (!(*pmsgtable = (msgentry *) alloc(ulmrange * sizeof(msgentry))))
         die_nomem();
@@ -210,7 +207,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
   submax = 0;
   psubnext = *psubtable;	/* dummy node to get tree going. Basically, */
   psubt = &sdummy;		/* assure that subject > psubt-sub and that */
-  init_dummy(fatal);		/* below ok unless HASHLEN > 40 */
+  init_dummy();			/* below ok unless HASHLEN > 40 */
   psubt->sub = (char*)"                                       ";
   psubt->sublen = 40;		/* there is something to hold psubt->higher */
   psubt->higher = (subentry *) 0;
@@ -228,7 +225,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
     if (!stralloc_cats(&line,"/index")) die_nomem();
     if (!stralloc_0(&line)) die_nomem();
     if (!locked && idx == idxlatest)
-      lockup(fatal);
+      lockup();
     flagmissingindex = 0;
     fd = open_read(line.s);
     if (fd == -1) {
@@ -236,7 +233,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
 					/* but the lists is supposedly indexed*/
         flagmissingindex = 1;
       } else
-        strerr_die4sys(111,fatal,ERR_OPEN,line.s,": ");
+        strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
     } else
       substdio_fdbuf(&ssindex,read,fd,indexbuf,sizeof(indexbuf));
 
@@ -250,14 +247,14 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
       if (!flagmissingindex && (msg > tmpmsg)) {
         flagauth = 0;
         if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die3sys(111,fatal,ERR_READ,"index: ");
+          strerr_die3sys(111,FATAL,ERR_READ,"index: ");
         if (!match)
           flagmissingindex = 1;
         else {
           pos = scan_ulong(line.s,&tmpmsg);
           if (line.s[pos++] == ':') {
             if (getln(&ssindex,&authline,&match,'\n') == -1)
-              strerr_die3sys(111,fatal,ERR_READ,"index: ");
+              strerr_die3sys(111,FATAL,ERR_READ,"index: ");
             if (!match)
               flagmissingindex = 1;
             else {
@@ -273,7 +270,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
         subject = line.s + pos;
         sublen = line.len - pos;
 	if (sublen <= HASHLEN)
-	  strerr_die2x(100,fatal,ERR_BAD_INDEX);
+	  strerr_die2x(100,FATAL,ERR_BAD_INDEX);
         hasauth = flagauth;
       } else {
         subject = dummyind.s;
@@ -286,7 +283,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
           if (psubt->higher)
             psubt = psubt->higher;
           else {
-            newsub(psubnext,subject,sublen,msg,fatal);
+            newsub(psubnext,subject,sublen,msg);
             psubt->higher = psubnext;
             psubt = psubnext;
             psubnext++;
@@ -296,7 +293,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
           if (psubt->lower)
             psubt = psubt->lower;
           else {
-            newsub(psubnext,subject,sublen,msg,fatal);
+            newsub(psubnext,subject,sublen,msg);
             psubt->lower = psubnext;
             psubt = psubnext;
             psubnext++;
@@ -347,7 +344,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
             if (pautht->higher)
               pautht = pautht->higher;
             else {
-              newauth(pauthnext,auth,authlen,msg,fatal);
+              newauth(pauthnext,auth,authlen,msg);
               pautht->higher = pauthnext;
               pautht = pauthnext;
               pauthnext++;
@@ -357,7 +354,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
             if (pautht->lower)
               pautht = pautht->lower;
             else {
-              newauth(pauthnext,auth,authlen,msg,fatal);
+              newauth(pauthnext,auth,authlen,msg);
               pautht->lower = pauthnext;
               pautht = pauthnext;
               pauthnext++;
@@ -394,8 +391,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
 		  unsigned long msg_to,		/* last message in range */
 		  unsigned long msg_master,	/* master message for single thread, else 0*/
 		  unsigned long msg_latest,	/* latest message in archive (for locking) */
-		  int locked,			/* if already locked */
-		  const char *fatal)			/* Program-specific */
+		  int locked)			/* if already locked */
 
 /* Works like idx_mkthreads, except that it finds the subject for message   */
 /* msg_master, then identifies messages in the range that have the same     */
@@ -422,7 +418,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
   msgentry *x,*y;
 
   if ((ulmrange = msg_to - msg_from +1) <= 0)
-    strerr_die2x(100,fatal,"Program error: bad range in idx_mkthreads");
+    strerr_die2x(100,FATAL,"Program error: bad range in idx_mkthreads");
   if (!(*pmsgtable = (msgentry *) alloc(ulmrange * sizeof(msgentry))))
          die_nomem();
   y = *pmsgtable;
@@ -457,19 +453,19 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
   if (!stralloc_0(&line)) die_nomem();
   ffound = 0;
   if (!locked && idx == idxlatest)
-    lockup(fatal);
+    lockup();
   fd = open_read(line.s);
   psubt = *psubtable;
   if (fd == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,fatal,ERR_OPEN,line.s,": ");
+      strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
     else
-      strerr_die2x(111,fatal,ERR_NOINDEX);	/* temp - admin can fix! */
+      strerr_die2x(111,FATAL,ERR_NOINDEX);	/* temp - admin can fix! */
   } else {
     substdio_fdbuf(&ssindex,read,fd,indexbuf,sizeof(indexbuf));
     for(;;) {
       if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die3sys(111,fatal,ERR_OPEN,"index: ");
+          strerr_die3sys(111,FATAL,ERR_OPEN,"index: ");
       if (!match)
         break;
       pos=scan_ulong(line.s,&msg);
@@ -479,14 +475,14 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
       } else
         flagauth = 0;
       if (msg == msg_master) {
-        newsub(psubt,line.s+pos,line.len-pos,msg,fatal);
+        newsub(psubt,line.s+pos,line.len-pos,msg);
 					/* need to update msg later! */
         ffound = 1;
         break;
       }
       if (flagauth) {			/* skip author line */
         if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die3sys(111,fatal,ERR_OPEN,"index: ");
+          strerr_die3sys(111,FATAL,ERR_OPEN,"index: ");
       if (!match)
         break;
       }
@@ -496,7 +492,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
   if (!locked && idx == idxlatest)
     unlock();
   if (!ffound)
-      strerr_die2x(100,fatal,ERR_NOINDEX);
+      strerr_die2x(100,FATAL,ERR_NOINDEX);
   for (idx = msg_from / 100; idx <= idxto; idx++) {
 		/* make index file name */
     if (!stralloc_copys(&line,"archive/")) die_nomem();
@@ -504,16 +500,16 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
     if (!stralloc_cats(&line,"/index")) die_nomem();
     if (!stralloc_0(&line)) die_nomem();
     if (!locked && idx == idxlatest)
-      lockup(fatal);
+      lockup();
     fd = open_read(line.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die4sys(111,fatal,ERR_OPEN,line.s,": ");
+        strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
     } else {
       substdio_fdbuf(&ssindex,read,fd,indexbuf,sizeof(indexbuf));
       for(;;) {
         if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die3sys(111,fatal,ERR_READ,"index: ");
+          strerr_die3sys(111,FATAL,ERR_READ,"index: ");
         if (!match)
           break;
         pos=scan_ulong(line.s,&msg);
@@ -521,7 +517,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
           pos++;
           flagauth = 1;
           if (getln(&ssindex,&authline,&match,'\n') == -1)
-            strerr_die3sys(111,fatal,ERR_READ,"index: ");
+            strerr_die3sys(111,FATAL,ERR_READ,"index: ");
           if (!match)
             break;
         } else
@@ -556,7 +552,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
 	        if (pautht->higher)
 	          pautht = pautht->higher;
 	        else {
-	          newauth(pauthnext,auth,authlen,msg,fatal);
+	          newauth(pauthnext,auth,authlen,msg);
 	          pautht->higher = pauthnext;
 	          pautht = pauthnext;
 	          pauthnext++;
@@ -566,7 +562,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
 	        if (pautht->lower)
 	          pautht = pautht->lower;
 	        else {
-	          newauth(pauthnext,auth,authlen,msg,fatal);
+	          newauth(pauthnext,auth,authlen,msg);
 	          pautht->lower = pauthnext;
 	          pautht = pauthnext;
 	          pauthnext++;
@@ -596,8 +592,7 @@ void idx_mklist(msgentry **pmsgtable,	/* pointer to table of message<->subject *
 		subentry **psubtable,	/* ptr to tbl of subject no, len, str char * */
 		authentry **pauthtable,
 		unsigned long msg_from,		/* first message in range */
-		unsigned long msg_to,		/* last message in range */
-		const char *fatal)			/* Program-specific */
+		unsigned long msg_to)		/* last message in range */
 /* Like mkthreads, except that it works without a subject index. The result */
 /* is just a dummy subject and a sequential list of messages. This to allow */
 /* use of the same routines when creating digest from lists that have no    */
@@ -609,7 +604,7 @@ void idx_mklist(msgentry **pmsgtable,	/* pointer to table of message<->subject *
   authentry *pautht;
 
   if ((ulmrange = msg_to - msg_from +1) <= 0)
-    strerr_die2x(111,fatal,"bad range in idx_mkthreads :");
+    strerr_die2x(111,FATAL,"bad range in idx_mkthreads :");
 
   if (!(*pmsgtable = (msgentry *) alloc(ulmrange * sizeof(msgentry))))
          die_nomem();
@@ -625,7 +620,7 @@ void idx_mklist(msgentry **pmsgtable,	/* pointer to table of message<->subject *
   if (!(*psubtable = (subentry *) alloc(2 * sizeof(subentry))))
           die_nomem();
   psubt = *psubtable;
-  newsub(psubt,dummyind.s,dummyind.len,msg_from,fatal);
+  newsub(psubt,dummyind.s,dummyind.len,msg_from);
   psubt->lastmsg = msg_to;
   ++psubt;
   psubt->sub = (char *) 0;

@@ -18,8 +18,7 @@ static const char char64table[128] = {
 
 #define char64enc(c)  (((c) & 0x80) ? -1 : char64table[(c)])
 
-void decodeB(const char *cpfrom,unsigned int n,stralloc *outdata,
-	     const char *fatal)
+void decodeB(const char *cpfrom,unsigned int n,stralloc *outdata)
 /* does B decoding of the string pointed to by cpfrom up to the character */
 /* before the one pointed to by cpnext, and appends the results to mimeline*/
 {

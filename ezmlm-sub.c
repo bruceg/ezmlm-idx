@@ -79,14 +79,14 @@ char **argv;
 		/* allow repeats and last addr doesn't need comment */
       while ((addr = argv[optind++])) {
         (void) subscribe(dir,addr,1,argv[optind],"+manual",
-		flagmysql,forcehash,(char *) 0,FATAL);
+		flagmysql,forcehash,(char *) 0);
         if (!argv[optind++]) break;
       }
     } else {
 
       while ((addr = argv[optind++]))
         (void) subscribe(dir,addr,1,"","+manual",flagmysql,
-		forcehash,(char *) 0,FATAL);
+		forcehash,(char *) 0);
     }
   } else {		/* stdin */
     for (;;) {
@@ -110,7 +110,7 @@ char **argv;
         }
       }
       (void) subscribe(dir,line.s,1,comment,"+manual",flagmysql,
-		forcehash,(char *) 0,FATAL);
+		forcehash,(char *) 0);
     }
   }
   closesql();

@@ -153,9 +153,9 @@ unsigned int n;
       qmail_put(&qq,s,n);
     else {
       if (flagcd == 'B')
-        encodeB(s,n,&qline,0,FATAL);
+        encodeB(s,n,&qline,0);
       else
-        encodeQ(s,n,&qline,FATAL);
+        encodeQ(s,n,&qline);
       qmail_put(&qq,qline.s,qline.len);
     }
     return 0;		/* always succeeds */
@@ -354,8 +354,8 @@ char **argv;
     else
       _exit(0);					/* not for us */
   }
-  getconf_line(&outlocal,"outlocal",1,FATAL,dir);
-  getconf_line(&outhost,"outhost",1,FATAL,dir);
+  getconf_line(&outlocal,"outlocal",1,dir);
+  getconf_line(&outhost,"outhost",1,dir);
 
   if (!stralloc_copy(&listname,&outlocal)) die_nomem();
   if (!stralloc_copy(&hostname,&outhost)) die_nomem();
@@ -371,7 +371,7 @@ char **argv;
   if (str_equal(sender,"#@[]"))
     strerr_die2x(99,INFO,ERR_BOUNCE);
 
-  getconf(&headerremove,"headerremove",1,FATAL,dir);
+  getconf(&headerremove,"headerremove",1,dir);
   constmap_init(&headerremovemap,headerremove.s,headerremove.len,0);
 
   if (!stralloc_copys(&mydtline,
@@ -649,7 +649,7 @@ char **argv;
 
 	/* now we need to look for charset and set flagcd appropriately */
 
-    if (getconf_line(&charset,"charset",0,FATAL,dir)) {
+    if (getconf_line(&charset,"charset",0,dir)) {
       if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
         if (charset.s[charset.len - 1] == 'B' ||
 		charset.s[charset.len - 1] == 'Q') {
@@ -664,7 +664,7 @@ char **argv;
     set_cpouthost(&hostname);		/* necessary in case there are <#h#> */
 					/* we don't want to be send to a list*/
     hdr_adds("Mailing-List: ezmlm-request");
-    if (getconf_line(&line,"listid",0,FATAL,dir))
+    if (getconf_line(&line,"listid",0,dir))
       hdr_add2("List-ID: ",line.s,line.len);
     hdr_datemsgid(now());
     hdr_from((cmdidx == EZREQ_HELP) ? "-return-" : "-help");
@@ -677,7 +677,7 @@ char **argv;
     qmail_put(&qq,line.s,line.len);
     qmail_puts(&qq,TXT_RESULTS);
     hdr_ctboundary();
-    copy(&qq,"text/top",flagcd,FATAL);
+    copy(&qq,"text/top",flagcd);
    if (cmdidx == EZREQ_LISTS || cmdidx == EZREQ_WHICH) {
       switch (cmdidx) {
         case EZREQ_LISTS:
@@ -724,7 +724,7 @@ char **argv;
             }
             break;
           case EZREQ_WHICH:
-            if (issub(line.s+pos,to.s,(char *) 0,FATAL)) {
+            if (issub(line.s+pos,to.s,(char *) 0)) {
               code_qput(line.s,pos-1);
               code_qput("\n",1);
             }
@@ -735,12 +735,12 @@ char **argv;
       code_qput("\n",1);
       close(fd);
     } else
-      copy(&qq,"text/help",flagcd,FATAL);
+      copy(&qq,"text/help",flagcd);
 
-    copy(&qq,"text/bottom",flagcd,FATAL);
+    copy(&qq,"text/bottom",flagcd);
     if (flagcd) {
       if (flagcd == 'B') {
-        encodeB("",0,&line,2,FATAL);	/* flush */
+        encodeB("",0,&line,2);	/* flush */
         qmail_put(&qq,line.s,line.len);
       }
       hdr_boundary(0);

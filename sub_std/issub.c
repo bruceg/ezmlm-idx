@@ -25,8 +25,7 @@ static char ssbuf[512];
 
 const char *issub(const char *dbname,		/* directory to basedir */
 		  const char *userhost,
-		  const char *tab,		/* override table name */
-		  const char *fatal)
+		  const char *tab)		/* override table name */
 /* Returns (char *) to match if userhost is in the subscriber database     */
 /* dbname, 0 otherwise. dbname is a base directory for a list and may NOT  */
 /* be NULL        */
@@ -68,13 +67,13 @@ const char *issub(const char *dbname,		/* directory to basedir */
     fd = open_read(fn.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die4sys(111,fatal,ERR_OPEN,fn.s,": ");
+        strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
     } else {
       substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
 
       for (;;) {
         if (getln(&ss,&line,&match,'\0') == -1)
-          strerr_die4sys(111,fatal,ERR_READ,fn.s,": ");
+          strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
         if (!match) break;
         if (line.len == lcaddr.len)
           if (!case_diffb(line.s,line.len,lcaddr.s))
@@ -92,14 +91,14 @@ const char *issub(const char *dbname,		/* directory to basedir */
     fd = open_read(fn.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die4sys(111,fatal,ERR_OPEN,fn.s,": ");
+        strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
       return (char *) 0;
     }
     substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
 
     for (;;) {
       if (getln(&ss,&line,&match,'\0') == -1)
-        strerr_die4sys(111,fatal,ERR_READ,fn.s,": ");
+        strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
       if (!match) break;
       if (line.len == addr.len)
         if (!case_diffb(line.s,line.len,addr.s))
