@@ -11,11 +11,7 @@ extern void decodeHDR();
 extern void concatHDR();
 extern int unfoldHDR();
 
-#ifdef WITH_PROTO
 extern unsigned int author_name(char **,char *,unsigned int);
-#else
-extern unsigned int author_name();
-#endif
 
 /* Characters */
 #define ESC 0x1B

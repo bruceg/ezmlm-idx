@@ -10,8 +10,6 @@
 /* a subscriber, flagadd = 0 removes the address. To use e.g. a SQL data-  */
 /* base for addresses, just replace these routines and rebuild ezmlm.      */
 
-#ifdef WITH_PROTO
-
 extern int subscribe(char *dir,char *username,int flagadd,char *from,
 	char *event, int flagmysql, int forcehash,
 	char *table_override, char *FATAL);
@@ -40,20 +38,5 @@ extern char *opensql(char *dir, char **table);
 
 extern void closesql();
 
-#else
-
-extern int subscribe();
-extern char *issub();
-extern unsigned long putsubs();
-extern void tagmsg();
-extern char *logmsg();
-char *checktag();
-extern int subreceipt();
-extern char *getlistno();
-extern char *opensql();
-extern void closesql();
-extern void searchlog();
-
-#endif
 extern void *psql;		/* contains SQL handle */
 #endif
