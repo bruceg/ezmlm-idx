@@ -3,6 +3,7 @@
 /* Set up instead of ezmlm-return in DIR/bouncer of main list */
 
 #include <sys/types.h>
+#include <unistd.h>
 #include "direntry.h"
 #include "stralloc.h"
 #include "str.h"

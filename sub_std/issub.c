@@ -1,4 +1,6 @@
 /*$Id$*/
+
+#include <unistd.h>
 #include "stralloc.h"
 #include "getln.h"
 #include "readwrite.h"

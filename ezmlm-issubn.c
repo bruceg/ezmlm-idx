@@ -1,4 +1,6 @@
 /*$Id$*/
+
+#include <unistd.h>
 #include "strerr.h"
 #include "env.h"
 #include "subscribe.h"

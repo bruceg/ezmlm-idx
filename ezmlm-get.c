@@ -1,7 +1,8 @@
 /*$Id$*/
-
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "alloc.h"
 #include "error.h"
 #include "stralloc.h"
@@ -30,6 +31,9 @@
 #include "constmap.h"
 #include "subscribe.h"
 #include "hdr.h"
+#include "open.h"
+#include "lock.h"
+#include "scan.h"
 #include "idxthread.h"
 #include "idx.h"
 #include "mime.h"

@@ -1,5 +1,8 @@
+/*$Id$*/
+
 #include "stralloc.h"
 #include "slurp.h"
+#include "slurpclose.h"
 #include "error.h"
 #include "open.h"
 

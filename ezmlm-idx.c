@@ -2,6 +2,8 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "stralloc.h"
 #include "subfd.h"
 #include "strerr.h"
@@ -18,6 +20,8 @@
 #include "readwrite.h"
 #include "exit.h"
 #include "substdio.h"
+#include "sig.h"
+#include "byte.h"
 #include "idx.h"
 #include "mime.h"
 #include "errtxt.h"

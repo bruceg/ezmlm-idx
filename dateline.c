@@ -3,6 +3,7 @@
 #include "fmt.h"
 #include "yyyymm.h"
 #include "stralloc.h"
+#include "cgi.h"
 
 static char strnum[FMT_ULONG];
 

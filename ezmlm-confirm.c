@@ -1,7 +1,8 @@
-/*$Id: ezmlm-confirm.c 36 2003-12-18 19:26:32Z bruce $*/
+/*$Id$*/
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include "error.h"
 #include "case.h"
 #include "stralloc.h"
@@ -29,6 +30,9 @@
 #include "cookie.h"
 #include "errtxt.h"
 #include "copy.h"
+#include "open.h"
+#include "lock.h"
+#include "wrap.h"
 #include "idx.h"
 #include "mime.h"
 #include "auto_version.h"

@@ -1,6 +1,8 @@
 /*$Id$*/
 
 #include <sys/types.h>
+#include <unistd.h>
+#include "alloc.h"
 #include "direntry.h"
 #include "datetime.h"
 #include "now.h"
@@ -31,6 +33,7 @@
 #include "mime.h"
 #include "idx.h"
 #include "yyyymm.h"
+#include "cgi.h"
 
 #define FATAL "ezmlm-cgi: fatal: "
 #define GET "-getv"
@@ -175,14 +178,14 @@ void die_syntax(char *s)
 char outbuf[4096];
 substdio ssout = SUBSTDIO_FDBUF(write,1,outbuf,sizeof(outbuf));
 
-void oput(register char *s, register unsigned int l)
+void oput(const char *s, unsigned int l)
 /* unbuffered. Avoid extra copy as httpd buffers */
 {
   if (substdio_put(&ssout,s,l) == -1)
     strerr_die3sys(111,FATAL,ERR_WRITE,"stdout: ");
 }
 
-void oputs(register char *s)
+void oputs(const char *s)
 {
   oput(s,str_len(s));
 }
@@ -191,7 +194,7 @@ void oputs(register char *s)
 void die_prog(char *s) { strerr_die5x(100,FATAL,"program error (please send bug report to bugs@ezmlm.org): ",s," Command: ",cmd); }
 
 /* If we already issued a header than this will look ugly */
-void cgierr(char *s,char *s1,char *s2)
+void cgierr(const char *s,const char *s1,const char *s2)
 {
   strerr_warn4(FATAL,s,s1,s2,(struct strerr *)0);
   oputs("Content-type: text/plain\n");
@@ -214,7 +217,7 @@ void toggle_flagpre(int flag)
   cn1 = 0; cn2 = 0;		/* just in case */
 }
 
-unsigned int decode_charset(register char *s, register unsigned int l)
+unsigned int decode_charset(const char *s,unsigned int l)
 /* return charset code. CS_BAD means that base charset should be used, i.e. */
 /* that charset is empty or likely invalid. CS_NONE are charsets for which  */
 /* we don't need to do anything special. */
@@ -248,7 +251,7 @@ unsigned int decode_charset(register char *s, register unsigned int l)
   return CS_BAD;
 }
 
-void html_put (register char *s,register unsigned int l)
+void html_put (const char *s,unsigned int l)
 /* At this time, us-ascii, iso-8859-? create no problems. We just encode  */
 /* some html chars. iso-2022 may have these chars as character components.*/
 /* cs is set for these, 3 for CN, 2 for others. Bit 0 set means 2 byte    */
@@ -406,10 +409,10 @@ void html_put (register char *s,register unsigned int l)
 char hexchar[] = "0123456789ABCDEF";
 char enc_url[] = "%00";
 
-void urlencode_put (register char *s,register unsigned int l)
+void urlencode_put (const char *s,unsigned int l)
 {
   for (;l--;s++) {
-    register unsigned char ch;
+    unsigned char ch;
     ch = (unsigned char) *s;
     if (ch <= 32 || ch > 127 || byte_chr("?<>=/:%+#\"",10,ch) != 10) {
       enc_url[2] = hexchar[ch & 0xf];
@@ -420,7 +423,7 @@ void urlencode_put (register char *s,register unsigned int l)
   }
 }
 
-void urlencode_puts(register char *s)
+void urlencode_puts(const char *s)
 {
   urlencode_put(s,str_len(s));
 }
@@ -477,9 +480,9 @@ void anchor_put(unsigned char *s, unsigned int l)
   }
 }
 
-int checkhash(register char *s)
+int checkhash(const char *s)
 {
-  register int l = HASHLEN;
+  int l = HASHLEN;
   while (l--) {
     if (*s < 'a' || *s > 'p') return 0;	/* illegal */
     s++;
@@ -518,7 +521,7 @@ int makefn(stralloc *sa,char item, unsigned long n, char *hash)
   return 1;
 }
 
-void link(struct msginfo *infop,char item,char axis,unsigned long msg,
+void alink(struct msginfo *infop,char item,char axis,unsigned long msg,
 		char *data,unsigned int l)
 /* links with targets other msg -> msg. If the link is for author, we    */
 /* still supply subject, since most navigation at the message level will */
@@ -651,7 +654,7 @@ void justpress()
 
 void homelink()
 {
-  register char *cp,*cp1,*cp2;
+  const char *cp,*cp1,*cp2;
 
   if (home && *home) {
     cp = home;
@@ -919,7 +922,7 @@ void gtdate(struct msginfo *infop,int flagfail)
   return;
 }
 
-indexlinks(struct msginfo *infop)
+int indexlinks(struct msginfo *infop)
 {
   unsigned long tmpmsg;
 
@@ -986,7 +989,7 @@ int show_index(struct msginfo *infop)
     infop->subject = subject.s;
     oput(strnum,fmt_uint0(strnum,(unsigned int) thismsg % 100,2));
     oputs(": ");
-    link(infop,ITEM_MESSAGE,ITEM_SUBJECT,thismsg,line.s+pos,line.len - pos - 1);
+    alink(infop,ITEM_MESSAGE,ITEM_SUBJECT,thismsg,line.s+pos,line.len - pos - 1);
     oputs("\n");
     if (ch == ':') {
       if (getln(&ssin,&line,&match,'\n') == -1)
@@ -997,7 +1000,7 @@ int show_index(struct msginfo *infop)
       if (pos != line.len) {
 	infop->date = date2yyyymm(line.s);
 	oputs("(");
-	link(infop,ITEM_AUTHOR,ITEM_AUTHOR,thismsg,line.s+pos+1,
+	alink(infop,ITEM_AUTHOR,ITEM_AUTHOR,thismsg,line.s+pos+1,
 		line.len - pos - 2);
 	oputs(")<BR>\n");
       }
@@ -1131,7 +1134,7 @@ if ((fd = open_read(fn.s)) == -1)
       linkitem = ITEM_AUTHOR;
     else
       linkitem = ITEM_SUBJECT;
-    link(infop,targetitem,linkitem,thismsg,line.s+pos,line.len - pos - 1);
+    alink(infop,targetitem,linkitem,thismsg,line.s+pos,line.len - pos - 1);
     oputs("<BR>\n");
   }
   close(fd);
@@ -1284,7 +1287,7 @@ void decode_mime_type(char *s,unsigned int l,unsigned int flagmime)
   return;
 }
 
-void decode_transfer_encoding(register char *s,register unsigned int l)
+void decode_transfer_encoding(char *s,unsigned int l)
 {
   unsigned int r;
   mime_current->ctenc = CTENC_NONE;
@@ -1292,7 +1295,7 @@ void decode_transfer_encoding(register char *s,register unsigned int l)
 			/* base64/QP ignored for multipart */
   r = CTENC_NONE;
   while (l && (*s == ' ' || *s == '\t')) { s++; l--; }	/* skip LWSP */
-s[l-1] = 0;
+  s[l-1] = 0;
   if (case_startb(s,l,"quoted-printable")) {
     r = CTENC_QP;
   } else if (case_startb(s,l,"base64")) {
@@ -1615,7 +1618,7 @@ int decode_cmd(char *s,struct msginfo *infop)
 /*          1 empty or at least cmd + msgnum. */
 /*            Guarantee: Only legal values accepted */
 {
-  register char ch;
+  char ch;
 
   infop->source = 0L;
   infop->date = 0L;

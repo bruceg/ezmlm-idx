@@ -1,5 +1,11 @@
+/*$Id$*/
+
+#include <unistd.h>
 #include "strerr.h"
 #include "substdio.h"
+#include "byte.h"
+#include "case.h"
+#include "str.h"
 #include "readwrite.h"
 #include "stralloc.h"
 #include "getln.h"

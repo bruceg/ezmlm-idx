@@ -1,11 +1,12 @@
 #ifndef COPY_H
 #define COPY_H
 
-/* copy (qq,fn,fatal) */
-extern void copy();
-extern void set_cpoutlocal();
-extern void set_cpouthost();
-extern void set_cptarget();
-extern void set_cpconfirm();
-extern void set_cpnum();
+extern void copy(struct qmail *qq,const char *fn,char q,const char *fatal);
+extern void set_cpoutlocal(const stralloc *);
+extern void set_cpouthost(const stralloc *);
+extern void set_cptarget(const char *);
+extern void set_cpconfirm(const char *);
+extern void set_cpnum(const char *);
+extern void set_cpverptarget(const char *);
+
 #endif

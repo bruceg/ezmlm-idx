@@ -126,7 +126,7 @@ compile case_startb.c case.h case_startb.c
 
 checktag.o: \
 compile checktag.c stralloc.h scan.h fmt.h strerr.h cookie.h \
-	errtxt.h subscribe.h
+errtxt.h subscribe.h slurp.h byte.h
 	./compile checktag.c
 
 choose: choose.sh warn-auto.sh
@@ -157,7 +157,7 @@ surfpcs.h uint32.h surfpcs.h cookie.c
 
 copy.o: \
 compile copy.c copy.h stralloc.h substdio.h str.h readwrite.h open.h qmail.h \
-strerr.h getln.h case.h errtxt.h mime.h error.h quote.h
+strerr.h getln.h case.h errtxt.h mime.h error.h quote.h byte.h
 	./compile copy.c
 
 date2yyyymm.o:\
@@ -165,7 +165,7 @@ compile date2yyyymm.c yyyymm.h
 	./compile date2yyyymm.c
 
 dateline.o:\
-compile dateline.c yyyymm.h stralloc.h fmt.h
+compile dateline.c yyyymm.h stralloc.h fmt.h cgi.h
 	./compile dateline.c
 
 date822fmt.o: \
@@ -284,8 +284,9 @@ ezmlm-archive.1
 
 ezmlm-archive.o: \
 compile ezmlm-archive.c alloc.h error.h stralloc.h gen_alloc.h str.h \
-sig.h slurp.h getconf.h strerr.h getln.h substdio.h readwrite.h \
-makehash.h fmt.h strerr.h errtxt.h idx.h idxthread.h sgetopt.h subgetopt.h
+sig.h slurp.h getconf.h strerr.h getln.h substdio.h readwrite.h lock.h \
+makehash.h fmt.h strerr.h errtxt.h idx.h idxthread.h sgetopt.h subgetopt.h \
+scan.h open.h
 	./compile ezmlm-archive.c
 
 ezmlm-cgi: \
@@ -304,7 +305,7 @@ ezmlm-cgi.1
 ezmlm-cgi.o: \
 compile ezmlm-cgi.c alloc.h direntry.h error.h stralloc.h gen_alloc.h str.h \
 sig.h slurp.h getconf.h strerr.h getln.h substdio.h readwrite.h env.h \
-makehash.h fmt.h strerr.h errtxt.h idx.h idxthread.h mime.h \
+makehash.h fmt.h strerr.h errtxt.h idx.h idxthread.h mime.h alloc.h cgi.h \
 constmap.h sgetopt.h subgetopt.h datetime.h now.h fork.h wait.h
 	./compile ezmlm-cgi.c
 
@@ -338,7 +339,8 @@ ezmlm-clean.o: \
 compile ezmlm-clean.c error.h stralloc.h gen_alloc.h str.h hdr.h \
 env.h sig.h slurp.h getconf.h strerr.h byte.h getln.h case.h copy.h mime.h \
 qmail.h substdio.h readwrite.h seek.h quote.h datetime.h now.h cookie.h \
-date822fmt.h direntry.h fmt.h strerr.h errtxt.h idx.h sgetopt.h subgetopt.h
+date822fmt.h direntry.h fmt.h strerr.h errtxt.h idx.h sgetopt.h subgetopt.h \
+open.h scan.h lock.h
 	./compile ezmlm-clean.c
 
 ezmlm-confirm: \
@@ -362,7 +364,7 @@ ezmlm-confirm.o: \
 compile ezmlm-confirm.c error.h stralloc.h gen_alloc.h str.h \
 env.h sig.h slurp.h getconf.h strerr.h byte.h getln.h case.h \
 qmail.h substdio.h readwrite.h seek.h quote.h datetime.h now.h \
-fmt.h strerr.h cookie.h errtxt.h idx.h copy.h mime.h \
+fmt.h strerr.h cookie.h errtxt.h idx.h copy.h mime.h open.h lock.h wrap.h \
 subgetopt.h sgetopt.h auto_bin.h fork.h wait.h
 	./compile ezmlm-confirm.c
 
@@ -380,9 +382,9 @@ ezmlm-cron.1
 	nroff -man ezmlm-cron.1 > ezmlm-cron.0
 
 ezmlm-cron.o: \
-compile ezmlm-cron.c strerr.h substdio.h stralloc.h error.h str.h \
-fork.h readwrite.h wait.h errtxt.h idx.h sgetopt.h auto_qmail.h \
-fmt.h auto_cron.h
+compile ezmlm-cron.c strerr.h substdio.h stralloc.h error.h str.h sig.h \
+fork.h readwrite.h wait.h errtxt.h idx.h sgetopt.h auto_qmail.h case.h \
+fmt.h auto_cron.h scan.h open.h lock.h byte.h getln.h 
 	./compile ezmlm-cron.c
 
 ezmlm-gate: \
@@ -424,7 +426,7 @@ compile ezmlm-get.c idx.h errtxt.h error.h getconf.h stralloc.h gen_alloc.h \
 str.h cookie.h env.h sig.h slurp.h strerr.h byte.h getln.h case.h qmail.h \
 substdio.h readwrite.h seek.h quote.h sgetopt.h subgetopt.h datetime.h now.h \
 date822fmt.h fmt.h strerr.h copy.h errtxt.h idx.h idxthread.h mime.h \
-constmap.h makehash.h hdr.h
+constmap.h makehash.h hdr.h open.h lock.h scan.h
 	./compile ezmlm-get.c
 
 ezmlm-get.0: \
@@ -441,7 +443,7 @@ alloc.a error.a str.a fd.a case.a fs.a getconf.o makehash.o surf.o mime.a
 	getconf.o makehash.o surf.o
 
 ezmlm-idx.o: \
-compile ezmlm-idx.c stralloc.h getconf.h \
+compile ezmlm-idx.c stralloc.h getconf.h byte.h \
 substdio.h subfd.h strerr.h error.h sgetopt.h \
 lock.h sig.h slurp.h open.h getln.h case.h \
 str.h fmt.h readwrite.h exit.h idx.h mime.h errtxt.h uint32.h
@@ -491,7 +493,8 @@ ezmlm-limit.1
 
 ezmlm-limit.o: \
 compile ezmlm-limit.c stralloc.h strerr.h substdio.h readwrite.h sig.h lock.h \
-getconf.h fmt.h now.h sgetopt.h error.h errtxt.h idx.h datetime.h
+getconf.h fmt.h now.h sgetopt.h error.h errtxt.h idx.h datetime.h scan.h \
+open.h
 	./compile ezmlm-limit.c
 
 ezmlm-list: \
@@ -557,8 +560,8 @@ byte.h ezmlm-manage.c getln.h ezmlm-manage.c case.h ezmlm-manage.c \
 qmail.h substdio.h qmail.h ezmlm-manage.c substdio.h substdio.h \
 ezmlm-manage.c readwrite.h ezmlm-manage.c seek.h ezmlm-manage.c \
 quote.h ezmlm-manage.c datetime.h ezmlm-manage.c now.h datetime.h \
-datetime.h now.h ezmlm-manage.c ezmlm-manage.c fmt.h \
-ezmlm-manage.c subscribe.h strerr.h strerr.h subscribe.h \
+datetime.h now.h ezmlm-manage.c ezmlm-manage.c fmt.h open.h lock.h scan.h \
+ezmlm-manage.c subscribe.h strerr.h strerr.h subscribe.h mime.h \
 sgetopt.h subgetopt.h cookie.h idx.h errtxt.h copy.h hdr.h
 	./compile ezmlm-manage.c
 
@@ -584,9 +587,9 @@ ezmlm-moderate.1
 	nroff -man ezmlm-moderate.1 > ezmlm-moderate.0
 
 ezmlm-moderate.o: \
-compile ezmlm-moderate.c error.h stralloc.h gen_alloc.h str.h \
+compile ezmlm-moderate.c error.h stralloc.h gen_alloc.h str.h open.h \
 env.h sig.h slurp.h getconf.h strerr.h byte.h getln.h case.h hdr.h \
-qmail.h substdio.h readwrite.h seek.h quote.h datetime.h now.h \
+qmail.h substdio.h readwrite.h seek.h quote.h datetime.h now.h lock.h \
 fmt.h strerr.h cookie.h errtxt.h idx.h copy.h mime.h \
 subgetopt.h sgetopt.h auto_bin.h fork.h wait.h
 	./compile ezmlm-moderate.c
@@ -608,7 +611,7 @@ ezmlm-request.0:
 ezmlm-request.o: \
 compile ezmlm-request.c stralloc.h subfd.h strerr.h error.h qmail.h env.h \
 sig.h open.h getln.h case.h str.h readwrite.h exit.h substdio.h quote.h \
-getconf.h constmap.h fmt.h byte.h errtxt.h idx.h datetime.h \
+getconf.h constmap.h fmt.h byte.h errtxt.h idx.h datetime.h mime.h \
 subscribe.h now.h copy.h cookie.h
 	./compile ezmlm-request.c
 
@@ -628,7 +631,7 @@ ezmlm-reject.1
 ezmlm-reject.o: \
 compile ezmlm-reject.c strerr.h substdio.h readwrite.h stralloc.h gen_alloc.h \
 stralloc.h getln.h sgetopt.h subgetopt.h constmap.h getconf.h errtxt.h \
-scan.h fmt.h idx.h qmail.h env.h seek.h
+scan.h fmt.h idx.h qmail.h env.h seek.h byte.h case.h str.h
 	./compile ezmlm-reject.c
 
 ezmlm-return: \
@@ -653,8 +656,7 @@ strerr.h ezmlm-return.c byte.h ezmlm-return.c case.h ezmlm-return.c \
 getln.h ezmlm-return.c substdio.h ezmlm-return.c error.h direntry.h \
 ezmlm-return.c quote.h ezmlm-return.c readwrite.h ezmlm-return.c \
 fmt.h ezmlm-return.c now.h datetime.h now.h ezmlm-return.c cookie.h \
-ezmlm-return.c subscribe.h strerr.h strerr.h subscribe.h \
-strerr.h strerr.h
+subscribe.h open.h scan.h lock.h slurpclose.h strerr.h
 	./compile ezmlm-return.c
 
 ezmlm-send: \
@@ -696,7 +698,7 @@ ezmlm-split.1
 	nroff -man ezmlm-split.1 > ezmlm-split.0
 
 ezmlm-split.o: \
-compile ezmlm-split.c error.h stralloc.h gen_alloc.h str.h \
+compile ezmlm-split.c error.h stralloc.h gen_alloc.h str.h open.h scan.h \
 env.h sig.h getconf.h strerr.h byte.h getln.h case.h \
 qmail.h substdio.h  readwrite.h quote.h \
 fmt.h errtxt.h idx.h uint32.h
@@ -773,7 +775,7 @@ ezmlm-tstdig.1
 ezmlm-tstdig.o: \
 compile ezmlm-tstdig.c strerr.h sgetopt.h getconf.h \
 sig.h now.h errtxt.h stralloc.h sig.h env.h fmt.h substdio.h readwrite.h \
-now.h idx.h
+now.h idx.h scan.h case.h str.h open.h
 	./compile ezmlm-tstdig.c
 
 ezmlm-unsub: \
@@ -812,10 +814,10 @@ ezmlm-warn.1
 	nroff -man ezmlm-warn.1 > ezmlm-warn.0
 
 ezmlm-warn.o: \
-compile ezmlm-warn.c direntry.h readwrite.h getln.h \
+compile ezmlm-warn.c direntry.h readwrite.h getln.h open.h scan.h lock.h \
 substdio.h stralloc.h gen_alloc.h slurp.h getconf.h byte.h error.h str.h \
-sig.h now.h datetime.h fmt.h cookie.h qmail.h substdio.h \
-qmail.h copy.h mime.h idx.h errtxt.h sgetopt.h subgetopt.h
+sig.h now.h datetime.h fmt.h cookie.h qmail.h substdio.h quote.h copy.h \
+mime.h idx.h errtxt.h sgetopt.h subgetopt.h
 	./compile ezmlm-warn.c
 
 ezmlm-weed: \
@@ -830,7 +832,7 @@ ezmlm-weed.1
 
 ezmlm-weed.o: \
 compile ezmlm-weed.c stralloc.h gen_alloc.h stralloc.h ezmlm-weed.c \
-str.h ezmlm-weed.c byte.h ezmlm-weed.c readwrite.h ezmlm-weed.c \
+str.h ezmlm-weed.c byte.h ezmlm-weed.c readwrite.h ezmlm-weed.c case.h \
 substdio.h ezmlm-weed.c getln.h ezmlm-weed.c strerr.h ezmlm-weed.c
 	./compile ezmlm-weed.c
 
@@ -979,7 +981,7 @@ scan_8long.o
 
 getconf.o: \
 compile getconf.c stralloc.h gen_alloc.h stralloc.h getconf.c slurp.h \
-getconf.c strerr.h getconf.c getconf.h getconf.c
+getconf.c strerr.h getconf.c getconf.h getconf.c byte.h
 	./compile getconf.c
 
 getln.0: \
@@ -1053,7 +1055,7 @@ fmt.h date822fmt.h
 	./compile hdr_datemsgid.c
 
 hdr_from.o: \
-compile hdr_from.c hdr.h qmail.h stralloc.h
+compile hdr_from.c hdr.h qmail.h stralloc.h quote.h
 	./compile hdr_from.c
 
 hdr_mime.o: \
@@ -1079,7 +1081,8 @@ byte.h install.c
 
 idxthread.o: \
 compile idxthread.c idxthread.h alloc.h error.h stralloc.h str.h lock.h idx.h \
-substdio.h fmt.h readwrite.h idx.h errtxt.h substdio.h byte.h yyyymm.h
+substdio.h fmt.h readwrite.h idx.h errtxt.h substdio.h byte.h yyyymm.h \
+open.h getln.h scan.h byte.h
 	./compile idxthread.c
 
 issub.o: \
@@ -1138,7 +1141,7 @@ make-makelib.sh auto-ccld.sh
 	chmod 755 make-makelib
 
 makehash.o: \
-makehash.c makehash.h surf.h uint32.h stralloc.h
+makehash.c makehash.h surf.h uint32.h stralloc.h byte.h
 	./compile makehash.c
 
 makelang: \
@@ -1203,14 +1206,14 @@ compile opensql.c error.h strerr.h errtxt.h \
 	./compile opensql.c
 
 putsubs.o: \
-compile putsubs.c error.h substdio.h strerr.h readwrite.h \
+compile putsubs.c error.h substdio.h strerr.h readwrite.h getln.h \
 str.h open.h case.h errtxt.h stralloc.h subscribe.h qmail.h fmt.h
 	./compile putsubs.c
 
 qmail.o: \
 compile qmail.c substdio.h qmail.c readwrite.h qmail.c wait.h qmail.c \
 exit.h qmail.c fork.h qmail.c fd.h qmail.c qmail.h substdio.h \
-substdio.h qmail.h qmail.c auto_qmail.h qmail.c env.h qmail.c
+substdio.h qmail.h qmail.c auto_qmail.h qmail.c env.h qmail.c str.h
 	./compile qmail.c
 
 quote.o: \
@@ -1228,8 +1231,8 @@ compile scan_ulong.c scan.h scan_ulong.c
 
 searchlog.o: \
 compile searchlog.c case.h stralloc.h scan.h open.h datetime.h errtxt.h str.h \
-	datetime.h date822fmt.h substdio.h readwrite.h strerr.h error.h \
-	subscribe.h
+datetime.h date822fmt.h substdio.h readwrite.h strerr.h error.h subscribe.h \
+getln.h
 	./compile searchlog.c
 
 seek.a: \
@@ -1307,7 +1310,7 @@ compile sig_pipe.c sig_pipe.c sig.h sig_pipe.c
 
 slurp.o: \
 compile slurp.c stralloc.h gen_alloc.h stralloc.h slurp.c slurp.h \
-slurp.c error.h slurp.c open.h slurp.c
+slurp.c error.h slurp.c open.h slurp.c slurpclose.h
 	./compile slurp.c
 
 slurpclose.o: \
@@ -1461,7 +1464,7 @@ compile subgetopt.c subgetopt.h subgetopt.h subgetopt.c
 subscribe.o: \
 compile subscribe.c stralloc.h gen_alloc.h stralloc.h \
 getln.h readwrite.h substdio.h strerr.h open.h byte.h case.h \
-lock.h error.h uint32.h subscribe.h idx.h fmt.h
+lock.h error.h uint32.h subscribe.h idx.h fmt.h str.h
 	./compile subscribe.c
 
 substdi.o: \

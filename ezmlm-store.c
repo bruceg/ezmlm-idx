@@ -2,6 +2,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include "stralloc.h"
 #include "subfd.h"
 #include "strerr.h"
@@ -24,6 +25,10 @@
 #include "cookie.h"
 #include "sgetopt.h"
 #include "errtxt.h"
+#include "byte.h"
+#include "case.h"
+#include "slurp.h"
+#include "quote.h"
 #include "hdr.h"
 #include "idx.h"
 #include "copy.h"

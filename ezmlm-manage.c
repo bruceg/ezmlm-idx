@@ -2,6 +2,8 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "error.h"
 #include "stralloc.h"
 #include "str.h"
@@ -26,6 +28,10 @@
 #include "sgetopt.h"
 #include "copy.h"
 #include "errtxt.h"
+#include "open.h"
+#include "lock.h"
+#include "scan.h"
+#include "mime.h"
 #include "hdr.h"
 #include "idx.h"
 #include "auto_version.h"

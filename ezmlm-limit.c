@@ -1,6 +1,8 @@
 /*$Id$*/
 
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "stralloc.h"
 #include "substdio.h"
 #include "readwrite.h"
@@ -12,6 +14,8 @@
 #include "now.h"
 #include "sgetopt.h"
 #include "error.h"
+#include "scan.h"
+#include "open.h"
 #include "errtxt.h"
 #include "idx.h"
 

@@ -1,3 +1,7 @@
+/*$Id$*/
+
+#include <unistd.h>
+#include "getln.h"
 #include "error.h"
 #include "strerr.h"
 #include "readwrite.h"

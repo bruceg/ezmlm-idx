@@ -1,6 +1,7 @@
 /* Public domain, from daemontools-0.76. */
 
 #include <sys/types.h>
+#include <unistd.h>
 #include "seek.h"
 
 #define SET 0 /* sigh */

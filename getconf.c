@@ -1,4 +1,6 @@
+/*$Id$*/
 #include "stralloc.h"
+#include "byte.h"
 #include "slurp.h"
 #include "strerr.h"
 #include "getconf.h"

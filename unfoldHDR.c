@@ -7,6 +7,8 @@
 #include "errtxt.h"
 #include "mime.h"
 
+extern void die_nomem(const char *);
+
 static stralloc tmpdata = {0};
 
 static int trimre(cpp,cpend,prefix,fatal)

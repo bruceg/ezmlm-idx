@@ -1,10 +1,13 @@
 /*$Id$*/
+
 #include "stralloc.h"
 #include "scan.h"
 #include "fmt.h"
 #include "cookie.h"
 #include "makehash.h"
 #include "strerr.h"
+#include "slurp.h"
+#include "byte.h"
 #include "errtxt.h"
 #include "subscribe.h"
 

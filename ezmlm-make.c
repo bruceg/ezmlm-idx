@@ -1,7 +1,9 @@
 /*Id: ezmlm-make.c,v 1.31 1997/12/08 23:44:02 lindberg Exp lindberg $*/
 
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/time.h>
+#include <unistd.h>
 #include "sgetopt.h"
 #include "stralloc.h"
 #include "strerr.h"

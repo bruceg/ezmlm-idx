@@ -1,6 +1,9 @@
 /*$Id$*/
+
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "direntry.h"
 #include "readwrite.h"
 #include "getln.h"
@@ -20,6 +23,11 @@
 #include "cookie.h"
 #include "qmail.h"
 #include "errtxt.h"
+#include "quote.h"
+#include "open.h"
+#include "scan.h"
+#include "lock.h"
+#include "copy.h"
 #include "mime.h"
 #include "auto_version.h"
 #include "hdr.h"

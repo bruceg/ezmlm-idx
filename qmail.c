@@ -1,7 +1,11 @@
+/*$Id$*/
+
+#include <unistd.h>
 #include "substdio.h"
 #include "readwrite.h"
 #include "wait.h"
 #include "env.h"
+#include "str.h"
 #include "exit.h"
 #include "fork.h"
 #include "fd.h"

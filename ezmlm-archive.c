@@ -1,5 +1,8 @@
 /*$Id$*/
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "alloc.h"
 #include "error.h"
 #include "stralloc.h"
@@ -14,6 +17,9 @@
 #include "sgetopt.h"
 #include "idxthread.h"
 #include "makehash.h"
+#include "lock.h"
+#include "open.h"
+#include "scan.h"
 #include "idx.h"
 #include "errtxt.h"
 #include "auto_version.h"

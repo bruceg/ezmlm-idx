@@ -1,4 +1,6 @@
 /*$Id$*/
+
+#include <unistd.h>
 #include "hdr.h"
 #include "qmail.h"
 #include "stralloc.h"

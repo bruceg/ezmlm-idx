@@ -1,6 +1,7 @@
 /*$Id$*/
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include "error.h"
 #include "stralloc.h"
 #include "str.h"
@@ -25,6 +26,9 @@
 #include "fmt.h"
 #include "errtxt.h"
 #include "copy.h"
+#include "open.h"
+#include "scan.h"
+#include "lock.h"
 #include "hdr.h"
 #include "idx.h"
 #include "mime.h"
@@ -268,7 +272,7 @@ int argc;
 char **argv;
 {
   int fdlock;
-  int delay;
+  unsigned long delay;
   int opt;
   (void) umask(022);
   sig_pipeignore();

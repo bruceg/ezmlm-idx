@@ -11,12 +11,17 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include "error.h"
 #include "alloc.h"
 #include "str.h"
 #include "stralloc.h"
 #include "strerr.h"
 #include "lock.h"
+#include "open.h"
+#include "getln.h"
+#include "scan.h"
+#include "byte.h"
 #include "idx.h"
 #include "errtxt.h"
 #include "substdio.h"

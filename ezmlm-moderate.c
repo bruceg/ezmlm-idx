@@ -2,6 +2,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include "error.h"
 #include "case.h"
 #include "stralloc.h"
@@ -28,6 +29,9 @@
 #include "errtxt.h"
 #include "copy.h"
 #include "hdr.h"
+#include "mime.h"
+#include "open.h"
+#include "lock.h"
 #include "idx.h"
 #include "wrap.h"
 #include "auto_version.h"

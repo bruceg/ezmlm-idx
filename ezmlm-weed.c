@@ -1,6 +1,10 @@
+/*$Id$*/
+
+#include <unistd.h>
 #include "stralloc.h"
 #include "str.h"
 #include "byte.h"
+#include "case.h"
 #include "readwrite.h"
 #include "substdio.h"
 #include "getln.h"

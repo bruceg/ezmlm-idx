@@ -1,9 +1,12 @@
 /*$Id$*/
 
 #include "stralloc.h"
+#include "byte.h"
 #include "surf.h"
 #include "uint32.h"
 #include "makehash.h"
+
+extern void die_nomem(void);
 
 typedef struct {
   uint32 seed[32];

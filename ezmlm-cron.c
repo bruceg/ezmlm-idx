@@ -1,5 +1,8 @@
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <pwd.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "strerr.h"
 #include "stralloc.h"
 #include "sgetopt.h"
@@ -9,6 +12,13 @@
 #include "fmt.h"
 #include "wait.h"
 #include "readwrite.h"
+#include "sig.h"
+#include "case.h"
+#include "scan.h"
+#include "open.h"
+#include "lock.h"
+#include "byte.h"
+#include "getln.h"
 #include "auto_qmail.h"
 #include "auto_cron.h"
 #include "auto_version.h"
@@ -63,7 +73,7 @@ int flagours;
 int foundlocal;
 int foundmatch = 0;
 int nolists = 0;
-int maxlists;
+unsigned long maxlists;
 unsigned int pos,pos2,poslocal,len;
 unsigned int lenhost,lenlocal;
 unsigned int part0start,part0len;

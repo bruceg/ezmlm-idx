@@ -7,6 +7,8 @@
 #include "mime.h"
 #include "errtxt.h"
 
+extern void die_nomem(const char *);
+
 void concatHDR(indata,n,outdata,fatal)
 char *indata;
 unsigned int n;

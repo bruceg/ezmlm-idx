@@ -1,5 +1,9 @@
 /*$Id$*/
+
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "direntry.h"
 #include "stralloc.h"
 #include "str.h"
@@ -10,6 +14,10 @@
 #include "strerr.h"
 #include "byte.h"
 #include "case.h"
+#include "open.h"
+#include "scan.h"
+#include "lock.h"
+#include "slurpclose.h"
 #include "getln.h"
 #include "substdio.h"
 #include "error.h"

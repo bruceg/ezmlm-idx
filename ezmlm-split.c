@@ -2,6 +2,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include "error.h"
 #include "stralloc.h"
 #include "str.h"
@@ -9,6 +10,8 @@
 #include "sig.h"
 #include "slurp.h"
 #include "getconf.h"
+#include "open.h"
+#include "scan.h"
 #include "strerr.h"
 #include "byte.h"
 #include "getln.h"

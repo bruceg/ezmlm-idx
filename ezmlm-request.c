@@ -1,4 +1,7 @@
 /*$Id$*/
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "stralloc.h"
 #include "subfd.h"
 #include "strerr.h"
@@ -25,6 +28,8 @@
 #include "errtxt.h"
 #include "copy.h"
 #include "cookie.h"
+#include "subscribe.h"
+#include "mime.h"
 #include "hdr.h"
 #include "idx.h"
 #include "auto_version.h"

@@ -1,4 +1,7 @@
 /*$Id$*/
+
+#include <unistd.h>
+#include "getln.h"
 #include "case.h"
 #include "scan.h"
 #include "stralloc.h"

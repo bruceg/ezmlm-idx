@@ -15,6 +15,7 @@
 /* lower case 'q'/'b'! If code is 'H' substitution of target and   */
 /* verptarget is prevented as it may create illegal headers.       */
 
+#include <unistd.h>
 #include "stralloc.h"
 #include "substdio.h"
 #include "strerr.h"
@@ -28,6 +29,11 @@
 #include "quote.h"
 #include "copy.h"
 #include "mime.h"
+#include "open.h"
+#include "byte.h"
+
+extern void die_nomem(const char *);
+
 			/* for public setup functions only */
 #define FATAL "copy: fatal: "
 
@@ -38,60 +44,49 @@ static stralloc outlocal = {0};
 static stralloc outhost = {0};
 static substdio sstext;
 static char textbuf[256];
-static char *target = "?????";
-static char *verptarget = "?????";
-static char *confirm = "?????";
+static const char *target = "?????";
+static const char *verptarget = "?????";
+static const char *confirm = "?????";
 static unsigned int confirmlocal;
-static char *szmsgnum = "?????";
+static const char *szmsgnum = "?????";
 
-void set_cpoutlocal(ln)
-stralloc *ln;
+void set_cpoutlocal(const stralloc *ln)
 {	/* must be quoted for safety. Note that substitutions that use */
 	/* outlocal within an atom may create illegal addresses */
   if (!quote(&outlocal,ln))
         strerr_die2x(111,FATAL,ERR_NOMEM);
 }
 
-void set_cpouthost(ln)
-stralloc *ln;
+void set_cpouthost(const stralloc *ln)
 {
   if (!stralloc_copy(&outhost,ln))
         strerr_die2x(111,FATAL,ERR_NOMEM);
 }
 
-void set_cptarget(tg)
-char *tg;
+void set_cptarget(const char *tg)
 {
   target = tg;
 }
 
-void set_cpverptarget(tg)
-char *tg;
+void set_cpverptarget(const char *tg)
 {
   verptarget = tg;
 }
 
-void set_cpconfirm(cf)
-char *cf;
+void set_cpconfirm(const char *cf)
 {
   confirm = cf;
   confirmlocal = str_chr(cf, '@');
 }
 
-void set_cpnum(cf)
-char *cf;
+void set_cpnum(const char *cf)
 {
   szmsgnum = cf;
 }
 
 static struct qmail *qq;
 
-static void codeput(l,n,code,fatal)
-char *l;
-unsigned int n;
-char code;
-char *fatal;
-
+static void codeput(const char *l,unsigned int n,char code,const char *fatal)
 {
   if (!code || code == 'H')
     qmail_put(qq,l,n);
@@ -104,21 +99,17 @@ char *fatal;
   }
 }
 
-static void codeputs(l,code,fatal)
-char *l;
-char code;
-char *fatal;
+static void codeputs(const char *l,char code,const char *fatal)
 {
   codeput(l,str_len(l),code,fatal);
 }
 
-void copy(qqp,fn,q,fatal)
-struct qmail *qqp;
-char *fn;		/* text file name */
-char q;			/* = '\0' for regular output, 'B' for base64, */
-			/* 'Q' for quoted printable,'H' for header    */
-char *fatal;		/* FATAL error string */
-
+void copy(struct qmail *qqp,
+	  const char *fn,	/* text file name */
+	  char q,		/* '\0' for regular output, 'B' for base64, */
+				/* 'Q' for quoted printable,'H' for header  */
+	  const char *fatal	/* FATAL error string */
+	  )
 {
   int fd;
   int match, done;
