@@ -1,6 +1,7 @@
 #ifndef WRAP_H
 #define WRAP_H
 
+extern void wrap_execsh(const char *command, const char *FATAL);
 extern void wrap_execv(const char **argv, const char *FATAL);
 extern void wrap_execvp(const char **argv, const char *FATAL);
 extern void wrap_exitcode(int pid, const char *FATAL);

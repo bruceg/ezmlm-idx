@@ -36,7 +36,6 @@ stralloc storeopt = {0};
 void *psql = (void *) 0;
 
 char szchar[2] = "-";
-  const char *sendargs[4];
   int child;
   const char *pmod;
 
@@ -45,14 +44,12 @@ int mailprog(s)
 {
     int r;
 
-    sendargs[0] = "/bin/sh";	/* 100 perm error, 111 temp, 99 dom ok */
-    sendargs[1] = "-c";		/* 0 rec ok, others bounce */
-    sendargs[2] = s;
-    sendargs[3] = (char *)0;
     if ((child = wrap_fork(FATAL)) == 0)
-      wrap_execv(sendargs, FATAL);
+      wrap_execsh(s, FATAL);
     /* parent */
     switch((r = wrap_waitpid(child, FATAL))) {
+      /* 100 perm error, 111 temp, 99 dom ok */
+      /* 0 rec ok, others bounce */
       case 0: case 99: case 100: break;
       case 111:					/* temp error */
         strerr_die2x(111,FATAL,ERR_CHILD_TEMP);
@@ -150,8 +147,6 @@ char **argv;
     }
   }
 
-  sendargs[0] = "/bin/sh";
-  sendargs[1] = "-c";
   if (!stralloc_copys(&send,auto_bin)) die_nomem();
   if (pmod) {
     if (!stralloc_cats(&send,"/ezmlm-send")) die_nomem();
@@ -169,22 +164,16 @@ char **argv;
   if (!stralloc_cats(&send,dir)) die_nomem();
   if (!stralloc_cats(&send,"'")) die_nomem();
   if (!stralloc_0(&send)) die_nomem();
-  sendargs[2] = send.s;
-  sendargs[3] = 0;
 
   if (dontact) {
-    const char **s;
-    for (s = sendargs; *s; s++) {
-      substdio_puts(subfderr, *s);
-      if (s[1]) substdio_puts(subfderr, " ");
-    }
+    substdio_puts(subfderr, send.s);
     substdio_putsflush(subfderr, "\n");
     return;
   }
 
   if ((child = wrap_fork(FATAL)) == 0)
-    wrap_execv(sendargs, FATAL);
-   /* parent */
-   wrap_exitcode(child, FATAL);
+    wrap_execsh(send.s, FATAL);
+  /* parent */
+  wrap_exitcode(child, FATAL);
 }
 

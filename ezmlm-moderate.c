@@ -211,7 +211,7 @@ char **argv;
   unsigned int pos,i;
   int child;
   int opt;
-  const char *sendargs[4];
+  const char *command;
   char *cp,*cpnext,*cpfirst,*cplast,*cpafter;
 
   (void) umask(022);
@@ -550,10 +550,8 @@ char **argv;
       strerr_die4sys(111,FATAL,ERR_SEEK,fnmsg.s,": ");
 
 /* ##### NO REASON TO USE SH HERE ##### */
-        sendargs[0] = "/bin/sh";
-        sendargs[1] = "-c";
         if (argc > optind) {
-          sendargs[2] = argv[optind];
+          command = argv[optind];
         } else {
           if (!stralloc_copys(&send,auto_bin)) die_nomem();
           if (!stralloc_cats(&send,"/ezmlm-send")) die_nomem();
@@ -563,14 +561,13 @@ char **argv;
           if (!stralloc_cats(&send,dir)) die_nomem();
           if (!stralloc_cats(&send,"'")) die_nomem();
           if (!stralloc_0(&send)) die_nomem();
-          sendargs[2] = send.s;
+          command = send.s;
         }
-        sendargs[3] = 0;
 
     if ((child = wrap_fork(FATAL)) == 0) {
       close(0);
       dup(fd);	/* make fnmsg.s stdin */
-      wrap_execv(sendargs, FATAL);
+      wrap_execsh(command, FATAL);
     }
       /* parent */
       close(fd);

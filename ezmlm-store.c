@@ -161,7 +161,6 @@ char **argv;
   int opt;
   unsigned int i;
   char szchar[2] = "-";
-  const char *sendargs[4];
   int child;
 
   (void) umask(022);
@@ -207,8 +206,6 @@ char **argv;
   flagmodpost = getconf_line(&moderators,"modpost",0,FATAL,dir);
   flagremote = getconf_line(&line,"remote",0,FATAL,dir);
   if (!flagmodpost) {			/* not msg-mod. Pipe to ezmlm-send */
-    sendargs[0] = "/bin/sh";
-    sendargs[1] = "-c";
     if (!stralloc_copys(&line,auto_bin)) die_nomem();
     if (!stralloc_cats(&line,"/ezmlm-send")) die_nomem();
     if (sendopt.len > 2)
@@ -217,10 +214,8 @@ char **argv;
     if (!stralloc_cats(&line,dir)) die_nomem();
     if (!stralloc_cats(&line,"'")) die_nomem();
     if (!stralloc_0(&line)) die_nomem();
-    sendargs[2] = line.s;
-    sendargs[3] = 0;
     if ((child = wrap_fork(FATAL)) == 0)
-      wrap_execvp(sendargs, FATAL);
+      wrap_execsh(line.s, FATAL);
     /* parent */
     wrap_exitcode(child, FATAL);
   }

@@ -1566,9 +1566,13 @@ compile wait_pid.c wait_pid.c wait_pid.c error.h haswaitp.h
 	./compile wait_pid.c
 
 wrap.a: \
-makelib wrap_execv.o wrap_exitcode.o wrap_fork.o wrap_waitpid.o
-	./makelib wrap.a wrap_execv.o wrap_exitcode.o wrap_fork.o \
-	wrap_waitpid.o
+makelib wrap_execsh.o wrap_execv.o wrap_exitcode.o wrap_fork.o wrap_waitpid.o
+	./makelib wrap.a wrap_execsh.o wrap_execv.o wrap_exitcode.o \
+	wrap_fork.o wrap_waitpid.o
+
+wrap_execsh.o: \
+compile wrap_execsh.c wrap.h
+	./compile wrap_execsh.c
 
 wrap_execv.o: \
 compile wrap_execv.c error.h errtxt.h strerr.h wrap.h
