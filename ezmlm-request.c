@@ -450,10 +450,10 @@ char **argv;
           while (pos < len &&
 		(line.s[pos] == ' ' || line.s[pos] == '\t')) ++pos;
           if (!stralloc_append(&subject," ")) die_nomem();
-          if (!stralloc_copy(&subject,line.s+pos,len-pos+1)) die_nomem();
-      }
-      if (!match)
-        break;
+          if (!stralloc_catb(&subject,line.s+pos,len-pos+1)) die_nomem();
+	}
+	if (!match)
+	  break;
     }
     if (!cfname) {		 /* listserv@/majordomo@ ignore */
       register char ch;

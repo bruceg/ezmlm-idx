@@ -30,6 +30,8 @@ in the next version.
 
 =========================
 -Updated ezmlmrc.fr.  Thanks Jean-Marc Lasgouttes.
+-Fixed bug in ezmlm-request when dealing with continuation lines.
+ Thanks Sami Farin.
 
 ezmlm-idx-0.42, 20040114 (New maintainer: Bruce Guenter <bruceg@em.ca>)
 =======================================================================
