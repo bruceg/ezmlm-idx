@@ -79,9 +79,6 @@ STRINGS='strings'
 TAIL='tail'
 UNSET='unset'
 WC='wc'
-# if you don't have this, you can put 'echo "user"' where user is the current
-# login user name.
-WHOAMI='whoami'
 
 ###################### END CONFIRGRABLE ITEMS #########################
 if ${ECHO} -n | grep n > /dev/null 2>&1; then
@@ -98,6 +95,22 @@ if ps auxw > /dev/null 2>&1; then
 	PS='ps auxw'
 else
 	PS='ps -ef'
+fi
+
+if (whoami) > /dev/null 2>&1; then
+	USER=`whoami`
+elif (id) > /dev/null 2>&1; then
+	USER=`id | cut -d'(' -f2 | cut -d')' -f1`
+# the remaining two tests work only if "su -" was used
+# perhaps delete them
+elif (logname) > /dev/null 2>&1; then
+	USER=`logname`
+elif (who am i) > /dev/null 2>&1; then
+	USER=`who am i | cut -d' ' -f1 | cut -d'!' -f2`
+else
+	${ECHO} "Could not determine current user name."
+	${ECHO} "If you're not \"${EZTEST}\" the test will fail."
+	USER="${EZTEST}"
 fi
 
 SQLUSER=''	# must be empty
@@ -165,10 +178,6 @@ done
 if [ -z "$SQLUSER" ]; then
 	SQLUSER="$SQLUSR"
 fi
-
-USER=`${WHOAMI}` >/dev/null 2>&1 || \
-	{ ${ECHO} "whoami doesn't work. If you're not \"${EZTEST}\" the";
-	  ${ECHO} "will fail."; USER="${EZTEST}"; }
 
 if [ "$USER" != "${EZTEST}" ]; then 
   ${ECHO} "Must be user ${EZTEST} to execute"; exit 99
