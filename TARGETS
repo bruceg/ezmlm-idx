@@ -110,6 +110,9 @@ ezmlm-mktab.0
 ezmlm-moderate
 ezmlm-moderate.0
 ezmlm-moderate.o
+ezmlm-receipt
+ezmlm-receipt.0
+ezmlm-receipt.o
 ezmlm-reject
 ezmlm-reject.0
 ezmlm-reject.o

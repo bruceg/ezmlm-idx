@@ -3,6 +3,8 @@
 /* Set up instead of ezmlm-return in DIR/bouncer of main list */
 
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
 #include <unistd.h>
 #include "direntry.h"
 #include "stralloc.h"
@@ -203,8 +205,8 @@ char **argv;
   /* now see if -digest-return- */
   if (flagdig == 1) {
     flagdig = 0;
-    if (str_len(local) >= str_len(def) + 14)
-      if (str_start(local + str_len(local) - 14 - str_len(def),"digest-"))
+    if (str_len(local) >= str_len(action) + 14)
+      if (str_start(local + str_len(local) - 14 - str_len(action),"digest-"))
 	flagdig = 2;
   }
   if (flagdig) {
