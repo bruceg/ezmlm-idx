@@ -179,7 +179,7 @@ char **argv;
   if (!stralloc_0(&user)) die_nomem();
   if (!(ppasswd = getpwuid(euid)))
     strerr_die2x(100,FATAL,ERR_EUID);
-  if (!stralloc_copys(&dir.s,ppasswd->pw_dir)) die_nomem();
+  if (!stralloc_copys(&dir,ppasswd->pw_dir)) die_nomem();
   if (!stralloc_0(&dir)) die_nomem();
   if (!stralloc_copys(&euser,ppasswd->pw_name)) die_nomem();
   if (!stralloc_0(&euser)) die_nomem();
