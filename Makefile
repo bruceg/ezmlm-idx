@@ -322,9 +322,9 @@ ezmlm-check.1
 ezmlm-clean: \
 load ezmlm-clean.o auto_qmail.o auto_version.o getconf.o copy.o mime.a \
 now.o datetime.o date822fmt.o slurpclose.o slurp.o qmail.o quote.o \
-getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a surf.a \
+getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a surf.a hdr.a \
 error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a cookie.o getopt.a
-	./load ezmlm-clean auto_qmail.o auto_version.o getconf.o copy.o \
+	./load ezmlm-clean auto_qmail.o auto_version.o getconf.o copy.o hdr.a \
 	mime.a now.o datetime.o date822fmt.o slurpclose.o slurp.o qmail.o \
 	quote.o getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a \
 	error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a cookie.o \
@@ -335,7 +335,7 @@ ezmlm-clean.1
 	nroff -man ezmlm-clean.1 > ezmlm-clean.0
 
 ezmlm-clean.o: \
-compile ezmlm-clean.c error.h stralloc.h gen_alloc.h str.h \
+compile ezmlm-clean.c error.h stralloc.h gen_alloc.h str.h hdr.h \
 env.h sig.h slurp.h getconf.h strerr.h byte.h getln.h case.h copy.h mime.h \
 qmail.h substdio.h readwrite.h seek.h quote.h datetime.h now.h cookie.h \
 date822fmt.h direntry.h fmt.h strerr.h errtxt.h idx.h sgetopt.h subgetopt.h
@@ -408,12 +408,12 @@ fork.h wait.h exit.h getln.h open.h
 ezmlm-get: \
 load ezmlm-get.o idxthread.o subdb.a auto_qmail.o getopt.a now.o getconf.o \
 datetime.o date822fmt.o slurpclose.o slurp.o qmail.o quote.o makehash.o \
-cookie.o surf.a yyyymm.a auto_version.o \
+cookie.o surf.a yyyymm.a auto_version.o hdr.a \
 constmap.o getln.a env.a sig.a strerr.a substdio.a mime.a stralloc.a alloc.a \
 error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a copy.o sql.lib
 	./load ezmlm-get idxthread.o subdb.a auto_qmail.o getopt.a getconf.o \
 	now.o datetime.o date822fmt.o cookie.o makehash.o slurpclose.o slurp.o \
-	yyyymm.a auto_version.o \
+	yyyymm.a auto_version.o hdr.a \
 	constmap.o substdio.a copy.o mime.a strerr.a stralloc.a alloc.a \
 	qmail.o quote.o surf.a getln.a env.a sig.a \
 	error.a str.a fs.a case.a \
@@ -424,7 +424,7 @@ compile ezmlm-get.c idx.h errtxt.h error.h getconf.h stralloc.h gen_alloc.h \
 str.h cookie.h env.h sig.h slurp.h strerr.h byte.h getln.h case.h qmail.h \
 substdio.h readwrite.h seek.h quote.h sgetopt.h subgetopt.h datetime.h now.h \
 date822fmt.h fmt.h strerr.h copy.h errtxt.h idx.h idxthread.h mime.h \
-constmap.h makehash.h
+constmap.h makehash.h hdr.h
 	./compile ezmlm-get.c
 
 ezmlm-get.0: \
@@ -580,11 +580,11 @@ load ezmlm-manage.o auto_qmail.o auto_version.o getconf.o subdb.a log.o \
 cookie.o now.o datetime.o date822fmt.o slurpclose.o slurp.o qmail.o \
 quote.o surf.a getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a \
 error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a getopt.a \
-mime.a copy.o auto_version.o sql.lib
+mime.a copy.o auto_version.o hdr.a sql.lib
 	./load ezmlm-manage subdb.a auto_qmail.o getconf.o copy.o \
 	mime.a log.o cookie.o now.o datetime.o date822fmt.o slurpclose.o \
 	slurp.o qmail.o quote.o surf.a getln.a env.a sig.a strerr.a \
-	substdio.a stralloc.a alloc.a error.a str.a fs.a case.a \
+	substdio.a stralloc.a alloc.a error.a str.a fs.a case.a hdr.a \
 	open.a seek.a wait.a lock.a fd.a getopt.a auto_version.o \
 	`cat sql.lib`
 
@@ -603,7 +603,7 @@ ezmlm-manage.c readwrite.h ezmlm-manage.c seek.h ezmlm-manage.c \
 quote.h ezmlm-manage.c datetime.h ezmlm-manage.c now.h datetime.h \
 datetime.h now.h ezmlm-manage.c date822fmt.h ezmlm-manage.c fmt.h \
 ezmlm-manage.c subscribe.h strerr.h strerr.h subscribe.h \
-sgetopt.h subgetopt.h cookie.h idx.h errtxt.h copy.h
+sgetopt.h subgetopt.h cookie.h idx.h errtxt.h copy.h hdr.h
 	./compile ezmlm-manage.c
 
 ezmlm-mktab.0: \
@@ -614,9 +614,9 @@ ezmlm-moderate: \
 load ezmlm-moderate.o auto_qmail.o getconf.o auto_bin.o copy.o mime.a \
 cookie.o now.o datetime.o date822fmt.o slurpclose.o slurp.o qmail.o quote.o \
 surf.a getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a wrap.a \
-error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a getopt.a \
+error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a getopt.a hdr.a \
 auto_version.o
-	./load ezmlm-moderate auto_qmail.o getconf.o copy.o mime.a \
+	./load ezmlm-moderate auto_qmail.o getconf.o copy.o mime.a hdr.a \
 	cookie.o now.o datetime.o date822fmt.o slurpclose.o slurp.o \
 	qmail.o quote.o surf.a getln.a env.a sig.a wrap.a strerr.a \
 	substdio.a stralloc.a alloc.a error.a str.a fs.a case.a \
@@ -629,7 +629,7 @@ ezmlm-moderate.1
 
 ezmlm-moderate.o: \
 compile ezmlm-moderate.c error.h stralloc.h gen_alloc.h str.h \
-env.h sig.h slurp.h getconf.h strerr.h byte.h getln.h case.h \
+env.h sig.h slurp.h getconf.h strerr.h byte.h getln.h case.h hdr.h \
 qmail.h substdio.h readwrite.h seek.h quote.h datetime.h now.h \
 date822fmt.h fmt.h strerr.h cookie.h errtxt.h idx.h copy.h mime.h \
 subgetopt.h sgetopt.h auto_bin.h fork.h wait.h
@@ -637,11 +637,11 @@ subgetopt.h sgetopt.h auto_bin.h fork.h wait.h
 
 ezmlm-request: \
 load ezmlm-request.o subdb.a getconf.o constmap.o getln.a auto_qmail.o qmail.o \
-strerr.a slurpclose.o slurp.o getopt.a env.a open.a fd.a sig.a case.a \
+strerr.a slurpclose.o slurp.o getopt.a env.a open.a fd.a sig.a case.a hdr.a \
 substdio.a error.a stralloc.a alloc.a str.a case.a fs.a wait.a seek.a \
 date822fmt.o now.o datetime.o quote.o copy.o mime.a sql.lib
 	./load ezmlm-request subdb.a getconf.o constmap.o getln.a auto_qmail.o \
-	qmail.o date822fmt.o datetime.o now.o quote.o auto_version.o \
+	qmail.o date822fmt.o datetime.o now.o quote.o auto_version.o hdr.a \
 	slurpclose.o slurp.o env.a open.a sig.a wait.a getopt.a \
 	strerr.a substdio.a error.a copy.o stralloc.a alloc.a substdio.a \
 	str.a case.a fs.a fd.a sig.a wait.a seek.a mime.a `cat sql.lib`
@@ -703,12 +703,12 @@ strerr.h strerr.h
 
 ezmlm-send: \
 load ezmlm-send.o auto_qmail.o getconf.o qmail.o constmap.o slurp.o \
-slurpclose.o wait.a getln.a strerr.a sig.a env.a open.a lock.a sql.lib \
+slurpclose.o wait.a getln.a strerr.a sig.a env.a open.a lock.a sql.lib hdr.a \
 substdio.a cookie.o stralloc.a alloc.a error.a str.a fd.a case.a fs.a surf.a \
 getopt.a copy.o mime.a subdb.a makehash.o surf.o makehash.o str.a \
 quote.o auto_version.o
 	./load ezmlm-send subdb.a cookie.o surf.a auto_qmail.o getconf.o \
-	getopt.a qmail.o quote.o constmap.o slurp.o slurpclose.o \
+	getopt.a qmail.o quote.o constmap.o slurp.o slurpclose.o hdr.a \
 	wait.a getln.a strerr.a sig.a env.a open.a lock.a substdio.a \
 	stralloc.a alloc.a error.a fd.a case.a fs.a getopt.a copy.o \
 	mime.a makehash.o str.a auto_version.o `cat sql.lib`
@@ -797,8 +797,8 @@ load ezmlm-store.o auto_qmail.o getconf.o subdb.a log.o auto_bin.o mime.a \
 cookie.o now.o datetime.o date822fmt.o slurpclose.o slurp.o qmail.o quote.o \
 surf.a getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a sql.lib \
 error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a getopt.a copy.o \
-wrap.a auto_version.o
-	./load ezmlm-store auto_qmail.o getconf.o subdb.a copy.o mime.a \
+hdr.a wrap.a auto_version.o
+	./load ezmlm-store auto_qmail.o getconf.o subdb.a copy.o mime.a hdr.a \
 	log.o cookie.o now.o datetime.o date822fmt.o slurpclose.o wrap.a \
 	slurp.o qmail.o quote.o surf.a getln.a env.a sig.a strerr.a \
 	substdio.a stralloc.a alloc.a error.a str.a fs.a case.a \
@@ -1117,6 +1117,14 @@ trysgact.c compile load
 
 haswaitp.h: choose compile haswaitp.h1 haswaitp.h2 load trywaitp.c
 	./choose cl trywaitp haswaitp.h1 haswaitp.h2 > haswaitp.h
+
+hdr.a: \
+makelib hdr_transferenc.o
+	./makelib hdr.a hdr_transferenc.o
+
+hdr_transferenc.o: \
+compile hdr_transferenc.c hdr.h qmail.h
+	./compile hdr_transferenc.c
 
 install: \
 load install.o getln.a strerr.a substdio.a stralloc.a alloc.a open.a \

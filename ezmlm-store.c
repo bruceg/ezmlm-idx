@@ -25,6 +25,7 @@
 #include "cookie.h"
 #include "sgetopt.h"
 #include "errtxt.h"
+#include "hdr.h"
 #include "idx.h"
 #include "copy.h"
 #include "subscribe.h"
@@ -119,18 +120,6 @@ char textbuf[512];
 
 substdio sssub;
 char subbuf[512];
-
-void transferenc()
-{
-	if (flagcd) {
-	  qmail_puts(&qq,"\nContent-Transfer-Encoding: ");
-          if (flagcd == 'Q')
-            qmail_puts(&qq,"Quoted-Printable\n\n");
-          else
-	    qmail_puts(&qq,"base64\n\n");
-        } else
-          qmail_puts(&qq,"\n\n");
-}
 
 void makehash(act)
 stralloc *act;					/* has to be 0-terminated  */
@@ -417,7 +406,7 @@ char **argv;
     qmail_put(&qq,boundary,COOKIE);
     qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
     qmail_puts(&qq,charset.s);
-    transferenc();
+    hdr_transferenc();
   } else {
     qmail_put(&qq,subject.s,subject.len);
     qmail_puts(&qq,"\n\n");

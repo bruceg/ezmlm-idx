@@ -26,6 +26,7 @@
 #include "errtxt.h"
 #include "makehash.h"
 #include "cookie.h"
+#include "hdr.h"
 #include "idx.h"
 #include "copy.h"
 #include "auto_version.h"
@@ -322,18 +323,6 @@ int idx_copy_insertsubject()
   if (rename(fnifn.s,fnif.s) == -1)
     strerr_die4x(111,FATAL,ERR_MOVE,fnifn.s,": ");
   return r;
-}
-
-void transferenc()
-{
-	if (flagcd) {
-	  qmail_puts(&qq,"\nContent-Transfer-Encoding: ");
-          if (flagcd == 'Q')
-            qmail_puts(&qq,"Quoted-printable\n\n");
-          else
-	    qmail_puts(&qq,"base64\n\n");
-        } else
-          qmail_puts(&qq,"\n\n");
 }
 
 void getcharset()
@@ -698,7 +687,7 @@ char **argv;
             qmail_put(&qq,boundary.s,boundary.len);
             qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
             qmail_puts(&qq,charset.s);
-            transferenc();		/* trailer for multipart message */
+            hdr_transferenc();		/* trailer for multipart message */
 	    copy(&qq,"text/trailer",flagcd,FATAL);
             if (flagcd == 'B')	{	/* need to do our own flushing */
               encodeB("",0,&qline,2,FATAL);

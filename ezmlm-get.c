@@ -29,6 +29,7 @@
 #include "copy.h"
 #include "constmap.h"
 #include "subscribe.h"
+#include "hdr.h"
 #include "idxthread.h"
 #include "idx.h"
 #include "mime.h"
@@ -208,18 +209,6 @@ unsigned int n;
     }
 }
 
-void transferenc()
-{
-	if (flagcd) {
-	  qmail_puts(&qq,"\nContent-Transfer-Encoding: ");
-          if (flagcd == 'Q')
-            qmail_puts(&qq,"Quoted-printable\n\n");
-          else
-	    qmail_puts(&qq,"base64\n\n");
-        } else
-          qmail_puts(&qq,"\n\n");
-}
-
 void zapnonsub(szerr)
 /* fatal error if flagsub is set and sender is not a subscriber */
 /* expects the current dir to be the list dir. Error is szerr */
@@ -367,7 +356,7 @@ char format;		/* output format type (see idx.h) */
         qmail_put(&qq,boundary,COOKIE);
         qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
 	qmail_puts(&qq,charset.s);
-	transferenc();	/* content-transfer-enc header if needed */
+	hdr_transferenc();	/* content-transfer-enc header if needed */
         qmail_puts(&qq,"\n");
 	break;
     case RFC1153:
@@ -623,7 +612,7 @@ unsigned long msg;
    qmail_puts(&qq,"_");
    qmail_put(&qq,strnum,fmt_ulong(strnum,msg));
    qmail_puts(&qq,".ezm\"\n");
-   transferenc();
+   hdr_transferenc();
    copy(&qq,"text/get-bad",flagcd,FATAL);
 }
 

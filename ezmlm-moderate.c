@@ -28,6 +28,7 @@
 #include "cookie.h"
 #include "errtxt.h"
 #include "copy.h"
+#include "hdr.h"
 #include "idx.h"
 #include "wrap.h"
 #include "auto_version.h"
@@ -100,18 +101,6 @@ unsigned int n;
         encodeQ(s,n,&qline,FATAL);
       qmail_put(&qq,qline.s,qline.len);
     }
-}
-
-void transferenc()
-{
-	if (flagcd) {
-	  qmail_puts(&qq,"\nContent-Transfer-Encoding: ");
-          if (flagcd == 'Q')
-            qmail_puts(&qq,"Quoted-printable\n\n");
-          else
-	    qmail_puts(&qq,"base64\n\n");
-        } else
-          qmail_puts(&qq,"\n\n");
 }
 
 int checkfile(fn)
@@ -401,7 +390,7 @@ char **argv;
       qmail_put(&qq,boundary,COOKIE);
       qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
       qmail_puts(&qq,charset.s);
-      transferenc();
+      hdr_transferenc();
     }
     copy(&qq,"text/top",flagcd,FATAL);
     copy(&qq,"text/mod-reject",flagcd,FATAL);

@@ -27,6 +27,7 @@
 #include "sgetopt.h"
 #include "copy.h"
 #include "errtxt.h"
+#include "hdr.h"
 #include "idx.h"
 #include "auto_version.h"
 
@@ -342,11 +343,7 @@ void transferenc()
           qmail_put(&qq,boundary,COOKIE);
           qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
           qmail_puts(&qq,charset.s);
-	  qmail_puts(&qq,"\nContent-Transfer-Encoding: ");
-          if (flagcd == 'Q')
-            qmail_puts(&qq,"quoted-printable\n\n");
-          else
-	    qmail_puts(&qq,"base64\n\n");
+	  hdr_transferenc();
         } else
           qmail_puts(&qq,"\n");
 }

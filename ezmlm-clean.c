@@ -26,6 +26,7 @@
 #include "fmt.h"
 #include "errtxt.h"
 #include "copy.h"
+#include "hdr.h"
 #include "idx.h"
 #include "mime.h"
 #include "auto_version.h"
@@ -104,17 +105,6 @@ unsigned long msgnum = 0;
 			/* ezmlm started within x seconds, and with the    */
 			/* same pid. Very unlikely.                        */
 
-void transferenc()
-{
-	if (flagcd) {
-	  qmail_puts(&qq,"\nContent-Transfer-Encoding: ");
-          if (flagcd == 'Q')
-            qmail_puts(&qq,"Quoted-Printable\n\n");
-          else
-	    qmail_puts(&qq,"base64\n\n");
-        } else
-          qmail_puts(&qq,"\n\n");
-}
 void readconfigs()
 /* gets outlocal, outhost, etc. This is done only if there are any timed-out*/
 /* messages found, that merit a reply to the author. */
@@ -206,7 +196,7 @@ char *d;
         qmail_put(&qq,boundary,COOKIE);
         qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
         qmail_puts(&qq,charset.s);
-        transferenc();
+        hdr_transferenc();
       } else
       qmail_puts(&qq,"\n\n");
 
