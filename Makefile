@@ -1091,7 +1091,7 @@ open.h byte.h case.h lock.h error.h subscribe.h strerr.h uint32.h fmt.h
 	./compile issub.c
 
 it: \
-ezmlm-idx ezmlm-accept ezmlm-archive ezmlm-check ezmlm-gate ezmlm-get \
+symlinks ezmlm-idx ezmlm-accept ezmlm-archive ezmlm-check ezmlm-gate ezmlm-get \
 ezmlm-clean ezmlm-confirm ezmlm-glconf ezmlm-moderate ezmlm-store ezmlm-tstdig \
 ezmlm-make ezmlm-manage ezmlm-send ezmlm-reject ezmlm-return \
 ezmlm-warn ezmlm-weed ezmlm-list ezmlm-sub ezmlm-unsub ezmlm-cgi ezmlm-limit \
