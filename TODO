@@ -5,3 +5,5 @@ test Delivered-To handling
 test cookie expiration for ezmlm-return
 test ezmlm-warn only handling susbcribers
 test ezmlm-return only handling susbcribers
+
+Correct sv translation sed

@@ -1,0 +1,3 @@
+# $Id$
+s/@REJECTPOSTS@/Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this./
+s/@ONLYSUBSCRIBERS@/Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included./

@@ -889,6 +889,74 @@ ezmlmrc.0: \
 ezmlmrc.5
 	nroff -man ezmlmrc.5 > ezmlmrc.0
 
+ezmlmrc.ch_GB: \
+makelang ezmlmrc.template lang/ch_GB.text lang/ch_GB.sed
+	./makelang ch_GB
+
+ezmlmrc.cs: \
+makelang ezmlmrc.template lang/cs.text lang/cs.sed
+	./makelang cs
+
+ezmlmrc.da: \
+makelang ezmlmrc.template lang/da.text lang/da.sed
+	./makelang da
+
+ezmlmrc.de: \
+makelang ezmlmrc.template lang/de.text lang/de.sed
+	./makelang de
+
+ezmlmrc.en_US: \
+makelang ezmlmrc.template lang/en_US.text lang/en_US.sed
+	./makelang en_US
+
+ezmlmrc.es: \
+makelang ezmlmrc.template lang/es.text lang/es.sed
+	./makelang es
+
+ezmlmrc.fr: \
+makelang ezmlmrc.template lang/fr.text lang/fr.sed
+	./makelang fr
+
+ezmlmrc.hu: \
+makelang ezmlmrc.template lang/hu.text lang/hu.sed
+	./makelang hu
+
+ezmlmrc.id: \
+makelang ezmlmrc.template lang/id.text lang/id.sed
+	./makelang id
+
+ezmlmrc.it: \
+makelang ezmlmrc.template lang/it.text lang/it.sed
+	./makelang it
+
+ezmlmrc.jp: \
+makelang ezmlmrc.template lang/jp.text lang/jp.sed
+	./makelang jp
+
+ezmlmrc.nl: \
+makelang ezmlmrc.template lang/nl.text lang/nl.sed
+	./makelang nl
+
+ezmlmrc.pl: \
+makelang ezmlmrc.template lang/pl.text lang/pl.sed
+	./makelang pl
+
+ezmlmrc.pt: \
+makelang ezmlmrc.template lang/pt.text lang/pt.sed
+	./makelang pt
+
+ezmlmrc.pt_BR: \
+makelang ezmlmrc.template lang/pt_BR.text lang/pt_BR.sed
+	./makelang pt_BR
+
+ezmlmrc.ru: \
+makelang ezmlmrc.template lang/ru.text lang/ru.sed
+	./makelang ru
+
+ezmlmrc.sv: \
+makelang ezmlmrc.template lang/sv.text lang/sv.sed
+	./makelang sv
+
 ezmlmsubrc.0: \
 ezmlmsubrc.5
 	nroff -man ezmlmsubrc.5 > ezmlmsubrc.0
