@@ -1448,8 +1448,10 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 	      oputs("\">");
 	    }
 	    if (flagobscure && i == HDR_FROM - 1) {
+	      int k;
 	      oputs(" ");
-	      decodeHDR(cp,author_name(&cp,line.s,line.len),&decline,"",FATAL);
+	      k = author_name(&cp,line.s,line.len);
+	      decodeHDR(cp,k,&decline,"",FATAL);
 	      html_put(decline.s,decline.len);
 	    } else {
 	      decodeHDR(hdr[i].s,hdr[i].len,&decline,"",FATAL);
