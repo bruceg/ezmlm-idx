@@ -15,9 +15,7 @@ typedef struct {
 
 #define SURFPCS_LEN 32
 
-static void surfpcs_init(s,k)
-surfpcs *s;
-uint32 k[32];
+static void surfpcs_init(surfpcs *s,const uint32 k[32])
 {
   int i;
   for (i = 0;i < 32;++i) s->seed[i] = k[i];
@@ -35,12 +33,9 @@ static uint32 littleendian[8] = {
 #define data ((unsigned char *) s->in)
 #define outdata ((unsigned char *) s->out)
 
-static void surfpcs_addlc(s,x,n)
+static void surfpcs_addlc(surfpcs *s,const unsigned char *x,unsigned int n)
 	/* modified from Dan's surfpcs_add by skipping ' ' & '\t' and */
 	/* case-independence */
-surfpcs *s;
-unsigned char *x;
-unsigned int n;
 {
   register unsigned char ch;
   int i;
@@ -64,9 +59,7 @@ unsigned int n;
   }
 }
 
-static void surfpcs_out(s,h)
-surfpcs *s;
-unsigned char h[32];
+static void surfpcs_out(surfpcs *s,unsigned char h[32])
 {
   int i;
   surfpcs_addlc(s,".",1);
@@ -77,10 +70,7 @@ unsigned char h[32];
   for (i = 0;i < 32;++i) h[i] = outdata[end[i]];
 }
 
-void makehash(indata,inlen,hash)
-char *indata;
-unsigned int inlen;
-char *hash;
+void makehash(const char *indata,unsigned int inlen,char *hash)
 	/* makes hash[COOKIE=20] from stralloc *indata, ignoring case and */
 	/* SPACE/TAB */
 {
@@ -99,8 +89,7 @@ char *hash;
 
 static stralloc dummy = {0};
 
-void mkauthhash(s,len,h)
-char *s; unsigned int len; char *h;
+void mkauthhash(const char *s,unsigned int len,char *h)
 /* This is a string that should be the same for all messages from a given   */
 /* author. Doesn't have to be the real rfc822 address. We look for a '@'    */
 /* and grab everything up to the next '>', ' ', or ';'. We go back the same */

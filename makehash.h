@@ -3,8 +3,8 @@
 
 #define HASHLEN 20
 
-extern void makehash();
-extern void mkauthhash();
+extern void makehash(const char *indata,unsigned int inlen,char *hash);
+extern void mkauthhash(const char *s,unsigned int len,char *h);
 
 #endif
 
