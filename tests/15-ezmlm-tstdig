@@ -1,0 +1,52 @@
+################
+# ezmlm-tstdig #
+################
+
+if [ "$SECT" = "1" ]; then
+
+  prompt "ezmlm-tstdig:         "
+
+  ${EZBIN}/ezmlm-tstdig -k2 -m5 -t1 "${DIR}" || \
+	{ ${ECHO} "-t1 failed"; exit 100; }
+  ${EZBIN}/ezmlm-tstdig -k2 -m5 -t0 "${DIR}" && \
+	{ ${ECHO} "-t0 failed"; exit 100; }
+
+  LOCAL="$LOC-xx"; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT='xx'; export DEFAULT
+  fi
+  ${EZBIN}/ezmlm-tstdig -k2 -m5 -t0 "${DIR}" || \
+	{ ${ECHO} "problem with -xx in manager position"; exit 100; }
+  LOCAL="$LOC-dig."; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT='dig.'; export DEFAULT
+  fi
+  ${EZBIN}/ezmlm-tstdig -k2 -m5 -t0 "${DIR}" && \
+	{ ${ECHO} "problem with -dig in manager position"; exit 100; }
+  LOCAL="$LOC-digest-"; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT='digest-'; export DEFAULT
+  fi
+  ${EZBIN}/ezmlm-tstdig -k2 -m5 -t0 "${DIR}" || \
+	{ ${ECHO} "err with -digest- in mgr pos: 0.31 bug fixed in 0.321"
+	  prompt "ezmlm-tstdig.......   "
+	  BUG="${BUG} digest"
+	}
+  LOCAL=''; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	unset DEFAULT
+  fi
+  ${EZBIN}/ezmlm-tstdig -k2 -m4 -t1 "${DIR}" || \
+	{ ${ECHO} "-m failed"; exit 100; }
+  ${EZBIN}/ezmlm-tstdig -k1 -m5 -t0 "${DIR}" || \
+	{ ${ECHO} "-k failed"; exit 100; }
+  LOCAL="$LOC"; export LOCAL
+  ${EZBIN}/ezmlm-tstdig -k1 -m5 -t0 "${DIR}" > "${ERR}" 2>&1 || \
+	{
+	 ${ECHO} "problem with DEFAULT unset: 0.32 bug, OK in 0.321."
+	 prompt "ezmlm-tstdig.......   "
+	  BUG="${BUG} tstdig"
+	}
+  ${ECHO} "OK"
+
+fi

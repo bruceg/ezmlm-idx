@@ -1,0 +1,51 @@
+###############
+# ezmlm-clean #
+###############
+
+if [ "$SECT" = "1" ]; then
+
+  prompt "ezmlm-clean (1/2):    "
+
+# clean1 should be silently removed (no -x).
+# clean2 should result in a message
+# clean3 should not since it's time hasn't come
+# clean4 should be removed, but not result in a message since we use -R
+
+  ${ECHO} "Return-Path: <${DIG}@$HOST>" > "${DIR}/mod/pending/1"
+  ${ECHO} "X-num: clean1" >> "${DIR}/mod/pending/1"
+  ${ECHO} "Return-Path: <${DIG}@${HOST}>" > "${DIR}/mod/pending/2"
+  ${ECHO} "X-num: clean2" >> "${DIR}/mod/pending/2"
+  ${ECHO} "Return-Path: <${DIG}@$HOST>" > "${DIR}/mod/pending/1999999999"
+  ${ECHO} "X-num: clean3" >> "${DIR}/mod/pending/1999999999"
+
+  chmod +x "${DIR}/mod/pending/2" "${DIR}/mod/pending/1999999999"
+
+  ${EZBIN}/ezmlm-clean "${DIR}" >"${ERR}" 2>&1 ||
+	{ ${ECHO} "failed first invocation"; exit 100; }
+  if [ -r "${DIR}/mod/pending/1" ]; then
+	${ECHO} "failed to remove non-x moderation queue entry 1"
+	exit 100
+  fi
+  if [ -r "${DIR}/mod/pending/2" ]; then
+	${ECHO} "failed to remove moderation queue entry 2"
+	exit 100
+  fi
+  if [ ! -r "${DIR}/mod/pending/1999999999" ]; then
+	${ECHO} "removed mod queue entry 3 that wasn't due"
+	exit 100
+  fi
+
+${ECHO} <<EOF > "${DIR}/mod/pending/4"
+Return-Path: <${DIG}@$HOST>
+X-num: clean4
+EOF
+  chmod +x "${DIR}/mod/pending/4"
+  ${EZBIN}/ezmlm-clean -R "${DIR}" >"${ERR}" 2>&1 ||
+	{ ${ECHO} "-R failed"; exit 100; }
+  if [ -r  "${DIR}/mod/pending/4" ]; then
+	${ECHO} "failed to remove moderation queue entry 4"; exit 100
+  fi
+
+  ${ECHO} "OK"
+
+fi

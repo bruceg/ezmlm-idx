@@ -1,0 +1,83 @@
+###############################
+# ezmlm-sub/unsub/list/issubn #
+###############################
+
+if [ "$SECT" = "1" ]; then
+
+  prompt "ezmlm-[un|is]sub[n]:  "
+
+  SENDER="XYZZY@HOst"; export SENDER
+
+# With mysql testing, there may be junk left from earlier testing that
+# gives false positives in testing. Make sure it's detected
+  ${EZBIN}/ezmlm-list "${DIR}" >/dev/null || \
+	{ ${ECHO} "ezmlm-list: failed"; exit 100; }
+
+  ${EZBIN}/ezmlm-list "${DIR}" | ${GREP} '@' >/dev/null 2>&1 && \
+	{ ${ECHO} "already addresses in table - please remove and start again";
+		exit 100; }
+
+  ${EZBIN}/ezmlm-list "${DIR}/digest" | ${GREP} '@' >/dev/null 2>&1 && \
+	{ ${ECHO} "already addresses in table - please remove and start again";
+		exit 100; }
+
+  ${EZBIN}/ezmlm-list "${DIR}/${ALLOW}" | ${GREP} '@' >/dev/null 2>&1 && \
+	{ ${ECHO} "already addresses in table - please remove and start again";
+		exit 100; }
+
+# not subscriber. Test default
+  ${EZBIN}/ezmlm-issubn "${DIR}" "${DIR}/${ALLOW}" && \
+	{ ${ECHO} "ezmlm-issubn: failed: exit 0 on non-subscriber"; exit 100; }
+
+# not subscriber. Test -n
+  ${EZBIN}/ezmlm-issubn -n "${DIR}" "${DIR}/${ALLOW}" || \
+	{ ${ECHO} "ezmlm-issubn: -n failed for non-subscriber"; exit 100; }
+
+# add subscriber
+  ${EZBIN}/ezmlm-sub "${DIR}" "xyZZy@hoSt" || \
+	{ ${ECHO} "ezmlm-sub: failed to add subscriber"; exit 100; }
+
+# is subscriber. Test default
+  ${EZBIN}/ezmlm-issubn "${DIR}" "${DIR}/${ALLOW}" || \
+	{ ${ECHO} "ezmlm-issubn: failed: exit false for subscriber"; exit 100; }
+
+# is subscriber. Test -n
+  ${EZBIN}/ezmlm-issubn -n "${DIR}" "${DIR}/${ALLOW}" && \
+	{ ${ECHO} "ezmlm-issubn: -n failed for subscriber"; exit 100; }
+
+# add to allow
+  ${EZBIN}/ezmlm-sub "${DIR}/${ALLOW}" "ZZtop@hoSt" || \
+	{ ${ECHO} "ezmlm-sub: failed to add address to ${DIR}/${ALLOW}"; exit 100; }
+
+# list subscribers
+  ${EZBIN}/ezmlm-list "${DIR}" | ${GREP} "xyZZy" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "ezmlm-list: failed to list subscribers"; exit 100; }
+
+# remove subscriber
+  ${EZBIN}/ezmlm-unsub "${DIR}" "xYzZy@hOst" || \
+	{ ${ECHO} "ezmlm-sub: failed to add subscriber"; exit 100; }
+
+# see that it was removed
+  ${EZBIN}/ezmlm-list "${DIR}" | ${GREP} "xyZZy" >"${ERR}" 2>&1 && \
+	{ ${ECHO} "ezmlm-unsub: failed to remove subscriber"; exit 100; }
+
+  SENDER="zztop@HOst"; export SENDER
+
+# check for address in allow
+  ${EZBIN}/ezmlm-issubn "${DIR}" "${DIR}/${ALLOW}" || \
+	{ ${ECHO} "ezmlm-sub/issubn: failed to add/look in 2nd db"; exit 100; }
+
+# remove (multiple) (non)existing addresses from allow
+  ${EZBIN}/ezmlm-unsub "${DIR}/${ALLOW}" "xYzZy@hOst" "zZToP@HOSt" || \
+	{ ${ECHO} "ezmlm-unsub: failed to remove subscriber"; exit 100; }
+
+# verify removal
+  ${EZBIN}/ezmlm-issubn "${DIR}" "${DIR}/${ALLOW}" && \
+	{ ${ECHO} "ezmlm-unsub/issubn: failed to remove address"; exit 100; }
+
+# clean up
+  LOCAL=''; export LOCAL
+
+  ${ECHO} "OK"
+
+fi
