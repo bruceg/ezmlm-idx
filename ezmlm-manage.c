@@ -915,6 +915,12 @@ char **argv;
       copy(&qq,"text/sub-confirm",flagcd,FATAL);
       copybottom();
       qmail_to(&qq,target.s);
+    } else if (flagmod) {
+      store_from(&fromline,target.s);
+      doconfirm(ACTION_TC);
+      copy(&qq,"text/mod-sub-confirm",flagcd,FATAL);
+      copybottom();
+      sendtomods();
     } else {				/* normal subscribe, no confirm */
       r = geton(action);		/* should be rarely used. */
       copybottom();
