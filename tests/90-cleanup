@@ -1,3 +1,5 @@
+# $Id$
+
 ########################## start of section 9 (cleanup)
 if [ "$SECT" -eq "9" -o -z "$DEBUG" ]; then
 

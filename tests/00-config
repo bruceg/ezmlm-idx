@@ -1,4 +1,5 @@
 # Above should have been added a QMPATH definition
+# $Id$
 # DEBUG=1
 # This program is meant to test ezmlm-idx.
 # Several criteria have to be met for this to work:
