@@ -4,6 +4,7 @@
 #include "qmail.h"
 #include "cookie.h"
 #include "stralloc.h"
+#include "str.h"
 
 extern struct qmail qq;
 extern char boundary[COOKIE];
@@ -18,7 +19,7 @@ void hdr_ctype(const char *ctype)
     qmail_puts(&qq,"; charset=");
     qmail_puts(&qq,charset.s);
   }
-  if (memcmp(ctype, "multipart/", 10) == 0) {
+  if (str_diffn(ctype, "multipart/", 10) == 0) {
     /* multipart/something */
     qmail_puts(&qq,";\n\tboundary=");
     qmail_put(&qq,boundary,COOKIE);
