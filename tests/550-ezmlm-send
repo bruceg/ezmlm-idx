@@ -1,0 +1,31 @@
+# $Id$
+
+if [ "$SECT" -le "5" ]; then
+
+  prompt "ezmlm-send: "
+
+  cat >"$TMP" <<EOF
+From: test@example.org
+Subject: test post
+X-Test-Header: one
+Content-Length: zip
+
+message goes here
+EOF
+
+  LOCAL="${LOC}"; export LOCAL
+  ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  { ${ECHO} "failed to produce post"; exit 100; }
+
+  grephdr_list 1
+  grephdr precedence: bulk
+  grephdr x-no-archive: yes
+  grephdr delivered-to: "mailing list ${LOC}@${HOST}"
+  grephdr from: test@example.org
+  grephdr subject: test post
+  grephdr x-test-header: one
+  grephdr_empty
+
+  ${ECHO} OK
+
+fi

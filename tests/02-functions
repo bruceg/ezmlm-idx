@@ -15,18 +15,25 @@ grephdr() {
 }
 
 grephdr_std() {
-  grephdr mailing-list: "contact ${LOC}-help@${HOST}; run by ezmlm"
-  grephdr date: ".. ... .... ..:..:.. [-+]...."
   grephdr message-id: "<[0123456789]*\\.[0123456789]*\\.ezmlm@${HOST}>"
   grephdr delivered-to: "responder for ${LOC}@${HOST}"
   grephdr mime-version: 1.0
 }
 
-grephdr_manage() {
-  grephdr_std
+grephdr_list() {
+  grephdr mailing-list: "contact ${LOC}-help@${HOST}; run by ezmlm"
   grephdr list-help: "<mailto:${LOC}-help@${HOST}>"
   grephdr list-post: "<mailto:${LOC}@${HOST}>"
   grephdr list-subscribe: "<mailto:${LOC}-subscribe@${HOST}>"
+  if [ -n "$*" ]; then
+    grephdr list-unsubscribe: "<mailto:${LOC}-unsubscribe@${HOST}>"
+  fi
+}
+
+grephdr_manage() {
+  grephdr_std
+  grephdr_list
+  grephdr date: ".. ... .... ..:..:.. [-+]...."
   grephdr from: "${LOC}-help@${HOST}"
   grephdr to: "test@example.org"
   grephdr content-type: "text/plain; charset=.*"
