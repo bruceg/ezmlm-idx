@@ -15,6 +15,7 @@
 #include "error.h"
 #include "errtxt.h"
 #include "subscribe.h"
+#include "idx.h"
 #include <mysql.h>
 
 extern void die_write(const char *fatal);
@@ -27,11 +28,6 @@ static struct datetime dt;
 static substdio ssin;
 static char inbuf[256];
 
-static void die_nomem(const char *fatal)
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
-
 static void lineout(subwrite,fatal)
 int subwrite();
 const char *fatal;
@@ -39,9 +35,9 @@ const char *fatal;
   (void) scan_ulong(line.s,&when);
   datetime_tai(&dt,when);		/* there is always at least a '\n' */
   if (!stralloc_copyb(&outline,date,date822fmt(date,&dt) - 1))
-	die_nomem(fatal);
-  if (!stralloc_cats(&outline,": ")) die_nomem(fatal);
-  if (!stralloc_catb(&outline,line.s,line.len - 1)) die_nomem(fatal);
+	die_nomem();
+  if (!stralloc_cats(&outline,": ")) die_nomem();
+  if (!stralloc_catb(&outline,line.s,line.len - 1)) die_nomem();
   if (subwrite(outline.s,outline.len) == -1)
 	strerr_die3x(111,fatal,ERR_WRITE,"output");
   return;
@@ -90,9 +86,9 @@ const char *fatal;	/* fatal */
   if ((ret = opensql(dir,ptable))) {
     if (*ret) strerr_die2x(111,fatal,ret);
 						/* fallback to local log */
-  if (!stralloc_copys(&line,dir)) die_nomem(fatal);
-  if (!stralloc_cats(&line,"/Log")) die_nomem(fatal);
-  if (!stralloc_0(&line)) die_nomem(fatal);
+  if (!stralloc_copys(&line,dir)) die_nomem();
+  if (!stralloc_cats(&line,"/Log")) die_nomem();
+  if (!stralloc_0(&line)) die_nomem();
   fd = open_read(line.s);
   if (fd == -1)
     if (errno != error_noent)
@@ -137,17 +133,17 @@ const char *fatal;	/* fatal */
 
     if (!stralloc_cats(&line,"SELECT CONCAT(FROM_UNIXTIME(UNIX_TIMESTAMP(tai)),"
 	"'-0000: ',UNIX_TIMESTAMP(tai),' ',edir,etype,' ',address,' ',"
-	"fromline) FROM ")) die_nomem(fatal);
-    if (!stralloc_cats(&line,table)) die_nomem(fatal);
-    if (!stralloc_cats(&line,"_slog ")) die_nomem(fatal);
+	"fromline) FROM ")) die_nomem();
+    if (!stralloc_cats(&line,table)) die_nomem();
+    if (!stralloc_cats(&line,"_slog ")) die_nomem();
     if (*search) {	/* We can afford to wait for LIKE '%xx%' */
-      if (!stralloc_cats(&line,"WHERE fromline LIKE '%")) die_nomem(fatal);
-      if (!stralloc_cats(&line,search)) die_nomem(fatal);
-      if (!stralloc_cats(&line,"%' OR address LIKE '%")) die_nomem(fatal);
-      if (!stralloc_cats(&line,search)) die_nomem(fatal);
-      if (!stralloc_cats(&line,"%'")) die_nomem(fatal);
+      if (!stralloc_cats(&line,"WHERE fromline LIKE '%")) die_nomem();
+      if (!stralloc_cats(&line,search)) die_nomem();
+      if (!stralloc_cats(&line,"%' OR address LIKE '%")) die_nomem();
+      if (!stralloc_cats(&line,search)) die_nomem();
+      if (!stralloc_cats(&line,"%'")) die_nomem();
     }	/* ordering by tai which is an index */
-      if (!stralloc_cats(&line," ORDER by tai")) die_nomem(fatal);
+      if (!stralloc_cats(&line," ORDER by tai")) die_nomem();
 
     if (mysql_real_query((MYSQL *) psql,line.s,line.len))	/* query */
 	strerr_die2x(111,fatal,mysql_error((MYSQL *) psql));

@@ -21,11 +21,6 @@
 #include <unistd.h>
 #include <libpq-fe.h>
 
-static void die_nomem(const char *fatal)
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
-
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
 static stralloc line = {0};
@@ -103,8 +98,8 @@ const char *fatal;
   if (!flagsql || (r = opensql(dbname,ptable))) {
     if (r && *r) strerr_die2x(111,fatal,r);
 						/* fallback to local db */
-    if (!stralloc_copys(&addr,"T")) die_nomem(fatal);
-    if (!stralloc_cats(&addr,userhost)) die_nomem(fatal);
+    if (!stralloc_copys(&addr,"T")) die_nomem();
+    if (!stralloc_cats(&addr,userhost)) die_nomem();
     if (addr.len > 401)
       strerr_die2x(100,fatal,ERR_ADDR_LONG);
 
@@ -112,7 +107,7 @@ const char *fatal;
     if (j == addr.len)
       strerr_die2x(100,fatal,ERR_ADDR_AT);
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
-    if (!stralloc_copy(&lcaddr,&addr)) die_nomem(fatal);
+    if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
     case_lowerb(lcaddr.s + 1,j - 1);	/* make all-lc version of address */
 
     if (forcehash >= 0 && forcehash <= 52) {
@@ -128,20 +123,20 @@ const char *fatal;
       ch = 64 + (h % 53);
     }
 
-    if (!stralloc_0(&addr)) die_nomem(fatal);
-    if (!stralloc_0(&lcaddr)) die_nomem(fatal);
-    if (!stralloc_copys(&fn,dbname)) die_nomem(fatal);
-    if (!stralloc_copys(&fnlock,dbname)) die_nomem(fatal);
+    if (!stralloc_0(&addr)) die_nomem();
+    if (!stralloc_0(&lcaddr)) die_nomem();
+    if (!stralloc_copys(&fn,dbname)) die_nomem();
+    if (!stralloc_copys(&fnlock,dbname)) die_nomem();
 
-    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem(fatal);
-    if (!stralloc_catb(&fn,&lcch,1)) die_nomem(fatal);
-    if (!stralloc_copy(&fnnew,&fn)) die_nomem(fatal);
+    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem();
+    if (!stralloc_catb(&fn,&lcch,1)) die_nomem();
+    if (!stralloc_copy(&fnnew,&fn)) die_nomem();
 	/* code later depends on fnnew = fn + 'n' */
-    if (!stralloc_cats(&fnnew,"n")) die_nomem(fatal);
-    if (!stralloc_cats(&fnlock,"/lock")) die_nomem(fatal);
-    if (!stralloc_0(&fnnew)) die_nomem(fatal);
-    if (!stralloc_0(&fn)) die_nomem(fatal);
-    if (!stralloc_0(&fnlock)) die_nomem(fatal);
+    if (!stralloc_cats(&fnnew,"n")) die_nomem();
+    if (!stralloc_cats(&fnlock,"/lock")) die_nomem();
+    if (!stralloc_0(&fnnew)) die_nomem();
+    if (!stralloc_0(&fn)) die_nomem();
+    if (!stralloc_0(&fnlock)) die_nomem();
 
     fdlock = open_append(fnlock.s);
     if (fdlock == -1)
@@ -197,7 +192,7 @@ const char *fatal;
     if ((ch == lcch) || flagwasthere) {
       close(fdlock);
       if (flagadd ^ flagwasthere) {
-        if (!stralloc_0(&addr)) die_nomem(fatal);
+        if (!stralloc_0(&addr)) die_nomem();
         logaddr(dbname,event,addr.s+1,comment);
         return 1;
       }
@@ -245,7 +240,7 @@ const char *fatal;
 
     close(fdlock);
     if (flagadd ^ flagwasthere) {
-      if (!stralloc_0(&addr)) die_nomem(fatal);
+      if (!stralloc_0(&addr)) die_nomem();
       logaddr(dbname,event,addr.s+1,comment);
       return 1;
     }
@@ -254,7 +249,7 @@ const char *fatal;
   } else {				/* SQL version */
     domain.len = 0;			/* clear domain */
 					/* lowercase and check address */
-    if (!stralloc_copys(&addr,userhost)) die_nomem(fatal);
+    if (!stralloc_copys(&addr,userhost)) die_nomem();
     if (addr.len > 255)			/* this is 401 in std ezmlm. 255 */
 					/* should be plenty! */
       strerr_die2x(100,fatal,ERR_ADDR_LONG);
@@ -265,7 +260,7 @@ const char *fatal;
     case_lowerb(cpat + 1,addr.len - j - 1);
 
     if (forcehash < 0) {
-      if (!stralloc_copy(&lcaddr,&addr)) die_nomem(fatal);
+      if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
       case_lowerb(lcaddr.s,j);		/* make all-lc version of address */
       h = 5381;
       for (j = 0;j < lcaddr.len;++j) {
@@ -279,12 +274,12 @@ const char *fatal;
     szhash[1] = '0' + (ch % 10);
 
     if (flagadd) {
-      if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem(fatal);
-      if (!stralloc_cats(&line,table)) die_nomem(fatal);
-      if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem(fatal);
-      if (!stralloc_cat(&line,&addr)) die_nomem(fatal);	/* addr */
-      if (!stralloc_cats(&line,"$'")) die_nomem(fatal);
-      if (!stralloc_0(&line)) die_nomem(fatal);
+      if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
+      if (!stralloc_cats(&line,table)) die_nomem();
+      if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
+      if (!stralloc_cat(&line,&addr)) die_nomem();	/* addr */
+      if (!stralloc_cats(&line,"$'")) die_nomem();
+      if (!stralloc_0(&line)) die_nomem();
       result = PQexec(psql,line.s);
       if (result == NULL)
 	strerr_die2x(111,fatal,PQerrorMessage(psql));
@@ -296,15 +291,15 @@ const char *fatal;
         return 0;						/* there */
       } else {							/* not there */
 	PQclear(result);
-	if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem(fatal);
-	if (!stralloc_cats(&line,table)) die_nomem(fatal);
+	if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
+	if (!stralloc_cats(&line,table)) die_nomem();
 	if (!stralloc_cats(&line," (address,hash) VALUES ('"))
-		die_nomem(fatal);
-	if (!stralloc_cat(&line,&addr)) die_nomem(fatal);	/* addr */
-	if (!stralloc_cats(&line,"',")) die_nomem(fatal);
-	if (!stralloc_cats(&line,szhash)) die_nomem(fatal);	/* hash */
-	if (!stralloc_cats(&line,")")) die_nomem(fatal);
-	if (!stralloc_0(&line)) die_nomem(fatal);
+		die_nomem();
+	if (!stralloc_cat(&line,&addr)) die_nomem();	/* addr */
+	if (!stralloc_cats(&line,"',")) die_nomem();
+	if (!stralloc_cats(&line,szhash)) die_nomem();	/* hash */
+	if (!stralloc_cats(&line,")")) die_nomem();
+	if (!stralloc_0(&line)) die_nomem();
 	result = PQexec(psql,line.s);
 	if (result == NULL)
 	  strerr_die2x(111,fatal,PQerrorMessage(psql));
@@ -312,19 +307,19 @@ const char *fatal;
 	  strerr_die2x(111,fatal,PQresultErrorMessage(result));
       }
     } else {							/* unsub */
-      if (!stralloc_copys(&line,"DELETE FROM ")) die_nomem(fatal);
-      if (!stralloc_cats(&line,table)) die_nomem(fatal);
-      if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem(fatal);
-      if (!stralloc_cat(&line,&addr)) die_nomem(fatal);	/* addr */
+      if (!stralloc_copys(&line,"DELETE FROM ")) die_nomem();
+      if (!stralloc_cats(&line,table)) die_nomem();
+      if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
+      if (!stralloc_cat(&line,&addr)) die_nomem();	/* addr */
       if (forcehash >= 0) {
-	if (!stralloc_cats(&line,"$' AND hash=")) die_nomem(fatal);
-	if (!stralloc_cats(&line,szhash)) die_nomem(fatal);
+	if (!stralloc_cats(&line,"$' AND hash=")) die_nomem();
+	if (!stralloc_cats(&line,szhash)) die_nomem();
       } else {
         if (!stralloc_cats(&line,"$' AND hash BETWEEN 0 AND 52"))
-		die_nomem(fatal);
+		die_nomem();
       }
       
-      if (!stralloc_0(&line)) die_nomem(fatal);
+      if (!stralloc_0(&line)) die_nomem();
       result = PQexec(psql,line.s);
       if (result == NULL)
 	strerr_die2x(111,fatal,PQerrorMessage(psql));
@@ -339,25 +334,25 @@ const char *fatal;
 		/* INSERT INTO t_slog (address,edir,etype,fromline) */
 		/* VALUES('address',{'+'|'-'},'etype','[comment]') */
 
-    if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem(fatal);
-    if (!stralloc_cats(&logline,table)) die_nomem(fatal);
+    if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
+    if (!stralloc_cats(&logline,table)) die_nomem();
     if (!stralloc_cats(&logline,
-	"_slog (address,edir,etype,fromline) VALUES ('")) die_nomem(fatal);
-    if (!stralloc_cat(&logline,&addr)) die_nomem(fatal);
+	"_slog (address,edir,etype,fromline) VALUES ('")) die_nomem();
+    if (!stralloc_cat(&logline,&addr)) die_nomem();
     if (flagadd) {						/* edir */
-      if (!stralloc_cats(&logline,"','+','")) die_nomem(fatal);
+      if (!stralloc_cats(&logline,"','+','")) die_nomem();
     } else {
-      if (!stralloc_cats(&logline,"','-','")) die_nomem(fatal);
+      if (!stralloc_cats(&logline,"','-','")) die_nomem();
     }
     if (*(event + 1))	/* ezmlm-0.53 uses '' for ezmlm-manage's work */
-      if (!stralloc_catb(&logline,event+1,1)) die_nomem(fatal);	/* etype */
-    if (!stralloc_cats(&logline,"','")) die_nomem(fatal);
+      if (!stralloc_catb(&logline,event+1,1)) die_nomem();	/* etype */
+    if (!stralloc_cats(&logline,"','")) die_nomem();
     if (comment && *comment) {
-      if (!stralloc_cats(&logline,comment)) die_nomem(fatal);
+      if (!stralloc_cats(&logline,comment)) die_nomem();
     }
-    if (!stralloc_cats(&logline,"')")) die_nomem(fatal);
+    if (!stralloc_cats(&logline,"')")) die_nomem();
 
-    if (!stralloc_0(&logline)) die_nomem(fatal);
+    if (!stralloc_0(&logline)) die_nomem();
     result = PQexec(psql,logline.s);		/* log (ignore errors) */
     PQclear(result);
 

@@ -15,6 +15,7 @@
 #include "error.h"
 #include "errtxt.h"
 #include "subscribe.h"
+#include "idx.h"
 
 static stralloc line = {0};
 static stralloc outline = {0};
@@ -22,12 +23,6 @@ static char date[DATE822FMT];
 static datetime_sec when;
 static substdio ssin;
 static char inbuf[256];
-
-static void die_nomem(fatal)
-const char *fatal;
-{
-  strerr_die2x(100,fatal,ERR_NOMEM);
-}
 
 static void lineout(subwrite,fatal)
 int subwrite();
@@ -37,9 +32,9 @@ const char *fatal;
   (void) scan_ulong(line.s,&when);
   datetime_tai(&dt,when);		/* there is always at least a '\n' */
   if (!stralloc_copyb(&outline,date,date822fmt(date,&dt) - 1))
-	die_nomem(fatal);
-  if (!stralloc_cats(&outline,": ")) die_nomem(fatal);
-  if (!stralloc_catb(&outline,line.s,line.len - 1)) die_nomem(fatal);
+	die_nomem();
+  if (!stralloc_cats(&outline,": ")) die_nomem();
+  if (!stralloc_catb(&outline,line.s,line.len - 1)) die_nomem();
   if (subwrite(outline.s,outline.len) == -1)
 	strerr_die3x(111,fatal,ERR_WRITE,"output");
   return;
@@ -76,9 +71,9 @@ const char *fatal;	/* fatal */
     *(cps - 1) = '_';			/* will [also] match char specified */
   }
 
-  if (!stralloc_copys(&line,dir)) die_nomem(fatal);
-  if (!stralloc_cats(&line,"/Log")) die_nomem(fatal);
-  if (!stralloc_0(&line)) die_nomem(fatal);
+  if (!stralloc_copys(&line,dir)) die_nomem();
+  if (!stralloc_cats(&line,"/Log")) die_nomem();
+  if (!stralloc_0(&line)) die_nomem();
   fd = open_read(line.s);
   if (fd == -1)
     if (errno != error_noent)

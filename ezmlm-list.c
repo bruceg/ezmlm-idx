@@ -20,6 +20,8 @@ void *psql = (void *) 0;
 
 char strnum[FMT_ULONG];
 
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
+
 void die_write()
 {
   strerr_die3sys(111,FATAL,ERR_WRITE,"stdout: ");

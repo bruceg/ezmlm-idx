@@ -13,6 +13,7 @@
 #include "errtxt.h"
 #include "subscribe.h"
 #include "qmail.h"
+#include "idx.h"
 #include <unistd.h>
 #include <libpq-fe.h>
 
@@ -21,11 +22,6 @@ static char inbuf[512];
 char strnum[FMT_ULONG];
 static stralloc line = {0};
 static stralloc fn = {0};
-
-static void die_nomem(const char *fatal)
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
 
 static void die_write(const char *fatal)
 {
@@ -67,8 +63,8 @@ const char *fatal;	/* fatal error string */
   if (!flagsql || (ret = opensql(dbname,&table))) {
     if (flagsql && *ret) strerr_die2x(111,fatal,ret);
 						/* fallback to local db */
-    if (!stralloc_copys(&fn,dbname)) die_nomem(fatal);
-    if (!stralloc_catb(&fn,"/subscribers/?",15)) die_nomem(fatal);
+    if (!stralloc_copys(&fn,dbname)) die_nomem();
+    if (!stralloc_catb(&fn,"/subscribers/?",15)) die_nomem();
 				/* NOTE: Also copies terminal '\0' */
     hashpos = fn.len - 2;
     if (hash_lo > 52) hash_lo = 52;
@@ -100,15 +96,15 @@ const char *fatal;	/* fatal error string */
 
 						/* main query */
     if (!stralloc_copys(&line,"SELECT address FROM "))
-		die_nomem(fatal);
-    if (!stralloc_cats(&line,table)) die_nomem(fatal);
-    if (!stralloc_cats(&line," WHERE hash BETWEEN ")) die_nomem(fatal);
+		die_nomem();
+    if (!stralloc_cats(&line,table)) die_nomem();
+    if (!stralloc_cats(&line," WHERE hash BETWEEN ")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_lo)))
-		die_nomem(fatal);
-    if (!stralloc_cats(&line," AND ")) die_nomem(fatal);
+		die_nomem();
+    if (!stralloc_cats(&line," AND ")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_hi)))
-      die_nomem(fatal);
-    if (!stralloc_0(&line)) die_nomem(fatal);
+      die_nomem();
+    if (!stralloc_0(&line)) die_nomem();
     result = PQexec(psql,line.s);
     if (result == NULL)
       strerr_die2x(111,fatal,PQerrorMessage(psql));

@@ -8,6 +8,7 @@
 #include "errtxt.h"
 #include "subscribe.h"
 #include "makehash.h"
+#include "idx.h"
 #include <unistd.h>
 #include <libpq-fe.h>
 
@@ -15,11 +16,6 @@ static stralloc line = {0};
 static stralloc key = {0};
 static char hash[COOKIE];
 static char strnum[FMT_ULONG];	/* message number as sz */
-
-static void die_nomem(const char *fatal)
-{
-  strerr_die2x(100,fatal,ERR_NOMEM);
-}
 
 void tagmsg(dir,msgnum,seed,action,hashout,bodysize,chunk,fatal)
 /* This routine creates a cookie from num,seed and the */
@@ -67,32 +63,32 @@ const char *fatal;
 	/* INSERT INTO table_cookie (msgnum,cookie) VALUES (num,cookie) */
 	/* (we may have tried message before, but failed to complete, so */
 	/* ER_DUP_ENTRY is ok) */
-    if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem(fatal);
-    if (!stralloc_cats(&line,table)) die_nomem(fatal);
+    if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
+    if (!stralloc_cats(&line,table)) die_nomem();
     if (!stralloc_cats(&line,"_cookie (msgnum,cookie,bodysize,chunk) VALUES ("))
-      die_nomem(fatal);
-    if (!stralloc_cats(&line,strnum)) die_nomem(fatal);
-    if (!stralloc_cats(&line,",'")) die_nomem(fatal);
-    if (!stralloc_catb(&line,hash,COOKIE)) die_nomem(fatal);
-    if (!stralloc_cats(&line,"',")) die_nomem(fatal);
+      die_nomem();
+    if (!stralloc_cats(&line,strnum)) die_nomem();
+    if (!stralloc_cats(&line,",'")) die_nomem();
+    if (!stralloc_catb(&line,hash,COOKIE)) die_nomem();
+    if (!stralloc_cats(&line,"',")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,bodysize)))
-      die_nomem(fatal);
-    if (!stralloc_cats(&line,",")) die_nomem(fatal);
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,chunk))) die_nomem(fatal);
-    if (!stralloc_cats(&line,")")) die_nomem(fatal);
+      die_nomem();
+    if (!stralloc_cats(&line,",")) die_nomem();
+    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,chunk))) die_nomem();
+    if (!stralloc_cats(&line,")")) die_nomem();
     
-    if (!stralloc_0(&line)) die_nomem(fatal);
+    if (!stralloc_0(&line)) die_nomem();
     result = PQexec(psql,line.s);
     if (result == NULL)
       strerr_die2x(111,fatal,PQerrorMessage(psql));
     if (PQresultStatus(result) != PGRES_COMMAND_OK) { /* Possible tuplicate */
-      if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem(fatal);
-      if (!stralloc_cats(&line,table)) die_nomem(fatal);	  
-      if (!stralloc_cats(&line,"_cookie WHERE msgnum = ")) die_nomem(fatal);
+      if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
+      if (!stralloc_cats(&line,table)) die_nomem();	  
+      if (!stralloc_cats(&line,"_cookie WHERE msgnum = ")) die_nomem();
       if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgnum))) 
-	die_nomem(fatal);
+	die_nomem();
       /* Query */
-      if (!stralloc_0(&line)) die_nomem(fatal);
+      if (!stralloc_0(&line)) die_nomem();
       result2 = PQexec(psql,line.s);
       if (result2 == NULL)
 	strerr_die2x(111,fatal,PQerrorMessage(psql));

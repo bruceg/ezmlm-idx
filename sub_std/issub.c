@@ -14,12 +14,7 @@
 #include "fmt.h"
 #include "subscribe.h"
 #include "errtxt.h"
-
-static void die_nomem(fatal)
-char *fatal;
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
+#include "idx.h"
 
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
@@ -45,13 +40,13 @@ const char *issub(const char *dbname,		/* directory to basedir */
   char ch,lcch;
   int match;
 
-    if (!stralloc_copys(&addr,"T")) die_nomem(fatal);
-    if (!stralloc_cats(&addr,userhost)) die_nomem(fatal);
+    if (!stralloc_copys(&addr,"T")) die_nomem();
+    if (!stralloc_cats(&addr,userhost)) die_nomem();
 
     j = byte_rchr(addr.s,addr.len,'@');
     if (j == addr.len) return (char *) 0;
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
-    if (!stralloc_copy(&lcaddr,&addr)) die_nomem(fatal);
+    if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
     case_lowerb(lcaddr.s + 1,j - 1);	/* totally lc version of addr */
 
     h = 5381;
@@ -63,12 +58,12 @@ const char *issub(const char *dbname,		/* directory to basedir */
     ch = 64 + (h % 53);
     lcch = 64 + (lch % 53);
 
-    if (!stralloc_0(&addr)) die_nomem(fatal);
-    if (!stralloc_0(&lcaddr)) die_nomem(fatal);
-    if (!stralloc_copys(&fn,dbname)) die_nomem(fatal);
-    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem(fatal);
-    if (!stralloc_catb(&fn,&lcch,1)) die_nomem(fatal);
-    if (!stralloc_0(&fn)) die_nomem(fatal);
+    if (!stralloc_0(&addr)) die_nomem();
+    if (!stralloc_0(&lcaddr)) die_nomem();
+    if (!stralloc_copys(&fn,dbname)) die_nomem();
+    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem();
+    if (!stralloc_catb(&fn,&lcch,1)) die_nomem();
+    if (!stralloc_0(&fn)) die_nomem();
 
     fd = open_read(fn.s);
     if (fd == -1) {

@@ -353,5 +353,7 @@ typedef struct dateentry {	/* date yyyymm and 1st message of that date */
   unsigned int msg;
 } dateentry;
 
+extern void die_nomem(void);
+
 #endif
 

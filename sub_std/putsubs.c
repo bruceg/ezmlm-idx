@@ -14,18 +14,13 @@
 #include "errtxt.h"
 #include "subscribe.h"
 #include "qmail.h"
+#include "idx.h"
 
 static substdio ssin;
 static char inbuf[512];
 char strnum[FMT_ULONG];
 static stralloc line = {0};
 static stralloc fn = {0};
-
-static void die_nomem(fatal)
-const char *fatal;
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
 
 static void die_write(fatal)
 const char *fatal;
@@ -57,8 +52,8 @@ const char *fatal;	/* fatal error string */
   int match;
   unsigned int hashpos;
 
-    if (!stralloc_copys(&fn,dbname)) die_nomem(fatal);
-    if (!stralloc_catb(&fn,"/subscribers/?",15)) die_nomem(fatal);
+    if (!stralloc_copys(&fn,dbname)) die_nomem();
+    if (!stralloc_catb(&fn,"/subscribers/?",15)) die_nomem();
 				/* NOTE: Also copies terminal '\0' */
     hashpos = fn.len - 2;
     if (hash_lo > 52) hash_lo = 52;

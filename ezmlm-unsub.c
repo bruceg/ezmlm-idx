@@ -23,7 +23,9 @@ substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,sizeof(inbuf));
 
 stralloc line = {0};
 
-void die_usage()
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
+
+void die_usage(void)
 {
   strerr_die1x(100,
    "ezmlm-unsub: usage: ezmlm-unsub [-h hash] [-HmMnNvV] dir box@domain ...");

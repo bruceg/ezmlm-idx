@@ -20,12 +20,6 @@
 #include "log.h"
 #include "idx.h"
 
-static void die_nomem(fatal)
-char *fatal;
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
-
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
 static stralloc line = {0};
@@ -90,8 +84,8 @@ const char *fatal;
   if (userhost[str_chr(userhost,'\n')])
     strerr_die2x(100,fatal,ERR_ADDR_NL);
 
-    if (!stralloc_copys(&addr,"T")) die_nomem(fatal);
-    if (!stralloc_cats(&addr,userhost)) die_nomem(fatal);
+    if (!stralloc_copys(&addr,"T")) die_nomem();
+    if (!stralloc_cats(&addr,userhost)) die_nomem();
     if (addr.len > 401)
       strerr_die2x(100,fatal,ERR_ADDR_LONG);
 
@@ -99,7 +93,7 @@ const char *fatal;
     if (j == addr.len)
       strerr_die2x(100,fatal,ERR_ADDR_AT);
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
-    if (!stralloc_copy(&lcaddr,&addr)) die_nomem(fatal);
+    if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
     case_lowerb(lcaddr.s + 1,j - 1);	/* make all-lc version of address */
 
     if (forcehash >= 0 && forcehash <= 52) {
@@ -115,20 +109,20 @@ const char *fatal;
       ch = 64 + (h % 53);
     }
 
-    if (!stralloc_0(&addr)) die_nomem(fatal);
-    if (!stralloc_0(&lcaddr)) die_nomem(fatal);
-    if (!stralloc_copys(&fn,dbname)) die_nomem(fatal);
-    if (!stralloc_copys(&fnlock,dbname)) die_nomem(fatal);
+    if (!stralloc_0(&addr)) die_nomem();
+    if (!stralloc_0(&lcaddr)) die_nomem();
+    if (!stralloc_copys(&fn,dbname)) die_nomem();
+    if (!stralloc_copys(&fnlock,dbname)) die_nomem();
 
-    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem(fatal);
-    if (!stralloc_catb(&fn,&lcch,1)) die_nomem(fatal);
-    if (!stralloc_copy(&fnnew,&fn)) die_nomem(fatal);
+    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem();
+    if (!stralloc_catb(&fn,&lcch,1)) die_nomem();
+    if (!stralloc_copy(&fnnew,&fn)) die_nomem();
 	/* code later depends on fnnew = fn + 'n' */
-    if (!stralloc_cats(&fnnew,"n")) die_nomem(fatal);
-    if (!stralloc_cats(&fnlock,"/lock")) die_nomem(fatal);
-    if (!stralloc_0(&fnnew)) die_nomem(fatal);
-    if (!stralloc_0(&fn)) die_nomem(fatal);
-    if (!stralloc_0(&fnlock)) die_nomem(fatal);
+    if (!stralloc_cats(&fnnew,"n")) die_nomem();
+    if (!stralloc_cats(&fnlock,"/lock")) die_nomem();
+    if (!stralloc_0(&fnnew)) die_nomem();
+    if (!stralloc_0(&fn)) die_nomem();
+    if (!stralloc_0(&fnlock)) die_nomem();
 
     fdlock = open_append(fnlock.s);
     if (fdlock == -1)
@@ -184,7 +178,7 @@ const char *fatal;
     if ((ch == lcch) || flagwasthere) {
       close(fdlock);
       if (flagadd ^ flagwasthere) {
-        if (!stralloc_0(&addr)) die_nomem(fatal);
+        if (!stralloc_0(&addr)) die_nomem();
         logaddr(dbname,event,addr.s+1,comment);
         return 1;
       }
@@ -232,7 +226,7 @@ const char *fatal;
 
     close(fdlock);
     if (flagadd ^ flagwasthere) {
-      if (!stralloc_0(&addr)) die_nomem(fatal);
+      if (!stralloc_0(&addr)) die_nomem();
       logaddr(dbname,event,addr.s+1,comment);
       return 1;
     }

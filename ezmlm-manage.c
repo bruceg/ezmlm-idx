@@ -67,18 +67,18 @@ char *workdir;
 char *sender;
 void *psql = (void *) 0;
 
-void die_usage() {
+void die_usage(void) {
   strerr_die1x(100,"ezmlm-manage: usage: ezmlm-manage "
 		"[-bBcCdDeEfFlLmMnNqQsSuUvV] dir"); }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_badaddr()
+void die_badaddr(void)
 {
   strerr_die2x(100,FATAL,ERR_BAD_ADDRESS);
 }
 
-void die_cookie()
+void die_cookie(void)
 {
   strerr_die2x(100,FATAL,ERR_MOD_COOKIE);
 }
@@ -232,7 +232,7 @@ char *act;		/* action */
 
   if (!flagstorefrom) return 0;
   if (fromline.len) {	/* easy! We got it in this message */
-    if (!stralloc_0(&fromline)) die_nomem(FATAL);
+    if (!stralloc_0(&fromline)) die_nomem();
     return fromline.s;
   }			/* need to recover it from DIR/from */
   fl = 0;

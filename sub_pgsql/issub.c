@@ -12,13 +12,9 @@
 #include "fmt.h"
 #include "subscribe.h"
 #include "errtxt.h"
+#include "idx.h"
 #include <unistd.h>
 #include <libpq-fe.h>
-
-static void die_nomem(const char *fatal)
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
 
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
@@ -54,13 +50,13 @@ const char *fatal;
     if (*ret) strerr_die2x(111,fatal,ret);
 						/* fallback to local db */
 
-    if (!stralloc_copys(&addr,"T")) die_nomem(fatal);
-    if (!stralloc_cats(&addr,userhost)) die_nomem(fatal);
+    if (!stralloc_copys(&addr,"T")) die_nomem();
+    if (!stralloc_cats(&addr,userhost)) die_nomem();
 
     j = byte_rchr(addr.s,addr.len,'@');
     if (j == addr.len) return 0;
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
-    if (!stralloc_copy(&lcaddr,&addr)) die_nomem(fatal);
+    if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
     case_lowerb(lcaddr.s + 1,j - 1);	/* totally lc version of addr */
 
     h = 5381;
@@ -72,12 +68,12 @@ const char *fatal;
     ch = 64 + (h % 53);
     lcch = 64 + (lch % 53);
 
-    if (!stralloc_0(&addr)) die_nomem(fatal);
-    if (!stralloc_0(&lcaddr)) die_nomem(fatal);
-    if (!stralloc_copys(&fn,dbname)) die_nomem(fatal);
-    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem(fatal);
-    if (!stralloc_catb(&fn,&lcch,1)) die_nomem(fatal);
-    if (!stralloc_0(&fn)) die_nomem(fatal);
+    if (!stralloc_0(&addr)) die_nomem();
+    if (!stralloc_0(&lcaddr)) die_nomem();
+    if (!stralloc_copys(&fn,dbname)) die_nomem();
+    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem();
+    if (!stralloc_catb(&fn,&lcch,1)) die_nomem();
+    if (!stralloc_0(&fn)) die_nomem();
 
     fd = open_read(fn.s);
     if (fd == -1) {
@@ -130,18 +126,18 @@ const char *fatal;
 	/* work. Since sender checks for posts are bogus anyway, I don't */
 	/* know if it's worth the cost of the "WHERE ...". */
 
-    if (!stralloc_copys(&addr,userhost)) die_nomem(fatal);
+    if (!stralloc_copys(&addr,userhost)) die_nomem();
     j = byte_rchr(addr.s,addr.len,'@');
     if (j == addr.len) return 0;
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
 
-    if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem(fatal);
-    if (!stralloc_cats(&line,table)) die_nomem(fatal);
-    if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem(fatal);
-    if (!stralloc_cat(&line,&addr)) die_nomem(fatal);
-    if (!stralloc_cats(&line,"$'")) die_nomem(fatal);
+    if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
+    if (!stralloc_cats(&line,table)) die_nomem();
+    if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
+    if (!stralloc_cat(&line,&addr)) die_nomem();
+    if (!stralloc_cats(&line,"$'")) die_nomem();
 
-    if (!stralloc_0(&line)) die_nomem(fatal);
+    if (!stralloc_0(&line)) die_nomem();
     result = PQexec(psql,line.s);
     if (result == NULL)
       strerr_die2x(111,fatal,PQerrorMessage(psql));
@@ -153,8 +149,8 @@ const char *fatal;
       return (char *)0;
 
     if (!stralloc_copyb(&line,PQgetvalue(result,0,0),PQgetlength(result,0,0)))
-	die_nomem(fatal);
-    if (!stralloc_0(&line)) die_nomem(fatal);
+	die_nomem();
+    if (!stralloc_0(&line)) die_nomem();
 
     PQclear(result);
     return line.s;
