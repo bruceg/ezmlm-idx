@@ -76,8 +76,8 @@ HOW TO BUILD, TEST, AND INSTALL:
        % make ISO
 
     where ``iso'' is the ISO language designation. Currently supported
-    are: cz, da, de, en_US, fr, jp, pl, pt_BR, sv. NOTE: A normal ``make'' sets
-    up the en_US version (as before). ezmlmrc files for your language
+    are: cz, da, de, en_US, fr, hu, jp, pl, pt_BR, sv. NOTE: A normal ``make''
+    sets up the en_US version (as before). ezmlmrc files for your language
     may be available via ftp://id.wustl.edu/pub/patches/ezmlmrc. If not,
     please feel free to contribute one (translate ezmlmrc.en_US, but leave
     comments intact for "diff").

@@ -1520,6 +1520,10 @@ fr: \
 ezmlmrc.fr
 	cp -f ezmlmrc.fr ezmlmrc
 
+hu: \
+ezmlmrc.hu
+	cp -f ezmlmrc.hu ezmlmrc
+
 id: \
 ezmlmrc.id
 	cp -f ezmlmrc.id ezmlmrc
