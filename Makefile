@@ -1528,7 +1528,7 @@ id: \
 ezmlmrc.id
 	cp -f ezmlmrc.id ezmlmrc
 
-ita: \
+it: \
 ezmlmrc.it
 	cp -f ezmlmrc.it ezmlmrc
 
