@@ -1087,10 +1087,10 @@ ${ECHO} "OK"
   ${ECHO} "X-num: clean1" >> "${DIR}/mod/pending/1"
   ${ECHO} "Return-Path: <${DIG}@${HOST}>" > "${DIR}/mod/pending/2"
   ${ECHO} "X-num: clean2" >> "${DIR}/mod/pending/2"
-  ${ECHO} "Return-Path: <${DIG}@$HOST>" > "${DIR}/mod/pending/999999999"
-  ${ECHO} "X-num: clean3" >> "${DIR}/mod/pending/999999999"
+  ${ECHO} "Return-Path: <${DIG}@$HOST>" > "${DIR}/mod/pending/1999999999"
+  ${ECHO} "X-num: clean3" >> "${DIR}/mod/pending/1999999999"
 
-  chmod +x "${DIR}/mod/pending/2" "${DIR}/mod/pending/999999999"
+  chmod +x "${DIR}/mod/pending/2" "${DIR}/mod/pending/1999999999"
 
   ${EZBIN}/ezmlm-clean "${DIR}" >"${ERR}" 2>&1 ||
 	{ ${ECHO} "failed first invocation"; exit 100; }
@@ -1102,7 +1102,7 @@ ${ECHO} "OK"
 	${ECHO} "failed to remove moderation queue entry 2"
 	exit 100
   fi
-  if [ ! -r "${DIR}/mod/pending/999999999" ]; then
+  if [ ! -r "${DIR}/mod/pending/1999999999" ]; then
 	${ECHO} "removed mod queue entry 3 that wasn't due"
 	exit 100
   fi
