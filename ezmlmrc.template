@@ -249,6 +249,9 @@ C:<#C#>
 # ezmlm-archive here for normal lists. Put into moderator for mess-mod lists
 </#Mi/>
 |<#B#>/ezmlm-archive '<#D#>' || exit 0
+# I also for -umi lists
+</#umi/>
+|<#B#>/ezmlm-archive '<#D#>' || exit 0
 # all lists have warn unless -w.
 </#W/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0

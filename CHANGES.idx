@@ -50,6 +50,7 @@ moderators.  Thanks Mate Wierdl.
 -Fixed ezmlm-send to fully handle QMQP relaying.  Thanks Bernhard Graf.
 -Fixed ezmlm-gate to use "/bin/sh" consistently.  Thanks Bernhard Graf.
 -Fixed ezmlm-cgi's output of non-standard port numbers.
+-Fixed message archiving in subscribe-only moderated lists.
 
 ezmlm-idx-0.40, 19991220
 ========================
