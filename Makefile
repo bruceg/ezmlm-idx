@@ -1645,6 +1645,10 @@ ja: \
 ezmlmrc.ja
 	cp -f ezmlmrc.ja ezmlmrc
 
+jp: \
+ezmlmrc.ja
+	cp -f ezmlmrc.ja ezmlmrc
+
 nl: \
 ezmlmrc.nl
 	cp -f ezmlmrc.nl ezmlmrc
