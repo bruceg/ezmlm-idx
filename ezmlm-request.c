@@ -25,6 +25,7 @@
 #include "seek.h"
 #include "errtxt.h"
 #include "copy.h"
+#include "cookie.h"
 #include "hdr.h"
 #include "idx.h"
 #include "auto_version.h"
@@ -73,7 +74,7 @@ stralloc cmds = {0};
 stralloc from = {0};
 stralloc to = {0};
 stralloc charset = {0};
-char *boundary = "zxcaeedrqcrtrvthbdty";	/* cheap "rnd" MIME boundary */
+char boundary[COOKIE] = "zxcaeedrqcrtrvthbdty";	/* cheap "rnd" MIME boundary */
 int flagcd = '\0';				/* no encoding by default */
 
 struct constmap headerremovemap;
@@ -142,17 +143,6 @@ substdio ssout;
 char outbuf[1];
 
 stralloc mydtline = {0};
-
-void transferenc()
-{
-	if (flagcd) {
-          qmail_puts(&qq,"\n--");
-          qmail_puts(&qq,boundary);
-          qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
-          qmail_puts(&qq,charset.s);
-	  hdr_transferenc();
-        }
-}
 
 int code_qput(s,n)
 char *s;
@@ -727,7 +717,7 @@ char **argv;
     if (!quote2(&line,outlocal.s)) die_nomem();
     qmail_put(&qq,line.s,line.len);
     qmail_puts(&qq,TXT_RESULTS);
-    transferenc();
+    hdr_ctboundary();
     copy(&qq,"text/top",flagcd,FATAL);
    if (cmdidx == EZREQ_LISTS || cmdidx == EZREQ_WHICH) {
       switch (cmdidx) {

@@ -653,7 +653,7 @@ ezmlm-request.o: \
 compile ezmlm-request.c stralloc.h subfd.h strerr.h error.h qmail.h env.h \
 sig.h open.h getln.h case.h str.h readwrite.h exit.h substdio.h quote.h \
 getconf.h constmap.h fmt.h byte.h errtxt.h idx.h datetime.h date822fmt.h \
-subscribe.h now.h copy.h
+subscribe.h now.h copy.h cookie.h
 	./compile ezmlm-request.c
 
 ezmlm-reject: \
@@ -1119,8 +1119,12 @@ haswaitp.h: choose compile haswaitp.h1 haswaitp.h2 load trywaitp.c
 	./choose cl trywaitp haswaitp.h1 haswaitp.h2 > haswaitp.h
 
 hdr.a: \
-makelib hdr_transferenc.o
-	./makelib hdr.a hdr_transferenc.o
+makelib hdr_ctboundary.o hdr_transferenc.o
+	./makelib hdr.a hdr_ctboundary.o hdr_transferenc.o
+
+hdr_ctboundary.o: \
+compile hdr_ctboundary.c hdr.h qmail.h cookie.h stralloc.h
+	./compile hdr_ctboundary.c
 
 hdr_transferenc.o: \
 compile hdr_transferenc.c hdr.h qmail.h
