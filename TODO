@@ -1,10 +1,4 @@
-think about how to disable ezmlm-return, ezmlm-warn
-test generally
-test ezmlm-warn deleting ancient files in bounce/
-test Delivered-To handling
-test cookie expiration for ezmlm-return
-test ezmlm-warn only handling susbcribers
-test ezmlm-return only handling susbcribers
+merge all the redundant declarations of die_nomem
 ezmlm-reject.1 does not document -[fF]
 
 Refactor all header generation into a single module:

@@ -1,3 +1,9 @@
+BIN
+MAN
+Makefile
+SYSDEPS
+TODO
+VERSION
 alloc.c
 alloc.h
 alloc_re.c
