@@ -17,6 +17,10 @@ char *action;
   int i;
   int j;
 
+  /* addr may be passed in as a NULL pointer.
+   * Make sure it points to a non-NULL empty string. */
+  if (addr == 0) addr = "";
+
 /*
 step 1: create seed from key. note that this doesn't have to be
 cryptographic; it simply has to avoid destroying the user's entropy.
