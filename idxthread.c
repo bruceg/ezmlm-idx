@@ -46,9 +46,7 @@ struct stat st;
 static subentry sdummy;
 static authentry adummy;
 
-
-static void die_nomem(fatal)
-char *fatal;
+static void die_nomem(const char *fatal)
 {
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
@@ -56,8 +54,7 @@ char *fatal;
 int fdlock;
 
 /* NOTE: These do NOT prevent double locking */
-static void lockup(fatal)
-char *fatal;
+static void lockup(const char *fatal)
 {
   fdlock = open_append("lock");
   if (fdlock == -1)
@@ -68,20 +65,16 @@ char *fatal;
   }
 }
 
-static void unlock()
+static void unlock(void)
 {
     close(fdlock);
 }
 
-static void newsub(psubt,subject,sublen,msg,fatal)
+static void newsub(subentry *psubt,const char *subject,unsigned int sublen,
+		   unsigned long msg,const char *fatal)
 /* Initializes subentry pointed to by psubt, adds a '\0' to subject,    */
 /* allocates space and copies in subject, and puts a pointer to it in   */
 /* the entry. */
-subentry *psubt;
-const char *subject;
-unsigned int sublen;
-unsigned long msg;
-char *fatal;
 {
   const char *cpfrom;
   char *cpto;
@@ -101,18 +94,17 @@ char *fatal;
   psubt->sublen = sublen;
 }
 
-static void newauth(pautht,author,authlen,msg,fatal)
+static void newauth(authentry *pautht,		/* entry for current message */
+		    const char *author,/* pointer to author string (not sz!) */
+		    unsigned int authlen,	/* lenth of author */
+		    unsigned long msg,
+		    const char *fatal)		/* sz */
 /* Allocates space for author of length authlen+1 adding a terminal '\0' */
 /* and puts the pointer in pautht->auth. Analog to newsub().             */
-authentry *pautht;	/* entry for current message */
-char *author;		/* pointer to author string (not sz!) */
-unsigned int authlen;	/* lenth of author */
-unsigned long msg;
-char *fatal;		/* sz */
-
 {
-  register char *cpfrom, *cpto;
-  register unsigned int cpno;
+  const char *cpfrom;
+  char *cpto;
+  unsigned int cpno;
 
   pautht->higher = (subentry *) 0;
   pautht->lower = (subentry *) 0;
@@ -138,8 +130,16 @@ char *fatal;
   if (!stralloc_append(&dummyind," ")) die_nomem(fatal);
 }
 
-void idx_mkthreads(pmsgtable,psubtable,pauthtable,pdatetable,
-	msg_from,msg_to,msg_latest,locked,fatal)
+void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
+		   subentry **psubtable,	/* subject no, len, str char * */
+		   authentry **pauthtable,	/* author no, len, str char* */
+		   dateentry **pdatetable,	/* message per date */
+		   unsigned long msg_from,	/* first message in range */
+		   unsigned long msg_to,	/* last message in range */
+		   unsigned long msg_latest,	/* latest message in archive (for locking) */
+		   int locked,			/* if already locked */
+		   const char *fatal)		/* Program-specific */
+
 /* Threads messages msg_from -> msg_to into pmsgtable & psubtable. When  */
 /* reading the latest index file (containing msg_latest) it locks the    */
 /* directory, unless it is already locked (as in digest creation).       */
@@ -150,17 +150,6 @@ void idx_mkthreads(pmsgtable,psubtable,pauthtable,pdatetable,
 /* missing entries, not necessarily reflecting missing archive files.    */
 /* This all to make ezmlm-get more robust to get maximal info out of     */
 /* corrupted archives.                                                   */
-
-  msgentry **pmsgtable;		/* table of message<->subject */
-  subentry **psubtable;		/* subject no, len, str char * */
-  authentry **pauthtable;	/* author no, len, str char * */
-  dateentry **pdatetable;	/* message per date */
-  unsigned long msg_from;	/* first message in range */
-  unsigned long msg_to;		/* last message in range */
-  unsigned long msg_latest;	/* latest message in archive (for locking) */
-  int locked;			/* if already locked */
-  char *fatal;			/* Program-specific */
-
 {
   unsigned long idxlatest;	/* need to lock for this (last) index file */
   unsigned long msg;		/* current msg number */
@@ -403,22 +392,19 @@ void idx_mkthreads(pmsgtable,psubtable,pauthtable,pdatetable,
 }
 
 
-void idx_mkthread(pmsgtable,psubtable,pauthtable,msg_from,msg_to,msg_master,
-		msg_latest,locked,fatal)
+void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subject */
+		  subentry **psubtable,		/* ptr to tbl of subject no, len, str char * */
+		  authentry **pauthtable,
+		  unsigned long msg_from,	/* first message in range */
+		  unsigned long msg_to,		/* last message in range */
+		  unsigned long msg_master,	/* master message for single thread, else 0*/
+		  unsigned long msg_latest,	/* latest message in archive (for locking) */
+		  int locked,			/* if already locked */
+		  const char *fatal)			/* Program-specific */
+
 /* Works like idx_mkthreads, except that it finds the subject for message   */
 /* msg_master, then identifies messages in the range that have the same     */
 /* subject. msgtable entries with subject 0 do not match, with '1' do match.*/
-
-msgentry **pmsgtable;		/* pointer to table of message<->subject */
-subentry **psubtable;		/* ptr to tbl of subject no, len, str char * */
-authentry **pauthtable;
-unsigned long msg_from;		/* first message in range */
-unsigned long msg_to;		/* last message in range */
-unsigned long msg_latest;	/* latest message in archive (for locking) */
-unsigned long msg_master;	/* master message for single thread, else 0*/
-int locked;			/* if already locked */
-char *fatal;			/* Program-specific */
-
 {
   unsigned long idxlatest;	/* need to lock for this (last) index file */
   unsigned long idxto;		/* index for last msg in range */
@@ -438,7 +424,7 @@ char *fatal;			/* Program-specific */
   int fd;			/* index file handle */
   int match;
   msgentry *pmsgt;
-  register msgentry *x,*y;
+  msgentry *x,*y;
 
   if ((ulmrange = msg_to - msg_from +1) <= 0)
     strerr_die2x(100,fatal,"Program error: bad range in idx_mkthreads");
@@ -611,20 +597,19 @@ char *fatal;			/* Program-specific */
   pauthnext->auth = (char *) 0;	/* end of table marker */
 }
 
-void idx_mklist(pmsgtable,psubtable,pauthtable,msg_from,msg_to,fatal)
+void idx_mklist(msgentry **pmsgtable,	/* pointer to table of message<->subject */
+		subentry **psubtable,	/* ptr to tbl of subject no, len, str char * */
+		authentry **pauthtable,
+		unsigned long msg_from,		/* first message in range */
+		unsigned long msg_to,		/* last message in range */
+		const char *fatal)			/* Program-specific */
 /* Like mkthreads, except that it works without a subject index. The result */
 /* is just a dummy subject and a sequential list of messages. This to allow */
 /* use of the same routines when creating digest from lists that have no    */
 /* subject index (for whatever reason). */
-msgentry **pmsgtable;		/* pointer to table of message<->subject */
-subentry **psubtable;		/* ptr to tbl of subject no, len, str char * */
-authentry **pauthtable;
-unsigned long msg_from;		/* first message in range */
-unsigned long msg_to;		/* last message in range */
-char *fatal;			/* Program-specific */
 {
   unsigned long ulmrange;
-  register msgentry *x,*y;
+  msgentry *x,*y;
   subentry *psubt;
   authentry *pautht;
 
@@ -657,11 +642,12 @@ char *fatal;			/* Program-specific */
   pautht->lower = (authentry *) 0;
 }
 
-void idx_destroythread(msgtable,subtable,authtable)
+void idx_destroythread(msgentry *msgtable,
+		       subentry *subtable,
+		       authentry *authtable)
 /* Frees space allocated by idxthread routines. This is needed only if */
 /* one does several threadings in one program run. Otherwise, exit()   */
 /* should free all allocated memory, which will be faster. */
-msgentry *msgtable; subentry *subtable; authentry *authtable;
 {
   subentry *psubt;
   authentry *pautht;
