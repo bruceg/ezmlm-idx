@@ -170,11 +170,11 @@ I messaggi in realtà non é necessario che siano vuoti, ma ignorerò
 il loro contenuto. E' importante solo l'INDIRIZZO dal quale li spedisci.
 
 Puoi iscriverti anche da un altro indirizzo,per esempio se vuoi iscrivere
-"john@host.domain", basta solo aggiungere un trattino e il tuo indirizzo (con
-'=' al posto di '@') dopo i comandi: <<#L#>-subscribe-john=host.domain@<#H#>>
+"john@example.com", basta solo aggiungere un trattino e il tuo indirizzo (con
+'=' al posto di '@') dopo i comandi: <<#L#>-subscribe-john=example.com@<#H#>>
 
 Per cancellare l'iscrizione da questo indirizzo, scrivi a:
-<<#L#>-unsubscribe-john=host.domain@<#H#>>
+<<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </text/mod-help#E/>
 Grazie per aver accettato di moderare la mailing list <#L#>@<#H#>.
@@ -188,18 +188,18 @@ amministratore della lista e/o moderatore.
 Sottoscrizione remota
 -------------------
 Come moderatore, puoi iscrivere e cancellare qualsiasi indirizzo alla
-mailing list. Per iscrivere "john@host.domain" , basta solo
+mailing list. Per iscrivere "john@example.com" , basta solo
 aggiungere un trattino  dopo il comando, quindi il suo indirizzo con
 '=' invece di '@'. Per esempio, per iscrivere questo indirizzo scrivi
-a:    <<#L#>-subscribe-john=host.domain@<#H#>>
+a:    <<#L#>-subscribe-john=example.com@<#H#>>
 
 Analogamente puoi rimuovere l'indirizzo scrivendo a:
-   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </#dE/>
 Per la lista delle raccolte:
-   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 </#E/>
 Questo è tutto. Non sono necessari comandi nell' oggetto o nel corpo del 
@@ -211,7 +211,7 @@ realmente spedito la richiesta. Rispondi semplicemente al messaggio e i
 tuoi desideri saranno eseguiti.
 </#RE/>
 Spedirò una richiesta di conferma all'indirizzo dell'utente, in questo caso
-a <john@host.domain>. Tutto ciò che l'utente dovrà fare sarà quello di 
+a <john@example.com>. Tutto ciò che l'utente dovrà fare sarà quello di 
 rispondere alla richiesta di conferma.
 </#E/>
 
@@ -253,10 +253,10 @@ Le iscrizioni funzionano allo stesso modo.
 
 L'utente può anche utilizzare:
 
-   <<#L#>-subscribe-mary=host.domain@<#H#>>
-   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
 
-per ricevere le e-mail a: "mary@host.domain". Solo se riceve effettivamente
+per ricevere le e-mail a: "mary@example.com". Solo se riceve effettivamente
 le e-mail a questo indirizzo potrà ricevere il messaggio di conferma ed essere 
 in grado di rispondergli.
 
@@ -600,8 +600,8 @@ oppure clicca qui:
 Non ho controllato che il tuo indirizzo sia al momento nella mailing list.
 Per vedere quale indirizzo hai usato per iscriverti, guarda ai messaggi che
 stai ricevendo dalla mailing list. Ciascun messaggio ha il tuo indirizzo
-nascosto nel campo di ritorno; per esempio, mary@xdd.ff.com riceve i messaggi
-con il campo di ritorno:<<#l#>-return-<numero>-mary=xdd.ff.com@<#H#>.
+nascosto nel campo di ritorno; per esempio, mary@example.com riceve i messaggi
+con il campo di ritorno:<<#l#>-return-<numero>-mary=example.com@<#H#>.
 
 </#qE/>
 Alcuni programmi di posta sono difettosi e non sono in grado di gestire
@@ -622,12 +622,12 @@ Se ti sei cancellato, ma continui a ricevere i messaggi, allora ti sei
 iscritto con un altro indirizzo diverso da quello che usi al momento. per
 favore cerca nell'intestazione:
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
 
-Ciò indica che l'indirizzo usato per l'iscrizione è``user@host.dom''.
+Ciò indica che l'indirizzo usato per l'iscrizione è``user@example.com''.
 L'indirizzo per cancellarsi per questo utente sarà:
-'<#l#>-unsubscribe-utente=host.dominnio@<#H#>'.
-Basta scrivere a questo indirizzo, sostituendo ai valori utente=host.dominio
+'<#l#>-unsubscribe-utente=example.cominnio@<#H#>'.
+Basta scrivere a questo indirizzo, sostituendo ai valori utente=example.cominio
 quelli corretti.
 
 Se il messaggio ha un'intestazione con ``List-Unsubscribe:'' puoi

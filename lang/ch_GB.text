@@ -57,11 +57,11 @@ contact <#L#>-help@<#H#>; run by ezmlm
 </text/bottom#/>
 
 你可以通过电子邮件的方式注册一个其它的地址，举例来讲，你希望通过电子邮件的方式注
-册“john@host.domain”，只要在命令后（subscribe）添加“-”并且用“=”代替“@”：
-<<#L#>-subscribe-john=host.domain@<#H#>>
+册“john@example.com”，只要在命令后（subscribe）添加“-”并且用“=”代替“@”：
+<<#L#>-subscribe-john=example.com@<#H#>>
 
 取消注册邮件列表，将电子邮件发送到：
-<<#L#>-unsubscribe-john=host.domain@<#H#>>
+<<#L#>-unsubscribe-john=example.com@<#H#>>
 
 使用这种方式注册、取消注册邮件列表时，系统将向该地址发送确认的电子邮件，当该地址
 收到电子邮件时，只要回复电子邮件就能够完成注册和取消注册。
@@ -160,17 +160,17 @@ contact <#L#>-help@<#H#>; run by ezmlm
 用户注册和取消注册的管理
 ----------------------
 作为邮件列表的管理者，你能够注册和取消注册邮件列表的任何用户。你希望通过电子邮件的方
-式注册“john@host.domain”，只要在命令后（subscribe）添加“-”并且用“=”代替“@”，举
+式注册“john@example.com”，只要在命令后（subscribe）添加“-”并且用“=”代替“@”，举
 例来讲，注册上面所讲的地址，将电子邮件发送到：
-   <<#L#>-subscribe-john=host.domain@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#H#>>
 
 同样，取消注册上面的电子邮件地址，将电子邮件发送到：
-   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </#d/>
 同样对于注册和取消注册邮件列表的摘要：
-   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 <//>
 所有的注册和取消注册都不需要有邮件主题和邮件内容!
@@ -178,7 +178,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 </#r/>
 系统将向你发送确认的电子邮件，确认是你发送的请求。你只要回复电子邮件就能完成所有的请求。
 </#R/>
-系统将向用户发送确认的电子邮件，如上面所说的电子邮件地址<john@host.domain>。用户必须
+系统将向用户发送确认的电子邮件，如上面所说的电子邮件地址<john@example.com>。用户必须
 回复电子邮件才能完成所有的请求。
 <//>
 
@@ -214,10 +214,10 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 同样用户也可以使用下面的方法取消注册：
 
-   <<#L#>-subscribe-mary=host.domain@<#H#>>
-   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
 
-"mary@host.domain"将收到系统发送的确认取消注册的电子邮件.在验证完成后就能取消注册。
+"mary@example.com"将收到系统发送的确认取消注册的电子邮件.在验证完成后就能取消注册。
 
 </#rl/>
 通过电子邮件的方式获得<#L#>@<#H#>邮件列表的注册用户，将电子邮件发送到下面的地址:
@@ -478,8 +478,8 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 系统不能确认你的电子邮件地址是否是邮件列表的注册用户。你可以使用下面的方法获得你使用什么
 地址注册邮件列表：在你收到的从邮件列表发送的电子邮件中，每个电子邮件的退回路径
-（Return path）中包括了你注册用的电子邮件地址，例如，mary@xdd.ff.com收到的电子邮件中包
-括的退回路径（Return path）是<<#l#>-return-<number>-mary=xdd.ff.com@<#H#>。
+（Return path）中包括了你注册用的电子邮件地址，例如，mary@example.com收到的电子邮件中包
+括的退回路径（Return path）是<<#l#>-return-<number>-mary=example.com@<#H#>。
 
 </#q/>
 有些电子邮件的客户端程序不能够解析很长的地址。如果你不能够直接回复这封电子邮件，你可以向
@@ -494,11 +494,11 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 如果你已经取消注册，但是你还是收到从邮件列表发送来得的电子邮件，请你核对这封邮件的：
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
 
 你只要将电子邮件发送到：
-'<#l#>-unsubscribe-user=host.dom@<#H#>'.
-就能够取消注册，‘user=host.dom’是你的电子邮件地址，在这封邮件发出后，你将收到系统发
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
+就能够取消注册，‘user=example.com’是你的电子邮件地址，在这封邮件发出后，你将收到系统发
 送的有关取消注册的确认信，你只要回复电子邮件就能完成取消注册，最后系统将向你发送取消
 注册成功的电子邮件。
 

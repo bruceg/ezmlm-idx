@@ -167,14 +167,14 @@ Meddelandena behöver inte innehålla något särskilt, det är
 bara adressen som är viktig.
 
 Du kan starta en prenumeration till en alternativ adress,
-t ex "john@host.domain", addera bara ett bindesträck
+t ex "john@example.com", addera bara ett bindesträck
 och din adress (med '=', istället för '@') efter kommando
 ordet. Dvs:
-<<#L#>-subscribe-john=host.domain@<#H#>>
+<<#L#>-subscribe-john=example.com@<#H#>>
 
 För att avsluta prenumerationen till denna adressen,
 skicka ett brev till:
-<<#L#>-unsubscribe-john=host.domain@<#H#>>
+<<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </text/mod-help#E/>
 Tack för att du vill moderera <#L#>@<#H#> listan.
@@ -190,19 +190,19 @@ Allmäna kommandon följer efter detta meddelande.
 Fjärr prenumeration.
 --------------------
 Som moderator kan du prenumerera och avprenumerera vilken adress
-som helst på listan. För att prenumerera "john@host.domain",
+som helst på listan. För att prenumerera "john@example.com",
 skriv bara ett bindesträck efter "kommando ordet", därefter
 adressen med ett '=' tecken istället för '@'. I detta fallet skulle
 du skickat ett brev till:
-   <<#L#>-subscribe-john=host.domain@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#H#>>
 
 Du kan på samma sätt ta bort en adress med ett meddelande till:
-   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </#dE/>
 För "digest" versionen av listan:
-   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 </#E/>
 Det är allt. Titel och innehåll spelar ingen roll!
@@ -213,7 +213,7 @@ på att det verkligen var du som skickade brevet.
 Svara bara på det brevet och det hela är klart.
 </#RE/>
 Jag kommer skicka ett bekräftelsebrev till prenumerantens adress,
-i detta fallet <john@host.domain>. Allt prenumeranten behöver
+i detta fallet <john@example.com>. Allt prenumeranten behöver
 göra är att svara på brevet.
 </#E/>
 
@@ -259,10 +259,10 @@ Prenumeration fungerar på samma sätt.
 
 Användaren kan också:
 
-   <<#L#>-subscribe-mary=host.domain@<#H#>>
-   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
 
-för att få brev skickad till "mary@host.domain". Bara om hon kan
+för att få brev skickad till "mary@example.com". Bara om hon kan
 ta emot brev på den adressen, får hon bekräftelse meddelandet
 och kan svara på det.
 
@@ -605,9 +605,9 @@ eller tryck här:
 
 För att se vilken adress din prenumeration går till, undersök ett
 meddelande från listan. Varje meddelande har din adress dold i
-dess "return path", t ex mary@xdd.ff.com har får meddelanden
+dess "return path", t ex mary@example.com har får meddelanden
 med "return-path" satt till:
-<<#l#>-return-<nummer>-mary=xdd.ff.com@<#H#>>.
+<<#l#>-return-<nummer>-mary=example.com@<#H#>>.
 
 </#qE/>
 Vissa email program är felaktiga och kan inte hantera långa adresser.
@@ -626,14 +626,14 @@ Ifall du har avslutat din prenumeration, men fortfarande får brev,
 är du prenumererad under en annan adress än den du för närvarande
 använder. Titta i brevhuvudet (header) efter:
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
 
-Det visar din prenumerationsadress som "user@host.dom".
+Det visar din prenumerationsadress som "user@example.com".
 För att avsluta din prenumeration med den adressen, skicka
 ett brev till:
-<#l#>-unsubscribe-user=host.dom@<#H#>
+<#l#>-unsubscribe-user=example.com@<#H#>
 
-Glöm inte att anpassa user=host.dom till din egen adress.
+Glöm inte att anpassa user=example.com till din egen adress.
 
 Ifall meddelandet har en "List-Unsubscribe:" fält i brevhuvudet,
 kan du skicka ett meddelande till adressen i det fältet.

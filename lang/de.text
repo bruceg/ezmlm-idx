@@ -8,6 +8,8 @@
 #                       directly to me please
 #
 # Changes:
+# 2004-09-17     The sample address @lightwerk.de was replaced by the
+#                RFC-mandated example.com
 # 1999-11-23     Update for version 0.40, most help texts are moved to
 #                the answer of the -help command.
 #                The sample address ich@irgendwo.de was replaced by
@@ -245,7 +247,7 @@ ist für meine Steuerung maßgebend.
 
 ------------------------------------------------------------
 ACHTUNG: bitte probieren Sie nicht die im folgenden genannte
-Adresse ich@lightwerk.de aus, sondern ersetzen Sie
+Adresse ich@example.com aus, sondern ersetzen Sie
 diese durch Ihre eigene Adresse, unter der Sie
 Abonnent der Liste werden möchten!
 ------------------------------------------------------------
@@ -254,12 +256,12 @@ Sie können direkt die Adresse vorgeben, unter der Sie als
 Empfänger der Liste eingetragen werden möchten. Dazu bauen Sie
 die gewünschte Adresse in meine Steuerungsadresse ein, indem Sie
 das at-Zeichen (@) durch ein Gleichheitszeichen (=) ersetzen.
-Um zum Beispiel als Adresse ich@lightwerk.de anzugeben, senden
+Um zum Beispiel als Adresse ich@example.com anzugeben, senden
 Sie eine Mail an die Adresse
-   <<#L#>-subscribe-ich=lightwerk.de@<#H#>>.
+   <<#L#>-subscribe-ich=example.com@<#H#>>.
 Die entsprechende Adresse zum abmelden des Abonnements ist
-   <<#L#>-unsubscribe-ich=lightwerk.de@<#H#>>.
-In beiden Fällen werde ich eine Bestätigung an ich@lightwerk.de
+   <<#L#>-unsubscribe-ich=example.com@<#H#>>.
+In beiden Fällen werde ich eine Bestätigung an ich@example.com
 schicken, die Sie nach Empfang einfach nur beantworten müssen,
 um den An- oder Abmeldevorgang abzuschließen.
 
@@ -294,18 +296,18 @@ in die Liste aufzunehmen oder sie daraus zu streichen. Sie
 bauen einfach die Adresse, um die es geht in meine Kommando-Adresse
 ein und ersetzen dabei das at-Zeichen (@) durch ein
 Gleichheitszeichen (=).
-Für die Adresse ich@lightwerk.de geht das zum Beispiel
+Für die Adresse ich@example.com geht das zum Beispiel
 über die folgenden Steueradressen:
 
 Eintragen:
-   <#L#>-subscribe-ich=lightwerk.de@<#H#>
+   <#L#>-subscribe-ich=example.com@<#H#>
 Löschen:
-   <#L#>-unsubscribe-ich=lightwerk.de@<#H#>
+   <#L#>-unsubscribe-ich=example.com@<#H#>
 
 </#dE/>
 Entsprechend für die Digest-Liste:
-   <#L#>-digest-subscribe-ich=lightwerk.de@<#H#>
-   <#L#>-digest-unsubscribe-ich=lightwerk.de@<#H#>
+   <#L#>-digest-subscribe-ich=example.com@<#H#>
+   <#L#>-digest-unsubscribe-ich=example.com@<#H#>
 
 </#E/>
 So einfach ist das :) Sie brauchen nicht einmal einen
@@ -318,7 +320,7 @@ Sie brauchen dann einfach nur noch antworten und der Vorgang
 ist damit abgeschlossen.
 </#RE/>
 Ich werde zur Sicherheit an die angegebene Adresse (in diesem
-Fall ich@lightwerk.de) eine Rückfrage schicken.
+Fall ich@example.com) eine Rückfrage schicken.
 Alles was der Nutzer tun muß, ist auf diese Anfrage zu antworten.
 </#E/>
 
@@ -369,18 +371,18 @@ Beachten Sie, daß dadurch Ihre Email-Adresse bekannt wird.
 </#E/>
 Die Nutzer können auch die folgende Adressen benutzen:
 
-   <#L#>-subscribe-ich=lightwerk.de@<#H#>
-   <#L#>-unsubscribe-ich=lightwerk.de@<#H#>
+   <#L#>-subscribe-ich=example.com@<#H#>
+   <#L#>-unsubscribe-ich=example.com@<#H#>
 
 </#dE/>
 Für Digests:
-   <#L#>-digest-subscribe-ich=lightwerk.de@<#H#>
-   <#L#>-digest-unsubscribe-ich=lightwerk.de@<#H#>
+   <#L#>-digest-subscribe-ich=example.com@<#H#>
+   <#L#>-digest-unsubscribe-ich=example.com@<#H#>
 
 </#E/>
 Damit können sie eine andere als die aktuell benutzte
 Email-Adresse in die Mailingliste einzutragen bzw. sie daraus
-löschen (in diesem Beispiel die Adresse ich@lightwerk.de).
+löschen (in diesem Beispiel die Adresse ich@example.com).
 Nur wenn die Rückfrage an diese Adresse dann auch beantwortet
 wird, kann die Aktion ausgeführt werden.
 
@@ -852,16 +854,16 @@ benutzen.
 Um festzustellen, unter welcher Adresse Sie die Mailingliste
 empfangen, sehen Sie sich die Header der empfangenen Nachrichten an.
 Jede Nachricht hat Ihre Empfängeradresse in ihrem Return-Path: kodiert.
-Zum Beispiel empfängt die Adresse ich@lightwerk.de alle Listennachrichten
+Zum Beispiel empfängt die Adresse ich@example.com alle Listennachrichten
 mit folgendem Return-Path:
-Return-Path: <<#l#>-return-<nummer>-ich=lightwerk.de@<#H#>
+Return-Path: <<#l#>-return-<nummer>-ich=example.com@<#H#>
 Die Nummer wechselt natürlich, also sieht das zum Beispiel so aus:
-'Return-Path: <<#l#>-return-1234-ich=lightwerk.de@<#H#>>'
+'Return-Path: <<#l#>-return-1234-ich=example.com@<#H#>>'
 
 Das zeigt, daß die Adresse, über die die Nachrichten bezogen werden,
-ich@lightwerk.de ist. Die Adresse zum Abbestellen der Liste wäre in
+ich@example.com ist. Die Adresse zum Abbestellen der Liste wäre in
 diesem Fall 
-   <#l#>-unsubscribe-ich=lightwerk.de@<#H#>
+   <#l#>-unsubscribe-ich=example.com@<#H#>
 Benutzen Sie einfach die so ermittelte Adresse.
 
 Wenn Ihre Listen-Nachrichten einen Header "List-Unsubscribe"

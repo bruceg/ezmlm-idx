@@ -72,9 +72,9 @@ Jesli to zrobisz, administrator listy ich nie zobaczy, natomiast
 wszyscy prenumeratorzy nie¼le siê na Ciebie wkurz± i zostaniesz
 uznany(a) za internetowego ¿ó³todzioba, z którym nie warto gadaæ.
 
-Aby okresliæ adres Bóg@niebo.prezydent.pl jako swój adres subskrybcyjny,
+Aby okresliæ adres Bóg@example.com jako swój adres subskrybcyjny,
 wy¶lij list na adres:
-<<#L#>-subscribe-Bóg=niebo.prezydent.pl@<#H#>>.
+<<#L#>-subscribe-Bóg=example.com@<#H#>>.
 Wy¶lê Ci wtedy potwierdzenie na ten w³asnie adres; kiedy je otrzymasz,
 po prostu odpowiedz na nie, aby staæ siê prenumeratorem.
 
@@ -186,16 +186,16 @@ Poni¿ej kilka s³ów o tym, jak dzia³a moderowanie:
 Zdalne wpisanie na listê prenumeratorów
 ---------------------------------------
 Bêd±c moderatorem, mo¿esz zapisaæ lub wypisaæ internautê
-o adresie janek@komputer-janka.domena poprzez wys³anie listu na adres:
+o adresie janek@example.com poprzez wys³anie listu na adres:
 
-<#L#>-subscribe-janek=komputer-janka.domena@<#H#>
-<#L#>-unsubscribe-janek=komputer-janka.domena@<#H#>
+<#L#>-subscribe-janek=example.com@<#H#>
+<#L#>-unsubscribe-janek=example.com@<#H#>
 
 </#g/>
 Odpowiednio dla przegl±du listy:
 
-<#L#>-digest-subscribe-janek=komputer-janka.domena@<#H#>
-<#L#>-digest-unsubscribe-janek=komputer-janka.domena@<#H#>
+<#L#>-digest-subscribe-janek=example.com@<#H#>
+<#L#>-digest-unsubscribe-janek=example.com@<#H#>
 
 <//>
 To wszystko. Nie musisz nadawaæ listowi tytu³u, nie musisz
@@ -245,12 +245,12 @@ Zapisy funkcjonuj± w ten sam sposób.
 
 U¿ytkownik mo¿e równie¿ u¿ywaæ adresów:
 
-<#L#>-subscribe-janek=komputer-janka.domena@<#H#>
-<#L#>-unsubscribe-janek=komputer-janka.domena@<#H#>
+<#L#>-subscribe-janek=example.com@<#H#>
+<#L#>-unsubscribe-janek=example.com@<#H#>
 
 aby poczta z listy wêdrowa³a na inny adres bed±cy jego w³asno¶ci±.
 Tylko wówczas, kiedy u¿ytkownik dostaje listy na adres
-janek@komputer-janka.domena, bêdzie w stanie odpowiedzieæ
+janek@example.com, bêdzie w stanie odpowiedzieæ
 na ¿yczenie potwierdzenia skierowanego od menad¿era listy.
 
 Wszystkie powy¿sze kroki s± przedsiêbrane po to, by unikaæ
@@ -596,8 +596,8 @@ Nie sprawdzi³em jednak czy twój adres znajduje siê na li¶cie
 prenumeratorów. Aby sprawdziæ, którego adresu u¿ywasz jako koresponde-
 cyjnego, spojrzyj na jak±kolwiek wiadomosæ z listy dyskusyjnej.
 Ka¿dy list ma schowany Twój adres w scie¿ce zwrotnej; np.
-Bóg@niebo.prezydent.pl dostaje listy ze scie¿k± zwrotn±:
-<<#l#>-return-<number>-Bóg=niebo.prezydent.pl@<#H#>.
+Bóg@example.com dostaje listy ze scie¿k± zwrotn±:
+<<#l#>-return-<number>-Bóg=example.com@<#H#>.
 
 </text/unsub-nop/>
 Powiadomienie: Adresu pocztowego
@@ -612,11 +612,11 @@ zapisany(a) z innego adresu, ni¿ ten, którego w³a¶nie u¿ywasz.
 Spojrzyj, proszê, ma nag³ówki któregokolwiek listu z prenumeraty,
 znajdziesz tam frazê:
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
 
 W³a¶ciwy adres, na który powinno wiêc trafiæ twoje ¿yczenie wypisania to:
-'<#l#>-unsubscribe-user=host.dom@<#H#>'.
-Po prostu napisz na powy¿szy adres, zamieniaj±c user=host.dom na twoje
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
+Po prostu napisz na powy¿szy adres, zamieniaj±c user=example.com na twoje
 prawdziwe dane, odpowiedz po¼niej na pro¶bê potwierdzenia, 
 powieniene¶(a¶) wówczas dostaæ list, ¿e jeste¶ wykre¶lony(a)
 z listy prenumeratorów.

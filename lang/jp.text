@@ -205,20 +205,20 @@ command address $B08$F$N(B message $B$O(B address $B$N$_$,I,MW$G$9!#Cf?H$O
 $BI,MW$G$"$l$PDL>o$H$O0[$J$k(B address $B$G(B mailing list <#L#> $B$+$i$N(B
 message $B$r<u$1<h$k$h$&$K=PMh$^$9!#(B
 
-$BNc!K(Bjohn@host.domain $B$G<u$1<h$kMM$K$9$k(B
+$BNc!K(Bjohn@example.com $B$G<u$1<h$kMM$K$9$k(B
 
     $B<u$1<h$j(B address $B$r0J2<$NMM$KJQ49$7$F(B
 
-        john@host.domain
+        john@example.com
                 $B"-(B      $B!J(B'@' --> '='$B!K(B
-        john=host.domain
+        john=example.com
                 $B"-(B
-        <<#L#>-subscribe-john=host.domain@<#H#>>
+        <<#L#>-subscribe-john=example.com@<#H#>>
 
-<#L#>-subscribe-john=host.domain@<#H#> $B08$F$K6u(B message $B$rAw$k$3$H$G(B
-john@host.domain $B$G$N9XFI$r3+;O$G$-$^$9!#(B
+<#L#>-subscribe-john=example.com@<#H#> $B08$F$K6u(B message $B$rAw$k$3$H$G(B
+john@example.com $B$G$N9XFI$r3+;O$G$-$^$9!#(B
 
-$B$3$N>l9g!"9XFI$rCf;_$9$k$K$O(B <#L#>-unsubscribe-john=host.domain@<#H#>
+$B$3$N>l9g!"9XFI$rCf;_$9$k$K$O(B <#L#>-unsubscribe-john=example.com@<#H#>
 $B08$F$K6u(B message $B$rAw$C$F$/$@$5$$!#(B
 
 </text/mod-help#E/>
@@ -236,28 +236,28 @@ ezmlm $B$N(B command $B$O!"B>$N(B mailing list program $B$H$O<c430[$J$C$F(
 Remote subscription
 -------------------
 $B4IM}<T$OG$0U$N(B address $B$r9XFI<T$K2C$($?$j30$7$?$j$9$k;v$,=PMh$^$9!#(B
-$BNc$($P(B "john@host.domain" $B$r9XFI<T$K2C$($k>l9g$O!"(B
+$BNc$($P(B "john@example.com" $B$r9XFI<T$K2C$($k>l9g$O!"(B
 
-                john@host.domain
+                john@example.com
                         $B"-(B
-                john=host.domain
+                john=example.com
                         $B"-(B
-        <<#L#>-subscribe-john=host.domain@<#H#>>
+        <<#L#>-subscribe-john=example.com@<#H#>>
 
 $B$NMM$K$7$F(B command address $B$r@8@.$7!"$=$N(B address $B$X(B
 $B6u$N(B message $B$rAw$C$F2<$5$$!#(B
 
-$B$^$?!"(Bjohn@host.domain $B$r9XFI<T$+$i30$9>l9g$O(B
+$B$^$?!"(Bjohn@example.com $B$r9XFI<T$+$i30$9>l9g$O(B
 
-        <<#L#>-unsubscribe-john=host.domain@<#H#>>
+        <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 $B$X6u$N(B message $B$rAw$C$F2<$5$$!#(B
 
 </#dE/>
 digest list $B$K2C$($?$j!&30$7$?$j$9$k>l9g$bF1MM$K$7$F(B
 
-        <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-        <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+        <<#L#>-digest-subscribe-john=example.com@<#H#>>
+        <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 $B$NMM$K$J$j$^$9!#(B
 
@@ -271,7 +271,7 @@ reply $B$9$k;v$G<jB3$-$O40N;$7$^$9!#(B
 
 </#RE/>
 ezmlm $B$O(B user $B$KBP$7$F3NG'$N(B message $B$rAw$j$^$9!#(B
-$B>e5-$N>l9g$O(B <john@host.domain> $B08$K3NG'$N(B message $B$,Aw$i$l$k(B
+$B>e5-$N>l9g$O(B <john@example.com> $B08$K3NG'$N(B message $B$,Aw$i$l$k(B
 $B$3$H$K$J$j$^$9!#3NG'$N(B message $B$r<u$1<h$C$?(B user $B$O(B reply $B$r(B
 $B$9$k$3$H$G3NG'$,=*N;$7$^$9!#(B
 </#E/>
@@ -320,15 +320,15 @@ request $B$NH/?.<T$KO"Mm$7$F$_$F2<$5$$!#(B
 
 $B$^$?!"(B
 
-        <<#L#>-subscribe-mary=host.domain@<#H#>>
-	(Start subscription as mary@host.domain)
+        <<#L#>-subscribe-mary=example.com@<#H#>>
+	(Start subscription as mary@example.com)
 
-	<<#L#>-unsubscribe-mary=host.domain@<#H#>>
-	(Stop subscription as mary@host.domain)
+	<<#L#>-unsubscribe-mary=example.com@<#H#>>
+	(Stop subscription as mary@example.com)
 
-$B$NMM$K$9$k;v$G!"H/?.85$H$O0[$J$k(B address$B!J$3$N>l9g$O(B mary@host.domain$B!K(B
+$B$NMM$K$9$k;v$G!"H/?.85$H$O0[$J$k(B address$B!J$3$N>l9g$O(B mary@example.com$B!K(B
 $B$G(B mailing list $B$+$i$N(B message $B$r<u$1<h$kMM$K$9$k;v$b=PMh$^$9!#(B
-$B3NG'$O(B mary@host.domain $B08$KH/9T$5$l!"$=$N(B message $B$KBP$7$F(B
+$B3NG'$O(B mary@example.com $B08$KH/9T$5$l!"$=$N(B message $B$KBP$7$F(B
 $B@5$7$$(B reply $B$,5"$C$F$-$?>l9g$N$_9XFI!&C&B`$OM-8z$K$J$j$^$9!#(B
 
 $B4IM}<T$N(B address $B$=$NB>$N>pJs$O9XFI<T$K$O0l@ZO"Mm$5$l$^$;$s!#(B
@@ -762,9 +762,9 @@ Mail User Agent (MUA) $B$K$h$C$F$O(B
 $B5.J}$N(B address $B$,9XFI<T$+H]$+$O(B check $B$7$F$$$^$;$s!#(B
 $B$I$N(B address $B$G9XFI$r$7$F$$$k$N$+$O!"(Bmailing list $B$+$i(B
 $BAw$i$l$F$/$k(B message $B$N(B "Return-Path:" $B$N=j$KKd$a9~$^$l$F(B
-$B$$$^$9!#Nc$($P!"(Bmary@xdd.ff.com $B$,9XFI$N(B address $B$J$i(B
+$B$$$^$9!#Nc$($P!"(Bmary@example.com $B$,9XFI$N(B address $B$J$i(B
 
-        Return-Path: <<#L#>-return-<number>-mary=xdd.ff.com@<#H#>>
+        Return-Path: <<#L#>-return-<number>-mary=example.com@<#H#>>
 
 $B$H$$$&6q9g$$$G$9!#(B
 
@@ -793,16 +793,16 @@ Mail User Agent (MUA) $B$K$h$C$F$O(B
 
 hearder $B$N0J2<$NItJ,$K(B
 
-'Return-Path: <<#L#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#L#>-return-1234-user=example.com@<#H#>>'
 
 $B5.J}$,$I$N(B address $B$G9XFI$r$7$F$$$k$N$+$,8=$l$F$$$^$9!#(B
-$B!J$3$N>l9g!"(Buser@host.dom $B$G9XFI$r$7$F$$$k$3$H$K$J$j$^$9!K(B
+$B!J$3$N>l9g!"(Buser@example.com $B$G9XFI$r$7$F$$$k$3$H$K$J$j$^$9!K(B
 
 address $B$rL@<($7$F9XFICf;_$N(B request $B$r=P$9>l9g$O!"0J2<$NMM$K(B
 
-        <<#L#>-unsubscribe-user=host.dom@<#H#>>
+        <<#L#>-unsubscribe-user=example.com@<#H#>>
 
-'<#L#>-unsubscribe-' $B$N8e$m$K!"(Buser@host.dom $B$r(B user=host.dom $B$K(B
+'<#L#>-unsubscribe-' $B$N8e$m$K!"(Buser@example.com $B$r(B user=example.com $B$K(B
 $B=q$-49$($?J*$r7R$$$G2<$5$$!#(B
 
 $B4v$D$+$N(B Mail User Agent (MUA) $B$O!"(BReturn-Path $B$r8+$k$?$a$K$O(B

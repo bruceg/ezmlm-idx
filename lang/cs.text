@@ -64,12 +64,12 @@ Zprávy ve skuteènosti nemusí být prázdné - budu jejich obsah ignorovat.
 Jediná dùle¾itá vìc je ADRESA na kterou mail posíláte.
 
 Mù¾ete se také do listu pøihlásit pod jinou adresou - napøíklad
-"pepa@domena.cz". Staèí pøidat pomlèku a novou adresu s rovnítkem (=)
+"pepa@example.com". Staèí pøidat pomlèku a novou adresu s rovnítkem (=)
 namísto zavináèe:
-<<#L#>-subscribe-pepa=domena.cz@<#H#>>
+<<#L#>-subscribe-pepa=example.com@<#H#>>
 
 Odhlásit tuto adresu lze pomocí mailu na adresu
-<<#L#>-unsubscribe-pepa=domena.cz@<#H#>>
+<<#L#>-unsubscribe-pepa=example.com@<#H#>>
 
 V obou pøípadech po¹lu ¾ádost o souhlas na tuto adresu. Kdy¾ ji dostanete,
 jednodu¹e na ni odpovìzte a va¹e pøihlá¹ení/odhlá¹ení se dokonèí.
@@ -182,19 +182,19 @@ Vzdálené pøihlá¹ení
 -------------------
 
 Jako moderátor mù¾ete pøihla¹ovat a odhla¹ovat libovolnou adresu
-do svého listu. Pro pøihlá¹ení u¾ivatele "pepa@domena.cz" jednodu¹e
+do svého listu. Pro pøihlá¹ení u¾ivatele "pepa@example.com" jednodu¹e
 doplòte pomlèku za název pøíkazu a pak tuto adres s rovnítkem
 místo zavináèe. Napøíklad pro pøihlá¹ení vý¹e uvedené adresy
 po¹lete mail na adresu
-   <<#L#>-subscribe-pepa=domena.cz@<#H#>>
+   <<#L#>-subscribe-pepa=example.com@<#H#>>
 
 Podobnì mù¾ete odhla¹ovat u¾ivatele pomocí mailu na adresu
-   <<#L#>-unsubscribe-pepa=domena.cz@<#H#>>
+   <<#L#>-unsubscribe-pepa=example.com@<#H#>>
 
 </#d/>
 Pro digestový list:
-   <<#L#>-digest-subscribe-pepa=domena.cz@<#H#>>
-   <<#L#>-digest-unsubscribe-pepa=domena.cz@<#H#>>
+   <<#L#>-digest-subscribe-pepa=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-pepa=example.com@<#H#>>
 
 <//>
 To je v¹echno. ®ádný speciální subject ani obsah zprávy není potøeba!
@@ -204,7 +204,7 @@ Po¹lu vám ¾ádost o potvrzení, abych se ujistil, ¾e po¾adavek
 opravdu pochází od vás. Jednodu¹e odpovìzte na mail,
 který obdr¾íte a vá¹ pøíkaz se vykoná.
 </#R/>
-Po¹lu ¾ádost o potvrzení, v tomto pøípadì na adresu <pepa@domena.cz>.
+Po¹lu ¾ádost o potvrzení, v tomto pøípadì na adresu <pepa@example.com>.
 V¹echno co bude muset udìlat u¾ivatel je odpovìdìt na tuto
 ¾ádost.
 <//>
@@ -247,10 +247,10 @@ Pøihlíá¹ení funguje stejnì.
 
 U¾ivatel také mù¾e pou¾ít adresu
 
-   <<#L#>-subscribe-jana=domena.cz@<#H#>>
-   <<#L#>-unsubscribe-jana=domena.cz@<#H#>>
+   <<#L#>-subscribe-jana=example.com@<#H#>>
+   <<#L#>-unsubscribe-jana=example.com@<#H#>>
 
-pro zaslání mailu pro "jana@domena.cz". Pokud tato skuteènì má
+pro zaslání mailu pro "jana@example.com". Pokud tato skuteènì má
 vý¹e uvedenou adresu, obdr¾í ¾ádost o potvrzení a mù¾e ji
 potvrdit.
 
@@ -587,7 +587,7 @@ Nekontroloval jsem, je-li va¹e adresa v souèasné dobì na listu.
 Chcete-li zjistit, ze které adresy bylo provedeno pøihlá¹ení,
 podívejte se do zpráv, které dostáváte z listu. Ka¾dá zpráva
 má adresu v návratové cestì:
-<<#l#>-return-<number>-jana=domena.cz@<#H#>.
+<<#l#>-return-<number>-jana=example.com@<#H#>.
 
 </#q/>
 Nìkteré po¹tovní programy jsou chybné a nemohou zpracovávat dlouhé
@@ -607,11 +607,11 @@ Pokud se odhlásíte, ale stále vám budou chodit dopisy, je pøihlá¹ení
 provedeno pod jinou adresou, ne¾ kterou v souèasné dobì pou¾íváte.
 Podívejte se prosím do hlavièek zpráv na text
 
-"Return-Path: <<#l#>-return-1234-pepa=domena.cz@<#H#>>'
+"Return-Path: <<#l#>-return-1234-pepa=example.com@<#H#>>'
 
 Odhla¹ovací adresa pro tohoto u¾ivatele pak bude
-"<#l#>-unsubscribe-pepa=domena.cz@<#H#>".
-Staèí poslat mail na tuto adresu s tím, ¾e pepa=domena.cz nahradíte
+"<#l#>-unsubscribe-pepa=example.com@<#H#>".
+Staèí poslat mail na tuto adresu s tím, ¾e pepa=example.com nahradíte
 skuteènými hodnotami. Pak odpovíte na ¾ádost o potvrzení a mìla
 by vám dojít zpráva o odhlá¹ení z listu.
 

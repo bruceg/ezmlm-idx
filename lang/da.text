@@ -68,14 +68,14 @@ indhold vil blive ignoreret. Kommandoen ligger alene i
 modtageradressen 
 
 Hvis du vil tilmelde dig med en anden adresse end den du skriver
-fra, f.eks. jens@ferieby.dk, skal du skrive til:
-<<#L#>-subscribe-jens=ferieby.dk@<#H#>>
+fra, f.eks. jens@example.com, skal du skrive til:
+<<#L#>-subscribe-jens=example.com@<#H#>>
 Bemærk -jens og at @ i adressen er lavet om til et =.
 
 Du kan framelde din alternative adresse ved at skrive til:
-<<#L#>-unsubscribe-jens=ferieby.dk@<#H#>>
+<<#L#>-unsubscribe-jens=example.com@<#H#>>
 
-jens@ferieby.dk vil i begge tilfælde få et brev som skal
+jens@example.com vil i begge tilfælde få et brev som skal
 bekræftes for at få udført til/fra meldingen.
 
 </text/bottom/>
@@ -188,15 +188,15 @@ Her er en oversigt over hvordan du gør:
 Fjernadministration
 --------------------
 Som moderator kan du til- og framelde hvem som helst,
-f.eks. jens@ferieby.dk, ved at sende et tomt brev til:
-   <<#L#>-subscribe-jens=ferieby.dk@<#H#>> eller
-   <<#L#>-unsubscribe-jens=ferieby.dk@<#H#>>
+f.eks. jens@example.com, ved at sende et tomt brev til:
+   <<#L#>-subscribe-jens=example.com@<#H#>> eller
+   <<#L#>-unsubscribe-jens=example.com@<#H#>>
 Bemærk at det ene @ er lavet om til =.
 
 </#d/>
 For udtrækslisterne (digest):
-   <<#L#>-digest-subscribe-jens=ferieby.dk@<#H#>>
-   <<#L#>-digest-unsubscribe-jens=ferieby.dk@<#H#>>
+   <<#L#>-digest-subscribe-jens=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-jens=example.com@<#H#>>
 
 <//>
 Så simpelt er det. Der behøver hverken være emne eller
@@ -248,10 +248,10 @@ Tilmelding sker på samme måde.
 
 Brugeren kan også skrive til:
 
-   <<#L#>-subscribe-mary=host.domain@<#H#>>
-   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
 
-for at tilmelde "mary@host.domain". Kun hvis hun modtager post
+for at tilmelde "mary@example.com". Kun hvis hun modtager post
 på den adresse, vil hun modtage bekræftelses forespørgslen og
 være i stand til at svare på den.
 
@@ -583,8 +583,8 @@ Jeg har ikke undersøgt om din adresse er tilmeldt i øjeblikket.
 Du kan se hvilken adresse du har brugt i din tilmelding ved
 at kigge på de breve du modtager fra listen. Hvert brev har
 din abonnementsadresse gemt i sin retur sti, f.eks. modtager
-mary@xdd.ff.com breve med retur stien
-<<#l#>-return-<number>-mary=xdd.ff.com@<#H#>.
+mary@example.com breve med retur stien
+<<#l#>-return-<number>-mary=example.com@<#H#>.
 
 </#q/>
 Nogle post programmer er meget syge og kan ikke håndtere lange
@@ -604,12 +604,12 @@ Hvis du afmelder, men stadig får post, er du tilmeldt med en
 andren adresse end den du bruger i øjeblikket. Kig i brevhoved
 efter noget der ser sådan ud:
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
 
 Afmeldingsadressen for denne bruger ville blive:
-'<#l#>-unsubscribe-user=host.dom@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
 
-Send nu post til denne adresse, erstat user=host.dom med rigtige
+Send nu post til denne adresse, erstat user=example.com med rigtige
 værdier, og du burde modtage et brev om at du er frameldt listen.
 
 I nogle post programmer, skal man gøre brevhovedet synligt for

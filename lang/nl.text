@@ -184,13 +184,13 @@ hun inhoud negeren. Alleen het ADRES waar u naar toe stuurt
 is voor mij van belang.
 
 U kunt zich onder een ander adres inschrijven, bijvoorbeeld
-"john@host.domain".
+"john@example.com".
 Voeg een minteken toe en het adres waarin u het @ teken vervangt
 door een =, achter het commando:
-    <<#L#>-subscribe-john=host.domain@<#H#>>
+    <<#L#>-subscribe-john=example.com@<#H#>>
 
 Om uw andere adres uit te schrijven stuurt u een e-mail naar:
-    <<#L#>-unsubscribe-john=host.domain@<#H#>>
+    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </text/mod-help#E/>
 Dank u dat u de <#L#>@<#H#> mailing list wilt moderaten.
@@ -206,19 +206,19 @@ Algemene list instructies staan aan het eind van dit bericht.
 Remote inschrijven:
 -------------------
 Als moderator kunt u ieder adres in- of uitschrijven van de list.
-Om bijvoorbeeld "john@host.domain" in te schrijven, stuurt u een
-e-mail naar <<#L#>-subscribe-john=host.domain@<#H#>>.
+Om bijvoorbeeld "john@example.com" in te schrijven, stuurt u een
+e-mail naar <<#L#>-subscribe-john=example.com@<#H#>>.
 Achter het subscribe commando geeft u een minteken in en het adres
 wat u in wilt schrijven. In dat adres vervangt u het @ teken voor een =.
 
 Op gelijke wijze kunt u een adres verwijderen door een e-mail
 te sturen naar:
-   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </#dE/>
 Voor de digest list is dat:
-   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 </#E/>
 Dat is alles. Subject en tekst hoeft u niet in te voeren.
@@ -229,7 +229,7 @@ dat u het verzoek heeft ingediend. U kunt reply-en en
 uw wens wordt uitgevoerd.
 </#RE/>
 Ik zal een verzoek naar dat adres sturen, in dit geval
-<john@host.domain>. De gebruiker hoeft alleen maar een reply
+<john@example.com>. De gebruiker hoeft alleen maar een reply
 te sturen om te bevestigen.
 </#E/>
 
@@ -274,10 +274,10 @@ Inschrijvingen werken op dezelfde manier.
 
 De gebruiker kan ook het volgende manier gebruiken:
 
-   <<#L#>-subscribe-mary=host.domain@<#H#>>
-   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
 
-om zich in te schrijven als "mary@host.domain". Alleen als zij
+om zich in te schrijven als "mary@example.com". Alleen als zij
 mail ontvangt op dat adres kan zij mijn verzoek om bevestiging
 ontvangen en bevestigen.
 
@@ -588,8 +588,8 @@ Ik heb niet gecontroleerd of uw adres op dit moment op de mailing list
 staat. Om te zien onder welk adres u op dit moment bent ingeschreven,
 kijkt u naar een bericht dat u van de mailing list hebt ontvangen.
 Ieder bericht bevat uw email adres in het "return path";
-Bijvoorbeeld,  mary@host.domain ontvangt berichten met het "return-path":
-<<#l#>-return-<number>-mary=host.domain@<#H#>.
+Bijvoorbeeld,  mary@example.com ontvangt berichten met het "return-path":
+<<#l#>-return-<number>-mary=example.com@<#H#>.
 
 </#qE/>
 Sommige emailprogramma's bevatten fouten en kunnen niet overweg met lange
@@ -611,11 +611,11 @@ Als u zich hebt uitgeschreven, maar nog steeds mail ontvangt, dan
 bent u onder een ander adres ingeschreven dan wat u nu gebruikt.
 Kijk in de HEADER van uw email en zoek naar een regel met:
 
-'Return-Path: <<#l#>-return-1234-joe=host.domain@<#H#>>'
+'Return-Path: <<#l#>-return-1234-joe=example.com@<#H#>>'
 
-Hier ziet u dat het ingeschreven adres ``joe@host.domain'' is.
+Hier ziet u dat het ingeschreven adres ``joe@example.com'' is.
 Om dit adres uit te schrijven zou u een bericht sturen naar:
-'<#l#>-unsubscribe-joe=host.dom@<#H#>'.
+'<#l#>-unsubscribe-joe=example.com@<#H#>'.
 
 Stuur een email naar dat adres, natuurlijk aangepast met uw adres.
 

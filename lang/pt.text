@@ -63,12 +63,12 @@ Na verdade as mensagens não precisam ser vazias, mas eu irei
 ignorar o seu conteúdo. Somente o ENDEREÇO é importante.
 
 Você pode iniciar a assinatura para um endereço alternativo,
-por exemplo "john@host.domain", bastando adicionar um traço
+por exemplo "john@example.com", bastando adicionar um traço
 e o seu endereço (com '=' no lugar de '@'), ou seja:
-<<#L#>-subscribe-john=host.domain@<#H#>>
+<<#L#>-subscribe-john=example.com@<#H#>>
 
 Para cancelar a subscrição para este endereço, envie mensagem
-para: <<#L#>-unsubscribe-john=host.domain@<#H#>>
+para: <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 Em ambos os casos, eu enviarei uma mensagem de confirmação para
 esse endereço; quando você receber esta mensagem, simplesmente
@@ -189,15 +189,15 @@ de qualquer endereço da lista. Para cadastrar john@johnhost.johndomain,
 simplesmente coloque um traço depois do comando, e depois o endereço
 com '=' no lugar de '@'. Por exemplo, para cadastrar este endereço,
 envie uma mensagem para:
-   <<#L#>-subscribe-john=host.domain@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#H#>>
 
 Você pode analogamente remover esse endereço, enviando mensagem para:
-   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </#d/>
 Para a lista "digest":
-   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 <//>
 Isto é tudo. Nem assunto nem corpo de mensagem são necessários!
@@ -208,7 +208,7 @@ que é realmente você quem enviou a requisição. Simplesmente
 retorne a mensagem, e a requisição será completada.
 </#R/>
 Eu enviarei um pedido de confirmação para o endereço do usuário,
-neste caso <john@host.domain>. Tudo que o usuário tem que fazer é
+neste caso <john@example.com>. Tudo que o usuário tem que fazer é
 retornar este pedido de confirmação.
 <//>
 
@@ -254,10 +254,10 @@ Subscrições funcionam da mesma forma.
 
 O usuário também pode usar estas formas:
 
-   <<#L#>-subscribe-mary=host.domain@<#H#>>
-   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
 
-para que as mensagens sejam enviadas para "mary@host.domain".
+para que as mensagens sejam enviadas para "mary@example.com".
 Somente se ela receber mensagens neste endereço, ela será
 capaz de responder a confirmação.
 
@@ -611,9 +611,9 @@ ou clique aqui:
 Eu não verifiquei se o seu endereço está atualmente na lista.
 Para ver qual endereço você usou ao se subscrever, olhe as mensagens
 que você está recebendo da lista. Cada mensagem tem seu endereço 
-oculto dentro do caminho de retorno; por exemplo, mary@xdd.ff.com 
+oculto dentro do caminho de retorno; por exemplo, mary@example.com 
 recebe mensagens com caminho de retorno:
-<<#l#>-return-<number>-mary=xdd.ff.com@<#H#>.
+<<#l#>-return-<number>-mary=example.com@<#H#>.
 
 </#q/>
 Alguns programas de correio eletrônico não conseguem manipular endereços
@@ -634,12 +634,12 @@ Se você cancelou a subscrição, mas continua recebendo mensagens,
 você está incluído com um endereço diferente do que está usando 
 agora. Por favor, olhe o cabeçalho da mensagem, procurando por:
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
 
 O endereço de cancelamento para este endereço deve ser:
-'<#l#>-unsubscribe-user=host.dom@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
 Basta enviar uma mensagem para este endereço, substituindo
-user=host.dom pelos valores corretos, responda ao pedido de confirmação
+user=example.com pelos valores corretos, responda ao pedido de confirmação
 e você deverá receber um aviso que está fora da lista.
 
 Para alguns programas de correio, você precisará tornar os cabeçalhos

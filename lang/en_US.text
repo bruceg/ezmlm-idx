@@ -160,12 +160,12 @@ The messages do not really need to be empty, but I will ignore
 their content. Only the ADDRESS you send to is important.
 
 You can start a subscription for an alternate address,
-for example "john@host.domain", just add a hyphen and your
+for example "john@example.com", just add a hyphen and your
 address (with '=' instead of '@') after the command word:
-    <<#L#>-subscribe-john=host.domain@<#H#>>
+    <<#L#>-subscribe-john=example.com@<#H#>>
 
 To stop subscription for this address, mail:
-    <<#L#>-unsubscribe-john=host.domain@<#H#>>
+    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </text/mod-help#E/>
 Thank you for agreeing to moderate the <#L#>@<#H#>
@@ -182,18 +182,18 @@ General list instructions follow at the end of this message.
 Remote subscription
 -------------------
 As a moderator, you can subscribe and unsubscribe any address to
-the mailing list. To subscribe "john@host.domain", simply put
+the mailing list. To subscribe "john@example.com", simply put
 a hyphen after the command word, then his address with '=' instead
 of the '@'. For instance, to subscribe that address, send mail to:
-   <<#L#>-subscribe-john=host.domain@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#H#>>
 
 You can similarly remove the address by sending a message to:
-   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </#dE/>
 For the digest list:
-   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 </#E/>
 That's all. No subject and no message body needed!
@@ -204,7 +204,7 @@ that you really sent the request. Simply reply to the
 message, and your wish has been granted.
 </#RE/>
 I will send a confirmation request to the user address, in this
-case <john@host.domain>. All the user has to do is to reply to 
+case <john@example.com>. All the user has to do is to reply to 
 this confirmation request message.
 </#E/>
 
@@ -247,10 +247,10 @@ Subscriptions work the same way.
 
 The user can also use:
 
-   <<#L#>-subscribe-mary=host.domain@<#H#>>
-   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
 
-to have mail sent to "mary@host.domain". Only if she receives mail
+to have mail sent to "mary@example.com". Only if she receives mail
 at this address will she receive the confirmation request and be
 able to reply to it.
 
@@ -594,8 +594,9 @@ or click here:
 I haven't checked whether your address is currently on the mailing list.
 To see what address you used to subscribe, look at the messages you are
 receiving from the mailing list. Each message has your address hidden
-inside its return path; for example, mary@xdd.ff.com receives messages
-with return path: <<#l#>-return-<number>-mary=xdd.ff.com@<#H#>.
+inside its return path; for example, mary@example.com receives
+messages with return path:
+<<#l#>-return-<number>-mary=example.com@<#H#>.
 
 </#qE/>
 Some mail programs are broken and cannot handle long addresses. If you
@@ -616,11 +617,11 @@ If you unsubscribe, but continue to receive mail, you're subscribed
 under a different address than the one you currently use.
 Please look at the header for:
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
 
-This shows that the subscription address is ``user@host.dom''.
+This shows that the subscription address is ``user@example.com''.
 The unsubscribe address for this user would be:
-'<#l#>-unsubscribe-user=host.dom@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
 
 Just mail to that address, adjusted for the real subscription address.
 

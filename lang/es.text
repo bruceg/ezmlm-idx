@@ -197,14 +197,14 @@ pero si no lo están ignoraré su contenido. Sólo es importante la
 DIRECCIÓN a la que se envía.
 
 Usted puede suscribir una dirección alternativa, por ejemplo,
-para "david@ordenador.dominio", simplemente añada un guión y su
+para "david@example.com", simplemente añada un guión y su
 dirección (con '=' en lugar de '@') después del comando:
 
-   <<#L#>-subscribe-david=ordenador.dominio@<#H#>>
+   <<#L#>-subscribe-david=example.com@<#H#>>
 
 Para cancelar la suscripción de esta dirección, escriba a:
 
-<<#L#>-unsubscribe-david=ordenador.dominio@<#H#>>
+<<#L#>-unsubscribe-david=example.com@<#H#>>
 
 </text/mod-help#E/>
 Gracias por acceder a moderar la lista <#L#>@<#H#>.
@@ -222,23 +222,23 @@ Suscripción remota
 -------------------
 
 Como moderador, puede añadir o quitar cualquier dirección de la
-lista. Para suscribir "david@ordenador.dominio", basta con poner
+lista. Para suscribir "david@example.com", basta con poner
 un guión después del comando, y después su dirección con '=' en
 lugar de '@'. Por ejemplo, para suscribir esa dirección, mande
 correo a:
 
-   <<#L#>-subscribe-john=host.domain@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#H#>>
 
 De la misma manera puede eliminar la dirección de la lista
 mandando un mensaje a:
 
-   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </#dE/>
 Para suscribirse o darse de baja de la lista de resúmenes:
 
-   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 </#E/>
 
@@ -251,7 +251,7 @@ Le mandaré una petición de confirmación, para asegurarme que
 usted me envió la petición. Simplemente responda al mensaje, y se
 cursará su petición. </#RE/> Mandaré una petición de confirmación
 a la dirección del usuario, en este caso a
-<david@ordenador.dominio>. El usuario simplemente debe responder
+<david@example.com>. El usuario simplemente debe responder
 a este mensaje de confirmación. </#E/>
 
 Las confirmaciones son necesarias para impedir, en la medida de
@@ -299,10 +299,10 @@ Las suscripciones funcionan del mismo modo.
 
 El usuario también puede utilizar:
 
-   <<#L#>-subscribe-maria=ordenador.dominio@<#H#>>
-   <<#L#>-unsubscribe-maria=ordenador.dominio@<#H#>>
+   <<#L#>-subscribe-maria=example.com@<#H#>>
+   <<#L#>-unsubscribe-maria=example.com@<#H#>>
 
-para que le manden correo a: "maria@ordenador.dominio". Solo si
+para que le manden correo a: "maria@example.com". Solo si
 ella recibe correo en esta dirección, podrá recibir la petición
 de confirmación y mandar una contestación.
 
@@ -696,8 +696,8 @@ No he comprobado si su dirección está actualmente en la lista de
 correo. Para ver que dirección utilizó para suscribirse, mire los
 mensajes que está recibiendo de la lista de correo. Cada mensaje
 tiene su dirección oculta dentro de la ruta de retorno; por
-ejemplo, maria@xdd.ff.com recibe mensajes con la ruta de retorno:
-<<#l#>-return-<número>-maria=xdd.ff.com@<#H#>>.
+ejemplo, maria@example.com recibe mensajes con la ruta de retorno:
+<<#l#>-return-<número>-maria=example.com@<#H#>>.
 
 </#qE/>
 
@@ -718,10 +718,10 @@ Si se da de baja, pero sigue recibiendo correo, es que está
 suscrito con una dirección distinta a la que usa actualmente. Por
 favor, busque en las cabeceras el texto:
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
 
 La dirección para dar de baja a este usuario sería:
-'<#l#>-unsubscribe-user=host.dom@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
 
 Simplemente escriba a esa dirección, tras modificarla con la
 verdadera dirección de suscripción.

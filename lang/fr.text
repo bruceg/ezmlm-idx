@@ -174,13 +174,13 @@ En realite, les messages n'ont pas besoin d'etre vides, leur contenu sera
 totalement ignore. Seul l'ADRESSE a laquelle vous ecrivez est determinante.
 
 Il est possible de demander un abonnement a une autre adresse que la votre.
-Par exemple pour abonner "john@machine.domaine", il suffit d'ajouter un tiret
+Par exemple pour abonner "john@example.com", il suffit d'ajouter un tiret
 et l'adresse (avec le signe "=" a la place de "@") apres le nom de la
 commande :
-<<#L#>-subscribe-john=machine.domaine@<#H#>>
+<<#L#>-subscribe-john=example.com@<#H#>>
 
 Pour desabonner cette derniere adresse :
-<<#L#>-unsubscribe-john=machine.domaine@<#H#>>
+<<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </text/mod-help#E/>
 Merci beaucoup d'accepter le role de moderateur pour la liste de diffusion
@@ -198,20 +198,20 @@ Inscription a distance
 ----------------------
 En tant que moderateur, vous pouvez inscrire et desinscrire n'importe quelle
 adresse a la liste de diffusion.
-Ainsi, pour abonner "john@machine.domaine", mettez simplement un tiret apres
+Ainsi, pour abonner "john@example.com", mettez simplement un tiret apres
 le nom de la commande, puis l'adresse du futur abonne en remplacant le signe
 "@" par "=".
 Par exemple, pour inscrire l'utilisateur ci-dessus, envoyez un message a :
-   <<#L#>-subscribe-john=machine.domaine@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#H#>>
 
 De facon similaire, il est possible de retirer son adresse de la liste en
 ecrivant a :
-   <<#L#>-unsubscribe-john=machine.domaine@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </#dE/>
 Idem pour les listes presentees sous la forme de bulletins :
-   <<#L#>-digest-subscribe-john=machine.domaine@<#H#>>
-   <<#L#>-digest-unsubscribe-john=machine.domaine@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 </#E/>
 C'est tout ! Aucun sujet special ni corps de message n'est requis.
@@ -222,7 +222,7 @@ sur que vous etes bien a l'origine de la requete. Repondez
 simplement au message et la transaction sera achevee.
 </#RE/>
 J'enverrai une demande de confirmation a l'adresse de
-l'utilisateur (ici john@machine.domaine).
+l'utilisateur (ici john@example.com).
 Tout ce qu'il aura a faire sera de repondre au message.
 </#E/>
 
@@ -268,10 +268,10 @@ Les inscriptions fonctionnent de facon analogue.
 
 Il est aussi possible d'utiliser :
 
-   <<#L#>-subscribe-mary=machine.domaine@<#H#>>
-   <<#L#>-unsubscribe-mary=machine.domaine@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
 
-pour que les messages soient envoyes a "mary@machine.domaine". Elle
+pour que les messages soient envoyes a "mary@example.com". Elle
 recevra la demande de confirmation uniquement si elle recoit son
 courrier a cette adresse et si elle est alors en mesure d'y repondre.
 
@@ -672,12 +672,12 @@ inscription sous une adresse differente de celle que vous utilisez
 actuellement.
 Verifiez dans l'en-tete une ligne de la forme :
 
-'Return-Path: <<#l#>-return-1234-utilisateur=machine.domaine@<#H#>>'
+'Return-Path: <<#l#>-return-1234-utilisateur=example.com@<#H#>>'
 
 Cela reflete une inscription de l'adresse
-"utilisateur@machine.domaine". Dans ce cas, il est possible de
+"utilisateur@example.com". Dans ce cas, il est possible de
 se desabonner en ecrivant a :
-'<#l#>-unsubscribe-utilisateur=machine.domaine@<#H#>'.
+'<#l#>-unsubscribe-utilisateur=example.com@<#H#>'.
 
 Reprenez cet exemple apres y avoir mis votre adresse d'inscription.
 

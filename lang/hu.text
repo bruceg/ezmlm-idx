@@ -186,18 +186,18 @@ Az altalanos lista instrukciokat a level vegen talalod.
 Tavoli feliratkozas
 -------------------
 Mint moderator, fel es le tudsz iratni barmilyen cimet a listara.
-Feliratni "john@host.domain"-t abbol all, hogy kotojelet irsz a
+Feliratni "john@example.com"-t abbol all, hogy kotojelet irsz a
 parancs utan, majd hozzairod az email cimet, a "@" jelet kicserelve
 "=" jelre.  A peldanal maradva a feliratashoz ez a cim jarul:
-   <<#L#>-subscribe-john=host.domain@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#H#>>
 
 Ugyanilyen egyszeruen tudsz leirattatni egy cimet:
-   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </#dE/>
 Ugyanez digest-re:
-   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 </#E/>
 Ennyi az egesz. Se targy, se szovegtorzs nem szukseges.
@@ -208,7 +208,7 @@ meggyozodjunk a keres valodisagarol.  Arra egyszeruen csak
 valaszolnod kell, ami utan a kivansagod teljesul.
 </#RE/>
 Ezutan kuldeni fogok egy megerositesi kerelmet a felhasznalonak,
-jelen esetben <john@host.domain>-nek.  Neki is csak valaszolnia
+jelen esetben <john@example.com>-nek.  Neki is csak valaszolnia
 kell a levelre.
 </#E/>
 
@@ -252,10 +252,10 @@ Az feliratkozasok hasonlokeppen mennek.
 
 A felhasznalo hasznalhatja ezt a format is:
 
-   <<#L#>-subscribe-mary=host.domain@<#H#>>
-   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
 
-ekkor a "mary@host.domain" cimre kapja a megerosites kerest. Igy
+ekkor a "mary@example.com" cimre kapja a megerosites kerest. Igy
 csak akkor tud arra valaszolni, ha meg is kapta a levelet, es kepes
 valaszolni.
 
@@ -592,8 +592,8 @@ vagy kattints ide:
 Nem ellenoriztem, hogy a cimed pillanatnyilag fent van-e a listan.
 Hogy megnezd, melyik cimmel vagy feliratkozva a listara, nezd meg a
 listarol jott leveleidet.  Mindegyik tartalmazza elrejtve a
-return-path-ben.  Peldaul mary@xdd.ff.com leveleinek return-path-je:
-<<#l#>-return-<szam>-mary=xdd.ff.com@<#l#>>.
+return-path-ben.  Peldaul mary@example.com leveleinek return-path-je:
+<<#l#>-return-<szam>-mary=example.com@<#l#>>.
 
 </#qE/>
 Nehany levelezoprogram hibas es nem tudja kezelni a hosszu cimeket.
@@ -611,12 +611,12 @@ Ha leiratkoztal, de meg mindig kapsz leveleket, bizonyara mas cimen
 iratkoztal fel, mint amit jelenleg hasznalsz.  Kerlek, nezd meg a
 level fejleceben a kovetkezo sort (ez csak egy pelda):
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
 
-Ez a sor azt mutatja, hogy a feliratkozasi cim "user@host.dom".  Ezen
+Ez a sor azt mutatja, hogy a feliratkozasi cim "user@example.com".  Ezen
 felhasznalo leiratkozasi kerelmet az alabbi cimre kell irnia:
 
-'<#l#>-unsubscribe-user=host.dom@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
 
 Helyettesitsd be a valodi feliratkozasi cimedet, es arra kuldd a leveled.
 

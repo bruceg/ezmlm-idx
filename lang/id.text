@@ -161,12 +161,12 @@ E-mail tidak perlu kosong, tapi program ini tidak akan membaca isi mail.
 Hanya alamat tujuan e-mail yang penting.
 
 Anda dapat berlangganan menggunakan alamat e-mail anda yang lain,
-misalnya "john@host.domain", dengan menambahkan '-' dan alamat e-mail
+misalnya "john@example.com", dengan menambahkan '-' dan alamat e-mail
 anda (gunakan '=' sebagai pengganti '@') setelah kata perintah:
-<<#L#>-subscribe-john=host.domain@<#H#>>
+<<#L#>-subscribe-john=example.com@<#H#>>
 
 Untuk berhenti menerima email di alamat ini, kirim e-mail ke:
-<<#L#>-unsubscribe-john=host.domain@<#H#>>
+<<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </text/mod-help#E/>
 Terima kasih atas kesediaan anda untuk memoderatori
@@ -183,18 +183,18 @@ Perintah-perintah umum akan ada di bagian akhir mail ini.
 Pendaftaran jarak jauh
 ----------------------
 Sebagai moderator, anda dapat mendaftarkan dan menghapuskan siapa saja ke
-dalam milis. Untuk mendaftarkan "john@host.domain", taruh '-' setelah kata
+dalam milis. Untuk mendaftarkan "john@example.com", taruh '-' setelah kata
 perintahnya, kemudian alamat emailnya dengan menggunakan tanda '=' sebagai
 ganti dari '@'. Contoh, untuk mendaftarkan alamat tersebut, kirim mail ke:
-   <<#L#>-subscribe-john=host.domain@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#H#>>
 
 Dengan cara yang sama, untuk menghapus alamat tersebut, kirim mail ke:
-   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
 
 </#dE/>
 Untuk list digest:
-   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
 </#E/>
 Itu saja. Tidak perlu subjek dan isi dari postingnya!
@@ -205,7 +205,7 @@ bahwa anda benar-benar mengirimkan permohonan tersebut. Yang perlu anda
 lakukan adalah mereply ke mail konfirmasi tersebut.
 </#RE/>
 Kami akan mengirimkan sebuah permohonan konfirmasi ke alamat tersebut,
-dalam hal ini <john@host.domain>. Yang bersangkutan tinggal menjawab
+dalam hal ini <john@example.com>. Yang bersangkutan tinggal menjawab
 mail konfirmasi tersebut.
 </#E/>
 
@@ -248,10 +248,10 @@ Untuk berlangganan adalah sama caranya.
 
 Si fulan dapat juga mengirim mail ke:
 
-   <<#L#>-subscribe-mary=host.domain@<#H#>>
-   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
 
-untuk mendapatkan mailnya terkirim ke "mary@host.domain".  Hanya jika 
+untuk mendapatkan mailnya terkirim ke "mary@example.com".  Hanya jika 
 yang bersangkutan menerima mail pada alamat tersebut, dia akan menerima
 permohonan konfirmasi tersebut dan dapat mereplynya.
 
@@ -596,8 +596,8 @@ atau klik di sini:
 Kami belum mencek apakah alamat anda sudah ada di dalam milis. Untuk
 melihat alamat apa yang anda pakai untuk mendaftar, lihat mail yang anda
 terima dari milis. Setiap mail mempunyai alamat anda yang tersembunyi di
-dalam return-pathnya; sebagai contoh, mary@xdd.ff.com menerima mail
-dengan return-path: <<#l#>-return-<number>-mary=xdd.ff.com@<#H#>.
+dalam return-pathnya; sebagai contoh, mary@example.com menerima mail
+dengan return-path: <<#l#>-return-<number>-mary=example.com@<#H#>.
 
 </#qE/>
 Beberapa program mail tidak berfungsi sempurna dan tidak dapat menangani
@@ -618,11 +618,11 @@ Jika anda berhenti, tapi masih menerima mail, anda terdaftar dengan
 alamat lain dari yang anda pakai sekarang.  Tolong lihat header surat
 untuk:
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
 
-Ini menunjukkan bahwa alamat pelanggan adalah ``user@host.dom''.
+Ini menunjukkan bahwa alamat pelanggan adalah ``user@example.com''.
 Alamat berhenti untuk pelanggan ini adalah:
-'<#l#>-unsubscribe-user=host.dom@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
 
 Kirim mail ke alamat tersebut, disesuaikan dengan alamat sebenarnya.
 

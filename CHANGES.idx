@@ -29,6 +29,8 @@ If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
 =========================
+-Changed all example domain names in text files to the RFC 2606 mandated
+ example.com domain name.
 -Several documentation and comment fixes.  Thanks Tullio Andreatta.
 -Added conf-sub control file, used to choose which subscriber
  mechanism to use.  This replaces the "make std/mysql/pgsql" mechanism.
