@@ -1258,43 +1258,6 @@ subfd.h sgetopt.c sgetopt.h sgetopt.h subgetopt.h sgetopt.h sgetopt.c \
 subgetopt.h subgetopt.h sgetopt.c
 	./compile sgetopt.c
 
-shar: \
-FILES BLURB README INSTALL TODO THANKS CHANGES FILES BIN MAN VERSION \
-SYSDEPS Makefile ezmlm.5 ezmlm-make.1 ezmlm-make.c ezmlm-send.1 \
-ezmlm-send.c ezmlm-reject.1 ezmlm-reject.c ezmlm-list.1 ezmlm-list.c \
-ezmlm-sub.1 ezmlm-sub.c ezmlm-unsub.1 ezmlm-unsub.c ezmlm-manage.1 \
-ezmlm-manage.c ezmlm-return.1 ezmlm-return.c ezmlm-warn.1 \
-ezmlm-warn.c ezmlm-weed.1 ezmlm-weed.c getconf.h getconf.c log.h \
-log.c issub.h issub.c subscribe.h subscribe.c cookie.h cookie.c \
-auto-str.c conf-bin auto_bin.h conf-man install.c conf-cc conf-ld \
-find-systype.sh make-compile.sh make-load.sh make-makelib.sh trycpp.c \
-warn-auto.sh fork.h1 fork.h2 tryvfork.c wait.3 wait.h wait_pid.c \
-trywaitp.c error.3 error_str.3 error_temp.3 error.h error.c \
-error_str.c substdio.3 substdio_copy.3 substdio_in.3 substdio_out.3 \
-substdio.h substdio.c substdi.c substdo.c substdio_copy.c subfd.3 \
-subfd.h subfderr.c readwrite.h exit.h byte.h byte_chr.c byte_copy.c \
-byte_cr.c byte_diff.c byte_rchr.c byte_zero.c str.h str_chr.c \
-str_cpy.c str_diff.c str_diffn.c str_len.c str_rchr.c str_start.c \
-getopt.3 sgetopt.3 subgetopt.3 sgetopt.h sgetopt.c subgetopt.h \
-subgetopt.c strerr.h strerr.c strerr_sys.c strerr_die.c gen_alloc.h \
-gen_allocdefs.h stralloc.3 stralloc.h stralloc_eady.c stralloc_pend.c \
-stralloc_copy.c stralloc_opyb.c stralloc_opys.c stralloc_cat.c \
-stralloc_catb.c stralloc_cats.c stralloc_arts.c alloc.3 alloc.h \
-alloc.c alloc_re.c open.h open_append.c open_read.c open_trunc.c \
-uint32.h1 uint32.h2 tryulong32.c case.3 case.h case_diffb.c \
-case_lowerb.c case_startb.c fmt.h fmt_str.c fmt_uint.c fmt_uint0.c \
-fmt_ulong.c scan.h scan_ulong.c scan_8long.c lock.h lock_ex.c \
-tryflock.c env.3 env.h envread.c slurpclose.h slurpclose.c sig.h \
-sig_catch.c sig_pipe.c trysgact.c datetime.3 datetime.h datetime.c \
-date822fmt.h date822fmt.c now.3 now.h now.c quote.h quote.c seek.h \
-seek_set.c conf-qmail auto_qmail.h qmail.h qmail.c direntry.3 \
-direntry.h1 direntry.h2 trydrent.c getln.3 getln.h getln.c getln2.3 \
-getln2.c fd.h fd_copy.3 fd_copy.c fd_move.3 fd_move.c surf.3 surf.h \
-surf.c surfpcs.3 surfpcs.h surfpcs.c slurp.h slurp.c constmap.h \
-constmap.c
-	shar -m `cat FILES` > shar
-	chmod 400 shar
-
 sig.a: \
 makelib sig_catch.o sig_pipe.o
 	./makelib sig.a sig_catch.o sig_pipe.o
