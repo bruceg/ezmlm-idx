@@ -84,8 +84,6 @@ void die_indexn()
   strerr_die4x(111,FATAL,ERR_WRITE,fnifn.s,": ");
 }
 
-void *psql = (void *) 0;
-
 unsigned long innum;
 unsigned long outnum;
 unsigned long msgnum;

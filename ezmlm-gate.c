@@ -36,7 +36,6 @@ stralloc line = {0};
 stralloc cmds = {0};
 stralloc sendopt = {0};
 stralloc storeopt = {0};
-void *psql = (void *) 0;
 
 char szchar[2] = "-";
   int child;

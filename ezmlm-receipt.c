@@ -79,7 +79,6 @@ unsigned long addrno = 0L;
 char *sender;
 char *dir;
 char *workdir;
-void **psql = (void **) 0;
 stralloc listno = {0};
 
 

@@ -80,7 +80,6 @@ struct constmap digheadersmap;
 
 char schar[] = "00_";
 stralloc listno = {0};
-void *psql = (void *) 0;
 
 datetime_sec when;
 unsigned long cumsize = 0L;	/* cumulative msgs / 256 */

@@ -65,7 +65,6 @@ stralloc fnlastd = {0};
 stralloc lasth = {0};
 stralloc lastd = {0};
 struct stat st;
-void *psql = (void *) 0;
 
 void die_read() { strerr_die4sys(111,FATAL,ERR_READ,fn.s,": "); }
 

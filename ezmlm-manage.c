@@ -65,7 +65,6 @@ unsigned int actlen = 0;/* str_len of above */
 char *dir;
 char *workdir;
 char *sender;
-void *psql = (void *) 0;
 
 void die_usage(void) {
   strerr_die1x(100,"ezmlm-manage: usage: ezmlm-manage "

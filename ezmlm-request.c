@@ -54,8 +54,6 @@ void die_badaddr()
 
 char strnum[FMT_ULONG];
 
-void *psql = (void *) 0;
-
 char *userlocal = (char *) 0;
 char *userhost = (char *) 0;
 char *listlocal = (char *) 0;

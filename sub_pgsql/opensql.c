@@ -15,6 +15,8 @@ static stralloc fn = {0};
 static stralloc ourdb = {0};
 static const char *ourtable = (char *) 0;
 
+void *psql = (void *) 0;
+
 const char *opensql(const char *dbname,	/* database directory */
 		    const char **table)	/* table root_name */
 /* reads the file dbname/sql, and if the file exists, parses it into the    */

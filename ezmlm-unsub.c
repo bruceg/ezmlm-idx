@@ -16,8 +16,6 @@
 
 const char FATAL[] = "ezmlm-unsub: fatal: ";
 
-void *psql = (void *) 0;
-
 char inbuf[512];
 substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,sizeof(inbuf));
 

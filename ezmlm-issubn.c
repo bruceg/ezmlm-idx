@@ -11,8 +11,6 @@
 
 const char FATAL[] = "ezmlm-issubn: fatal: ";
 
-void *psql = (void *) 0;
-
 void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 void die_usage()

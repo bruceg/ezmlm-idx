@@ -61,7 +61,6 @@ stralloc fndate = {0};
 stralloc fndatenew = {0};
 stralloc fnhash = {0};
 stralloc fnhashnew = {0};
-void *psql = (void *) 0;
 
 stralloc quoted = {0};
 stralloc ddir = {0};

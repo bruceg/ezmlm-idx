@@ -71,8 +71,6 @@ char boundary[COOKIE];
 datetime_sec when;
 struct stat st;
 
-void *psql = (void *) 0;
-
 stralloc fnbase = {0};
 stralloc line = {0};
 stralloc mailinglist = {0};
