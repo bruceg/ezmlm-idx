@@ -636,7 +636,7 @@ Potvrzení: Zru¹il jsem adresu
 z listu <#l#>. Tato adresa ji¾ dále není v seznamu
 pøihlá¹ených.
 
-</text/edit-do#n/>
+</text/edit-do#nE/>
 Prosím editujte následující soubor a po¹lete jej na adresu
 
 !R
@@ -651,7 +651,7 @@ Tyto øádky zaèínají tøemi znaky procento. Nesmí být modifikovány
 (s výjimkou pøípadných znakù pøed nimi, pøidaných pøipadnì va¹ím
 po¹tovním klientem).
 
-</text/edit-list#n/>
+</text/edit-list#nE/>
 Pøíkaz <#L#>-edit.soubor mù¾e být pou¾it vzdáleným správcem k editaci
 textových souborù, ze kterých se skládají odpovìdi pro list <#L#>@<#H#>.
 
@@ -689,7 +689,7 @@ unsub_confirm       odesílateli - ¾ádost o potvrzení odhlá¹ení.
 unsub_nop           odesílateli - nebyl-li pøihlá¹en a sna¾il-li se odhlásit.
 unsub_ok            odesílateli po úspì¹ném odhlá¹ení.
 
-</text/edit-done#n/>
+</text/edit-done#nE/>
 Textový soubor byl úspì¹nì upraven.
 </text/info#E/>
 ®ádná informace nebyla k tomuto listu poskytnuta.

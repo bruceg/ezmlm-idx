@@ -642,7 +642,7 @@ Zawiadomienie: usun±³em adres pocztowy
 z listy prenumeratorów <#l#>.
 Na adres ten nie bêd± ju¿ przychodzi³y przesy³ki z listy.
 
-</text/edit-do#n/>
+</text/edit-do#nE/>
 Przerób, proszê, za³±czony tekst i wy¶lij go na adres:
 
 !R
@@ -658,7 +658,7 @@ Nie mog± one byæ zmienione, dodatkowe znaki dodane przez program
 pocztowy na pocz±tku linii s± dozwolone.
 
 
-</text/edit-list#n/>
+</text/edit-list#nE/>
 Pliki <#L#>-edit.nazwa_pliku mog± byæ stosowane przez zdalnego
 administratora do edycji tekstów zarz±dczych listy dyskusyjnej.
 
@@ -697,7 +697,7 @@ unsub_confirm       tre¶æ potwierdzenia po ¿yczeniu wypisania siê z listy.
 unsub_nop           do osoby nie bêd±cej prenumeratorem, wypisuj±cej siê.
 unsub_ok            list po¿egnalny do rezygnuj±cego z prenumeraty.
 
-</text/edit-done#n/>
+</text/edit-done#nE/>
 Plik tekstowy zosta³ szczê¶liwie zamieniony.
 
 </text/info#E/>

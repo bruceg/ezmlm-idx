@@ -636,7 +636,7 @@ Anderkendelse: Jeg har fjernet adressen
 
 fra <#l#> listen. Adressen er ikke længere tilmeldt.
 
-</text/edit-do#n/>
+</text/edit-do#nE/>
 Ret den følgende tekst og send den til denne adresse:
 
 !R
@@ -650,7 +650,7 @@ teksten, bare du ikke retter i selve markeringslinjerne.
 Markeringslinjerne er de linjer der starter med %%%. De må ikke
 ændres.
 
-</text/edit-list#n/>
+</text/edit-list#nE/>
 <#L#>-edit.file kommandoen kan bruges af en fjernadministrator,
 til at rette teksterne i de fleste af svarteksterne i
 svar-tekst filerne .
@@ -689,7 +689,7 @@ unsub_confirm       til afsender for at bekræfte frameldingsbekræftelse.
 unsub_nop           til ikke-tilmeldte efter framelding.
 unsub_ok            til ex-tilmeldte efter vellykket framelding.
 
-</text/edit-done#n/>
+</text/edit-done#nE/>
 Denne text er med held blevet opdateret
 </text/info#E/>
 Der findes pt. ingen information om denne liste.

@@ -687,7 +687,7 @@ Start och slutraderna är rader som börjar med %%%. De får inte
 de stå kvar.
 
 
-</text/edit-list#En/>
+</text/edit-list#nE/>
 <#L#>-edit.fil kommandot kan användas av en fjärradministratör
 för att editera de textfiler som skapar de svaren jag skickar för
 <#L#>@<#H#> listan.

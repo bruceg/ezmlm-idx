@@ -665,7 +665,7 @@ Confirmação: Eu removi o endereço
 da lista <#l#>. Este endereço não está
 mais na lista.
 
-</text/edit-do#n/>
+</text/edit-do#nE/>
 Por favor edite o arquivo texto seguinte e envie-o para este endereço: 
 
 !R
@@ -681,7 +681,7 @@ devem ser modificadas (caracteres extras adicionados pelo seu programa
 de correio eletrônico no início da linha são aceitos).
 
 
-</text/edit-list#n/>
+</text/edit-list#nE/>
 O comando <#L#>-edit.file pode ser usado por um administrador
 remoto para editar os arquivos texto que são usados para as
 respostas da lista <#L#>@<#H#>.
@@ -723,7 +723,7 @@ unsub_confirm       para assinante pedindo confirmação para o cancelamento.
 unsub_nop           para não-assinante depois de pedido de cancelamento.
 unsub_ok            para ex-assinante depois do cancelamento com sucesso.
 
-</text/edit-done#n/>
+</text/edit-done#nE/>
 O arquivo texto foi atualizado com sucesso.
 
 </text/info#E/>

@@ -515,7 +515,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 已经成功的从<#l#>邮件列表中取消注册。
 
-</text/edit-do#n/>
+</text/edit-do#nE/>
 请你编辑下面的文件并将他们发送到下面的地址：
 
 !R
@@ -523,7 +523,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 以'%%%'开始的文字是不能够编辑的。
 
 
-</text/edit-list#n/>
+</text/edit-list#nE/>
 <#L#>-edit.file 者条命令可以用于远程的编辑<#L#>@<#H#>邮件列表的各种控制
 文件。
 
@@ -558,7 +558,7 @@ unsub_confirm       需要用户确认的取消注册信息。
 unsub_nop           发送给不是邮件列表注册用户要求取消注册邮件列表的信息。
 unsub_ok            取消注册成功后发送给用户的信息。
 
-</text/edit-done#n/>
+</text/edit-done#nE/>
 已经成功的更新配置文件。
 </text/info#E/>
 邮件列表的介绍文件不存在。
