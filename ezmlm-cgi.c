@@ -1,8 +1,5 @@
 /*$Id$*/
 
-/* Please leave. Will hopefully help pay for further improvement. */
-#define EZ_CRIGHT "<a href=\"http://www.lindeinc.com\">(c) 1999 Lin-De, Inc</a>"
-/******/
 #include <sys/types.h>
 #include "direntry.h"
 #include "datetime.h"
@@ -798,9 +795,6 @@ void html_header(char *t,char *s, unsigned int l,char *class,int flagspecial)
 
 void html_footer(int flagspecial)
 {
-  oputs("<HR><DIV class=copyright>");
-  oputs(EZ_CRIGHT);
-  oputs("</DIV>");
   if ((flagspecial & SPC_BANNER) && banner && *banner) {
     oputs("<DIV class=banner>\n");
     if (*banner == '<') oputs(banner);
