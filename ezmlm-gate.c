@@ -1,6 +1,8 @@
 /*$Id: ezmlm-gate.c,v 1.18 1999/10/09 16:49:56 lindberg Exp $*/
 /*$Name: ezmlm-idx-040 $*/
 
+#include "substdio.h"
+#include "subfd.h"
 #include "stralloc.h"
 #include "strerr.h"
 #include "error.h"
@@ -88,6 +90,7 @@ char **argv;
   char *queryext = (char *) 0;
   int opt;
   int ret = 0;
+  int dontact = 0;
   unsigned int i,j,k;
 
   umask(022);
@@ -98,7 +101,7 @@ char **argv;
   if (!stralloc_copys(&storeopt," -")) die_nomem();
 
   while ((opt = getopt(argc,argv,
-      "cCmMpPq:Q:sSrRt:T:vV")) != opteof)
+      "0cCmMpPq:Q:sSrRt:T:vV")) != opteof)
     switch(opt) {	/* pass on unrecognized options */
       case 'c':			/* ezmlm-send flags */
       case 'C':
@@ -120,6 +123,7 @@ char **argv;
       case 'q': if (optarg) queryext = optarg; break;
       case 'v':
       case 'V': strerr_die2x(0,"ezmlm-gate version: ",EZIDX_VERSION);
+      case '0': dontact = 1; break;
       default:			/* ezmlm-store flags */
         die_usage();
     }
@@ -183,6 +187,16 @@ char **argv;
   if (!stralloc_0(&send)) die_nomem();
   sendargs[2] = send.s;
   sendargs[3] = 0;
+
+  if (dontact) {
+    char **s;
+    for (s = sendargs; *s; s++) {
+      substdio_puts(subfderr, *s);
+      if (s[1]) substdio_puts(subfderr, " ");
+    }
+    substdio_putsflush(subfderr, "\n");
+    return;
+  }
 
   switch(child = fork()) {
     case -1:

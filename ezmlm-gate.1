@@ -2,7 +2,7 @@
 .SH NAME
 ezmlm-gate \- Gate posts depending on message SENDER
 .SH SYNOPSIS
-.B ezmlm-gate [-cCmMpPrRsSvV] [-q file]
+.B ezmlm-gate [-0cCmMpPrRsSvV] [-q file]
 .I dir [moddir1] [moddir2 ...]
 .SH DESCRIPTION
 .B ezmlm-gate
@@ -49,6 +49,11 @@ status per
 etc, is tested only if all the programs have been executed and the final
 exit code is 0. Thus, programs can cause moderation (100), posting (99), or
 defer the decision to the next program and ultimately to subscriber status.
+.TP
+.B \-0
+Instead of running ezmlm-store(1) or ezmlm-send(1), print 
+(to stdout)
+the command and arguments that would have been run.
 .TP
 .B \-v
 Display version information.
