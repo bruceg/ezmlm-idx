@@ -16,13 +16,13 @@
 #include "sig.h"
 #include "now.h"
 #include "datetime.h"
-#include "date822fmt.h"
 #include "fmt.h"
 #include "cookie.h"
 #include "qmail.h"
 #include "errtxt.h"
 #include "mime.h"
 #include "auto_version.h"
+#include "hdr.h"
 #include "idx.h"
 #include "subscribe.h"
 
@@ -90,8 +90,6 @@ int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
 }
 char qqbuf[1];
 substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
-struct datetime dt;
-char date[DATE822FMT];
 
 void code_qput(s,n)
 char *s;
@@ -116,7 +114,6 @@ int flagw;
   int match;
   int fdhash;
   const char *err;
-  datetime_sec msgwhen;
 
   fd = open_read(fn.s);
   if (fd == -1) die_read();
@@ -137,30 +134,17 @@ int flagw;
   if (qmail_open(&qq, (stralloc *) 0) == -1)
     strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
 
-  msgwhen = now();
   qmail_puts(&qq,"Mailing-List: ");
   qmail_put(&qq,mailinglist.s,mailinglist.len);
   if (getconf_line(&line,"listid",0,FATAL,dir)) {
     qmail_puts(&qq,"\nList-ID: ");
     qmail_put(&qq,line.s,line.len);
   }
-  qmail_puts(&qq,"\nDate: ");
-  datetime_tai(&dt,msgwhen);
-  qmail_put(&qq,date,date822fmt(date,&dt));
-  if (!stralloc_copys(&line,"Message-ID: <")) die_nomem();
-  if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,(unsigned long) msgwhen)))
-		die_nomem();
-  if (!stralloc_cats(&line,".")) die_nomem();
-  if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,(unsigned long) getpid())))
-		die_nomem();
-  if (!stralloc_cats(&line,".ezmlm-warn@")) die_nomem();
-  if (!stralloc_catb(&line,outhost.s,outhost.len)) die_nomem();
-  qmail_put(&qq,line.s,line.len);
+  hdr_datemsgid(now());
   if (flagcd) {
     if (!stralloc_0(&line)) die_nomem();
-    cookie(boundary,"",0,"",line.s,"");	/* universal MIME boundary */
   }
-  qmail_puts(&qq,">\nFrom: ");
+  qmail_puts(&qq,"\nFrom: ");
   if (!quote(&quoted,&outlocal)) die_nomem();
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"-help@");

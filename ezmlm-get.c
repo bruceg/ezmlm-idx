@@ -81,7 +81,6 @@ stralloc listno = {0};
 void *psql = (void *) 0;
 
 datetime_sec when;
-struct datetime dt;
 unsigned long cumsize = 0L;	/* cumulative msgs / 256 */
 unsigned long cumsizen = 0L;	/* new cumulative msgs / 256 */
 unsigned long max = 0L;		/* Last message in archive */
@@ -90,7 +89,6 @@ datetime_sec digwhen;		/* last digest */
 
 char strnum[FMT_ULONG];
 char szmsgnum[FMT_ULONG];
-char date[DATE822FMT];
 char boundary[COOKIE];
 char hashout[COOKIE];
 stralloc line = {0};
@@ -775,21 +773,8 @@ void doheaders()
     qmail_puts(&qq,"\nList-ID: ");
     qmail_put(&qq,line.s,line.len);
   }
-  qmail_puts(&qq,"\nDate: ");
-  qmail_put(&qq,date,date822fmt(date,&dt));
-  qmail_puts(&qq,"Message-ID: <");
-  if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,(unsigned long) when)))
-     die_nomem();
-  if (!stralloc_append(&line,".")) die_nomem();
-  if (!stralloc_catb(&line,strnum,
-		fmt_ulong(strnum,(unsigned long) getpid()))) die_nomem();
-  if (!stralloc_cats(&line,".ezmlm@")) die_nomem();
-  if (!stralloc_cat(&line,&outhost)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
-  qmail_puts(&qq,line.s);
-		/* "unique" MIME boundary as hash of messageid */
-  makehash(line.s,line.len,boundary);
-  qmail_puts(&qq,">\nFrom: ");
+  hdr_datemsgid(when);
+  qmail_puts(&qq,"\nFrom: ");
   if (!quote(&quoted,&outlocal)) die_nomem();
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"-help@");
@@ -858,6 +843,8 @@ char **argv;
   subentry *subtable;
   authentry *authtable;
   dateentry *datetable;
+  struct datetime dt;
+  char date[DATE822FMT];
 
   (void) umask(022);
   sig_pipeignore();

@@ -19,7 +19,6 @@
 #include "quote.h"
 #include "datetime.h"
 #include "now.h"
-#include "date822fmt.h"
 #include "direntry.h"
 #include "cookie.h"
 #include "sgetopt.h"
@@ -65,7 +64,6 @@ void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 datetime_sec when;
 unsigned int older;
-struct datetime dt;
 
 char textbuf[1024];
 substdio sstext;
@@ -81,7 +79,6 @@ substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
 
 char *dir;
 char strnum[FMT_ULONG];
-char date[DATE822FMT];
 char boundary[COOKIE];
 datetime_sec hashdate;
 
@@ -150,22 +147,8 @@ char *d;
       qmail_put(&qq,mailinglist.s,mailinglist.len);
       qmail_puts(&qq,"\nList-ID: ");
       qmail_put(&qq,listid.s,listid.len);
-      qmail_puts(&qq,"\nDate: ");
-      datetime_tai(&dt,when);
-      qmail_put(&qq,date,date822fmt(date,&dt));
-      qmail_puts(&qq,"Message-ID: <");
-      if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,
-		(unsigned long) when + msgnum++))) die_nomem();
-      if (!stralloc_append(&line,".")) die_nomem();
-      if (!stralloc_catb(&line,strnum,
-		fmt_ulong(strnum,(unsigned long) getpid()))) die_nomem();
-      if (!stralloc_cats(&line,".ezmlm@")) die_nomem();
-      if (!stralloc_cat(&line,&outhost)) die_nomem();
-      if (!stralloc_0(&line)) die_nomem();
-      qmail_puts(&qq,line.s);
-		/* "unique" MIME boundary as hash of messageid */
-      cookie(boundary,"",0,"",line.s,"");
-      qmail_puts(&qq,">\nFrom: ");
+      hdr_datemsgid(when+msgnum++);
+      qmail_puts(&qq,"\nFrom: ");
       if (!quote(&quoted,&outlocal)) die_nomem();
       qmail_put(&qq,quoted.s,quoted.len);
       qmail_puts(&qq,"-help@");

@@ -4,5 +4,6 @@
 
 void hdr_transferenc(void);
 void hdr_ctboundary(void);
+void hdr_datemsgid(unsigned long when);
 
 #endif

@@ -11,7 +11,6 @@
 #include "case.h"
 #include "str.h"
 #include "datetime.h"
-#include "date822fmt.h"
 #include "now.h"
 #include "quote.h"
 #include "readwrite.h"
@@ -120,9 +119,6 @@ const int noargsxlate[] = { 0,1,-2,3,4,5,-2,-13,-14,9,10,11,12,13,14,15,16,17,
 
 substdio sstext;
 char textbuf[1024];
-datetime_sec when;
-struct datetime dt;
-char date[DATE822FMT];
 
 struct qmail qq;
 
@@ -675,21 +671,8 @@ char **argv;
       qmail_puts(&qq,"List-ID: ");
       qmail_put(&qq,line.s,line.len);
     }
-    qmail_puts(&qq,"\nDate: ");
-    when = now();
-    datetime_tai(&dt,when);
-    qmail_put(&qq,date,date822fmt(date,&dt));
-    qmail_puts(&qq,"Message-ID: <");
-    if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,(unsigned long) when)))
-	die_nomem();
-    if (!stralloc_append(&line,".")) die_nomem();
-    if (!stralloc_catb(&line,strnum,
-		fmt_ulong(strnum,(unsigned long) getpid()))) die_nomem();
-    if (!stralloc_cats(&line,".ezmlm@")) die_nomem();
-    if (!stralloc_cats(&line,outhost.s)) die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
-    qmail_puts(&qq,line.s);
-    qmail_puts(&qq,">\nFrom: ");
+    hdr_datemsgid(now());
+    qmail_puts(&qq,"\nFrom: ");
     if (!quote2(&line,outlocal.s)) die_nomem();
     qmail_put(&qq,line.s,line.len);
     if (cmdidx == EZREQ_HELP)

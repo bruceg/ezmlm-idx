@@ -23,7 +23,6 @@
 #include "quote.h"
 #include "datetime.h"
 #include "now.h"
-#include "date822fmt.h"
 #include "fmt.h"
 #include "sgetopt.h"
 #include "auto_bin.h"

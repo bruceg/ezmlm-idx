@@ -20,7 +20,6 @@
 #include "quote.h"
 #include "datetime.h"
 #include "now.h"
-#include "date822fmt.h"
 #include "fmt.h"
 #include "subscribe.h"
 #include "cookie.h"
@@ -105,12 +104,10 @@ stralloc fneditn = {0};
 stralloc charset = {0};
 
 datetime_sec when;
-struct datetime dt;
 int match;
 unsigned int max;
 
 char strnum[FMT_ULONG];
-char date[DATE822FMT];
 char hash[COOKIE];
 char boundary[COOKIE];
 datetime_sec hashdate;
@@ -388,22 +385,9 @@ void msg_headers()
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"-subscribe@");
   qmail_put(&qq,outhost.s,outhost.len);
-  qmail_puts(&qq,">\nDate: ");
-  datetime_tai(&dt,when);
-  qmail_put(&qq,date,date822fmt(date,&dt));
-  qmail_puts(&qq,"Message-ID: <");
-  if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,(unsigned long) when)))
-     die_nomem();
-  if (!stralloc_append(&line,".")) die_nomem();
-  if (!stralloc_catb(&line,strnum,
-		fmt_ulong(strnum,(unsigned long) getpid()))) die_nomem();
-  if (!stralloc_cats(&line,".ezmlm@")) die_nomem();
-  if (!stralloc_cat(&line,&outhost)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
-  qmail_puts(&qq,line.s);
-		/* "unique" MIME boundary as hash of messageid */
-  cookie(boundary,"",0,"",line.s,"");
-  qmail_puts(&qq,">\nFrom: ");
+  qmail_puts(&qq,">");
+  hdr_datemsgid(when);
+  qmail_puts(&qq,"\nFrom: ");
   qmail_put(&qq,quoted.s,quoted.len);
   if (act == AC_HELP)		/* differnt "From:" for help to break auto- */
     qmail_puts(&qq,"-return-@");	/* responder loops */

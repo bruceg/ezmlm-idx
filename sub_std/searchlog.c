@@ -17,7 +17,6 @@ static stralloc line = {0};
 static stralloc outline = {0};
 static char date[DATE822FMT];
 static datetime_sec when;
-static struct datetime dt;
 static substdio ssin;
 static char inbuf[256];
 
@@ -31,6 +30,7 @@ static void lineout(subwrite,fatal)
 int subwrite();
 char *fatal;
 {
+  struct datetime dt;
   (void) scan_ulong(line.s,&when);
   datetime_tai(&dt,when);		/* there is always at least a '\n' */
   if (!stralloc_copyb(&outline,date,date822fmt(date,&dt) - 1))

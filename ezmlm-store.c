@@ -21,7 +21,6 @@
 #include "getconf.h"
 #include "datetime.h"
 #include "now.h"
-#include "date822fmt.h"
 #include "cookie.h"
 #include "sgetopt.h"
 #include "errtxt.h"
@@ -62,11 +61,9 @@ int pid;
 int match;
 
 char strnum[FMT_ULONG];
-char date[DATE822FMT];
 char hash[COOKIE];
 char boundary[COOKIE];
 datetime_sec when;
-struct datetime dt;
 struct stat st;
 
 void *psql = (void *) 0;
@@ -317,28 +314,13 @@ char **argv;
     qmail_puts(&qq,"List-ID: ");
     qmail_put(&qq,line.s,line.len);
   }
-  qmail_puts(&qq,"\nDate: ");
-  datetime_tai(&dt,when);
-  qmail_put(&qq,date,date822fmt(date,&dt));
-  qmail_puts(&qq,"Message-ID: <");
-  if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,(unsigned long) when)))
-     die_nomem();
-  if (!stralloc_append(&line,".")) die_nomem();
-  if (!stralloc_catb(&line,strnum,
-		fmt_ulong(strnum,(unsigned long) getpid()))) die_nomem();
-  if (!stralloc_cats(&line,".ezmlm@")) die_nomem();
-  if (!stralloc_cat(&line,&outhost)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
-  qmail_puts(&qq,line.s);
-		/* "unique" MIME boundary as hash of messageid */
-  cookie(boundary,"",0,"",line.s,"");
+  hdr_datemsgid(when);
+  qmail_puts(&qq,"\nFrom: ");
   if (flagconfirm) {
-    qmail_puts(&qq,">\nFrom: ");
     qmail_put(&qq,outlocal.s,outlocal.len);
     qmail_puts(&qq,"-owner@");
     qmail_put(&qq,outhost.s,outlocal.len);
   } else {
-    qmail_puts(&qq,">\nFrom: ");
     qmail_puts(&qq,reject.s);
   }
   qmail_puts(&qq,"\nReply-To: ");
