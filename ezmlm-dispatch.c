@@ -60,7 +60,7 @@ static int is_dir(const char *fn)
 {
   struct stat st;
   make_path(fn);
-  return wrap_stat(path.s,&st,FATAL) == 0
+  return wrap_stat(path.s,&st) == 0
     && S_ISDIR(st.st_mode);
 }
 
@@ -68,7 +68,7 @@ static int is_file(const char *fn)
 {
   struct stat st;
   make_path(fn);
-  return wrap_stat(path.s,&st,FATAL) == 0
+  return wrap_stat(path.s,&st) == 0
     && S_ISREG(st.st_mode);
 }
 
@@ -112,9 +112,9 @@ static void execute_line(const char *line)
     /* ignore comments */
     break;
   case '|':
-    if ((child = wrap_fork(FATAL)) == 0)
-      wrap_execsh(line+1,FATAL);
-    if ((code = wrap_waitpid(child,FATAL)) != 0)
+    if ((child = wrap_fork()) == 0)
+      wrap_execsh(line+1);
+    if ((code = wrap_waitpid(child)) != 0)
       _exit(code);
     ++did_program;
     break;

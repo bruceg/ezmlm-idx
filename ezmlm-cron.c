@@ -485,13 +485,13 @@ char **argv;
   if (!stralloc_0(&line)) die_nomem();
   sendargs[2] = line.s;
   sendargs[3] = 0;
-  if ((child = wrap_fork(FATAL)) == 0) {
+  if ((child = wrap_fork()) == 0) {
     if (setreuid(euid,euid) == -1)
       strerr_die2sys(100,FATAL,ERR_SETUID);
-    wrap_execvp(sendargs, FATAL);
+    wrap_execvp(sendargs);
   }
   /* parent */
-  switch (wrap_waitpid(child, FATAL)) {
+  switch (wrap_waitpid(child)) {
       case 0:
         _exit(0);
       default:

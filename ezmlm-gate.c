@@ -46,10 +46,10 @@ int mailprog(s)
 {
     int r;
 
-    if ((child = wrap_fork(FATAL)) == 0)
-      wrap_execsh(s, FATAL);
+    if ((child = wrap_fork()) == 0)
+      wrap_execsh(s);
     /* parent */
-    switch((r = wrap_waitpid(child, FATAL))) {
+    switch((r = wrap_waitpid(child))) {
       /* 100 perm error, 111 temp, 99 dom ok */
       /* 0 rec ok, others bounce */
       case 0: case 99: case 100: break;
@@ -174,9 +174,9 @@ char **argv;
     return;
   }
 
-  if ((child = wrap_fork(FATAL)) == 0)
-    wrap_execbin(program, opts, dir, FATAL);
+  if ((child = wrap_fork()) == 0)
+    wrap_execbin(program, opts, dir);
   /* parent */
-  wrap_exitcode(child, FATAL);
+  wrap_exitcode(child);
 }
 

@@ -1,10 +1,12 @@
+/*$Id$*/
+
 #include "error.h"
 #include "errtxt.h"
 #include "strerr.h"
 #include "wrap.h"
+#include "idx.h"
 
-static void wrapper(int (*fn)(char*,char**),
-		    const char **args, const char *FATAL)
+static void wrapper(int (*fn)(char*,char**), const char **args)
 {
   fn((char*)*args, (char**)args);
   strerr_die4sys((errno == error_txtbsy
@@ -16,12 +18,12 @@ static void wrapper(int (*fn)(char*,char**),
 extern int execv(char*,char**);
 extern int execvp(char*,char**);
 
-void wrap_execv(const char **args, const char *FATAL)
+void wrap_execv(const char **args)
 {
-  wrapper(execv, args, FATAL);
+  wrapper(execv, args);
 }
 
-void wrap_execvp(const char **args, const char *FATAL)
+void wrap_execvp(const char **args)
 {
-  wrapper(execvp, args, FATAL);
+  wrapper(execvp, args);
 }

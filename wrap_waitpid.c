@@ -1,9 +1,12 @@
+/*$Id$*/
+
 #include "wait.h"
 #include "errtxt.h"
 #include "strerr.h"
 #include "wrap.h"
+#include "idx.h"
 
-int wrap_waitpid(int pid, const char *FATAL)
+int wrap_waitpid(int pid)
 {
   int wstat;
   wait_pid(&wstat,pid);

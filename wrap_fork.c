@@ -1,9 +1,12 @@
+/*$Id$*/
+
 #include "fork.h"
 #include "errtxt.h"
 #include "strerr.h"
 #include "wrap.h"
+#include "idx.h"
 
-int wrap_fork(const char *FATAL)
+int wrap_fork(void)
 {
   int child;
   if ((child = fork()) == -1)

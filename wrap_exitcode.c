@@ -1,10 +1,13 @@
+/*$Id$*/
+
 #include "errtxt.h"
 #include "strerr.h"
 #include "wrap.h"
+#include "idx.h"
 
-void wrap_exitcode(int pid, const char *FATAL)
+void wrap_exitcode(int pid)
 {
-  switch (wrap_waitpid(pid, FATAL)) {
+  switch (wrap_waitpid(pid)) {
     case 100:
       strerr_die2x(100,FATAL,ERR_CHILD_FATAL);
     case 111:

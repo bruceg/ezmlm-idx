@@ -240,17 +240,17 @@ void main(int argc, char **argv)
     if (seek_begin(fd) == -1)	/* rewind, since we read an entire buffer */
       strerr_die4sys(111,FATAL,ERR_SEEK,fnmsg.s,": ");
 
-    if ((child = wrap_fork(FATAL)) == 0) {
+    if ((child = wrap_fork()) == 0) {
       close(0);
       dup(fd);	/* make fnmsg.s stdin */
       if (argc > optind)
-        wrap_execsh(argv[optind], FATAL);
+        wrap_execsh(argv[optind]);
       else
-        wrap_execbin("/ezmlm-send", &sendopt, dir, FATAL);
+        wrap_execbin("/ezmlm-send", &sendopt, dir);
     }
     /* parent */
     close(fd);
-    wrap_exitcode(child, FATAL);
+    wrap_exitcode(child);
 
     unlink(fnmsg.s);
     _exit(0);

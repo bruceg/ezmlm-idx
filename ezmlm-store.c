@@ -204,10 +204,10 @@ char **argv;
   flagmodpost = getconf_line(&moderators,"modpost",0,dir);
   flagremote = getconf_line(&line,"remote",0,dir);
   if (!flagmodpost && !flagconfirm) {	/* not msg-mod. Pipe to ezmlm-send */
-    if ((child = wrap_fork(FATAL)) == 0)
-      wrap_execbin("/ezmlm-send", &sendopt, dir, FATAL);
+    if ((child = wrap_fork()) == 0)
+      wrap_execbin("/ezmlm-send", &sendopt, dir);
     /* parent */
-    wrap_exitcode(child, FATAL);
+    wrap_exitcode(child);
   }
 
   if (!moderators.len || !(moderators.s[0] == '/')) {

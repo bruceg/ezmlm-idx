@@ -1,3 +1,5 @@
+/*$Id$*/
+
 #include "auto_bin.h"
 #include "stralloc.h"
 #include "wrap.h"
@@ -7,8 +9,7 @@ static stralloc path;
 
 void wrap_execbin(const char *program,
 	          stralloc *opts,
-	          const char *dir,
-	          const char *FATAL)
+	          const char *dir)
 {
   const char *args[4];
   int i;
@@ -27,5 +28,5 @@ void wrap_execbin(const char *program,
   args[i++] = dir;
   args[i] = 0;
 
-  wrap_execv(args, FATAL);
+  wrap_execv(args);
 }
