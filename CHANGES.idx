@@ -28,6 +28,7 @@ cn_GB,cs,pl,ru,dk,pt_BR,pt
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
+ezmlm-idx-0.431, 20041229
 =========================
 -Make ezmlm-idx obey $QMAILQUEUE.
 -Added missing ezmlm-confirm.0 target.
