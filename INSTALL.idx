@@ -51,15 +51,15 @@ HOW TO BUILD, TEST, AND INSTALL:
 
     (Programs compiled with MySQL support will work like
     their non-MySQL counterparts for lists that are not specifically
-    set up to take advantage of MySQL support.) Do:
-	% make mysql
+    set up to take advantage of MySQL support.) Replace the first line
+    of the "conf-sub" file with the word "mysql".
 
     PostgresSQL:
     If you want to compile ezmlm with PostgreSQL support 
     (http://www.postgreSQL.org), edit sub_pgsql/conf-sqlcc (include files) 
     and pgsql/conf-sqlld (libraries) to reflect your PostgreSQL installation 
-    (see PostgreSQL documentation). Do:
-	% make pgsql
+    (see PostgreSQL documentation). Replace the first line of the
+    "conf-sub" file with the word "pgsql".
 
     Others:
     If you're familiar with C programming for the particular RDBMS, it will
@@ -126,8 +126,9 @@ HOW TO BUILD, TEST, AND INSTALL:
     add a ``-u testuser'' switch. Note that -p has to be specified even if
     the database has no password. In this case, use -p ''.
 
-10. If you for some reason want to rebuild binaries without MySQL support, do:
-	% make std
+10. If you for some reason want to rebuild binaries without MySQL
+    support, replace the first line of "conf-sub" with the word "std"
+    and do:
 	% make
 
 11. Copy binaries and man pages to the correct locations.

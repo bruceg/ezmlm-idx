@@ -30,6 +30,9 @@ in the next version.
 
 =========================
 -Several documentation and comment fixes.  Thanks Tullio Andreatta.
+-Added conf-sub control file, used to choose which subscriber
+ mechanism to use.  This replaces the "make std/mysql/pgsql" mechanism.
+ Adapted from patch by Tullio Andreatta.
 
 ezmlm-idx-0.421, 20040602
 =========================

@@ -1,0 +1,6 @@
+mysql
+
+Choose a subscription database support. Available supports are:
+* std    (Default) filesystem
+* mysql  MySQL database
+* pgsql  Postgres database

@@ -5,3 +5,4 @@ fork.h
 hasflock.h
 hassgact.h
 uint32.h
+conf-sub

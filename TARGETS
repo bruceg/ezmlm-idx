@@ -30,8 +30,6 @@ checktag.o
 choose
 compile
 concatHDR.o
-conf-sqlcc
-conf-sqlld
 constmap.o
 cookie.o
 copy.o
@@ -228,6 +226,7 @@ sig_catch.o
 sig_pipe.o
 slurp.o
 slurpclose.o
+sql.lib
 str.a
 str_chr.o
 str_cpy.o
