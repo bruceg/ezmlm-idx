@@ -52,6 +52,15 @@ ERR="${DIR}__err"
 # file that can hold crated test msg to avoid sigpipe
 TMP="${DIR}/__tmp"
 
+# file to hold a test qmail-queue
+QQTEST="${DIR}/__qqtest"
+
+# file to hold the message output from qmail-queue
+QQMSG="${DIR}/__qqmsg"
+
+# file to hold the envelope output from qmail-queue
+QQENV="${DIR}/__qqenv"
+
 # defaults for SQL version - overridden by command line switches
 TABLE='list'
 DB='ezmlm'
@@ -80,5 +89,7 @@ STRINGS='strings'
 TAIL='tail'
 UNSET='unset'
 WC='wc'
+CHMOD='chmod'
+CAT='cat'
 
 ###################### END CONFIRGRABLE ITEMS #########################

@@ -79,4 +79,12 @@ fi
   ${ECHO} "|${GREP} 'MAILER-DAEMON' >/dev/null && exit 99" > "$DOT-$BOUNCE"
   ${ECHO} "|exit 100" > "$DOT-$BOUNCE"
 
+  (
+    ${ECHO} "#!/bin/sh"
+    ${ECHO} "${CAT} >'${QQMSG}'"
+    ${ECHO} "${CAT} <&1 >'${QQENV}'"
+    ${ECHO} "exit 1"
+  ) > "${QQTEST}"
+  ${CHMOD} 755 "${QQTEST}"
+
 fi
