@@ -895,6 +895,11 @@ ezmlmrc.0: \
 ezmlmrc.5
 	nroff -man ezmlmrc.5 > ezmlmrc.0
 
+ezmlmrc.all: \
+ezmlmrc.ch_GB ezmlmrc.cs ezmlmrc.da ezmlmrc.de ezmlmrc.en_US \
+ezmlmrc.es ezmlmrc.fr ezmlmrc.hu ezmlmrc.id ezmlmrc.it ezmlmrc.jp \
+ezmlmrc.nl ezmlmrc.pl ezmlmrc.pt ezmlmrc.pt_BR ezmlmrc.ru ezmlmrc.sv
+
 ezmlmrc.ch_GB: \
 makelang ezmlmrc.template lang/ch_GB.text lang/ch_GB.sed
 	./makelang ch_GB
@@ -1102,7 +1107,8 @@ ezmlm-idx ezmlm-accept ezmlm-archive ezmlm-check ezmlm-gate ezmlm-get \
 ezmlm-clean ezmlm-glconf ezmlm-moderate ezmlm-store ezmlm-tstdig \
 ezmlm-make ezmlm-manage ezmlm-send ezmlm-reject ezmlm-return \
 ezmlm-warn ezmlm-weed ezmlm-list ezmlm-sub ezmlm-unsub ezmlm-cgi ezmlm-limit \
-ezmlm-issubn ezmlm-cron ezmlm-request ezmlm-test ezmlm-split ezmlmrc
+ezmlm-issubn ezmlm-cron ezmlm-request ezmlm-test ezmlm-split ezmlmrc.all \
+ezmlmrc
 
 load: \
 make-load warn-auto.sh systype
