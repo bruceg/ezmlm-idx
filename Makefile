@@ -1707,6 +1707,10 @@ sv: \
 ezmlmrc.sv
 	cp -f ezmlmrc.sv ezmlmrc
 
+symlinks: \
+ezmlm-mktab checktag.c issub.c logmsg.c subscribe.c opensql.c \
+putsubs.c tagmsg.c searchlog.c
+
 ezmlm-mktab: \
 conf-sub
 	rm -f ezmlm-mktab
