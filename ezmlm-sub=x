@@ -2,6 +2,7 @@ auto_version.o
 log.o
 now.o
 subdb.a
+slurp.a
 fs.a
 strerr.a
 getln.a

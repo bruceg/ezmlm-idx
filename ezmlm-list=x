@@ -1,6 +1,7 @@
 getopt.a
-fs.a
 subdb.a
+fs.a
+slurp.a
 strerr.a
 getln.a
 substdio.a
@@ -10,3 +11,4 @@ error.a
 open.a
 str.a
 auto_version.o
+sql.lib
