@@ -22,6 +22,7 @@
 #include "qmail.h"
 #include "errtxt.h"
 #include "mime.h"
+#include "auto_version.h"
 #include "idx.h"
 #include "subscribe.h"
 
@@ -310,8 +311,7 @@ char **argv;
                 }
                 break;
       case 'v':
-      case 'V': strerr_die2x(0,
-		"ezmlm-warn version: ezmlm-0.53+",EZIDX_VERSION);
+      case 'V': strerr_die2x(0, "ezmlm-warn version: ",auto_version);
       default:
 	die_usage();
     }

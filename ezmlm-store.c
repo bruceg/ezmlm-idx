@@ -30,6 +30,7 @@
 #include "subscribe.h"
 #include "mime.h"
 #include "wrap.h"
+#include "auto_version.h"
 
 int flagmime = MOD_MIME;	/* default is message as attachment */
 int flagpublic = 1;		/* default anyone can post */
@@ -188,7 +189,7 @@ char **argv;
         if (!stralloc_append(&sendopt,szchar)) die_nomem();
         break;
       case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-store version: ",EZIDX_VERSION);
+      case 'V': strerr_die2x(0,"ezmlm-store version: ",auto_version);
       default:
 	die_usage();
     }

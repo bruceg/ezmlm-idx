@@ -7,6 +7,7 @@
 #include "scan.h"
 #include "errtxt.h"
 #include "idx.h"
+#include "auto_version.h"
 
 #define FATAL "ezmlm-unsub: fatal: "
 
@@ -49,8 +50,7 @@ char **argv;
       case 'n': flagname = 1; break;
       case 'N': flagname = 0; break;
       case 'v':
-      case 'V': strerr_die2x(0,
-		"ezmlm-unsub version: ezmlm-0.53+",EZIDX_VERSION);
+      case 'V': strerr_die2x(0, "ezmlm-unsub version: ",auto_version);
       default:
 	die_usage();
     }

@@ -13,6 +13,7 @@
 #include "env.h"
 #include "errtxt.h"
 #include "idx.h"
+#include "auto_version.h"
 
 #define FATAL "ezmlm-reject: fatal: "
 
@@ -204,8 +205,7 @@ char **argv;
       case 't': flagtook = 0; break;
       case 'T': flagtook = 1; break;
       case 'v':
-      case 'V': strerr_die2x(0,
-		"ezmlm-reject: version ezmlm-0.53+",EZIDX_VERSION);
+      case 'V': strerr_die2x(0, "ezmlm-reject version: ",auto_version);
 
       default: die_usage();
     }

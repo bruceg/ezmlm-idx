@@ -26,6 +26,7 @@
 #include "errtxt.h"
 #include "copy.h"
 #include "idx.h"
+#include "auto_version.h"
 
 #define FATAL "ezmlm-request: fatal: "
 #define INFO "ezmlm-request: info: "
@@ -328,7 +329,7 @@ char **argv;
       case 'F':
       case 'f': if (optarg) cfname = optarg; break;
       case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-request version: ",EZIDX_VERSION);
+      case 'V': strerr_die2x(0,"ezmlm-request version: ",auto_version);
       default:
 	die_usage();
     }

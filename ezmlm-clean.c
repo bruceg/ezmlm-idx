@@ -28,6 +28,7 @@
 #include "copy.h"
 #include "idx.h"
 #include "mime.h"
+#include "auto_version.h"
 
 int flagmime = MOD_MIME;	/* default is message as attachment */
 int flagreturn = 1;		/* default return timed-out messages */
@@ -320,7 +321,7 @@ char **argv;
       case 'r': flagreturn = 1; break;
       case 'R': flagreturn = 0; break;
       case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-clean version: ", EZIDX_VERSION);
+      case 'V': strerr_die2x(0,"ezmlm-clean version: ", auto_version);
                 /* not reached */
       default:
 	die_usage();

@@ -28,6 +28,7 @@
 #include "copy.h"
 #include "errtxt.h"
 #include "idx.h"
+#include "auto_version.h"
 
 #define FATAL "ezmlm-manage: fatal: "
 #define INFO "ezmlm-manage: info: "
@@ -722,8 +723,7 @@ char **argv;
       case 'u': flagunsubconf = 1; break;
       case 'U': flagunsubconf = 0; break;
       case 'v':
-      case 'V': strerr_die2x(0,
-		"ezmlm-manage version: ezmlm-0.53+",EZIDX_VERSION);
+      case 'V': strerr_die2x(0, "ezmlm-manage version: ",auto_version);
       default:
 	die_usage();
     }

@@ -2,9 +2,6 @@
 #ifndef IDX_H
 #define IDX_H
 
-/* Version of this release */
-#define EZIDX_VERSION "ezmlm-idx-0.431\n"
-
 /* Range for '-thread' to protect large archives. A '-thread' search */
 /* will start at most THREAD_BEFORE messages before the action argument */
 /* and go to at most THREAD_AFTER messages after the action argument. */

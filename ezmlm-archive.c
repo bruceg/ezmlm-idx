@@ -16,6 +16,7 @@
 #include "makehash.h"
 #include "idx.h"
 #include "errtxt.h"
+#include "auto_version.h"
 
 #define FATAL "ezmlm-archive: fatal: "
 #define WARNING "ezmlm-archive: warning: inconsistent index: "
@@ -387,7 +388,7 @@ char **argv;
 		break;
       case 'T': to = 0; break;
       case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-archive version: ",EZIDX_VERSION);
+      case 'V': strerr_die2x(0,"ezmlm-archive version: ",auto_version);
       default:
         die_usage();
     }

@@ -28,6 +28,7 @@
 #include "cookie.h"
 #include "idx.h"
 #include "copy.h"
+#include "auto_version.h"
 
 int flagnoreceived = 1;		/* suppress received headers by default. They*/
 				/* are still archived. =0 => archived and */
@@ -403,8 +404,7 @@ char **argv;
       case 'q': break;
       case 'Q': break;
       case 'v':
-      case 'V': strerr_die2x(0,
-		"ezmlm-send version: ezmlm-0.53+",EZIDX_VERSION);
+      case 'V': strerr_die2x(0, "ezmlm-send version: ",auto_version);
       default:
 	die_usage();
     }

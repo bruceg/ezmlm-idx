@@ -9,6 +9,7 @@ TARGETS
 UPGRADE.idx
 author.c
 auto_cron.h
+auto_version.h
 case_diffs.c
 case_starts.c
 checktag.c
@@ -82,7 +83,7 @@ ezmlm-unsub.c
 ezmlm-warn.c
 ezmlmglrc
 ezmlmglrc.5
-ezmlmrc.5
+ezmlmrc.9
 ezmlmrc.template
 ezmlmsubrc
 ezmlmsubrc.5

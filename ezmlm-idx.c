@@ -23,6 +23,7 @@
 #include "errtxt.h"
 #include "getconf.h"
 #include "makehash.h"
+#include "auto_version.h"
 
 #define FATAL "ezmlm-idx: fatal: "
 
@@ -199,7 +200,7 @@ char **argv;
       case 'f': if (optarg) (void) scan_ulong(optarg,&msgnum); break;
       case 'F': msgnum = 0L;
       case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-archive version: ",EZIDX_VERSION);
+      case 'V': strerr_die2x(0,"ezmlm-archive version: ",auto_version);
       default: die_usage();
   }
   dir = argv[optind];

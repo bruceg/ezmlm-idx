@@ -11,6 +11,7 @@
 #include "readwrite.h"
 #include "auto_qmail.h"
 #include "auto_cron.h"
+#include "auto_version.h"
 #include "errtxt.h"
 #include "idx.h"
 #include "wrap.h"
@@ -163,7 +164,7 @@ char **argv;
                 }
                 break;
       case 'v':
-      case 'V': strerr_die2x(100,"ezmlm-cron version: ",EZIDX_VERSION);
+      case 'V': strerr_die2x(100,"ezmlm-cron version: ",auto_version);
       default:
                 die_usage();
     }

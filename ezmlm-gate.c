@@ -18,6 +18,7 @@
 #include "idx.h"
 #include "subscribe.h"
 #include "wrap.h"
+#include "auto_version.h"
 
 #define FATAL "ezmlm-gate: fatal: "
 
@@ -107,7 +108,7 @@ char **argv;
         break;
       case 'q': if (optarg) queryext = optarg; break;
       case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-gate version: ",EZIDX_VERSION);
+      case 'V': strerr_die2x(0,"ezmlm-gate version: ",auto_version);
       case '0': dontact = 1; break;
       default:			/* ezmlm-store flags */
         die_usage();

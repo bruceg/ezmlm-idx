@@ -33,6 +33,7 @@
 #include "idx.h"
 #include "mime.h"
 #include "errtxt.h"
+#include "auto_version.h"
 
 int flagdo = 1;			/* React to commands (doesn't affect -dig)*/
 int flagbottom = 1;		/* copy text/bottom + request */
@@ -889,7 +890,7 @@ char **argv;
       case 's': flagsub = 1; break;	/* only subs have archive access */
       case 'S': flagsub = 0; break;	/* everyone has archive access */
       case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-get version: ",EZIDX_VERSION);
+      case 'V': strerr_die2x(0,"ezmlm-get version: ",auto_version);
       default:
         die_usage();
     }

@@ -16,6 +16,7 @@
 #include "lock.h"
 #include "errtxt.h"
 #include "idx.h"
+#include "auto_version.h"
 
 			/* defaults. All other flags are false = 0 */
 char  *defflags="ap";		/* archived list -a */
@@ -237,7 +238,7 @@ char **argv;
    "+aAbBcC:dDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0:3:4:5:6:7:8:9:"))
            != opteof) {
     if (opt == 'v' || opt == 'V')
-      strerr_die2x(0,"ezmlm-make version: ezmlm-0.53+",EZIDX_VERSION);
+      strerr_die2x(0,"ezmlm-make version: ",auto_version);
     if (opt =='C')	/* treat this like nl switch to allow override of -c*/
       cfname = optarg;
     if (opt >= 'a' && opt <= 'z') {
@@ -446,15 +447,15 @@ char **argv;
     strerr_die4sys(111,FATAL,ERR_READ,template.s,": ");
   if (!match)
     strerr_die4sys(111,FATAL,ERR_READ,template.s,": ");
-  i = str_rchr(EZIDX_VERSION,'-');			/* check version */
-  if (EZIDX_VERSION[i]) i++;
+  i = str_rchr(auto_version,'-');			/* check version */
+  if (auto_version[i]) i++;
   j = 0;
-  while (line.s[j] == EZIDX_VERSION[i] && j < line.len &&
-		EZIDX_VERSION[i] != '.' && EZIDX_VERSION[i]) {
+  while (line.s[j] == auto_version[i] && j < line.len &&
+		auto_version[i] != '.' && auto_version[i]) {
     i++; j++;						/* major */
   }							/* first minor */
-  if (EZIDX_VERSION[i] != '.' || j + 1 >= line.len ||
-		EZIDX_VERSION[i+1] != line.s[j+1])
+  if (auto_version[i] != '.' || j + 1 >= line.len ||
+		auto_version[i+1] != line.s[j+1])
     strerr_warn2(WARNING,ERR_VERSION, (struct strerr *) 0);
 
   for (;;) {

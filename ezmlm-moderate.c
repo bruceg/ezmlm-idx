@@ -30,6 +30,7 @@
 #include "copy.h"
 #include "idx.h"
 #include "wrap.h"
+#include "auto_version.h"
 
 int flagmime = MOD_MIME;	/* default is message as attachment */
 char flagcd = '\0';		/* default: do not use transfer encoding */
@@ -232,7 +233,7 @@ char **argv;
       case 't':
       case 'T': if (optarg) replyto = optarg; break;
       case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-moderate version: ",EZIDX_VERSION);
+      case 'V': strerr_die2x(0,"ezmlm-moderate version: ",auto_version);
       default:
 	die_usage();
     }

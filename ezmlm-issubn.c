@@ -5,6 +5,7 @@
 #include "sgetopt.h"
 #include "errtxt.h"
 #include "idx.h"
+#include "auto_version.h"
 
 #define FATAL "ezmlm-issubn: fatal: "
 
@@ -37,8 +38,7 @@ char **argv;
       case 'n': flagsub = 99; break;
       case 'N': flagsub = 0; break;
       case 'v':
-      case 'V': strerr_die2x(0,
-		"ezmlm-issubn version: ezmlm-0.53+",EZIDX_VERSION);
+      case 'V': strerr_die2x(0, "ezmlm-issubn version: ",auto_version);
       default:
 	die_usage();
     }

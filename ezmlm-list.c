@@ -8,6 +8,7 @@
 #include "sgetopt.h"
 #include "errtxt.h"
 #include "idx.h"
+#include "auto_version.h"
 
 #define FATAL "ezmlm-list: fatal: "
 
@@ -60,8 +61,7 @@ char **argv;
       case 'n': flagnumber = 1; break;
       case 'N': flagnumber = 0; break;
       case 'v':
-      case 'V': strerr_die2x(0,
-	"ezmlm-list version: ezmlml-0.53+",EZIDX_VERSION);
+      case 'V': strerr_die2x(0, "ezmlm-list version: ",auto_version);
       default:
 	die_usage();
     }

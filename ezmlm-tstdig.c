@@ -14,6 +14,7 @@
 #include "sgetopt.h"
 #include "errtxt.h"
 #include "idx.h"
+#include "auto_version.h"
 
 #define FATAL "ezmlm-tstdig: fatal: "
 
@@ -69,7 +70,7 @@ char **argv;
                   scan_ulong(optarg,&deltanum);
                 break;
       case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-tstdig version: ",EZIDX_VERSION);
+      case 'V': strerr_die2x(0,"ezmlm-tstdig version: ",auto_version);
       default:
 	die_usage();
     }
