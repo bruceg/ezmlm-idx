@@ -667,19 +667,14 @@ char **argv;
     set_cpoutlocal(&listname);		/* necessary in case there are <#l#> */
     set_cpouthost(&hostname);		/* necessary in case there are <#h#> */
 					/* we don't want to be send to a list*/
-    qmail_puts(&qq,"Mailing-List: ezmlm-request");
-    if (getconf(&line,"listid",0,FATAL)) {
-      qmail_puts(&qq,"List-ID: ");
-      qmail_put(&qq,line.s,line.len);
-    }
-    qmail_puts(&qq,"\n");
+    hdr_adds("Mailing-List: ezmlm-request");
+    if (getconf(&line,"listid",0,FATAL))
+      hdr_add2("List-ID: ",line.s,line.len);
     hdr_datemsgid(now());
     hdr_from((cmdidx == EZREQ_HELP) ? "-return-" : "-help");
     qmail_put(&qq,mydtline.s,mydtline.len);
-    qmail_puts(&qq,"To: ");
     if (!quote2(&line,to.s)) die_nomem();
-    qmail_put(&qq,line.s,line.len);
-    qmail_puts(&qq,"\n");
+    hdr_add2("To: ",line.s,line.len);
     hdr_mime(flagcd ? "multipart/mixed" : "text/plain");
     qmail_puts(&qq,"Subject: ");
     if (!quote2(&line,outlocal.s)) die_nomem();

@@ -330,23 +330,15 @@ char **argv;
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
     maketo();			/* extract SENDER from return-path */
 						/* Build message */
-    qmail_puts(&qq,"Mailing-List: ");
-    qmail_put(&qq,mailinglist.s,mailinglist.len);
-    if(getconf_line(&line,"listid",0,FATAL,dir)) {
-      qmail_puts(&qq,"\nList-ID: ");
-      qmail_put(&qq,line.s,line.len);
-    }
-    qmail_puts(&qq,"\n");
+    hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
+    if(getconf_line(&line,"listid",0,FATAL,dir))
+      hdr_add2("List-ID: ",line.s,line.len);
     hdr_datemsgid(when);
     hdr_from("-owner");
-    if (replyto) {
-      qmail_puts(&qq,"Reply-To: ");
-      qmail_puts(&qq,replyto);
-      qmail_puts(&qq,"\n");
-    }
-    qmail_puts(&qq, "To: ");
-    qmail_puts(&qq,to.s);
-    qmail_puts(&qq,"\nSubject: ");
+    if (replyto)
+      hdr_add2s("Reply-To: ",replyto);
+    hdr_add2s("To: ",to.s);
+    qmail_puts(&qq,"Subject: ");
     qmail_puts(&qq,TXT_RETURNED_POST);
     qmail_put(&qq,quoted.s,quoted.len);
     qmail_puts(&qq,"@");

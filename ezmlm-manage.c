@@ -366,14 +366,11 @@ void msg_headers()
   int flaggetfrom;
   unsigned int pos;
 
-  qmail_puts(&qq,"Mailing-List: ");
-  qmail_put(&qq,mailinglist.s,mailinglist.len);
-  if(getconf_line(&line,"listid",0,FATAL,dir)) {
-    qmail_puts(&qq,"\nList-ID: ");
-    qmail_put(&qq,line.s,line.len);
-  }
+  hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
+  if(getconf_line(&line,"listid",0,FATAL,dir))
+    hdr_add2("List-ID: ",line.s,line.len);
   if (!quote(&quoted,&outlocal)) die_nomem();	/* quoted has outlocal */
-  qmail_puts(&qq,"\nList-Help: <mailto:");	/* General rfc2369 headers */
+  qmail_puts(&qq,"List-Help: <mailto:");	/* General rfc2369 headers */
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"-help@");
   qmail_put(&qq,outhost.s,outhost.len);
@@ -389,10 +386,8 @@ void msg_headers()
   hdr_datemsgid(when);
   /* differnt "From:" for help to break auto-responder loops */
   hdr_from((act == AC_HELP) ? "-return-" : "-help");
-  qmail_puts(&qq,"To: ");
   if (!quote2(&quoted,target.s)) die_nomem();
-  qmail_put(&qq,quoted.s,quoted.len);
-  qmail_puts(&qq,"\n");
+  hdr_add2("To: ",quoted.s,quoted.len);
   if (!stralloc_copys(&mydtline,"Delivered-To: responder for ")) die_nomem();
   if (!stralloc_catb(&mydtline,outlocal.s,outlocal.len)) die_nomem();
   if (!stralloc_cats(&mydtline,"@")) die_nomem();

@@ -758,13 +758,9 @@ void doheaders()
   if (act == AC_DIGEST)
     copy(&qq,"headeradd",'H',FATAL);
 
-  qmail_puts(&qq,"Mailing-List: ");
-  qmail_put(&qq,mailinglist.s,mailinglist.len);
-  if (getconf_line(&line,"listid",0,FATAL,dir)) {
-    qmail_puts(&qq,"\nList-ID: ");
-    qmail_put(&qq,line.s,line.len);
-  }
-  qmail_puts(&qq,"\n");
+  hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
+  if (getconf_line(&line,"listid",0,FATAL,dir))
+    hdr_add2("List-ID: ",line.s,line.len);
   hdr_datemsgid(when);
   hdr_from("-help");
   if (!stralloc_copys(&mydtline,"Delivered-To: responder for ")) die_nomem();

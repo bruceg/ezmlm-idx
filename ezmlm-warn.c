@@ -134,13 +134,9 @@ int flagw;
   if (qmail_open(&qq, (stralloc *) 0) == -1)
     strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
 
-  qmail_puts(&qq,"Mailing-List: ");
-  qmail_put(&qq,mailinglist.s,mailinglist.len);
-  if (getconf_line(&line,"listid",0,FATAL,dir)) {
-    qmail_puts(&qq,"\nList-ID: ");
-    qmail_put(&qq,line.s,line.len);
-  }
-  qmail_puts(&qq,"\n");
+  hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
+  if (getconf_line(&line,"listid",0,FATAL,dir))
+    hdr_add2("\nList-ID: ",line.s,line.len);
   hdr_datemsgid(now());
   if (flagcd) {
     if (!stralloc_0(&line)) die_nomem();

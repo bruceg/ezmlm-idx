@@ -143,11 +143,8 @@ char *d;
         if (!stralloc_0(&to)) die_nomem();
       } else
         die_read();
-      qmail_puts(&qq,"Mailing-List: ");
-      qmail_put(&qq,mailinglist.s,mailinglist.len);
-      qmail_puts(&qq,"\nList-ID: ");
-      qmail_put(&qq,listid.s,listid.len);
-      qmail_puts(&qq,"\n");
+      hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
+      hdr_add2("List-ID: ",listid.s,listid.len);
       hdr_datemsgid(when+msgnum++);
       hdr_from("-help");
       qmail_puts(&qq,"Subject: ");
@@ -155,8 +152,8 @@ char *d;
       qmail_put(&qq,quoted.s,quoted.len);
       qmail_puts(&qq,"@");
       qmail_put(&qq,outhost.s,outhost.len);
-      qmail_puts(&qq, "\nTo: ");
-      qmail_puts(&qq,to.s);
+      qmail_puts(&qq, "\n");
+      hdr_add2s("To: ",to.s);
       if (flagmime) {
         if (getconf_line(&charset,"charset",0,FATAL,dir)) {
           if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
@@ -169,7 +166,6 @@ char *d;
         } else
           if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
         if (!stralloc_0(&charset)) die_nomem();
-        qmail_puts(&qq,"\n");
 	hdr_mime("multipart/mixed");
         qmail_puts(&qq,"\n--");
         qmail_put(&qq,boundary,COOKIE);

@@ -308,25 +308,17 @@ char **argv;
   if (qmail_open(&qq, (stralloc *) 0) == -1)		/* Open mailer */
     strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
 
-  qmail_puts(&qq,"Mailing-List: ");
-  qmail_put(&qq,mailinglist.s,mailinglist.len);
-  if (getconf_line(&line,"listid",0,FATAL,dir)) {
-    qmail_puts(&qq,"List-ID: ");
-    qmail_put(&qq,line.s,line.len);
-  }
-  qmail_puts(&qq,"\n");
+  hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
+  if (getconf_line(&line,"listid",0,FATAL,dir))
+    hdr_add2("List-ID: ",line.s,line.len);
   hdr_datemsgid(when);
-  if (flagconfirm) {
+  if (flagconfirm)
     hdr_from("-owner");
-  } else {
-    qmail_puts(&qq,"From: ");
-    qmail_puts(&qq,reject.s);
-    qmail_puts(&qq,"\n");
-  }
-  qmail_puts(&qq,"Reply-To: ");
-  qmail_puts(&qq,accept.s);
+  else
+    hdr_add2s("From: ",reject.s);
+  hdr_add2s("Reply-To: ",accept.s);
   if (!flagconfirm && !pmod && flagremote) {	/* if remote admin add -allow- address */
-    qmail_puts(&qq,"\nCc: ");	/* for ezmlm-gate users */
+    qmail_puts(&qq,"Cc: ");	/* for ezmlm-gate users */
     strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
     cookie(hash,key.s,key.len-FLD_ALLOW,strnum,sender,"t");
     if (!stralloc_copy(&line,&outlocal)) die_nomem();
@@ -344,14 +336,15 @@ char **argv;
     qmail_put(&qq,line.s,line.len);
     qmail_puts(&qq,"@");
     qmail_put(&qq,outhost.s,outhost.len);
+    qmail_puts(&qq,"\n");
   }
   if (flagconfirm) {
-    qmail_puts(&qq,"\nTo: <");
+    qmail_puts(&qq,"To: <");
     if (sender)
       qmail_puts(&qq, sender);
-    qmail_puts(&qq,">");
+    qmail_puts(&qq,">\n");
   } else {
-    qmail_puts(&qq,"\nTo: Recipient list not shown: ;");
+    qmail_puts(&qq,"To: Recipient list not shown: ;\n");
   }
   if (!stralloc_copys(&subject,"Subject: ")) die_nomem();
   if (flagconfirm) {
@@ -380,7 +373,6 @@ char **argv;
     } else
       if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
     if (!stralloc_0(&charset)) die_nomem();
-    qmail_puts(&qq,"\n");
     hdr_mime("multipart/mixed");
     qmail_put(&qq,subject.s,subject.len);
     qmail_puts(&qq,"\n\n--");
