@@ -1,0 +1,9 @@
+########################
+# waiting for delivery #
+########################
+
+if [ "$SECT" = "1" ]; then
+
+  send_test 2
+
+fi

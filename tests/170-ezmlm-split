@@ -1,0 +1,51 @@
+###############
+# ezmlm-split #
+###############
+
+if [ "$SECT" = "1" ]; then
+
+if [ "$QMVER" = "n" ]; then
+  prompt "ezmlm-split (1/2):    "
+# set up split file
+  ${ECHO} "edu:1:26:l1@h1" > "${DIR}/split"
+  ${ECHO} "edu:27:52:l2@h2" >> "${DIR}/split"
+  ${ECHO} "com:::l3@h3" >> "${DIR}/split"
+# most testing with -D
+  ${ECHO} "lindberg@ezmlm.org" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
+	${GREP} "$LIST@$HOST" >/dev/null || \
+	{ ${ECHO} "failed to split correctly on domain"; exit 100; }
+  ${ECHO} "lindberg@id.com" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
+	${GREP} 'l3' >/dev/null || \
+	{ ${ECHO} "failed to split correctly on domain"; exit 100; }
+  ${ECHO} "lindberg@id.wustl.edu" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
+	${GREP} 'l1' >/dev/null || \
+	{ ${ECHO} "failed to split correctly on hash + domain"; exit 100; }
+  ${ECHO} "cfl@id.wustl.edu" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
+	${GREP} 'l2' >/dev/null || \
+	{ ${ECHO} "failed to split correctly on hash + domain"; exit 100; }
+# one test with delivery - redirect to local manager
+# should exit 99 after redirecting
+  ${ECHO} ":::${LOC}@$HOST" > "${DIR}/split"
+  SENDER="${MOD}@$HOST"; export SENDER
+  DTLINE="Delivered-To: ezmlm-split@$HOST"; export DTLINE
+  LOCAL="$LOC-subscribe-${SND}=$HOST"; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT="subscribe-${SND}=$HOST"; export DEFAULT
+  fi
+  ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "${DIR}" >"${ERR}" 2>&1
+
+  EC="$?"
+  if [ "$EC" -eq "0" ]; then
+	${ECHO} "exited 0 after forwarding, rather than 99"; exit 100
+  elif [ "$EC" != "99" ]; then
+	${ECHO} "failed to process message for forwarding"; exit 100
+  fi
+# if no match, should exit 0
+  ${ECHO} "___:::${LOC}@$HOST" > "${DIR}/split"
+  ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "${DIR}" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed to exit 0 after failing to match"; exit 100; }
+
+  ${ECHO} "OK"
+fi
+
+fi

@@ -1,0 +1,22 @@
+##############
+# ezmlm-warn #
+##############
+
+if [ "$SECT" = "1" ]; then
+
+  prompt "ezmlm-warn (1/3):     "
+
+# should send a warning
+  ${EZBIN}/ezmlm-warn -t0 "${DIR}" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed with normal bounce for warning"; exit 100; }
+  ${EZBIN}/ezmlm-issubn "${DIR}" || \
+	{ ${ECHO} "script error: SENDER is not a subscriber"; exit 100; }
+
+  ${EZBIN}/ezmlm-warn -d -t0 "${DIR}" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed with digest bounce for warning"; exit 100; }
+  ${EZBIN}/ezmlm-issubn "${DIR}/digest" || \
+	{ ${ECHO} "script error: SENDER is not a digest subscriber"; exit 100; }
+
+  ${ECHO} "OK"
+
+fi

@@ -1,0 +1,107 @@
+################
+# ezmlm-manage #
+################
+
+if [ "$SECT" = "1" ]; then
+
+  prompt "ezmlm-manage (1/4):   "
+
+  LOCAL="$LOC-unsubscribe"; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT='unsubscribe'; export DEFAULT
+  fi
+  SENDER="${SND}@$HOST"; export SENDER
+
+  ${EZBIN}/ezmlm-sub "${DIR}" "${SND}@$HOST"
+  ${EZBIN}/ezmlm-manage -U "${DIR}" </dev/null >"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed with -U"; exit 100; }
+  ${EZBIN}/ezmlm-issubn "${DIR}" && \
+	{ ${ECHO} "unsubscribe with -U failed"; exit 100; }
+
+  LOCAL="$LOC-digest-subscribe"; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT='digest-subscribe'; export DEFAULT
+  fi
+  ${EZBIN}/ezmlm-unsub "${DIR}/digest" "${SND}@$HOST"
+
+# test that access to the deny db is restricted to remote admins
+  LOCAL="$LOC-deny-subscribe"; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT='deny-subscribe'; export DEFAULT
+  fi
+  ${EZBIN}/ezmlm-manage "${DIR}" </dev/null >/dev/null 2>&1 && \
+	{
+	 ${ECHO} "Deny open to regular subscribers: 0.31 bug, OK in 0.321."
+	 prompt "ezmlm-manage ...      "
+	 BUG="${BUG} deny"
+	}
+  SENDER="${MOD}@$HOST"; export SENDER
+  ${EZBIN}/ezmlm-sub "${DIR}/mod" "$SENDER" || exit 100
+  ${EZBIN}/ezmlm-manage "${DIR}" </dev/null > "${ERR}" 2>&1 || \
+	{ ${ECHO} "Deny access denied to remote admin!"; exit 100; }
+
+# make non-moderated
+  ${RM} -f "${DIR}/modsub" || \
+	{ ${ECHO} "Failed to remove DIR/modsub"; exit 99; }
+
+# make non-remote
+  ${RM} -f "${DIR}/remote" || \
+	{ ${ECHO} "Failed to remove DIR/remote"; exit 99; }
+  ${EZBIN}/ezmlm-manage "${DIR}" </dev/null > "${ERR}" 2>&1 && \
+	{
+	 ${ECHO} "Deny even without remote/modsub: 0.31 bug, OK in 0.321."
+	 prompt "ezmlm-manage ...      "
+	 BUG="${BUG} deny"
+	}
+
+# restore remote/SENDER/mod/LOCAL/DEFAULT
+  ${EZBIN}/ezmlm-unsub "${DIR}/mod" "$SENDER" || exit 100
+  SENDER="${SND}@$HOST"; export SENDER	# restore order
+  touch "${DIR}/remote" || \
+	{ ${ECHO} "Failed to remove DIR/remote"; exit 99; }
+  LOCAL="$LOC-digest-subscribe"; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT='digest-subscribe'; export DEFAULT
+  fi
+
+  ${EZBIN}/ezmlm-manage -S "${DIR}" </dev/null >"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed with -S"; exit 100; }
+  ${EZBIN}/ezmlm-issubn "${DIR}/digest" || \
+	{ ${ECHO} "digest-subscribe with -S failed"; exit 100; }
+  ${EZBIN}/ezmlm-unsub "${DIR}/digest" "${SND}@$HOST"
+  touch "${DIR}/modsub" || \
+	{ ${ECHO} "Failed to restore DIR/modsub"; exit 99; }
+
+  SENDER="${MAN}@$HOST"; export SENDER
+
+  ${ECHO} "X-num: sub1" > "${DIR}/__tmp"
+  ${ECHO} "From: Mr. $EZTEST requests <${MAN}@$HOST>" >> "${DIR}/__tmp"
+  ${ECHO} >> "${DIR}/__tmp"
+  ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${DIR}/__tmp" \
+		>"${ERR}" 2>&1 || \
+	{ ${ECHO} "digest-subscribe with request failed"; exit 100; }
+
+  ${EZBIN}/ezmlm-sub "${DIR}" "${MAN}@$HOST"
+  LOCAL="$LOC-unsubscribe"; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT='unsubscribe'; export DEFAULT
+  fi
+  ${ECHO} "X-num: sub2" > "${DIR}/__tmp"
+  ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "unsubscribe request failed"; exit 100; }
+
+# -get function for backwards compatibility
+  LOCAL="$LOC-get.1"; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT='get.1'; export DEFAULT
+  fi
+  ${ECHO} "X-num: manget1" > "${DIR}/__tmp"
+  ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "get failed"; exit 100; }
+# -C should disable it
+  ${EZBIN}/ezmlm-manage -C "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 && \
+	{ ${ECHO} "-C failed to disable -get"; exit 100; }
+
+  ${ECHO} "OK"
+
+fi

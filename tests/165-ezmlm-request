@@ -1,0 +1,35 @@
+#################
+# ezmlm-request #
+#################
+
+if [ "$SECT" = "1" ]; then
+
+  prompt "ezmlm-request (1/2):  "
+
+  SENDER="${SND}@$HOST"; export SENDER
+  LOCAL="$LOC-request"; export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT='request'; export DEFAULT
+  fi
+
+  ${ECHO} "X-num: req1" > "${DIR}/__tmp"
+# use a non-existing command
+  ${ECHO} "Subject: qqqq ${SND}@$HOST" >> "${DIR}/__tmp"
+  ${EZBIN}/ezmlm-request "${DIR}" < "${DIR}/__tmp" > "${ERR}" 2>&1
+  if [ "$?" != "99" ]; then
+	${ECHO} "qqqq command in subject failed to exit 99"
+	exit 100
+  fi
+
+  ${ECHO} "X-num: req1" > "${DIR}/__tmp"
+# test full ezmlm cmd in subject and command substitution
+  ${ECHO} "Subject: ${LOC}-remove-${SND}=${HOST}@${HOST}" >> "${DIR}/__tmp"
+  ${EZBIN}/ezmlm-request "${DIR}" < "${DIR}/__tmp" > "${ERR}" 2>&1
+  if [ "$?" != "99" ]; then
+	${ECHO} "full ezmlm command in subject failed to exit 99"
+	exit 100
+  fi
+
+  ${ECHO} "OK"
+
+fi
