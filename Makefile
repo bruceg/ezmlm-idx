@@ -799,12 +799,13 @@ ezmlm-warn: \
 load ezmlm-warn.o auto_qmail.o getconf.o mime.a cookie.o makehash.o subdb.a \
 now.o slurpclose.o slurp.o quote.o datetime.o date822fmt.o qmail.o surf.a \
 case.a strerr.a sig.a getln.a substdio.a stralloc.a alloc.a error.a hdr.a \
-open.a lock.a str.a fs.a fd.a wait.a copy.o getopt.a auto_version.o sql.lib
+open.a lock.a str.a fs.a fd.a wait.a env.a copy.o getopt.a auto_version.o \
+sql.lib
 	./load ezmlm-warn auto_qmail.o getconf.o mime.a hdr.a makehash.o \
 	cookie.o subdb.a getopt.a now.o slurpclose.o slurp.o quote.o \
 	datetime.o date822fmt.o qmail.o surf.a case.a strerr.a sig.a \
 	getln.a substdio.a stralloc.a alloc.a error.a open.a lock.a \
-	str.a fs.a fd.a wait.a copy.o auto_version.o `cat sql.lib`
+	env.a str.a fs.a fd.a wait.a copy.o auto_version.o `cat sql.lib`
 
 ezmlm-warn.0: \
 ezmlm-warn.1
@@ -1191,7 +1192,7 @@ str.h open.h case.h errtxt.h stralloc.h subscribe.h qmail.h fmt.h
 qmail.o: \
 compile qmail.c substdio.h qmail.c readwrite.h qmail.c wait.h qmail.c \
 exit.h qmail.c fork.h qmail.c fd.h qmail.c qmail.h substdio.h \
-substdio.h qmail.h qmail.c auto_qmail.h qmail.c
+substdio.h qmail.h qmail.c auto_qmail.h qmail.c env.h qmail.c
 	./compile qmail.c
 
 quote.o: \

@@ -1,6 +1,7 @@
 #include "substdio.h"
 #include "readwrite.h"
 #include "wait.h"
+#include "env.h"
 #include "exit.h"
 #include "fork.h"
 #include "fd.h"
@@ -35,7 +36,9 @@ int qmail_open(struct qmail *qq, const stralloc *sa)
       if (fd_move(0,pim[0]) == -1) _exit(120);
       if (fd_move(1,pie[0]) == -1) _exit(120);
       if (chdir(auto_qmail) == -1) _exit(61);
-      if (sa && sa->len) {		/* count args */
+      if ((cp = env_get("QMAILQUEUE")) != 0)
+	binqqargs[0] = cp;
+      else if (sa && sa->len) {		/* count args */
 	j = 2;				/* empty sa - qmqpc c control args */
 	for (i = 0; i < sa->len; i++) {
 	  if (sa->s[i] == '\0') j++;

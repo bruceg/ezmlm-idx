@@ -29,6 +29,7 @@ If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
 =========================
+-Make ezmlm-idx obey $QMAILQUEUE.
 -Added missing ezmlm-confirm.0 target.
 -Auto-generate all version strings from the VERSION file.
 -Fixed up the broken Swedish translation.  Thanks Mads E. Eilertsen.
