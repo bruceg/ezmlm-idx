@@ -1,11 +1,8 @@
-add ezmlm-receipt to build system
-merge all the redundant declarations of die_nomem
+add ezmlm-receipt to build system (needs to be fixed to compile)
 ezmlm-reject.1 does not document -[fF]
 
 Refactor all header generation into a single module:
 -Write headers into a stralloc.
 -Code functions to find/add/replace/remove headers.
--Code functions to generate common header parts, such as Content-Type:
-and Content-Transfer-Encoding:
 -Parse a file to do above as well.
 -Dump the block to qmail and free.
