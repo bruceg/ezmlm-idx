@@ -28,6 +28,7 @@ cn_GB,cs,pl,ru,da,pt_BR,pt
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
+ezmlm-idx-0.432, 20050101
 =========================
 -Un-fixed the Swedish and Danish translation names, as they should match
  ISO 639 language codes, not ISO 3166 country codes.
