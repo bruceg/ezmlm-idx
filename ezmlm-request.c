@@ -671,8 +671,9 @@ char **argv;
       qmail_puts(&qq,"List-ID: ");
       qmail_put(&qq,line.s,line.len);
     }
+    qmail_puts(&qq,"\n");
     hdr_datemsgid(now());
-    qmail_puts(&qq,"\nFrom: ");
+    qmail_puts(&qq,"From: ");
     if (!quote2(&line,outlocal.s)) die_nomem();
     qmail_put(&qq,line.s,line.len);
     if (cmdidx == EZREQ_HELP)

@@ -345,10 +345,9 @@ char format;		/* output format type (see idx.h) */
 	qmail_put(&qq,subject->s,subject->len);
 	qmail_puts(&qq,"\n\n\n--");
         qmail_put(&qq,boundary,COOKIE);
-        qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
-	qmail_puts(&qq,charset.s);
-	hdr_transferenc();	/* content-transfer-enc header if needed */
         qmail_puts(&qq,"\n");
+	hdr_ctype("text/plain");
+	hdr_transferenc();	/* content-transfer-enc header if needed */
 	break;
     case RFC1153:
         hdr_mime("text/plain");
@@ -595,9 +594,9 @@ unsigned long msg;
 {
    qmail_puts(&qq,"\n--");
    qmail_put(&qq,boundary,COOKIE);
-   qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
-   qmail_puts(&qq,charset.s);
-   qmail_puts(&qq,"\nContent-Disposition: inline; filename=\"");
+   qmail_puts(&qq,"\n");
+   hdr_ctype("text/plain");
+   qmail_puts(&qq,"Content-Disposition: inline; filename=\"");
    qmail_put(&qq,listname.s,listname.len);
    qmail_puts(&qq,"_");
    qmail_put(&qq,strnum,fmt_ulong(strnum,msg));
@@ -765,8 +764,9 @@ void doheaders()
     qmail_puts(&qq,"\nList-ID: ");
     qmail_put(&qq,line.s,line.len);
   }
+  qmail_puts(&qq,"\n");
   hdr_datemsgid(when);
-  qmail_puts(&qq,"\nFrom: ");
+  qmail_puts(&qq,"From: ");
   if (!quote(&quoted,&outlocal)) die_nomem();
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"-help@");

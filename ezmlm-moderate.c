@@ -336,8 +336,9 @@ char **argv;
       qmail_puts(&qq,"\nList-ID: ");
       qmail_put(&qq,line.s,line.len);
     }
+    qmail_puts(&qq,"\n");
     hdr_datemsgid(when);
-    qmail_puts(&qq,"\nFrom: ");
+    qmail_puts(&qq,"From: ");
     if (!quote(&quoted,&outlocal)) die_nomem();
     qmail_put(&qq,quoted.s,quoted.len);
     qmail_puts(&qq,"-owner@");
@@ -370,8 +371,8 @@ char **argv;
       hdr_mime("multipart/mixed");
       qmail_puts(&qq,"\n--");
       qmail_put(&qq,boundary,COOKIE);
-      qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
-      qmail_puts(&qq,charset.s);
+      qmail_puts(&qq,"\n");
+      hdr_ctype("text/plain");
       hdr_transferenc();
     }
     copy(&qq,"text/top",flagcd,FATAL);

@@ -1,4 +1,4 @@
-/*$Id:$*/
+/*$Id$*/
 #include "hdr.h"
 #include "qmail.h"
 
@@ -8,7 +8,7 @@ extern char flagcd;
 void hdr_transferenc(void)
 {
   if (flagcd) {
-    qmail_puts(&qq,"\nContent-Transfer-Encoding: ");
+    qmail_puts(&qq,"Content-Transfer-Encoding: ");
     if (flagcd == 'Q')
       qmail_puts(&qq,"Quoted-Printable\n\n");
     else

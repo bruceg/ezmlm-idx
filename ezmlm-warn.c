@@ -140,11 +140,12 @@ int flagw;
     qmail_puts(&qq,"\nList-ID: ");
     qmail_put(&qq,line.s,line.len);
   }
+  qmail_puts(&qq,"\n");
   hdr_datemsgid(now());
   if (flagcd) {
     if (!stralloc_0(&line)) die_nomem();
   }
-  qmail_puts(&qq,"\nFrom: ");
+  qmail_puts(&qq,"From: ");
   if (!quote(&quoted,&outlocal)) die_nomem();
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"-help@");

@@ -19,7 +19,7 @@ void hdr_datemsgid(unsigned long when)
 {
   char date[DATE822FMT];
   struct datetime dt;
-  qmail_puts(&qq,"\nDate: ");
+  qmail_puts(&qq,"Date: ");
   datetime_tai(&dt,when);
   qmail_put(&qq,date,date822fmt(date,&dt));
   qmail_puts(&qq,"Message-ID: <");
@@ -32,7 +32,7 @@ void hdr_datemsgid(unsigned long when)
   if (!stralloc_cats(&line,outhost.s)) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   qmail_puts(&qq,line.s);
-  qmail_puts(&qq,">");
+  qmail_puts(&qq,">\n");
   /* "unique" MIME boundary as hash of messageid */
   makehash(line.s,line.len,boundary);
 }

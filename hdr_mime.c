@@ -18,7 +18,7 @@ void hdr_ctype(const char *ctype)
     qmail_puts(&qq,"; charset=");
     qmail_puts(&qq,charset.s);
   }
-  if (ctype[0] == 'm') {
+  if (memcmp(ctype, "multipart/", 10) == 0) {
     /* multipart/something */
     qmail_puts(&qq,";\n\tboundary=");
     qmail_put(&qq,boundary,COOKIE);

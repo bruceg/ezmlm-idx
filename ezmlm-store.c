@@ -314,8 +314,9 @@ char **argv;
     qmail_puts(&qq,"List-ID: ");
     qmail_put(&qq,line.s,line.len);
   }
+  qmail_puts(&qq,"\n");
   hdr_datemsgid(when);
-  qmail_puts(&qq,"\nFrom: ");
+  qmail_puts(&qq,"From: ");
   if (flagconfirm) {
     qmail_put(&qq,outlocal.s,outlocal.len);
     qmail_puts(&qq,"-owner@");
@@ -385,8 +386,8 @@ char **argv;
     qmail_put(&qq,subject.s,subject.len);
     qmail_puts(&qq,"\n\n--");
     qmail_put(&qq,boundary,COOKIE);
-    qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
-    qmail_puts(&qq,charset.s);
+    qmail_puts(&qq,"\n");
+    hdr_ctype("text/plain");
     hdr_transferenc();
   } else {
     qmail_put(&qq,subject.s,subject.len);
@@ -404,7 +405,9 @@ char **argv;
   if (flagmime) {
     qmail_puts(&qq,"\n--");
     qmail_put(&qq,boundary,COOKIE);
-    qmail_puts(&qq,"\nContent-Type: message/rfc822\n\n");
+    qmail_puts(&qq,"\n");
+    hdr_ctype("message/rfc822");
+    qmail_puts(&qq, "\n");
   }
 
   qmail_put(&qq,returnpath.s,returnpath.len);
