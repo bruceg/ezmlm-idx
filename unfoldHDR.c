@@ -19,7 +19,7 @@ char *fatal;
 
 {
   int r = 0;
-  register char *cp;
+  char *cp;
   char *cpnew;
   int junk;
   unsigned int i,j;
@@ -40,7 +40,7 @@ char *fatal;
         if (cpnew < cp + 3) break;	/* at least 3 char before ' ' */
 	if (*(cpnew - 1) != ':') break;	/* require ':' before ' ' */
 	if (cpnew > cp + 5) {		/* if > 4 char before ':' require */
-	  register char ch;
+	  char ch;
 	  ch = *(cpnew - 2);		/* XX^3, XX[3], XX(3) */
 	  if (ch != ')' && ch != ']' && (ch < '0' || ch > '9'))
 	    break;

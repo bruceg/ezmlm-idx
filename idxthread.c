@@ -179,7 +179,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
   unsigned int datetablesize,datetableunit;
   unsigned int lastdate = 0;
   unsigned int thisdate;
-  register msgentry *x, *y;
+  msgentry *x, *y;
 
 				/* a few unnecessary sanity checks */
   if (msg_to > msg_latest)

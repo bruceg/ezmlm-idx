@@ -59,12 +59,12 @@ int subwrite();		/* output fxn */
 const char *fatal;	/* fatal */
 {
 
-  register unsigned char x;
-  register unsigned char y;
-  register unsigned char *cp;
-  register unsigned char *cpsearch;
-  unsigned register char *cps;
-  unsigned register char ch;
+  unsigned char x;
+  unsigned char y;
+  unsigned char *cp;
+  unsigned char *cpsearch;
+  unsigned char *cps;
+  unsigned char ch;
   unsigned char *cplast, *cpline;
   unsigned int searchlen;
   int fd,match;

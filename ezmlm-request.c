@@ -166,8 +166,8 @@ unsigned int n;
 void checkarg(s)
 char *s;
 {
-  register char *cp;
-  register char ch;
+  char *cp;
+  char ch;
   cp = s;
   if (!cp) return;				/* undef is ok */
   while ((ch = *cp++)) {
@@ -438,7 +438,7 @@ char **argv;
 	  break;
     }
     if (!cfname) {		 /* listserv@/majordomo@ ignore */
-      register char ch;
+      char ch;
       if (!stralloc_0(&subject)) die_nomem();
       ch = *subject.s;		/* valid commands/list names start w letter */
       if ((ch <= 'z' && ch >= 'a') || (ch <= 'Z' && ch >= 'A')) {
@@ -469,7 +469,7 @@ char **argv;
 	  }
 	}
         {
-         register char ch;
+         char ch;
          ch = *line.s;
         if (line.len == 1 ||
           !((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')))

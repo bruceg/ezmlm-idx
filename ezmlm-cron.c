@@ -103,8 +103,8 @@ int isclean(addr,flagaddr)
   int flagaddr;		/* 1 for addresses with '@', 0 for other args */
 {
   unsigned int pos;
-  register char ch;
-  register char *cp;
+  char ch;
+  char *cp;
   if (flagaddr) {		/* shoud have one '@' */
     pos = str_chr(addr,'@');
     if (!pos || !addr[pos])

@@ -89,7 +89,7 @@ void qmail_put(struct qmail *qq, const char *s, int len)
 
 void qmail_puts(struct qmail *qq, const char *s)
 {
-  register int len;
+  int len;
   if (!qq->flagerr) {
     len = str_len(s);
     if (substdio_put(&qq->ss,s,len) == -1) qq->flagerr = 1;

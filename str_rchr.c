@@ -3,11 +3,11 @@
 
 #include "str.h"
 
-unsigned int str_rchr(register const char *s,int c)
+unsigned int str_rchr(const char *s,int c)
 {
-  register char ch;
-  register const char *t;
-  register const char *u;
+  char ch;
+  const char *t;
+  const char *u;
 
   ch = c;
   t = s;

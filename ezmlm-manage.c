@@ -636,7 +636,7 @@ char **argv;
   unsigned int len;
   int fd;
   int flagdone;
-  register char ch;
+  char ch;
 
   (void) umask(022);
   sig_pipeignore();
@@ -1033,7 +1033,8 @@ char **argv;
       }
       if (!stralloc_copy(&line,&text)) die_nomem();
       {		/* get rid of nulls to use cookie */
-        register char *s; register unsigned int n;
+        char *s;
+	unsigned int n;
         s = line.s; n = line.len;
         while(n--) { if (!*s) *s = '_'; ++s; }
       }
@@ -1120,7 +1121,8 @@ char **argv;
     }
     if (!stralloc_copy(&line,&text)) die_nomem();
     {		/* get rid of nulls to use cookie */
-      register char *s; register unsigned int n;
+      char *s;
+      unsigned int n;
       s = line.s; n = line.len;
       while(n--) { if (!*s) *s = '_'; ++s; }
     }

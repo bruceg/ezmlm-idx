@@ -6,8 +6,8 @@
 int getln2(substdio *ss,stralloc *sa,
 	   /*@out@*/char **cont,/*@out@*/unsigned int *clen,int sep)
 {
-  register char *x;
-  register unsigned int i;
+  char *x;
+  unsigned int i;
   int n;
  
   if (!stralloc_ready(sa,0)) return -1;

@@ -30,8 +30,8 @@ static int getthis(substdio *s,char *buf,int len)
 
 int substdio_feed(substdio *s)
 {
-  register int r;
-  register int q;
+  int r;
+  int q;
 
   if (s->p) return s->p;
   q = s->n;

@@ -271,7 +271,7 @@ char **argv;
   int flagmaster = 0;
   int flagreceipt = 0;
   int fdlock;
-  register char ch;
+  char ch;
 
   umask(022);
   sig_pipeignore();

@@ -2,7 +2,7 @@
 
 unsigned int str_copy(char *s,const char *t)
 {
-  register int len;
+  int len;
 
   len = 0;
   for (;;) {

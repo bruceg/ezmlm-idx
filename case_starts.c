@@ -2,8 +2,8 @@
 
 int case_starts(const char *s,const char *t)
 {
-  register unsigned char x;
-  register unsigned char y;
+  unsigned char x;
+  unsigned char y;
 
   for (;;) {
     x = *s++ - 'A';

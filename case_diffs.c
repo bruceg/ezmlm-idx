@@ -3,10 +3,10 @@
 
 #include "case.h"
 
-int case_diffs(register const char *s,register const char *t)
+int case_diffs(const char *s,const char *t)
 {
-  register unsigned char x;
-  register unsigned char y;
+  unsigned char x;
+  unsigned char y;
 
   for (;;) {
     x = *s++ - 'A';

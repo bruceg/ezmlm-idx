@@ -1,5 +1,5 @@
-
 /*$Id$*/
+
 #include "yyyymm.h"
 
 unsigned int date2yyyymm(const char *s)
@@ -55,7 +55,7 @@ unsigned int date2yyyymm(const char *s)
     return 0L;		/* mo true means s[0-2] valid */
   year = 0L;
   for (;;) {
-    register unsigned char chy;
+    unsigned char chy;
     chy = (unsigned char) *(s++);
     if (chy < '0' || chy > '9') {
       if (year) break;

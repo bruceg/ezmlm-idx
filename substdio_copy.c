@@ -4,8 +4,8 @@
 
 int substdio_copy(substdio *ssout,substdio *ssin)
 {
-  register int n;
-  register char *x;
+  int n;
+  char *x;
 
   for (;;) {
     n = substdio_feed(ssin);

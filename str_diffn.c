@@ -2,7 +2,7 @@
 
 int str_diffn(const char *s,const char *t,unsigned int len)
 {
-  register char x;
+  char x;
 
   for (;;) {
     if (!len--) return 0; x = *s; if (x != *t) break; if (!x) break; ++s; ++t;

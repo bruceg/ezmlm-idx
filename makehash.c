@@ -40,7 +40,7 @@ static void surfpcs_addlc(surfpcs *s,const unsigned char *x,unsigned int n)
 	/* modified from Dan's surfpcs_add by skipping ' ' & '\t' and */
 	/* case-independence */
 {
-  register unsigned char ch;
+  unsigned char ch;
   int i;
   while (n--) {
     ch = *x++;
@@ -100,7 +100,7 @@ void mkauthhash(const char *s,unsigned int len,char *h)
 /* avoids problems with posters that band their addresses.                  */
 {
   unsigned int i,j,k,l;
-  register char ch;
+  char ch;
 
   j = k = l = 0;
   i = byte_rchr(s,len,'@');

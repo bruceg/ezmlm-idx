@@ -3,10 +3,10 @@
 
 #include "case.h"
 
-int case_diffb(register const char *s,register unsigned int len,register const char *t)
+int case_diffb(const char *s,unsigned int len,const char *t)
 {
-  register unsigned char x;
-  register unsigned char y;
+  unsigned char x;
+  unsigned char y;
 
   while (len > 0) {
     --len;

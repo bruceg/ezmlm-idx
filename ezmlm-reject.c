@@ -89,8 +89,8 @@ stralloc *sa;		/* line */
 unsigned int n;
 {
   char *first;
-  register char *s;
-  register int level = 0;
+  char *s;
+  int level = 0;
 
   first = sa->s;
   s = sa->s + n;
@@ -125,8 +125,8 @@ stralloc *sa;		/* line */
 unsigned int n;
 {
   char *last;
-  register char *s;
-  register int level = 0;
+  char *s;
+  int level = 0;
 
   last = sa->s + sa->len - 1;
   s = sa->s + n;
