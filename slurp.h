@@ -1,6 +1,7 @@
 #ifndef SLURP_H
 #define SLURP_H
 
-extern int slurp(const char *fn,stralloc *sa,int bufsize);
+struct stralloc;
+extern int slurp(const char *fn,struct stralloc *sa,int bufsize);
 
 #endif
