@@ -159,7 +159,7 @@ Se esta mensagem também não for entregue, eu enviarei uma última
 verificação. Se a verificação também for devolvida, eu removerei o seu
 endereço da lista <#l#>, sem mais avisos.
 
-</text/digest#d/>
+</text/digest#dE/>
 Para subscrever-se à lista "digest", envie mensagem para:
 	<#L#>-digest-subscribe@<#H#>
 

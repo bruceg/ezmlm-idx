@@ -136,7 +136,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 正确的电子邮件，如果这个电子邮件同样被弹回，系统将把你的电子邮件地址从<#l#>邮件列表
 取消注册并不在通知你。
 
-</text/digest#d/>
+</text/digest#dE/>
 注册邮件列表的摘要，将电子邮件发送到：
 	<#L#>-digest-subscribe@<#H#>
 
