@@ -1,5 +1,4 @@
-#$Id: ezmlmrc.cs,v 1.8 1999/05/11 03:28:11 lindberg Exp $
-#$Name: ezmlm-idx-040 $
+#$Id$
 #
 # ezmlmrc 
 # #######

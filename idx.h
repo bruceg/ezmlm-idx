@@ -1,5 +1,4 @@
-/*$Id: idx.h,v 1.57 1999/11/29 04:54:01 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 #ifndef IDX_H
 #define IDX_H
 

@@ -1,7 +1,6 @@
 0.40 - This version identifier must be on line 1 and start in pos 1.
 #
-#$Id: ezmlmrc.sv,v 1.23 1999/12/23 23:08:19 lindberg Exp $
-#$Name: ezmlm-idx-040 $
+#$Id$
 #
 # ezmlmrc 
 # #######

@@ -1,5 +1,4 @@
-/*$Id: ezmlm-manage.c,v 1.86 1999/12/23 02:43:55 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 #include <sys/types.h>
 #include <sys/stat.h>

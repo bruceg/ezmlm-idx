@@ -1,7 +1,6 @@
 0.40 - This version identifier must be on line 1 and start in pos 1.
 #
-#$Id: ezmlmrc.es,v 1.4 1999/12/22 04:06:38 lindberg Exp $
-#$Name: ezmlm-idx-040 $
+#$Id$
 #
 # ezmlmrc- Traducción de: Vicent Mas, Francesc Alted, Sonia Lorente, Cyndy DePoy
 # #######   Servicom2000

@@ -1,5 +1,4 @@
-/*$Id: dateline.c,v 1.2 1999/10/09 17:44:37 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 #include "fmt.h"
 #include "yyyymm.h"

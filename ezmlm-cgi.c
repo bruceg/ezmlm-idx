@@ -1,5 +1,4 @@
-/*$Id: ezmlm-cgi.c,v 1.18 2000/01/08 02:42:38 lindberg Exp lindberg $*/
-/*$Name:  $*/
+/*$Id$*/
 
 /* Please leave. Will hopefully help pay for further improvement. */
 #define EZ_CRIGHT "<a href=\"http://www.lindeinc.com\">(c) 1999 Lin-De, Inc</a>"

@@ -1,5 +1,4 @@
-/*$Id: subscribe.h,v 1.14 1999/10/03 19:23:31 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 #ifndef SUBSCRIBE_H
 #define SUBSCRIBE_H
 

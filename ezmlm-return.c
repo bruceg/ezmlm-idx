@@ -1,5 +1,4 @@
-/*$Id: ezmlm-return.c,v 1.26 1999/08/07 20:50:52 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 #include <sys/types.h>
 #include "direntry.h"
 #include "stralloc.h"

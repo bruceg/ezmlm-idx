@@ -1,5 +1,4 @@
-/*$Id: ezmlm-clean.c,v 1.30 1999/05/12 22:15:26 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "error.h"

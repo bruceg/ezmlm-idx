@@ -1,5 +1,4 @@
-/* $Id: ezmlm-send.c,v 1.77 1999/10/29 02:49:14 lindberg Exp $*/
-/* $Name: ezmlm-idx-040 $*/
+/* $Id$*/
 #include "stralloc.h"
 #include "subfd.h"
 #include "strerr.h"

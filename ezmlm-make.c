@@ -1,5 +1,4 @@
 /*Id: ezmlm-make.c,v 1.31 1997/12/08 23:44:02 lindberg Exp lindberg $*/
-/*$Name: ezmlm-idx-040 $*/
 
 #include <sys/types.h>
 #include <sys/time.h>

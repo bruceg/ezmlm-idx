@@ -1,5 +1,4 @@
-#$Id: ezmlmrc.pl,v 1.19 1999/05/11 03:28:11 lindberg Exp $
-#$Name: ezmlm-idx-040 $
+#$Id$
 #
 # English ---> polish translation by Sergiusz Paw³owicz, 1998.
 # Translation (C) to Free Software Foundation, 1998.

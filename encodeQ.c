@@ -1,5 +1,4 @@
-/* $Id: encodeQ.c,v 1.2 1998/02/28 19:03:02 lindberg Exp $*/
-/* $Name: ezmlm-idx-040 $*/
+/* $Id$*/
 
 #include "errtxt.h"
 #include "mime.h"

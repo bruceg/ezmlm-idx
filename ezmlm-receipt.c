@@ -1,5 +1,4 @@
-/*$Id: ezmlm-receipt.c,v 1.10 1999/02/05 04:57:44 lindberg Exp $*/
-/*$Name: ezmlm-idx-0324 $*/
+/*$Id$*/
 /* Handles receipts and bounces from sublists at the main list */
 /* Set up instead of ezmlm-return in DIR/bouncer of main list */
 

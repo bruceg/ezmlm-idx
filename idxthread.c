@@ -1,5 +1,4 @@
-/*$Id: idxthread.c,v 1.35 1999/11/22 01:47:45 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 /* idxthread.c contains routines to from the ezmlm-idx subject index build */
 /* a structure of unique subjects as well as a table of messages with      */

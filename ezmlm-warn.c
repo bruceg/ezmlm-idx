@@ -1,5 +1,4 @@
-/*$Id: ezmlm-warn.c,v 1.27 1999/08/07 20:47:26 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "direntry.h"

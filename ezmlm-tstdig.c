@@ -1,5 +1,4 @@
-/*$Id: ezmlm-tstdig.c,v 1.17 1999/03/20 16:43:42 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 #include <sys/types.h>
 #include "stralloc.h"

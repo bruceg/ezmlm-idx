@@ -1,4 +1,4 @@
-/*$Id: author.c,v 1.3 1999/09/29 03:11:44 lindberg Exp $*/
+/*$Id$*/
 /*$Name:*/
 
 unsigned int author_name(char **sout,char *s,unsigned int l)

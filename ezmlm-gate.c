@@ -1,5 +1,4 @@
-/*$Id: ezmlm-gate.c,v 1.18 1999/10/09 16:49:56 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 #include "substdio.h"
 #include "subfd.h"

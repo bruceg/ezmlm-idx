@@ -1,5 +1,4 @@
-/*$Id: ezmlm-split.c,v 1.6 1999/05/12 22:17:54 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 #include <sys/types.h>
 #include <sys/stat.h>

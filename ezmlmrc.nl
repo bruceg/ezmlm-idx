@@ -2,8 +2,7 @@
 #
 # NOTE: This file has not been tested in a production environment!
 #
-#$Id: ezmlmrc.nl,v 0.02 2003/06/22 21:43:12 oldeman Exp $
-#$Name: ezmlm-idx-040 $
+#$Id$
 #
 # Nederlandse vertaling: Willem Oldeman <willem@king-pin.nl>
 #                        Op- of aanmerkingen over deze vertaling

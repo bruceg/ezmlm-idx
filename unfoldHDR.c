@@ -1,5 +1,4 @@
-/*$Id: unfoldHDR.c,v 1.14 1999/11/06 05:25:14 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 #include "stralloc.h"
 #include "strerr.h"

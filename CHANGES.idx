@@ -1,5 +1,4 @@
-$Id: CHANGES.idx,v 1.66 1999/12/24 04:33:03 lindberg Exp $
-$Name: ezmlm-idx-040 $
+$Id$
 
 BUGS:	-ezmlm-idx does not implement a full rfc822 parser. Comments can be
 	 inserted to defeat the MIME parsing mechanism, such as:

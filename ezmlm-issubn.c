@@ -1,5 +1,4 @@
-/*$Id: ezmlm-issubn.c,v 1.13 1999/08/07 20:45:16 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 #include "strerr.h"
 #include "env.h"
 #include "subscribe.h"

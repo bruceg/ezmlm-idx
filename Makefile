@@ -1,5 +1,4 @@
-#$Id: Makefile,v 1.117 1999/12/23 02:42:12 lindberg Exp $
-#$Name: ezmlm-idx-040 $
+#$Id$
 SHELL=/bin/sh
 SQLCC=`head -1 conf-sqlcc`
 SQLLD=`head -1 conf-sqlld`

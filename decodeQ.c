@@ -1,5 +1,4 @@
-/*$Id: decodeQ.c,v 1.3 1998/10/29 21:48:24 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 #include "stralloc.h"
 #include "strerr.h"

@@ -1,5 +1,4 @@
-/* $Id: encodeB.c,v 1.3 1998/03/21 18:30:27 lindberg Exp $*/
-/* $Name: ezmlm-idx-040 $*/
+/* $Id$*/
 
 #include "stralloc.h"
 #include "uint32.h"

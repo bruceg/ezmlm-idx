@@ -1,5 +1,4 @@
-#$Id: ezmlmsubrc,v 1.8 1999/05/11 02:32:40 lindberg Exp $
-#$Name: ezmlm-idx-040 $
+#$Id$
 # ezmlm-make -C ezmlmsubrc dir dot local host
 # Options:
 #	-3 mainlist local	(required)

@@ -1,5 +1,4 @@
-/*$Id: ezmlm-limit.c,v 1.2 1999/10/31 18:58:48 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 #include <sys/types.h>
 #include "stralloc.h"

@@ -1,5 +1,4 @@
-/*$Id: copy.c,v 1.10 1999/08/07 19:28:16 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 /* Copies a file relative the current directory and substitutes    */
 /* !A at the beginning of a line for the target,                   */

@@ -1,4 +1,4 @@
-/*$Id: errtxt.h,v 1.46 1999/11/29 04:54:01 lindberg Exp $*/
+/*$Id$*/
 /*Name: $*/
 
 #ifndef ERRTXT_H

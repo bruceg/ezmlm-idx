@@ -1,6 +1,5 @@
 
-/*$Id: date2yyyymm.c,v 1.1 1999/10/09 16:45:43 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 #include "yyyymm.h"
 
 unsigned int date2yyyymm(s)

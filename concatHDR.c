@@ -1,5 +1,4 @@
-/*$Id: */
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 #include "stralloc.h"
 #include "strerr.h"

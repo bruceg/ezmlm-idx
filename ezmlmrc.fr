@@ -1,6 +1,6 @@
 0.40 - This version identifier must be on line 1 and start in pos 1.
 #
-#$Id: ezmlmrc.fr,v 1.22 1999/12/22 04:02:15 lindberg Exp $
+#$Id$
 #Name:$
 #
 # ezmlmrc.fr - Traduction: Frank DENIS "Jedi/Sector One" <j@4u.net>

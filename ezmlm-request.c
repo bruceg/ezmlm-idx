@@ -1,5 +1,4 @@
-/*$Id: ezmlm-request.c,v 1.34 1999/08/18 01:50:04 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 #include "stralloc.h"
 #include "subfd.h"
 #include "strerr.h"

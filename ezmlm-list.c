@@ -1,5 +1,4 @@
-/*$Id: ezmlm-list.c,v 1.15 1999/09/12 20:25:33 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 #include "strerr.h"
 #include "readwrite.h"
 #include "substdio.h"

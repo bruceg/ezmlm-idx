@@ -1,5 +1,4 @@
-/*$Id: ezmlm-archive.c,v 1.13 1999/11/28 20:13:32 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id$*/
 
 #include "alloc.h"
 #include "error.h"
