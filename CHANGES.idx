@@ -8,7 +8,7 @@ BUGS:	-ezmlm-idx does not implement a full rfc822 parser. Comments can be
 	 a message within a message. The mechanism isn't intended as a
 	 "secure" way of preventing e.g. "application/ms-tnef" from being
 	 disseminated.
-	 If you think this is a problem, E-mail lindberg@id.wustl.edu.
+	 If you think this is a problem, E-mail ezmlm@list.cr.yp.to.
 	 Mimeremove/reject work only at the outer MIME layer.
 	-ezmlm-request requires addresses to be user@host. While rfc822
 	 compliant, addresses like ``"the man" @ host'' are not accepted.
@@ -19,14 +19,37 @@ BUGS:	-ezmlm-idx does not implement a full rfc822 parser. Comments can be
 TODO:
 -ezmlm-cgi to run directly under tcpserver.
 
-Acknowledgements, some are missing. Please write lindberg@id.wustl.edu
-if you're missing.
+Acknowledgements, some are missing. Please write bruceg@em.ca if you're
+missing.
 
-Some ezmlmrc are not updated and won't work right:
+Some ezmlmrc are not updated and may not work right:
 cn_GB,cs,pl,ru,da,pt_BR,pt
 
-If you fix them, please send them to lindberg@id.wustl.edu for inclusion
+If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
+
+ezmlm-idx-0.42, 20040114 (New maintainer: Bruce Guenter <bruceg@em.ca>)
+=======================================================================
+-The ezmlmrc.* files were broken into two parts, to make them easier to
+ write and maintain.  The language specific parts are stored in the
+ "lang" subdirectory.
+-Updated ezmlm-cgi to version 1.18, which includes the no banner
+ security fix.
+-Added ezmlmrc.hu.  Thanks Julian Severn-nek http://js.hu/
+-Added ezmlmrc.nl.  Thanks Willem
+-Fixed problem in ezmlm-send munging MIME attachments using implicit
+ content types.  Thanks Ed
+-Fixed typo in ezmlm-unsub -- manual unsubscriptions would be
+ erroneously logged as "+manual"
+-Fixed ezmlm-gate to handle the -Q option.  Thanks Bjoern Hansen.
+-Fixed internal bug calling decodeHDR.
+-Fix ezmlm-manage to properly send subscription confirmation to
+moderators.  Thanks Mate Wierdl.
+-Portability and bug fixes to ezmlm-test.
+-Added a "dry-run" option to ezmlm-gate.
+-Fixed ezmlm-send to fully handle QMQP relaying.  Thanks Bernhard Graf.
+-Fixed ezmlm-gate to use "/bin/sh" consistently.  Thanks Bernhard Graf.
+-Fixed ezmlm-cgi's output of non-standard port numbers.
 
 ezmlm-idx-0.40, 19991220
 ========================
