@@ -3,6 +3,6 @@
 
 #include "datetime.h"
 
-extern datetime_sec now();
+extern datetime_sec now(void);
 
 #endif
