@@ -1,4 +1,4 @@
-/*$Id: tagmsg.c,v 1.2 1999/10/07 23:31:01 lindberg Exp $*/
+/*$Id$*/
 #include "stralloc.h"
 #include "scan.h"
 #include "fmt.h"

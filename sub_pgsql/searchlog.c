@@ -1,4 +1,4 @@
-/*$Id: searchlog.c,v 1.2 1999/10/07 23:31:01 lindberg Exp $*/
+/*$Id$*/
 #include "case.h"
 #include "scan.h"
 #include "stralloc.h"

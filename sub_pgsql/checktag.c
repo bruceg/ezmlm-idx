@@ -1,4 +1,4 @@
-/*$Id: checktag.c,v 1.3 1999/12/23 02:40:57 lindberg Exp $*/
+/*$Id$*/
 #include "stralloc.h"
 #include "scan.h"
 #include "fmt.h"

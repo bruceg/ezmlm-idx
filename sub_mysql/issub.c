@@ -1,4 +1,4 @@
-/*$Id: issub.c,v 1.16 1999/12/11 03:04:19 lindberg Exp $*/
+/*$Id$*/
 #include "stralloc.h"
 #include "getln.h"
 #include "readwrite.h"

@@ -1,4 +1,4 @@
-/*$Id: opensql.c,v 1.4 1999/11/28 19:55:31 lindberg Exp $*/
+/*$Id$*/
 #include "stralloc.h"
 #include "strerr.h"
 #include "errtxt.h"
