@@ -12,10 +12,10 @@
 #
 # ezmlm-make looks for this file, first as .ezmlmrc in the directory that the
 # lists .qmail files will be placed in (if you've used the -c command line
-# switch), then /etc/ezmlmrc, then ezmlmrc in the ezmlm-make binary directory.
-# Thus, you can customize ezmlm-make on a global level by placing a customized
-# copy of ezmlmrc in /etc and on a user level by copying it to .ezmlmrc in
-# the user's home directory AND use the ezmlm-make -c switch.
+# switch), then /etc/ezmlm/ezmlmrc, then ezmlmrc in the ezmlm-make binary
+# directory.  Thus, you can customize ezmlm-make on a global level by placing
+# a customized copy of ezmlmrc in /etc/ezmlm and on a user level by copying it
+# to .ezmlmrc in the user's home directory AND use the ezmlm-make -c switch.
 #
 # Tags are:
 #	</filename/>       : put succeeding text lines in DIR/filename
