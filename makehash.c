@@ -1,5 +1,4 @@
-/*Id:$*/
-/*Name:$*/
+/*$Id:$*/
 
 #include "stralloc.h"
 #include "surf.h"

@@ -1,5 +1,4 @@
 /*$Id: checktag.c,v 1.3 1999/12/23 02:40:57 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
 #include "stralloc.h"
 #include "scan.h"
 #include "fmt.h"

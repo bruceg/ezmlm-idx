@@ -1,5 +1,4 @@
 /*$Id: opensql.c,v 1.3 1999/10/12 23:38:36 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
 #include "stralloc.h"
 #include "strerr.h"
 #include "errtxt.h"

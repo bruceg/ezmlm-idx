@@ -1,5 +1,4 @@
 /*$Id: searchlog.c,v 1.15 1999/11/10 04:08:27 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
 #include "case.h"
 #include "scan.h"
 #include "stralloc.h"

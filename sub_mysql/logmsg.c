@@ -1,5 +1,4 @@
 /*$Id: logmsg.c,v 1.10 1999/11/10 04:08:27 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
 #include "stralloc.h"
 #include "fmt.h"
 #include "subscribe.h"

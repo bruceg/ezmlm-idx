@@ -1,5 +1,4 @@
 /*$Id: subscribe.c,v 1.5 1999/10/12 23:38:36 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
 #include "stralloc.h"
 #include "getln.h"
 #include "readwrite.h"

@@ -1,5 +1,4 @@
 $Id: README,v 1.2 1999/02/20 20:03:11 lindberg Exp $
-$Name: ezmlm-idx-040 $
 STANDARD EZMLM DATABASE INTERFACE
 
 These files comprise the ezmlm subscriber database interface. issub.c and
