@@ -103,6 +103,7 @@ char **argv;
       case 'c':			/* ezmlm-send flags */
       case 'C':
       case 'r':
+      case 'Q':
       case 'R':
         szchar[0] = opt;
         if (!stralloc_append(&sendopt,szchar)) die_nomem();
@@ -116,8 +117,7 @@ char **argv;
         szchar[0] = opt;
         if (!stralloc_append(&storeopt,szchar)) die_nomem();
         break;
-      case 'q':			/* allow both qQ to be nice */
-      case 'Q': if (optarg) queryext = optarg; break;
+      case 'q': if (optarg) queryext = optarg; break;
       case 'v':
       case 'V': strerr_die2x(0,"ezmlm-gate version: ",EZIDX_VERSION);
       default:			/* ezmlm-store flags */
