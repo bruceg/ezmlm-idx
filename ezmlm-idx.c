@@ -282,6 +282,8 @@ char **argv;
     } else if (fstat(fd,&st) == -1 || (!(st.st_mode & 0100)))
         close(fd);
     else {
+      int k;
+
       subject.len = 0;		/* clear in case they're missing in msg */
       author.len = 0;
       received.len = 0;
@@ -303,7 +305,9 @@ char **argv;
       mkauthhash(lines.s,lines.len,hash);
       if (!stralloc_catb(&line,hash,HASHLEN)) die_nomem();
 
-      decodeHDR(cp,author_name(&cp,lines.s,lines.len),&author,charset.s,FATAL);
+      k = author_name(&cp,lines.s,lines.len);
+      decodeHDR(cp,k,&author,charset.s,FATAL);
+
       (void) unfoldHDR(author.s,author.len,&lines,charset.s,&prefix,0,FATAL);
 
       if (!stralloc_cats(&line," ")) die_nomem();
