@@ -28,6 +28,9 @@ cn_GB,cs,pl,ru,da,pt_BR,pt
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
+=========================
+-Several documentation and comment fixes.  Thanks Tullio Andreatta.
+
 ezmlm-idx-0.421, 20040602
 =========================
 -Updated ezmlmrc.fr.  Thanks Jean-Marc Lasgouttes.

@@ -6,7 +6,7 @@ ezmlmrc \- ezmlm-make configuration file
 ezmlmrc
 .SH DESCRIPTION
 .LP
-.B .ezmlmrc
+.B ezmlmrc
 is a file that configures
 .B ezmlm-make(1)
 for setting up new lists.
@@ -21,15 +21,14 @@ as is any text preceding the first tag.
 
 The first line
 in
-.B .ezmlmrc
+.B ezmlmrc
 is unique. It should start in position 1 with ``x.yz'', where
 ``x'' is the major version number, ``y'' a minor version number, and ``z''
 a bugfix version number.
 .B ezmlm-make(1)
 will print a warning message if it is used with an
-.B .ezmlmrc
-file that lacks the version identifier, or
-with an
+.B ezmlmrc
+file that lacks the version identifier, or with an
 .B ezmlmrc
 file that has a version identifier that differs in
 either major or minor version numbers from the
@@ -37,11 +36,11 @@ either major or minor version numbers from the
 version.
 
 The
-.B .ezmlmrc
+.B ezmlmrc
 file is processed top down. Text preceding the first tag is ignored.
 Subsequently, one and only one file is open for writing. Any text encountered
 in
-.B \.ezmlmrc
+.B ezmlmrc
 is copied to that file as is with a few substitutions (see below). Text
 following conditional tags is copied only if the condition is met. A file is
 automatically closed when a new file is opened. Opening a file overwrites
@@ -56,8 +55,7 @@ if the options specified after the ``#'' are active, in this case
 .I archived
 and not
 .IR indexed .
-Any number of flags can be specified. This
-is used to adapt the files and
+Any number of flags can be specified. This is used to adapt the files and
 messages to the type of list created. If no flags are
 used, the ``#'' can be omitted. If the file name is the same as the previous
 tag, or if it is omitted, the text will be added to the previous file.
@@ -105,7 +103,7 @@ the
 switch is ignored.
 
 .TP
-.B </filename#^5^i/>
+.B </filename#5^i/>
 This is an alternative way of specifying ``if switch \-5 is specified and
 the \-i switch is not specified''. ``^'' is used as ``not''.
 .TP

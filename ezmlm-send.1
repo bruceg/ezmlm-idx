@@ -290,6 +290,14 @@ For
 .BR ezmlm-send ,
 this affects the format of the trailer, if a trailer is specified and if the
 message is a multipart mime message
+.SH BUGS
+Since the MIME parser doesn't decode inner MIME layers of a 
+.I "multipart/*"
+message,
+.I mimeremove
+and
+.I mimereject
+will be applied to the outer MIME layer only.
 .SH "SEE ALSO"
 ezmlm-get(1),
 ezmlm-idx(1),

@@ -23,7 +23,7 @@ int exitquiet = 100;		/* reject with error (100) rather than exit */
 				/* quietly (99) if listaddress missing */
 int flagheaderreject = 0;	/* don't reject messages with headers from */
 				/* other mailing lists. */
-int flagbody = 0;		/* =1 => reject is subject or body starts with*/
+int flagbody = 0;		/* =1 => reject if subject or body starts with*/
 				/* "subscribe" or "unsubscribe" */
 int flagforward = 0;		/* =1 => forward commands to list-request */
 int flagparsemime = 0;

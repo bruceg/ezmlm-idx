@@ -69,6 +69,7 @@ or ``unsubscribe''. If the
 .B \-c
 switch is specified, messages will also be rejected if the subject starts
 with these words.
+.TP
 .B \-B
 (Default.)
 Do not reject messages starting ``subscribe'' or ``unsubscribe''.
@@ -147,6 +148,14 @@ This could be used to defeat the
 MIME rejection function.
 OTOH, this function is intended to reduce garbage, not guarantee
 its elimination.
+
+Since the MIME parser doesn't decode inner MIME layers of a 
+.I "multipart/*"
+message,
+.I mimeremove
+and
+.I mimereject
+will be applied to the outer MIME layer only.
 .SH "SEE ALSO"
 ezmlm-send(1),
 qmail-command(8)
