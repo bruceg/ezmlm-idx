@@ -106,7 +106,7 @@ That's it! To report success (this helps to track platform-specific problems):
 
 Replace First M. Last with your name.
 
-Send bugs reports, ideally with patch, to 'lindberg@id.wustl.edu'.
+Send bugs reports, ideally with patch, to 'bruceg@em.ca'.
 
 
 ------------------------------------------------------------------------------
@@ -144,8 +144,7 @@ do the following:
 Any existing list can be edited with 'ezmlm-make -e dir dot local host [code]'
 with the appropriate switches to take advantage of new ezmlm functions. If
 you make ezmlmrc files in other languages, please make them public domain and
-mail them to lindberg@id.wustl.edu for inclusion in future versions of
-ezmlm-idx.
+mail them to bruceg@em.ca for inclusion in future versions of ezmlm-idx.
 
 Adjusting the name of the extra databases (from ezmlm-idx<0.30):
 ===============================================================

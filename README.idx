@@ -1,7 +1,9 @@
 $Id$
 
-(c) 1997, 1998, 1999 Fred Lindberg, lindberg@id.wustl.edu (code+docs+faq)
-                     Fred B. Ringel, fredr@rivertown.net (faq)
+(c) 1997, 1998, 1999, 2004
+  Fred Lindberg, lindberg@id.wustl.edu (code+docs+faq)
+  Fred B. Ringel, fredr@rivertown.net (faq)
+  Bruce Guenter, bruceg@em.ca (code+docs)
 
 This software is distributed under the GNU General Public Licence as
 published by the Free Software Foundation.  See the file LICENCE.TXT for
@@ -43,28 +45,22 @@ in the next ezmlm-idx version.
 move it to a cgi-bin directory, set ownership and SUID (if needed), and
 set up /ezmlm/ezcgirc.
 
-See http://pobox.com/~djb/ezmlm.html for the latest information about
-ezmlm.
+See http://cr.yp.to/ezmlm.html for the latest information about ezmlm.
 
-See ftp://ftp.id.wustl.edu/pub/patches for the latest version of ezmlm-idx and
-downloadable versions of the FAQ.
-
-See http://www.ezmlm.org/ for ezmlm FAQ and docs on line.
+See http://www.ezmlm.org/ for the latest version of ezmlm-idx, as well
+as on-line versions of the FAQ and docs.
 
 Mail ``ezmlm-subscribe@list.cr.yp.to'' to join the ezmlm mailing
 list (averages 3 messages per day). This list is run by Dan J. Bernstein
 using ezmlm-0.53.
 
-Send general comments and questions to:
-lindberg@id.wustl.edu or fredr@rivertown.net.
-
-Send bug reports and patches to:
-lindberg@id.wustl.edu.
+Send general comments, questions, bug reports, and patches to:
+	ezmlm@list.cr.yp.to
 
 Below, acknowledgements and a list of systems where ezmlm-idx has been reported
 to work.
 
-ACKNOWLEDGEMENTS
+ACKNOWLEDGEMENTS (from Fred Lindberg)
 - Fred B. Ringel, first and foremost, for a great collaboration, ideas, testing,
   docs clarification. This makes it so much more fun.
 - Dan J. Bernstein for qmail, ezmlm, and great libraries.
