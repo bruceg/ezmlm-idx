@@ -1536,6 +1536,10 @@ jp: \
 ezmlmrc.jp
 	cp -f ezmlmrc.jp ezmlmrc
 
+nl: \
+ezmlmrc.nl
+	cp -f ezmlmrc.nl ezmlmrc
+
 pl: \
 ezmlmrc.pl
 	cp -f ezmlmrc.pl ezmlmrc

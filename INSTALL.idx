@@ -77,11 +77,11 @@ HOW TO BUILD, TEST, AND INSTALL:
 
     where ``iso'' is the ISO language designation. Currently supported
     are: ch, ch_GB, cs, da, de, en_US (en, us), es, fr, hu, id, it, jp,
-    pl, pt_BR, ru, sv. NOTE: A normal ``make'' sets up the en_US version
-    (as before). ezmlmrc files for your language may be available via
-    ftp://id.wustl.edu/pub/patches/ezmlmrc. If not, please feel free to
-    contribute one (translate ezmlmrc.en_US, but leave comments intact
-    for "diff").
+    nl, pl, pt_BR, ru, sv. NOTE: A normal ``make'' sets up the en_US
+    version (as before). ezmlmrc files for your language may be
+    available via ftp://id.wustl.edu/pub/patches/ezmlmrc. If not, please
+    feel free to contribute one (translate ezmlmrc.en_US, but leave
+    comments intact for "diff").
 
  8. Test the programs:
 	a. Create a user ``eztest'' or edit ezmlm-test to use another user name.
