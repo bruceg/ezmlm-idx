@@ -1,11 +1,7 @@
-auto_version.o
-log.o
-now.o
-subdb.a
-fs.a
+getconf.o
+slurpclose.o
+slurp.o
 strerr.a
-getln.a
-getopt.a
 substdio.a
 stralloc.a
 alloc.a
@@ -14,4 +10,7 @@ str.a
 case.a
 open.a
 lock.a
-sql.lib
+getopt.a
+fs.a
+sig.a
+now.o

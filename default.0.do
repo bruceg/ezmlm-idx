@@ -1,9 +1,9 @@
-if test -r "$2=0"
-then
-  dependon "$2=0"
-  dependon `cat "$2=0"`
-  nroff -man `cat "$2=0"`
-  formake nroff -man `cat "$2=0"` '>' $1
-else
-  nosuchtarget
-fi
+for section in 1 2 3 4 5 6 7 8; do
+  if test -r "$2.$section"
+  then
+    dependon "$2.$section"
+    formake nroff -man "$2.$section" '>' $1
+    exit 0
+  fi
+done
+nosuchtarget

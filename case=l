@@ -1,3 +1,5 @@
 case_diffb.o
+case_diffs.o
 case_lowerb.o
 case_startb.o
+case_starts.o

@@ -11,7 +11,7 @@ str.a
 alloc.a
 slurp.o
 slurpclose.o
-fmt_ulong.o
+fs.a
 stralloc.a
 open.a
 fd.a

@@ -1,8 +1,10 @@
-subscribe.o
+auto_version.o
 log.o
 now.o
+subdb.a
 fs.a
 strerr.a
+getopt.a
 getln.a
 substdio.a
 stralloc.a
@@ -12,3 +14,4 @@ str.a
 case.a
 open.a
 lock.a
+sql.lib

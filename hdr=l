@@ -1,0 +1,7 @@
+hdr_add.o
+hdr_boundary.o
+hdr_ctboundary.o
+hdr_datemsgid.o
+hdr_from.o
+hdr_mime.o
+hdr_transferenc.o

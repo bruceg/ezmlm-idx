@@ -1,3 +1,5 @@
+add ezmlm-receipt to build system
+merge slurp.o and slurpclose.o into slurp.a
 merge all the redundant declarations of die_nomem
 ezmlm-reject.1 does not document -[fF]
 

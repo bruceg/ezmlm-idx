@@ -1,9 +1,12 @@
-auto_bin.o
 open.a
 getopt.a
+getln.a
 substdio.a
+lock.a
 strerr.a
 stralloc.a
 alloc.a
 error.a
 str.a
+auto_bin.o
+auto_version.o

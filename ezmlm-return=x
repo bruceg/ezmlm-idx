@@ -1,7 +1,7 @@
 quote.o
 getconf.o
 issub.o
-subscribe.o
+subdb.a
 log.o
 slurpclose.o
 slurp.o

@@ -1,0 +1,7 @@
+wrap_execbin.o
+wrap_execsh.o
+wrap_execv.o
+wrap_exitcode.o
+wrap_fork.o
+wrap_stat.o
+wrap_waitpid.o

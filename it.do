@@ -1,4 +1,30 @@
 dependon \
-ezmlm-make ezmlm-manage ezmlm-send ezmlm-reject \
-ezmlm-return ezmlm-warn ezmlm-weed \
-ezmlm-list ezmlm-sub ezmlm-unsub
+symlinks \
+ezmlm-archive \
+ezmlm-cgi \
+ezmlm-clean \
+ezmlm-confirm \
+ezmlm-cron \
+ezmlm-dispatch \
+ezmlm-gate \
+ezmlm-get \
+ezmlm-idx \
+ezmlm-issubn \
+ezmlm-limit \
+ezmlm-list \
+ezmlm-make \
+ezmlm-manage \
+ezmlm-moderate \
+ezmlm-reject \
+ezmlm-request \
+ezmlm-return \
+ezmlm-send \
+ezmlm-split \
+ezmlm-store \
+ezmlm-sub \
+ezmlm-tstdig \
+ezmlm-unsub \
+ezmlm-warn \
+ezmlm-weed \
+ezmlmrc.all \
+ezmlmrc

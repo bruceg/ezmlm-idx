@@ -5,3 +5,4 @@ error.a
 stralloc.a
 alloc.a
 str.a
+case.a

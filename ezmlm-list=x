@@ -1,3 +1,6 @@
+getopt.a
+fs.a
+subdb.a
 strerr.a
 getln.a
 substdio.a
@@ -6,3 +9,4 @@ alloc.a
 error.a
 open.a
 str.a
+auto_version.o
