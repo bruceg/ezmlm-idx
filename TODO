@@ -7,8 +7,6 @@ test ezmlm-warn only handling susbcribers
 test ezmlm-return only handling susbcribers
 ezmlm-reject.1 does not document -[fF]
 
-Correct sv translation sed
-
 Refactor all header generation into a single module:
 -Write headers into a stralloc.
 -Code functions to find/add/replace/remove headers.
