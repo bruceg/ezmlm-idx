@@ -1138,6 +1138,10 @@ makehash.o: \
 makehash.c makehash.h surf.h uint32.h stralloc.h
 	./compile makehash.c
 
+makelang: \
+makelang.sh warn-auto.sh
+	cat warn-auto.sh makelang.sh >makelang
+
 makelib: \
 make-makelib warn-auto.sh systype
 	( cat warn-auto.sh; ./make-makelib "`cat systype`" ) > \
