@@ -73,8 +73,6 @@ GREP=`which grep` 2>/dev/null || GREP='grep'
 HEAD='head'
 MKDIR='mkdir'
 MV='mv'
-# a ps command that would list qmail if running. This works for RedHat Linux
-PS='ps auxw'
 RM='rm'
 SED='sed'
 STRINGS='strings'
@@ -95,6 +93,13 @@ else
 		${ECHO} -n "$*"
 	}
 fi
+
+if ps auxw > /dev/null 2>&1; then
+	PS='ps auxw'
+else
+	PS='ps -ef'
+fi
+
 SQLUSER=''	# must be empty
 ARR='-------------------->'
 ALLOW='allow'
