@@ -431,50 +431,6 @@ ezmlm-get.0: \
 ezmlm-get.1
 	nroff -man ezmlm-get.1 > ezmlm-get.0
 
-ezmlm-greturn: \
-load ezmlm-greturn.o quote.o getconf.o subdb.a log.o \
-slurpclose.o slurp.o now.o cookie.o surf.a lock.a env.a sig.a \
-strerr.a getln.a substdio.a stralloc.a alloc.a error.a str.a fs.a \
-case.a open.a sql.lib
-	./load ezmlm-greturn quote.o getconf.o subdb.a \
-	log.o slurpclose.o slurp.o now.o cookie.o surf.a lock.a \
-	env.a sig.a strerr.a getln.a substdio.a stralloc.a alloc.a \
-	error.a str.a fs.a case.a open.a `cat sql.lib`
-
-ezmlm-greturn.0: \
-ezmlm-greturn.1
-	nroff -man ezmlm-greturn.1 > ezmlm-greturn.0
-
-ezmlm-greturn.o: \
-compile ezmlm-greturn.c stralloc.h gen_alloc.h stralloc.h str.h env.h sig.h \
-slurp.h getconf.h strerr.h byte.h case.h getln.h substdio.h error.h \
-quote.h readwrite.h fmt.h datetime.h now.h cookie.h \
-strerr.h subscribe.h
-	./compile ezmlm-greturn.c
-
-ezmlm-gwarn: \
-load ezmlm-gwarn.o auto_qmail.o getconf.o mime.a cookie.o subdb.a now.o \
-slurpclose.o slurp.o quote.o datetime.o date822fmt.o qmail.o surf.a \
-case.a strerr.a sig.a getln.a substdio.a stralloc.a alloc.a error.a \
-open.a lock.a str.a fs.a fd.a wait.a copy.o getopt.a sql.lib
-	./load ezmlm-gwarn auto_qmail.o getconf.o mime.a \
-	cookie.o subdb.a getopt.a \
-	now.o slurpclose.o slurp.o quote.o datetime.o date822fmt.o \
-	qmail.o surf.a case.a strerr.a sig.a getln.a substdio.a \
-	stralloc.a alloc.a error.a open.a lock.a str.a fs.a fd.a \
-	wait.a copy.o `cat sql.lib`
-
-ezmlm-gwarn.0: \
-ezmlm-gwarn.1
-	nroff -man ezmlm-gwarn.1 > ezmlm-gwarn.0
-
-ezmlm-gwarn.o: \
-compile ezmlm-gwarn.c direntry.h readwrite.h getln.h \
-substdio.h stralloc.h gen_alloc.h slurp.h getconf.h byte.h error.h str.h \
-sig.h now.h datetime.h fmt.h cookie.h qmail.h substdio.h \
-qmail.h copy.h mime.h idx.h errtxt.h sgetopt.h subgetopt.h
-	./compile ezmlm-gwarn.c
-
 ezmlm-idx: \
 load ezmlm-idx.o auto_version.o slurp.o slurpclose.o mime.a wait.a \
 getopt.a getln.a strerr.a sig.h sig.a open.a lock.a substdio.a stralloc.a \
@@ -724,52 +680,6 @@ lock.h sig.h open.h getln.h case.h scan.h str.h fmt.h readwrite.h quote.h \
 exit.h getconf.h constmap.h byte.h errtxt.h idx.h mime.h subscribe.h \
 uint32.h
 	./compile ezmlm-send.c
-
-ezmlm-master: \
-load ezmlm-master.o auto_qmail.o getconf.o qmail.o constmap.o slurp.o \
-slurpclose.o wait.a getln.a strerr.a sig.a env.a open.a lock.a sql.lib \
-substdio.a cookie.o stralloc.a alloc.a error.a str.a fd.a case.a fs.a surf.a\
-getopt.a copy.o mime.a subdb.a makehash.o surf.o makehash.o str.a quote.o
-	./load ezmlm-master subdb.a cookie.o surf.a auto_qmail.o getconf.o \
-	getopt.a qmail.o quote.o constmap.o slurp.o slurpclose.o \
-	wait.a getln.a strerr.a \
-	sig.a env.a open.a lock.a substdio.a stralloc.a alloc.a error.a \
-	fd.a case.a fs.a getopt.a copy.o mime.a makehash.o str.a `cat sql.lib`
-
-ezmlm-master.0: \
-ezmlm-master.1
-	nroff -man ezmlm-master.1 > ezmlm-master.0
-
-ezmlm-master.o: \
-compile ezmlm-master.c stralloc.h gen_alloc.h copy.h \
-subfd.h substdio.h strerr.h error.h qmail.h env.h makehash.h sgetopt.h \
-lock.h sig.h open.h getln.h case.h scan.h str.h fmt.h readwrite.h quote.h \
-exit.h getconf.h constmap.h byte.h errtxt.h idx.h mime.h subscribe.h \
-uint32.h
-	./compile ezmlm-master.c
-
-ezmlm-slave: \
-load ezmlm-slave.o auto_qmail.o getconf.o qmail.o constmap.o slurp.o \
-slurpclose.o wait.a getln.a strerr.a sig.a env.a open.a lock.a sql.lib \
-substdio.a cookie.o stralloc.a alloc.a error.a str.a fd.a case.a fs.a surf.a \
-getopt.a copy.o mime.a subdb.a makehash.o surf.o makehash.o str.a quote.o
-	./load ezmlm-slave subdb.a cookie.o surf.a auto_qmail.o getconf.o \
-	getopt.a qmail.o quote.o constmap.o slurp.o slurpclose.o \
-	wait.a getln.a strerr.a \
-	sig.a env.a open.a lock.a substdio.a stralloc.a alloc.a error.a \
-	fd.a case.a fs.a getopt.a copy.o mime.a makehash.o str.a `cat sql.lib`
-
-ezmlm-slave.0: \
-ezmlm-slave.1
-	nroff -man ezmlm-slave.1 > ezmlm-slave.0
-
-ezmlm-slave.o: \
-compile ezmlm-slave.c stralloc.h gen_alloc.h copy.h \
-subfd.h substdio.h strerr.h error.h qmail.h env.h makehash.h sgetopt.h \
-lock.h sig.h open.h getln.h case.h scan.h str.h fmt.h readwrite.h quote.h \
-exit.h getconf.h constmap.h byte.h errtxt.h idx.h mime.h subscribe.h \
-uint32.h
-	./compile ezmlm-slave.c
 
 ezmlm-split: \
 load ezmlm-split.o auto_qmail.o getconf.o \
