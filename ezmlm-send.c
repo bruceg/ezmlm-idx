@@ -229,6 +229,7 @@ int idx_copy_insertsubject()
   int match;
   int r;
   unsigned int pos;
+  int k;
 
   if (!stralloc_copys(&fnadir,"archive/")) die_nomem();
   if (!stralloc_catb(&fnadir,strnum,fmt_ulong(strnum,outnum / 100)))
@@ -306,7 +307,9 @@ int idx_copy_insertsubject()
   if (!stralloc_catb(&qline,hash,HASHLEN)) die_nomem();
   if (!stralloc_cats(&qline," ")) die_nomem();
 
-  decodeHDR(cp,author_name(&cp,lines.s,lines.len),&from,charset.s,FATAL);
+  k = author_name(&cp,lines.s,lines.len);
+  decodeHDR(cp,k,&from,charset.s,FATAL);
+
   (void) unfoldHDR(from.s,from.len,&lines,charset.s,&dcprefix,0,FATAL);
   if (!stralloc_cat(&qline,&lines)) die_nomem();
 
