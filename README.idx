@@ -90,7 +90,7 @@ ACKNOWLEDGEMENTS (from Fred Lindberg)
   and pre-release testing.
 - Masashi Fujita (MF; objectx@polyphony.scei.co.jp) for fix to clean SGI
   compiles, lint advice, MIME suggestions, pre-release testing, a patch for
-  the ezmlm-make-0.21 -c bug, ezmlmrc.jp, and finding postmsg bug in 0.301.
+  the ezmlm-make-0.21 -c bug, ezmlmrc.ja, and finding postmsg bug in 0.301.
 - Matthew D. Stock (MDS; stock@perdix.acsu.buffalo.edu) for pre-release testing.
 - Ximenes Zalteca for finding an ezmlm-send-0.21 bug.
 - Jukka Suomela (JS; jukka@narnia.tky.hut.fi) for inciting the ezmlm-send -cC

@@ -35,6 +35,12 @@ in the next version.
 -Removed all references to "inhost" which was completely unused but
  still referenced in documentation and tests.
 
+ezmlm-idx-0.433, 20050109
+=========================
+-Fixed a problem in passing options to ezmlm-send in ezmlm-confirm,
+ ezmlm-moderate, and ezmlm-store.  Thanks Ueli Heuer.
+-Fixed the Japanese language code from "jp" to "ja" as per ISO 639.
+
 ezmlm-idx-0.432, 20050101
 =========================
 -Un-fixed the Swedish and Danish translation names, as they should match

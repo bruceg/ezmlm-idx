@@ -1,4 +1,4 @@
-# Above should have been added a QMPATH definition
+# Above should have been added QMPATH, VER, and EZVER definitions
 # $Id$
 # DEBUG=1
 # This program is meant to test ezmlm-idx.
@@ -32,8 +32,6 @@ HOST=''
 
 # Version of ezmlm-idx for which this test script is designed
 OLD_VER='ezmlm-idx-031'		# ezmlm-idx-0.31x
-VER='ezmlm-idx-0.432'
-EZVER='432'			# default version
 
 # basedir for test list. It and all files therein are destroyed by
 # the script
