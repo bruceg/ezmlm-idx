@@ -461,7 +461,7 @@ if [ "$SECT" = "1" ]; then
 # digest/bouncer only for >=0.32
   if [  "$EZVER" != '31' ]; then
     if [ ! -f "${DIR}/digest/bouncer" ]; then
-	echo "failed to create digest/bouncer"; exit 100;
+	${ECHO} "failed to create digest/bouncer"; exit 100;
     fi
     ${GREP} "ezmlm-weed" "${DIR}/digest/bouncer" >/dev/null 2>&1 || \
 	{ ${ECHO} "no ezmlm-weed in bouncer"; exit 100; }
@@ -502,7 +502,7 @@ fi
 	{ ${ECHO} "mkdir for sinkdir failed"; exit 100; }
   ${ECHO} "${SINKDIR}/" > "$DOT-$SINK"
 # link for qmail version testing 
-  ${ECHO} '|echo $DEFAULT >' "${DIR}/default" > "$DOT-$SINK-default"
+  ${ECHO} '|${ECHO} $DEFAULT >' "${DIR}/default" > "$DOT-$SINK-default"
   ${ECHO} "${SINKDIR}/" >> "$DOT-$SINK-default"
 
   ${MKDIR} "$MODDIR" "$MODDIR/new" "$MODDIR/cur" "$MODDIR/tmp" || \
@@ -896,13 +896,13 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
 
 # test to see that trailer is added to nom-mime messages
   CONTENT=''
-  { echo "X-num: msg5"; make_message; } | \
+  { ${ECHO} "X-num: msg5"; make_message; } | \
 	${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1  || \
 	{ ${ECHO} "failed to accept non-mime message"; exit 100; }
 
 # test to see that trailer is suppressed for multipart/signed
   CONTENT='multipart/signed'
-  { echo "X-num: msg6"; make_message; } | \
+  { ${ECHO} "X-num: msg6"; make_message; } | \
 	${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1  || \
 	{ ${ECHO} "failed to accept multipart/signed message"; exit 100; }
 
@@ -1747,7 +1747,7 @@ ${GREP}  '#PENULTIMATE#' "$MSG2" >/dev/null || \
 ${GREP} "msg3" $SINKDIR/new/* >/dev/null 2>&1 && \
 	{ ${ECHO} "-C failed to exclude sender (no longer supported)"; \
 	  BUG="${BUG}_noself"; \
-	  echo -n "ezmlm-send:           "; }
+	  prompt "ezmlm-send:           "; }
 
 MSG5=`${GREP} -l "msg5" $SINKDIR/new/*` || \
 	{ ${ECHO} "failed to deliver message 5 to subscriber"; \
@@ -1762,9 +1762,9 @@ MSG6=`${GREP} -l "msg6" $SINKDIR/new/*` || \
 
 ${GREP} 'TRAILER' "$MSG6" >/dev/null 2>&1 && \
 	{ ${ECHO} "failed to suppress trailer for multipart/signed message"; \
-	  echo "                      0.31 bug fixed in 0.316/0.323";
+	  ${ECHO} "                      0.31 bug fixed in 0.316/0.323";
 	  BUG="${BUG}_signed"; \
-	  echo -n "ezmlm-send ......:    "; }
+	  prompt "ezmlm-send ......:    "; }
 
 ${GREP} "msg3" $SINKDIR/new/* >/dev/null 2>&1 && \
 	{ 
@@ -1772,7 +1772,7 @@ ${GREP} "msg3" $SINKDIR/new/* >/dev/null 2>&1 && \
 	  {
 	    ${ECHO} "-C failed to exclude sender (no longer supported)"
 	    BUG="${BUG}_noself"
-	    echo -n "ezmlm-send ......:   ${BUG} "
+	    prompt "ezmlm-send ......:   ${BUG} "
 	  }
 	}
 
