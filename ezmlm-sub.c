@@ -40,7 +40,7 @@ char **argv;
   int match;
   int flagmysql = 1;	/* use mysql if supported */
   int forcehash = -1;
-  unsigned int u;
+  unsigned long u;
 
   (void) umask(022);
   while ((opt = getopt(argc,argv,"h:HmMnNvV")) != opteof)

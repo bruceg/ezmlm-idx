@@ -25,7 +25,7 @@ int flagd = 0;				/* =0 create modpost, =1 ignore */
 					/* excess, =2 defer excess */
 int flagmod;				/* list moderated */
 int flagloop;
-char *fn = TXT_LOOPNUM;
+const char *fn = TXT_LOOPNUM;
 
 void die_usage()
 {

@@ -86,7 +86,7 @@ char **argv;
   char *dir;
   char *sender;
   char *moddir;
-  char *queryext = (char *) 0;
+  const char *queryext = (char *) 0;
   int opt;
   int ret = 0;
   int dontact = 0;

@@ -386,7 +386,7 @@ char **argv;
     switch(opt) {
       case 'c': case 'C': break;	/* ignore for backwards compat */
       case 'h':
-      case 'H': mlheader = optarg;	/* Alternative sublist check header */
+      case 'H': mlheader = (char*)optarg;/* Alternative sublist check header */
                 mlheader[str_chr(mlheader,':')] = '\0';
                 break;
       case 'l': flaglog = 1; break;

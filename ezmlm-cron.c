@@ -33,8 +33,8 @@ void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
 unsigned long deltah = 24L;	/* default interval 24h */
 unsigned long hh = 4L;		/* default time 04:12 */
 unsigned long mm = 12L;
-char *dow = "*";		/* day of week */
-char *qmail_inject = "/bin/qmail-inject ";
+const char *dow = "*";		/* day of week */
+const char *qmail_inject = "/bin/qmail-inject ";
 char strnum[FMT_ULONG];
 unsigned long uid,euid;
 
@@ -69,9 +69,9 @@ unsigned int part0start,part0len;
 int fdlock,fdin,fdout;
 
 char *local = (char *) 0;	/* list = local@host */
-char *host = (char *) 0;
-char *code = (char *) 0;	/* digest code */
-char *cp;
+const char *host = (char *) 0;
+const char *code = (char *) 0;	/* digest code */
+const char *cp;
 
 void die_syntax()
 {

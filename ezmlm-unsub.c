@@ -35,7 +35,7 @@ char **argv;
   int flagmysql = 1;		/* if there is mysql support, use it! */
   int forcehash = -1;
   int flagname = 0;
-  unsigned int u;
+  unsigned long u;
   int opt;
 
   (void) umask(022);

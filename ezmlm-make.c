@@ -34,7 +34,7 @@ char  *defflags="ap";		/* archived list -a */
 #define NO_FLAGS ('z' - 'a' + 1)
 int flags[NO_FLAGS];		/* holds flags */
 
-char *popt[10];
+const char *popt[10];
 stralloc dotplus = {0};
 stralloc dirplus = {0};
 stralloc line = {0};
@@ -214,7 +214,7 @@ char **argv;
   char *p;
   char *oldflags = (char *) 0;
   char *code = (char *) 0;
-  char *cfname = (char *) 0;		/* config file if spec as -C cf_file */
+  const char *cfname = (char *) 0;	/* config file if spec as -C cf_file */
   char ch;
 
   keyadd((unsigned long) getpid());

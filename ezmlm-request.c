@@ -53,7 +53,7 @@ char *userlocal = (char *) 0;
 char *userhost = (char *) 0;
 char *listlocal = (char *) 0;
 char *listhost = (char *) 0;
-char *cfname = (char *) 0;
+const char *cfname = (char *) 0;
 char *command = "help";
 stralloc line = {0};
 stralloc qline = {0};
@@ -217,7 +217,8 @@ void parseline(cp)
 char *cp;
 
 {
-  register char *cp1, *cp2;
+  char *cp1;
+  char *cp2;
   char *cp3;
 
   cp1 = cp;

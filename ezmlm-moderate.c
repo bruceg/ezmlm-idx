@@ -206,7 +206,7 @@ char **argv;
   char *err;
   char encin = '\0';
   char szchar[2] = "-";
-  char *replyto = (char *) 0;
+  const char *replyto = (char *) 0;
   unsigned int start,confnum;
   unsigned int pos,i;
   int child;
