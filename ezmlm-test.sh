@@ -182,6 +182,18 @@ fi
 if [ "$USER" != "${EZTEST}" ]; then 
   ${ECHO} "Must be user ${EZTEST} to execute"; exit 99
 fi
+
+# test for the common uid=0 error; not foolproof
+# any system w/o id or UID ?
+if (id) > /dev/null 2>&1 && \
+   test "x`id|cut -d'(' -f1 |cut -d'=' -f2`" = "x0"; then
+	${ECHO} 'uid is 0 but superuser does not receive mail under qmail'
+	exit 1  
+elif test "x$UID" = "x0" ; then
+	${ECHO} '$UID = 0 but superuser does not receive mail under qmail'
+	exit 1
+fi
+
 LOC="$EZTEST-$LIST"
 # calculate position in LOCAL where [normally] default starts
 LOCLEN=`${ECHO} "$LOC-" | ${WC} -c | ${SED} 's/ //g'`
