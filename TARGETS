@@ -280,4 +280,11 @@ unfoldHDR.o
 wait.0
 wait.a
 wait_pid.o
+wrap.a
+wrap_execbin.o
+wrap_execsh.o
+wrap_execv.o
+wrap_exitcode.o
+wrap_fork.o
+wrap_waitpid.o
 yyyymm.a

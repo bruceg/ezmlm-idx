@@ -131,6 +131,13 @@ qmail.c
 qmail.h
 subscribe.h
 unfoldHDR.c
+wrap.h
+wrap_execbin.c
+wrap_execsh.c
+wrap_execv.c
+wrap_exitcode.c
+wrap_fork.c
+wrap_waitpid.c
 yyyymm.h
 sub_mysql/README
 sub_mysql/checktag.c
