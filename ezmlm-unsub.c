@@ -88,7 +88,7 @@ char **argv;
 	if (ch)
 	  *cp = '\0';
       }
-      (void) subscribe(dir,line.s,0,"","+manual",flagmysql,
+      (void) subscribe(dir,line.s,0,"","-manual",flagmysql,
 		forcehash,(char *) 0,FATAL);
     }
   }
