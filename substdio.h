@@ -11,22 +11,22 @@ typedef struct substdio {
 
 #define SUBSTDIO_FDBUF(op,fd,buf,len) { (buf), 0, (len), (fd), (op) }
 
-extern void substdio_fdbuf();
+extern void substdio_fdbuf(substdio *s,int (*op)(),int fd,char *buf,int len);
 
-extern int substdio_flush();
-extern int substdio_put();
-extern int substdio_bput();
-extern int substdio_putflush();
-extern int substdio_puts();
-extern int substdio_bputs();
-extern int substdio_putsflush();
+extern int substdio_flush(substdio *s);
+extern int substdio_put(substdio *s,const char *buf,int len);
+extern int substdio_bput(substdio *s,const char *buf,int len);
+extern int substdio_putflush(substdio *s,const char *buf,int len);
+extern int substdio_puts(substdio *s,const char *buf);
+extern int substdio_bputs(substdio *s,const char *buf);
+extern int substdio_putsflush(substdio *s,const char *buf);
 
-extern int substdio_get();
-extern int substdio_bget();
-extern int substdio_feed();
+extern int substdio_get(substdio *s,char *buf,int len);
+extern int substdio_bget(substdio *s,char *buf,int len);
+extern int substdio_feed(substdio *s);
 
-extern char *substdio_peek();
-extern void substdio_seek();
+extern const char *substdio_peek(substdio *s);
+extern void substdio_seek(substdio *s,int len);
 
 #define substdio_fileno(s) ((s)->fd)
 
@@ -42,6 +42,6 @@ extern void substdio_seek();
     : substdio_bput((s),&(c),1) \
   )
 
-extern int substdio_copy();
+extern int substdio_copy(substdio *ssout,substdio *ssin);
 
 #endif
