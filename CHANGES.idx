@@ -36,6 +36,7 @@ in the next version.
 -Fixed "log" function conflicting with built-in math function.
 -Fixed problem with "test -e" in makelang.sh for Solaris.
 -Fixed typo bug in ezmlm-cron.
+-Fixed uses of "head -#" and "tail -#" to "head -n #" and "tail -n #".
 
 ezmlm-idx-0.42, 20040114 (New maintainer: Bruce Guenter <bruceg@em.ca>)
 =======================================================================

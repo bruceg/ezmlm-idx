@@ -1,7 +1,7 @@
 #$Id$
 SHELL=/bin/sh
-SQLCC=`head -1 conf-sqlcc`
-SQLLD=`head -1 conf-sqlld`
+SQLCC=`head -n 1 conf-sqlcc`
+SQLLD=`head -n 1 conf-sqlld`
 default: it
 
 clean: \
@@ -31,8 +31,8 @@ compile author.c mime.h
 auto-ccld.sh: \
 conf-cc conf-ld warn-auto.sh
 	( cat warn-auto.sh; \
-	echo CC=\'`head -1 conf-cc`\'; \
-	echo LD=\'`head -1 conf-ld`\' \
+	echo CC=\'`head -n 1 conf-cc`\'; \
+	echo LD=\'`head -n 1 conf-ld`\' \
 	) > auto-ccld.sh
 
 auto-str: \
@@ -46,7 +46,7 @@ exit.h auto-str.c
 
 auto_cron.c: \
 auto-str conf-cron
-	./auto-str auto_cron `head -1 conf-cron` > auto_cron.c
+	./auto-str auto_cron `head -n 1 conf-cron` > auto_cron.c
 
 auto_cron.o: \
 compile auto_cron.c
@@ -54,7 +54,7 @@ compile auto_cron.c
 
 auto_bin.c: \
 auto-str conf-bin
-	./auto-str auto_bin `head -1 conf-bin` > auto_bin.c
+	./auto-str auto_bin `head -n 1 conf-bin` > auto_bin.c
 
 auto_bin.o: \
 compile auto_bin.c
@@ -62,7 +62,7 @@ compile auto_bin.c
 
 auto_qmail.c: \
 auto-str conf-qmail
-	./auto-str auto_qmail `head -1 conf-qmail` > auto_qmail.c
+	./auto-str auto_qmail `head -n 1 conf-qmail` > auto_qmail.c
 
 auto_qmail.o: \
 compile auto_qmail.c
@@ -256,7 +256,7 @@ error_temp.3
 ezmlm-accept: \
 ezmlm-accept.sh warn-auto.sh conf-bin
 	(cat warn-auto.sh; \
-	echo EZPATH=\'`head -1 conf-bin`\'; \
+	echo EZPATH=\'`head -n 1 conf-bin`\'; \
 	cat ezmlm-accept.sh ) > ezmlm-accept
 
 ezmlm-accept.0: \
@@ -304,8 +304,8 @@ constmap.h sgetopt.h subgetopt.h datetime.h now.h fork.h wait.h
 ezmlm-check: \
 ezmlm-check.sh warn-auto.sh conf-bin
 	(cat warn-auto.sh; \
-	echo EZPATH=\'`head -1 conf-bin`\'; \
-	echo QMPATH=\'`head -1 conf-qmail`\'; \
+	echo EZPATH=\'`head -n 1 conf-bin`\'; \
+	echo QMPATH=\'`head -n 1 conf-qmail`\'; \
 	cat ezmlm-check.sh ) > ezmlm-check
 
 ezmlm-check.0: \
@@ -465,7 +465,7 @@ ezmlm-idx.1
 ezmlm-glconf: \
 ezmlm-glconf.sh warn-auto.sh conf-bin
 	(cat warn-auto.sh; \
-	echo EZPATH=\'`head -1 conf-bin`\'; \
+	echo EZPATH=\'`head -n 1 conf-bin`\'; \
 	cat ezmlm-glconf.sh ) > ezmlm-glconf
 
 ezmlm-glconf.0: \
@@ -799,7 +799,7 @@ strerr.h subscribe.h log.h errtxt.h sgetopt.h scan.h idx.h
 ezmlm-test: \
 ezmlm-test.sh warn-auto.sh conf-bin
 	(cat warn-auto.sh; \
-	echo QMPATH=\'`head -1 conf-qmail`\'; \
+	echo QMPATH=\'`head -n 1 conf-qmail`\'; \
 	cat ezmlm-test.sh ) > ezmlm-test; \
 	chmod 755 ezmlm-test
 
@@ -1251,8 +1251,8 @@ compile seek_set.c seek_set.c seek.h seek_set.c
 
 setup: \
 it man install conf-bin conf-man
-	./install "`head -1 conf-bin`" < BIN
-	./install "`head -1 conf-man`" < MAN
+	./install "`head -n 1 conf-bin`" < BIN
+	./install "`head -n 1 conf-man`" < MAN
 
 sgetopt.0: \
 sgetopt.3

@@ -1758,7 +1758,7 @@ ${GREP} '#LAST#' "$MSG1" >/dev/null || \
 ${GREP} 'Subject:' "$MSG1" | ${GREP} 'PFX' >/dev/null 2>&1 || \
 	{ ${ECHO} "failed to add subject prefix"; exit 100; }
 	# the trailer should be a MIME part, so not at the very end
-${TAIL} -6 "$MSG1" | ${HEAD} -2 | ${GREP} 'TRAILER' >/dev/null 2>&1 || \
+${TAIL} -n 6 "$MSG1" | ${HEAD} -n 2 | ${GREP} 'TRAILER' >/dev/null 2>&1 || \
 	{ ${ECHO} "failed to add trailer"; exit 100; }
 
 MSG2=`${GREP} -l "msg2" $SINKDIR/new/*` || \
@@ -2127,14 +2127,14 @@ fi
 
   prompt "ezmlm-moderate (2/2): "
 
-  MOD1=`${GREP} -l "mod1" $SINKDIR/new/* | head -1` || \
+  MOD1=`${GREP} -l "mod1" $SINKDIR/new/* | head -n 1` || \
 	{ ${ECHO} "failed to send rejection notice for message mod1"; exit 100; }
 
 # ${SND}@$HOST means it was rejected, not send through the list
   ${GREP} "To: ${SND}@$HOST" "$MOD1" > /dev/null 2>&1 || \
 	{ ${ECHO} "failed to reject message mod1"; exit 100; }
 
-  MOD3=`${GREP} -l "mod3" $SINKDIR/new/* | head -1`
+  MOD3=`${GREP} -l "mod3" $SINKDIR/new/* | head -n 1`
   if [ -z "$MOD3" ]; then
     ${ECHO} "failed to post message mod3"
     exit 100

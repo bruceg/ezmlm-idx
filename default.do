@@ -63,12 +63,12 @@ case "$1" in
   auto-ccld.sh)
     dependon conf-cc conf-ld warn-auto.sh
     formake '( cat warn-auto.sh; \'
-    formake 'echo CC=\'\''`head -1 conf-cc`\'\''; \'
-    formake 'echo LD=\'\''`head -1 conf-ld`\'\'' \'
+    formake 'echo CC=\'\''`head -n 1 conf-cc`\'\''; \'
+    formake 'echo LD=\'\''`head -n 1 conf-ld`\'\'' \'
     formake ') > auto-ccld.sh'
     cat warn-auto.sh
-    echo CC=\'`head -1 conf-cc`\'
-    echo LD=\'`head -1 conf-ld`\'
+    echo CC=\'`head -n 1 conf-cc`\'
+    echo LD=\'`head -n 1 conf-ld`\'
     ;;
   *)
     nosuchtarget
