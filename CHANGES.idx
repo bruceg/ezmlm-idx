@@ -32,6 +32,8 @@ in the next version.
 -Added missing ezmlm-confirm.0 target.
 -Auto-generate all version strings from the VERSION file.
 -Fixed up the broken Swedish translation.  Thanks Mads E. Eilertsen.
+-Fixed naming of translations to match their ISO 3166 country codes:
+ sv => se (Sweden) and da => dk (Denmark)
 
 ezmlm-idx-0.43, 20041125
 ========================

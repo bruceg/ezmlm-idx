@@ -936,9 +936,9 @@ ezmlmrc.5
 	nroff -man ezmlmrc.5 > ezmlmrc.0
 
 ezmlmrc.all: \
-ezmlmrc.ch_GB ezmlmrc.cs ezmlmrc.da ezmlmrc.de ezmlmrc.en_US \
+ezmlmrc.ch_GB ezmlmrc.cs ezmlmrc.dk ezmlmrc.de ezmlmrc.en_US \
 ezmlmrc.es ezmlmrc.fr ezmlmrc.hu ezmlmrc.id ezmlmrc.it ezmlmrc.jp \
-ezmlmrc.nl ezmlmrc.pl ezmlmrc.pt ezmlmrc.pt_BR ezmlmrc.ru ezmlmrc.sv
+ezmlmrc.nl ezmlmrc.pl ezmlmrc.pt ezmlmrc.pt_BR ezmlmrc.ru ezmlmrc.se
 
 ezmlmrc.ch_GB: \
 makelang ezmlmrc.template lang/ch_GB.text lang/ch_GB.sed
@@ -948,9 +948,9 @@ ezmlmrc.cs: \
 makelang ezmlmrc.template lang/cs.text lang/cs.sed
 	./makelang cs
 
-ezmlmrc.da: \
-makelang ezmlmrc.template lang/da.text lang/da.sed
-	./makelang da
+ezmlmrc.dk: \
+makelang ezmlmrc.template lang/dk.text lang/dk.sed
+	./makelang dk
 
 ezmlmrc.de: \
 makelang ezmlmrc.template lang/de.text lang/de.sed
@@ -1004,9 +1004,9 @@ ezmlmrc.ru: \
 makelang ezmlmrc.template lang/ru.text lang/ru.sed
 	./makelang ru
 
-ezmlmrc.sv: \
-makelang ezmlmrc.template lang/sv.text lang/sv.sed
-	./makelang sv
+ezmlmrc.se: \
+makelang ezmlmrc.template lang/se.text lang/se.sed
+	./makelang se
 
 ezmlmsubrc.0: \
 ezmlmsubrc.5
@@ -1668,9 +1668,9 @@ cs: \
 ezmlmrc.cs
 	cp -f ezmlmrc.cs ezmlmrc
 
-da: \
-ezmlmrc.da
-	cp -f ezmlmrc.da ezmlmrc
+dk: \
+ezmlmrc.dk
+	cp -f ezmlmrc.dk ezmlmrc
 
 de: \
 ezmlmrc.de
@@ -1736,9 +1736,9 @@ ru: \
 ezmlmrc.ru
 	cp -f ezmlmrc.ru ezmlmrc
 
-sv: \
-ezmlmrc.sv
-	cp -f ezmlmrc.sv ezmlmrc
+se: \
+ezmlmrc.se
+	cp -f ezmlmrc.se ezmlmrc
 
 symlinks: \
 ezmlm-mktab checktag.c issub.c logmsg.c subscribe.c opensql.c \
