@@ -1,10 +1,9 @@
 #include "auto_bin.h"
 #include "stralloc.h"
 #include "wrap.h"
+#include "idx.h"
 
 static stralloc path;
-
-extern void die_nomem(void);
 
 void wrap_execbin(const char *program,
 	          stralloc *opts,

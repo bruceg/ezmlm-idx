@@ -8,8 +8,8 @@
 #include "fmt.h"
 #include "date822fmt.h"
 #include "makehash.h"
+#include "idx.h"
 
-extern void die_nomem(void);
 extern struct qmail qq;
 extern char flagcd;
 extern char boundary[HASHLEN];

@@ -8,11 +8,7 @@
 #include "uint32.h"
 #include "mime.h"
 #include "errtxt.h"
-
-static void die_nomem(const char *fatal)
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
+#include "idx.h"
 
 void decodeHDR(const char *indata,
 	       unsigned int n,
@@ -28,8 +24,8 @@ void decodeHDR(const char *indata,
   cpnext = indata;
   cpafter = cpnext + n;
   cpstart = cpnext;
-  if (!stralloc_copys(outdata,"")) die_nomem(fatal);
-  if (!stralloc_ready(outdata,n)) die_nomem(fatal);
+  if (!stralloc_copys(outdata,"")) die_nomem();
+  if (!stralloc_ready(outdata,n)) die_nomem();
   for (;;) {
     cpstart = cpstart + byte_chr(cpstart,cpafter-cpstart,'=');
     if (cpstart == cpafter)
@@ -61,7 +57,7 @@ void decodeHDR(const char *indata,
       cp++;
     if (cp != cpstart - 2)
       if (!stralloc_catb(outdata,cpnext, cpstart - cpnext - 2))
-		die_nomem(fatal);
+		die_nomem();
    cpnext = cp + 1;
    cpstart = cpnext;
           switch (*cpenc) {
@@ -83,6 +79,6 @@ void decodeHDR(const char *indata,
               break;
           }
   }
-  if (!stralloc_catb(outdata,cpnext,indata-cpnext+n)) die_nomem(fatal);
+  if (!stralloc_catb(outdata,cpnext,indata-cpnext+n)) die_nomem();
 }
 

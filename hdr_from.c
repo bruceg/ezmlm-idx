@@ -4,12 +4,12 @@
 #include "qmail.h"
 #include "stralloc.h"
 #include "quote.h"
+#include "idx.h"
 
 extern struct qmail qq;
 extern stralloc outlocal;
 extern stralloc outhost;
 extern stralloc quoted;
-extern void die_nomem(void);
 
 void hdr_from(const char *append)
 {

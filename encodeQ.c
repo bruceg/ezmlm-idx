@@ -4,12 +4,7 @@
 #include "mime.h"
 #include "stralloc.h"
 #include "strerr.h"
-
-static void die_nomem(fatal)
-  char *fatal;
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
+#include "idx.h"
 
 static const char hexchar[16] = "0123456789ABCDEF";
 
@@ -26,8 +21,8 @@ void encodeQ(const char *indata,unsigned int n,stralloc *outdata,
   cpin = indata;
   i = 0;
 	/* max 3 outchars per inchar  & 2 char newline per 72 chars */
-  if (!stralloc_copys(outdata,"")) die_nomem(fatal);
-  if (!stralloc_ready(outdata,n * 3 + n/36)) die_nomem(fatal);	/* worst case */
+  if (!stralloc_copys(outdata,"")) die_nomem();
+  if (!stralloc_ready(outdata,n * 3 + n/36)) die_nomem();	/* worst case */
   cpout = outdata->s;
   while (n--) {
     ch = *cpin++;

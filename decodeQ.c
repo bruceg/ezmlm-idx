@@ -4,6 +4,7 @@
 #include "strerr.h"
 #include "errtxt.h"
 #include "mime.h"
+#include "idx.h"
 
 /* takes a string pointed to by cpfrom and adds the next 'n' bytes to        */
 /* outdata, replacing any Quoted-Printable codes with the real characters.   */
@@ -23,11 +24,6 @@ static const char char16table[128] = {
 
 #define char16enc(c)  (((c) & 0x80) ? -1 : char16table[(int)(c)])
 
-static void die_nomem(const char *fatal)
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
-
 void decodeQ(const char *cpfrom,unsigned int n,stralloc *outdata,
 	     const char *fatal)
 /* does Q decoding of the string pointed to by cpfrom up to the character */
@@ -39,7 +35,7 @@ void decodeQ(const char *cpfrom,unsigned int n,stralloc *outdata,
 
   cp = cpfrom;
   cpnext = cp + n;
-  if (!stralloc_readyplus(outdata,n)) die_nomem(fatal);
+  if (!stralloc_readyplus(outdata,n)) die_nomem();
 
   while (cp < cpnext) {
     ch = *cp++;
@@ -57,7 +53,7 @@ void decodeQ(const char *cpfrom,unsigned int n,stralloc *outdata,
         ch = (ch1 << 4 | ch2) & 0xff;
       }
     }
-    if (!stralloc_append(outdata,&ch)) die_nomem(fatal);
+    if (!stralloc_append(outdata,&ch)) die_nomem();
   }
 }      
 

@@ -6,8 +6,7 @@
 #include "byte.h"
 #include "mime.h"
 #include "errtxt.h"
-
-extern void die_nomem(const char *);
+#include "idx.h"
 
 void concatHDR(char *indata,
 	       unsigned int n,
@@ -22,14 +21,14 @@ void concatHDR(char *indata,
   char *cp;
   char *cpout;
   char *cplast;
-  if (!stralloc_copys(outdata,"")) die_nomem(fatal);
-  if (!stralloc_ready(outdata,n)) die_nomem(fatal);
+  if (!stralloc_copys(outdata,"")) die_nomem();
+  if (!stralloc_ready(outdata,n)) die_nomem();
   cpout = outdata->s;
   if (n == 0) return;
   cplast = indata + n - 1;
   cp = cplast;
   while (*cplast == '\0' || *cplast == '\n') --cplast;
-  if (cp == cplast) die_nomem(fatal);		/* just in case */
+  if (cp == cplast) die_nomem();		/* just in case */
   *(++cplast) = '\n';				/* have terminal '\n' */
   cp = indata;
   while (cp <= cplast) {

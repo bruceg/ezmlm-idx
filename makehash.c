@@ -5,8 +5,7 @@
 #include "surf.h"
 #include "uint32.h"
 #include "makehash.h"
-
-extern void die_nomem(void);
+#include "idx.h"
 
 typedef struct {
   uint32 seed[32];

@@ -5,11 +5,7 @@
 #include "mime.h"
 #include "strerr.h"
 #include "errtxt.h"
-
-static void die_nomem(const char *fatal)
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
+#include "idx.h"
 
 static const unsigned char base64char[64] =
    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -77,8 +73,8 @@ void encodeB(const unsigned char *indata,unsigned int n,stralloc *outdata,
     pos = 0;
     i = 0;
   }
-  if (!stralloc_copys(outdata,"")) die_nomem(fatal);
-  if (!stralloc_ready(outdata,n*8/3 + n/72 + 5)) die_nomem(fatal);
+  if (!stralloc_copys(outdata,"")) die_nomem();
+  if (!stralloc_ready(outdata,n*8/3 + n/72 + 5)) die_nomem();
   cpout = (unsigned char *) outdata->s;
   while (n--) {
     ch = *indata++;

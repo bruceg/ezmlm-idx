@@ -2,6 +2,7 @@
 #include "strerr.h"
 #include "uint32.h"
 #include "errtxt.h"
+#include "idx.h"
 
 	/* Characters and translation as per rfc2047. */
 static const char char64table[128] = {
@@ -16,11 +17,6 @@ static const char char64table[128] = {
 };
 
 #define char64enc(c)  (((c) & 0x80) ? -1 : char64table[(c)])
-
-static void die_nomem(const char *fatal)
-{
-  strerr_die2x(111,fatal,ERR_NOMEM);
-}
 
 void decodeB(const char *cpfrom,unsigned int n,stralloc *outdata,
 	     const char *fatal)
@@ -38,14 +34,14 @@ void decodeB(const char *cpfrom,unsigned int n,stralloc *outdata,
   cpnext = cp + n;
   i = 0;
   hold32 = 0L;
-  if (!stralloc_readyplus(outdata,n)) die_nomem(fatal);
+  if (!stralloc_readyplus(outdata,n)) die_nomem();
   for (;;) {
     if (i == 4) {
       for (j = 2; j >= 0; --j) {
         holdch[j] = hold32 & 0xff;
         hold32 = hold32 >> 8;
       }
-      if (!stralloc_cats(outdata,holdch)) die_nomem(fatal);
+      if (!stralloc_cats(outdata,holdch)) die_nomem();
       if (cp >= cpnext)
         break;
       hold32 = 0L;
