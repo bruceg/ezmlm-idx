@@ -187,7 +187,7 @@ char **argv;
   char *def;
   char *dtline;
   char *nhost;
-  char *err;
+  const char *err;
   unsigned int i;
   int match;
   int optind = 1;

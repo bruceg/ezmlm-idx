@@ -157,7 +157,7 @@ char **argv;
   int flagmodpost;
   int flagremote;
   char *pmod;
-  char *err;
+  const char *err;
   int opt;
   unsigned int i;
   char szchar[2] = "-";

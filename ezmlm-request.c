@@ -307,7 +307,7 @@ char **argv;
   char *def;
   char *sender;
   char *psz;
-  char *err;
+  const char *err;
   int cmdidx;
   int flagsub;
   int flagok;

@@ -114,7 +114,7 @@ int flagw;
   int fd;
   int match;
   int fdhash;
-  char *err;
+  const char *err;
   datetime_sec msgwhen;
 
   fd = open_read(fn.s);
@@ -288,7 +288,6 @@ char **argv;
   unsigned long ld;
   unsigned long ddir,dfile;
   int fdlock,fd;
-  char *err;
   int opt;
   char ch;
 

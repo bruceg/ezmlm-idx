@@ -182,7 +182,7 @@ char **argv;
   char linetype = ' ';
   char *cp, *cpstart, *cpafter;
   char *dir;
-  char *err;
+  const char *err;
   char *sender;
   unsigned int len;
   int match;

@@ -360,7 +360,7 @@ char **argv;
   char *sender;
   char *mlheader = (char *) 0;
   char *ret;
-  char *err;
+  const char *err;
   int flagmlwasthere;
   int flaglistid = 0;	/* no listid header added */
   int match;

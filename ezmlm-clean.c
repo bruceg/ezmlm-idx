@@ -132,7 +132,7 @@ char *d;
 /* message. */
 {
   unsigned int x,y;
-  char *err;
+  const char *err;
 
       if (!flagconf) {
         readconfigs();

@@ -681,7 +681,7 @@ char **argv;
   char *x, *y;
   char *fname;
   char *pmod;
-  char *err;
+  const char *err;
   char *cp,*cpfirst,*cplast,*cpnext,*cpafter;
   int flagmod;
   int flagremote;

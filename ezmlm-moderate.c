@@ -203,7 +203,7 @@ char **argv;
   int flagdone;
   int fd, fdlock;
   int match;
-  char *err;
+  const char *err;
   char encin = '\0';
   char szchar[2] = "-";
   const char *replyto = (char *) 0;

@@ -849,7 +849,7 @@ char **argv;
   char *local;
   char *action = "";
   char *psz;
-  char *err;
+  const char *err;
   int fd;
   unsigned int i,j;
   int flagremote;
