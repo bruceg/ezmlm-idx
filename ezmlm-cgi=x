@@ -1,7 +1,6 @@
 getconf.o
-slurpclose.o
-slurp.o
 constmap.o
+slurp.a
 getln.a
 sig.a
 mime.a

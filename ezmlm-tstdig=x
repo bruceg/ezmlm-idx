@@ -1,8 +1,7 @@
 auto_version.o
 getconf.o
 now.o
-slurpclose.o
-slurp.o
+slurp.a
 open.a
 getopt.a
 fs.a

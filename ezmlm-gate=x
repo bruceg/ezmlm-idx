@@ -15,8 +15,7 @@ open.a
 lock.a
 fs.a
 getconf.o
-slurpclose.o
-slurp.o
+slurp.a
 seek.a
 wrap.a
 wait.a

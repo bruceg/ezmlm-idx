@@ -3,8 +3,7 @@ getconf.o
 issub.o
 subdb.a
 log.o
-slurpclose.o
-slurp.o
+slurp.a
 now.o
 cookie.o
 surf.a

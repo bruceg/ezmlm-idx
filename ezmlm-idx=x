@@ -1,6 +1,5 @@
 auto_version.o
-slurp.o
-slurpclose.o
+slurp.a
 mime.a
 wait.a
 getopt.a

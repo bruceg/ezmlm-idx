@@ -1,7 +1,6 @@
 subdb.a
 getconf.o
-slurpclose.o
-slurp.o
+slurp.a
 env.a
 fs.a
 strerr.a

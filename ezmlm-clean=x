@@ -4,8 +4,7 @@ mime.a
 now.o
 datetime.o
 date822fmt.o
-slurpclose.o
-slurp.o
+slurp.a
 qmail.o
 quote.o
 getln.a

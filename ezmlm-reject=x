@@ -1,8 +1,7 @@
 qmail.o
 constmap.o
 getconf.o
-slurp.o
-slurpclose.o
+slurp.a
 getln.a
 strerr.a
 substdio.a

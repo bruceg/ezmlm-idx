@@ -1,7 +1,6 @@
 auto_qmail.o
 getconf.o
-slurpclose.o
-slurp.o
+slurp.a
 qmail.o
 quote.o
 wait.a

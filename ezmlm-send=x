@@ -1,8 +1,7 @@
 getconf.o
 qmail.o
 constmap.o
-slurp.o
-slurpclose.o
+slurp.a
 cookie.o
 copy.o
 quote.o

@@ -1,6 +1,5 @@
 getconf.o
-slurpclose.o
-slurp.o
+slurp.a
 getln.a
 sig.a
 strerr.a

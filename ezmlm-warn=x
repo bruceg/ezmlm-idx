@@ -4,8 +4,7 @@ getconf.o
 cookie.o
 issub.o
 now.o
-slurpclose.o
-slurp.o
+slurp.a
 quote.o
 datetime.o
 date822fmt.o

@@ -9,8 +9,7 @@ wrap.a
 wait.a
 str.a
 alloc.a
-slurp.o
-slurpclose.o
+slurp.a
 fs.a
 stralloc.a
 open.a

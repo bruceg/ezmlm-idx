@@ -6,12 +6,11 @@ now.o
 getconf.o
 datetime.o
 date822fmt.o
-slurpclose.o
-slurp.o
 qmail.o
 quote.o
 makehash.o
 cookie.o
+slurp.a
 surf.a
 yyyymm.a
 auto_version.o
