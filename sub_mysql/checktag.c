@@ -1,4 +1,7 @@
 /*$Id$*/
+
+#include "slurp.h"
+#include "byte.h"
 #include "stralloc.h"
 #include "scan.h"
 #include "fmt.h"

@@ -1,4 +1,7 @@
 /*$Id$*/
+
+#include "str.h"
+#include "slurp.h"
 #include "stralloc.h"
 #include "strerr.h"
 #include "errtxt.h"

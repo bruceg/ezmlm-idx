@@ -1,3 +1,7 @@
+/*$Id$*/
+
+#include <unistd.h>
+#include "getln.h"
 #include "error.h"
 #include "strerr.h"
 #include "readwrite.h"
@@ -16,8 +20,6 @@ static substdio ssin;
 static char inbuf[512];
 char strnum[FMT_ULONG];
 static stralloc line = {0};
-static stralloc domains = {0};
-static stralloc quoted = {0};
 static stralloc fn = {0};
 
 static void die_nomem(fatal)
@@ -60,7 +62,6 @@ char *fatal;		/* fatal error string */
   int fd;
   unsigned long no = 0L;
   int match;
-  unsigned int pos = 0;
   unsigned int hashpos;
   const char *ret = (char *) 0;
 

@@ -1,4 +1,6 @@
 /*$Id$*/
+
+#include "getln.h"
 #include "case.h"
 #include "scan.h"
 #include "stralloc.h"
@@ -14,6 +16,8 @@
 #include "subscribe.h"
 #include <unistd.h>
 #include <libpq-fe.h>
+
+extern void die_write(const char *);
 
 static stralloc line = {0};
 static stralloc outline = {0};

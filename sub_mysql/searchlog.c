@@ -1,4 +1,7 @@
 /*$Id$*/
+
+#include <unistd.h>
+#include "getln.h"
 #include "case.h"
 #include "scan.h"
 #include "stralloc.h"
@@ -13,6 +16,8 @@
 #include "errtxt.h"
 #include "subscribe.h"
 #include <mysql.h>
+
+extern void die_write(const char *fatal);
 
 static stralloc line = {0};
 static stralloc outline = {0};
@@ -70,7 +75,6 @@ char *fatal;		/* fatal */
   MYSQL_ROW row;
   char *table = (char *) 0;
   char **ptable = &table;
-  char *sublist = (char *) 0;
   unsigned long *lengths;
 
   if (!search) search = "";	/* defensive */

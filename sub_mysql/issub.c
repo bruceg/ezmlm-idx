@@ -1,4 +1,6 @@
 /*$Id$*/
+
+#include <unistd.h>
 #include "stralloc.h"
 #include "getln.h"
 #include "readwrite.h"
@@ -27,7 +29,6 @@ static stralloc quoted = {0};
 static stralloc fn = {0};
 static substdio ss;
 static char ssbuf[512];
-static char szh[FMT_ULONG];
 
 const char *issub(dbname,userhost,tab,fatal)
 /* Returns (char *) to match if userhost is in the subscriber database     */

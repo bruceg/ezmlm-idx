@@ -1,4 +1,8 @@
 /*$Id$*/
+
+#include <stdio.h>
+#include <unistd.h>
+#include "str.h"
 #include "stralloc.h"
 #include "getln.h"
 #include "readwrite.h"
@@ -33,7 +37,6 @@ static stralloc quoted = {0};
 static stralloc fnnew = {0};
 static stralloc fn = {0};
 static stralloc fnlock = {0};
-static char szh[FMT_ULONG];
 
 void die_read(fatal)
 char *fatal;
@@ -85,7 +88,7 @@ char *fatal;
 
   MYSQL_RES *result;
   MYSQL_ROW row;
-  char *cp,*cpafter,*cpat;
+  char *cpat;
   char szhash[3] = "00";
   const char *r = (char *) 0;
   char *table = (char *) 0;
