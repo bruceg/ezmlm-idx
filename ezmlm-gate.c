@@ -166,7 +166,7 @@ char **argv;
     }
   }
 
-  sendargs[0] = "sh";
+  sendargs[0] = "/bin/sh";
   sendargs[1] = "-c";
   if (!stralloc_copys(&send,auto_bin)) die_nomem();
   if (pmod) {
@@ -202,12 +202,12 @@ char **argv;
     case -1:
       strerr_die2sys(111,FATAL,ERR_FORK);
     case 0:
-      execvp(*sendargs,sendargs);
+      execv(*sendargs,sendargs);
       if (errno == error_txtbsy || errno == error_nomem ||
           errno == error_io)
-        strerr_die4sys(111,FATAL,ERR_EXECUTE,sendargs[2],": ");
+        strerr_die5sys(111,FATAL,ERR_EXECUTE,"/bin/sh -c ",sendargs[2],": ");
       else
-        strerr_die4sys(100,FATAL,ERR_EXECUTE,sendargs[2],": ");
+        strerr_die5sys(100,FATAL,ERR_EXECUTE,"/bin/sh -c ",sendargs[2],": ");
    }
          /* parent */
    wait_pid(&wstat,child);
