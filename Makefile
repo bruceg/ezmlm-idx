@@ -797,11 +797,11 @@ load ezmlm-store.o auto_qmail.o getconf.o subdb.a log.o auto_bin.o mime.a \
 cookie.o now.o datetime.o date822fmt.o slurpclose.o slurp.o qmail.o quote.o \
 surf.a getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a sql.lib \
 error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a getopt.a copy.o \
-hdr.a wrap.a auto_version.o
+hdr.a wrap.a auto_version.o makehash.o
 	./load ezmlm-store auto_qmail.o getconf.o subdb.a copy.o mime.a hdr.a \
 	log.o cookie.o now.o datetime.o date822fmt.o slurpclose.o wrap.a \
 	slurp.o qmail.o quote.o surf.a getln.a env.a sig.a strerr.a \
-	substdio.a stralloc.a alloc.a error.a str.a fs.a case.a \
+	substdio.a stralloc.a alloc.a error.a str.a fs.a case.a makehash.o \
 	open.a seek.a wait.a lock.a fd.a getopt.a auto_bin.o \
 	auto_version.o `cat sql.lib`
 
