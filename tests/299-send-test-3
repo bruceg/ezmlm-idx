@@ -1,0 +1,9 @@
+########################
+# waiting for delivery #
+########################
+
+if [ "$SECT" -le "2" ]; then
+
+  send_test 3
+
+fi		# end section 2

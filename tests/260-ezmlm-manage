@@ -1,0 +1,118 @@
+################
+# ezmlm-manage #
+################
+
+if [ "$SECT" -le "2" ]; then
+
+prompt "ezmlm-manage (2/4):   "
+
+# check digest-subscribe and list-unsubscribe replies
+SUB1=`${GREP} -l 'sub1' $MANDIR/new/*` || \
+	{ ${ECHO} "failed getting digest-subscribe confirm request"; exit 100; }
+
+SUB2=`${GREP} -l 'sub2' $MANDIR/new/*` || \
+	{ ${ECHO} "failed getting -unsubscribe confirm request"; exit 100; }
+
+# Check -get.1 reply
+MANGET1=`${GREP} -l 'manget1' $MANDIR/new/*` || \
+	{ ${ECHO} "failed getting -get.1 reply"; exit 100; }
+
+${GREP} 'msg1' "$MANGET1" >/dev/null || \
+	{ ${ECHO} "get.1 failed to return archived message"; exit 100; }
+
+# Add moderator
+${EZBIN}/ezmlm-sub "${DIR}/mod" "${MOD}@$HOST"
+
+LOCAL=`${GREP} "Reply-To:" "$SUB1" | cut -d' ' -f2 | cut -d'@' -f1` || \
+	{ ${ECHO} "failed to find confirm address in -subscribe reply"; exit 100; }
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+fi
+${ECHO} "X-num: sub3" > "${DIR}/__tmp"
+${ECHO} "From: Mr. $EZTEST confirms <$SENDER>" >> "${DIR}/__tmp"
+${ECHO} >> "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${DIR}/__tmp" \
+		>"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed to send user conf for sub1"; exit 100; }
+
+LOCAL=`${GREP} "Reply-To:" "$SUB2" | cut -d' ' -f2 | cut -d'@' -f1` || \
+	{ ${ECHO} "failed to find confirm address in -unsubscribe reply"
+	  exit 100; }
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+fi
+${ECHO} "X-num: sub4" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to send conf for sub2"; exit 100; }
+
+# now test remote admin functions
+# add a few addresses to allow
+${EZBIN}/ezmlm-sub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff"
+
+# test -edit
+${ECHO} "#TEST_TEXT#" > "${DIR}/text/test"
+LOCAL="$LOC-edit.test-$MAN=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="edit.test-$MAN=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: edit1" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -e "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to reject edit request from non-mod"; exit 100; }
+LOCAL="$LOC-edit.test-$MOD=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="edit.test-$MOD=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: edit2" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 && \
+	{ ${ECHO} "-E failed for edit2"; exit 100; }
+${ECHO} "X-num: edit3" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -e "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "-e failed for remote admin for edit3"; exit 100; }
+
+# test list/log
+LOCAL="$LOC-allow-list-$MAN=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="allow-list-$MAN=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: list1" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to reject list request from non-mod"; exit 100; }
+
+LOCAL="$LOC-allow-log-$MAN=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="allow-log-$MAN=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: log1" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to reject log request from non-mod"; exit 100; }
+
+LOCAL="$LOC-allow-list-$MOD=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="allow-list-$MOD=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: list2" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "-L failed to reject list request"; exit 100; }
+
+${ECHO} "X-num: list3" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "-l failed for remote admin for list3"; exit 100; }
+
+LOCAL="$LOC-allow-log-$MOD=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="allow-log-$MOD=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: log2" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 && \
+	{ ${ECHO} "-L failed to reject log request"; exit 100; }
+
+${ECHO} "X-num: log3" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "-l failed for remote admin for log3"; exit 100; }
+
+
+${ECHO} "OK"
+
+fi

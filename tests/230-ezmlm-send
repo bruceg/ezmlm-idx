@@ -1,0 +1,68 @@
+##############
+# ezmlm-send #
+##############
+
+if [ "$SECT" -le "2" ]; then
+
+prompt "ezmlm-send (2/2):     "
+MSG1=`${GREP} -l "msg1" $SINKDIR/new/*` || \
+	{ ${ECHO} "failed to deliver message 1 to subscriber"; \
+	exit 100; }
+# make sure headeradd was done
+  ${GREP} -i 'precedence: bulk' < "$MSG1" >/dev/null 2>&1 ||
+	{ ${ECHO} "failed to add headeradd"; exit 100; }
+# check on received: header handling
+${GREP} '#PENULTIMATE#' "$MSG1" >/dev/null && \
+	{ ${ECHO} "-r failed to remove received header"; \
+	exit 100; }
+${GREP} '#LAST#' "$MSG1" >/dev/null || \
+	{ ${ECHO} "-r failed to leave last received header"; \
+	exit 100; }
+${GREP} 'Subject:' "$MSG1" | ${GREP} 'PFX' >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to add subject prefix"; exit 100; }
+	# the trailer should be a MIME part, so not at the very end
+${TAIL} -n 6 "$MSG1" | ${HEAD} -n 2 | ${GREP} 'TRAILER' >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to add trailer"; exit 100; }
+
+MSG2=`${GREP} -l "msg2" $SINKDIR/new/*` || \
+	{ ${ECHO} "failed to deliver message 2 to subscriber"; \
+	exit 100; }
+${GREP}  '#PENULTIMATE#' "$MSG2" >/dev/null || \
+	{ ${ECHO} "-R failed to leave received header"; \
+	exit 100; }
+
+${GREP} "msg3" $SINKDIR/new/* >/dev/null 2>&1 && \
+	{ ${ECHO} "-C failed to exclude sender (no longer supported)"; \
+	  BUG="${BUG}_noself"; \
+	  prompt "ezmlm-send:           "; }
+
+MSG5=`${GREP} -l "msg5" $SINKDIR/new/*` || \
+	{ ${ECHO} "failed to deliver message 5 to subscriber"; \
+	exit 100; }
+${GREP} 'TRAILER' "$MSG5" >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to add trailer to non-mime message"; \
+	exit 100; }
+
+MSG6=`${GREP} -l "msg6" $SINKDIR/new/*` || \
+	{ ${ECHO} "failed to deliver message 6 to subscriber"; \
+	exit 100; }
+
+${GREP} 'TRAILER' "$MSG6" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to suppress trailer for multipart/signed message"; \
+	  ${ECHO} "                      0.31 bug fixed in 0.316/0.323";
+	  BUG="${BUG}_signed"; \
+	  prompt "ezmlm-send ......:    "; }
+
+${GREP} "msg3" $SINKDIR/new/* >/dev/null 2>&1 && \
+	{ 
+	  ${ECHO} "${BUG}" | ${GREP} 'noself' >/dev/null 2>&1 || \
+	  {
+	    ${ECHO} "-C failed to exclude sender (no longer supported)"
+	    BUG="${BUG}_noself"
+	    prompt "ezmlm-send ......:   ${BUG} "
+	  }
+	}
+
+${ECHO} "OK"
+
+fi

@@ -1,0 +1,97 @@
+##################
+# ezmlm-moderate #
+##################
+
+if [ "$SECT" -le "2" ]; then
+
+prompt "ezmlm-moderate (1/2): "
+
+# MOD1 and MOD3 are defined from ezmlm-store testing
+
+REJ=`${GREP} "From: $LOC-reject" "$MOD1"| cut -d' ' -f2`
+if [ -z "$REJ" ]; then
+	${ECHO} "No From: ...-reject header in mod request for mod1"
+	exit 100
+fi
+
+ACC=`${GREP} "Reply-To: $LOC-accept" "$MOD3"| cut -d' ' -f2`
+if [ -z "$ACC" ]; then
+	${ECHO} "No From: ...-accept header in mod request for mod3"
+	exit 100
+fi
+
+# remove moderation request from sinkdir
+${RM} -f "$MOD1" 2>/dev/null || \
+	{ ${ECHO} "failed to remove mod request for mod1"; exit 100; }
+${RM} -f "$MOD3" 2>/dev/null || \
+	{ ${ECHO} "failed to remove mod request for mod3"; exit 100; }
+
+# make sure we get the (mis)accepted message(s)
+${EZBIN}/ezmlm-sub "${DIR}" "${SND}@$HOST"
+
+LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
+export LOCAL
+
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	</dev/null >"${ERR}" 2>&1 || \
+		{ ${ECHO} "failed on rejection"; exit 100; }
+
+LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	 </dev/null >"${ERR}" 2>&1 || \
+		{ ${ECHO} "failed on acceptance"; exit 100; }
+
+ls -l "${DIR}/mod/rejected/" | ${GREP} '[0-9]' >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to write reject stub"; exit 100; }
+ls -l "${DIR}/mod/accepted/" | ${GREP} '[0-9]' >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to write accept stub"; exit 100; }
+
+REJ1=`${ECHO} "$REJ" | sed s/reject/accept/`
+LOCAL=`${ECHO} "$REJ1" | cut -d@ -f1`
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	</dev/null >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to bounce accept of rejected message"; exit 100; }
+LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	</dev/null >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to silently ignore re-rejection"; exit 100; }
+
+ACC1=`${ECHO} "$ACC" | sed s/accept/reject/`
+LOCAL=`${ECHO} "$ACC1" | cut -d@ -f1`
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	</dev/null >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to bounce reject of accepted message"; exit 100; }
+LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	</dev/null >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to silently ignore re-acceptance"; exit 100; }
+
+${ECHO} "OK"
+
+# cleanup
+${EZBIN}/ezmlm-unsub "${DIR}" "${SND}@$HOST"
+
+fi
