@@ -410,11 +410,7 @@ char **argv;
   if (chdir(dir) == -1)
     strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
 
-  fdlock = open_append("lock");
-  if (fdlock == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/lock: ");
-  if (lock_ex(fdlock) == -1)
-    strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/lock: ");
+  fdlock = lockfile("lock");
 
   flagarchived = getconf_line(&line,"archived",0,dir);
   flagindexed = getconf_line(&line,"indexed",0,dir);

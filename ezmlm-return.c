@@ -365,11 +365,7 @@ char **argv;
     if (!stralloc_cats(&line,"/lockbounce")) die_nomem();
     if (!stralloc_0(&line)) die_nomem();
 
-    fdlock = open_append(line.s);
-    if (fdlock == -1)
-      strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
-    if (lock_ex(fdlock) == -1)
-      strerr_die4sys(111,FATAL,ERR_OBTAIN,line.s,": ");
+    fdlock = lockfile(line.s);
 
     if (!flagmaster && str_start(action,"warn-")) {
       action += 5;

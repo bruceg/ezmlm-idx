@@ -115,30 +115,39 @@
 #define TXT_UNSUBSCRIBE_FROM "unsubscribe from "
 
 /* Subject: WELCOME to */
-#define TXT_WELCOME "Subject: WELCOME to "
+#define TXT_WELCOME "WELCOME to "
 
 /* Subject: GOODBYE from */
-#define TXT_GOODBYE "Subject: GOODBYE from "
+#define TXT_GOODBYE "GOODBYE from "
 
-/* Subject: ezmlm response\n */
-#define TXT_EZMLM_RESPONSE "Subject: ezmlm response\n"
+/* Subjects for various administrative responses in ezmlm-manage: */
+#define TXT_SUB_NOP "Already subscribed to "
+#define TXT_UNSUB_NOP "Not subscribed to "
+#define TXT_SUB_LIST "Subscriber list for "
+#define TXT_SUB_LOG "Subscriber log for "
+#define TXT_GET_MSG "Archive retrieval from "
+#define TXT_STATUS "Subscription status on "
+#define TXT_INFO_FOR "Information for "
+#define TXT_FAQ_FOR "FAQ for "
+#define TXT_MOD_HELP "Moderator help for "
+#define TXT_HELP_FOR "Help for "
 
 /* Subject: majordomo results\n\n [where "majordomo" is outlocal] */
 #define TXT_RESULTS " results\n\n"
 
 /* Subject: Edit file xxx for list@host */
-#define TXT_EDIT_RESPONSE "Subject: EDIT "
+#define TXT_EDIT_RESPONSE "EDIT "
 #define TXT_EDIT_FOR " for "
 
-/* Subject: Editable text files\n */
-#define TXT_EDIT_LIST "Subject: List of editable text files\n"
+/* Subject: Editable text files for list@host */
+#define TXT_EDIT_LIST "List of editable text files for "
 
 /* markers for ezmlm-manage text file edit */
 /* MUST start with '%' */
 #define TXT_EDIT_START "%%% START OF TEXT FILE"
 #define TXT_EDIT_END "%%% END OF TEXT FILE"
 
-#define TXT_EDIT_SUCCESS "Subject: Success editing "
+#define TXT_EDIT_SUCCESS "Success editing "
 
 /* Text for '-list' command */
 #define TXT_LISTMEMBERS "\nSubscribers to this list are:\n\n"

@@ -418,13 +418,7 @@ char **argv;
 
 	/* Lock list to assure that no ezmlm-send is working on it */
 	/* and that the "num" message is final */
-  fdlock = open_append("lock");
-  if (fdlock == -1)
-    strerr_die2sys(111,FATAL,ERR_OPEN_LOCK);
-  if (lock_ex(fdlock) == -1) {
-    (void) close(fdlock);
-    strerr_die2sys(111,FATAL,ERR_OBTAIN_LOCK);
-  }
+  fdlock = lockfile("lock");
 					/* get num */
   if (!getconf_line(&num,"num",0,dir))
     strerr_die1x(100,ERR_EMPTY_LIST);
@@ -434,13 +428,7 @@ char **argv;
   (void) scan_ulong(num.s,&max);
   if (!to || to > max) to = max;
 
-  fdlock = open_append("archive/lock");	/* lock index */
-  if (fdlock == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/archive/lock: ");
-  if (lock_ex(fdlock) == -1) {
-    (void) close(fdlock);
-    strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/archive/lock: ");
-  }
+  fdlock = lockfile("archive/lock");	/* lock index */
   if (!flagcreate && !archnum) {	/* adjust archnum (from) / to */
     if (getconf_line(&num,"archnum",0,dir)) {
       if (!stralloc_0(&num)) die_nomem();

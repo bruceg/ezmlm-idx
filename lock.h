@@ -6,5 +6,6 @@
 extern int lock_ex(int);
 extern int lock_un(int);
 extern int lock_exnb(int);
+extern int lockfile(const char *path);
 
 #endif

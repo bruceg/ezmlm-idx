@@ -25,10 +25,10 @@ str.a
 fs.a
 case.a
 hdr.a
-open.a
 seek.a
 wait.a
 lock.a
+open.a
 fd.a
 getopt.a
 auto_version.o

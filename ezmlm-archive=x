@@ -9,8 +9,8 @@ alloc.a
 error.a
 str.a
 fs.a
-open.a
 lock.a
+open.a
 fd.a
 getopt.a
 idxthread.o

@@ -2,16 +2,15 @@ strerr.a
 stralloc.a
 alloc.a
 error.a
-open.a
 getopt.a
 getln.a
 substdio.a
 str.a
 sig.a
 fs.a
-open.a
 fd.a
 lock.a
+open.a
 case.a
 wrap.a
 wait.a

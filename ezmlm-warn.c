@@ -153,7 +153,7 @@ int flagw;
   hdr_add2("To: ",quoted.s,quoted.len);
   /* to accomodate transfer-encoding */
   hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
-  hdr_adds(flagw ? "Subject: ezmlm probe" : "Subject: ezmlm warning");
+  hdr_listsubject1(flagw ? "probe from " : "warning from ");
 
   if (flagcd) {			/* first part for QP/base64 multipart msg */
     hdr_boundary(0);
@@ -342,11 +342,7 @@ char **argv;
   if (!stralloc_copys(&line,workdir)) die_nomem();
   if (!stralloc_cats(&line,"/lockbounce")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
-  fdlock = open_append(line.s);
-  if (fdlock == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
-  if (lock_ex(fdlock) == -1)
-    strerr_die4sys(111,FATAL,ERR_OBTAIN,line.s,": ");
+  fdlock = lockfile(line.s);
 
   if (!stralloc_copys(&line,workdir)) die_nomem();
   if (!stralloc_cats(&line,"/bounce/d")) die_nomem();

@@ -237,11 +237,7 @@ char **argv;
   getconf_line(&outlocal,"outlocal",1,dir);
   getconf_line(&mailinglist,"mailinglist",1,dir);
 
-  fdlock = open_append("mod/lock");
-  if (fdlock == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/mod/lock: ");
-  if (lock_ex(fdlock) == -1)
-    strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/mod/lock: ");
+  fdlock = lockfile("mod/lock");
 
   if (!stralloc_copys(&mydtline, flagconfirm
     ? "Delivered-To: confirm to "
@@ -349,6 +345,7 @@ char **argv;
   } else {
     qmail_puts(&qq,"To: Recipient list not shown: ;\n");
   }
+  /* FIXME: Drop the custom subject hack and use hdr_listsubject1 */
   if (!stralloc_copys(&subject,"Subject: ")) die_nomem();
   if (flagconfirm) {
     if (confirmpost.len) {

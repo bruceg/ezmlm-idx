@@ -6,8 +6,8 @@ getopt.a
 getln.a
 strerr.a
 sig.a
-open.a
 lock.a
+open.a
 substdio.a
 stralloc.a
 alloc.a

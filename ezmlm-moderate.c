@@ -280,11 +280,7 @@ char **argv;
   if (byte_diff(hash,COOKIE,action+confnum+1))
     die_badformat();
 
-  fdlock = open_append("mod/lock");
-  if (fdlock == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/mod/lock: ");
-  if (lock_ex(fdlock) == -1)
-    strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/mod/lock: ");
+  fdlock = lockfile("mod/lock");
 
   switch(checkfile(fnbase.s)) {
     case 0:
@@ -333,11 +329,7 @@ char **argv;
     if (replyto)
       hdr_add2s("Reply-To: ",replyto);
     hdr_add2s("To: ",to.s);
-    qmail_puts(&qq,"Subject: ");
-    qmail_puts(&qq,TXT_RETURNED_POST);
-    qmail_put(&qq,quoted.s,quoted.len);
-    qmail_puts(&qq,"@");
-    qmail_put(&qq,outhost.s,outhost.len);
+    hdr_listsubject1(TXT_RETURNED_POST);
 
     if (flagmime) {
       if (getconf_line(&charset,"charset",0,dir)) {
@@ -351,7 +343,6 @@ char **argv;
       } else
         if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
       if (!stralloc_0(&charset)) die_nomem();
-      qmail_puts(&qq,"\n");
       hdr_mime(CTYPE_MULTIPART);
       hdr_boundary(0);
       hdr_ctype(CTYPE_TEXT);

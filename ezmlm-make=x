@@ -1,8 +1,8 @@
-open.a
 getopt.a
 getln.a
 substdio.a
 lock.a
+open.a
 strerr.a
 stralloc.a
 alloc.a

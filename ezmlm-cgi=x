@@ -10,8 +10,8 @@ stralloc.a
 alloc.a
 error.a
 fs.a
-open.a
 lock.a
+open.a
 fd.a
 getopt.a
 env.a

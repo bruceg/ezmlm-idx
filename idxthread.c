@@ -51,13 +51,7 @@ int fdlock;
 /* NOTE: These do NOT prevent double locking */
 static void lockup(void)
 {
-  fdlock = open_append("lock");
-  if (fdlock == -1)
-    strerr_die2sys(111,FATAL,ERR_OPEN_LOCK);
-  if (lock_ex(fdlock) == -1) {
-    close(fdlock);
-    strerr_die2sys(111,FATAL,ERR_OBTAIN_LOCK);
-  }
+    fdlock = lockfile("lock");
 }
 
 static void unlock(void)

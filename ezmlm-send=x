@@ -15,8 +15,8 @@ getln.a
 strerr.a
 sig.a
 env.a
-open.a
 lock.a
+open.a
 substdio.a
 stralloc.a
 alloc.a

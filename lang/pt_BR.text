@@ -6,25 +6,31 @@ ISO-8859-1:Q
 contacte <#L#>-help@<#H#>; gerenciado pelo ezmlm
 </text/trailer#t/>
 ---------------------------------------------------------------------
-Para cancelar a subscrição, envie mensagem para: <#L#>-unsubscribe@<#H#>
+Para cancelar a assinatura, envie mensagem para: <#L#>-unsubscribe@<#H#>
 Para comandos adicionais, envie mensagem para: <#L#>-help@<#H#>
 </text/bottom/>
 
 --- Aqui estão os endereços de comando do ezmlm.
 
-Eu posso tratar as requisições administrativas automaticamente.
-Basta enviar uma mensagem vazia para qualquer destes endereços:
+Eu, O Sistema, posso cuidar automaticamente das tarefas administrativas. 
+Favor não enviar mensagens administrativas à própria lista. Basta enviar 
+uma mensagem vazia para qualquer destes endereços:
 
+   Para assinar a lista <#L#> e receber as mensagens a ela enviadas, 
+   envie email para:
    <<#L#>-subscribe@<#H#>>:
-   Receber as futuras mensagens enviadas para a lista <#L#>.
 
+   Para cancelar a assinatura, envie mensagem para:
    <<#L#>-unsubscribe@<#H#>>:
-   Parar de receber as mensagens da lista <#L#>.
+   Caso tenha mudado de endereço de email depois de ter assinado, pode 
+   ainda cancelar a assinatura pelo envio de uma mensagem ao endereço no 
+   campo: "List-Unsubscribe" encontrado nos cabeçalhos de qualquer mensagem 
+   que tenha sido enviada à lista.
 
+   Para receber mais informações ou o FAQ desta lista,
+   se disponíveis, envie email para:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
-   Para receber mais informações ou o FAQ desta lista,
-   se disponíveis.
 
 </#d/>
 Existem também estes endereços similares para a lista "digest":
@@ -63,22 +69,22 @@ Na verdade as mensagens não precisam ser vazias, mas eu irei
 ignorar o seu conteúdo. Somente o ENDEREÇO é importante.
 
 Você pode iniciar a assinatura para um endereço alternativo,
-por exemplo "john@example.com", bastando adicionar um traço
+por exemplo "john@host.domain", bastando adicionar um traço
 e o seu endereço (com '=' no lugar de '@'), ou seja:
-<<#L#>-subscribe-john=example.com@<#H#>>
+<<#L#>-subscribe-john=host.domain@<#H#>>
 
-Para cancelar a subscrição para este endereço, envie mensagem
-para: <<#L#>-unsubscribe-john=example.com@<#H#>>
+Para cancelar a assinatura desse endereço, envie mensagem
+para: <<#L#>-unsubscribe-john=host.domain@<#H#>>
 
-Em ambos os casos, eu enviarei uma mensagem de confirmação para
+Em ambos os casos, eu (O Sistema) enviarei uma mensagem de confirmação para
 esse endereço; quando você receber esta mensagem, simplesmente
-responda para completar sua subscrição (ou cancelamento).
+responda para completar sua assinatura (ou cancelamento).
 
 </text/bottom/>
 Se estas instruções são muito complicadas ou você não teve os
-resultados que esperava, por favor contacte o meu dono em 
+resultados que esperava, por favor escrever o meu dono em
 <#L#>-owner@<#H#>. Mas tenha paciência, o meu dono é
-muito mais lento do que eu ;-)
+muito mais devagar do que eu. ;-)
 </text/bottom/>
 
 --- Abaixo está uma cópia da requisição que eu recebi.
@@ -89,7 +95,7 @@ muito mais lento do que eu ;-)
 
 </text/bounce-num/>
 
-Eu mantenho um controle das mensagens da lista <#L> que não
+Eu, O sistema, mantenho um controle das mensagens da lista <#L> que não
 foram entregues para o seu endereço.
 </#a/>
 Cópias destas mensagens podem estar no arquivo.
@@ -102,7 +108,7 @@ Para recuperar uma lista de assuntos e autores das últimas 100
 mensagens, envie uma mensagem vazia para:
    <<#L#>-index@<#H#>>
 
-Para recuperar as mensagens 123 a 145 (no máximo 100 por requisição),
+Para recuperar as mensagens 123 a 145 (no máximo 100 por comando),
 envie uma mensagem vazia para:
    <<#L#>-get.123_145@<#H#>>
 
@@ -157,7 +163,7 @@ endereço da lista <#l#>, sem mais avisos.
 Para subscrever-se à lista "digest", envie mensagem para:
 	<#L#>-digest-subscribe@<#H#>
 
-Para cancelar a subscrição da lista "digest", envie mensagem para:
+Para cancelar a assinatura da lista "digest", envie mensagem para:
 	<#L#>-digest-unsubscribe@<#H#>
 
 Para enviar mensagens para a lista, use o endereço:
@@ -167,62 +173,61 @@ Para enviar mensagens para a lista, use o endereço:
 Sinto muito, esta mensagem não está arquivada.
 
 </text/help/>
-Esta é uma mensagem de ajuda genérica. A mensagem que eu recebi 
-não era para os meus endereços de comando.
+Esta é uma mensagem de ajuda genérica. A mensagem que eu recebi
+não era destinada para os meus endereços de comando.
 
 </text/mod-help/>
 Obrigado por concordar em moderar a lista
 <#L#>@<#H#>.
 
 Meus comandos são um pouco diferentes de outros gerenciadores de
-listas. À primeira vista eles parecem não usuais, mas à medida que
+listas. À primeira vista, eles parecem estranhos, mas à medida que
 você os for usando, vai apreciar a simplicidade do sistema e
-a rapidez com que eu trato suas requisições.
+a rapidez com que eu trato seus comandos.
 
 Aqui estão algumas observações sobre como atuar como dono da
 lista e/ou moderador:
 
-Subscrição Remota
+Assinatura remota
 -----------------
-Como um moderador, você pode subscrever e cancelar a subscrição
+Como um moderador, você pode subscrever e cancelar a assinatura
 de qualquer endereço da lista. Para cadastrar john@johnhost.johndomain,
 simplesmente coloque um traço depois do comando, e depois o endereço
 com '=' no lugar de '@'. Por exemplo, para cadastrar este endereço,
 envie uma mensagem para:
-   <<#L#>-subscribe-john=example.com@<#H#>>
+   <<#L#>-subscribe-john=host.domain@<#H#>>
 
-Você pode analogamente remover esse endereço, enviando mensagem para:
-   <<#L#>-unsubscribe-john=example.com@<#H#>>
+Semelhantemente, você pode remover esse endereço, enviando mensagem para:
+   <<#L#>-unsubscribe-john=host.domain@<#H#>>
 
 </#d/>
 Para a lista "digest":
-   <<#L#>-digest-subscribe-john=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
 
 <//>
-Isto é tudo. Nem assunto nem corpo de mensagem são necessários!
+Isto é tudo. Nenhum texto no assunto nem no corpo de mensagem é necessário!
 
 </#r/>
-Eu enviarei para você um pedido de confirmação, para ter certeza
-que é realmente você quem enviou a requisição. Simplesmente
-retorne a mensagem, e a requisição será completada.
+Enviarei para você um pedido de confirmação, para ter certeza
+que é realmente você quem enviou o comando. Simplesmente
+retorne a mensagem, e o comando será executado.
 </#R/>
-Eu enviarei um pedido de confirmação para o endereço do usuário,
-neste caso <john@example.com>. Tudo que o usuário tem que fazer é
+Enviarei um pedido de confirmação para o endereço do usuário,
+neste caso <john@host.domain>. Tudo que o usuário tem que fazer é
 retornar este pedido de confirmação.
 <//>
 
 As confirmações são necessárias para evitar que pessoas
-não autorizadas possam cadastrar ou remover endereços
-da lista.
+não autorizadas cadastrem ou removam endereços da lista.
 
-Eu notificarei o usuário quando a situação de sua subscrição
+Notificarei o usuário quando a situação de sua assinatura
 for alterada.
 
-Subscrição
+Assinatura
 ----------
 
-Qualquer usuário pode subscrever-se ou cancelar a subscrição
+Qualquer usuário pode assinar ou cancelar a assinatura
 enviando mensagem para:
 
 <#L#>-subscribe@<#H#>
@@ -235,31 +240,31 @@ Para a lista "digest":
 <#L#>-digest-unsubscribe@<#H#>
 
 <//>
-O usuário receberá um pedido de confirmação para eu ter 
-certeza que ele controla o endereço de subscrição. Quando este
+O usuário receberá um pedido de confirmação para eu ter
+certeza de que ele controle o endereço de assinatura. Quando este
 endereço for verificado, ele será descadastrado.
 
 </#s/>
-Sendo esta lista moderada para subscrição, eu enviarei um segundo
+Sendo esta lista moderada para assinatura, enviarei um segundo
 pedido de confirmação para o(s) moderador(es). Se o usuário
 já tiver confirmado o desejo de ficar na lista, você como
 moderador pode confiar que o endereço do assinante é verdadeiro.
 Se você deseja aprovar os pedidos do usuário, simplesmente
 retorne a mensagem de CONFIRMAÇÃO. Caso contrário, simplesmente
-ignore a minha mensagem ou possivelmente contacte o potencial
+ignore a minha mensagem ou possivelmente escreva o potencial
 assinante para obter mais informações.
 </#S/>
-Subscrições funcionam da mesma forma.
+Assinaturas funcionam da mesma forma.
 <//>
 
 O usuário também pode usar estas formas:
 
-   <<#L#>-subscribe-mary=example.com@<#H#>>
-   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+   <<#L#>-subscribe-mary=host.domain@<#H#>>
+   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
 
-para que as mensagens sejam enviadas para "mary@example.com".
-Somente se ela receber mensagens neste endereço, ela será
-capaz de responder a confirmação.
+para que as mensagens sejam enviadas para "mary@host.domain".
+Somente se ela receber mensagens neste endereço, será
+capaz de responder à confirmação.
 
 Seu endereço e identidade não serão revelados para o assinante,
 a não ser que você envie mensagens diretamente para o usuário.
@@ -286,9 +291,9 @@ mensagem para:
    <<#L#>-edit@<#H#>>
 
 </#m/>
-Postagens Moderadas
+Postagens moderadas
 -------------------
-Quando as postagens são moderadas, eu colocarei as mensagens em 
+Quando as postagens são moderadas, eu colocarei as mensagens em
 uma fila, e enviarei a você uma cópia junto com instruções. A
 mensagem terá "MODERATE for ..." como assunto.
 
@@ -307,7 +312,7 @@ duas linhas começando com três '%'. Eu enviarei este comentário somente
 para o remetente, sem revelar sua identidade.
 
 Eu irei processar a mensagem de acordo com o primeiro retorno que eu
-receber. Se você me enviar uma requisição para aceitar uma mensagem
+receber. Se você me enviar um comando para aceitar uma mensagem
 que já foi rejeitada ou vice-versa, eu o avisarei.
 
 Se eu não receber nenhuma resposta do moderador dentro de um certo
@@ -319,16 +324,16 @@ sejam simplesmente removidas, ao invés de retornar para o remetente.
 
 Férias
 ------
-Se você está temporariamente em um endereço diferente, basta repassar 
+Se você está temporariamente em um endereço diferente, basta repassar
 todas as mensagens que têm o cabeçalho correto 'Mailing-List:' (ou todas
 as mensagens que têm assuntos começando com 'MODERATE for <#L#>@<#H#>'
 ou 'CONFIRM subscribe to <#L#>@<#H#>') para o novo endereço.
 Você pode então moderar a partir do novo endereço. Alternativamente,
-você pode repassar as mensagens para um amigo, assim ele pode moderar 
+você pode repassar as mensagens para um amigo, assim ele pode moderar
 para você. Por favor, avise e confirme este procedimento com o dono da lista.
 
 Se você quiser aprovar automaticamente todas as mensagens enquanto
-está fora, configure o seu programa de correio eletrônico para responder 
+está fora, configure o seu programa de correio eletrônico para responder
 automaticamente as mensagens que têm os assuntos com os critérios acima.
 
 </#r/>
@@ -336,7 +341,7 @@ Se você tentar administrar remotamente a partir de um endereço que
 não é seu, o assinante, não você, será questionado para confirmar.
 Depois disto, um pedido de confirmação é enviado para todos os
 moderadores. Estou fazendo isto, porque eu não tenho como saber que
-foi você quem enviou o pedido original. 
+foi você quem enviou o pedido original.
 
 Por favor note que o seu pedido original (e seu endereço) é enviado
 para o assinante neste caso!
@@ -344,7 +349,7 @@ para o assinante neste caso!
 
 Boa sorte!
 
-PS: Por favor, contacte o dono da lista (<#L#>-owner@<#H#>) se você
+PS: Por favor, escreva o dono da lista (<#L#>-owner@<#H#>) se você
 tiver qualquer dúvida ou problema.
 
 </text/mod-reject/>
@@ -396,22 +401,22 @@ Obrigado pela sua ajuda!
 --- Inclusão, por favor encontre a mensagem postada.
 
 </text/mod-sub#E/>
---- Eu subscrevi você ou cancelei sua subscrição através
-da requisição de um moderador da lista <#l#>@<#H#>.
+--- Eu assinei por você ou cancelei sua assinatura através
+de comando de um moderador da lista <#l#>@<#H#>.
 
 Se esta é uma ação que você não deseja, por favor envie uma
 reclamação ou outros comentários para o dono da lista
-(<#l#>-owner@<#H#>) assim que possível.
+(<#l#>-owner@<#H#>), assim que possível.
 
-Se você quer alguma informação em como acessar o arquivo
-da lista <#L#>, basta enviar uma mensagem vazia para 
+Se você deseja alguma informação em como acessar o arquivo
+da lista <#L#>, basta enviar uma mensagem vazia para
 <#L#>-help@<#H#>.
 
 </text/mod-timeout/>
 Sinto muito, os moderadores não tomaram nenhuma ação com a sua
 mensagem. Eu a estou retornado para você. Se você acha que isto
-é um erro, por favor reenvie sua mensagem ou contacte um moderador
-da lista diretamente.
+é um erro, por favor reenvie sua mensagem ou escreva diretamente
+a um moderador da lista.
 
 --- Inclusão, por favor encontre a mensagem que você enviou.
 
@@ -427,7 +432,7 @@ Para confirmar, por favor envie uma resposta vazia para este endereço:
 
 !R
 
-Na prática, você estará enviado para este endereço quando pressionar o
+Na prática, você estará enviado para este endereço quando clicar no
 botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
 o endereço e cole-o para o campo "To:" de uma nova mensagem.
 </#x/>
@@ -450,7 +455,7 @@ uma resposta vazia para este endereço:
 
 !R
 
-Na prática, você estará enviado para este endereço quando pressionar o
+Na prática, você estará enviado para este endereço quando clicar no
 botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
 o endereço e cole-o para o campo "To:" de uma nova mensagem.
 </#x/>
@@ -466,12 +471,12 @@ Obrigado pela sua ajuda!
 </text/sub-bad/>
 Este número de confirmação perece ser inválido.
 
-A maioria dos casos de números inválidos é devida a expiração. Eu 
-tenho que receber uma confirmação de cada requisição dentro de 10 dias. 
+A maioria dos casos de números inválidos é devida a expiração. Eu
+tenho que receber uma confirmação de cada comando dentro de 10 dias.
 Certifique-se também que o número de confirmação está inteiro na
 resposta que você me enviou. Alguns programas de correio eletrônico têm
 o hábito de cortar parte do endereço de retorno, o qual pode ser
-bastante longo.
+bastante comprido.
 
 Eu configurei um novo número. Para confirmar que você deseja que
 
@@ -488,7 +493,7 @@ ou clique aqui:
 <//>
 
 Novamente verifique o endereço de resposta cuidadosamente, para ter
-certeza que está completo antes que você confirme a sua subscrição.
+certeza que está completo antes que você confirme a sua assinatura.
 
 Sinto muito pelo problema.
 
@@ -504,7 +509,7 @@ para o endereço:
 
 !R
 
-Na prática, você estará enviado para este endereço quando pressionar o
+Na prática, você estará enviado para este endereço quando clicar no
 botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
 o endereço e cole-o para o campo "To:" de uma nova mensagem.
 </#x/>
@@ -514,20 +519,20 @@ ou clique aqui:
 <//>
 
 Esta confirmação tem dois propósitos. Primeiro, ela verifica que eu
-sou consigo receber mensagens de você. Segundo, ela protege você no caso
-de alguém estar forjando um pedido de subscrição em seu nome.
+consigo receber mensagens de você. Segundo, ela protege você no caso
+de alguém tentar forjar um pedido de assinatura em seu nome.
 
 </#q/>
 Alguns programas de correio eletrônico não conseguem manipular endereços
-muito longos. Se você não está conseguindo responder esta requisição por
-causa disto, envie uma mensagem para <<#L#>-request@<#H#>> 
-e coloque o endereço inteiro listado abaixo na linha "Subject:" ou
+muito compridos. Se, por causa disto, você não está conseguindo resposta
+a este comando, envie uma mensagem para <<#L#>-request@<#H#>>
+e coloque o endereço inteiro abaixo na linha "Subject:" ou
 "Assunto:".
 
 </text/sub-confirm#s/>
 Esta lista é moderada. Depois que você enviar esta confirmação,
 o pedido será enviado para o(s) moderador(es) desta lista. Eu notificarei
-você quando sua subscrição for ativada.
+você quando sua assinatura for ativada.
 
 </text/sub-nop/>
 Confirmação: o endereço
@@ -548,7 +553,7 @@ Bem-vindo à <#l#>@<#H#>!
 
 Por favor salve esta mensagem para que você saiba o endereço sob o
 qual está inscrito; se mais tarde você quiser cancelar ou alterar
-o seu endereço de subscrição, esta mensagem poderá ser útil.
+o seu endereço de assinatura, esta mensagem poderá ser útil.
 
 </text/top/>
 Oi! Este é o programa ezmlm. Eu estou gerenciando
@@ -556,17 +561,17 @@ a lista <#l#>@<#H#>.
 
 </#x/>
 Eu estou trabalhando para o meu dono, que pode ser
-contactado pelo endereço <#l#>-owner@<#H#>.
+contatado pelo endereço <#l#>-owner@<#H#>.
 
 </text/unsub-bad/>
 O número de confirmação perece ser inválido.
 
-A maioria dos casos de números inválidos é devida a expiração. Eu 
-tenho que receber uma confirmação de cada requisição dentro de 10 dias. 
+A maioria dos casos de números inválidos é devida a expiração. Eu
+tenho que receber uma confirmação de cada comando dentro de 10 dias.
 Certifique-se também que o número de confirmação está inteiro na
 resposta que você me enviou. Alguns programas de correio eletrônico têm
 o hábito de cortar parte do endereço de retorno, o qual pode ser
-bastante longo.
+bastante comprido.
 
 Eu configurei um novo número. Para confirmar que você deseja que
 
@@ -582,7 +587,7 @@ ou clique aqui:
 	mailto:<#R#>
 <//>
 
-Novamente verifique o endereço de resposta cuidadosamente, para ter
+Novamente verifique com cuidado o endereço de resposta, para ter
 certeza que está completo antes que você confirme esta ação.
 
 Sinto muito pelo problema.
@@ -599,7 +604,7 @@ para este endereço:
 
 !R
 
-Na prática, você estará enviado para este endereço quando pressionar o
+Na prática, você estará enviado para este endereço quando clicar no
 botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
 o endereço e cole-o para o campo "To:" de uma nova mensagem.
 </#x/>
@@ -609,18 +614,17 @@ ou clique aqui:
 <//>
 
 Eu não verifiquei se o seu endereço está atualmente na lista.
-Para ver qual endereço você usou ao se subscrever, olhe as mensagens
-que você está recebendo da lista. Cada mensagem tem seu endereço 
-oculto dentro do caminho de retorno; por exemplo, mary@example.com 
+Para ver qual endereço você usou ao assinar, olhe as mensagens
+que você está recebendo da lista. Cada mensagem tem seu endereço
+oculto dentro do caminho de retorno; por exemplo, maria@xdd.ff.com
 recebe mensagens com caminho de retorno:
-<<#l#>-return-<number>-mary=example.com@<#H#>.
+<<#l#>-return-<number>-mary=xdd.ff.com@<#H#>.
 
 </#q/>
 Alguns programas de correio eletrônico não conseguem manipular endereços
-muito longos. Se você não está conseguindo responder esta requisição por
-causa disto, envie uma mensagem para <<#L#>-request@<#H#>> 
-e coloque o endereço inteiro listado abaixo na linha "Subject:" ou
-"Assunto:".
+muito compridos. Se, por causa disto, você não está conseguindo uma resposta 
+a este comando, envie uma mensagem para <<#L#>-request@<#H#>>
+e coloque o endereço inteiro abaixo na linha "Subject:" ou "Assunto:".
 
 </text/unsub-nop/>
 Confirmação: o endereço
@@ -630,26 +634,26 @@ Confirmação: o endereço
 não está na lista <#l#>. Ele não foi encontrado quando
 o seu pedido foi recebido.
 
-Se você cancelou a subscrição, mas continua recebendo mensagens,
-você está incluído com um endereço diferente do que está usando 
+Se você cancelou a assinatura, mas continua recebendo mensagens,
+você está assinado com um endereço diferente do que está usando
 agora. Por favor, olhe o cabeçalho da mensagem, procurando por:
 
-'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
 
 O endereço de cancelamento para este endereço deve ser:
-'<#l#>-unsubscribe-user=example.com@<#H#>'.
+'<#l#>-unsubscribe-user=host.dom@<#H#>'.
 Basta enviar uma mensagem para este endereço, substituindo
-user=example.com pelos valores corretos, responda ao pedido de confirmação
-e você deverá receber um aviso que está fora da lista.
+user=host.dom pelos valores corretos; depois, responda ao pedido de
+confirmação e você deverá receber um aviso que está fora da lista.
 
 Para alguns programas de correio, você precisará tornar os cabeçalhos
 visíveis para ver o caminho de retorno (return-path):
 
 Para o Eudora 4.0, clique no botão "Blah blah ...".
-Para o PMMail, clique em "Window->Show entire message/header". 
+Para o PMMail, clique em "Window->Show entire message/header".
 
-Se isto ainda não funcionar, eu sinto muito em dizer que eu não posso
-ajudar você. Por favor, REPASSE uma mensagem da lista junto com uma
+Se isto ainda não funcionar, eu sinto muito em dizer que não posso
+ajudá-lo. Por favor, REPASSE uma mensagem da lista junto com uma
 observação sobre o que você está tentando fazer para o meu dono:
 
     <#l#>-owner@<#H#>
@@ -666,7 +670,7 @@ da lista <#l#>. Este endereço não está
 mais na lista.
 
 </text/edit-do#n/>
-Por favor edite o arquivo texto seguinte e envie-o para este endereço: 
+Por favor edite o arquivo texto seguinte e envie-o para este endereço:
 
 !R
 
@@ -676,7 +680,7 @@ para este endereço automaticamente.
 Eu posso remover as aspas que o seu programa de correio adiciona
 ao texto, desde que você não edite as próprias linhas marcadoras.
 
-As linhas marcadoras são as linhas começando com '%%%'. Elas não 
+As linhas marcadoras são as linhas começando com '%%%'. Elas não
 devem ser modificadas (caracteres extras adicionados pelo seu programa
 de correio eletrônico no início da linha são aceitos).
 
@@ -697,22 +701,22 @@ Arquivo             Uso
 bottom              rodapé de todas as respostas. Informação geral dos comandos.
 digest              seção 'administrativa' das listas "digest".
 faq                 perguntas frequentes específicas desta lista.
-get_bad             no lugar de mensagem não encontradas no arquivo.
+get_bad             no lugar de mensagens não encontradas no arquivo.
 help                ajuda geral (entre 'top' e 'bottom').
-info                lista informações.
+info                lista de informações.
 mod_help            ajuda específica para moderadores.
 mod_reject          para o remetente de uma mensagem rejeitada.
 mod_request         para os moderadores junto com a mensagem.
-mod_sub             para o assinante depois que o moderador confirma a 
-                    sua subscrição.
-mod_sub_confirm     para o moderador de subscrição requerendo a confirmação.
+mod_sub             para o assinante depois que o moderador confirma a
+                    sua assinatura.
+mod_sub_confirm     para o moderador de assinatura requerendo a confirmação.
 mod_timeout         para o remetente de uma mensagem expirada.
 mod_unsub_confirm   para o administrador remoto confirmar o cancelamento
-                    de subscrição.
+                    de assinatura.
 sub_bad             para o assinante, se confirmado que a msg era inválida.
-sub_confirm         para o assinante solicitando confirmação de subscrição.
-sub_nop             para o assinante depois de re-subscrição.
-sub_ok              para o assinante depois de subscrição com sucesso.
+sub_confirm         para o assinante solicitando confirmação de assinatura.
+sub_nop             para o assinante depois de re-assinatura.
+sub_ok              para o assinante depois de assinatura com sucesso.
 top                 topo de todas as respostas.
 </#tn/>
 trailer             incluído em todas as mensagens enviadas pela lista.
@@ -729,8 +733,8 @@ O arquivo texto foi atualizado com sucesso.
 </text/info#E/>
 Ainda não há informações para esta lista.
 </text/faq#E/>
-FAQ - Questões mais freqüentes na lista <#l#>@<#H#>.
+FAQ - Perguntas mais freqüentes na lista <#l#>@<#H#>.
 
 Ainda não disponível.
-  
+
 

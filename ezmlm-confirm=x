@@ -22,10 +22,10 @@ error.a
 str.a
 fs.a
 case.a
-open.a
 seek.a
 wait.a
 lock.a
+open.a
 fd.a
 getopt.a
 auto_qmail.o

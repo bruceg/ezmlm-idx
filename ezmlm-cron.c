@@ -372,13 +372,7 @@ char **argv;
 
   if (!flaglist) {
 	/* now to rewrite crontab we need to lock */
-    fdlock = open_append("crontabl");
-    if (fdlock == -1)
-      strerr_die4sys(111,FATAL,ERR_OPEN,dir.s,"/crontabl: ");
-    if (lock_ex(fdlock) == -1) {
-      close(fdlock);
-    strerr_die4sys(111,FATAL,ERR_OBTAIN,dir.s,"/crontabl: ");
-    }
+    fdlock = lockfile("crontabl");
   } /* if !flaglist */
   if ((fdin = open_read("crontab")) == -1) {
     if (errno != error_noent)

@@ -139,11 +139,7 @@ int subscribe(const char *dbname,
     if (!stralloc_0(&fn)) die_nomem();
     if (!stralloc_0(&fnlock)) die_nomem();
 
-    fdlock = open_append(fnlock.s);
-    if (fdlock == -1)
-      strerr_die4sys(111,FATAL,ERR_OPEN,fnlock.s,": ");
-    if (lock_ex(fdlock) == -1)
-      strerr_die4sys(111,FATAL,ERR_OBTAIN,fnlock.s,": ");
+    fdlock = lockfile(fnlock.s);
 
 				/* do lower case hashed version first */
     fdnew = open_trunc(fnnew.s);

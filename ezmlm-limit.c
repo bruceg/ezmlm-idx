@@ -93,11 +93,7 @@ char **argv;
   if ((flagmod = getconf_line(&line,"modpost",0,dir)))
     _exit(0);		/* already mod */
 			/* lock for num and for writing loopnum */
-  fdlock = open_append("lock");
-  if (fdlock == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/lock: ");
-  if (lock_ex(fdlock) == -1)
-    strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/lock: ");
+  fdlock = lockfile("lock");
 
   if (!getconf_line(&line,"num",0,dir))
     _exit(99);						/* no msgs */

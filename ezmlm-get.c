@@ -172,13 +172,7 @@ void lockup()
 /* lock unless locked */
 {
   if(!flaglocked) {
-    fdlock = open_append("lock");
-    if (fdlock == -1)
-      strerr_die2sys(111,FATAL,ERR_OPEN_LOCK);
-    if (lock_ex(fdlock) == -1) {
-      close(fdlock);
-      strerr_die2sys(111,FATAL,ERR_OBTAIN_LOCK);
-    }
+    fdlock = lockfile("lock");
     flaglocked = 1;
   }
 }
@@ -1302,9 +1296,8 @@ char **argv;
       scan_ulong(action + pos + 1, &to);
 
     if(u == 0 || u > max) {
-      if (!stralloc_cats(&subject,"\n\n")) die_nomem();
-      qmail_puts(&qq,"Subject: ");
-      qmail_put(&qq,subject.s,subject.len);
+      hdr_add2("Subject: ",subject.s,subject.len);
+      qmail_puts(&qq,"\n");
       copy(&qq,"text/get-bad",flagcd);
     } else {	/* limit range to at most u-THREAD_BEFORE to u+THREAD_AFTER */
       if (u > THREAD_BEFORE)

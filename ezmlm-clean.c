@@ -151,12 +151,7 @@ char *d;
       hdr_add2("List-ID: ",listid.s,listid.len);
       hdr_datemsgid(when+msgnum++);
       hdr_from("-help");
-      qmail_puts(&qq,"Subject: ");
-      qmail_puts(&qq,TXT_RETURNED_POST);
-      qmail_put(&qq,quoted.s,quoted.len);
-      qmail_puts(&qq,"@");
-      qmail_put(&qq,outhost.s,outhost.len);
-      qmail_puts(&qq, "\n");
+      hdr_listsubject1(TXT_RETURNED_POST);
       hdr_add2s("To: ",to.s);
       if (flagmime) {
         if (getconf_line(&charset,"charset",0,dir)) {
@@ -305,11 +300,7 @@ char **argv;
   else if (delay > DELAY_MAX) delay = DELAY_MAX;
   older = (unsigned long) when - 3600L * delay;	/* delay is in hours */
 
-  fdlock = open_append("mod/lock");
-  if (fdlock == -1)
-    strerr_die4sys(0,FATAL,ERR_OPEN,dir,"/mod/lock: ");
-  if (lock_ex(fdlock) == -1)
-    strerr_die4sys(0,FATAL,ERR_OBTAIN,dir,"/mod/lock: ");
+  fdlock = lockfile("mod/lock");
 
   flagconf = 0;
   dodir("mod/pending/",flagreturn);

@@ -213,11 +213,7 @@ void main(int argc, char **argv)
   if (byte_diff(hash,COOKIE,action+confnum+1))
     die_badformat();
 
-  fdlock = open_append("mod/lock");
-  if (fdlock == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/mod/lock: ");
-  if (lock_ex(fdlock) == -1)
-    strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/mod/lock: ");
+  lockfile("mod/confirmlock");
 
   if (!checkfile(fnbase.s)) strerr_die2x(100,FATAL,ERR_MOD_TIMEOUT);
 /* Here, we have an existing filename in fnbase with the complete path */

@@ -217,7 +217,7 @@ C:<#C#>
 # manage message confirmations
 </confirmer#y/>
 </#my/>
-|<#B#>/ezmlm-confirm "<#B#>/ezmlm-store -Y '<#D#>'"
+|<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-store -Y '<#D#>'"
 </#My/>
 |<#B#>/ezmlm-confirm '<#D#>'
 </#iy/>
@@ -250,6 +250,8 @@ C:<#C#>
 |<#B#>/ezmlm-clean -R '<#D#>' || exit 0
 </#mUoY/>
 |<#B#>/ezmlm-store -P '<#D#>'
+</#mUOY/>
+|<#B#>/ezmlm-store '<#D#>'
 </#mUY/>
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
 </#muY/>

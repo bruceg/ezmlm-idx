@@ -271,11 +271,7 @@ char **argv;
 
   if (flags['e' - 'a'] & 1) {	/* lock for edit */
     dirplusmake("/lock");
-    fdlock = open_append(dirplus.s);
-    if (fdlock == -1)
-      strerr_die4sys(111,FATAL,ERR_OPEN,dirplus.s,": ");
-    if (lock_ex(fdlock) == -1)
-      strerr_die4sys(111,FATAL,ERR_OBTAIN,dirplus.s,": ");
+    fdlock = lockfile(dirplus.s);
 
 				/* for edit, try to get args from dir/config */
     dirplusmake("/config");

@@ -128,13 +128,7 @@ char **argv;
       (deltanum && ((dignum + deltanum) <= num))) {	/* digest! */
     if (flaglocal) {	/* avoid multiple digests. Of course, ezmlm-tstdig*/
 			/* belongs in ezmlm-digest, but it's too late ....*/
-      fdlock = open_append("lock");
-      if (fdlock == -1)
-        strerr_die2sys(111,FATAL,ERR_OPEN_LOCK);
-      if (lock_ex(fdlock) == -1) {
-        close(fdlock);
-        strerr_die2sys(111,FATAL,ERR_OBTAIN_LOCK);
-      }
+      fdlock = lockfile("lock");
       getconf_line(&line,"tstdig",0,dir);
       if (!stralloc_0(&line)) die_nomem();
       scan_ulong(line.s,&tsttime);	/* give digest 1 h to complete */

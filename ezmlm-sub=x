@@ -14,6 +14,6 @@ alloc.a
 error.a
 str.a
 case.a
-open.a
 lock.a
+open.a
 sql.lib

@@ -2,7 +2,6 @@ auto_version.o
 getconf.o
 now.o
 slurp.a
-open.a
 getopt.a
 fs.a
 strerr.a

@@ -129,11 +129,7 @@ int fdlock;
 
 void lock()
 {
-    fdlock = open_append("lock");
-    if (fdlock == -1)
-      strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/lock: ");
-    if (lock_ex(fdlock) == -1)
-      strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/lock: ");
+    fdlock = lockfile("lock");
 }
 
 void unlock()
@@ -471,12 +467,7 @@ char *action;
 	    qmail_puts(&qq,"@");
 	    qmail_put(&qq,outhost.s,outhost.len);	/* safe */
 	    qmail_puts(&qq,">\n");
-            qmail_puts(&qq,TXT_WELCOME);
-	    if (!quote(&quoted,&outlocal)) die_nomem();
-            qmail_put(&qq,quoted.s,quoted.len);
-            qmail_puts(&qq,"@");
-            qmail_put(&qq,outhost.s,outhost.len);
-            qmail_puts(&qq,"\n");
+	    hdr_listsubject1(TXT_WELCOME);
             hdr_ctboundary();
 	    if (!stralloc_copy(&confirm,&outlocal)) die_nomem();
 	    if (!stralloc_append(&confirm,"unsubscribe-")) die_nomem();
@@ -491,7 +482,7 @@ char *action;
     default:
             if (str_start(action,ACTION_TC))
               strerr_die2x(0,INFO,ERR_SUB_NOP);
-            qmail_puts(&qq,TXT_EZMLM_RESPONSE);
+	    hdr_listsubject1(TXT_SUB_NOP);
             hdr_ctboundary();
             copy(&qq,"text/top",flagcd);
             copy(&qq,"text/sub-nop",flagcd);
@@ -510,18 +501,14 @@ char *action;
   switch((r = subscribe(workdir,target.s,0,"","-",1,-1,(char *) 0))) {
 			/* no comment for unsubscribe */
     case 1:
-            qmail_puts(&qq,TXT_GOODBYE);
-            if (!quote(&quoted,&outlocal)) die_nomem();
-            qmail_put(&qq,quoted.s,quoted.len);
-            qmail_puts(&qq,"@");
-            qmail_put(&qq,outhost.s,outhost.len);
-            qmail_puts(&qq,"\n\n");
+            hdr_listsubject1(TXT_GOODBYE);
+            qmail_puts(&qq,"\n");
             hdr_ctboundary();
             copy(&qq,"text/top",flagcd);
             copy(&qq,"text/unsub-ok",flagcd);
             break;
     default:
-            qmail_puts(&qq,TXT_EZMLM_RESPONSE);
+	    hdr_listsubject1(TXT_UNSUB_NOP);
             hdr_ctboundary();
             copy(&qq,"text/top",flagcd);
             copy(&qq,"text/unsub-nop",flagcd);
@@ -559,20 +546,10 @@ char *act;	/* first letter of desired confirm request only as STRING! */
   qmail_puts(&qq,"\n");
   if (!stralloc_0(&confirm)) die_nomem();
 
-  qmail_puts(&qq,"Subject: ");
-  if (*act == ACTION_SC[0] || *act == ACTION_UC[0])
-    qmail_puts(&qq,TXT_USRCONFIRM);
-  else
-    qmail_puts(&qq,TXT_MODCONFIRM);
-  if (*act == ACTION_SC[0] || *act == ACTION_TC[0])
-    qmail_puts(&qq,TXT_SUBSCRIBE_TO);
-  else
-    qmail_puts(&qq,TXT_UNSUBSCRIBE_FROM);
-  if (!quote(&quoted,&outlocal)) die_nomem();
-  qmail_put(&qq,quoted.s,quoted.len);
-  qmail_puts(&qq,"@");
-  qmail_put(&qq,outhost.s,outhost.len);
-  qmail_puts(&qq,"\n");
+  hdr_listsubject2((*act == ACTION_SC[0] || *act == ACTION_UC[0])
+		   ? TXT_USRCONFIRM : TXT_MODCONFIRM,
+		   (*act == ACTION_SC[0] || *act == ACTION_TC[0])
+		   ? TXT_SUBSCRIBE_TO : TXT_UNSUBSCRIBE_FROM);
   hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 }
@@ -973,7 +950,7 @@ char **argv;
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
     if (!pmod)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
-    qmail_puts(&qq,TXT_EZMLM_RESPONSE);
+    hdr_listsubject1(TXT_SUB_LIST);
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 
@@ -996,7 +973,7 @@ char **argv;
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
     if (!pmod)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
-    qmail_puts(&qq,TXT_EZMLM_RESPONSE);
+    hdr_listsubject1(TXT_SUB_LOG);
     hdr_ctboundary();
     searchlog(workdir,action,code_subto);
     copybottom();
@@ -1060,14 +1037,7 @@ char **argv;
       qmail_puts(&qq,"\n");
       if (!stralloc_0(&confirm)) die_nomem();
 
-      qmail_puts(&qq,TXT_EDIT_RESPONSE);
-      qmail_puts(&qq,action+len+1);	/* has the '_' not '-' */
-      qmail_puts(&qq,TXT_EDIT_FOR);
-      if (!quote(&quoted,&outlocal)) die_nomem();
-      qmail_put(&qq,quoted.s,quoted.len);
-      qmail_puts(&qq,"@");
-      qmail_put(&qq,outhost.s,outhost.len);
-      qmail_puts(&qq,"\n");
+      hdr_listsubject3(TXT_EDIT_RESPONSE,action+len+1,TXT_EDIT_FOR);
       hdr_ctboundary();
       copy(&qq,"text/top",flagcd);
       copy(&qq,"text/edit-do",flagcd);
@@ -1078,7 +1048,7 @@ char **argv;
       (void) code_qput("\n",1);
 
     } else {	/* -edit only, so output list of editable files */
-      qmail_puts(&qq,TXT_EDIT_LIST);
+      hdr_listsubject1(TXT_EDIT_LIST);
       hdr_ctboundary();
       copy(&qq,"text/top",flagcd);
       copy(&qq,"text/edit-list",flagcd);
@@ -1208,14 +1178,7 @@ char **argv;
       strerr_die6sys(111,FATAL,ERR_MOVE,dir,"/",fneditn.s,": ");
 
     unlock();
-    qmail_puts(&qq,TXT_EDIT_SUCCESS);
-    qmail_puts(&qq,fname);
-    qmail_puts(&qq,TXT_EDIT_FOR);
-    if (!quote(&quoted,&outlocal)) die_nomem();
-    qmail_put(&qq,quoted.s,quoted.len);
-    qmail_puts(&qq,"@");
-    qmail_put(&qq,outhost.s,outhost.len);
-    qmail_puts(&qq,"\n");
+    hdr_listsubject3(TXT_EDIT_SUCCESS,fname,TXT_EDIT_FOR);
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/edit-done",flagcd);
@@ -1232,7 +1195,7 @@ char **argv;
 
     if (!flagget)
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
-    qmail_puts(&qq,TXT_EZMLM_RESPONSE);
+    hdr_listsubject1(TXT_GET_MSG);
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 
@@ -1279,7 +1242,7 @@ char **argv;
 
   } else if (case_starts(action,ACTION_QUERY) ||
 		case_starts(action,ALT_QUERY)) {
-    qmail_puts(&qq,TXT_EZMLM_RESPONSE);
+    hdr_listsubject1(TXT_STATUS);
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     if (pmod) {	/* pmod points to static storage in issub(). Need to do this */
@@ -1298,7 +1261,7 @@ char **argv;
 
   } else if (case_starts(action,ACTION_INFO) ||
 		case_starts(action,ALT_INFO)) {
-    qmail_puts(&qq,TXT_EZMLM_RESPONSE);
+    hdr_listsubject1(TXT_INFO_FOR);
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/info",flagcd);
@@ -1307,7 +1270,7 @@ char **argv;
 
   } else if (case_starts(action,ACTION_FAQ) ||
 		case_starts(action,ALT_FAQ)) {
-    qmail_puts(&qq,TXT_EZMLM_RESPONSE);
+    hdr_listsubject1(TXT_FAQ_FOR);
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/faq",flagcd);
@@ -1315,7 +1278,7 @@ char **argv;
     qmail_to(&qq,target.s);
 
   } else if (pmod && (act == AC_HELP)) {
-    qmail_puts(&qq,TXT_EZMLM_RESPONSE);
+    hdr_listsubject1(TXT_MOD_HELP);
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/mod-help",flagcd);
@@ -1325,7 +1288,7 @@ char **argv;
 
   } else {
     act = AC_HELP;
-    qmail_puts(&qq,TXT_EZMLM_RESPONSE);
+    hdr_listsubject1(TXT_HELP_FOR);
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/help",flagcd);

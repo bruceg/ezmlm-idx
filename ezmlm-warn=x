@@ -25,8 +25,8 @@ substdio.a
 stralloc.a
 alloc.a
 error.a
-open.a
 lock.a
+open.a
 str.a
 fs.a
 fd.a
