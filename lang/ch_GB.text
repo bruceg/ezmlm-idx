@@ -1,7 +1,7 @@
 # $Id$
 </mailinglist/>
 contact <#L#>-help@<#H#>; run by ezmlm
-</text/trailer#t/>
+</text/trailer#tE/>
 ---------------------------------------------------------------------
 取消注册，将电子邮件发送到：<#L#>-unsubscribe@<#H#>，如果需要更多的帮助，将
 电子邮件发送到：<#L#>-help@<#H#>。
@@ -73,11 +73,11 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 --- 随信附上的是系统收到的你发送的邮件。
 
-</text/bounce-bottom/>
+</text/bounce-bottom#E/>
 
 --- 随信附上的是系统收到的系统弹回（bounce）的邮件。
 
-</text/bounce-num/>
+</text/bounce-num#E/>
 
 系统已经保存了一份从<#L#>邮件列表发送到你的电子邮件地址被弹回（bounce）电子邮件。
 
@@ -97,7 +97,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 <//>
 下面是电子邮件的编号：
 
-</text/dig-bounce-num/>
+</text/dig-bounce-num#E/>
 
 系统已经保存了一份从<#L#>邮件列表发送到你的电子邮件地址被弹回（bounce）的摘要邮件。
 对于你错过的每份摘要，系统已经包含在发送给你的摘要邮件中的第一个邮件。系统没有将你
@@ -117,7 +117,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 <//>
 下面是摘要邮件的编号：
 
-</text/bounce-probe/>
+</text/bounce-probe#E/>
 
 从<#l#>邮件列表发送给你的电子邮件已经被弹回（bounce）。系统已经向你发送了一个警告的
 邮件，但是这个邮件同样被弹回（bounce）。系统将附上弹回（bounce）的邮件。
@@ -127,7 +127,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 知你。同样你也可以通过向下面的地址发送电子邮件的方式重新注册邮件列表：
    <<#l#>-subscribe@<#H#>>
 
-</text/bounce-warn/>
+</text/bounce-warn#E/>
 
 从<#l#>邮件列表发送给你的电子邮件已经被弹回（bounce）。系统已经将被弹回（bounce）的
 第一个电子邮件附上。
@@ -146,13 +146,13 @@ contact <#L#>-help@<#H#>; run by ezmlm
 向邮件列表发送电子邮件，将电子邮件发送到下面的地址：
 	<#L#>@<#H#>
 
-</text/get-bad/>
+</text/get-bad#E/>
 在邮件列表的历史文档中不能发现这条邮件。
 
-</text/help/>
+</text/help#E/>
 系统收到的电子邮件中没有包括系统能够处理的命令。
 
-</text/mod-help/>
+</text/mod-help#E/>
 你现在已经成为<#L#>@<#H#>邮件列表的管理者（moderator），下面将介绍作为一个邮件列表
 的所有者或管理者（moderator）你可以通过下面的方式对邮件列表的各个方面进行管理。
 
@@ -277,10 +277,10 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 注意：如果你在使用的过程中有任何的问题，请你与邮件列表的所有者(<#L#>-owner@<#H#>)联系。
 
-</text/mod-reject/>
+</text/mod-reject#E/>
 对不起，你发送到邮件列表的邮件没有被邮件列表的管理者批准。如果邮件列表的管理者对你的邮件
 做了评论，也附在这封邮件中。
-</text/mod-request/>
+</text/mod-request#E/>
 这封邮件是某人发送到<#L#>@<#H#>邮件列表中的。如果你希望邮件列表的注册用户都收到这封邮件，请
 将电子邮件发送到下面的地址：
 
@@ -322,13 +322,13 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 如果你希望得到更多的帮助，请将电子邮件发送到<#L#>-help@<#H#>。
 
-</text/mod-timeout/>
+</text/mod-timeout#E/>
 对不起，<#L#>邮件列表的管理者不能够处理你投递的邮件。系统将邮件退回给你，请你重新投递邮件或与邮
 件列表的管理者联系。
 
 --- 随信附上的是投递到邮件列表的电子邮件。
 
-</text/mod-sub-confirm/>
+</text/mod-sub-confirm#E/>
 用户!A请求注册<#l#>邮件列表，
 他的请求必须得到你的确认后才能完成，请将电子邮件发送到下面的地址：
 
@@ -345,7 +345,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 谢谢你的帮助！
 
-</text/mod-unsub-confirm/>
+</text/mod-unsub-confirm#E/>
 用户!A请求取消注册<#l#>邮件列表，
 他的请求必须得到你的确认后才能完成，请将电子邮件发送到下面的地址：
 
@@ -362,7 +362,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 谢谢你的帮助！
 
-</text/sub-bad/>
+</text/sub-bad#E/>
 用于确认的标记是非法的。
 
 最大的可能性是因为标记已经过期。用于确认的标记在10天内是有效的。还有一种可能是因为用于
@@ -385,7 +385,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 	<#L#>-Owner <<#l#>-owner@<#H#>>
 
-</text/sub-confirm/>
+</text/sub-confirm#E/>
 为了完成注册<#l#>邮件列表，你需要确认下面的地址是否正确
 
 !A
@@ -413,7 +413,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 这个邮件列表的注册是需要经过邮件列表的管理者批准的。一旦你回复了确认信，注册请求将直
 接发送到邮件列表的管理者。系统将通知你当邮件列表的管理者同意你加入邮件列表。
 
-</text/sub-nop/>
+</text/sub-nop#E/>
 下面的电子邮件地址
 
 !A
@@ -437,7 +437,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 </#x/>
 邮件列表所有者的电子邮件地址：<#l#>-owner@<#H#>.
 
-</text/unsub-bad/>
+</text/unsub-bad#E/>
 用于确认的标记是非法的。
 
 最大的可能性是因为标记已经过期。用于确认的标记在10天内是有效的。还有一种可能是因为用于
@@ -460,7 +460,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 	<#l#>-Owner <<#l#>-owner@<#H#>>
 
-</text/unsub-confirm/>
+</text/unsub-confirm#E/>
 为了完成从<#l#>邮件列表中取消注册，你需要确认下面的地址是否正确
 
 !A
@@ -485,7 +485,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 有些电子邮件的客户端程序不能够解析很长的地址。如果你不能够直接回复这封电子邮件，你可以向
 <<#L#>-request@<#H#>>发送邮件并将上面的地址放在邮件的主题中。
 
-</text/unsub-nop/>
+</text/unsub-nop#E/>
 下面的电子邮件地址
 
 !A
@@ -508,7 +508,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 他负责管理这个邮件列表。
 
-</text/unsub-ok/>
+</text/unsub-ok#E/>
 下面的地址
 
 !A

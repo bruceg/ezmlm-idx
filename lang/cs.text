@@ -5,7 +5,7 @@
 iso-8859-2:Q
 </mailinglist/>
 contact <#L#>-help@<#H#>; run by ezmlm
-</text/trailer#t/>
+</text/trailer#tE/>
 ---------------------------------------------------------------------
 Pro odhlá¹ení, po¹lete mail na <#L#>-unsubscribe@<#H#>
 Dal¹í pøíkazy vypí¹e e-mail: <#L#>-help@<#H#>
@@ -82,11 +82,11 @@ podstatnì pomalej¹í ne¾ já ;-)
 
 --- Pøipojuji kopii po¾adavku, který jsem dostal.
 
-</text/bounce-bottom/>
+</text/bounce-bottom#E/>
 
 --- Pøipojuji kopii zprávy, která se mi vrátila.
 
-</text/bounce-num/>
+</text/bounce-num#E/>
 
 Uschoval jsem si seznam zpráv z listu <#L#>, které se z va¹í adresy
 vrátily.
@@ -108,7 +108,7 @@ Seznam zpráv se subjectem a autorem zpráv 123-456 - e-mail:
 <//>
 Následují èísla zpráv:
 
-</text/dig-bounce-num/>
+</text/dig-bounce-num#E/>
 
 Uschoval jsem èísla digestù z listu <#L#>-digest, které se vrátily
 z va¹í adresy. Pro ka¾dý takový digest jsem si zapamatoval èíslo
@@ -131,7 +131,7 @@ Seznam zpráv se subjectem a autorem zpráv 123-456 - e-mail:
 <//>
 Následují èísla prvních zpráv v digestech:
 
-</text/bounce-probe/>
+</text/bounce-probe#E/>
 
 Vracejí se mi zprávy pro vás z listu <#l#>.
 Poslal jsem vám varovnou zprávu, ale ta se také vrátila.
@@ -143,7 +143,7 @@ bez dal¹ího upozornìní. Mù¾ete se pøihlásit znovu posláním prázdné zprávy
 na adresu
    <<#l#>-subscribe@<#H#>>
 
-</text/bounce-warn/>
+</text/bounce-warn#E/>
 
 Vracejí se mi zprávy pro vás z listu <#l#>.
 Pøipojuji kopii první vrácené zprávy, kterou jsem dostal.
@@ -162,14 +162,14 @@ Pro odhlá¹ení z digestu pou¾ijte adresu
 Chcete-li poslat zprávu do listu, pi¹te na adresu
 	<#L#>@<#H#>
 
-</text/get-bad/>
+</text/get-bad#E/>
 Promiòte, ale tato zpráva v archívu není.
 
-</text/help/>
+</text/help#E/>
 Toto je zpráva se v¹eobecnou nápovìdou. Zpráva, kterou jsem dostal,
 nebyla poslána na ¾ádnou z adres platných pro zasílání pøíkazù.
 
-</text/mod-help/>
+</text/mod-help#E/>
 Dìkuji, ¾e jste se uvoli moderovat nebo spravovat list <#L#>@<#H#>.
 
 Moje pøíkazy jsou ponìkud odli¹nìj¹í od jiných listù, ale myslím,
@@ -335,10 +335,10 @@ Mnoho ¹tìstí!
 PS: Prosím kontaktujte správce listu (<#L#>-owner@<#H#>),
 budete-li mít dotazy nebo problémy.
 
-</text/mod-reject/>
+</text/mod-reject#E/>
 Je mi líto, ale va¹e ní¾e citované zpráva nebyla potvrzena moderátorem.
 Pokud moderátor pøipojil nìjaký komentáø, uvádím jej ní¾e.
-</text/mod-request/>
+</text/mod-request#E/>
 Ní¾e citovaná zpráva byla zaslána na adresu listu <#L#>@<#H#>.
 Pokud souhlasíte s distribucí této zprávy v¹em pøihlá¹eným, po¹lete
 mail na adresu
@@ -389,14 +389,14 @@ Chcete-li získat podrobnìj¹í návod pro práci s listem <#L#>, po¹lete
 prázdnou zprávu na adresu
 <#L#>-help@<#H#>.
 
-</text/mod-timeout/>
+</text/mod-timeout#E/>
 Je mi líto, ale moderátor listu <#L#> nezareagoval na vá¹ pøíspìvek.
 Tento tedy pova¾uji za odmítnutý a vracím vám jej. Pokud máte pocit,
 ¾e do¹lo k chybì, obra»te se pøímo na moderátora listu.
 
 --- Dále uvádím vámi zaslanou zprávu.
 
-</text/mod-sub-confirm/>
+</text/mod-sub-confirm#E/>
 ®ádám zdvoøile oprávnìní pøidat adresu
 
 !A
@@ -421,7 +421,7 @@ Nesouhlasíte-li, ignorujte tuto zprávu.
 
 Díky za spolupráci!
 
-</text/mod-unsub-confirm/>
+</text/mod-unsub-confirm#E/>
 Obdr¾el jsem po¾adavek na zru¹ení adresy
 
 !A
@@ -444,7 +444,7 @@ Nesouhlasíte-li, ignorujte tuto zprávu.
 
 Dìkuji za spolupráci!
 
-</text/sub-bad/>
+</text/sub-bad#E/>
 Hmmm, tohle èíslo potvrzení nevypadá platnì.
 
 Nejèastìj¹ím dùvodem výskytu neplatných èísel je vypr¹ení èasu.
@@ -473,7 +473,7 @@ Omlouvám se za potí¾e.
 
 	<#L#>-Owner <<#l#>-owner@<#H#>>
 
-</text/sub-confirm/>
+</text/sub-confirm#E/>
 Chcete-li opravdu pøidat adresu
 
 !A
@@ -507,7 +507,7 @@ Tento list je moderovaný. Jakmile po¹lete potvrzení, po¾adavek
 bude poslán moderátorovi tohoto listu. Uvìdomím vás, jakmile
 bude pøihlá¹ení hotovo.
 
-</text/sub-nop/>
+</text/sub-nop#E/>
 Potvrzení: Adresa
 
 !A
@@ -536,7 +536,7 @@ Zdravím, tady je program ezmlm. Spravuji diskusní list
 Pracuji pro svého správce, který mù¾e být zasti¾en na adrese
 at <#l#>-owner@<#H#>.
 
-</text/unsub-bad/>
+</text/unsub-bad#E/>
 Hmmm, tohle èíslo potvrzení nevypadá platnì.
 
 Nejèastìj¹ím dùvodem výskytu neplatných èísel je vypr¹ení èasu.
@@ -565,7 +565,7 @@ Omlouvám se za potí¾e.
 
         <#L#>-Owner <<#l#>-owner@<#H#>>
 
-</text/unsub-confirm/>
+</text/unsub-confirm#E/>
 Potvrzujete-li, ¾e chcete adresu
 
 !A
@@ -595,7 +595,7 @@ adresy. Pokud nemù¾ete odpovìdìt na tuto adresu, po¹lete
 zprávu na adresu <<#L#>-request@<#H#>>
 a vlo¾te celou vý¹e uvedenou adresu do subjectu.
 
-</text/unsub-nop/>
+</text/unsub-nop#E/>
 Potvrzení: Adresa
 
 !A
@@ -628,7 +628,7 @@ mù¾ete být pøihlá¹en[a] mému správci:
 Tento se bude sna¾it vá¹ problém øe¹it. Mùj správce je tro¹ku pomalej¹í
 ne¾ já, tak¾e prosím o trochu trpìlivosti.
 
-</text/unsub-ok/>
+</text/unsub-ok#E/>
 Potvrzení: Zru¹il jsem adresu
 
 !A

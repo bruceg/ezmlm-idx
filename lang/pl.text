@@ -12,7 +12,7 @@
 ISO-8859-2
 </mailinglist/>
 contact <#L#>-help@<#H#>; run by ezmlm
-</text/trailer#t/>
+</text/trailer#tE/>
 ---------------------------------------------------------------------
 Wypisanie?     wy¶lij list: <#L#>-unsubscribe@<#H#>
 Wiêcej pomocy? wy¶lij list: <#L#>-help@<#H#>
@@ -88,11 +88,11 @@ od komputera, którym ja jestem ;-)
 
 --- Za³±cznik jest kopi± polecenia, które otrzyma³em.
 
-</text/bounce-bottom/>
+</text/bounce-bottom#E/>
 
 --- Za³±cznik jest kopi± odrzuconego listu, który dosta³em.
 
-</text/bounce-num/>
+</text/bounce-num#E/>
 
 Na wszelki wypadek przechowujê odrzucone listy z twojego adresu,
 wys³ane na listê o nazwie <#L#>. Aby dostaæ kopiê tych listów
@@ -110,7 +110,7 @@ wy¶lij pust± wiadomosæ na adres:
 <//>
 Poni¿ej znajduj± sie numery listów:
 
-</text/dig-bounce-num/>
+</text/dig-bounce-num#E/>
 
 Trzymam indeks przesy³ek, które nie zosta³y prawid³owo dorêczone
 pod Twój adres z listy <#L#>-digest. Mam zachowany numer pierwszego
@@ -130,7 +130,7 @@ wy¶lij pust± wiadomosæ pod adres: <#L#>-get.123_145@<#H#>.
 <//>
 Poni¿ej znajdziesz numery przegl±dów listy:
 
-</text/bounce-probe/>
+</text/bounce-probe#E/>
 
 Jeste¶ zapisany(a) na listê dyskusyjn± o nazwie <#l#>,
 niestety listy z niej nie mog± do Ciebie dotrzeæ, gdy¿ s± odrzucane
@@ -140,7 +140,7 @@ zmuszony bêdê wykresliæ Ciê z listy prenumeratorów, a nast±pi
 to w przypadku, je¶li i ten list nie zostanie przyjêty przez Twój
 serwer pocztowy.
 
-</text/bounce-warn/>
+</text/bounce-warn#E/>
 
 Poczta kierowana do Ciebie z listy <#l#> jest odrzucana przez Twój serwer.
 Za³±czam kopiê pierwszej przesy³ki, z dostarczeniem której mia³em k³opoty.
@@ -163,16 +163,16 @@ Aby wys³aæ cokolwiek na listê, pisz pod adres:
 	Opiekun listy pocztowej - 
         - <<#L#>-owner@<#H#>>
 
-</text/get-bad/>
+</text/get-bad#E/>
 Przykro mi, tego listu nie ma w archiwum.
 
-</text/help/>
+</text/help#E/>
 Niestety nie poda³e¶ prawid³owego adresu prenumeraty.
 List, który otrzyma³e¶, jest niczym innym, jak standardow± instrukcj±
 obs³ugi menad¿era list dyskusyjnych zainstalowanego na naszym serwerze.
 Mam nadziejê, ¿e teraz ju¿ sobie poradzisz.
 
-</text/mod-help/>
+</text/mod-help#E/>
 Dziêkujê za zgodê na zostanie moderatorem listy o adresie:
 <#L#>@<#H#>.
 
@@ -347,10 +347,10 @@ PS: Skontaktuj siê, proszê, z opiekunem listy pod adresem
 <#L#>-owner@<#H#>
 je¿eli masz jakie¶ pytania, lub napotkasz na problemy.
 
-</text/mod-reject/>
+</text/mod-reject#E/>
 Przykro mi, ale Twój list nie zosta³ zaakceptowany przez moderatora.
 Je¿eli moderator uczyni³ jakie¶ uwagi, zamieszczam je poni¿ej.
-</text/mod-request/>
+</text/mod-request#E/>
 Proszê o decyzjê czy b±d±c moderatorem zgadzasz siê na wys³anie
 za³±czonej przesy³ki na listê o nazwie <#L#>.
 
@@ -401,7 +401,7 @@ Je¿eli potrzebujesz informacji o tym, jak dostaæ siê do archiwum
 listy <#L#>, prze¶lij pusty list na adres:
 <#L#>-help@<#H#>
 
-</text/mod-timeout/>
+</text/mod-timeout#E/>
 Przykro mi, ale moderatorzy nie zareagowali na Twój list.
 Dlatego zwracam go Tobie, je¿eli uwa¿asz, ¿e kryje siê za tym
 jaki¶ b³±d maszyny, wy¶lij list ponownie, albo skontaktuj siê
@@ -409,7 +409,7 @@ bezpo¶rednio z moderatorem listy.
 
 --- W za³±czeniu Twoja oryginalna przesy³ka na listê.
 
-</text/mod-sub-confirm/>
+</text/mod-sub-confirm#E/>
 Bardzo proszê o zgodê na dodanie internauty o adresie:
 
 <#A#>
@@ -435,7 +435,7 @@ Je¿eli natomiast siê nie zgadzasz, po prostu zignoruj ten list.
 
 Dziekujê za pomoc!
 
-</text/mod-unsub-confirm/>
+</text/mod-unsub-confirm#E/>
 Bardzo proszê o Twoj± zgodê na usuniêcie internauty o adresie:
 
 !A
@@ -454,7 +454,7 @@ list, je¿eli u¿yjesz opcji "Odpowiedz/Reply".
 
 Dziekujê za pomoc!
 
-</text/sub-bad/>
+</text/sub-bad#E/>
 Hmmm, numer potwierdzenia wydaje mi siê nieprawid³owy.
 
 Najczêstsz± przyczyn± nieprawid³owo¶ci jest jego przeterminowanie.
@@ -486,7 +486,7 @@ Opiekun listy -
 <#L#>-owner@<#H#>
 <//>
 
-</text/sub-confirm/>
+</text/sub-confirm#E/>
 Aby potwierdziæ chêæ zapisania siê z adresu:
 
 !A
@@ -513,7 +513,7 @@ Lista jest moderowana. Kiedy wys³a³e¶ ju¿ potwierdzenie, chêæ prenumeraty
 zosta³a przes³ana moderatorowi. Zawiadomiê Ciê odrêbnym listem, je¶li
 zostaniesz wpisany(a) na listê prenumeratorów.
 
-</text/sub-nop/>
+</text/sub-nop#E/>
 
 Potwierdzenie: Adres poczty elektronicznej:
 
@@ -546,7 +546,7 @@ Jestem komputerem, bezdusznym s³ug± opiekuna listy, cz³owieka :-),
 którego mo¿na znale¼æ pod adresem:
 <#L#>-owner@<#H#>.
 
-</text/unsub-bad/>
+</text/unsub-bad#E/>
 Hmmm, numer potwierdzenia wydaje mi siê nieprawid³owy.
 
 Najczêstsz± przyczyn± nieprawid³owo¶ci jest przeterminowanie,
@@ -575,7 +575,7 @@ Przepraszam za k³opoty.
 Opiekun -
 <#L#>-owner@<#H#>
 
-</text/unsub-confirm/>
+</text/unsub-confirm#E/>
 Aby potwierdziæ, ¿e chcesz usunac adres
 
 !A
@@ -599,7 +599,7 @@ Ka¿dy list ma schowany Twój adres w scie¿ce zwrotnej; np.
 Bóg@example.com dostaje listy ze scie¿k± zwrotn±:
 <<#l#>-return-<number>-Bóg=example.com@<#H#>.
 
-</text/unsub-nop/>
+</text/unsub-nop#E/>
 Powiadomienie: Adresu pocztowego
 
 !A
@@ -634,7 +634,7 @@ mailto:<#L#>-owner@<#H#>
 który to opiekun siê tym zajmie. We¼ pod uwagê, ¿e cz³owiek jest nieco
 wolniejszy od komputera :-), wiêc b±d¼ cierpliwy(a).
 
-</text/unsub-ok/>
+</text/unsub-ok#E/>
 Zawiadomienie: usun±³em adres pocztowy
 
 !A

@@ -5,7 +5,7 @@
 iso-8859-1:Q
 </mailinglist/>
 contact <#L#>-help@<#H#>; run by ezmlm
-</text/trailer#t/>
+</text/trailer#tE/>
 ---------------------------------------------------------------------
 Vil du fjernes fra listen, så skriv til: <#L#>-unsubscribe@<#H#>
 Vil du have en kommandooversigt, skriv til: <#L#>-help@<#H#>
@@ -90,11 +90,11 @@ til selve mailing listen, f.eks. for at blive frameldt.
 
 --- Vedlagt: En kopi af det kommando brev du sendte til mig.
 
-</text/bounce-bottom/>
+</text/bounce-bottom#E/>
 
 --- Vedlagt: En kopi af det brev som ikke kunne afleveres.
 
-</text/bounce-num/>
+</text/bounce-num#E/>
 
 Jeg har hold øje med hvilke breve fra <#L> listen der er
 kommet retur fordi de ikke kunne afleveres til dig.
@@ -118,7 +118,7 @@ breve ved at sende et tomt brev til:
 <//>
 Her er brevnumrene:
 
-</text/dig-bounce-num/>
+</text/dig-bounce-num#E/>
 
 Jeg har gemt en liste over hvilke udtræk fra <#L#> listen som er
 kommet retur fordi de ikke kunne afleveres. Kopier af disse breve
@@ -140,7 +140,7 @@ breve ved at sende et tomt brev til:
 <//>
 Her er en liste over brevnumre i udtrækket:
 
-</text/bounce-probe/>
+</text/bounce-probe#E/>
 
 <#L#> listen har haft svigtende held med at aflevere breve til dig.
 Jeg har sendt dig en advarsel, men den kom retur. Fejlmeddelse vedlagt.
@@ -150,7 +150,7 @@ det ikke lykkes, bliver du automatisk fjernet fra <#L#>listen.
 Du kan melde dig til igen ved at sende et tomt brev til:
    <<#l#>-subscribe@<#H#>>
 
-</text/bounce-warn/>
+</text/bounce-warn#E/>
 
 Mine breve til dig fra <#l#> er kommet retur uden at kunne afleveres.
 Kopi af fejlmeddelsen er vedlagt.
@@ -170,14 +170,14 @@ brev til:
 Du kan sende et brev ud til alle liste modtagerne ved at skrive til:
 	<#L#>@<#H#>
 
-</text/get-bad/>
+</text/get-bad#E/>
 Ikke godt. Det brev findes ikke i arkivet.
 
-</text/help/>
+</text/help#E/>
 Dette er en generel hjælpetekst. Det brev jeg modtog fra dig var
 ikke sendt til nogen af mine kommandoadresser.
 
-</text/mod-help/>
+</text/mod-help#E/>
 Tak fordi du vil moderere <#L#>@<#H#> listen.
 
 Mine kommandoer er lidt anderledes end i andre postlister,
@@ -332,11 +332,11 @@ Held og lykke!
 PS: Kontakt venligst liste ejeren (<#L#>-owner@<#H#>)
 hvis du har spørgsmål eller problemer.
 
-</text/mod-reject/>
+</text/mod-reject#E/>
 Jeg må desværre meddele at dit brev (vedlagt) ikke er blevet godkendt
 af moderator. Hvis moderatoren har skrevet en kommentar, ses den
 nedenfor.
-</text/mod-request/>
+</text/mod-request#E/>
 Det vedlagte brev er blevet postet til <#L#>@<#H#> listen.
 Hvis du vil godkende at det kommer ud til alle abonnenterne,
 skriver du til:
@@ -389,14 +389,14 @@ ejeren på (<#l#>-owner@<#H#>).
 Hvis du ønsker oplysninger om hvordan man bruger <#L#> arkivet,
 send et tomt brev til <#L#>-help@<#H#>.
 
-</text/mod-timeout/>
+</text/mod-timeout#E/>
 Moderator fra <#L#> listen har desværre ikke reageret på dit brev.
 Derfor sender jeg det hermed retur til dig. Hvis du mener det er
 en fejl, send brevet igen eller kontakt en moderator direkte.
 
 --- Enclosed, please find the message you sent.
 
-</text/mod-sub-confirm/>
+</text/mod-sub-confirm#E/>
 Jeg beder hermed om din tilladelse til at tilføje
 
 !A
@@ -421,7 +421,7 @@ Hvis du ikke vil godkende, kan du bare glemme dette brev.
 
 Tak for hjælpen!
 
-</text/mod-unsub-confirm/>
+</text/mod-unsub-confirm#E/>
 Nogen har bedt om at få fjernet
 
 !A
@@ -444,7 +444,7 @@ Hvis du ikke vil godkende, kan du bare ignorere dette brev.
 
 Tak for hjælpen!
 
-</text/sub-bad/>
+</text/sub-bad#E/>
 Ups, bekræftelsesnummeret er ikke gyldigt.
 
 Den mest almindelige grund til ugyldige numre er at deres levetid
@@ -473,7 +473,7 @@ Undskyld besværet.
 
 	<#L#>-Owner <<#l#>-owner@<#H#>>
 
-</text/sub-confirm/>
+</text/sub-confirm#E/>
 Hvis du vil bekræfte at du vil have
 
 !A
@@ -505,7 +505,7 @@ Denne liste er modereret. Når du har sendt denne bekræftelse,
 vil moderator få besked om af godkende. Du får besked når
 din tilmelding er blevet aktiv.
 
-</text/sub-nop/>
+</text/sub-nop#E/>
 Anerkendelse: Adressen
 
 !A
@@ -533,7 +533,7 @@ Hej! Dette er ezmlm programmet. Jeg håndterer <#l#>@<#H#> listen.
 Jeg arbejder for min ejer som kan nås på
 <#l#>-owner@<#H#>.
 
-</text/unsub-bad/>
+</text/unsub-bad#E/>
 Ups! Bekræftelsesnummeret er ikke gyldigt.
 
 Den mest almindelige grund til ugyldige numre er at deres levetid
@@ -562,7 +562,7 @@ Undskyld besværet.
 
         <#l#>-Owner <<#l#>-owner@<#H#>>
 
-</text/unsub-confirm/>
+</text/unsub-confirm#E/>
 Hvis du vil bekræfte at du vil have
 
 !A
@@ -592,7 +592,7 @@ adresser. Hvis du er ramt af et sådant, kan du istedet skrive
 til <<#L#>-request@<#H#>> og putte hele adressen ovenfor i emne
 linjen.
 
-</text/unsub-nop/>
+</text/unsub-nop#E/>
 Anerkendelse: Adressen
 
 !A
@@ -629,7 +629,7 @@ andresser du evt. kan være tilmeldt under. Ejeren,
 Vil tage sig af det. Min ejer er ikke så hurtig som mig, så hav
 venligst lidt tålmodighed.
 
-</text/unsub-ok/>
+</text/unsub-ok#E/>
 Anderkendelse: Jeg har fjernet adressen
 
 !A

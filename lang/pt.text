@@ -4,7 +4,7 @@
 ISO-8859-1:Q
 </mailinglist/>
 contacte <#L#>-help@<#H#>; gerenciado pelo ezmlm
-</text/trailer#t/>
+</text/trailer#tE/>
 ---------------------------------------------------------------------
 Para cancelar a subscrição, envie mensagem para: <#L#>-unsubscribe@<#H#>
 Para comandos adicionais, envie mensagem para: <#L#>-help@<#H#>
@@ -83,11 +83,11 @@ muito mais lento do que eu ;-)
 
 --- Abaixo está uma cópia da requisição que eu recebi.
 
-</text/bounce-bottom/>
+</text/bounce-bottom#E/>
 
 --- Abaixo está uma cópia da mensagem devolvida que eu recebi.
 
-</text/bounce-num/>
+</text/bounce-num#E/>
 
 Eu mantenho um controle das mensagens da lista <#L> que não
 foram entregues para o seu endereço.
@@ -109,7 +109,7 @@ envie uma mensagem vazia para:
 <//>
 Aqui estão os números das mensagens:
 
-</text/dig-bounce-num/>
+</text/dig-bounce-num#E/>
 
 Eu mantenho um controle de quais mensagens da lista <#L#>-digest
 não foram entregues para o seu endereço. Para cada "digest" que você
@@ -132,7 +132,7 @@ mensagens, envie uma mensagem vazia para:
 <//>
 Aqui estão os números dos "digests":
 
-</text/bounce-probe/>
+</text/bounce-probe#E/>
 
 Mensagens da lista <#l#> para você estão sendo devolvidas.
 Eu enviei um aviso para você, que também foi devolvido.
@@ -144,7 +144,7 @@ for devolvida, eu removerei o seu endereço da lista
 lista enviando uma mensagem vazia para o endereço:
    <<#l#>-subscribe@<#H#>>
 
-</text/bounce-warn/>
+</text/bounce-warn#E/>
 
 Mensagens da lista <#l#> para você não foram entregues.
 Eu anexei uma cópia da primeira mensagem que eu recebi de volta.
@@ -163,14 +163,14 @@ Para cancelar a subscrição da lista "digest", envie mensagem para:
 Para enviar mensagens para a lista, use o endereço:
 	<#L#>@<#H#>
 
-</text/get-bad/>
+</text/get-bad#E/>
 Sinto muito, esta mensagem não está arquivada.
 
-</text/help/>
+</text/help#E/>
 Esta é uma mensagem de ajuda genérica. A mensagem que eu recebi 
 não era para os meus endereços de comando.
 
-</text/mod-help/>
+</text/mod-help#E/>
 Obrigado por concordar em moderar a lista
 <#L#>@<#H#>.
 
@@ -347,10 +347,10 @@ Boa sorte!
 PS: Por favor, contacte o dono da lista (<#L#>-owner@<#H#>) se você
 tiver qualquer dúvida ou problema.
 
-</text/mod-reject/>
+</text/mod-reject#E/>
 Sinto muito, sua mensagem (incluída) não foi aceita pelo moderador.
 Se o moderador fez algum comentário, este será mostrado abaixo.
-</text/mod-request/>
+</text/mod-request#E/>
 Esta mensagem foi submetida à lista <#L#>@<#H#>.
 Se você aprova a mensagem para distribuição a todos
 os assinantes, por favor envie mensagem para:
@@ -407,7 +407,7 @@ Se você quer alguma informação em como acessar o arquivo
 da lista <#L#>, basta enviar uma mensagem vazia para 
 <#L#>-help@<#H#>.
 
-</text/mod-timeout/>
+</text/mod-timeout#E/>
 Sinto muito, os moderadores não tomaram nenhuma ação com a sua
 mensagem. Eu a estou retornado para você. Se você acha que isto
 é um erro, por favor reenvie sua mensagem ou contacte um moderador
@@ -415,7 +415,7 @@ da lista diretamente.
 
 --- Inclusão, por favor encontre a mensagem que você enviou.
 
-</text/mod-sub-confirm/>
+</text/mod-sub-confirm#E/>
 Respeitosamente eu solicito sua permissão para incluir
 
 !A
@@ -440,7 +440,7 @@ Se você não aprovar, simplesmente ignore esta mensagem.
 
 Obrigado pela sua ajuda!
 
-</text/mod-unsub-confirm/>
+</text/mod-unsub-confirm#E/>
 Foi feito um pedido para remover
 
 !A
@@ -463,7 +463,7 @@ Se você não aprova, simplesmente ignore esta mensagem.
 
 Obrigado pela sua ajuda!
 
-</text/sub-bad/>
+</text/sub-bad#E/>
 Este número de confirmação perece ser inválido.
 
 A maioria dos casos de números inválidos é devida a expiração. Eu 
@@ -494,7 +494,7 @@ Sinto muito pelo problema.
 
 	<#L#>-Owner <<#l#>-owner@<#H#>>
 
-</text/sub-confirm/>
+</text/sub-confirm#E/>
 Para confirmar que você deseja que
 
 !A
@@ -529,7 +529,7 @@ Esta lista é moderada. Depois que você enviar esta confirmação,
 o pedido será enviado para o(s) moderador(es) desta lista. Eu notificarei
 você quando sua subscrição for ativada.
 
-</text/sub-nop/>
+</text/sub-nop#E/>
 Confirmação: o endereço
 
 !A
@@ -558,7 +558,7 @@ a lista <#l#>@<#H#>.
 Eu estou trabalhando para o meu dono, que pode ser
 contactado pelo endereço <#l#>-owner@<#H#>.
 
-</text/unsub-bad/>
+</text/unsub-bad#E/>
 O número de confirmação perece ser inválido.
 
 A maioria dos casos de números inválidos é devida a expiração. Eu 
@@ -589,7 +589,7 @@ Sinto muito pelo problema.
 
 	<#l#>-Owner <<#l#>-owner@<#H#>>
 
-</text/unsub-confirm/>
+</text/unsub-confirm#E/>
 Para confirmar que você deseja que
 
 !A
@@ -622,7 +622,7 @@ causa disto, envie uma mensagem para <<#L#>-request@<#H#>>
 e coloque o endereço inteiro listado abaixo na linha "Subject:" ou
 "Assunto:".
 
-</text/unsub-nop/>
+</text/unsub-nop#E/>
 Confirmação: o endereço
 
 !A
@@ -657,7 +657,7 @@ observação sobre o que você está tentando fazer para o meu dono:
 que cuidará disto. Meu dono é um pouco mais lento do que eu,
 por favor tenha paciência.
 
-</text/unsub-ok/>
+</text/unsub-ok#E/>
 Confirmação: Eu removi o endereço
 
 !A
