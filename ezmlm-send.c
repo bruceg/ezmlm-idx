@@ -400,8 +400,7 @@ char **argv;
 		(void) scan_ulong(optarg+pos,&hash_hi);
 		if (hash_hi > 52L) hash_hi = 52L;
 		if (hash_lo > hash_hi) hash_lo = hash_hi;
-
- break;
+		break;
       case 'q': break;
       case 'Q': break;
       case 'v':
