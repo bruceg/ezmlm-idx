@@ -766,12 +766,7 @@ void doheaders()
   }
   qmail_puts(&qq,"\n");
   hdr_datemsgid(when);
-  qmail_puts(&qq,"From: ");
-  if (!quote(&quoted,&outlocal)) die_nomem();
-  qmail_put(&qq,quoted.s,quoted.len);
-  qmail_puts(&qq,"-help@");
-  qmail_put(&qq,outhost.s,outhost.len);
-  qmail_puts(&qq,"\n");
+  hdr_from("-help");
   if (!stralloc_copys(&mydtline,"Delivered-To: responder for ")) die_nomem();
   if (!stralloc_catb(&mydtline,outlocal.s,outlocal.len)) die_nomem();
   if (!stralloc_cats(&mydtline,"@")) die_nomem();

@@ -338,16 +338,13 @@ char **argv;
     }
     qmail_puts(&qq,"\n");
     hdr_datemsgid(when);
-    qmail_puts(&qq,"From: ");
-    if (!quote(&quoted,&outlocal)) die_nomem();
-    qmail_put(&qq,quoted.s,quoted.len);
-    qmail_puts(&qq,"-owner@");
-    qmail_put(&qq,outhost.s,outhost.len);
+    hdr_from("-owner");
     if (replyto) {
-      qmail_puts(&qq,"\nReply-To: ");
+      qmail_puts(&qq,"Reply-To: ");
       qmail_puts(&qq,replyto);
+      qmail_puts(&qq,"\n");
     }
-    qmail_puts(&qq, "\nTo: ");
+    qmail_puts(&qq, "To: ");
     qmail_puts(&qq,to.s);
     qmail_puts(&qq,"\nSubject: ");
     qmail_puts(&qq,TXT_RETURNED_POST);

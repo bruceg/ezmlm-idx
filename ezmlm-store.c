@@ -316,15 +316,14 @@ char **argv;
   }
   qmail_puts(&qq,"\n");
   hdr_datemsgid(when);
-  qmail_puts(&qq,"From: ");
   if (flagconfirm) {
-    qmail_put(&qq,outlocal.s,outlocal.len);
-    qmail_puts(&qq,"-owner@");
-    qmail_put(&qq,outhost.s,outlocal.len);
+    hdr_from("-owner");
   } else {
+    qmail_puts(&qq,"From: ");
     qmail_puts(&qq,reject.s);
+    qmail_puts(&qq,"\n");
   }
-  qmail_puts(&qq,"\nReply-To: ");
+  qmail_puts(&qq,"Reply-To: ");
   qmail_puts(&qq,accept.s);
   if (!flagconfirm && !pmod && flagremote) {	/* if remote admin add -allow- address */
     qmail_puts(&qq,"\nCc: ");	/* for ezmlm-gate users */

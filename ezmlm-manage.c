@@ -387,14 +387,9 @@ void msg_headers()
   qmail_put(&qq,outhost.s,outhost.len);
   qmail_puts(&qq,">\n");
   hdr_datemsgid(when);
-  qmail_puts(&qq,"From: ");
-  qmail_put(&qq,quoted.s,quoted.len);
-  if (act == AC_HELP)		/* differnt "From:" for help to break auto- */
-    qmail_puts(&qq,"-return-@");	/* responder loops */
-  else
-    qmail_puts(&qq,"-help@");
-  qmail_put(&qq,outhost.s,outhost.len);
-  qmail_puts(&qq,"\nTo: ");
+  /* differnt "From:" for help to break auto-responder loops */
+  hdr_from((act == AC_HELP) ? "-return-" : "-help");
+  qmail_puts(&qq,"To: ");
   if (!quote2(&quoted,target.s)) die_nomem();
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"\n");

@@ -145,12 +145,8 @@ int flagw;
   if (flagcd) {
     if (!stralloc_0(&line)) die_nomem();
   }
-  qmail_puts(&qq,"From: ");
-  if (!quote(&quoted,&outlocal)) die_nomem();
-  qmail_put(&qq,quoted.s,quoted.len);
-  qmail_puts(&qq,"-help@");
-  qmail_put(&qq,outhost.s,outhost.len);
-  qmail_puts(&qq,"\nTo: ");
+  hdr_from("-help");
+  qmail_puts(&qq,"To: ");
   if (!quote2(&quoted,addr.s)) die_nomem();
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"\n");

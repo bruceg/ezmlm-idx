@@ -73,6 +73,7 @@ stralloc cmds = {0};
 stralloc from = {0};
 stralloc to = {0};
 stralloc charset = {0};
+stralloc quoted = {0};
 char boundary[COOKIE] = "zxcaeedrqcrtrvthbdty";	/* cheap "rnd" MIME boundary */
 int flagcd = '\0';				/* no encoding by default */
 
@@ -673,15 +674,7 @@ char **argv;
     }
     qmail_puts(&qq,"\n");
     hdr_datemsgid(now());
-    qmail_puts(&qq,"From: ");
-    if (!quote2(&line,outlocal.s)) die_nomem();
-    qmail_put(&qq,line.s,line.len);
-    if (cmdidx == EZREQ_HELP)
-      qmail_puts(&qq,"-return-@");
-    else
-      qmail_puts(&qq,"-help@");
-    qmail_puts(&qq,outhost.s);
-    qmail_puts(&qq,"\n");
+    hdr_from((cmdidx == EZREQ_HELP) ? "-return-" : "-help");
     qmail_put(&qq,mydtline.s,mydtline.len);
     qmail_puts(&qq,"To: ");
     if (!quote2(&line,to.s)) die_nomem();
