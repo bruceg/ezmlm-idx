@@ -28,6 +28,7 @@ cn_GB,cs,pl,ru,da,pt_BR,pt
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
+ezmlm-idx-0.433, 20050109
 =========================
 -Fixed a problem in passing options to ezmlm-send in ezmlm-confirm,
  ezmlm-moderate, and ezmlm-store.  Thanks Ueli Heuer.
