@@ -237,6 +237,12 @@ char **argv;
     flagforward = 0;		/* nor forward requests */
   }
 
+  sender = env_get("SENDER");
+  if (!sender)
+    strerr_die2x(100,FATAL,ERR_NOSENDER);
+  if (!*sender)
+    strerr_die2x(100,FATAL,ERR_BOUNCE);
+
   if (flagparsemime) {		/* set up MIME parsing */
     getconf(&mimeremove,"mimeremove",0,FATAL,dir);
       constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0);
@@ -332,9 +338,6 @@ char **argv;
 
   if (flagrejectcommands && flaghavecommand)
     if (flagforward) {			/* flagforward => forward */
-      sender = env_get("SENDER");
-      if (!sender || !*sender)		/* can't [won't] forward */
-        strerr_die2x(100,FATAL,ERR_SUBCOMMAND);
       if (qmail_open(&qq,(stralloc *) 0) == -1)	/* open queue */
 	strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
       qmail_put(&qq,mydtline.s,mydtline.len);

@@ -643,6 +643,17 @@ if [ "$SECT" = "1" ]; then
   CC="<>"
   BODY=''
 
+  ${EZBIN}/ezmlm-reject "${DIR}" </dev/null >/dev/null 2>&1 && \
+        { ${ECHO} "failed to reject missing \$SENDER"; \
+          exit 100; }
+
+  SENDER=''; export SENDER
+  ${EZBIN}/ezmlm-reject "${DIR}" </dev/null >/dev/null 2>&1 && \
+        { ${ECHO} "failed to reject empty sender"; \
+          exit 100; }
+
+  SENDER="${SND}@$HOST"; export SENDER
+
 # with directory
   make_message | ${EZBIN}/ezmlm-reject "${DIR}" || \
 	{ ${ECHO} "failed to accept good message with dir"; \

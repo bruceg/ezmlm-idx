@@ -36,6 +36,7 @@ in the next version.
  mechanism to use.  This replaces the "make std/mysql/pgsql" mechanism.
  Adapted from patch by Tullio Andreatta.
 -Got rid of the frivolous uses of /bin/sh to exec ezmlm-send.
+-Always reject bounce messages in ezmlm-reject.
 
 ezmlm-idx-0.421, 20040602
 =========================
