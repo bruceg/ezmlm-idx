@@ -1,0 +1,10 @@
+# $Id$
+
+if [ "$SECT" -le "5" ]; then
+
+  unset QMAILQUEUE
+  unset SENDER
+  unset LOCAL
+  unset DEFAULT
+
+fi

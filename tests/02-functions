@@ -1,0 +1,43 @@
+# $Id$
+
+grephdr() {
+  # Search for the header line, and produce an error if it didn't match.
+  ${GREP} -i "^$*$" "${QQHDR}" >/dev/null 2>&1 || \
+  {
+    ${ECHO} "Header is missing or wrong $1 line:";
+    ${GREP} -i "^$1" "${QQHDR}"
+    BUG="${BUG} headers"
+    prompt "..............: "
+  }
+  # Remove any found lines from the header file
+  ${GREP} -iv "^$1" "${QQHDR}" >"${TMP}hdr"
+  ${MV} -f "${TMP}hdr" "${QQHDR}"
+}
+
+grephdr_std() {
+  grephdr mailing-list: "contact ${LOC}-help@${HOST}; run by ezmlm"
+  grephdr date: ".. ... .... ..:..:.. [-+]...."
+  grephdr message-id: "<[0123456789]*\\.[0123456789]*\\.ezmlm@${HOST}>"
+  grephdr delivered-to: "responder for ${LOC}@${HOST}"
+  grephdr mime-version: 1.0
+}
+
+grephdr_manage() {
+  grephdr_std
+  grephdr list-help: "<mailto:${LOC}-help@${HOST}>"
+  grephdr list-post: "<mailto:${LOC}@${HOST}>"
+  grephdr list-subscribe: "<mailto:${LOC}-subscribe@${HOST}>"
+  grephdr from: "${LOC}-help@${HOST}"
+  grephdr to: "test@example.org"
+  grephdr content-type: "text/plain; charset=.*"
+}
+
+grephdr_empty() {
+  # Use this after all other grephdr checks to ensure nothing else was output
+  test -s "${QQHDR}" && \
+  {
+    ${ECHO} "Headers contained extra lines:"
+    ${CAT} "${QQHDR}"
+    BUG="${BUG} headers"
+  }
+}

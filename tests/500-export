@@ -1,0 +1,14 @@
+# $Id$
+
+if [ "$SECT" -le "5" ]; then
+
+  QMAILQUEUE="${QQTEST}"; export QMAILQUEUE
+  SENDER="test@example.org"; export SENDER
+  ${ECHO} "From: Test <${SENDER}>" >"${TMP}"
+
+  ${ECHO} Verifying message header and body contents...
+
+  ${EZBIN}/ezmlm-make -+ -S "$DIR" || \
+  { ${ECHO} "ezmlm-make failed"; exit 100; }
+
+fi

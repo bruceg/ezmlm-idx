@@ -1,0 +1,19 @@
+# $Id$
+
+if [ "$SECT" -le "5" ]; then
+
+  prompt "ezmlm-manage (unsubscribe probe): "
+
+  DEFAULT="unsubscribe"; export DEFAULT
+  LOCAL="${LOC}-${DEFAULT}"; export LOCAL
+  ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  { ${ECHO} "failed to produce unsubscribe probe"; exit 100; }
+
+  grephdr_manage
+  grephdr reply-to: "${LOC}-uc\\..*\\..*-test=example.org@${HOST}"
+  grephdr subject: "confirm unsubscribe from ${LOC}@${HOST}"
+  grephdr_empty
+
+  ${ECHO} OK
+
+fi

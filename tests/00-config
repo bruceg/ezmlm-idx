@@ -61,6 +61,12 @@ QQMSG="${DIR}/__qqmsg"
 # file to hold the envelope output from qmail-queue
 QQENV="${DIR}/__qqenv"
 
+# file to hold the message headers output from qmail-queue
+QQHDR="${DIR}/__qqhdr"
+
+# file to hold the message body output from qmail-queue
+QQBODY="${DIR}/__qqbody"
+
 # defaults for SQL version - overridden by command line switches
 TABLE='list'
 DB='ezmlm'
