@@ -31,6 +31,7 @@ in the next version.
 =========================
 -Added missing ezmlm-confirm.0 target.
 -Auto-generate all version strings from the VERSION file.
+-Fixed up the broken Swedish translation.  Thanks Mads E. Eilertsen.
 
 ezmlm-idx-0.43, 20041125
 ========================
