@@ -14,7 +14,6 @@ struct datetime {
 
 typedef long datetime_sec;
 
-extern void datetime_tai();
-extern datetime_sec datetime_untai();
+extern void datetime_tai(struct datetime *dt,datetime_sec t);
 
 #endif

@@ -1,9 +1,7 @@
 /* 19950925 */
 #include "datetime.h"
 
-void datetime_tai(dt,t)
-struct datetime *dt;
-datetime_sec t;
+void datetime_tai(struct datetime *dt,datetime_sec t)
 {
   int day;
   int tod;
