@@ -62,7 +62,6 @@ n'ont temporairement pas pu etre delivres a votre adresse.
 </#aE/>
 Une copie de ces messages doit se trouver dans l'archive.
 
-</#aE/>
 Pour obtenir l'ensemble des messages depuis le numero 123 jusqu'au numero 145
 (avec un maximum de 100 par requete), envoyez un message vide avec un sujet
 quelconque a :

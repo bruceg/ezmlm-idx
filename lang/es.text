@@ -74,8 +74,6 @@ He guardado una lista de todos los mensajes de la lista de correo
 
 Una copia de estos mensajes puede estar en el archivo.
 
-</#aE/>
-
 Para recibir los mensajes desde el número 123 al 145 (con un
 máximo de 100 por petición), escriba a:
 
@@ -500,7 +498,6 @@ no funciona, simplemente copie la dirección y péguela en el campo
 o haga clic aquí:
 
 	mailto:<#R#>
-</#E/>
 
 Si no está de acuerdo, simplemente ignore este mensaje. 
 
