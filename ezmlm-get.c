@@ -61,7 +61,6 @@ void die_badaddr()
   strerr_die2x(100,FATAL,ERR_BAD_ADDRESS);
 }
 
-stralloc inhost = {0};
 stralloc outhost = {0};
 stralloc inlocal = {0};
 stralloc outlocal = {0};

@@ -77,7 +77,6 @@ void die_cookie()
   strerr_die2x(100,FATAL,ERR_MOD_COOKIE);
 }
 
-stralloc inhost = {0};
 stralloc outhost = {0};
 stralloc inlocal = {0};
 stralloc outlocal = {0};

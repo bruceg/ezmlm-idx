@@ -41,7 +41,7 @@
 #define ERR_NOT_INDEXED "Sorry, this list is not indexed (#5.1.1)"
 #define ERR_NOT_AVAILABLE "Command not available (#5.1.1)"
 #define ERR_NOT_ALLOWED "Command allowed only to moderators (#5.7.1)"
-#define ERR_BAD_ADDRESS "I don't accept messages at this address (inlocal and/or inhost don't match) (#5.1.1)"
+#define ERR_BAD_ADDRESS "I don't accept messages at this address (inlocal doesn't match) (#5.1.1)"
 #define ERR_BAD_RETURN_ADDRESS "Invalid bounce or receipt address format (#5.1.1)"
 #define ERR_BAD_REQUEST "Illegal request format (#5.7.1)"
 #define ERR_QMAIL_QUEUE "unable to run qmail-queue: "

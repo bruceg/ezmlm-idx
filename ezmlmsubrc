@@ -62,8 +62,6 @@ C:<#C#>
 |<#B#>/ezmlm-return -D '<#D#>'
 </bouncer#d/>
 |<#B#>/ezmlm-return -d '<#D#>'
-</inhost/>
-<#H#>
 </outhost/>
 <#H#>
 </inlocal/>

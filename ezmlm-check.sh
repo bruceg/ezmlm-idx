@@ -56,7 +56,7 @@ if [ ! -z "$1" -a ! -d "$1" ]; then
 fi
 
 # reset variables
-GET=''; DIGEST=''; FLAGARCH=''; FLAGIND=''; INLOCAL=''; INLOCALOK=''; INHOST=''
+GET=''; DIGEST=''; FLAGARCH=''; FLAGIND=''; INLOCAL=''; INLOCALOK='' 
 MANAGE=''; OUTLOCAL=''; OUTHOST=''; SPEC=''; SRESTRICT=''; STORE=''; REMOTE=''
 MODSUB=''; MODPOST=''; SPEC=''
 
@@ -100,23 +100,15 @@ MODSUB=''; MODPOST=''; SPEC=''
 	  fi
 	  if [ ! -r "$1/inlocal" ]; then
 	    ${ECHO} "$EZERR $1/inlocal does not exist"
-	  elif [ ! -r "$1/inhost" ]; then
-	      ${ECHO} "$EZERR $1/inhost does not exist"
 	  else
 	    INLOCAL=`${CAT} "$1/inlocal"| ${HEAD} -1`
-            INHOST=`${CAT} "$1/inhost"| ${HEAD} -1`
 	    if [ -z "$HOST" ]; then
 	      ${ECHO} "$EZERR HOST is empty. Likely running from the command"
-	      ${ECHO} "    line. Run from $1/editor to check if HOST matches"
-	      ${ECHO} "    $1/inhost and LOCAL matches $1/inlocal."
+	      ${ECHO} "    line. Run from $1/editor to check if LOCAL matches"
+	      ${ECHO} "    $1/inlocal."
 	      ${ECHO} "    Mismatches here are the most common setup error."
 	      ${ECHO}
 	    else
-	      if [ "$HOST" != "$INHOST" ]; then
-	        ${ECHO} "$EZERR HOST does not match $1/inhost"
-	      else
-	        ${ECHO} "... $1/inhost OK"
-	      fi
 	      if ${ECHO} "$LOCAL" | ${GREP} -G "^$INLOCAL" >/dev/null 2>&1
               then
 	        ${ECHO} "... $1/inlocal OK"
@@ -137,12 +129,6 @@ MODSUB=''; MODPOST=''; SPEC=''
 	      OUTHOST=`${CAT} "$1/outhost"| ${HEAD} -1`
 	  fi
 	  ${ECHO} "... The list is named ${OUTLOCAL}@${OUTHOST}"
-	  if [ "$OUTHOST" != "$INHOST" ]; then
-	    HOSTMATCH='1';
-	    ${ECHO}
-	    ${ECHO} "??? $1/inhost and $1/outhost do not"
-	    ${ECHO} "    match. This is very unusual ..."
-	  fi
 	  if ${ECHO} "$INLOCAL" | ${GREP} "^${USER}" >/dev/null ; then
 	    USERSTART='1'; INLOCALOK='1'
 	  fi

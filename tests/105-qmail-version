@@ -67,10 +67,10 @@ fi
     ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/digest/bouncer"
   fi
 
-# if testing qmail>=1.02, remove inlocal/inhost - shouldn't be used
+# if testing qmail>=1.02, remove inlocal - shouldn't be used
   if [ "$QMVER" = "n" ]; then
-	${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
-	  { ${ECHO} "failed to remove inlocal/inhost for testlist"; exit 100; }
+	${RM} -f "${DIR}/inlocal" > /dev/null || \
+	  { ${ECHO} "failed to remove inlocal for testlist"; exit 100; }
   fi
 
 ###########################

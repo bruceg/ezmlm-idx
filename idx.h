@@ -98,13 +98,13 @@
 /* When copy of the message is suppressed (is this really used?)*/
 #define TXT_SUPPRESSED "\n<suppressed>\n\n"
 
-/* Subject: MODERATE for inlocal@inhost */
+/* Subject: MODERATE for inlocal@host */
 #define TXT_MODERATE "MODERATE for "
 
-/* Subject: Confirm post to inlocal@inhost */
+/* Subject: Confirm post to inlocal@host */
 #define TXT_CONFIRM_POST "Confirm post to "
 
-/* Subject: Returned post for inlocal@inhost */
+/* Subject: Returned post for inlocal@host */
 /* (used both for rejected and timed-out posts) */
 #define TXT_RETURNED_POST "Returned post for "
 
