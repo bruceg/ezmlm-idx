@@ -167,9 +167,7 @@ char *d;
           if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
         if (!stralloc_0(&charset)) die_nomem();
 	hdr_mime("multipart/mixed");
-        qmail_puts(&qq,"\n--");
-        qmail_put(&qq,boundary,COOKIE);
-        qmail_puts(&qq,"\n");
+	hdr_boundary(0);
 	hdr_ctype("text/plain");
         hdr_transferenc();
       } else
@@ -183,9 +181,9 @@ char *d;
       }
 
       if (flagmime) {
-        qmail_puts(&qq,"\n--");
-        qmail_put(&qq,boundary,COOKIE);
-        qmail_puts(&qq,"\nContent-Type: message/rfc822\n\n");
+	hdr_boundary(0);
+	hdr_ctype("message/rfc822");
+        qmail_puts(&qq,"\n");
       }
 
       if (seek_begin(fd) == -1)
@@ -195,11 +193,8 @@ char *d;
       if (substdio_copy(&ssqq,&sstext) != 0) die_read();
       close (fd);
 
-      if (flagmime) {
-        qmail_puts(&qq,"\n--");
-        qmail_put(&qq,boundary,COOKIE);
-        qmail_puts(&qq,"--\n");
-      }
+      if (flagmime)
+	hdr_boundary(1);
 
       if (!stralloc_copy(&line,&outlocal)) die_nomem();
       if (!stralloc_cats(&line,"-return-@")) die_nomem();

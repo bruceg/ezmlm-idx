@@ -142,24 +142,16 @@ int flagw;
     if (!stralloc_0(&line)) die_nomem();
   }
   hdr_from("-help");
-  qmail_puts(&qq,"To: ");
   if (!quote2(&quoted,addr.s)) die_nomem();
-  qmail_put(&qq,quoted.s,quoted.len);
-  qmail_puts(&qq,"\n");
+  hdr_add2("To: ",quoted.s,quoted.len);
   /* to accomodate transfer-encoding */
   hdr_mime(flagcd ? "multipart/mixed" : "text/plain");
-  qmail_puts(&qq,flagw ? "Subject: ezmlm probe\n" : "\nSubject: ezmlm warning\n");
+  hdr_adds(flagw ? "Subject: ezmlm probe" : "Subject: ezmlm warning");
 
   if (flagcd) {			/* first part for QP/base64 multipart msg */
-    qmail_puts(&qq,"\n\n--");
-    qmail_put(&qq,boundary,COOKIE);
-    qmail_puts(&qq,"\nContent-Type: text/plain; charset=");
-    qmail_puts(&qq,charset.s);
-    qmail_puts(&qq,"\nContent-Transfer-Encoding: ");
-    if (flagcd == 'Q')
-      qmail_puts(&qq,"Quoted-printable\n\n");
-    else
-      qmail_puts(&qq,"base64\n\n");
+    hdr_boundary(0);
+    hdr_ctype("text/plain");
+    hdr_transferenc();
   } else
     qmail_puts(&qq,"\n");
 
@@ -200,18 +192,15 @@ int flagw;
       encodeB("",0,&line,2,FATAL);
       qmail_put(&qq,line.s,line.len);	/* flush */
     }
-    qmail_puts(&qq,"\n\n--");
-    qmail_put(&qq,boundary,COOKIE);
-    qmail_puts(&qq,"\nContent-Type: message/rfc822\n\n");
+    hdr_boundary(0);
+    hdr_ctype("message/rfc822");
+    qmail_puts(&qq,"\n");
   }
   if (substdio_copy(&ssqq,&ssin) < 0) die_read();
   close(fd);
 
-  if (flagcd) {				/* end multipart/mixed */
-    qmail_puts(&qq,"\n--");
-    qmail_put(&qq,boundary,COOKIE);
-    qmail_puts(&qq,"--\n");
-  }
+  if (flagcd)				/* end multipart/mixed */
+    hdr_boundary(1);
 
   strnum[fmt_ulong(strnum,when)] = 0;
   cookie(hash,key.s,key.len,strnum,addr.s,flagw ? "P" : "W");

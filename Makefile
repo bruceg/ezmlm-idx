@@ -1030,17 +1030,21 @@ haswaitp.h: choose compile haswaitp.h1 haswaitp.h2 load trywaitp.c
 	./choose cl trywaitp haswaitp.h1 haswaitp.h2 > haswaitp.h
 
 hdr.a: \
-makelib hdr_add.o hdr_ctboundary.o hdr_datemsgid.o hdr_from.o hdr_mime.o \
-hdr_transferenc.o
-	./makelib hdr.a hdr_add.o hdr_ctboundary.o hdr_datemsgid.o \
-	hdr_from.o hdr_mime.o hdr_transferenc.o
+makelib hdr_add.o hdr_boundary.o hdr_ctboundary.o hdr_datemsgid.o \
+hdr_from.o hdr_mime.o hdr_transferenc.o
+	./makelib hdr.a hdr_add.o hdr_boundary.o hdr_ctboundary.o \
+	hdr_datemsgid.o hdr_from.o hdr_mime.o hdr_transferenc.o
 
 hdr_add.o: \
 compile hdr_add.c hdr.h qmail.h
 	./compile hdr_add.c
 
+hdr_boundary.o: \
+compile hdr_boundary.c hdr.h qmail.h makehash.h
+	./compile hdr_boundary.c
+
 hdr_ctboundary.o: \
-compile hdr_ctboundary.c hdr.h qmail.h makehash.h stralloc.h
+compile hdr_ctboundary.c hdr.h qmail.h
 	./compile hdr_ctboundary.c
 
 hdr_datemsgid.o: \
@@ -1053,7 +1057,7 @@ compile hdr_from.c hdr.h qmail.h stralloc.h
 	./compile hdr_from.c
 
 hdr_mime.o: \
-compile hdr_mime.c hdr.h qmail.h cookie.h stralloc.h
+compile hdr_mime.c hdr.h qmail.h makehash.h stralloc.h str.h
 	./compile hdr_mime.c
 
 hdr_transferenc.o: \

@@ -347,11 +347,8 @@ void mod_bottom()
       copy(&qq,"text/mod-sub",flagcd,FATAL);
       copy(&qq,"text/bottom",flagcd,FATAL);
       code_qput(TXT_SUPPRESSED,str_len(TXT_SUPPRESSED));
-      if (flagcd) {
-        qmail_puts(&qq,"\n--");
-        qmail_put(&qq,boundary,COOKIE);
-        qmail_puts(&qq,"--\n");
-      }
+      if (flagcd)
+	hdr_boundary(1);
       if (flagcd == 'B') {
         encodeB("",0,&line,2,FATAL);	/* flush */
         qmail_put(&qq,line.s,line.len);
@@ -593,10 +590,10 @@ void copybottom()
 	encodeB("",0,&line,2,FATAL);	/* flush */
 	qmail_put(&qq,line.s,line.len);
       }
-      qmail_puts(&qq,"\n--");
-      qmail_put(&qq,boundary,COOKIE);
-      qmail_puts(&qq,"\nContent-Type: message/rfc822");
-      qmail_puts(&qq,"\nContent-Disposition: inline; filename=request.msg\n\n");
+      hdr_boundary(0);
+      hdr_ctype("message/rfc822");
+      hdr_adds("Content-Disposition: inline; filename=request.msg");
+      qmail_puts(&qq,"\n");
     }
     qmail_puts(&qq,"Return-Path: <");
     if (!quote2(&quoted,sender)) die_nomem();
@@ -606,11 +603,8 @@ void copybottom()
       strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
     if (substdio_copy(&ssqq,&ssin2) != 0)
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
-    if (flagcd) {
-      qmail_puts(&qq,"\n--");
-      qmail_put(&qq,boundary,COOKIE);
-      qmail_puts(&qq,"--\n");
-    }
+    if (flagcd)
+      hdr_boundary(1);
   } else {
     if (flagcd == 'B') {
       encodeB("",0,&line,2,FATAL);	/* flush even if no bottom */

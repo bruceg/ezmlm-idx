@@ -684,8 +684,7 @@ char **argv;
           flagbadpart = 0;		/* end boundary should be output */
           if (flagtrailer) {
             qmail_puts(&qq,"\n");
-            qmail_put(&qq,boundary.s,boundary.len);
-            qmail_puts(&qq,"\n");
+	    hdr_add(boundary.s,boundary.len);
 	    hdr_ctype("text/plain");
             hdr_transferenc();		/* trailer for multipart message */
 	    copy(&qq,"text/trailer",flagcd,FATAL);

@@ -375,9 +375,7 @@ char **argv;
     if (!stralloc_0(&charset)) die_nomem();
     hdr_mime("multipart/mixed");
     qmail_put(&qq,subject.s,subject.len);
-    qmail_puts(&qq,"\n\n--");
-    qmail_put(&qq,boundary,COOKIE);
-    qmail_puts(&qq,"\n");
+    hdr_boundary(0);
     hdr_ctype("text/plain");
     hdr_transferenc();
   } else {
@@ -394,9 +392,7 @@ char **argv;
   substdio_fdbuf(&ssin,read,0,inbuf,sizeof(inbuf));
 
   if (flagmime) {
-    qmail_puts(&qq,"\n--");
-    qmail_put(&qq,boundary,COOKIE);
-    qmail_puts(&qq,"\n");
+    hdr_boundary(0);
     hdr_ctype("message/rfc822");
     qmail_puts(&qq, "\n");
   }
@@ -428,11 +424,8 @@ char **argv;
     if (substdio_put(&ssmsg,line.s,line.len) == -1) die_msg();
   }
 
-  if (flagmime) {
-    qmail_puts(&qq,"\n--");
-    qmail_put(&qq,boundary,COOKIE);
-    qmail_puts(&qq,"--\n");
-  }
+  if (flagmime)
+    hdr_boundary(1);
 
 /* close archive before qmail. Loss of qmail will result in re-run, and   */
 /* worst case this results in a duplicate msg sitting orphaned until it's */

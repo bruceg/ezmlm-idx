@@ -747,11 +747,10 @@ char **argv;
         encodeB("",0,&line,2,FATAL);	/* flush */
         qmail_put(&qq,line.s,line.len);
       }
-       qmail_puts(&qq,"\n--");
-       qmail_puts(&qq,boundary);
-       qmail_puts(&qq,"\nContent-Type: message/rfc822");
-       qmail_puts(&qq,
-		"\nContent-Disposition: inline; filename=request.msg\n\n");
+      hdr_boundary(0);
+      hdr_ctype("message/rfc822");
+      hdr_adds("Content-Disposition: inline; filename=request.msg");
+      qmail_puts(&qq,"\n");
     }
     qmail_puts(&qq,"Return-Path: <");
     if (!quote2(&line,sender)) die_nomem();
@@ -761,11 +760,8 @@ char **argv;
       strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
     if (substdio_copy(&ssqq,&ssin2) != 0)
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
-    if (flagcd) {
-      qmail_puts(&qq,"\n--");
-      qmail_puts(&qq,boundary);
-      qmail_puts(&qq,"--\n");
-    }
+    if (flagcd)
+      hdr_boundary(1);
   }
   qmail_from(&qq,from.s);
   qmail_to(&qq,to.s);
