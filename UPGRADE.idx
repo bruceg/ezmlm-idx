@@ -1,0 +1,190 @@
+$Id: UPGRADE.idx,v 1.39 1999/12/19 16:47:30 lindberg Exp $
+$Name: ezmlm-idx-040 $
+
+Like any other piece of software (and information generally), ezmlm-idx
+comes with NO WARRANTY.
+
+This file is for upgrading from earlier version of ezmlm-idx/mod. If you use
+ezmlm-0.53 but have not installed a previous version of ezmlm-idx,
+see INSTALL.idx. For details on what's new in this version, see CHANGES.idx.
+
+1. Proceed as per INSTALL.idx.
+   NOTE: If you follow the test instructions in INSTALL of ezmlm-0.53 after
+   adding ezmlm-idx, step 6 will fail. Before this step, edit
+   ~/testlist/editor and remove the ezmlm-reject line. 
+
+
+Steps required for upgrading from ezmlm-idx-0.31x/32x
+-----------------------------------------------------
+In the unlikely event that you have lists that have been manually configured
+to use ezmlm-gate (sender check/moderation combination) using only a single
+directory, add the same directory to the command line a second time. If you
+do not do this, all messages will be moderated, i.e. no major problem. No
+other changes are required, but you may want to use some of the new features
+(see CHANGES.idx).
+
+See below to migrate customized ezmlmrc files.
+
+Run ezmlm-idx on your lists. The index file format has changed. The old
+format will still work, but only the new format can be used with WWW archive
+access.
+
+To enable WWW archive access for your list(s) see the "Optional" section in
+INSTALL.idx.
+
+If you used MySQL support, you need to update the tables. A few new fields
+have been added for performance moitoring and billing. sub_mysql/to40x will
+generate the necessary SQL. For each list, do:
+
+sh sub_mysql/to40x list | mysql ...
+
+where ``list'' is the tableroot for the list.
+
+Additional steps for upgrading from ezmlm-idx-0.30x
+---------------------------------------------------
+
+If your old lists use SENDER restriction on posts with aliases (DIR/extra)
+and blacklisted addresses (DIR/blacklist) you need to change the name of
+these directories to DIR/allow and DIR/deny, respectively, and rebuild the list
+(see below). Without this change the list will still function normally, but
+addresses cannot be added/removed from these addresses remotely (e.g. via
+list-allow-subscribe). Other than this, your lists will function without
+modifications if you are upgrading from ezmlm-idx>=0.30.
+
+See below for changing the names of the extra databases.
+
+
+Additional steps for upgrading from ezmlm-idx<0.30
+--------------------------------------------------
+1.  Reindex the subject index for existing lists:
+
+	% ezmlm-idx DIR
+
+    for each list directory 'DIR'.
+
+2.  For existing digest lists, assuming the list "joe-sos" and the digest list
+    "joe-sos-digest".
+
+    a. Remove links to the digest list:
+
+	% rm -f ~joe/.qmail-sos-digest*
+
+    b. edit the main list to include a digest list:
+
+	% ezmlm-make -edxxx ~joe/SOS ~joe/.qmail joe-sos id.com gaga
+
+       where 'xxx' are switches used in creating the original list. For lists
+       created with ezmlm-idx-0.23 or later, the arguments after the list
+       directory may be omitted.
+
+    c. Move the digest subscriber info:
+
+	% mv ~joe/SOS-digest/subscribers/* ~joe/SOS/digest/subscribers
+
+    The digest list bounce info will be lost, as the key used for the new
+    digest is the same as for the list, and different for that from the old
+    digest. At worst, this will make the info for a digest user on missed
+    digests incomplete. It may also slightly delay the removal
+    of a permanently bouncing subscriber addresses.
+
+
+Additional steps for upgrading from ezmlm-idx<0.23x
+---------------------------------------------------
+For subscription-moderated lists created with ezmlm-idx<0.23:
+
+1.  If you have subscription moderated lists created with ezmlm-idx<0.23,
+    they likely lack dir/text/mod-sub-confirm and dir/text/mod-unsub-confirm.
+    Ezmlm-idx-0.23 substituted dir/text/(un)sub-confirm if the above files were
+    missing, but ezmlm-idx>=0.30 will not work without these files. Again,
+    ezmlm-make -e is the easiest way to update the list. Alternatively,
+    just copy dir/text/(un)sub-confirm to dir/text/mod-(un)sub-confirm.
+
+------------------------------------------------------------------------------
+That's it! To report success (this helps to track platform-specific problems):
+
+       % ( echo 'First M. Last'; cat `cat SYSDEPS` ) \
+         | mail cfl-src@id.wustl.edu
+
+Replace First M. Last with your name.
+
+Send bugs reports, ideally with patch, to 'lindberg@id.wustl.edu'.
+
+
+------------------------------------------------------------------------------
+
+
+ Additional information
+------------------------
+
+Migrating customized ezmlmrc files
+==================================
+
+ezmlmrc is upgraded from ezmlm-idx-0.31x/32x, but the changes are not required
+for using the list.
+
+The changes from ezmlm-0.30x are minimal, but fix a couple of bugs, see
+CHANGES.idx). If you have custom ezmlmrc files and wish to update them,
+do the following:
+
+    First create a diff between the old ezmlmrc distribution and the
+    custom ezmlmrc file:
+
+	% cp /usr/local/bin/ezmlm/ezmlmrc ~/ezmlmrc.orig
+	% cp ~/.ezmlmrc ~/ezmlmrc
+	% diff -c ~/ezmlmrc.orig ~/ezmlmrc ~/ezmlmrc.diff
+
+    Next, apply the changes to the new ezmlmrc:
+
+	% cp .../ezmlm-idx-0.33/ezmlmrc ~/ezmlmrc
+	% patch ~/ezmlmrc < ~/ezmlmrc.diff
+
+    Next check for rejected parts (you need to apply them manually):
+
+	% cat ~/ezmlmrc.rej
+
+Any existing list can be edited with 'ezmlm-make -e dir dot local host [code]'
+with the appropriate switches to take advantage of new ezmlm functions. If
+you make ezmlmrc files in other languages, please make them public domain and
+mail them to lindberg@id.wustl.edu for inclusion in future versions of
+ezmlm-idx.
+
+Adjusting the name of the extra databases (from ezmlm-idx<0.30):
+===============================================================
+
+	% mv DIR/extra DIR/allow
+	% mv DIR/blacklist DIR/deny
+	% ezmlm-make -+ DIR
+
+Additional steps required when upgrading from ezmlm-idx<0.30:
+
+1.  Reindex the subject index for existing lists:
+
+	% ezmlm-idx DIR
+
+    for each list directory 'DIR'.
+
+2.  For existing digest lists, assuming the list "joe-sos" and the digest list
+    "joe-sos-digest".
+
+    a. Remove links to the digest list:
+
+	% rm -f ~joe/.qmail-sos-digest*
+
+    b. edit the main list to include a digest list:
+
+	% ezmlm-make -edxxx ~joe/SOS ~joe/.qmail joe-sos id.com gaga
+
+       where 'xxx' are switches used in creating the original list. For lists
+       created with ezmlm-idx-0.23 or later, the arguments after the list
+       directory may be omitted.
+
+    c. Move the digest subscriber info:
+
+	% mv ~joe/SOS-digest/subscribers/* ~joe/SOS/digest/subscribers
+
+    The digest list bounce info will be lost, as the key used for the new
+    digest is the same as for the list, and different for that from the old
+    digest. At worst, this will make the info for a digest user on missed
+    digests incomplete. It may also slightly delay the removal
+    of a permanently bouncing subscriber addresses.
+

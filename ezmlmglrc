@@ -1,0 +1,97 @@
+# ezmlmglrc file to set up a global "majordomo"-like interface.
+# You also need to create DIR/config.cf, for instance with ezmlm-glconf
+#
+# Usage: ezmlm-make -Cezmlmglrc [-5 owner] dir dot local host
+#
+# dir   - base directory
+# dot   - qmail file. Usually, ~alias/.qmail-majordomo or such.
+# local - local address, e.g. "majordomo"
+# host  - host
+#
+# 
+# These work just like for standard ezmlm-make
+#
+# directories
+</+text/>
+# links - the second for complete command addresses like
+# majordomo-which-me=myhost, as well as for our own bounces
+</:/ezdomo/>
+</:-default/ezdomo/>
+</ezdomo/>
+|<#B#>/ezmlm-request -f ezdomo.cf '<#D#>'
+# standard stuff
+</inlocal/>
+<#L#>
+</outlocal/>
+<#L#>
+</outhost/>
+<#H#>
+# List owner mail
+</:-owner/owner/>
+</owner#5/>
+&<#5#>
+</owner#^5/>
+<#D#>/Mailbox
+</headerremove/>
+return-path
+return-receipt-to
+content-length
+# texts
+</text/bottom/>
+
+--- Administrative commands ---
+
+Administrative functions of ezmlm mailing lists are done by
+sending a message to the lists COMMAND address.
+
+Please do not send the requests to the list address. If you do,
+ezmlm will not see them and other subscribers will be annoyed.
+
+To subscribe to any list "listname@hostname" send a message to:
+   <listname-subscribe@hostname>
+
+To get a complete list of commands for the same list, mail to:
+   <listname-help@hostname>
+
+--- Enclosed is a copy of the request I received.
+
+</text/help/>
+ezmlm mailing lists have an address for each command (see below).
+
+I work at this address to make it easier for users used to other
+mailing list managers to use ezmlm lists. I do this by reading the
+first line of your message and doing my best to translate it into
+a command message to the correct list. Usually, it is more efficient
+for you to talk to the list directly.
+
+In general, I accept and translate commands of the form:
+
+command [listname] [username]
+
+for instance:
+
+subscribe listname
+
+I also directly reply to:
+
+lists [username]
+which [username]
+
+If username is omitted, your address will be used and the
+reply will be sent to your address.
+
+If listname does not contain a host name, I will look into my
+list and try to add the correct host name. If I can't find it,
+I will add the name of this computer. If listname contains a host
+name, it must match a listname on my list. If not, I will
+replace the host name with the name of this computer.
+
+</text/top/>
+Hi! This is the ezmlm program. I'm managing the
+<#L#>@<#H#> address to guide
+your request to the appropriate ezmlm mailing list.
+
+</ezdomo/>
+|<#B#>/ezmlm-request -f '<#D#>/config.cf' '<#D#>'
+# that's all folks!
+

@@ -1,0 +1,61 @@
+.TH ezmlm-list 1
+.SH NAME
+ezmlm-list \- show the addresses on a mailing list
+.SH SYNOPSIS
+.B ezmlm-list
+[
+.B \-n\fI msgnum
+] [
+.B \-aAmMnNvV
+]
+.I dir
+.SH DESCRIPTION
+.B ezmlm-list
+prints the subscriber list for the mailing list stored in
+.IR dir ,
+one address per line.
+
+.B WARNING:
+Unless you have disabled automatic subscriptions,
+the addresses in a mailing list are under the control
+of a possibly malicious remote user.
+.B ezmlm-list
+does not strip control characters.
+.SH "GENERAL OPTIONS"
+.TP
+.B \-m
+(Default.)
+Use SQL support if available.
+.TP
+.B \-M
+Do not use SQL support even if available.
+This option can be used to manipulate
+a normal local subscriber database even for lists with SQL support.
+.TP
+.B \-n
+Print only the number of subscribers.
+.TP
+.B \-N
+(Default.)
+List subscriber addresses, one per line.
+.TP
+.B \-v
+Display
+.B ezmlm-list(1)
+version information.
+.TP
+.B \-V
+Display
+.B ezmlm-list(1)
+version information.
+.SH "SEE ALSO"
+ezmlm-list(1),
+ezmlm-manage(1),
+ezmlm-make(1),
+ezmlm-send(1),
+ezmlm-sub(1),
+ezmlm(5)
+.SH "SEE ALSO"
+ezmlm-sub(1),
+ezmlm-unsub(1),
+ezmlm(5)

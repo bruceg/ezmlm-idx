@@ -1,0 +1,1155 @@
+0.40 - This version identifier must be on line 1 and start in pos 1.
+#
+#$Id: ezmlmrc.it,v 1.3 1999/12/22 04:02:15 lindberg Exp $
+#$Name: ezmlm-idx-040 $
+#
+# translation by Roberto De Carlo rodeca@tiscalinet.it
+#
+# ezmlmrc 
+# #######
+# Controls the actions of ezmlm-make as patched with ezmlm-idx-0.31 or later.
+#
+# The base directory 'DIR' is always created by ezmlm-make, as is DIR/key.
+# Everything else is done from here.
+#
+# ezmlm-make looks for this file, first as .ezmlmrc in the directory that the
+# lists .qmail files will be placed in (if you've used the -c command line
+# switch), then /etc/ezmlmrc, then ezmlmrc in the ezmlm-make binary directory.
+# Thus, you can customize ezmlm-make on a global level by placing a customized
+# copy of ezmlmrc in /etc and on a user level by copying it to .ezmlmrc in
+# the user's home directory AND use the ezmlm-make -c switch.
+#
+# Tags are:
+#	</filename/>       : put succeeding text lines in DIR/filename
+#	</-filename/>      : erase DIR/filename.
+#	</+dirname/>       : create directory DIR/dirname
+#	</:lname/dirname>  : symlink DIR/.qmail-list-lname -> DIR/dirname
+#
+# The name in the tag can be suffixed with '#' and any number of flags,
+# corresponding to command line switches. The item will be created/extended
+# only if all the flags listed are set. Files can be extended as long as they
+# were the last one created, but not if another file has been started since
+# then. Flags that are not recognized are silently ignored.
+# 
+# Thus, </filename#aP/> creates the file if and only if the list is archived
+# (-a) and not public (-P). If the next tag is </filename#m/>, the file is
+# extended with the lines up to the next tag if the list is message moderated
+# (-m). If the next tag is </another/>, 'filename' is closed. Any further
+# tags leading to the reopenining of 'filename' will overwrite the file, not
+# extend it.
+#
+# A set of user-defined command line switches (xX, yY, zZ) are available for
+# customization.
+#
+# Within the text, certain tags are substituted. Other tags are copied as
+# is. <#A#> and <#R#> are substituted by ezmlm-manage and -store (see man pages)
+# and <#l#> (lower case L) is replaced dynamically by the list name for
+# programs handling both 'list' and 'list-digest'.
+#
+# Substitutions are:
+# <#B#> ezmlm binaries path   <#C#> digest code         <#D#> dir
+# <#H#> host                  <#L#> local               <#F#> flags
+# <#T#> dot                   <#0#> arg for -0. <#3#>...<#9#> arg for -3..9
+# <#1#> ext1                  <#2#> ext2 [if dot is /path/.qmail-ext1-ext2-name]
+# The latter useful when a single user is controlling several virtual domains.
+#
+# -0 is used for the main list address when setting up sublists
+# -3 is for the new from header if we want that header replaced
+# -4 for specifying the ezmlm-tstdig switches used in dir/editor. Default
+#    -k64 -m30 -t24. Only used if -g is used.
+# -5 for list-owner address. Mail to list-owner will be forwarded to this addr.
+# -6 for sql connection info
+# -7 for contents of DIR/modpost
+# -8 for contents of DIR/modsub
+# -9 for contents of DIR/remote
+#
+# For demonstration purposes, the '-x' switch results in the following
+# non-standard actions:
+# - Removal of many non-text MIME parts from messages.
+# - Limit posts to 2 bytes <= msg body size <= 40000
+#
+# Attempts to create links or directories that already exist, will result
+# in a FATAL error. Attempts to open files that have already been closed
+# or already exits, will cause the old file to be overwritten.
+#
+# One of the major problems with ezmlm-lists is DIR/inlocal. For normal
+# users, it is set up to the list name (user-list or so), which is correct.
+# However, for user 'ezmlm' in control of virtual domain 'host.dom.com'
+# the list name is 'list@host.dom.com', but inlocal should be 'ezmlm-list',
+# not 'list'. Similarly, if ezmlm-domain1 is in control of 'host.dom.com,
+# list@host.dom.com, should yield an inlocal of 'ezmlm-domain1-list'. To
+# always get the lists correct, place this file as '.ezmlmrc' in the 
+# users home directory (~ezmlm/.ezmlmrc) and change the inlocal text below
+# to 'ezmlm-<#L#>' or 'ezmlm-<#1#>-<#L#>, respectively.
+# config to support future editing without giving ezmlm-make command line
+# arguments other than dir. Useful for GUI/WWW editing tools
+</config/>
+F:<#F#>
+X:<#X#>
+D:<#D#>
+T:<#T#>
+L:<#L#>
+H:<#H#>
+C:<#C#>
+0:<#0#>
+3:<#3#>
+4:<#4#>
+5:<#5#>
+6:<#6#>
+7:<#7#>
+8:<#8#>
+9:<#9#>
+</inlocal/>
+<#L#>
+</sublist#0/>
+<#0#>
+</+archive/>
+</+subscribers/>
+</+bounce/>
+</+text/>
+# dirs for digests
+</+digest#d/>
+</+digest/subscribers#d/>
+</+digest/bounce#d/>
+# for extra address db
+</+allow/>
+</+allow/subscribers/>
+# for blacklist
+</+deny#k/>
+</+deny/subscribers#k/>
+# moderator db & mod queue dirs. Needed for -m, -r -s, so we just
+# make them by default.
+</+mod/>
+</+mod/subscribers/>
+</+mod/pending/>
+</+mod/accepted/>
+</+mod/rejected/>
+# links: dot -> dir/editor
+</:/editor/>
+</:-owner/owner/>
+</:-digest-owner/owner#d/>
+</:-return-default/bouncer/>
+</:-digest-return-default/digest/bouncer#d/>
+</:-default/manager/>
+# for message moderation only
+</:-accept-default/moderator#m/>
+</:-reject-default/moderator#m/>
+# Get rid of configuration flags for editing mode so we can start with a
+# clean slate.
+</-modpost#eM/>
+</-modsub#eS/>
+</-remote#eR/>
+</-public#eP/>
+</-indexed#eA/>
+</-archived#eA/>
+</-prefix#eF/>
+</-text/trailer#eT/>
+</-sublist#e^0/>
+</-mimeremove#eX/>
+# Not needed, except for message moderation.
+</-moderator#eM/>
+# We don't clean out text files to make it easier for users
+# doing manual config by e.g. touching dir/remote.
+# subscription moderation
+</modsub#s/>
+<#8#>
+# remote admin
+</remote#r/>
+<#9#>
+# message moderation
+</modpost#m/>
+<#7#>
+# List owner mail
+</owner#5/>
+<#5#>
+</owner#^5/>
+<#D#>/Mailbox
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# Handles subscription. Add flags if you want a non-default digest format.
+# Service subject commands to the # request address if the -q switch is given.
+# Also -l and -d enable subscriber listing/text file editing, for remote adms.
+# -u gives subscriber only archive access
+</manager#ab/>
+|<#B#>/ezmlm-get -P '<#D#>' <#C#>
+</manager#aGB/>
+|<#B#>/ezmlm-get '<#D#>' <#C#>
+</manager#agB/>
+|<#B#>/ezmlm-get -s '<#D#>' <#C#>
+</manager#q/>
+|<#B#>/ezmlm-request '<#D#>'
+# Ok to add -l/-d even for non-mod lists, since ezmlm-manage
+# won't allow it unless there are remote admins. The lack of logic other than
+# AND makes this very tedious ...
+# first lists with normal confirmation:
+</manager#LNHJ/>
+|<#B#>/ezmlm-manage '<#D#>'
+</manager#lNHJ/>
+|<#B#>/ezmlm-manage -l '<#D#>'
+</manager#LnHJ/>
+|<#B#>/ezmlm-manage -e '<#D#>'
+</manager#lnHJ/>
+|<#B#>/ezmlm-manage -le '<#D#>'
+# ... now no confirmation for subscribe ...
+</manager#LNhJ/>
+|<#B#>/ezmlm-manage -S '<#D#>'
+</manager#lNhJ/>
+|<#B#>/ezmlm-manage -lS '<#D#>'
+</manager#LnhJ/>
+|<#B#>/ezmlm-manage -eS '<#D#>'
+</manager#lnhJ/>
+|<#B#>/ezmlm-manage -leS '<#D#>'
+# ... now no confirmation for unsubscribe ...
+</manager#LNHj/>
+|<#B#>/ezmlm-manage -U '<#D#>'
+</manager#lNHj/>
+|<#B#>/ezmlm-manage -lU '<#D#>'
+</manager#LnHj/>
+|<#B#>/ezmlm-manage -eU '<#D#>'
+</manager#lnHj/>
+|<#B#>/ezmlm-manage -leU '<#D#>'
+# ... and finally no confirmation at all ...
+</manager#LNhj/>
+|<#B#>/ezmlm-manage -US '<#D#>'
+</manager#lNhj/>
+|<#B#>/ezmlm-manage -lUS '<#D#>'
+</manager#Lnhj/>
+|<#B#>/ezmlm-manage -eUS '<#D#>'
+</manager#lnhj/>
+|<#B#>/ezmlm-manage -leUS '<#D#>'
+</manager#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</editor/>
+# reject shouldn't be configured for sublist.
+</#^0/>
+# full reject is now default, to get To/Cc: listaddress requirement
+|<#B#>/ezmlm-reject '<#D#>'
+# -k => reject posts from blacklisted addresses. Done for moderated
+# lists as well - allows removal of unwanted noise.
+</#k^0/>
+|<#B#>/ezmlm-issubn -n '<#D#>/deny' || { echo "Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this (#5.7.2)"; exit 100 ; }
+# switch -u=> restrict to subs of list & digest. If not m
+# do it with ezmlm-issubn, if 'm' do it with ezmlm-gate
+</#uM/>
+|<#B#>/ezmlm-issubn '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod' || { echo "Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included (#5.7.2)"; exit 100 ; }
+</#um/>
+|<#B#>/ezmlm-gate '<#D#>' '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod'
+# For message moderation, editor has store/clean
+</#mUO/>
+|<#B#>/ezmlm-store '<#D#>'
+</#mUo/>
+|<#B#>/ezmlm-store -P '<#D#>'
+</#mU/>
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+# for non-message moderated lists, it has send
+</#M/>
+|<#B#>/ezmlm-send '<#D#>'
+# ezmlm-archive here for normal lists. Put into moderator for mess-mod lists
+</#Mi/>
+|<#B#>/ezmlm-archive '<#D#>' || exit 0
+# all lists have warn unless -w.
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# for digest bounces
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</#d^4/>
+|<#B#>/ezmlm-tstdig -m30 -k64 -t48 '<#D#>' || exit 99
+</#d4/>
+|<#B#>/ezmlm-tstdig <#4#> '<#D#>' || exit 99
+</#d/>
+|<#B#>/ezmlm-get '<#D#>' || exit 0
+# bouncer for list and digest
+</bouncer/>
+|<#B#>/ezmlm-weed
+|<#B#>/ezmlm-return -D '<#D#>'
+</digest/bouncer#d/>
+|<#B#>/ezmlm-weed
+|<#B#>/ezmlm-return -d '<#D#>'
+# moderator is set up only for message moderated lists. However, '-e' does
+# not remove it since we can't remove the symlinks to it (they're outside
+# of the list dir.
+</moderator#m/>
+|<#B#>/ezmlm-moderate '<#D#>'
+</#mi/>
+|<#B#>/ezmlm-archive '<#D#>' || exit 0
+</#mU/>
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+</headerremove#E/>
+return-path
+return-receipt-to
+content-length
+precedence
+x-confirm-reading-to
+x-pmrqc
+list-subscribe
+list-unsubscribe
+list-help
+</headerremove#E^0/>
+# For sublists, these should be left in
+list-post
+# remove from header if -3 'new_from_line'
+</#3E/>
+from
+</lock/>
+</lockbounce/>
+</digest/lockbounce#d/>
+</digest/lock#d/>
+</public#p/>
+</archived#a/>
+</indexed#a/>
+</inhost/>
+<#H#>
+</outhost/>
+<#H#>
+</outlocal/>
+<#L#>
+</mailinglist/>
+contact <#L#>-help@<#H#>; run by ezmlm
+# Headeradd needs to always exist but leave out stuff for sublists
+</headeradd#E^0/>
+# Good for mailing list stuff (and vacation program)
+Precedence: bulk
+# To prevent indexing by findmail.com
+X-No-Archive: yes
+# rfc2369, first from main list only, others from sublist only
+List-Post: <mailto:<#L#>@<#H#>>
+</headeradd#E/>
+List-Help: <mailto:<#l#>-help@<#h#>>
+List-Unsubscribe: <mailto:<#l#>-unsubscribe@<#h#>>
+List-Subscribe: <mailto:<#l#>-subscribe@<#h#>>
+# add new from line "From: arg" if -3 'arg'
+</#3E/>
+From: <#3#>
+# max & min message size
+</msgsize#x/>
+30000:2
+# remove mime parts if -x
+</mimeremove#xE/>
+application/excel
+application/rtf
+application/msword
+application/ms-tnef
+text/html
+text/rtf
+text/enriched
+text/x-vcard
+application/activemessage
+application/andrew-inset
+application/applefile
+application/atomicmail
+application/dca-rft
+application/dec-dx
+application/mac-binhex40
+application/mac-compactpro
+application/macwriteii
+application/news-message-id
+application/news-transmission
+application/octet-stream
+application/oda
+application/pdf
+application/postscript
+application/powerpoint
+application/remote-printing
+application/slate
+application/wita
+application/wordperfect5.1
+application/x-bcpio
+application/x-cdlink
+application/x-compress
+application/x-cpio
+application/x-csh
+application/x-director
+application/x-dvi
+application/x-hdf
+application/x-httpd-cgi
+application/x-koan
+application/x-latex
+application/x-mif
+application/x-netcdf
+application/x-stuffit
+application/x-sv4cpio
+application/x-sv4crc
+application/x-tar
+application/x-tcl
+application/x-tex
+application/x-texinfo
+application/x-troff
+application/x-troff-man
+application/x-troff-me
+application/x-troff-ms
+application/x-ustar
+application/x-wais-source
+audio/basic
+audio/mpeg
+audio/x-aiff
+audio/x-pn-realaudio
+audio/x-pn-realaudio
+audio/x-pn-realaudio-plugin
+audio/x-realaudio
+audio/x-wav
+image/gif
+image/ief
+image/jpeg
+image/png
+image/tiff
+image/x-cmu-raster
+image/x-portable-anymap
+image/x-portable-bitmap
+image/x-portable-graymap
+image/x-portable-pixmap
+image/x-rgb
+image/x-xbitmap
+image/x-xpixmap
+image/x-xwindowdump
+text/x-sgml
+video/mpeg
+video/quicktime
+video/x-msvideo
+video/x-sgi-movie
+x-conference/x-cooltalk
+x-world/x-vrml
+# These can also be excluded, but for many lists it is desirable
+# to allow them. Uncomment to add to mimeremove.
+# application/zip
+# application/x-gtar
+# application/x-gzip
+# application/x-sh
+# application/x-shar
+# chemical/x-pdb
+# --------------------- Handle SQL connect info
+</-sql#^6e/>
+</-digest/sql#^6e/>
+</-allow/sql#^6e/>
+</sql#6W/>
+<#6#>
+</sql#6w/>
+<#6#>:<#L#>@<#H#>
+</digest/sql#6dW/>
+<#6#>_digest
+</digest/sql#6dw/>
+<#6#>_digest:<#L#>_digest@<#H#>
+</allow/sql#6/>
+<#6#>_allow
+# -------------------- End sql stuff
+</prefix#fE/>
+[<#L#>]
+</text/trailer#tE/>
+---------------------------------------------------------------------
+Per cancellarsi, scrivi a: <#L#>-unsubscribe@<#H#>
+Se vuoi conoscere altri comandi, scrivi a: <#L#>-help@<#H#>
+</text/bottom/>
+
+--- Comandi di gestione per la mailing list <#l#>  ---
+
+Posso elaborare comandi di gestione autonomamente. Per 
+favore non inviarli direttamente all'indirizzo della lista!
+Invece spedisci il tuo messaggio al giusto indirizzo per i comandi:
+
+Per ricevere aiuto e una descrizione dei comandi, scrivi a:
+   <<#L#>-help@<#H#>>
+
+Per iscriversi alla lista, spedisci un messaggio a:
+   <<#L#>-subscribe@<#H#>>
+
+Per cancellare il tuo indirizzo dalla lista, ti basta scrivere 
+all'indirizzo presente nell'intestazione ``List-Unsubscribe'' di
+qualsiasi messaggio della lista. Se non hai cambiato indirizzo da
+quando ti sei iscritto, puoi anche mandare un messaggio a:
+    <<#L#>-unsubscribe@<#H#>>
+
+</#dE/>
+o per le raccolte a:
+   <<#L#>-unsubscribe@<#H#>>
+
+</#E/>
+
+Per l'aggiunta o la rimozione degli indirizzi di email, ti spedirò
+una conferma. Quando la riceverai, ti basta semplicemente rispondere
+per completare l'operazione.
+
+Se desideri contattare il responsabile in carne ed ossa di questa
+lista perfavore spedisci un messaggio a:
+
+    <<#L#>-owner@<#H#>>
+
+Perfavore inccludi un messaggio della lista con tutte le intestazioni
+complete per farti aiutare più facilmente.
+
+--- Allego una copia della richiesta che ho ricevuto.
+
+</text/bounce-bottom#E/>
+
+--- Allego una copia del messaggio di ritorno che ho ricevuto.
+
+</text/bounce-num#E/>
+
+Ho tenuto una copia dei messaggi della lista <#L#> che sono tornati
+indietro dal tuo indirizzo.
+
+</#aE/>
+Le copie di questi messaggi potrebbero essere nell'archivio.
+
+</#aE/>
+
+Per ricevere l'insieme dei messaggi 123-145 (al massimo
+100 per richiesta) dall'archivio, scrivi un messaggio vuoto a:   
+   <<#L#>-get.123_145@<#H#>>
+
+
+Per ricevere l'elenco dei soggetti e degli autori degli ultimi 100
+messaggi scrivi a:
+
+   <<#L#>-index@<#H#>>
+
+</#E/>
+Ecco i numeri dei messaggi:
+
+</text/dig-bounce-num#E/>
+
+Ho un elenco delle raccolte dalla mailing list <#L#>-digest che sono
+tornate indietro dal tuo indirizzo. Per ogni raccolta che ti sei
+perso ho annotato il numero del primo messaggio della raccolta. 
+
+</#aE/>
+Io non archivio le raccolte stesse, ma sei in grado di prendere i
+messaggi dall'archivio  principale della mailing list.
+
+Per ricevere i messaggi dal numero 123 al numero 145 (massimo 100 per ogni
+richiesta),  scrivi un messaggio vuoto a:
+
+   <<#L#>-get.123_145@<#H#>>
+
+Per ricevere l'elenco dei soggetti e degli autori degli ultimi 100 messaggi
+scrivi a:
+   <<#L#>-index@<#H#>>
+
+</#E/>
+Ecco i numeri delle raccolte:
+
+</text/bounce-probe#E/>
+
+I messaggi a te inviati dalla mailing list <#l#> sembrano tornare indietro.
+Ti ho spedito un messaggio di avvertimento, ma anche questo è tornato
+indietro.
+ Allego una copia del primo messaggio che mi è tornato indietro.
+
+Questa è una prova per vedere se il tuo indirizzo è raggiungibile.
+Se anche questo messaggio torna indietro toglierò il tuo indirizzo dalla
+mailing list <#l#>@<#H#> senza ulteriori avvertimenti.
+
+Ti potrai reiscrivere spedendo un messaggio a questo indirizzo:
+   <<#l#>-subscribe@<#H#>>
+
+</text/bounce-warn#E/>
+
+I messaggi a te inviati dalla mailing list <#l#> sembrano tornare indietro.
+Ti ho spedito un messaggio di avvertimento, ma anche questo è tornato
+indietro.
+ Allego una copia del primo messaggio che mi è tornato indietro.
+
+Se anche questo messaggio torna indietro ti spedirò un messaggio di
+prova. Se ritorna anche questo messaggio toglierò il tuo indirizzo
+dalla mailing list <#l#> senza ulteriori avvertimenti. 
+
+</text/digest#dE/>
+Per iscriversi alla lista delle raccolte scrivi a:
+	<#L#>-digest-subscribe@<#H#>
+
+Per rimuoverti dalla lista delle raccolte scrivi a:
+	<#L#>-digest-unsubscribe@<#H#>
+
+Per spedire un messaggio alla lista scrivi a:
+	<#L#>@<#H#>
+
+</text/get-bad#E/>
+Spiacente, questo messaggio non è nell'archivio.
+
+</text/help#E/>
+Questo è un messaggio di aiuto generico. Il messaggio che ho ricevuto
+non è stato spedito ad alcuno dei miei indirizzi per i comandi.
+
+Ecco un elenco degli indirizzi per i comandi consentiti:
+
+Scrivi una email ai seguenti indirizzi per le informazioni o le FAQ
+della lista:
+   <<#L#>-info@<#H#>>
+   <<#L#>-faq@<#H#>>
+
+</#dE/>
+Indirizzi analoghi esistono per la lista delle raccolte:
+   <<#L#>-digest-subscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+# ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
+# multi-get!
+</#aE/>
+Per ricevere i messaggi dal numero 123 al numero 145 (massimo 100 per ogni
+richiesta), scrivi a:
+   <<#L#>-get.123_145@<#H#>>
+
+Per ricevere l'indice dei messaggi 123-456 con l'oggetto e l'autore, scrivi a:
+   <<#L#>-index.123_456@<#H#>>
+
+Per ricevere tutti i messaggi con lo stesso oggetto del messaggio
+12345, spedisci un messaggio vuoto a:
+   <<#L#>-thread.12345@<#H#>>
+
+</#E/>
+I messaggi in realtà non é necessario che siano vuoti, ma ignorerò
+il loro contenuto. E' importante solo l'INDIRIZZO dal quale li spedisci.
+
+Puoi iscriverti anche da un altro indirizzo,per esempio se vuoi iscrivere
+"john@host.domain", basta solo aggiungere un trattino e il tuo indirizzo (con
+'=' al posto di '@') dopo i comandi: <<#L#>-subscribe-john=host.domain@<#H#>>
+
+Per cancellare l'iscrizione da questo indirizzo, scrivi a:
+<<#L#>-unsubscribe-john=host.domain@<#H#>>
+
+</text/mod-help#E/>
+Grazie per aver accettato di moderare la mailing list <#L#>@<#H#>.
+
+I miei comandi sono leggermente differenti da quelli delle altre
+mailing list, ma credo che li troverai intuitivi e facili da usare.
+
+Ecco alcune istruzioni per i compiti che dovrai assolvere come 
+amministratore della lista e/o moderatore.
+
+Sottoscrizione remota
+-------------------
+Come moderatore, puoi iscrivere e cancellare qualsiasi indirizzo alla
+mailing list. Per iscrivere "john@host.domain" , basta solo
+aggiungere un trattino  dopo il comando, quindi il suo indirizzo con
+'=' invece di '@'. Per esempio, per iscrivere questo indirizzo scrivi
+a:    <<#L#>-subscribe-john=host.domain@<#H#>>
+
+Analogamente puoi rimuovere l'indirizzo scrivendo a:
+   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+
+</#dE/>
+Per la lista delle raccolte:
+   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+
+</#E/>
+Questo è tutto. Non sono necessari comandi nell' oggetto o nel corpo del 
+messaggio!
+
+</#rE/>
+Ti spedirò una richiesta di conferma, per essere sicuro che tu abbia
+realmente spedito la richiesta. Rispondi semplicemente al messaggio e i 
+tuoi desideri saranno eseguiti.
+</#RE/>
+Spedirò una richiesta di conferma all'indirizzo dell'utente, in questo caso
+a <john@host.domain>. Tutto ciò che l'utente dovrà fare sarà quello di 
+rispondere alla richiesta di conferma.
+</#E/>
+
+I messaggi di conferma sono necessari per rendere estremamente difficile a
+qualcun altro di aggiungere o togliere un indirizzo dalla lista.
+
+Avvertirò l'utente quando cambia la sua iscrizione.
+
+Iscrizione
+-----------
+
+Qualsiasi utente può iscriversi o rimuoversi scrivendo a:
+
+    <<#L#>-subscribe@<#H#>>
+    <<#L#>-unsubscribe@<#H#>>
+
+</#dE/>
+Per la lista delle raccolte:
+
+    <<#L#>-digest-subscribe@<#H#>>
+    <<#L#>-digest-unsubscribe@<#H#>>
+
+</#E/>
+L'utente riceverà una richiesta di conferma per essere sicuri che
+controlli veramente l'indirizzo di iscrizione. Una volta fatta la
+verifica l'utente viene rimosso.
+
+</#sE/>
+Visto che questa lista è moderata per le iscrizioni, spedirò una seconda
+richiesta di conferma al moderatore. Dato che l'utente ha già confermato 
+il desiderio di essere nella lista, come moderatore puoi essere certo che 
+l'indirizzo sia esistente. Se vuoi approvare la richiesta dell'utente,
+rispondi semplicemente al mio messaggio di CONFERMA. In caso contrario puoi
+cancellare il mio messaggio o il potenziale iscrivente per maggiori 
+informazioni.
+</#SE/>
+Le iscrizioni funzionano allo stesso modo.
+</#E/>
+
+L'utente può anche utilizzare:
+
+   <<#L#>-subscribe-mary=host.domain@<#H#>>
+   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+
+per ricevere le e-mail a: "mary@host.domain". Solo se riceve effettivamente
+le e-mail a questo indirizzo potrà ricevere il messaggio di conferma ed essere 
+in grado di rispondergli.
+
+Il tuo indirizzo e la tua identità non saranno resi noti agli iscritti, a meno
+che tu non decida di scrivergli direttamente.
+
+</#rlE/>
+Per ricevere l'elenco degli iscritti a: <#L#>@<#H#> invia un messaggio a:
+   <<#L#>-list@<#H#>>
+
+Per ricevere il log delle transazioni per <#L#>@<#H#> scrivi a:
+   <<#L#>-log@<#H#>>
+</#rldE/>
+Per gli iscritti alle raccolte:
+   <<#L#>-digest-list@<#H#>>
+e:
+   <<#L#>-digest-log@<#H#>>
+
+</#rnE/>
+Puoi modificare a distanza i file di testo che compongono le risposte che 
+la lista spedisce. Per ricevere un elenco dei file e delle istruzioni per
+modificarli, scrivi a:
+   <<#L#>-edit@<#H#>>
+
+
+</#mE/>
+Moderazione dei messaggi
+------------------------
+Quando i messaggi sono moderati, archivierò il messaggio spedito e te ne
+invierò una copia con le istruzioni. Il messaggio che riceverai avrà
+"MODERATE for ..." come oggetto.
+
+Per accettare il messaggio, basta solo rispondere all'indirizzo 'Rispondi a:' 
+che ho già configurato con il corretto indirizzo di accettazione. Non è 
+necessario allegare il messaggio stesso. Difatti ignorerò tutto ciò che mi
+invierai se l'indirizzo dal quale scrivi è corretto.
+.
+Se vuoi rifutarlo, scrivi una e-mail allindirizzo 'Da:', che avrò già 
+configurato con il corretto indirizzo di "rifuto". Questo di solito può essere
+fatto con il 'Rispondi a tutti:' e cancellando tutti i destinatari escluso 
+quello di "rifiuto". Puoi aggiungere un commento al mittente tra due linee che 
+iniziano con tre '%'. Io spedirò solo questo commento con il messaggio 
+rifiutato. E ancora, non rivelerò la tua identità.
+
+Processerò il messaggio secondo la prima risposta che mi arriverà.
+Se mi spedisci una richiesta di accettare un messaggio che è stato già
+rifiutato o vice versa, te lo farò sapere.
+
+Se non ricevo risposte dal moderatore entro un certo numero di giorni
+(di solito 5), spedirò un messaggio al mittente con la spiegazione di ciò
+che è successo. Il tuo amministratore può anche configurare la lista in modo
+tale che questi messaggi "ignorati" vengano cancellati senza avviso, invece
+che rispediti al mittente. 
+</#E/>
+
+Assenze
+---------
+Se hai momentaneamente un indirizzo diverso, ti basta forwardare tutti i
+messaggi che hanno l'intestazione 'Mailing-List:' (o tutti i messaggi che
+iniziano con 'MODERATE for <#L#>@<#H#>' o con 'CONFIRM subscribe to
+<#L#>@<#H#>') al nuovo indirizzo.
+Puoi perciò moderare la mailing-list dal nuovo indirizzo. In alternativa, puoi
+forwardare i messaggi a un amico in modo tale che li possa moderare lui per te.
+Però assicurati di essere d'accordo con il proprietario della mailing list.
+
+Se vuoi approvare in automatico tutte le richieste mentre sei via, allora
+configura il tuo programma di posta in modo tale da risondere in automatico ai
+messaggi che hanno gli oggetti conformi ai criteri sopracitati.
+
+</#rE/>
+Se vuoi amministrare la lista da un indirizzo che non è il tuo ti verrà
+chiesta una conferma. Fatto ciò, verrà inviata una richiesta di conferma a
+tutti i moderatori. Faccio così perchè non c'è modo di conoscere che sia stato
+davvero tu a mandarmi la richiesta originale. 
+
+Ricorda che la tua richiesta originale ( e il tuo indirizzo) sono spediti a
+tutti gli iscritti in questo caso! 
+</#E/>
+
+Buona fortuna!
+
+PS: Per favore contatta l'amministratore della lista (<#L#>-owner@<#H#>) se
+hai domande o problemi.
+</text/mod-reject#E/>
+Spiacente, ma il tuo messaggio (allegato) non è stato accettato dal moderatore.
+Se il moderatore ha scritto qualche commento, essi sono riportati qui sotto.
+</text/mod-request#E/>
+Il messaggio allegato è stato inviato alla mailing list <#L#>@<#H#>
+Se vuoi approvarlo affinchè venga spedito a tutti gli iscritti, scrivi a:
+
+
+!A
+
+In genere ciò accade non appena schiacci il bottone "Rispondi". Puoi
+controllare l'indirizzo per assicurarti che inizi con "<#L#>-accept".
+Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
+"A:" di un nuovo messaggio.
+</#xE/>
+
+Oppure clicca qui:
+	mailto:<#A#>
+</#E/>
+
+Per rifiutare il messaggio e fare in modo che esso venga rispedito al
+mittente, per favore spedisci un messaggio a:
+
+!R
+
+Di solito è più facile cliccare sul bottone "Rispondi a tutti:", e poi
+togliere tutti gli indirizzi tranne quello che inizia con "<#L#>-reject".
+</#xE/>
+
+Oppure clicca qui:
+	mailto:<#R#>
+</#E/>
+
+Non è necessario copiare il messaggio nella risposta per accettarlo o
+rifiutarlo. Se desideri spedire un commento al mittente del messaggio
+rifiutato, per favore includilo tra due segnalatori di linea che iniziano
+con tre segni di percentuale ('%'):
+
+%%% Start comment
+%%% End comment
+
+Grazie per il tuo aiuto!
+
+--- In allegato, per favore verifica il messaggio inviato.
+
+</text/mod-sub#E/>
+--- Ti ho iscritto o cancellato dietro richiesta del moderatore della mailing
+list  <#l#>@<#H#>.
+
+Se non approvi quello che è stato fatto, per favore invia una lamentela o
+altri commenti al responsabile della lista (<#l#>-owner@<#H#>) non appena
+possibile.
+
+</text/mod-timeout#E/>
+Sono spiacente, ma il moderatore della lista <#L#> non ha ancora vagliato il
+tuo messaggio, perciò te lo rimando indietro. Se credi che ci sia un errore,
+per favore rispediscilo o contatta il moderatore della lista direttamente.
+
+--- In allegato, per favore, verifica il messaggio che hai spedito.
+
+</text/mod-sub-confirm#E/>
+Chiedo rispettosamente il tuo permesso di aggiungere
+
+!A
+
+agli iscritti della mailing list <#l#>. Questa richiesta o viene da
+te, o è già stata verificata dal potenziale iscritto. 
+
+Per confermare spedisci una risposta vuota a questo indirizzo:
+
+!R
+
+
+In genere ciò accade non appena schiacci il bottone "Rispondi". 
+Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
+"A:" di un nuovo messaggio.
+</#xE/>
+
+oppure clicca qui:
+	mailto:<#R#>
+</#E/>
+
+Se non sei d'accordo ti basta ignorare questo messaggio.
+
+Grazie per il tuo aiuto!
+
+</text/mod-unsub-confirm#E/>
+E' stato richiesto di cancellare
+
+!A
+
+dalla miling list <#l#>. Se sei d'accordo, per favore spedisci una 
+risposta vuota a questo indirizzo: 
+
+!R
+
+In genere ciò accade non appena schiacci il bottone "Rispondi". 
+Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
+"A:" di un nuovo messaggio.
+</#xE/>
+
+oppure clicca qui:
+	mailto:<#R#>
+</#E/>
+
+Se non sei d'accordo ti basta ignorare questo messaggio.
+
+Grazie per il tuo aiuto!
+
+</text/sub-bad#E/>
+Spiacente, il tuo numero di conferma sembra essere non valido.
+
+La ragione più comune per i numeri non validi è la scadenza. Devo 
+ricevere conferma di ogni richiesta entro 10 giorni. Oppure
+assicurati che era incluso tutto il numero di conferma nella
+risposta che mi hai inviato.  Alcuni programmi di posta elettronica
+hanno l'abitudine di eliminare  qualcosa nell'indirizzo di risposta
+che può essere abbastanza lungo.
+
+Ho predisposto un altro numero di conferma. Per confermare che vuoi
+che
+
+!A
+
+venga aggiunto alla mailing list <#l#>, per favore spedisci una
+risposta vuota a questo indirizzo:
+
+!R
+</#xE/>
+
+oppure clicca qui:
+	mailto:<#R#>
+</#E/>
+
+Di nuovo, controlla l'indirizzo di risposta per assicurarti che sia tutto
+incluso prima di confermare la tua iscrizione.
+
+Spiacente per l'inconveniente.
+
+	<#L#>-Owner <<#l#>-owner@<#H#>>
+
+</text/sub-confirm#E/>
+Per confermare che vuoi che
+
+!A
+
+venga iscritto alla mailing list <#l#>, per favore invia una risposta vuota a
+questo indirizzo:
+
+!R
+
+In genere ciò accade non appena schiacci il bottone "Rispondi". 
+Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
+"A:" di un nuovo messaggio.
+</#xE/>
+
+oppure clicca qui:
+	mailto:<#R#>
+</#E/>
+
+Questa conferma è necessaria per due motivi. Il primo è che verifica che io
+sia in grado  di ricevere la posta da te. Il secondo motivo è che ti protegge 
+nel caso qualcuno stia tentando di fare un'iscrizione a nome tuo.
+
+</#qE/>
+Alcuni programmi di posta sono difettosi e non sono in grado di gestire
+indirizzi molto lunghi. Se non riesci a rispondere a questa richiesta
+spedisci un messaggio a <<#L#>-request@<#H#>> e metti l'indirizzo
+intero indicato sopra nel campo "Oggetto:".
+
+</#sE/>
+Questa mailing list è moderata. Una volta spedita questa conferma la richiesta
+verrà spedita al/i moderatore/i della lista. Ti farò sapere quando la tua
+iscrizione sarà accettata.
+
+</text/sub-nop#E/>
+Ho delle difficoltà a soddisfare la tua richiesta: l'indirizzo
+
+!A
+
+è già iscritto nella mailing list <#l#> quando ho ricevuto la tua
+richiesta e rimane iscritto.
+
+</text/sub-ok#E/>
+Conferma: ho aggiunto l'indirizzo
+
+!A
+
+alla mailing list <#l#> .
+
+Benvenuto su <#l#>@<#H#>!
+
+Per favore salva questo messaggio in modo tale da sapere con quale
+indirizzo ti sei iscritto nel caso tu voglia successivamente cancellarti o
+modificare il tuo indirizzo di iscrizione.
+
+Per cancellare l'scrizione scrivi a:
+
+    <<#l#>-unsubscribe-<#t#>@<#H#>>
+
+</text/top/>
+Ciao! Sono il programma ezmlm. Mi occupo della 
+mailing list <#l#>@<#H#> .
+
+Sto lavorando per il mio responsabile, che può essere contattato presso
+at <#l#>-owner@<#H#>.
+
+</text/unsub-bad#E/>
+Spiacente, ma questo numero di conferma sembra essere non
+valido.
+
+La ragione più comune per i numeri non validi è la scadenza. Devo ricevere
+conferma di ogni richiesta entro 10 giorni. Oppure assicurati che era incluso
+tutto il numero di conferma nella risposta che mi hai inviato. 
+Alcuni programmi di posta elettronica hanno l'abitudine di eliminare qualcosa
+nell'indirizzo di risposta che può essere abbastanza lungo.
+
+Ho predisposto un altro numero di conferma. Per confermare che vuoi che
+
+!A
+
+venga rimosso dalla mailing list <#l#>, per favore manda una risposta vuota
+all'indirizzo:
+
+!R
+</#xE/>
+
+oppure clicca qui:
+	mailto:<#R#>
+</#E/>
+
+Di nuovo, controlla l'indirizzo di risposta per assicurarti che sia tutto
+incluso prima di confermare la tua iscrizione.
+
+Spiacente per l'inconveniente.
+
+	<#l#>-Owner <<#l#>-owner@<#H#>>
+
+</text/unsub-confirm#E/>
+Per confermare che vuoi che
+
+!A
+
+venga rimosso dalla mailing list <#l#>, per favore invia una risposta vuota a
+questo indirizzo:
+
+!R
+
+In genere ciò accade non appena schiacci il bottone "Rispondi". 
+Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
+"A:" di un nuovo messaggio.
+</#xE/>
+
+oppure clicca qui:
+	mailto:<#R#>
+</#E/>
+
+Non ho controllato che il tuo indirizzo sia al momento nella mailing list.
+Per vedere quale indirizzo hai usato per iscriverti, guarda ai messaggi che
+stai ricevendo dalla mailing list. Ciascun messaggio ha il tuo indirizzo
+nascosto nel campo di ritorno; per esempio, mary@xdd.ff.com riceve i messaggi
+con il campo di ritorno:<<#l#>-return-<numero>-mary=xdd.ff.com@<#H#>.
+
+</#qE/>
+Alcuni programmi di posta sono difettosi e non sono in grado di gestire
+indirizzi molto lunghi. Se non riesci a rispondere a questa richiesta
+spedisci un messaggio a <<#L#>-request@<#H#>> e metti l'indirizzo
+intero indicato sopra nel campo "Oggetto:".
+
+</text/unsub-nop#E/>
+Mi dispiace, ma non sono in grado di soddisfare la tua richiesta,
+visto che l'indirizzo
+
+!A
+
+non è nella mailing list <#l#> quando ho ricevuto la tua
+richiesta e non è iscritto a questa mailing list.
+
+Se ti sei cancellato, ma continui a ricevere i messaggi, allora ti sei
+iscritto con un altro indirizzo diverso da quello che usi al momento. per
+favore cerca nell'intestazione:
+
+'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+
+Ciò indica che l'indirizzo usato per l'iscrizione è``user@host.dom''.
+L'indirizzo per cancellarsi per questo utente sarà:
+'<#l#>-unsubscribe-utente=host.dominnio@<#H#>'.
+Basta scrivere a questo indirizzo, sostituendo ai valori utente=host.dominio
+quelli corretti.
+
+Se il messaggio ha un'intestazione con ``List-Unsubscribe:'' puoi
+spedire un messaggio all'indirizzo in quell'intestazione. Esso
+contiene l'indirizzo di iscrizione già codificato al suo interno.
+
+Per alcuni programmi di posta devi rendere le intestazioni visibili per
+leggere il percorso di ritorno:
+
+Con Eudora 4.0, clicca sul bottone "Blah blah ..." .
+Con PMMail, clicca su "Finestra->Mostra l'intero messaggio/intestazione". 
+
+Se tutto ciò ancora non funziona, mi dispiace dirti che non posso aiutarti.
+Per favore INOLTRA un messaggio della lista con una nota nella quale spieghi
+cosa stai cercando di ottenere insieme a un elenco di indirizzi dai quali ti
+potresti essere iscritto al mio responsabile: 
+    <#l#>-owner@<#H#>
+
+che se ne occuperà lui. Il mio responsabile è un po' più lento di quello che
+sono io, così per favore sii paziente.
+</text/unsub-ok#E/>
+Conferma: ho cancellato l'indirizzo
+
+!A
+
+dalla mailing list <#l#> . Questo indirizzo non è più iscritto.
+
+</text/edit-do#nE/>
+Per favore modifica i seguenti file di testo e inviali all'indirizzo:
+
+!R
+
+Il tuo programma di posta dovrebbe avere un'opzione di Rispondi che utilizzi
+questo indirizzo automaticamente.
+
+Posso rimouvere i segni di citazione che il tuo programma aggiunge al testo, a
+meno che tu non modifichi le linee citate stesse.
+
+Le linee segnate sono quelle che iniziano con '%%%'. Esse non devono essere
+modificate (caratteri aggiuntivi aggiunti dal tuo programma di posta
+all'inizio della linea sono tollerati).
+
+
+</text/edit-list#nE/>
+Il comando <#L#>-edit.file può essere usato da un amministratore remoto per
+modificare il file di testo che costituiscono il corpo delle risposte dalla
+mailing list <#L#>@<#H#> .
+
+Quello che segue è una lista dei nomi dei file delle risposte e una breve
+descrizione di quando è utilizzato il loro contenuto. Per modificare un file,
+spedisci semplicemente una e-mail a <#L#>-edit.file, sostituendo 'file' con il
+nome del file. Le istruzioni di modifica sono inviate con il file.
+
+File                Utilizzo
+
+bottom        la fine di tutte le risposte. informazioni generali sui comandi
+digest        sezione "amministrativa" per le raccolte. 
+faq           domande più frequenti relative alla lista.
+get_bad       al posto dei messaggi non trovati nell'archivio.
+help          aiuto generico (tra l'inizio e la fine).
+info          informazioni sulla lista.
+mod_help      aiuto specifico per i moderatori.
+mod_reject    al mittente dei messaggi rifiutati.
+mod_request   ai moderatori insieme con il messaggio.
+mod_sub       agli iscritti dopo che il moderatore ha confermato l'iscrizione.
+mod_sub_confirm  ai moderatori per avere conferma delle iscrizioni.
+mod_timeout   al mittente del messaggio scaduto. 
+mod_unsub_confirm  all'amministratore remoto per chiedere conferma di cancellazione
+sub_bad        all'iscritto se la richiesta di iscrizione è sbagliata.
+sub_confirm   all'iscritto per chiedere conferma dell'iscrizione.
+sub_nop       all'iscritto dopo una re-iscrizione.
+sub_ok        all'iscritto dopo che è stata accettata l'iscrizione.
+top           l'inizio di tutte le risposte.
+</#tnE/>
+trailer       aggiunto ai messaggi spediti fuori dalla lista
+</#nE/>
+unsub_bad     all'iscritto se la conferma di cancellazione è sbagliata.
+unsub_confirm all'iscritto per chiedere conferma di cancellazione.
+unsub_nop     al non-iscritto dopo la cancellazione.
+unsub_ok      all'ex iscritto dopo l'avvenuta cancellazione.
+
+</text/edit-done#nE/>
+Il file di testo è stato aggiornato correttamente.
+</text/info#E/>
+Non sono state fornite informazioni per questa lista.
+</text/faq#E/>
+FAQ - Frequently asked questions per la lista <#l#>@<#H#> .
+
+Non ancora disponibili.

@@ -1,0 +1,15 @@
+# listno;[-]UID;DIR;[-]listaddr;button[,button ...];style;banner
+
+# Default list. "alias" UID=7771. One extra button pointing to my home page ;-)
+0;7771;/var/qmail/alias/QMAIL;qmail@id.wustl.edu;[Home]=http://id.wustl.edu/~lindberg
+
+# the real qmail archive. Because of '-' before the list name, the from
+# address is not shown, only the associated "handle". More buttons here.
+1;7771;/var/qmail/alias/QMAIL;-qmail@id.wustl.edu;[Home]=http://id.wustl.edu/~lindberg,[qmail.org]=http://www.qmail.org,[djb]=http://www.pobox.com/~djb/qmail.html
+
+# This is another alias list. The '-' before the 7771 suppresses the chroot(),
+# which is needed since banner program "./niles" uses /bin/sh, cat, etc. The
+# style sheet is specified as well. Blank lines are ok, but all chars on config
+# lines are significant.
+2;-7771;/var/qmail/alias/SAMBA;samba@id.wustl.edu;[Home]=http://id.wustl.edu/~lindberg;iso-8859-1;/ezcgi.css;./niles
+

@@ -1,0 +1,1412 @@
+0.40 - This version identifier must be on line 1 and start in pos 1.
+#
+#$Id: ezmlmrc.de,v 1.22 1999/12/23 02:43:12 lindberg Exp $
+#$Name: ezmlm-idx-040 $
+#
+# Deutsche Übersetzung: Frank Tegtmeyer <fte@pobox.com>
+#                       Anmerkungen zur Übersetzung bitte direkt
+#                       an mich
+# translation to German: Frank Tegtmeyer <fte@pobox.com>
+#                       comments regarding the translation
+#                       directly to me please
+#
+# Changes:
+# 1999-11-23     Update for version 0.40, most help texts are moved to
+#                the answer of the -help command.
+#                The sample address ich@irgendwo.de was replaced by
+#                ich@lightwerk.de because I this address is under
+#                my control.
+# 1999-02-17     some refinements, sql support by Fred,
+#                mod-help with -log command
+# 1998-11-26     added -list command to mod-help
+#                more verbose explanation for ezmlm-issubn
+# 1998-08-14     one spelling error, added faq/info commands to 'bottom'
+#                instead of mod-help, Fred corrected one a-switch
+#                added a pointer to my web page "Mailinglisten und ihre
+#                Benutzung"
+# 1998-06-29     update for ezmlm-idx-0.31
+#                added faq/info, correction of some switches (archive, digest)
+#                again use of mailto:, additional hint to prevent the use
+#                of the sample address ich@irgendwo.de, some spelling errors
+#                corrected, only ASCII in qmail bounces
+#
+#
+# ezmlmrc 
+# #######
+# Controls the actions of ezmlm-make as patched with ezmlm-idx-0.31 or later.
+#
+# The base directory 'DIR' is always created by ezmlm-make, as is DIR/key.
+# Everything else is done from here.
+#
+# ezmlm-make looks for this file, first as .ezmlmrc in the directory that the
+# lists .qmail files will be placed in (if you've used the -c command line
+# switch), then /etc/ezmlmrc, then ezmlmrc in the ezmlm-make binary directory.
+# Thus, you can customize ezmlm-make on a global level by placing a customized
+# copy of ezmlmrc in /etc and on a user level by copying it to .ezmlmrc in
+# the user's home directory AND use the ezmlm-make -c switch.
+#
+# Tags are:
+#	</filename/>       : put succeeding text lines in DIR/filename
+#	</-filename/>      : erase DIR/filename.
+#	</+dirname/>       : create directory DIR/dirname
+#	</:lname/dirname>  : symlink DIR/.qmail-list-lname -> DIR/dirname
+#
+# The name in the tag can be suffixed with '#' and any number of flags,
+# corresponding to command line switches. The item will be created/extended
+# only if all the flags listed are set. Files can be extended as long as they
+# were the last one created, but not if another file has been started since
+# then. Flags that are not recognized are silently ignored.
+# 
+# Thus, </filename#aP/> creates the file if and only if the list is archived
+# (-a) and not public (-P). If the next tag is </filename#m/>, the file is
+# extended with the lines up to the next tag if the list is message moderated
+# (-m). If the next tag is </another/>, 'filename' is closed. Any further
+# tags leading to the reopenining of 'filename' will overwrite the file, not
+# extend it.
+#
+# A set of user-defined command line switches (xX, yY, zZ) are available for
+# customization.
+#
+# Within the text, certain tags are substituted. Other tags are copied as
+# is. <#A#> and <#R#> are substituted by ezmlm-manage and -store (see man pages)
+# and <#l#> (lower case L) is replaced dynamically by the list name for
+# programs handling both 'list' and 'list-digest'.
+#
+# Substitutions are:
+# <#B#> ezmlm binaries path   <#C#> digest code         <#D#> dir
+# <#H#> host                  <#L#> local               <#F#> flags
+# <#T#> dot                   <#0#> arg for -0. <#3#>...<#9#> arg for -3..9
+# <#1#> ext1                  <#2#> ext2 [if dot is /path/.qmail-ext1-ext2-name]
+# The latter useful when a single user is controlling several virtual domains.
+#
+# -0 is used for the main list address when setting up sublists
+# -3 is for the new from header if we want that header replaced
+# -4 for specifying the ezmlm-tstdig switches used in dir/editor. Default
+#    -k64 -m30 -t24. Only used if -g is used.
+# -5 for list-owner address. Mail to list-owner will be forwarded to this addr.
+# -6 for sql connection info
+# -7 for contents of DIR/modpost
+# -8 for contents of DIR/modsub
+# -9 for contents of DIR/remote
+#
+# For demonstration purposes, the '-x' switch results in the following
+# non-standard actions:
+# - Removal of many non-text MIME parts from messages.
+# - Limit posts to 2 bytes <= msg body size <= 40000
+#
+# Attempts to create links or directories that already exist, will result
+# in a FATAL error. Attempts to open files that have already been closed
+# or already exits, will cause the old file to be overwritten.
+#
+# One of the major problems with ezmlm-lists is DIR/inlocal. For normal
+# users, it is set up to the list name (user-list or so), which is correct.
+# However, for user 'ezmlm' in control of virtual domain 'host.dom.com'
+# the list name is 'list@host.dom.com', but inlocal should be 'ezmlm-list',
+# not 'list'. Similarly, if ezmlm-domain1 is in control of 'host.dom.com,
+# list@host.dom.com, should yield an inlocal of 'ezmlm-domain1-list'. To
+# always get the lists correct, place this file as '.ezmlmrc' in the 
+# users home directory (~ezmlm/.ezmlmrc) and change the inlocal text below
+# to 'ezmlm-<#L#>' or 'ezmlm-<#1#>-<#L#>, respectively.
+# config to support future editing without giving ezmlm-make command line
+# arguments other than dir. Useful for GUI/WWW editing tools
+</config/>
+F:<#F#>
+X:<#X#>
+D:<#D#>
+T:<#T#>
+L:<#L#>
+H:<#H#>
+C:<#C#>
+0:<#0#>
+3:<#3#>
+4:<#4#>
+5:<#5#>
+6:<#6#>
+7:<#7#>
+8:<#8#>
+9:<#9#>
+</charset/>
+# Explicitly specify character-set, when this ezmlmrc was used.
+# Use Quoted-Printable to make averyone happy.
+iso-8859-1:Q
+</inlocal/>
+<#L#>
+</sublist#0/>
+<#0#>
+</+archive/>
+</+subscribers/>
+</+bounce/>
+</+text/>
+# dirs for digests
+</+digest#d/>
+</+digest/subscribers#d/>
+</+digest/bounce#d/>
+# for extra address db
+</+allow/>
+</+allow/subscribers/>
+# for blacklist
+</+deny#k/>
+</+deny/subscribers#k/>
+# moderator db & mod queue dirs. Needed for -m, -r -s, so we just
+# make them by default.
+</+mod/>
+</+mod/subscribers/>
+</+mod/pending/>
+</+mod/accepted/>
+</+mod/rejected/>
+# links: dot -> dir/editor
+</:/editor/>
+</:-owner/owner/>
+</:-digest-owner/owner#d/>
+</:-return-default/bouncer/>
+</:-digest-return-default/digest/bouncer#d/>
+</:-default/manager/>
+# for message moderation only
+</:-accept-default/moderator#m/>
+</:-reject-default/moderator#m/>
+# Get rid of configuration flags for editing mode so we can start with a
+# clean state.
+</-modpost#eM/>
+</-modsub#eS/>
+</-remote#eR/>
+</-public#eP/>
+</-indexed#eA/>
+</-archived#eA/>
+</-prefix#eF/>
+</-text/trailer#eT/>
+</-sublist#e^0/>
+</-mimeremove#eX/>
+# Not needed, except for message moderation.
+</-moderator#eM/>
+# We don't clean out text files to make it easier for users
+# doing manual config by e.g. touching dir/remote.
+# subscription moderation
+</modsub#s/>
+<#8#>
+# remote admin
+</remote#r/>
+<#9#>
+# message moderation
+</modpost#m/>
+<#7#>
+# List owner mail
+</owner#5/>
+<#5#>
+</owner#^5/>
+<#D#>/Mailbox
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# Handles subscription. Add flags if you want a non-default digest format.
+# Service subject commands to the # request address if the -q switch is given.
+# Also -l and -d enable subscriber listing/text file editing, for remote adms.
+# -u gives subscriber only archive access
+</manager#ab/>
+|<#B#>/ezmlm-get -P '<#D#>' <#C#>
+</manager#aGB/>
+|<#B#>/ezmlm-get '<#D#>' <#C#>
+</manager#agB/>
+|<#B#>/ezmlm-get -s '<#D#>' <#C#>
+</manager#q/>
+|<#B#>/ezmlm-request '<#D#>'
+# Ok to add -l/-d even for non-mod lists, since ezmlm-manage
+# won't allow it unless there are remote admins. The lack of logic other than
+# AND makes this very tedious ...
+# first lists with normal confirmation:
+</manager#LNHJ/>
+|<#B#>/ezmlm-manage '<#D#>'
+</manager#lNHJ/>
+|<#B#>/ezmlm-manage -l '<#D#>'
+</manager#LnHJ/>
+|<#B#>/ezmlm-manage -e '<#D#>'
+</manager#lnHJ/>
+|<#B#>/ezmlm-manage -le '<#D#>'
+# ... now no confirmation for subscribe ...
+</manager#LNhJ/>
+|<#B#>/ezmlm-manage -S '<#D#>'
+</manager#lNhJ/>
+|<#B#>/ezmlm-manage -lS '<#D#>'
+</manager#LnhJ/>
+|<#B#>/ezmlm-manage -eS '<#D#>'
+</manager#lnhJ/>
+|<#B#>/ezmlm-manage -leS '<#D#>'
+# ... now no confirmation for unsubscribe ...
+</manager#LNHj/>
+|<#B#>/ezmlm-manage -U '<#D#>'
+</manager#lNHj/>
+|<#B#>/ezmlm-manage -lU '<#D#>'
+</manager#LnHj/>
+|<#B#>/ezmlm-manage -eU '<#D#>'
+</manager#lnHj/>
+|<#B#>/ezmlm-manage -leU '<#D#>'
+# ... and finally no confirmation at all ...
+</manager#LNhj/>
+|<#B#>/ezmlm-manage -US '<#D#>'
+</manager#lNhj/>
+|<#B#>/ezmlm-manage -lUS '<#D#>'
+</manager#Lnhj/>
+|<#B#>/ezmlm-manage -eUS '<#D#>'
+</manager#lnhj/>
+|<#B#>/ezmlm-manage -leUS '<#D#>'
+</manager#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</editor/>
+# reject shouldn't be configured for sublist.
+</#^0/>
+# full reject is now default, to get To/Cc: listaddress requirement
+|<#B#>/ezmlm-reject '<#D#>'
+# -k => reject posts from blacklisted addresses. Done for moderated
+# lists as well - allows removal of unwanted noise.
+</#k^0/>
+|<#B#>/ezmlm-issubn -n '<#D#>/deny' || { echo "Tut mir leid, ich wurde angewiesen, Ihre Nachrichten nicht anzunehmen. Diesbezuegliche Fragen richten Sie bitte an <#L#>-owner@<#H#> (#5.7.2)."; exit 100 ; }
+# switch -u=> restrict to subs of list & digest. If not m
+# do it with ezmlm-issubn, if 'm' do it with ezmlm-gate
+</#uM/>
+|<#B#>/ezmlm-issubn '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod' || { echo "Hier werden nur Nachrichten von Abonnenten der Liste akzeptiert. Falls Sie die Liste beziehen aber trotzdem nicht schreiben duerfen, schicken Sie bitte diese Nachricht an <#L#>-owner@<#H#> weiter, damit Ihre neue Adresse aufgenommen werden kann. Der Listeneigentuemer kann Sie ebenso gezielt fuer das Schreiben von Nachrichten freischalten, auch wenn Sie die Liste nicht beziehen (#5.7.2)."; exit 100 ; }
+</#um/>
+|<#B#>/ezmlm-gate '<#D#>' '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod'
+# For message moderation, editor has store/clean
+</#mUO/>
+|<#B#>/ezmlm-store '<#D#>'
+</#mUo/>
+|<#B#>/ezmlm-store -P '<#D#>'
+</#mU/>
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+# for non-message moderated lists, it has send
+</#M/>
+|<#B#>/ezmlm-send '<#D#>'
+# ezmlm-archive here for normal lists. Put into moderator for mess-mod lists
+</#Mi/>
+|<#B#>/ezmlm-archive '<#D#>' || exit 0
+# all lists have warn unless -w.
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# for digest bounces
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</#d^4/>
+|<#B#>/ezmlm-tstdig -m30 -k64 -t48 '<#D#>' || exit 99
+</#d4/>
+|<#B#>/ezmlm-tstdig <#4#> '<#D#>' || exit 99
+</#d/>
+|<#B#>/ezmlm-get '<#D#>' || exit 0
+# bouncer for list and digest
+</bouncer/>
+|<#B#>/ezmlm-weed
+|<#B#>/ezmlm-return -D '<#D#>'
+</digest/bouncer#d/>
+|<#B#>/ezmlm-weed
+|<#B#>/ezmlm-return -d '<#D#>'
+# moderator is set up only for message moderated lists. However, '-e' does
+# not remove it since we can't remove the symlinks to it (they're outside
+# of the list dir.
+</moderator#m/>
+|<#B#>/ezmlm-moderate '<#D#>'
+</#mi/>
+|<#B#>/ezmlm-archive '<#D#>' || exit 0
+</#mU/>
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+</headerremove#E/>
+return-path
+return-receipt-to
+content-length
+precedence
+x-confirm-reading-to
+x-pmrqc
+list-subscribe
+list-unsubscribe
+list-help
+</headerremove#E^0/>
+# For sublists, these should be left in
+list-post
+# remove from header if -3 'new_from_line'
+</#3E/>
+from
+</lock/>
+</lockbounce/>
+</digest/lockbounce#d/>
+</digest/lock#d/>
+</public#p/>
+</archived#a/>
+</indexed#a/>
+</inhost/>
+<#H#>
+</outhost/>
+<#H#>
+</outlocal/>
+<#L#>
+</mailinglist/>
+contact <#L#>-help@<#H#>; run by ezmlm
+# Headeradd needs to always exist but leave out stuff for sublists
+</headeradd#E^0/>
+# Good for mailing list stuff (and vacation program)
+Precedence: bulk
+# To prevent indexing by findmail.com
+X-No-Archive: yes
+# rfc2369, first from main list only, others from sublist only
+List-Post: <mailto:<#L#>@<#H#>>
+</headeradd#E/>
+List-Help: <mailto:<#l#>-help@<#h#>>
+List-Unsubscribe: <mailto:<#l#>-unsubscribe@<#h#>>
+List-Subscribe: <mailto:<#l#>-subscribe@<#h#>>
+# add new from line "From: arg" if -3 'arg'
+</#3E/>
+From: <#3#>
+# max & min message size
+</msgsize#x/>
+30000:2
+# remove mime parts if -x
+</mimeremove#xE/>
+application/excel
+application/rtf
+application/msword
+application/ms-tnef
+text/html
+text/rtf
+text/enriched
+text/x-vcard
+application/activemessage
+application/andrew-inset
+application/applefile
+application/atomicmail
+application/dca-rft
+application/dec-dx
+application/mac-binhex40
+application/mac-compactpro
+application/macwriteii
+application/news-message-id
+application/news-transmission
+application/octet-stream
+application/oda
+application/pdf
+application/postscript
+application/powerpoint
+application/remote-printing
+application/slate
+application/wita
+application/wordperfect5.1
+application/x-bcpio
+application/x-cdlink
+application/x-compress
+application/x-cpio
+application/x-csh
+application/x-director
+application/x-dvi
+application/x-hdf
+application/x-httpd-cgi
+application/x-koan
+application/x-latex
+application/x-mif
+application/x-netcdf
+application/x-stuffit
+application/x-sv4cpio
+application/x-sv4crc
+application/x-tar
+application/x-tcl
+application/x-tex
+application/x-texinfo
+application/x-troff
+application/x-troff-man
+application/x-troff-me
+application/x-troff-ms
+application/x-ustar
+application/x-wais-source
+audio/basic
+audio/mpeg
+audio/x-aiff
+audio/x-pn-realaudio
+audio/x-pn-realaudio
+audio/x-pn-realaudio-plugin
+audio/x-realaudio
+audio/x-wav
+image/gif
+image/ief
+image/jpeg
+image/png
+image/tiff
+image/x-cmu-raster
+image/x-portable-anymap
+image/x-portable-bitmap
+image/x-portable-graymap
+image/x-portable-pixmap
+image/x-rgb
+image/x-xbitmap
+image/x-xpixmap
+image/x-xwindowdump
+text/x-sgml
+video/mpeg
+video/quicktime
+video/x-msvideo
+video/x-sgi-movie
+x-conference/x-cooltalk
+x-world/x-vrml
+# These can also be excluded, but for many lists it is desirable
+# to allow them. Uncomment to add to mimeremove.
+# application/zip
+# application/x-gtar
+# application/x-gzip
+# application/x-sh
+# application/x-shar
+# chemical/x-pdb
+# --------------------- Handle SQL connect info
+</-sql#^6e/>
+</-digest/sql#^6e/>
+</-allow/sql#^6e/>
+</sql#6W/>
+<#6#>
+</sql#6w/>
+<#6#>:<#L#>@<#H#>
+</digest/sql#6dW/>
+<#6#>_digest
+</digest/sql#6dw/>
+<#6#>_digest:<#L#>_digest@<#H#>
+</allow/sql#6/>
+<#6#>_allow
+# -------------------- End sql stuff
+</prefix#fE/>
+[<#L#>]
+</text/trailer#tE/>
+---------------------------------------------------------------------
+Um die Liste abzubestellen, schicken Sie eine Mail an:
+    <#L#>-unsubscribe@<#H#>
+Um eine Liste aller verfügbaren Kommandos zu bekommen, schicken
+Sie eine Mail an:
+    <#L#>-help@<#H#>
+</text/bottom#E/>
+
+Wenn Sie weiterführende Informationen zu Mailinglisten haben möchten,
+schauen Sie sich doch im World Wide Web einmal das Dokument
+"Mailinglisten und ihre Benutzung"  unter folgender Adresse an:
+http://www.pobox.com/~fte/ml.html
+
+--- Hier eine Aufstellung der wichtigsten Kommandos zur Steuerung des
+    Mailinglistenmanagers ezmlm für diese Liste:
+
+Ich kann alle Ihre Anforderungen bezüglich der Liste
+automatisch bearbeiten. Schicken Sie einfach eine leere Mail
+an die jeweilige Adresse.
+SENDEN SIE KEINE KOMMANDOS AN DIE MAILINGLISTE SELBST.
+In dem Fall kann ich nicht darauf reagieren und viele Empfänger
+der Mailingliste werden sich bei Ihnen oder über Sie beschweren.
+
+   <<#L#>-help@<#H#>>
+   Beschreibung der Steuerungsmöglichkeiten für diese
+   Mailingliste
+
+   <<#L#>-subscribe@<#H#>>
+   wenn Sie die Mailingliste in Zukunft beziehen möchten
+
+   Wenn Sie keine Nachrichten der Mailingliste <#L#>
+   mehr empfangen möchten, benutzen Sie bitte die Adresse, die
+   im Header "List-Unsubscribe:" angegeben ist. Wenn Sie Ihre
+   Email-Adresse nach der Listenbestellung nicht geändert haben,
+   geht auch:
+   <<#L#>-unsubscribe@<#H#>>
+
+</#dE/>
+   Für die Digest-Liste existieren die entsprechenden Adressen:
+   <<#L#>-digest-subscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+</#HJE/>
+Beim Löschen oder Eintragen von Abonnenten verschicke ich eine
+zusätzliche Kontrollnachricht. Diese muß zur Bestätigung einfach
+nur beantwortet werden.
+
+</#E/>
+Falls Sie menschliche Hilfe brauchen, wenden Sie sich bitte an
+den Listeneigentümer:
+
+   <<#L#>-owner@<#H#>>
+
+Bitte schicken Sie eine Listenmail inklusive ALLER Header mit -
+dadurch wird es sehr viel leichter, Ihnen schnell zu helfen.
+
+--- Anbei eine Kopie der Anforderung die ich erhalten habe:
+
+</text/bounce-bottom#E/>
+
+--- Anbei eine Kopie der Fehlermeldung (bounce), die ich
+    erhalten habe:
+
+</text/bounce-num#E/>
+
+Ich habe mir gemerkt, welche Nachrichten der Mailingliste
+   <<#L#>@<#H#>>
+nicht an Sie zugestellt werden konnten.
+</#aE/>
+Eventuell befinden sich noch Kopien dieser Nachrichten
+im Archiv.
+
+</#aE/>
+Um beispielsweise eine Kopie der Nachricht 123
+anzufordern, schicken Sie eine Nachricht an
+   <#L#>-get.123@<#H#>
+
+Um die Nachrichten 123 bis 145 (maximal einhundert Nachrichten pro
+Anforderung) zu bekommen, benutzen Sie die folgende Adresse:
+   <#L#>-get.123_145@<#H#>
+
+Um eine Liste (Verfasser und Betreff) der letzen einhundert
+Nachrichten zu bekommen, schicken Sie eine leere Mail an die
+folgende Adresse:
+   <#L#>-index@<#H#>
+
+</#E/>
+Hier die Nummern der Nachrichten:
+
+</text/dig-bounce-num#E/>
+
+Ich habe mir gemerkt, welche Nachrichten der Mailingliste
+<#L#>-digest nicht an Sie zugestellt werden konnten.
+Pro nicht zugestelltem Digest wird jeweils die Nummer der
+ersten Nachricht vermerkt.
+
+</#aE/>
+Unter Umständen befinden sich noch Kopien der Nachrichten
+im Archiv. Ich habe mir jeweils die Nummer der ersten
+Nachricht pro Digest gemerkt. Sie können sich die Nachrichten
+vom Archiv schicken lassen. Eine Anforderung der Digests
+selber ist nicht möglich, da diese nicht archiviert werden.
+
+Um beispielsweise eine Kopie der Nachricht 123
+anzufordern, schicken Sie eine Nachricht an
+   <#L#>-get.123@<#H#>
+
+Um die Nachrichten 123 bis 145 (maximal einhundert Nachrichten pro
+Anforderung) zu bekommen, benutzen Sie die folgende Adresse:
+   <#L#>-get.123_145@<#H#>
+
+Um eine Liste (Verfasser und Betreff) der letzen einhundert
+Nachrichten zu bekommen, schicken Sie eine leere Mail an die
+folgende Adresse:
+   <#L#>-index@<#H#>
+
+</#E/>
+Hier die Nummern der ersten Nachricht pro Digest:
+
+</text/bounce-probe#E/>
+
+Es scheint, daß einige Nachrichten der Mailingliste
+<#l#> an Sie nicht zustellbar waren.
+Ich habe Ihnen eine Warnung geschickt, aber auch diese konnte
+nicht zugestellt werden. Eine Kopie der Fehlernachricht
+ist angehängt.
+
+Diese Nachricht ist ein weiterer Versuch zu prüfen, ob Ihre Adresse
+erreichbar ist. Wenn auch dieser letzte Versuch scheitert Ihnen
+Mail zuzustellen, dann wird Ihre Adresse ohne weitere Hinweise
+von der Mailingliste
+   <#l#>@<#H#>
+entfernt.
+
+Durch eine leere Mail an die Adresse
+   <<#l#>-subscribe@<#H#>>
+können Sie sich wieder in die Mailingliste eintragen.
+
+</text/bounce-warn#E/>
+
+Es scheint, daß einige Nachrichten der Mailingliste
+<#l#> an Sie nicht zustellbar waren.
+Ich habe eine Kopie der ersten Fehlernachricht mitgeschickt.
+
+Falls diese Nachricht auch nicht zustellbar ist, werde ich eine
+weitere Versuchsnachricht schicken. Ist auch diese ohne Erfolg, wird
+Ihre Adresse von der Mailingliste <#l#> gestrichen.
+
+</text/digest#dE/>
+Um sich in die Digest-Liste einzutragen, schicken Sie eine Mail an:
+   <#L#>-digest-subscribe@<#H#>
+
+Um sich abzumelden, schicken Sie eine Mail an:
+   <#L#>-digest-unsubscribe@<#H#>
+
+Nachrichten, die Sie in der Liste veröffentlichen wollen,
+schicken Sie bitte an:
+   <#L#>@<#H#>
+
+</text/get-bad#E/>
+Diese Nachricht ist im Archiv nicht vorhanden.
+
+</text/help#E/>
+Dies ist eine allgemeine Hilfsnachricht. Entweder haben Sie die Hilfe
+direkt angefordert oder die Mail, die ich empfangen habe, ist nicht an
+eine meiner korrekten Steuerungsadressen geschickt worden.
+
+Hier eine Aufstellung der Kommandos zur Steuerung des
+Mailinglistenmanagers ezmlm für diese Liste:
+
+<<#L#>-info@<#H#>>
+<<#L#>-faq@<#H#>>
+Die beiden Adressen sind zur Anforderung eines
+Informationstextes zur Mailingliste bzw. zur Anforderung der
+FAQ (Frequently Asked Questions - oft gestellte Fragen und
+die Antworten darauf) vorgesehen.
+
+# ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
+# multi-get!
+</#aE/>
+<<#L#>-get.12@<#H#>>
+Auf diese Weise fordern Sie eine Kopie der Nachricht 12
+vom Archiv an.
+
+<<#L#>-get.123_145@<#H#>>
+Fordern Sie auf diese Weise eine Kopie der Nachrichten
+123 bis 145 vom Archiv an. Sie können mit einer Anforderung
+maximal einhundert Nachrichten bekommen.
+
+<<#L#>-index.123_456@<#H#>>
+Fordern Sie auf diese Weise die Betreff-Zeilen (Subjects)
+der Nachrichten von 123 bis 456 (inklusive) vom Archiv an.
+Pro Anforderung werden maximal 2000 Betreff-Zeilen zugestellt. 
+Die Zustellung erfolgt in Gruppen zu je einhundert Betreff-Zeilen,
+so daß Sie mit dieser Anforderung real die Betreff-Zeilen
+der Nachrichten 100 bis 499 erhalten.
+Zusätzlich zu den Betreffzeilen wird der jeweilige Autor
+übermittelt.
+
+<<#L#>-thread.123@<#H#>>
+Anforderung aller Nachrichten, die den gleichen Betreff wie
+die Nachricht 123 haben.
+
+</#E/>
+Der Inhalt der Nachrichten muß nicht unbedingt leer sein, Sie
+können auch etwas in die Betreff-Zeilen schreiben. Ich werde
+jedoch beide Angaben ignorieren - nur die angeschriebene Adresse
+ist für meine Steuerung maßgebend.
+
+------------------------------------------------------------
+ACHTUNG: bitte probieren Sie nicht die im folgenden genannte
+Adresse ich@lightwerk.de aus, sondern ersetzen Sie
+diese durch Ihre eigene Adresse, unter der Sie
+Abonnent der Liste werden möchten!
+------------------------------------------------------------
+
+Sie können direkt die Adresse vorgeben, unter der Sie als
+Empfänger der Liste eingetragen werden möchten. Dazu bauen Sie
+die gewünschte Adresse in meine Steuerungsadresse ein, indem Sie
+das at-Zeichen (@) durch ein Gleichheitszeichen (=) ersetzen.
+Um zum Beispiel als Adresse ich@lightwerk.de anzugeben, senden
+Sie eine Mail an die Adresse
+   <<#L#>-subscribe-ich=lightwerk.de@<#H#>>.
+Die entsprechende Adresse zum abmelden des Abonnements ist
+   <<#L#>-unsubscribe-ich=lightwerk.de@<#H#>>.
+In beiden Fällen werde ich eine Bestätigung an ich@lightwerk.de
+schicken, die Sie nach Empfang einfach nur beantworten müssen,
+um den An- oder Abmeldevorgang abzuschließen.
+
+Auch wenn diese Erklärungen zu kompliziert für Sie sein sollten
+oder Sie Probleme mit der Steuerung der Liste haben, schreiben
+Sie bitte keine Hilfemails an die Liste selbst. Wenden Sie sich
+stattdessen an den Listeneigentümer:
+   <#L#>-owner@<#H#>
+Bitte haben Sie Geduld, da es sich dabei um ein eventuell
+überlastetes menschliches Wesen handelt, das nie so schnell
+reagieren kann wie ich :)
+
+</text/mod-help#E/>
+Vielen Dank, daß Sie bereit sind, die Moderation der Liste
+   <#L#>@<#H#>
+zu übernehmen.
+
+Die Kommandos, die ich benutze, sind sehr verschieden von denen
+anderer Mailinglistenmanager. Sie werden Ihnen anfangs sehr
+ungewohnt vorkommen, wenn Sie sich aber erst einmal daran gewöhnt
+haben werden Sie die Einfachheit und Geschwindigkeit des Systems
+schätzen lernen.
+
+Hier einige Hinweise, wie die Moderation funktioniert.
+Generelle Hinweise zur Listenbedienung folgen am Ende dieser
+Mail.
+
+Eintragen von Nutzern per Mail
+------------------------------
+Als Moderator sind Sie in der Lage, per Mail beliebige Adressen 
+in die Liste aufzunehmen oder sie daraus zu streichen. Sie
+bauen einfach die Adresse, um die es geht in meine Kommando-Adresse
+ein und ersetzen dabei das at-Zeichen (@) durch ein
+Gleichheitszeichen (=).
+Für die Adresse ich@lightwerk.de geht das zum Beispiel
+über die folgenden Steueradressen:
+
+Eintragen:
+   <#L#>-subscribe-ich=lightwerk.de@<#H#>
+Löschen:
+   <#L#>-unsubscribe-ich=lightwerk.de@<#H#>
+
+</#dE/>
+Entsprechend für die Digest-Liste:
+   <#L#>-digest-subscribe-ich=lightwerk.de@<#H#>
+   <#L#>-digest-unsubscribe-ich=lightwerk.de@<#H#>
+
+</#E/>
+So einfach ist das :) Sie brauchen nicht einmal einen
+Betreff oder irgendeinen Nachrichtentext schreiben.
+
+</#rE/>
+Ich werde Ihnen eine Rückfrage schicken, um sicherzugehen daß
+wirklich Sie das Kommando geschickt haben.
+Sie brauchen dann einfach nur noch antworten und der Vorgang
+ist damit abgeschlossen.
+</#RE/>
+Ich werde zur Sicherheit an die angegebene Adresse (in diesem
+Fall ich@lightwerk.de) eine Rückfrage schicken.
+Alles was der Nutzer tun muß, ist auf diese Anfrage zu antworten.
+</#E/>
+
+Die Bestätigungsnachrichten sind erforderlich um es Dritten
+schwerer zu machen, beliebige Mailadressen in die Liste
+aufzunehmen.
+
+Der Nutzer wird darüber informiert, wenn er in die Liste
+aufgenommen oder aus ihr gelöscht wird.
+
+
+Abonnement durch die User
+-------------------------
+
+Jeder kann die Liste abonnieren oder abbestellen indem eine
+Mail an die entsprechende Adresse geschickt wird:
+
+Bestellen der Liste:
+   <#L#>-subscribe@<#H#>
+
+Abbestellen der Liste:
+   <#L#>-unsubscribe@<#H#>
+
+</#dE/>
+Entsprechend für die Digest-Liste:
+
+   <#L#>-digest-subscribe@<#H#>
+   <#L#>-digest-unsubscribe@<#H#>
+
+</#E/>
+In beiden Fällen bekommt der Nutzer eine Rückfrage, um
+Fälschungen vorzubeugen. Nach Bestätigung wird der Nutzer
+Abonnent der Liste oder aus ihr gelöscht.
+
+</#sE/>
+Da diese Liste mit moderierten Abonnements arbeitet, wird
+bei einem Abonnement eine zweite Rückfrage an den oder die
+Moderatoren geschickt.
+Da die Bestätigung durch den Nutzer schon erfolgte, können Sie
+relativ sicher sein, daß die angegebene Adresse nicht gefälscht
+ist. Wenn Sie dem Abonnement durch den User zustimmen,
+beantworten Sie die Bestätigungsanforderung einfach.
+Falls nicht, können Sie die Anforderung einfach löschen.
+Eventuell können Sie auch mehr Informationen vom Nutzer einholen
+oder ihm Ihre Gründe für die Nicht-Bestätigung mitteilen.
+Beachten Sie, daß dadurch Ihre Email-Adresse bekannt wird.
+
+</#E/>
+Die Nutzer können auch die folgende Adressen benutzen:
+
+   <#L#>-subscribe-ich=lightwerk.de@<#H#>
+   <#L#>-unsubscribe-ich=lightwerk.de@<#H#>
+
+</#dE/>
+Für Digests:
+   <#L#>-digest-subscribe-ich=lightwerk.de@<#H#>
+   <#L#>-digest-unsubscribe-ich=lightwerk.de@<#H#>
+
+</#E/>
+Damit können sie eine andere als die aktuell benutzte
+Email-Adresse in die Mailingliste einzutragen bzw. sie daraus
+löschen (in diesem Beispiel die Adresse ich@lightwerk.de).
+Nur wenn die Rückfrage an diese Adresse dann auch beantwortet
+wird, kann die Aktion ausgeführt werden.
+
+All diese Rückfragen werden durchgeführt um sicherzustellen
+daß keine gefälschten Kommandos vorliegen und daß es sich
+wirklich um den Wunsch der Person handelt, die Mails über
+diese Adresse empfängt.
+
+Ihre Adresse und Identität wird keiner weiteren Person
+offengelegt, es sei denn Sie nehmen direkt Kontakt auf.
+
+</#rlE/>
+Information über den Listenzustand
+----------------------------------
+
+Um eine Liste der Abonnenten von <#L#>@<#H#>
+zu bekommen, senden Sie eine Mail an:
+   <<#L#>-list@<#H#>>
+
+Um ein Transaktionslog (Liste der Abonnenten-Zu- und
+Abgaenge) für <#L#>@<#H#>
+zu bekommen, senden Sie eine Mail an:
+   <<#L#>-log@<#H#>>
+
+</#rldE/>
+Die Liste der Digest-Abonnenten erhalten Sie über:
+   <<#L#>-digest-list@<#H#>>
+
+Das Logfile für die <#L#>-digest@<#H#> Liste über:
+   <<#L#>-digest-log@<#H#>>
+
+</#rnE/>
+
+Textänderungen
+--------------
+
+Sie können die erläuternden Texte, die ich verschicke auch per Mail
+verändern. Um eine Datei- und Kommandoliste dafür zu erhalten schreiben
+Sie an:
+   <<#L#>-edit@<#H#>>
+
+</#mE/>
+
+Moderierte Nachrichten
+----------------------
+
+Moderierte Nachrichten werden von mir zunächst in eine
+Warteschlange eingereiht, daraufhin wird eine Bestätigungs-
+anforderung an Sie geschickt. In der Betreffzeile steht
+in diesem Fall "MODERATE for ...".
+
+Falls Sie die Nachricht genehmigen, müssen Sie einfach nur
+auf diese Anforderung antworten. Dazu benutzen Sie bitte
+die Adresse im Reply-To:-Header (sollte automatisch von
+Ihrem Mailprogramm angeboten werden). In einigen Programmen
+wird die Adresse auch als Hyperlink im Mailtext angezeigt, den
+Sie dann nur noch per Mausklick öffnen müssen (zum Beispiel in
+Pegasus Mail).
+Die Nachricht des Nutzers müssen Sie nicht mitschicken, da ich
+noch eine Kopie davon besitze und diese verwende.
+
+Wenn Sie die Nachricht ablehnen möchten, senden Sie an die
+Adresse, die im From:-Header angegeben ist. Auch hier können
+Sie die Möglichkeit des Hyperlinks verwenden, wenn Ihr Mailprogramm
+das unterstützt.
+Sie können eine Begründung oder einen Kommentar mitgeben, indem Sie
+Ihren Text in zwei Zeilen einschließen, die jeweils mit drei
+Prozentzeichen beginnen. Der Nutzer erhält nur diesen
+Kommentar, ohne daß Ihre Identität dabei preisgegeben wird.
+
+Ich werde die Nachricht anhand der ersten Moderatoren-Antwort
+behandeln. Sollten Sie eine Bestätigung oder Ablehnung schicken
+und die Nachricht wurde aufgrund der Entscheidung eines
+weiteren Moderators schon anderweitig verarbeitet, werde
+ich Sie darüber informieren.
+
+Sollte kein Moderator innerhalb einer festgelegten Zeit
+(normalerweise 5 Tage) reagieren, schicke ich die Nachricht
+zusammen mit einer Erklärung an den Absender zurück.
+Die Liste kann auch so konfiguriert werden, daß solche
+Nachrichten nicht an den Nutzer zurückgeschickt, sondern
+kommentarlos gelöscht werden.
+
+</#E/>
+
+Urlaub und andere Abwesenheit
+-----------------------------
+
+Wenn Sie zeitweilig über eine andere Adresse erreichbar sind, schicken
+Sie alle Mails, die den richtigen 'Mailing-List:' Header haben an diese
+Adresse weiter. Behandeln Sie alle Mails, die einen Betreff der Form:
+'MODERATE for <#L#>@<#H#>' oder
+'CONFIRM subscribe to <#L#>@<#H#>'
+haben auf die gleiche Weise.
+Ihre Moderationstätigkeit können Sie dann auch von der neuen Adresse
+aus fortsetzen.
+Es ist ebenfalls möglich, einen Vertreter damit zu beauftragen. Bitte
+klären Sie aber Vertretungen vorher mit dem Listeneigentümer ab.
+
+Wenn Sie für eine Weile alle Anforderungsmails automatisch
+bestätigen wollen, lassen Sie einfach Ihr Mailsystem die Nachrichten
+automatisch beantworten, die die obengenannten Bedingungen erfüllen.
+
+</#rE/>
+Wenn Sie die Liste von einer Fremdadresse aus administrieren wollen,
+werden nicht Sie, sondern der Nutzer nach einer Bestätigung gefragt.
+Danach wird die Bestätigungsanforderung an alle Moderatoren verschickt.
+Diese Verfahrensweise ist notwendig, da ich in diesem Fall nicht wissen kann,
+ob Sie zur Administration berechtigt sind.
+
+Bitte beachten Sie, daß in diesem Fall auch Ihre Administrationsmail
+(und Ihre Mailadresse) an den Nutzer übermittelt werden.
+
+</#E/>
+Viel Erfolg!
+
+PS: Bitte wenden Sie sich an den Listeneigentümer
+   <#L#>-owner@<#H#>
+wenn Sie Probleme irgendwelcher Art mit der Listenadministration
+haben.
+
+</text/mod-reject#E/>
+Tut mir leid, Ihre (angehängte) Nachricht wurde von einem Moderator
+abgewiesen. Falls der Moderator einen Kommentar dazu abgegeben hat,
+können Sie diesen weiter unten finden.
+</text/mod-request#E/>
+Bitte entscheiden Sie als Moderator, ob diese Nachricht an die
+Mailingliste
+   <#L#>@<#H#>
+weitergeleitet werden soll.
+
+Um die Nachricht zuzulassen und sofort an alle Listenabonnenten
+weiterzuleiten, senden Sie bitte eine Mail an:
+
+!A
+
+Normalerweise sollte das über die "Beantworten"-Funktion Ihres
+Mailprogramms funktionieren. Bitte prüfen Sie aber noch einmal,
+ob die Adresse mit "<#L#>-accept" beginnt und am Ende nicht
+abgeschnitten ist. Manche Programme haben leider Probleme mit langen
+Adressen. Falls "Beantworten" nicht funktioniert, kopieren Sie
+die oben genannte Adresse einfach in die Zieladresse einer neuen
+Nachricht. Beachten Sie dabei aber einen eventuell von Ihrem
+Mailprogramm vorgenommenen Zeilenumbruch, falls die Adresse nicht
+in eine Zeile paßt.
+</#xE/>
+Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
+   mailto:<#A#>
+Kontrollieren Sie aber bitte auch in diesem Fall, daß die Adresse
+nicht durch Zeilenumbruch verstümmelt wurde!
+</#E/>
+
+
+Um die Nachricht abzuweisen und an den Absender zurückzuschicken,
+senden Sie bitte eine Mail an:
+
+!R
+
+Falls Ihr Programm das unterstützt, können Sie auch an die im
+From: Header angegebene Adresse antworten (das sollte die oben
+angegebene sein).
+
+</#xE/>
+Wenn Ihr Programm Hyperlinks unterstützt, können Sie auch
+hier klicken:
+   mailto:<#R#>
+
+</#E/>
+
+Sie müssen keine Kopie der Originalnachricht mitschicken.
+Wenn Sie dem Absender bei einer Ablehnung einen Kommentar zukommen
+lassen wollen, schließen Sie diesen zwischen zwei Zeilen ein, die
+jeweils mit drei Prozentzeichen beginnen.
+
+%%% Beginn Kommentar
+%%% Ende Kommentar
+
+Auch bei Ablehnung einer Nachricht kontrollieren Sie bitte, daß
+die Adresse nicht von Ihrem Mailprogramm verstümmelt wird.
+
+Vielen Dank für Ihre Mithilfe!
+
+--- Anbei finden Sie die Nachricht, um die es geht.
+
+</text/mod-sub#E/>
+Ich habe Sie auf Anforderung eines Moderators in die folgende
+Mailingliste aufgenommen bzw. Sie aus dieser gelöscht:
+   <#l#>@<#H#>
+
+Falls das nicht Ihren Wünschen entspricht oder ein Irrtum vorliegt,
+wenden Sie sich mit Ihrer Reklamation so schnell wie möglich an
+den Listeneigentümer:
+   <#l#>-owner@<#H#>
+
+Falls Sie Informationen über die Steuerung der Liste benötigen,
+senden Sie einfach eine leere Mail an 
+   <#l#>-help@<#H#>
+
+</text/mod-timeout#E/>
+Leider hat keiner der Moderatoren Ihre Nachricht bearbeitet. Deswegen
+schicke ich sie Ihnen zurück. Falls Sie dennoch versuchen wollen, die
+Nachricht zu veröffentlichen, schicken Sie sie bitte erneut oder
+nehmen Sie direkt Kontakt mit einem Moderator auf.
+
+--- Anbei finden Sie die Nachricht, die ich von Ihnen empfangen habe.
+
+</text/mod-sub-confirm#E/>
+Bitte entscheiden Sie, ob
+
+!A
+
+die Mailingliste
+   <#l#>@<#H#>
+abonnieren darf. Falls die Anforderung nicht von Ihnen selbst kam
+(die Originalanforderung habe ich angehängt), habe ich schon geprüft,
+daß die Anforderung wirklich von der angegebenen Adresse kam.
+
+Um zuzustimmen, senden Sie einfach eine leere Mail an die
+folgende Adresse:
+
+!R
+
+Die Funktion "Beantworten" in Ihrem Mailprogramm sollte diese Adresse
+automatisch benutzen.
+Beachten Sie dabei aber einen eventuell von Ihrem Mailprogramm
+vorgenommenen Zeilenumbruch, falls die Adresse nicht in eine Zeile paßt.
+Sie können die Adresse auch kopieren und in einer neuen Mail
+als Empfänger einsetzen.
+</#xE/>
+Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
+   mailto:<#R#>
+</#E/>
+
+
+Falls Sie nicht zustimmen, ignorieren Sie diese Nachricht einfach.
+Sie können Dem Nutzer natürlich auch eine Begründung Ihrer Ablehnung
+schicken, damit wird diesem allerdings Ihre Email-Adresse bekannt.
+
+Vielen Dank für Ihre Mithilfe!
+
+</text/mod-unsub-confirm#E/>
+Bitte entscheiden Sie, ob
+
+!A
+
+von der Mailingliste
+   <#l#>@<#H#>
+gestrichen werden soll.
+Um zuzustimmen, senden Sie einfach eine leere Mail an die
+folgende Adresse:
+
+!R
+
+Die Funktion "Beantworten" in Ihrem Mailprogramm sollte diese Adresse
+automatisch benutzen.
+Beachten Sie dabei aber einen eventuell von Ihrem Mailprogramm
+vorgenommenen Zeilenumbruch, falls die Adresse nicht in eine Zeile paßt.
+Sie können die Adresse auch kopieren und in einer neuen Mail
+als Empfänger einsetzen.
+</#xE/>
+Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
+   mailto:<#R#>
+</#E/>
+
+Falls Sie nicht zustimmen, ignorieren Sie diese Nachricht einfach.
+Sie können Dem Nutzer natürlich auch eine Begründung Ihrer Ablehnung
+schicken, damit wird diesem allerdings Ihre Email-Adresse bekannt.
+
+Vielen Dank für Ihre Mithilfe!
+
+</text/sub-bad#E/>
+Es scheint, daß diese Bestätigungsnummer nicht gültig ist.
+
+Der Grund dafür ist in den meisten Fällen eine Zeitüberschreitung.
+Bestätigungen muß ich innerhalb von zehn Tagen bekommen, sonst gelten
+Anforderungen als abgelehnt.
+Stellen Sie auch sicher, daß Sie die Antwortadresse komplett
+übernommen haben - da diese Kontrolladressen recht lang sind, haben
+einige Mailprogramme die Eigenschaft, diese kommentarlos zu kürzen.
+
+Ich habe eine neue Bestätigungsnummer generiert. Um zuzustimmen, daß
+die Adresse
+
+!A
+
+in die Mailingliste
+   <#l#>@<#H#>
+aufgenommen wird, senden Sie eine leere Mail an die Adresse
+
+!R
+</#xE/>
+
+Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
+   mailto:<#R#>
+</#E/>
+
+Prüfen Sie noch einmal genau, daß Sie an die richtige Adresse
+schreiben und diese nicht von Ihrem Mailprogramm verstümmelt wurde.
+
+Bitte entschuldigen Sie den Aufwand.
+
+   <#L#>-Owner <<#l#>-owner@<#H#>>
+
+</text/sub-confirm#E/>
+Um zu bestätigen, daß Sie unter der Adresse
+
+!A
+
+die Mailingliste <#l#>@<#H#>
+abonnieren möchten, senden Sie eine leere Mail an 
+
+!R
+
+Die Funktion "Beantworten" in Ihrem Mailprogramm sollte diese Adresse
+automatisch benutzen.
+Beachten Sie dabei aber einen eventuell von Ihrem Mailprogramm
+vorgenommenen Zeilenumbruch, falls die Adresse nicht in eine Zeile paßt.
+Sie können die Adresse auch kopieren und in einer neuen Mail
+als Empfänger einsetzen.
+</#xE/>
+Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
+   mailto:<#R#>
+</#qE/>
+
+Manche Mailprogramme sind nicht in der Lage, lange Adressen zu
+verarbeiten. Falls Sie die angegebene Adresse nicht anschreiben
+können, benutzen Sie bitte die Adresse
+<<#L#>-request@<#H#>> und tragen die
+obengenannte Adresse in die Betreff-Zeile (Subject:) ein.
+</#E/>
+
+Diese Bestätigung dient zwei Zwecken. Zum einen wird dadurch sicher-
+gestellt, daß ich Mails an Ihre Adresse zustellen kann.
+Zum anderen dient die Bestätigung als Schutz gegen gefälschte
+Mailinglisten-Abonnements.
+
+</#sE/>
+Diese Mailingliste ist moderiert. Sobald Sie die Bestätigung
+abgeschickt haben, wird eine weitere Bestätigung von den Moderatoren
+eingeholt. Sie erhalten einen Hinweis, wenn der Vorgang abgeschlossen
+wurde. Falls nach etwa zehn Tagen keine Reaktion kam, hat keiner der
+Moderatoren zugestimmt, Sie in die Liste aufzunehmen.
+
+</#E/>
+Wenn Sie diese Nachricht nicht beantworten, erhalten Sie die
+Mailingliste nicht. Wenden Sie sich an Ihren Mail-Administrator, wenn
+Sie der Meinung sind, daß jemand unter Ihrem Namen ein gefälschtes
+Abonnement vorgenommen hat.
+
+</text/sub-nop#E/>
+Hm. Die Adresse
+
+!A
+
+ist schon Abonnent der Mailingliste
+<#l#>@<#H#>.
+Diese Adresse war schon als Abonnent eingetragen, bevor Ihre
+Anforderung empfangen wurde. Daher habe ich keinerlei
+Änderungen ausgeführt.
+
+</text/sub-ok#E/>
+Bestätigung: Ich habe Ihre Adresse
+
+!A
+
+als Abonnenten in die Mailingliste <#l#>
+aufgenommen.
+
+Willkommen bei <#l#>@<#H#>!
+
+Bitte heben Sie diese Nachricht gut auf, damit Sie auch später
+noch wissen, unter welcher Adresse Sie die Mailingliste empfangen.
+Damit vermeiden Sie Probleme, falls sie später Ihre Adresse ändern
+oder die Mailingliste wieder abbestellen wollen.
+
+Um die Liste wieder abzubestellen, senden Sie eine leere Mail an
+die Adresse
+
+    <<#l#>-unsubscribe-<#t#>@<#H#>>
+
+</text/top/>
+Hallo, hier ist das ezmlm Programm. Ich verwalte die Mailingliste
+   <#l#>@<#H#>
+
+Ich nehme dem Eigentümer der Liste die meiste Arbeit ab. Er selbst
+ist erreichbar unter der Adresse
+   <#l#>-owner@<#H#>
+
+</text/unsub-bad#E/>
+Es scheint, daß diese Bestätigungsnummer nicht gültig ist.
+
+Der Grund dafür ist in den meisten Fällen eine Zeitüberschreitung.
+Bestätigungen muß ich innerhalb von zehn Tagen bekommen, sonst gelten
+Anforderungen als abgelehnt.
+Stellen Sie auch sicher, daß Sie die Antwortadresse komplett
+übernommen haben - da diese Kontrolladressen recht lang sind, haben
+einige Mailprogramme die Eigenschaft, sie kommentarlos zu kürzen.
+
+Ich habe eine neue Bestätigungsnummer generiert. Um zuzustimmen, daß
+Ihre Adresse
+
+!A
+
+von der Mailingliste <#l#>@<#H#>
+gestrichen werden soll, senden Sie bitte eine leere Mail an
+folgende Adresse:
+
+!R
+</#xE/>
+
+oder klicken Sie hier, wenn Ihr Programm Hyperlinks unterstützt:
+   mailto:<#R#>
+</#E/>
+
+Bitte prüfen Sie noch einmal genau, daß Sie an die richtige Adresse
+schreiben und diese nicht von Ihrem Mailprogramm verstümmelt wurde.
+
+Bitte entschuldigen Sie den Aufwand.
+
+	<#l#>-Owner <<#l#>-owner@<#H#>>
+
+</text/unsub-confirm#E/>
+Um zuzustimmen, daß Ihre Adresse
+
+!A
+
+von der Mailingliste <#l#>@<#H#>
+gestrichen werden soll, senden Sie bitte eine leere Mail an
+folgende Adresse:
+
+!R
+
+Die Funktion "Beantworten" in Ihrem Mailprogramm sollte diese Adresse
+automatisch benutzen.
+Beachten Sie dabei aber einen eventuell von Ihrem Mailprogramm
+vorgenommenen Zeilenumbruch, falls die Adresse nicht in eine Zeile paßt.
+Sie können die Adresse auch kopieren und in einer neuen Mail
+als Empfänger einsetzen.
+</#xE/>
+Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
+   mailto:<#R#>
+</#qE/>
+
+Manche Mailprogramme sind nicht in der Lage, lange Adressen zu
+verarbeiten. Falls Sie die angegebene Adresse nicht anschreiben
+können, benutzen Sie bitte die Adresse
+<<#L#>-request@<#H#>> und tragen die
+obengenannte Adresse in die Betreff-Zeile (Subject:) ein.
+</#E/>
+
+Ich habe nicht überprüft, ob Ihre Adresse wirklich die Mailingliste
+bezieht. Sollte die Adresse nicht zu den Abonnenten der Mailingliste
+gehören erhalten Sie erst nach Ihrer Bestätigung eine Fehlermeldung.
+
+</text/unsub-nop#E/>
+Hm. Die Adresse
+
+!A
+
+ist kein Abonnent der Mailingliste
+   <#l#>@<#H#>
+und konnte deshalb auch nicht von ihr abgemeldet werden.
+
+Wenn Sie die Liste abbestellen aber trotzdem weiterhin Nachrichten
+aus der Mailingliste empfangen, sind sie wahrscheinlich mit einer
+anderen Adresse eingetragen, als diejenige die sie momentan
+benutzen.
+
+Um festzustellen, unter welcher Adresse Sie die Mailingliste
+empfangen, sehen Sie sich die Header der empfangenen Nachrichten an.
+Jede Nachricht hat Ihre Empfängeradresse in ihrem Return-Path: kodiert.
+Zum Beispiel empfängt die Adresse ich@lightwerk.de alle Listennachrichten
+mit folgendem Return-Path:
+Return-Path: <<#l#>-return-<nummer>-ich=lightwerk.de@<#H#>
+Die Nummer wechselt natürlich, also sieht das zum Beispiel so aus:
+'Return-Path: <<#l#>-return-1234-ich=lightwerk.de@<#H#>>'
+
+Das zeigt, daß die Adresse, über die die Nachrichten bezogen werden,
+ich@lightwerk.de ist. Die Adresse zum Abbestellen der Liste wäre in
+diesem Fall 
+   <#l#>-unsubscribe-ich=lightwerk.de@<#H#>
+Benutzen Sie einfach die so ermittelte Adresse.
+
+Wenn Ihre Listen-Nachrichten einen Header "List-Unsubscribe"
+enthalten, dann können sie die dort angegebene Adresse benutzen. Diese
+hat Ihre Bezugsadresse schon mit in die Abmeldeadresse einbezogen.
+
+Wie Sie die Anzeige aller Header in Ihrem Mailprogramm einschalten,
+ist leider bei jedem Programm anders. Einige Beispiele:
+- Pegasus-Mail: Strg-P (deutsche Version) oder Strg-H (engl. Version)
+- Elm und Mutt: Anzeige der Nachricht nicht mit <Enter> sondern mit 'h'
+- Microsoft Outlook 98: sehen Sie unter Ansicht/Optionen nach. Dort
+                        finden Sie die Internet-Header Ihrer Mail
+- Eudora Pro (Mac): klicken Sie auf die mit "Blah" markierte Stelle
+- ...
+
+Falls all das nicht funktioniert, ist es wahrscheinlich, daß jemand
+die Nachrichten der Mailingliste an sie kopiert. Bitte fragen Sie
+ihren lokalen Mailadministrator um Hilfe. Kann auch dieser Ihnen nicht
+helfen, schicken Sie eine Listen-Nachricht inklusive ALLER HEADER
+zusammen mit einer Erklärung, was sie versucht haben an den Eigentümer
+dieser Liste:
+
+  <#l#>-owner@<#H#>
+
+Dieser wird sich dann mit Ihnen in Verbindung setzen und sich um das
+Problem kümmern. Aber haben Sie bitte Geduld - es handelt sich um
+ein menschliches Wesen, das eventuell vielbeschäftigt ist :)
+
+</text/unsub-ok#E/>
+Bestätigung: die Adresse
+
+!A
+
+wurde von der Mailingliste
+   <#l#>@<#H#>
+abgemeldet.
+
+</text/edit-do#nE/>
+Bitte bearbeiten Sie den folgenden Text und senden Sie ihn an:
+
+!R
+
+Die Funktion "Beantworten" in Ihrem Mailprogramm sollte diese Adresse
+automatisch benutzen.
+
+Solange Sie die Markierungszeilen nicht verändern, kann ich
+Quote-Zeichen (Zitat-Markierungen, in der Regel '> '), die Ihr
+Mail-Programm vor dem Text einfügt, selbständig wieder entfernen.
+
+Markierungszeilen sind Zeilen, die mit '%%%' beginnen. Sie dürfen
+nicht geändert werden (vom Mailprogramm eingefügte Zitat-Markierungen
+sind akzeptabel).
+
+
+</text/edit-list#nE/>
+Durch Remote-Administratoren kann das <#L#>-edit.file
+Kommando benutzt werden, um die Textdateien zu verändern, die die
+Hauptmenge der Antworten von der Liste
+    <#L#>@<#H#>
+ausmachen.
+
+Hier finden Sie eine Aufstellung der Dateinamen und eine kurze
+Beschreibung ihres Inhalts bzw. ihrer Funktion.
+Um den Inhalt einer Datei zu ändern, senden Sie einfach eine
+Mail an
+   <#L#>-edit.file@<#H#>
+wobei Sie 'file' durch den konkreten Dateinamen ersetzen.
+Die Instruktionen zur Bearbeitung erhalten Sie zusammen mit dem
+Text.
+
+Datei               Inhalt / Funktion
+
+bottom              an alle Antworten angehängt, allgemeine
+                    Information zu Kommandos
+digest              Steuerungsinformationen für Digests
+faq                 oft gestellte Fragen und die Antworten zur Liste
+get_bad             anstelle nicht im Archiv vorhandener Nachrichten
+help                allg. Hilfe (zwischen 'top' und 'bottom').
+info                Listenbeschreibung. Die erste Zeile ist Kurzbeschreibung.
+mod_help            Hilfe für Listenmoderatoren
+mod_reject          an den Absender abgewiesener Nachrichten
+mod_request         an Moderatoren, zusammen mit der Nachricht
+mod_sub             an Neu-Abonnenten, nach Moderator-Bestätigung
+mod_sub_confirm     Abonnement-Anforderung, an Moderatoren
+mod_timeout         Zeitüberschreitung, an Absender
+mod_unsub_confirm   Abbestellung, an Remote-Administrator
+sub_bad             Abonnement-Ablehnung, an Abonnent
+sub_confirm         an Neu-Abonnenten, zur Bestätigung des Abonnements
+sub_nop             an Abonnenten, falls er schon Abonnent ist
+sub_ok              an Abonnenten, wenn Abonnement erfolgreich
+top                 Anfang von allen Antworten
+</#tnE/>
+trailer             an alle Listennachrichten angehängt
+</#nE/>
+unsub_bad           an Abonnenten, wenn Abmeldung abgelehnt
+unsub_confirm       an Abonnenten, Anforderung Abmeldebestätigung
+unsub_nop           an Nicht-Abonnenten, wenn Abmeldung angefordert
+unsub_ok            an abgemeldeten Abonnenten, Abmeldung erfolgreich
+
+</text/edit-done#nE/>
+Der Text wurde erfolgreich abgeändert.
+
+</text/info#E/>
+Für diese Liste wurde noch keine Beschreibung bereitgestellt.
+
+</text/faq#E/>
+Oft gestellte Fragen+Antworten für die Mailingliste
+   <#l#>@<#H#>
+
+Leider hat sich noch niemand die Mühe gemacht, ein entsprechendes
+Dokument zu erstellen.

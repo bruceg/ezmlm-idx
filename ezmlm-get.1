@@ -1,0 +1,464 @@
+.TH ezmlm-get 1
+.SH NAME
+ezmlm-get \- handles mailing list archive retrieval and digests
+.SH SYNOPSIS
+.B ezmlm-get
+[
+.B \-bBcCpPsSvV
+][
+.B \-f
+.I format
+]
+.I dir
+[
+.I digestcode[f]
+]
+.SH OPTIONS
+.TP
+.B \-b
+(Default.)
+Copy administrative information and the request to the bottom of replies.
+This informs the recipient of other commands, and allows some error tracking
+in case the recipient did not originate the request.
+.TP
+.B \-B
+Suppress the normal administrative information and request copy. This may make
+it harder for the recipient to diagnose problems and learn commands.
+.TP
+.B \-c
+(Default.)
+Process and reply to commands (does not affect digests).
+.TP
+.B \-C
+Ignore all commands except digest.
+.TP
+.B \-f \fIformat
+.B ezmlm-get
+will use
+.I format
+as the default format for all returned message collections. The default
+is 'm' for MIME with a header subset (see below). Format specifiers
+send with individual requests override the default set with the
+.B \-f
+switch.
+.TP
+.B \-p
+\-get, \-index, and \-thread commands are available to all users,
+provided other flags are permissive. This overrides normal behavior,
+which is to allow archive retrieval only to moderators, when
+.I dir\fB/public
+does not exist. This is useful to set up non-public lists that still give
+users archive access.
+.TP
+.B \-P
+\-get, \-index, and \-thread commands are available
+only to moderators, even if
+.I dir\fB/public
+exists. The
+.B \-C
+and
+.B \-s
+flags can restrict this further. This is useful for public lists with
+archive retrieval restricted to a subset of users (moderators).
+.TP
+.B \-s
+\-get, \-index, and \-thread requests are processed only if
+.B SENDER
+is a subscriber.
+.TP
+.B \-S
+(Default.)
+Anyone can issue \-get, \-index, and \-thread requests.
+.TP
+.B \-v
+Print version info.
+.TP
+.B \-V
+Print version info.
+.SH DESCRIPTION
+.B ezmlm-get
+handles archive retrieval and optionally makes and sends out
+digests for the mailing list
+stored in
+.IR dir .
+Subscribers of the digest list are stored in
+.IR dir\fB/digest/subscribers/ .
+
+The contents of
+.I dir\fB/headeradd
+are added to the header of outgoing messages.
+
+.B ezmlm-get
+is normally invoked from a
+.B .qmail(7)
+file.
+
+It reads a mail message from its standard input,
+and a mail envelope from the
+.BR SENDER ,
+.BR LOCAL ,
+and
+.BR HOST
+environment variables.
+
+.B ezmlm-get
+uses
+.B LOCAL
+to determine where it is invoked. If
+.B LOCAL
+is the list local name only,
+.B ezmlm-get
+assumes it is run from
+.I dir\fB/editor
+to produce a digest.
+The digest is sent directly to the digest list subscribers.
+
+If
+.B LOCAL
+is empty or undefined,
+.B ezmlm-get
+assumes it is run from the command line or a script. In this case
+it behaves as if run from
+.I dir\fB/editor
+and sends out a digest to the digest subscribers.
+
+Otherwise,
+.B ezmlm-get
+expects
+.B LOCAL
+to be of the form
+.IR list\fB-\fIaction .
+Here
+.I list
+is the first line of
+.IR dir\fB/inlocal
+and
+.I action
+is a request.
+The output is sent to the envelope sender.
+
+.BR ezmlm-get
+checks
+.I action
+for
+.BR dig\.\fIdigestcode ,
+.BR index ,
+.BR thread ,
+and
+.BR get .
+If 
+.I action
+is one of these,
+.B ezmlm-get
+handles the request and sends a reply. If successful, it
+exits 99 (ignore remaining
+.B .qmail(7)
+file entries).
+If
+.I action
+is not one of these,
+.B ezmlm-get
+exits 0 (success) to pass the message on to later handlers,
+such as
+.BR ezmlm-manage(1) .
+
+.B ezmlm-get
+expects
+.B HOST
+to match the first line of
+.IR dir\fB/inhost .
+
+.BR ezmlm-dig\.\fIdigestcode
+returns a digest of messages received since the last digest, unless
+numerical arguments are given.
+.I digestcode
+must be alphanumeric, and match (case-insensitive)
+.I digestcode
+on the
+.B ezmlm-get
+command line. Otherwise, the request will be ignored. This is to restrict
+digest creation. The body of the requesting message up to the first line
+starting with '-' is copied into the
+.I administrivia 
+section of the digest. This is followed by the contents of
+.IR dir\fB/text/digest ,
+if this file exists.
+
+.B Note:
+Anyone who can read your
+.I dir\fB/manager
+file, digest-requesting scripts, or mail log knows the
+.I digestcode
+and can trigger digests.
+
+.B ezmlm-get
+copies
+.I dir\fB/mailinglist
+into a
+.B Mailing-List
+field in its response.
+If the incoming message has a
+.B Mailing-List
+field,
+.B ezmlm-get
+refuses to respond.
+.B ezmlm-get
+also refuses to respond to bounce messages.
+
+If
+.I dir\fB/listid
+exists,
+.B ezmlm-get
+will assume that the format is correct and
+create a ``List-ID:'' header by placing the contents after the
+text ``List-ID: ''. 
+
+If
+.I dir\fB/qmqpservers
+exists,
+.B ezmlm-get will use
+.B qmail-qmqp(1)
+to send digests. Other messages are sent by the normal qmail mechanism.
+
+If
+.I dir\fB/public
+does not exist,
+.B ezmlm-get
+rejects all archive retrieval attempts, unless the
+.B \-p
+command line switch is used.
+
+Archive retrieval actions can be of the form
+.BR action[f] , 
+.BR action[f].\fInum 
+or 
+.BR action[f].\fInum_num2 ,
+where 
+.I num
+is the message number for the action or
+.I num_num2
+the range of message numbers for the action.
+
+.B f
+is an optional format specifier for
+.IR \-get ,
+.IR \-thread ,
+and
+.I \-dig
+requests. It is allowed, but ignored for
+.I \-index
+requests. Currently, the following are allowed:
+
+.TP
+.B r
+rfc1153. This is a ``plain'' non-MIME format for dumb clients.
+.TP
+.B m
+(Default.) MIME
+.I multipart/digest 
+with a subset of ordered headers sorted.
+Currently, the following headers are
+included in the order listed:
+Date:,
+To:,
+From:,
+Reply-To:,
+Cc:,
+MIME-Version:,
+Content-Type:,
+Message-ID:,
+and Keywords:.
+This can be customized with the optional file
+.IR dir\fB/digheaders ,
+which should contain the desired headers up to but not including the colon.
+
+The format is no longer compliant
+with rfc1153, as the rfc1153 format is incompatible with rfc2046, which
+which the format is (should be) compatible.
+.TP
+.B x
+MIXED: This is the same as the default MIME
+format, except that the Content-Type is
+.IR multipart/mixed .
+This helps circumnavigate a Pine bug: when the digest is
+content-transfer-encoded, Pine will refuse to display the initial
+text/plain part of a 
+.I multipart/digest
+message, but display the same part of a
+.I multipart/mixed
+message. Some MUAs for some strange reason treat the two multipart formats
+differently. In some cases, ``x'' works better than ``m''.
+.TP
+.B v
+VIRGIN: This is MIME
+.I multipart/digest 
+with messages returned without any header filtering.
+.TP
+.B n
+NATIVE: This is VIRGIN format without threading, i.e. messages are
+presented in numerical order and the message index is suppressed.
+
+.PP
+For flexibility and backwards compatibility, the '.' separating the action from
+the first argument can be replaced by '\-',
+or omitted.
+Any non-alphanumeric character can separate
+.I num2
+from
+.IR num .
+.PP
+
+If
+.I action
+is
+.IR dig.digestcode ,
+.B ezmlm-get
+returns a digest of the messages received since the last digest, and updates
+the digest issue counter.
+
+If
+.I action
+is
+.IR get ,
+.B ezmlm-get
+sends back message(s)
+.I num
+or
+.I num
+through
+.IR num2 .
+from
+.IR dir\fB/archive/ .
+If
+.I num
+is omitted and
+.I dir\fB/dignum
+does not exist or is 0, the latest HISTGET message (default 30) are
+returned. Otherwise,
+the messages since the latest digest are returned including the last
+message in that digest, so that always at least 1 message is send. If the
+number of messages
+exceeds MAXGET (default 100), only the MAXGET last messages are returned.
+if
+.I num
+is greater than the latest message in the archive _and_
+.I num2
+is specified, the latest messages back to HISTGET before the end of the
+latest digest up to MAXGET messages are returned. This is a good way of
+always getting at least the latest 30 messages without knowing the latest
+message number. A link with such a command could be put into e.g.
+.IR dir\fB/text/sub-ok .
+
+.I num
+and
+.I num2
+are adjusted to make both > 0, and
+.I num2
+>=
+.IR num .
+If either is greater than
+the largest message number processed, it is silently
+set to the largest message number.
+At most 100 messages are
+returned.
+
+If
+.I action
+is
+.BI index ,
+.B ezmlm-get
+sends back the subjects and authors of the message(s)
+.I num
+or
+.IR num
+through
+.I num2
+in sets of 100 from
+.IR dir\fB/archive/ .
+.I num
+and
+.I num2
+are reasonable adjusted as for 'get'. No warnings are
+sent. At most 20 sets of 100 message entries are returned per request. If
+.I num
+is omitted,
+.B ezmlm-get
+returns the last 100-200 message entries, which automatically gives
+information about the last message number.
+
+If
+.I action
+is
+.BI thread ,
+.B ezmlm-get
+sends back the message(s) that have an index subject entry identical to
+that of message
+.I num 
+from
+.IR dir\fB/archive/ .
+
+If
+.I num2
+is given it is ignored. If
+.I num
+is out of range, and error
+message is returned. The message range scanned for the subject is limited
+to 2000 messages before and after the master message, i.e. the
+.BR thread
+argument.
+This limit protects very large archives.
+Most threads are expected to be considerably more short-lived.
+In the unlikely event that there are further messages,
+these can be retrieved by a second request for the 
+highest/lowest message returned in the first request.
+.SH "CHARACTER SETS"
+If
+.I dir\fB/charset
+exists,
+.B ezmlm-get
+will use the character set listed for all messages. Otherwise, the
+default ``us-ascii'' will be used. The character set can be suffixed
+by ``:'' followed by a code. If the code is ``Q'', outgoing messages are 
+sent as ``Quoted-Printable'', if it is ``B'' they are sent ``base64'' encoded.
+Otherwise, text is sent as is.
+.SH "FILES"
+.TP
+.I dir\fB/dignum
+The last message included in the latest normal mode digest.
+.TP
+.I dir\fB/digissue
+The issue number of the latest normal mode digest.
+.TP
+.I dir\fB/text/get-bad
+Returned if a/the message cannot be found.
+.TP
+.I dir\fB/text/digest
+Copied into the
+.I Administrivia
+section of digests after the body of the requesting message.
+.TP
+.I dir\fB/charset
+The character set used for all
+.B ezmlm-get
+messages (see above).
+If not present, the default, ``us-ascii'', is used without encoding.
+.SH BUGS
+The digest format per rfc2046
+should (but is not required to) be multipart/mixed
+with the table-of-contents a text/plain part, and the entire remainder of
+the digest a multipart/digest part. The multipart/digest in turn should 
+contain all the messages. Many
+MUA's fail to split out the individual messages from such a hierarchy, so the
+format used by
+.B ezmlm-get
+is a simple multipart/digest, explicitly typing the table-of-contents
+to text/plain, with the ``x'' format changing the mail content-type to
+multipart/mixed.
+.SH "SEE ALSO"
+ezmlm-make(1),
+ezmlm-manage(1),
+ezmlm-send(1),
+ezmlm(5),
+qmail-command(8),
+qmail-qmqp(1)
+

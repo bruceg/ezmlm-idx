@@ -1,0 +1,23 @@
+.TH surf 3
+.SH NAME
+surf \- Simple Unpredictable Random Function
+.SH SYNTAX
+.B #include <surf.h>
+
+void \fBsurf\fP(\fIout\fR,\fIin\fR,\fIseed\fR);
+
+uint32 \fIout\fR[8];
+.br
+uint32 \fIin\fR[12];
+.br
+uint32 \fIseed\fR[32];
+.SH DESCRIPTION
+.B surf
+changes a 384-bit input to a 256-bit output,
+under control of a 1024-bit seed.
+When the seed is secret,
+.B surf
+appears to be indistinguishable from a completely random
+384-bit-to-256-bit function.
+.SH "SEE ALSO"
+surfpcs(3)

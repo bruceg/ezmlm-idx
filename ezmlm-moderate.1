@@ -1,0 +1,170 @@
+.TH ezmlm-moderate 1
+.SH NAME
+ezmlm-moderate \- process moderator actions for message
+acceptance and rejection
+.SH SYNOPSIS
+.B ezmlm-moderate [-cCmMrRvV]
+.B [-t\fI reply-to@host\fB]
+.I dir ['/path/program args']
+
+.SH DESCRIPTION
+.B ezmlm-moderate
+reads a mail message, expecting it to contain an
+.I -accept
+or 
+.I -reject
+action request for the mailing list stored in
+.I dir.
+
+.B ezmlm-moderate
+verifies the cookie sent as part of the action request, and if correct
+attempts to find the corresponding message in
+.IR dir\fB/mod/pending/ .
+If the message is found, it is either rejected or posted to the list,
+depending on the action request.
+
+Posts to the list are handled by
+piping the message to
+.B ezmlm-send(1)
+located in the ezmlm binary directory, as set at compile time. This is
+usually the directory that ezmlm-moderate resides in.
+.B ezmlm-send(1)
+is provided with
+.I dir
+as the first argument.
+
+If the optional second argument is given,
+.B ezmlm-moderate
+pipes the message to that program, as executed by sh.
+No parameters are supplied.
+
+.I dir
+is passed as an argument to
+.BR ezmlm-send(1) ,
+but NOT to any program specified as the optional
+.B ezmlm-moderate
+command line argument.
+
+.B ezmlm-moderate
+does not bother to correctly set sender.
+.B ezmlm-send(1)
+doesn't care, and any other program that might be used can parse the
+sender from the first line of the message, which is always
+.I Return-Path: <address@host.domain>
+as build from SENDER originally passed to
+.BR ezmlm-store(1) .
+
+If the message is rejected, an optional moderator comment is copied into the
+notification to the message sender.
+A moderator comment is any text in the
+.I -reject
+request found between two lines with ``%%%'' starting in one of the first
+5 positions of the line. The easiest is to use lines consisting of ``%%%''
+only. If the characters preceeding the ``%%%'' are found at the beginning
+of any lines within the comment, the characters are removed. This is to
+appropriately ignore any ``quote marks'' that you mail program might place at
+the beginning of lines in a reply.
+
+.B ezmlm-moderate
+messages are sent ``From:''
+.IR list-owner@listhost .
+This allows the poster to easily complain to the owner of the list, in case
+s/he objects. An optional ``Reply-To:'' header can be added via the
+.BR \-r\fI\ reply-to@host .
+
+Once the message has been successfully accepted or rejected, it is removed from
+.I dir\fB/mod/pending/
+and a stub is created in
+.I dir\fB/mod/accepted/
+or
+.IR dir\fB/mod/rejected/ ,
+respectively.
+This is done in order to be able to notify the senders of later moderation
+requests about the fate of the message.
+
+A failure to find the message in
+.I dir\fB/mod/pending/
+is most often caused by the message already having been accepted or rejected
+by another moderator. Therefore,
+.B ezmlm-moderate
+looks in
+.I dir\fB/mod/accepted/
+and
+.I dir\fB/mod/rejected/
+for a message stub. If found, 
+.B ezmlm-moderate
+notifies the sender in the form of a fatal error
+if the fate of the message was different from
+that intended by the current action request.
+Otherwise, the fate of the message is silently logged.
+
+If the message is not found, it has timed out and the message or
+the message stub has been removed by
+.BR ezmlm-clean(1) .
+In this case,
+.B ezmlm-moderate
+notifies the moderator of the failure, but can no longer discern the fate
+of the original message. Again, notification is in the form of a fatal
+error from qmail.
+
+At the beginning of the message,
+.B ezmlm-moderate
+prints a new
+.B Mailing-List
+field with the contents of
+.IR dir\fB/mailinglist .
+It rejects the message if there is already a
+.B Mailing-List
+field.
+
+.B ezmlm-moderate
+does not distribute bounce messages:
+if the environment variable
+.B SENDER
+is set, and is either empty or
+.BR #@[] ,
+.B ezmlm-moderate
+rejects the message.
+.SH OPTIONS
+.TP
+.B \-cCrR
+Passed on to ezmlm-send(1).
+.TP
+.B \-m
+(Default.)
+The rejected post is sent as a MIME enclosure.
+.TP
+.B \-M
+The rejected post is appended to the message.
+.TP
+.B \-t\fI reply-to@host
+A ``Reply-To:
+.IR reply-to@host ''
+header will be added to the moderation request.
+.TP
+.TP
+.B \-v
+Display
+.B ezmlm-moderate
+version information.
+.TP
+.B \-V
+Display
+.B ezmlm-moderate
+version information.
+.SH "CHARACTER SETS"
+If
+.I dir\fB/charset
+exists,
+.B ezmlm-moderate
+will use the character set listed for all messages. Otherwise, the
+default ``us-ascii'' will be used. The character set can be suffixed
+by ``:'' followed by a code. If the code is ``Q'', outgoing messages are 
+sent as ``Quoted-Printable'', if it is ``B'' they are sent ``base64'' encoded.
+Otherwise, text is sent as is.
+.SH "SEE ALSO"
+ezmlm-clean(1),
+ezmlm-make(1),
+ezmlm-send(1),
+ezmlm-store(1),
+ezmlm(5)

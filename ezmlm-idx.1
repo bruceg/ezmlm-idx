@@ -1,0 +1,97 @@
+.TH ezmlm-idx 1
+.SH NAME
+ezmlm-idx \- create index for mailing list archive
+.SH SYNOPSIS
+.B ezmlm-idx
+[
+.B \-dDF
+][
+.B \-f\I msg
+]
+.I dir
+.SH DESCRIPTION
+.B ezmlm-idx
+reads all archived messages for the list in
+.I dir
+from
+.IR dir\fB/archive/
+and creates a message index. The index file format is identical to
+that produced by
+.B ezmlm-send(1)
+(when
+.IR dir\fB/indexed
+is present).
+
+.B ezmlm-idx
+will ignore messages that do not have the owner execute bit set.
+
+.B ezmlm-idx
+will create the the index file under a different name and then
+move it into place.
+
+If 
+.IR dir\fB/indexed
+does not exist,
+.B ezmlm-idx
+will create it to enable the use of the newly created subject and author index.
+
+.B ezmlm-idx
+will remove reply-indicators and the prefix from the subject before
+entry into the index, as described for
+.BR ezmlm-send(1) .
+.B ezmlm-idx
+will decode rfc2047 encoded subject and author headers. When unfolding
+split lines,
+.B ezmlm-idx
+will remove redundant escape sequences for the character
+set specified in
+.IR dir\fB/charset .
+
+.B ezmlm-idx
+calculates a subject hash based on the normalized subject header. Normalization
+removes linear whitespace, case information, and message reply indicators.
+The subject hash is used by
+.B ezmlm-get(1)
+for message threading.
+.SH OPTIONS
+.TP
+.B \-d
+Use the ``Date:'' header for date information, rather than the top ``Received:''
+header. This is unreliable, but useful when messages have been transferred from
+another type of archive by mailing them to ezmlm.
+.B ezmlm-idx
+converts dates with two-digit years ``xx'' to 19xx if xx is >= 70. Otherwise,
+20xx is assumed.
+.TP
+.B \-D
+(Default.)
+Use the ``Received:'' header, not the ``Date:'' header. This is more reliable
+since this is the header added by the receiving qmail. Also, this results
+in always correctly formatted dates in the same time zone (usually UTC).
+.TP
+.B \-f\fI msg
+Start indexing with the archive section containing message
+.IR msg .
+This is useful if you have removed part of the archive and do not want to
+create (empty) directories and index files for these. It also decreases
+.B ezmlm-idx
+memory use.
+.TP
+.B \-F
+(Default.)
+Start indexing from message 1.
+.TP
+.B \-v
+Display
+.B ezmlm-idx
+version info.
+.TP
+.B \-V
+Display
+.B ezmlm-idx
+version info.
+.SH "SEE ALSO"
+ezmlm-archive(1),
+ezmlm-get(1),
+ezmlm-send(1),
+ezmlm(5)

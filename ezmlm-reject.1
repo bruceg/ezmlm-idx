@@ -1,0 +1,152 @@
+.TH ezmlm-reject 1
+.SH NAME
+ezmlm-reject \- reject messages unsuitable for distribution
+.SH SYNOPSIS
+.B ezmlm-reject
+[
+.B \-bBcChHqQsStT
+][
+.I dir
+]
+.SH DESCRIPTION
+.B ezmlm-reject
+reads a mail message from its standard input.
+It rejects the message if it sees something it doesn't like.
+
+If the message has a ``Precedence: junk'' header,
+.B ezmlm-reject
+exits 99 causing the message to be ignored. This causes replies from (some)
+vacation programs to be ignored.
+
+If
+.I dir
+is specified,
+.B ezmlm-reject
+reads
+.I dir\fB/msgsize
+for a maximum:minimum message body size in bytes. Either number will be ignored
+if 0 or omitted.
+.B ezmlm-reject
+will also look for
+.I dir\fB/mimereject
+and 
+.IR dir\fB/mimeremove .
+if
+.IR dir\fB/mimereject
+exists,
+Messages of the Content-Types specified or with MIME parts of these
+types will be rejected.
+If
+.I dir\fB/mimeremove
+exists,
+.B ezmlm-reject
+will reject messages of the Content-Types specified. These content-types will
+be accepted as parts of a composite MIME message. They will be
+stripped out later by
+.BR ezmlm-send(1) .
+
+.B ezmlm-reject
+will exit 100 (permanent error) for rejections. If the list address is not in
+the message ``To:'' or ``Cc:'' headers and the
+.B \-t
+switch is active, the exit code is 100 or 99, depending on the
+.B \-q
+switch (see below).
+If you would like to forward messages instead of rejecting them, you can
+into the appropriate .qmail file put:
+
+.EX
+	|condredirect newaddress except /path/ezmlm-reject DIR
+.EE
+
+Now rejected posts will
+go to this address, and the recipient can take appropriate action.
+.SH OPTIONS
+.TP
+.B \-b
+Reject the message if the message body starts ``subscribe''
+or ``unsubscribe''. If the
+.B \-c
+switch is specified, messages will also be rejected if the subject starts
+with these words.
+.B \-B
+(Default.)
+Do not reject messages starting ``subscribe'' or ``unsubscribe''.
+.TP
+.B \-c
+(Default.)
+Commands are not permitted in the Subject line.
+A Subject line consisting solely of HELP, REMOVE, SUBSCRIBE, or UNSUBSCRIBE
+is rejected.
+.TP
+.B \-C
+Commands are permitted in the subject line.
+.TP
+.B \-h
+Reject message if any of the headers in
+.I dir\fB/headerreject
+occur in the header. Mailing-List headers of other mailing list managers
+can be put into this file, one per line, to prevent processing of messages
+from other mailing lists.
+.I dir
+must be specified.
+
+A reasonable set of headers would be: ``Mailing-List'', ``X-ml-name'',
+\``ml-name'',``X-loop'',``X-listprocessor-version'',``X-mailing-list''. Case
+is not important.
+.TP
+.B \-H
+(Default.)
+Ignore
+.IR dir\fB/headerreject .
+.B \-q
+Quiet. If the message due to the lack of the list address (see
+.BR \-t )
+is not accepted, this is logged but no error message is sent to the sender.
+.TP
+.B \-q
+Quiet. If a message due to the lack of the list address (see
+.BR \-t )
+is not accepted,
+the message is silently ignored.
+.TP
+.B \-Q
+(Default.)
+Not quiet. If a message due to the lack of the list address (see
+.BR \-t )
+is not accepted,
+the sender is notified by an error message.
+.TP
+.B \-s
+(Default.)
+A nonempty Subject line is required.
+.TP
+.B \-S
+A Subject line is not required.
+.TP
+.B \-t
+(Default.)
+Reject messages that do not have the list address in the ``To:'' or ``Cc:''
+header(s).
+.B ezmlm-reject
+needs access to
+.I dir\fB/outhost
+and
+.I dir\fB/outlocal
+to check this. This check is silently omitted if
+.I dir
+is not specified, to assure backwards compatibility with existing ezmlm lists.
+.TP
+.B \-T
+Do not require the list address in the ``To:'' or ``Cc:'' header(s).
+.SH BUGS
+.B ezmlm-reject
+does not handle rfc822 comments in ``Content-Type:'' lines if present
+before the type or boundary.
+This could be used to defeat the
+MIME rejection function.
+OTOH, this function is intended to reduce garbage, not guarantee
+its elimination.
+.SH "SEE ALSO"
+ezmlm-send(1),
+qmail-command(8)

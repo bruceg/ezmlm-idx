@@ -1,0 +1,178 @@
+.TH ezmlm-archive 1
+.SH NAME
+ezmlm-archive \- create thread and author index for a mailing list archive
+.SH SYNOPSIS
+.B ezmlm-archive
+[
+.B \-cCFTvV
+][
+.B \-f\fI msg1
+]
+][
+.B \-t\fI msg2
+]
+.I dir
+.SH DESCRIPTION
+.B ezmlm-archive
+reads the index files from a message archive, and creates a subject index, a
+collection of subject files, and a collection of author files. These
+files are suitable as an index for WWW access to, and navigation through
+a mailing list archive by
+.BR ezmlm-cgi(1) .
+
+The index files read are created by
+.B ezmlm-idx(1)
+on a per-list basis and by
+.B ezmlm-send(1)
+on a per-message archive for a indexed list.
+
+The output files created are:
+.TP
+.I dir\fB/archive/threads/yyyymm
+The thread index. It contains one line per subject, starting with the
+number of the first message with that subject within the set
+investigated, ``:'', a 20 character
+subject hash, blank, ``\[n\]'' where ``n'' is the number of messages in the
+thread, blank, and the subject.
+The file ``yyyymm'' contains
+entries for all threads that have messages in the month ``yyyymm''
+or that have messages both before and after that month.
+The subject hash is a key to the subject files; the message number is
+a key to the index file.
+The lines are in ascending order by message number when the index is
+created
+.I de novo
+on an existing archive. When the messages are added one-by-one as in normal
+archive operation, ``n'' is the number of message in the thread
+.I for the particular month
+and the order is in reverse of latest message, i.e. the last extended thread
+is shown last. The message number accompanying a thread is
+always a message within the thread. It is the first in
+archives created
+on existing lists, and the last message in incrementally created archives.
+Use the corresponding subject index file to get a list of all
+messages in the thread in ascending order.
+.TP
+.I dir\fB/archive/subjects/xx/yyyyyyyyyyyyyyyyyy
+A subject file. The first line is the subject hash, a space, and the subject.
+This is followed by one line per message with this subject, in the format
+message number, ``:'', date (yyyymm), ``:'',
+author hash, blank, author from line. The lines are
+sorted by message number. The author hash is a key to the author files;
+the message number is a key to the index file. The file in the example
+would be for the subject hash ``xxyyyyyyyyyyyyyyyyyy''.
+.TP
+.I dir\fB/archive/authors/xx/yyyyyyyyyyyyyyyyyy
+An author file. The first line is the author hash, a space, and the author
+from line.
+This is followed by one line per message with this author, in the format
+message number, ``:'', date (yyyymm), ``:'',
+subject hash, blank, subject. The lines are
+sorted by message number. The subject hash is a key to the subject files;
+the message number is a key to the index file. The file in the example
+would be for the author hash ``xxyyyyyyyyyyyyyyyyyy''.
+
+.I dir\fB/archnum
+keeps track of the last message processed. Normally,
+.B ezmlm-archive
+will process entries for messages from one above the contents of this file
+up to an including the message number in
+.IR dir\fB/num .
+.SH OPTIONS
+.B ezmlm-archive
+writes messages in a crash-proof manner when run in normal mode. When overriding
+the normal message range with any of the options listed, the normal
+.B sync(3)
+of the output files is suppressed for efficiency. Should the computer crash
+during this time the state of the indices is not defined. Use the
+.B \-s
+option in the (extremely rare) cases where this would be a problem.
+.TP
+.B \-c
+Create a new index. This  overrides
+.I dir\fB/archnum
+causing
+.B ezmlm-archive
+to start with the first message in the archive. Synonym for
+.BR \-f\fI0 .
+.B NOTE:
+.B ezmlm-archive
+does not remove files in the index. While it will overwrite/update old files
+it will not remove files that are obsolete for other reasons.
+.TP
+.B \-C
+(Default.)
+Process entries starting with the message after the message listed in
+.IR dir\fB/archnum .
+.TP
+.B \-f\fI msg1
+Process messages from the archive section (set of 100 messages)
+containing message
+.IR msg1 .
+This is useful if you have removed part of the archive, as it will shorten
+processing time and decrease memory use.
+.B NOTE:
+.B ezmlm-archive
+does not remove files in the index. While it will overwrite/update old files
+it will not remove files that are obsolete for other reasons. The number of
+messages per thread will be incorrect when using of the
+.B \-f
+and
+.B \-t
+switches leads to partial re-indexing of already indexed messages.
+.TP
+.B \-F
+(Default.)
+Do not change the starting message from the default
+(see
+.BR \-C ).
+.TP
+.B \-s
+Always sync files.
+.TP
+.B \-S
+(Default.)
+Sync files, except when on of the message range modifying options is
+used.
+.TP
+.B \-t\fI msg2
+Process messages to message
+.I msg2
+instead of the last message in the archive. Again, files written are
+corrected, but other files are not explicitly removed.
+.TP
+.B \-T
+(Default.)
+Process entries for messages up to the last message in the archive.
+.TP
+.B \-v
+Display
+.B ezmlm-archive
+version info.
+.TP
+.B \-V
+Display
+.B ezmlm-archive
+version info.
+.SH "MEMORY USAGE"
+.B ezmlm-archive
+stores its linked lists in memory. On at 32-bit architecture, it uses
+12 bytes per message, 28 bytes per thread (plus one copy of the subject),
+and 20 bytes per author (plus one copy of the author from line).
+
+In normal list use, it processes only at most a few messages at a time,
+but for initial processing of a large archive, considerable amounts of
+memory may be used. Assuming
+40 bytes for subject/from line, 5 messages per thread, 100,000 messages,
+and 1000 authors, this is 2.5 MB. For 1,000,000 messages this is about 20 MB.
+
+Thus, for large archives, it may be useful to use the
+.I \-t
+switch to process the archive in multiple subsets, starting with e.g. the first
+100,000, then the next, and so on.
+.SH "SEE ALSO"
+ezmlm-cgi(1),
+ezmlm-idx(1),
+ezmlm-send(1),
+ezmlm(5)
+

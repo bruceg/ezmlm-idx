@@ -1,0 +1,99 @@
+.TH substdio_out 3
+.SH NAME
+substdio_out \- substdio output routines
+.SH SYNTAX
+.B #include <substdio.h>
+
+int \fBsubstdio_put\fP(&\fIs\fR,\fIfrom\fR,\fIlen\fR);
+.br
+int \fBsubstdio_puts\fP(&\fIs\fR,\fIfrom\fR);
+
+int \fBsubstdio_bput\fP(&\fIs\fR,\fIfrom\fR,\fIlen\fR);
+.br
+int \fBsubstdio_bputs\fP(&\fIs\fR,\fIfrom\fR);
+
+int \fBsubstdio_flush\fP(&\fIs\fR);
+
+int \fBsubstdio_putflush\fP(&\fIs\fR,\fIfrom\fR,\fIlen\fR);
+.br
+int \fBsubstdio_putsflush\fP(&\fIs\fR,\fIfrom\fR);
+
+substdio \fIs\fR;
+.br
+char *\fIfrom\fR;
+.br
+int \fIlen\fR;
+.SH DESCRIPTION
+.B substdio_put
+writes
+.I len
+characters to
+.I s
+out of the character array
+.IR from .
+It returns 0 on success, -1 on error.
+
+.B substdio_bput
+has the same function as
+.BR substdio_put .
+The difference is how the buffer is flushed
+when there isn't enough room for
+.I len
+characters:
+.B substdio_put
+flushes the buffered data before copying the new data,
+whereas
+.B substdio_bput
+fills the buffer with new data before flushing.
+
+.B substdio_flush
+forces all data to be written from the internal buffer.
+It returns 0 on success, -1 on error.
+
+.B substdio_putflush
+is similar to
+.B substdio_put
+followed by
+.BR substdio_flush ,
+but it avoids all internal copies.
+
+.BR substdio_puts ,
+.BR substdio_bputs ,
+and
+.B substdio_putsflush
+are the same as
+.BR substdio_put ,
+.BR substdio_bput ,
+and
+.B substdio_putflush
+except that
+.I from
+must be a 0-terminated string of characters.
+The string, not including the 0, is written.
+
+The
+.B SUBSTDIO_OUTSIZE
+macro is defined as a reasonably large output buffer size for
+.BR substdio_fdbuf .
+.SH "INTERNALS"
+When a
+.B substdio
+variable
+.I s
+is used for output,
+data is buffered from
+.I s\fB.x
+to
+.I s\fB.x\fR +
+.I s\fB.p\fR;
+there is free buffer space from
+to
+.I s\fB.x\fR +
+.I s\fB.p
+to
+.I s\fB.x\fR +
+.I s\fB.n\fR;
+the total buffer length is
+.I s\fB.n\fR.
+.SH "SEE ALSO"
+substdio(3)

@@ -1,0 +1,30 @@
+.TH ezmlm-accept 1
+.SH NAME
+ezmlm-accept \- accept messages in moderation queue
+.SH SYNOPSIS
+.B ezmlm-accept
+.I dir
+.I file
+[
+.I file1 ...
+]
+.SH DESCRIPTION
+.B ezmlm-accept
+copies
+.IR file ,
+.IR file1 ,\ ...
+to
+.B ezmlm-send
+.IR dir .
+.B ezmlm-accept
+removes each file that was successfully processed by
+.BR ezmlm-send .
+
+This can be used to manually ``accept'' messages in a
+.I ezmlm
+moderation queue.
+.SH "SEE ALSO"
+ezmlm(5),
+ezmlm-moderate(1),
+ezmlm-send(1),
+ezmlm-store(1)

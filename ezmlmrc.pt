@@ -1,0 +1,1133 @@
+0.324 - This version identifier must be on line 1 and start in pos 1.
+#
+#$Id: ezmlmrc.pt_BR,v 1.15 1999/05/06 09:26:00 lindberg Exp $
+#$Name:$
+#
+# ezmlmrc 
+# #######
+# Controls the actions of ezmlm-make as patched with ezmlm-idx-0.31 or later.
+#
+# The base directory 'DIR' is always created by ezmlm-make, as is DIR/key.
+# Everything else is done from here.
+#
+# ezmlm-make looks for this file, first as .ezmlmrc in the directory that the
+# lists .qmail files will be placed in (if you've used the -c command line
+# switch), then /etc/ezmlmrc, then ezmlmrc in the ezmlm-make binary directory.
+# Thus, you can customize ezmlm-make on a global level by placing a customized
+# copy of ezmlmrc in /etc and on a user level by copying it to .ezmlmrc in
+# the user's home directory AND use the ezmlm-make -c switch.
+#
+# Tags are:
+#	</filename/>       : put succeeding text lines in DIR/filename
+#	</-filename/>      : erase DIR/filename.
+#	</+dirname/>       : create directory DIR/dirname
+#	</:lname/dirname>  : symlink DIR/.qmail-list-lname -> DIR/dirname
+#
+# The name in the tag can be suffixed with '#' and any number of flags,
+# corresponding to command line switches. The item will be created/extended
+# only if all the flags listed are set. Files can be extended as long as they
+# were the last one created, but not if another file has been started since
+# then. Flags that are not recognized are silently ignored.
+# 
+# Thus, </filename#aP/> creates the file if and only if the list is archived
+# (-a) and not public (-P). If the next tag is </filename#m/>, the file is
+# extended with the lines up to the next tag if the list is message moderated
+# (-m). If the next tag is </another/>, 'filename' is closed. Any further
+# tags leading to the reopenining of 'filename' will overwrite the file, not
+# extend it.
+#
+# A set of user-defined command line switches (xX, yY, zZ) are available for
+# customization.
+#
+# Within the text, certain tags are substituted. Other tags are copied as
+# is. <#A#> and <#R#> are substituted by ezmlm-manage and -store (see man pages)
+# and <#l#> (lower case L) is replaced dynamically by the list name for
+# programs handling both 'list' and 'list-digest'.
+#
+# Substitutions are:
+# <#B#> ezmlm binaries path   <#C#> digest code         <#D#> dir
+# <#H#> host                  <#L#> local               <#F#> flags
+# <#T#> dot                   <#0#> arg for -0. <#3#>...<#9#> arg for -3..9
+# <#1#> ext1                  <#2#> ext2 [if dot is /path/.qmail-ext1-ext2-name]
+# The latter useful when a single user is controlling several virtual domains.
+#
+# -0 is used for the main list address when setting up sublists
+# -4 for specifying the ezmlm-tstdig switches used in dir/editor. Default
+#    -k64 -m30 -t24. Only used if -g is used.
+# -5 for list-owner address. Mail to list-owner will be forwarded to this addr.
+# -6 for sql connection info
+# -7 for contents of DIR/modpost
+# -8 for contents of DIR/modsub
+# -9 for contents of DIR/remote
+#
+# For demonstration purposes, the '-x' switch results in the following
+# non-standard actions:
+# - Removal of many non-text MIME parts from messages.
+# - Limit posts to 2 bytes <= msg body size <= 40000
+#
+# Attempts to create links or directories that already exist, will result
+# in a FATAL error. Attempts to open files that have already been closed
+# or already exits, will cause the old file to be overwritten.
+#
+# One of the major problems with ezmlm-lists is DIR/inlocal. For normal
+# users, it is set up to the list name (user-list or so), which is correct.
+# However, for user 'ezmlm' in control of virtual domain 'host.dom.com'
+# the list name is 'list@host.dom.com', but inlocal should be 'ezmlm-list',
+# not 'list'. Similarly, if ezmlm-domain1 is in control of 'host.dom.com,
+# list@host.dom.com, should yield an inlocal of 'ezmlm-domain1-list'. To
+# always get the lists correct, place this file as '.ezmlmrc' in the 
+# users home directory (~ezmlm/.ezmlmrc) and change the inlocal text below
+# to 'ezmlm-<#L#>' or 'ezmlm-<#1#>-<#L#>, respectively.
+# config to support future editing without giving ezmlm-make command line
+# arguments other than dir. Useful for GUI/WWW editing tools
+</config/>
+F:<#F#>
+D:<#D#>
+T:<#T#>
+L:<#L#>
+H:<#H#>
+C:<#C#>
+0:<#0#>
+3:<#3#>
+4:<#4#>
+5:<#5#>
+6:<#6#>
+7:<#7#>
+8:<#8#>
+9:<#9#>
+</charset/>
+# Explicitly specify character-set, when this ezmlmrc was used.
+ISO-8859-1:Q
+</inlocal/>
+<#L#>
+</sublist#0/>
+<#0#>
+</+archive/>
+</+subscribers/>
+</+bounce/>
+</+text/>
+# dirs for digests
+</+digest#d/>
+</+digest/subscribers#d/>
+</+digest/bounce#d/>
+# for extra address db
+</+allow/>
+</+allow/subscribers/>
+# for blacklist
+</+deny#k/>
+</+deny/subscribers#k/>
+# moderator db & mod queue dirs. Needed for -m, -r -s, so we just
+# make them by default.
+</+mod/>
+</+mod/subscribers/>
+</+mod/pending/>
+</+mod/accepted/>
+</+mod/rejected/>
+# links: dot -> dir/editor
+</:/editor/>
+</:-owner/owner/>
+</:-digest-owner/owner#d/>
+</:-return-default/bouncer/>
+</:-digest-return-default/digest/bouncer#d/>
+</:-default/manager/>
+# for message moderation only
+</:-accept-default/moderator#m/>
+</:-reject-default/moderator#m/>
+# Get rid of configuration flags for editing mode so we can start with a
+# clean slate.
+</-modpost#eM/>
+</-modsub#eS/>
+</-remote#eR/>
+</-public#eP/>
+</-indexed#eI/>
+</-archived#eA/>
+</-prefix#eF/>
+</-text/trailer#eT/>
+</-sublist#e^0/>
+</-mimeremove#eX/>
+# Not needed, except for message moderation.
+</-moderator#eM/>
+# We don't clean out text files to make it easier for users
+# doing manual config by e.g. touching dir/remote.
+# subscription moderation
+</modsub#s/>
+<#8#>
+# remote admin
+</remote#r/>
+<#9#>
+# message moderation
+</modpost#m/>
+<#7#>
+# List owner mail
+</owner#5/>
+<#5#>
+</owner#^5/>
+<#D#>/Mailbox
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# Handles subscription. Add flags if you want a non-default digest format.
+# Service subject commands to the # request address if the -q switch is given.
+# Also -l and -d enable subscriber listing/text file editing, for remote adms.
+# -u gives subscriber only archive access
+</manager#iG/>
+|<#B#>/ezmlm-get '<#D#>' <#C#>
+</manager#ig/>
+|<#B#>/ezmlm-get -s '<#D#>' <#C#>
+</manager#q/>
+|<#B#>/ezmlm-request '<#D#>'
+# Ok to add -l/-d even for non-mod lists, since ezmlm-manage
+# won't allow it unless there are remote admins.
+</manager#LN/>
+|<#B#>/ezmlm-manage '<#D#>'
+</manager#lN/>
+|<#B#>/ezmlm-manage -l '<#D#>'
+</manager#Ln/>
+|<#B#>/ezmlm-manage -e '<#D#>'
+</manager#ln/>
+|<#B#>/ezmlm-manage -le '<#D#>'
+</manager#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</editor/>
+# reject shouldn't be configured for sublist.
+</#^0/>
+# full reject is now default, to get To/Cc: listaddress requirement
+|<#B#>/ezmlm-reject '<#D#>'
+# -k => reject posts from blacklisted addresses. Done for moderated
+# lists as well - allows removal of unwanted noise.
+</#k^0/>
+|<#B#>/ezmlm-issubn -n '<#D#>/deny' || { echo "Sinto muito, eu estou rejeitando as suas mensagens. Contacte <#L#>-owner@<#H#> se você tem questões sobre isto (#5.7.2)"; exit 100 ; }
+# switch -u=> restrict to subs of list & digest. If not m
+# do it with ezmlm-issubn, if 'm' do it with ezmlm-gate
+</#uM/>
+|<#B#>/ezmlm-issubn '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod' || { echo "Sinto muito, somente assinantes podem enviar mensagens. Se você é um assinante, por favor repasse esta mensagem para <#L#>-owner@<#H#> para ter o seu novo endereço incluído (#5.7.2)"; exit 100 ; }
+</#um/>
+|<#B#>/ezmlm-gate '<#D#>' '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod'
+# For message moderation, editor has store/clean
+</#mU/>
+|<#B#>/ezmlm-store '<#D#>'
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+# for non-message moderated lists, it has send
+</#M/>
+|<#B#>/ezmlm-send '<#D#>'
+# all lists have warn unless -w.
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# for digest bounces
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</#d^4/>
+|<#B#>/ezmlm-tstdig -m30 -k64 -t48 '<#D#>' || exit 99
+</#d4/>
+|<#B#>/ezmlm-tstdig <#4#> '<#D#>' || exit 99
+</#d/>
+|<#B#>/ezmlm-get '<#D#>' || exit 0
+# bouncer is complicated. We use ezmlm-receipt if -6 AND -w, but ezmlm-return
+# if (-6 and -W) OR (not -6 and -w). Since there is no or, we need 2 lines.
+</bouncer/>
+|<#B#>/ezmlm-weed
+</#^6/>
+|<#B#>/ezmlm-return -D '<#D#>'
+</#6W/>
+|<#B#>/ezmlm-return -D '<#D#>'
+</#6w/>
+|<#B#>/ezmlm-receipt -D '<#D#>'
+</digest/bouncer#d/>
+|<#B#>/ezmlm-weed
+</#^6d/>
+|<#B#>/ezmlm-return -d '<#D#>'
+</#6Wd/>
+|<#B#>/ezmlm-return -d '<#D#>'
+</#6wd/>
+|<#B#>/ezmlm-receipt -d '<#D#>'
+# moderator is set up only for message moderated lists. However, '-e' does
+# not remove it since we can't remove the symlinks to it (they're outside
+# of the list dir.
+</moderator#m/>
+|<#B#>/ezmlm-moderate '<#D#>'
+</#mU/>
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+</headerremove#E/>
+return-path
+return-receipt-to
+content-length
+precedence
+x-confirm-reading-to
+x-pmrqc
+# Only one allowed
+list-help
+list-unsubscribe
+list-post
+</lock/>
+</lockbounce/>
+</digest/lockbounce#d/>
+</digest/lock#d/>
+</public#p/>
+</archived#a/>
+</indexed#i/>
+</inhost/>
+<#H#>
+</outhost/>
+<#H#>
+</outlocal/>
+<#L#>
+</mailinglist/>
+contacte <#L#>-help@<#H#>; gerenciado pelo ezmlm
+# Headeradd needs to always exist
+</headeradd#E/>
+# Good for mailing list stuff (and vacation program)
+Precedence: bulk
+# To prevent indexing by findmail.com
+X-No-Archive: yes
+# rfc2369
+list-help: <mailto:<#l#>-help@<#h#>>
+list-unsubscribe: <mailto:<#l#>-unsubscribe@<#h#>>
+list-post: <mailto:<#L#>@<#H#>>
+# max & min message size
+</msgsize#x/>
+40000:2
+# remove mime parts if -x
+</mimeremove#x/>
+application/excel
+application/rtf
+application/msword
+application/ms-tnef
+text/html
+text/rtf
+text/enriched
+text/x-vcard
+application/activemessage
+application/andrew-inset
+application/applefile
+application/atomicmail
+application/dca-rft
+application/dec-dx
+application/mac-binhex40
+application/mac-compactpro
+application/macwriteii
+application/news-message-id
+application/news-transmission
+application/octet-stream
+application/oda
+application/pdf
+application/postscript
+application/powerpoint
+application/remote-printing
+application/slate
+application/wita
+application/wordperfect5.1
+application/x-bcpio
+application/x-cdlink
+application/x-compress
+application/x-cpio
+application/x-csh
+application/x-director
+application/x-dvi
+application/x-hdf
+application/x-httpd-cgi
+application/x-koan
+application/x-latex
+application/x-mif
+application/x-netcdf
+application/x-stuffit
+application/x-sv4cpio
+application/x-sv4crc
+application/x-tar
+application/x-tcl
+application/x-tex
+application/x-texinfo
+application/x-troff
+application/x-troff-man
+application/x-troff-me
+application/x-troff-ms
+application/x-ustar
+application/x-wais-source
+audio/basic
+audio/mpeg
+audio/x-aiff
+audio/x-pn-realaudio
+audio/x-pn-realaudio
+audio/x-pn-realaudio-plugin
+audio/x-realaudio
+audio/x-wav
+image/gif
+image/ief
+image/jpeg
+image/png
+image/tiff
+image/x-cmu-raster
+image/x-portable-anymap
+image/x-portable-bitmap
+image/x-portable-graymap
+image/x-portable-pixmap
+image/x-rgb
+image/x-xbitmap
+image/x-xpixmap
+image/x-xwindowdump
+text/x-sgml
+video/mpeg
+video/quicktime
+video/x-msvideo
+video/x-sgi-movie
+x-conference/x-cooltalk
+x-world/x-vrml
+# These can also be excluded, but for many lists it is desirable
+# to allow them. Uncomment to add to mimeremove.
+# application/zip
+# application/x-gtar
+# application/x-gzip
+# application/x-sh
+# application/x-shar
+# chemical/x-pdb
+# --------------------- Handle SQL connect info
+</-sql#^6e/>
+</-digest/sql#^6e/>
+</-allow/sql#^6e/>
+</sql#6W/>
+<#6#>
+</sql#6w/>
+<#6#>:<#L#>@<#H#>
+</digest/sql#6dW/>
+<#6#>_digest
+</digest/sql#6dw/>
+<#6#>_digest:<#L#>_digest@<#H#>
+</allow/sql#6/>
+<#6#>_allow
+# -------------------- End sql stuff
+</prefix#f/>
+[<#L#>]
+</text/trailer#t/>
+---------------------------------------------------------------------
+Para cancelar a subscrição, envie mensagem para: <#L#>-unsubscribe@<#H#>
+Para comandos adicionais, envie mensagem para: <#L#>-help@<#H#>
+</text/bottom/>
+
+--- Aqui estão os endereços de comando do ezmlm.
+
+Eu posso tratar as requisições administrativas automaticamente.
+Basta enviar uma mensagem vazia para qualquer destes endereços:
+
+   <<#L#>-subscribe@<#H#>>:
+   Receber as futuras mensagens enviadas para a lista <#L#>.
+
+   <<#L#>-unsubscribe@<#H#>>:
+   Parar de receber as mensagens da lista <#L#>.
+
+   <<#L#>-info@<#H#>>
+   <<#L#>-faq@<#H#>>
+   Para receber mais informações ou o FAQ desta lista,
+   se disponíveis.
+
+</#d/>
+Existem também estes endereços similares para a lista "digest":
+   <<#L#>-digest-subscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+# ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
+# multi-get!
+</text/bottom#ai/>
+   <<#L#>-get.12_45@<#H#>>:
+   Recupera uma cópia das mensagens 12 a 45 do arquivo.
+   No máximo 100 mensagens serão retornadas por requisição.
+
+</text/bottom#aI/>
+   <<#L#>-get.12@<#H#>>:
+   Recupera uma cópia da mensagem 12 do arquivo.
+
+</text/bottom#i/>
+   <<#L#>-index.123_456@<#H#>>:
+   Recupera os assuntos das mensagens número 123 a 456.
+   Assuntos são retornados em grupos de 100, ou seja você receberá
+   os assuntos das mensagens 100 a 499.
+   Um máximo de 2000 assuntos são retornados por requisição.
+
+# Lists need to be both archived and indexed for -thread to work
+</text/bottom#ai/>
+   <<#L#>-thread.12345@<#H#>>:
+   Recupera uma cópia de todas as mensagens com o mesmo assunto
+   da mensagem 12345.
+
+# The '#' in the tag below is optional, since no flags follow.
+# The name is optional as well, since the file will always be open
+# at this point.
+</text/bottom#/>
+Na verdade as mensagens não precisam ser vazias, mas eu irei
+ignorar o seu conteúdo. Somente o ENDEREÇO é importante.
+
+Você pode iniciar a assinatura para um endereço alternativo,
+por exemplo "john@host.domain", bastando adicionar um traço
+e o seu endereço (com '=' no lugar de '@'), ou seja:
+<<#L#>-subscribe-john=host.domain@<#H#>>
+
+Para cancelar a subscrição para este endereço, envie mensagem
+para: <<#L#>-unsubscribe-john=host.domain@<#H#>>
+
+Em ambos os casos, eu enviarei uma mensagem de confirmação para
+esse endereço; quando você receber esta mensagem, simplesmente
+responda para completar sua subscrição (ou cancelamento).
+
+</text/bottom/>
+Se estas instruções são muito complicadas ou você não teve os
+resultados que esperava, por favor contacte o meu dono em 
+<#L#>-owner@<#H#>. Mas tenha paciência, o meu dono é
+muito mais lento do que eu ;-)
+</text/bottom/>
+
+--- Abaixo está uma cópia da requisição que eu recebi.
+
+</text/bounce-bottom/>
+
+--- Abaixo está uma cópia da mensagem devolvida que eu recebi.
+
+</text/bounce-num/>
+
+Eu mantenho um controle das mensagens da lista <#L> que não
+foram entregues para o seu endereço.
+</#a/>
+Cópias destas mensagens podem estar no arquivo.
+</#aI/>
+Para pegar a mensagem 12345 do arquivo, envie uma mensagem vazia para
+  <<#L#>-get.12345@<#H#>>
+
+</#ia/>
+Para recuperar uma lista de assuntos e autores das últimas 100
+mensagens, envie uma mensagem vazia para:
+   <<#L#>-index@<#H#>>
+
+Para recuperar as mensagens 123 a 145 (no máximo 100 por requisição),
+envie uma mensagem vazia para:
+   <<#L#>-get.123_145@<#H#>>
+
+<//>
+Aqui estão os números das mensagens:
+
+</text/dig-bounce-num/>
+
+Eu mantenho um controle de quais mensagens da lista <#L#>-digest
+não foram entregues para o seu endereço. Para cada "digest" que você
+não recebeu, eu tenho anotado o número da primeira mensagem do "digest".
+Então você pode pegar as mensagens do arquivo da lista principal.
+
+</#aI/>
+Para recuperar a mensagem 12345 do arquivo, envie uma mensagem vazia para:
+   <<#L#>-get.12345@<#H#>>
+
+</#ia/>
+Para recuperar as mensagens 123 a 145 (no máximo 100 por requisição),
+envie uma mensagem vazia para:
+   <<#L#>-get.123_145@<#H#>>
+
+Para recuperar uma lista de assuntos e autores das últimas 100
+mensagens, envie uma mensagem vazia para:
+   <<#L#>-index@<#H#>>
+
+<//>
+Aqui estão os números dos "digests":
+
+</text/bounce-probe/>
+
+Mensagens da lista <#l#> para você estão sendo devolvidas.
+Eu enviei um aviso para você, que também foi devolvido.
+Eu anexei uma cópia da mensagem devolvida.
+
+Esta é uma verificação para o seu endereço. Se esta verificação
+for devolvida, eu removerei o seu endereço da lista
+<#l#>@<#H#>, sem mais avisos. Você pode assinar novamente a
+lista enviando uma mensagem vazia para o endereço:
+   <<#l#>-subscribe@<#H#>>
+
+</text/bounce-warn/>
+
+Mensagens da lista <#l#> para você não foram entregues.
+Eu anexei uma cópia da primeira mensagem que eu recebi de volta.
+
+Se esta mensagem também não for entregue, eu enviarei uma última
+verificação. Se a verificação também for devolvida, eu removerei o seu
+endereço da lista <#l#>, sem mais avisos.
+
+</text/digest#d/>
+Para subscrever-se à lista "digest", envie mensagem para:
+	<#L#>-digest-subscribe@<#H#>
+
+Para cancelar a subscrição da lista "digest", envie mensagem para:
+	<#L#>-digest-unsubscribe@<#H#>
+
+Para enviar mensagens para a lista, use o endereço:
+	<#L#>@<#H#>
+
+</text/get-bad/>
+Sinto muito, esta mensagem não está arquivada.
+
+</text/help/>
+Esta é uma mensagem de ajuda genérica. A mensagem que eu recebi 
+não era para os meus endereços de comando.
+
+</text/mod-help/>
+Obrigado por concordar em moderar a lista
+<#L#>@<#H#>.
+
+Meus comandos são um pouco diferentes de outros gerenciadores de
+listas. À primeira vista eles parecem não usuais, mas à medida que
+você os for usando, vai apreciar a simplicidade do sistema e
+a rapidez com que eu trato suas requisições.
+
+Aqui estão algumas observações sobre como atuar como dono da
+lista e/ou moderador:
+
+Subscrição Remota
+-----------------
+Como um moderador, você pode subscrever e cancelar a subscrição
+de qualquer endereço da lista. Para cadastrar john@johnhost.johndomain,
+simplesmente coloque um traço depois do comando, e depois o endereço
+com '=' no lugar de '@'. Por exemplo, para cadastrar este endereço,
+envie uma mensagem para:
+   <<#L#>-subscribe-john=host.domain@<#H#>>
+
+Você pode analogamente remover esse endereço, enviando mensagem para:
+   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+
+</#d/>
+Para a lista "digest":
+   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+
+<//>
+Isto é tudo. Nem assunto nem corpo de mensagem são necessários!
+
+</#r/>
+Eu enviarei para você um pedido de confirmação, para ter certeza
+que é realmente você quem enviou a requisição. Simplesmente
+retorne a mensagem, e a requisição será completada.
+</#R/>
+Eu enviarei um pedido de confirmação para o endereço do usuário,
+neste caso <john@host.domain>. Tudo que o usuário tem que fazer é
+retornar este pedido de confirmação.
+<//>
+
+As confirmações são necessárias para evitar que pessoas
+não autorizadas possam cadastrar ou remover endereços
+da lista.
+
+Eu notificarei o usuário quando a situação de sua subscrição
+for alterada.
+
+Subscrição
+----------
+
+Qualquer usuário pode subscrever-se ou cancelar a subscrição
+enviando mensagem para:
+
+<#L#>-subscribe@<#H#>
+<#L#>-unsubscribe@<#H#>
+
+</#d/>
+Para a lista "digest":
+
+<#L#>-digest-subscribe@<#H#>
+<#L#>-digest-unsubscribe@<#H#>
+
+<//>
+O usuário receberá um pedido de confirmação para eu ter 
+certeza que ele controla o endereço de subscrição. Quando este
+endereço for verificado, ele será descadastrado.
+
+</#s/>
+Sendo esta lista moderada para subscrição, eu enviarei um segundo
+pedido de confirmação para o(s) moderador(es). Se o usuário
+já tiver confirmado o desejo de ficar na lista, você como
+moderador pode confiar que o endereço do assinante é verdadeiro.
+Se você deseja aprovar os pedidos do usuário, simplesmente
+retorne a mensagem de CONFIRMAÇÃO. Caso contrário, simplesmente
+ignore a minha mensagem ou possivelmente contacte o potencial
+assinante para obter mais informações.
+</#S/>
+Subscrições funcionam da mesma forma.
+<//>
+
+O usuário também pode usar estas formas:
+
+   <<#L#>-subscribe-mary=host.domain@<#H#>>
+   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+
+para que as mensagens sejam enviadas para "mary@host.domain".
+Somente se ela receber mensagens neste endereço, ela será
+capaz de responder a confirmação.
+
+Seu endereço e identidade não serão revelados para o assinante,
+a não ser que você envie mensagens diretamente para o usuário.
+
+</#rl/>
+Para obter o cadastro de assinantes da lista <#L#>@<#H#>,
+envie uma mensagem para:
+   <<#L#>-list@<#H#>>
+
+Para um registro de transações da lista,
+envie uma mensagem para:
+   <<#L#>-log@<#H#>>
+
+</#rld/>
+Para o cadastro de assinantes da lista digest:
+   <<#L#>-digest-list@<#H#>>
+e:
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+Você pode editar remotamente os arquivos-texto de resposta que a lista
+envia. Para obter uma lista dos arquivos e instruções de edição, envie
+mensagem para:
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Postagens Moderadas
+-------------------
+Quando as postagens são moderadas, eu colocarei as mensagens em 
+uma fila, e enviarei a você uma cópia junto com instruções. A
+mensagem terá "MODERATE for ..." como assunto.
+
+Se você aceita a mensagem, basta responder para o endereço 'Reply-To:',
+o qual já deixei configurado como o endereço de "aceitação".
+Não é necessário incluir a mensagem; na verdade, eu ignorarei qualquer
+coisa que você envie, desde que o endereço para o qual você enviou
+esteja correto.
+
+Se você quiser rejeitá-la, envie a mensagem para o endereço 'From:',
+que por sua vez, está configurado com o endereço de "rejeição".
+Você pode usualmente fazer um 'reply-to-all' - resposta para todos,
+e então remover o seu endereço e o endereço de "aceitação").
+Você pode adicionar um comentário opcional para o remetente entre
+duas linhas começando com três '%'. Eu enviarei este comentário somente
+para o remetente, sem revelar sua identidade.
+
+Eu irei processar a mensagem de acordo com o primeiro retorno que eu
+receber. Se você me enviar uma requisição para aceitar uma mensagem
+que já foi rejeitada ou vice-versa, eu o avisarei.
+
+Se eu não receber nenhuma resposta do moderador dentro de um certo
+período de tempo (normalmente 5 dias), eu retornarei uma mensagem
+para o remetente com uma explicação do ocorrido. O administrador
+também pode configurar a lista para que as mensagens "ignoradas"
+sejam simplesmente removidas, ao invés de retornar para o remetente.
+<//>
+
+Férias
+------
+Se você está temporariamente em um endereço diferente, basta repassar 
+todas as mensagens que têm o cabeçalho correto 'Mailing-List:' (ou todas
+as mensagens que têm assuntos começando com 'MODERATE for <#L#>@<#H#>'
+ou 'CONFIRM subscribe to <#L#>@<#H#>') para o novo endereço.
+Você pode então moderar a partir do novo endereço. Alternativamente,
+você pode repassar as mensagens para um amigo, assim ele pode moderar 
+para você. Por favor, avise e confirme este procedimento com o dono da lista.
+
+Se você quiser aprovar automaticamente todas as mensagens enquanto
+está fora, configure o seu programa de correio eletrônico para responder 
+automaticamente as mensagens que têm os assuntos com os critérios acima.
+
+</#r/>
+Se você tentar administrar remotamente a partir de um endereço que
+não é seu, o assinante, não você, será questionado para confirmar.
+Depois disto, um pedido de confirmação é enviado para todos os
+moderadores. Estou fazendo isto, porque eu não tenho como saber que
+foi você quem enviou o pedido original. 
+
+Por favor note que o seu pedido original (e seu endereço) é enviado
+para o assinante neste caso!
+<//>
+
+Boa sorte!
+
+PS: Por favor, contacte o dono da lista (<#L#>-owner@<#H#>) se você
+tiver qualquer dúvida ou problema.
+
+</text/mod-reject/>
+Sinto muito, sua mensagem (incluída) não foi aceita pelo moderador.
+Se o moderador fez algum comentário, este será mostrado abaixo.
+</text/mod-request/>
+Esta mensagem foi submetida à lista <#L#>@<#H#>.
+Se você aprova a mensagem para distribuição a todos
+os assinantes, por favor envie mensagem para:
+
+!A
+
+Na prática, você estará enviado para este endereço quando pressionar o
+botão "reply" ou "responder". Você pode confirmar se o endereço começa com
+"<#L#>-accept". Se isto não funcionar, simplesmente copie
+o endereço e cole-o para o campo "To:" de uma nova mensagem.
+</#x/>
+
+Alternativamente, clique aqui:
+	mailto:<#A#>
+
+<//>
+
+Para rejeitar esta mensagem, retornando-a para o remetente,
+por favor envie uma mensagem para:
+
+!R
+
+Na prática, é fácil usar o botão "reply-to-all" ou "responder
+para todos", e então remover todos os endereços, exceto o que
+começar com
+"<#L#>-reject".
+</#x/>
+
+Alternativamente, clique aqui:
+	mailto:<#R#>
+<//>
+
+Você não precisa copiar esta mensagem na sua resposta para
+aceitá-la ou rejeitá-la. Se você quiser enviar um comentário para
+o remetente de uma mensagem rejeitada, por favor inclua o comentário
+entre duas linhas começando com três sinais de porcentagem ('%').
+
+%%% Início do comentário
+%%% Fim do comentário
+
+Obrigado pela sua ajuda!
+
+--- Inclusão, por favor encontre a mensagem postada.
+
+</text/mod-sub#E/>
+--- Eu subscrevi você ou cancelei sua subscrição através
+da requisição de um moderador da lista <#l#>@<#H#>.
+
+Se esta é uma ação que você não deseja, por favor envie uma
+reclamação ou outros comentários para o dono da lista
+(<#l#>-owner@<#H#>) assim que possível.
+
+Se você quer alguma informação em como acessar o arquivo
+da lista <#L#>, basta enviar uma mensagem vazia para 
+<#L#>-help@<#H#>.
+
+</text/mod-timeout/>
+Sinto muito, os moderadores não tomaram nenhuma ação com a sua
+mensagem. Eu a estou retornado para você. Se você acha que isto
+é um erro, por favor reenvie sua mensagem ou contacte um moderador
+da lista diretamente.
+
+--- Inclusão, por favor encontre a mensagem que você enviou.
+
+</text/mod-sub-confirm/>
+Respeitosamente eu solicito sua permissão para incluir
+
+!A
+
+como assinante da lista <#l#>. Este pedido ou vem de você
+ou já foi verificado pelo potencial assinante.
+
+Para confirmar, por favor envie uma resposta vazia para este endereço:
+
+!R
+
+Na prática, você estará enviado para este endereço quando pressionar o
+botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
+o endereço e cole-o para o campo "To:" de uma nova mensagem.
+</#x/>
+
+ou clique aqui:
+	mailto:<#R#>
+<//>
+
+Se você não aprovar, simplesmente ignore esta mensagem.
+
+Obrigado pela sua ajuda!
+
+</text/mod-unsub-confirm/>
+Foi feito um pedido para remover
+
+!A
+
+da lista <#l#>. Se você concordar, por favor envie
+uma resposta vazia para este endereço:
+
+!R
+
+Na prática, você estará enviado para este endereço quando pressionar o
+botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
+o endereço e cole-o para o campo "To:" de uma nova mensagem.
+</#x/>
+
+ou clique aqui:
+	mailto:<#R#>
+<//>
+
+Se você não aprova, simplesmente ignore esta mensagem.
+
+Obrigado pela sua ajuda!
+
+</text/sub-bad/>
+Este número de confirmação perece ser inválido.
+
+A maioria dos casos de números inválidos é devida a expiração. Eu 
+tenho que receber uma confirmação de cada requisição dentro de 10 dias. 
+Certifique-se também que o número de confirmação está inteiro na
+resposta que você me enviou. Alguns programas de correio eletrônico têm
+o hábito de cortar parte do endereço de retorno, o qual pode ser
+bastante longo.
+
+Eu configurei um novo número. Para confirmar que você deseja que
+
+!A
+
+seja incluído na lista <#l#>, por favor envie uma resposta vazia
+para o endereço:
+
+!R
+</#x/>
+
+ou clique aqui:
+	mailto:<#R#>
+<//>
+
+Novamente verifique o endereço de resposta cuidadosamente, para ter
+certeza que está completo antes que você confirme a sua subscrição.
+
+Sinto muito pelo problema.
+
+	<#L#>-Owner <<#l#>-owner@<#H#>>
+
+</text/sub-confirm/>
+Para confirmar que você deseja que
+
+!A
+
+seja incluído na lista <#l#>, por favor envie uma resposta vazia
+para o endereço:
+
+!R
+
+Na prática, você estará enviado para este endereço quando pressionar o
+botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
+o endereço e cole-o para o campo "To:" de uma nova mensagem.
+</#x/>
+
+ou clique aqui:
+	mailto:<#R#>
+<//>
+
+Esta confirmação tem dois propósitos. Primeiro, ela verifica que eu
+sou consigo receber mensagens de você. Segundo, ela protege você no caso
+de alguém estar forjando um pedido de subscrição em seu nome.
+
+</#q/>
+Alguns programas de correio eletrônico não conseguem manipular endereços
+muito longos. Se você não está conseguindo responder esta requisição por
+causa disto, envie uma mensagem para <<#L#>-request@<#H#>> 
+e coloque o endereço inteiro listado abaixo na linha "Subject:" ou
+"Assunto:".
+
+</text/sub-confirm#s/>
+Esta lista é moderada. Depois que você enviar esta confirmação,
+o pedido será enviado para o(s) moderador(es) desta lista. Eu notificarei
+você quando sua subscrição for ativada.
+
+</text/sub-nop/>
+Confirmação: o endereço
+
+!A
+
+está na lista <#l#>. Este endereço já estava
+cadastrado antes do seu pedido ser recebido.
+
+</text/sub-ok#E/>
+Confirmação: eu incluí o endereço
+
+!A
+
+para a lista <#l#>.
+
+Bem-vindo à <#l#>@<#H#>!
+
+Por favor salve esta mensagem para que você saiba o endereço sob o
+qual está inscrito; se mais tarde você quiser cancelar ou alterar
+o seu endereço de subscrição, esta mensagem poderá ser útil.
+
+</text/top/>
+Oi! Este é o programa ezmlm. Eu estou gerenciando
+a lista <#l#>@<#H#>.
+
+</#x/>
+Eu estou trabalhando para o meu dono, que pode ser
+contactado pelo endereço <#l#>-owner@<#H#>.
+
+</text/unsub-bad/>
+O número de confirmação perece ser inválido.
+
+A maioria dos casos de números inválidos é devida a expiração. Eu 
+tenho que receber uma confirmação de cada requisição dentro de 10 dias. 
+Certifique-se também que o número de confirmação está inteiro na
+resposta que você me enviou. Alguns programas de correio eletrônico têm
+o hábito de cortar parte do endereço de retorno, o qual pode ser
+bastante longo.
+
+Eu configurei um novo número. Para confirmar que você deseja que
+
+!A
+
+seja removido da lista <#l#>, por favor envie uma resposta vazia
+para o endereço:
+
+!R
+</#x/>
+
+ou clique aqui:
+	mailto:<#R#>
+<//>
+
+Novamente verifique o endereço de resposta cuidadosamente, para ter
+certeza que está completo antes que você confirme esta ação.
+
+Sinto muito pelo problema.
+
+	<#l#>-Owner <<#l#>-owner@<#H#>>
+
+</text/unsub-confirm/>
+Para confirmar que você deseja que
+
+!A
+
+seja removido da lista <#l#>, por favor envie uma resposta vazia
+para este endereço:
+
+!R
+
+Na prática, você estará enviado para este endereço quando pressionar o
+botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
+o endereço e cole-o para o campo "To:" de uma nova mensagem.
+</#x/>
+
+ou clique aqui:
+	mailto:<#R#>
+<//>
+
+Eu não verifiquei se o seu endereço está atualmente na lista.
+Para ver qual endereço você usou ao se subscrever, olhe as mensagens
+que você está recebendo da lista. Cada mensagem tem seu endereço 
+oculto dentro do caminho de retorno; por exemplo, mary@xdd.ff.com 
+recebe mensagens com caminho de retorno:
+<<#l#>-return-<number>-mary=xdd.ff.com@<#H#>.
+
+</#q/>
+Alguns programas de correio eletrônico não conseguem manipular endereços
+muito longos. Se você não está conseguindo responder esta requisição por
+causa disto, envie uma mensagem para <<#L#>-request@<#H#>> 
+e coloque o endereço inteiro listado abaixo na linha "Subject:" ou
+"Assunto:".
+
+</text/unsub-nop/>
+Confirmação: o endereço
+
+!A
+
+não está na lista <#l#>. Ele não foi encontrado quando
+o seu pedido foi recebido.
+
+Se você cancelou a subscrição, mas continua recebendo mensagens,
+você está incluído com um endereço diferente do que está usando 
+agora. Por favor, olhe o cabeçalho da mensagem, procurando por:
+
+'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+
+O endereço de cancelamento para este endereço deve ser:
+'<#l#>-unsubscribe-user=host.dom@<#H#>'.
+Basta enviar uma mensagem para este endereço, substituindo
+user=host.dom pelos valores corretos, responda ao pedido de confirmação
+e você deverá receber um aviso que está fora da lista.
+
+Para alguns programas de correio, você precisará tornar os cabeçalhos
+visíveis para ver o caminho de retorno (return-path):
+
+Para o Eudora 4.0, clique no botão "Blah blah ...".
+Para o PMMail, clique em "Window->Show entire message/header". 
+
+Se isto ainda não funcionar, eu sinto muito em dizer que eu não posso
+ajudar você. Por favor, REPASSE uma mensagem da lista junto com uma
+observação sobre o que você está tentando fazer para o meu dono:
+
+    <#l#>-owner@<#H#>
+
+que cuidará disto. Meu dono é um pouco mais lento do que eu,
+por favor tenha paciência.
+
+</text/unsub-ok/>
+Confirmação: Eu removi o endereço
+
+!A
+
+da lista <#l#>. Este endereço não está
+mais na lista.
+
+</text/edit-do#n/>
+Por favor edite o arquivo texto seguinte e envie-o para este endereço: 
+
+!R
+
+O seu programa de correio eletrônico deve ser capaz de enviar uma resposta
+para este endereço automaticamente.
+
+Eu posso remover as aspas que o seu programa de correio adiciona
+ao texto, desde que você não edite as próprias linhas marcadoras.
+
+As linhas marcadoras são as linhas começando com '%%%'. Elas não 
+devem ser modificadas (caracteres extras adicionados pelo seu programa
+de correio eletrônico no início da linha são aceitos).
+
+
+</text/edit-list#n/>
+O comando <#L#>-edit.file pode ser usado por um administrador
+remoto para editar os arquivos texto que são usados para as
+respostas da lista <#L#>@<#H#>.
+
+O que segue é uma lista dos nomes dos arquivos de resposta
+e uma breve descrição de quando os seus conteúdos são usados.
+Para editar um arquivo, simplesmente envie uma mensagem para
+<#L#>-edit.file, substituindo 'file' pelo nome do arquivo.
+Instruções para edição serão enviadas com o arquivo texto.
+
+Arquivo             Uso
+
+bottom              rodapé de todas as respostas. Informação geral dos comandos.
+digest              seção 'administrativa' das listas "digest".
+faq                 perguntas frequentes específicas desta lista.
+get_bad             no lugar de mensagem não encontradas no arquivo.
+help                ajuda geral (entre 'top' e 'bottom').
+info                lista informações.
+mod_help            ajuda específica para moderadores.
+mod_reject          para o remetente de uma mensagem rejeitada.
+mod_request         para os moderadores junto com a mensagem.
+mod_sub             para o assinante depois que o moderador confirma a 
+                    sua subscrição.
+mod_sub_confirm     para o moderador de subscrição requerendo a confirmação.
+mod_timeout         para o remetente de uma mensagem expirada.
+mod_unsub_confirm   para o administrador remoto confirmar o cancelamento
+                    de subscrição.
+sub_bad             para o assinante, se confirmado que a msg era inválida.
+sub_confirm         para o assinante solicitando confirmação de subscrição.
+sub_nop             para o assinante depois de re-subscrição.
+sub_ok              para o assinante depois de subscrição com sucesso.
+top                 topo de todas as respostas.
+</#tn/>
+trailer             incluído em todas as mensagens enviadas pela lista.
+</#n/>
+unsub_bad           para o assinante, se a confirmação de cancelamento
+                    é inválida.
+unsub_confirm       para assinante pedindo confirmação para o cancelamento.
+unsub_nop           para não-assinante depois de pedido de cancelamento.
+unsub_ok            para ex-assinante depois do cancelamento com sucesso.
+
+</text/edit-done#n/>
+O arquivo texto foi atualizado com sucesso.
+
+</text/info#E/>
+Ainda não há informações para esta lista.
+</text/faq#E/>
+FAQ - Questões mais freqüentes na lista <#l#>@<#H#>.
+
+Ainda não disponível.
+  
+

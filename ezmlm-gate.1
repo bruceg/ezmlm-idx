@@ -1,0 +1,116 @@
+.TH ezmlm-gate 1
+.SH NAME
+ezmlm-gate \- Gate posts depending on message SENDER
+.SH SYNOPSIS
+.B ezmlm-gate [-cCmMpPrRsSvV] [-q file]
+.I dir [moddir1] [moddir2 ...]
+.SH DESCRIPTION
+.B ezmlm-gate
+checks if SENDER is in it least one of the subscriber lists
+with base directory
+.IR moddir1 ,
+.IR moddir2 ,
+etc.
+If it is, the message is posted via
+.B ezmlm-send 
+to the list in
+.IR dir .
+If not, the message is sent for moderation via
+.BR ezmlm-store .
+
+The default is to send the message for moderation.
+.SH OPTIONS
+.TP
+.B \-cCmMpPrRsS
+Passed on to ezmlm-store(1) and ezmlm-send(1).
+.TP
+.B \-cCrR
+Passed on to ezmlm-send(1).
+.TP
+.B \-q\fI file
+Execute arbitration programs in
+.IR file .
+Lines in
+.I file
+are executed just like in regular
+.IR .qmail
+files with the difference that all lines are assumed to be program
+names. See
+.BR dot-qmail(5) .
+Programs are executed by /bin/sh and the message is on stdin of the
+executed program.
+The leading ``|'' is optional. Comments and blank lines are allowed. If a
+program exits 111, delivery is deferred. If it exits 99, the message is
+sent to the list. If it exits 0, the next line is executed. If it exits
+with any other exit code, the message is sent for moderation. Subscriber
+status per
+.IR moddir1 ,
+.IR moddir2 ,
+etc, is tested only if all the programs have been executed and the final
+exit code is 0. Thus, programs can cause moderation (100), posting (99), or
+defer the decision to the next program and ultimately to subscriber status.
+.TP
+.B \-v
+Display version information.
+.TP
+.B \-V
+Display version information.
+
+.SH USAGE
+.B ezmlm-gate
+is best used if you want to restrict posts to a set of addresses using
+SENDER checks. Obviously, this is not secure, but it 
+can help quite a bit to keep
+garbage off the list. For more secure setups, see
+.BR ezmlm-store(1) .
+For other arbitration such as SPAM protection, use the
+.B \-q
+option. For instance, invoking
+.B ezmlm-reject(1)
+here would cause failing messages to be sent for moderation rather that being
+rejected.
+
+Set up the list with a
+.B ezmlm-gate
+line in
+.I dir\fB/editor
+and touch
+.IR dir\fB/modpost .
+Add the moderator(s) (usually the list owner):
+
+.EX
+.B ezmlm-sub
+.I dir\fB/mod
+moderator@host
+.EE
+
+This will via
+.B ezmlm-send
+directly distribute
+all posts from subscriber addresses and send out the rest for moderation
+to the moderator(s) via
+.BR ezmlm-store .
+To test several subscriber databases, e.g. the list and the list-digest
+subscribers, add the corresponding list directories to the
+.B ezmlm-gate
+command line.
+
+This can be expanded to include users that post from addresses other than
+the one they are subscribed as: just create another directory 'addl', and
+a 'subscribers' subdirectory of it, and add 'addl' to the
+.B ezmlm-gate
+command line. Now just add all problem addresses to the 'addl' address
+database using
+.BR ezmlm-sub .
+The entire point is that post from subscribers of any union
+of list go through, posts from identified 'aliases' go through and all
+others go for approval to the list owner. Thus, legitimate users are never
+rejected and 'aliases' rapidly identified by the owner/moderator and
+their handling automated one by one, by simply adding them to 'addl'.
+.SH "SEE ALSO"
+dot-qmail(5),
+ezmlm(5),
+ezmlm-issubn(1),
+ezmlm-reject(1),
+ezmlm-send(1),
+ezmlm-store(1)

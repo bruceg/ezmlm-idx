@@ -1,0 +1,9 @@
+auto_bin.o
+open.a
+getopt.a
+substdio.a
+strerr.a
+stralloc.a
+alloc.a
+error.a
+str.a

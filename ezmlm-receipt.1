@@ -1,0 +1,129 @@
+.TH ezmlm-receipt 1
+.SH NAME
+ezmlm-receipt \- handle sublist replies at the main list
+.SH SYNOPSIS
+.B ezmlm-receipt
+[
+.B \-dD
+]
+.I dir
+.SH DESCRIPTION
+.B ezmlm-receipt
+handles mail from sublists of the main list
+stored in
+.I dir
+and, if it exists, the associated main digest list.
+.B ezmlm-receipt
+is used for main list with only sublists as subscribers. It is not
+useful for normal mailing lists.
+
+.B ezmlm-receipt
+is normally invoked from a
+.B .qmail
+file.
+It reads a mail message from its standard input,
+and a mail envelope from the
+.BR SENDER ,
+.BR LOCAL ,
+and
+.BR HOST
+environment variables.
+
+.B ezmlm-receipt
+has two functions. It takes the place of
+.B ezmlm-receipt(1)
+for main lists that have only sublists as subscribers.
+Bounces do not lead to removal of the bouncing
+address.
+.B emzlm-receipt
+saves the
+bounce, and logs the event to the mail log.
+.B ezmlm-receipt
+also saves the bounce to
+.I dir\fB/bounce/dnnn.ppp
+where
+.B nnn
+is a time stamp and
+.B ppp
+the PID of the process. A maximum of 50 bounces are saved. Further bounces
+are discarded until room is made in the bounce directory by manually removing
+files.
+If the list uses and SQL
+database, the even is logged to the _mlog table instead, and only if the
+distribution cookie matches. The bounce is still saved, but only if it
+contained a matching distribution cookie.
+
+.B ezmlm-receipt
+also handles feedback messages from the sublist. These are used to monitor
+that the sublist is able to send out messages. Receipt of feedback messages
+is logged to the mail log.
+If the list uses and SQL
+database, the even is logged to the _mlog table instead, and only if the
+distribution cookie matches.
+.SH OPTIONS
+.TP
+.B \-d
+.B ezmlm-receipt
+will assume the message is for a digest list.
+Normally,
+.B ezmlm-receipt
+will autodetect this from the bounce address. Autodetection makes
+.B ezmlm-receipt
+less flexible and will be removed in future versions.
+.TP
+.B \-D
+.B ezmlm-receipt
+will assume that the bounce is for a normal (non-digest) list.
+Normally,
+.B ezmlm-receipt
+will autodetect this from the bounce address. Autodetection makes
+.B ezmlm-receipt
+less flexible and will be removed in future versions.
+.B \-D
+will become the default.
+.SH ADDRESSES
+.B ezmlm-receipt
+handles mail sent to any of the following addresses:
+.TP
+.I local\fB\-return\-
+Trash.
+A help message or subscription acknowledgment bounced.
+.TP
+.I local\fB\-return\-\fImsg\fB\-\fIbox\fB=\fIdomain
+Distribution bounce.
+Message number
+.I msg
+was lost on the way to the sublist
+.IR box\fB@\fIdomain .
+.TP
+.I local\fB\-return\-\fImsg\fB\-
+Pre-VERP distribution bounce, in QSBMF format.
+Message number
+.I msg
+was lost on the way to one or more sublists;
+.B ezmlm-receipt
+will parse the bounce to figure out the addresses.
+.TP
+.I local\fB\-return\-receipt
+Feedback message from a sublist.
+.B ezmlm-receipt
+will figure out message number and sublist address from the envelope sender.
+
+For all the above addresses if,
+.I local
+is followed by
+.IR \-digest ,
+messages are assumed to relate to the digest list, and are stored in
+.I dir\fB/digest/bounce
+rather than in
+.I dir \fB/bounce .
+.SH "SEE ALSO"
+ezmlm-manage(1),
+ezmlm-make(1),
+ezmlm-return(1),
+ezmlm-send(1),
+ezmlm-sub(1),
+ezmlm-unsub(1),
+ezmlm-weed(1),
+ezmlm(5),
+qmail-command(8)

@@ -1,0 +1,115 @@
+.TH substdio 3
+.SH NAME
+substdio \- the Sub-Standard Input/Output Library
+.SH SYNTAX
+.B #include <substdio.h>
+
+void \fBsubstdio_fdbuf\fP(&\fIs\fR,\fIop\fR,\fIfd\fR,\fIbuf\fR,\fIlen\fR);
+
+int \fBsubstdio_fileno\fP(&\fIs\fR);
+
+substdio \fIs\fR;
+.br
+int (*\fIop\fR)();
+.br
+int \fIfd\fR;
+.br
+char *\fIbuf\fR;
+.br
+int \fIlen\fR;
+.SH DESCRIPTION
+.B substdio
+is the Sub-Standard I/O Library.
+.B substdio
+contains only a few of the features of stdio;
+it is a fast, lightweight, low-level library,
+suitable for use as a component of higher-level I/O libraries.
+
+The point of
+.B substdio
+is to provide buffered I/O.
+The basic object in
+.B substdio
+is the
+.B substdio
+structure;
+a
+.B substdio
+variable stores
+an operation,
+a descriptor,
+and
+a pointer into a buffer of some nonzero length.
+The
+.B substdio
+operations read data from the buffer,
+filling the buffer as necessary using the operation on the descriptor,
+or write data to the buffer,
+flushing the buffer as necessary using the operation on the descriptor.
+Input and output operations cannot be mixed.
+
+.B substdio_fdbuf
+initializes a
+.B substdio
+variable.
+The operation is
+.IR op .
+The descriptor is
+.IR fd .
+The buffer is
+.IR buf ,
+an array of
+.I len
+chars.
+
+.I op
+will be called as
+.I op\fR(\fIfd\fR,\fIx\fR,\fIn\fR).
+Here
+.I x
+is a pointer to an array of characters of length
+.IR n ;
+.I op
+must read some characters from
+.I fd
+to that array, or write some characters to
+.I fd
+from that array.
+The return value from
+.I op
+must be the number of characters read or written.
+0 characters read means end of input;
+0 characters written means that the write operation
+should be tried again immediately.
+On error,
+.I op
+must return -1,
+setting
+.B errno
+appropriately, without reading or writing anything.
+Most errors are returned directly to the
+.B substdio
+caller, but an error of
+.B error_intr
+means that the operation should be tried again immediately.
+
+There is a
+.B SUBSTDIO_FDBUF
+macro that can be used to statically initialize a
+.B substdio
+variable:
+
+.EX
+   substdio s = SUBSTDIO_FDBUF(op,fd,buf,len);
+.EE
+
+.B substdio_fileno
+returns the
+descriptor for an initialized
+.B substdio
+variable.
+.SH "SEE ALSO"
+substdio_in(3),
+substdio_out(3),
+substdio_copy(3),
+error(3)

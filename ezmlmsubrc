@@ -1,0 +1,162 @@
+#$Id: ezmlmsubrc,v 1.8 1999/05/11 02:32:40 lindberg Exp $
+#$Name: ezmlm-idx-040 $
+# ezmlm-make -C ezmlmsubrc dir dot local host
+# Options:
+#	-3 mainlist local	(required)
+#	-4 mainlist host	(required) 
+#	-6 sql connect info. Format: 'host:port:user:pw:db:table'
+#	-A main list not archived (affects only bounce texts)
+#	-I main list not indexed  (affects only bounce texts)
+#	-d this sublist is for a digest list
+#
+# NOTE: For sublists of a digest list use the list local name for -3, _not_
+# the digest list. Thus, to set up a sublist for list-digest@host, use
+# -d -3 list -4 host. This is needed to make the texts refer correctly.
+# Also, the "table" in the SQL connect info
+# Should be root, where "root" is the table name used for the main list.
+# A digest sublist is just like any other sublist, but the parent is
+# list-digest, rather than list. You need separate sublists for each and they
+# are independent. However, it's convenient to set them up in parallel, and
+# they will not interfere with one another.
+#
+# NOTE: The list address is always added to the SQL connect info to restrict
+# addresses to those serviced by this sublist.
+#
+# For memory
+</config/>
+F:<#F#>
+D:<#D#>
+T:<#T#>
+L:<#L#>
+H:<#H#>
+C:<#C#>
+0:<#0#>
+3:<#3#>
+4:<#4#>
+5:<#5#>
+6:<#6#>
+7:<#7#>
+8:<#8#>
+9:<#9#>
+########## real stuff starts here
+</sublist/>
+<#3#>@<#4#>
+</+subscribers/>
+</+bounce/>
+</+text/>
+</lock/>
+</lockbounce/>
+</-sql/>
+</sql#6D/>
+<#6#>:<#L#>@<#H#>
+</sql#6d/>
+<#6#>_digest:<#L#>_digest@<#H#>
+# links: dot -> dir/editor
+</:/editor/>
+</:-return-default/bouncer/>
+</editor/>
+|<#B#>/ezmlm-send '<#D#>'
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+</bouncer/>
+|<#B#>/ezmlm-weed
+</bouncer#D/>
+|<#B#>/ezmlm-return -D '<#D#>'
+</bouncer#d/>
+|<#B#>/ezmlm-return -d '<#D#>'
+</inhost/>
+<#H#>
+</outhost/>
+<#H#>
+</inlocal/>
+<#L#>
+</outlocal/>
+<#L#>
+</mailinglist/>
+contact <#3#>-help@<#4#>; run by ezmlm
+</headeradd/>
+Precedence: bulk
+</headerremove/>
+return-path
+return-receipt-to
+content-length
+precedence
+</text/top/>
+Hi! This is the ezmlm program.
+I'm managing the <#3#>@<#4#>
+</#D/>
+and <#3#>-digest@<#4#>
+mailing lists.
+
+</#d/>
+mailing list.
+</text/bounce-bottom/>
+
+--- Enclosed is a copy of the bounce message I received.
+
+</text/bounce-num/>
+
+</#D/>
+I've kept a list of which messages from the <#3#>@<#4#>
+mailing list have bounced from your address.
+
+</#d/>
+I've kept a list of which messages from
+the <#3#>-digest@<#4#>
+digest list have bounced from your address. In each case, the number
+is the number of the first message in the digest.
+
+</#a/>
+Copies of the messages may be in the archive.
+
+To get message 12345 from the archive, send an empty message to:
+   <<#3#>-get.12345@<#4#>>
+
+To retrieve a set of messages 123-145 (a maximum of 100 per request),
+send an empty message to:
+   <<#3#>-get.123_145@<#4#>>
+
+To receive a subject and author list for the last 100 or so messages,
+send an empty message to:
+   <<#3#>-index@<#4#>>
+
+To receive the thread of messages including message 123,
+send an empty message to:
+   <<#3#>-thread.123@<#4#>>
+
+<//>
+Here are the message numbers:
+
+</text/bounce-probe/>
+
+</#D/>
+Messages to you from the <#3#>@<#4#> mailing list
+</#d/>
+Messages to you from the <#3#>-digest@<#4#> list
+<//>
+seem to have been bouncing. I sent you a warning message, but it bounced.
+I've attached a copy of the bounce message.
+
+This is a probe to check whether your address is reachable. If this
+probe bounces, I will remove your address from the list
+without further notice. You can re-subscribe
+by sending an empty message to the following address:
+</#D/>
+   <<#3#>-subscribe@<#4#>>
+
+</#d/>
+   <<#3#>-digest-subscribe@<#4#>>
+
+</text/bounce-warn/>
+
+Messages to you from the
+</#D/>
+<#3#>@<#4#> mailing list seem to
+</#d/>
+<#3#>-digest@<#4#> digest list seem to
+<//>
+have been bouncing. I've attached a copy of the first bounce
+message I received.
+
+If this message bounces too, I will send you a probe. If the probe bounces,
+I will remove your address from the mailing list, without further notice.
+# End of minimal sublist setup.

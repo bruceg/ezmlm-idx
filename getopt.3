@@ -1,0 +1,235 @@
+.TH getopt 3
+.SH NAME
+getopt \- get option character from command line
+.SH SYNTAX
+.B #include <getopt.h>
+
+char *\fBoptarg\fP;
+.br
+int \fBoptind\fP;
+.br
+int \fBoptpos\fP;
+.br
+int \fBopteof\fP;
+.br
+int \fBoptproblem\fP;
+.br
+char *\fBoptprogname\fP;
+.br
+int \fBopterr\fP;
+
+int \fBgetopt(\fP\fIargc,argv,opts\fR\fB)\fP;
+
+int \fIargc\fR;
+.br
+char **\fIargv\fR;
+.br
+char *\fIopts\fR;
+.SH DESCRIPTION
+This is a clone version of
+the standard
+.B getopt
+library,
+built on top of
+.BR subgetopt(3) .
+
+See
+.B subgetopt(3)
+for a detailed description of
+.B getopt
+processing.
+The main difference between
+.B getopt
+and
+.B subgetopt
+is that
+.B getopt
+prints error messages
+in case of problems.
+To turn off these error messages, set
+.B opterr
+(default nonzero)
+to zero.
+
+This clone version of
+.B getopt
+also provides an
+.B optprogname
+variable.
+There are two uses for this variable:
+
+(1)
+By default
+.B optprogname
+is null.
+When
+.B getopt
+sees this,
+it
+attempts to initialize
+.B optprogname
+from
+.IR argv\fB[0] ,
+stripping the directory name.
+The calling program can use
+.B optprogname
+after calling
+.B getopt
+at least once.
+This is appropriate if the name of the program should be
+determined from its command line.
+
+(2)
+.B getopt
+prints
+.B optprogname
+at the beginning
+of any error messages.
+So the calling program can,
+before calling
+.BR getopt ,
+initialize
+.B optprogname
+as desired.
+This is appropriate if the name of the program should not be
+determined from its command line.
+.SH "COMPATIBILITY"
+Old versions of
+.B getopt
+do not include
+.BR opterr .
+.BR optpos ,
+.BR opteof ,
+.BR optproblem ,
+and
+.B optprogname
+are specific to this clone version of
+.BR getopt .
+
+Many features of this clone version of
+.B getopt
+are poorly defined, if available at all,
+in most versions of
+.BR getopt .
+For example, the standard
+.B getopt
+interface does not define
+.B optind
+until the end of the option list.
+And
+.B optarg
+is not defined
+unless
+.B getopt
+has just returned
+an option which takes an argument.
+In this clone version,
+.B optind
+and
+.B optpos
+always indicate the next character to be read,
+and
+.B optarg
+is null whenever
+the current option does not take an argument.
+See
+.B subgetopt(3)
+for precise definitions of the parsing procedure.
+
+When it reaches the end of the option list,
+this version of
+.B getopt
+always returns
+.BR opteof ,
+which is the same as
+.BR subgetoptdone ,
+which is initialized to
+.BR SUBGETOPTDONE ,
+which is defined as \-1.
+The standard behavior is to return
+EOF
+from
+.B stdio(3).
+This is incompatible
+on any weird machine where
+EOF is different from \-1.
+The calling program could set
+.B opteof
+to EOF to imitate the standard behavior.
+
+Like most versions of
+.BR getopt ,
+this clone version allows, but does not demand, that
+option arguments be
+separated from the option by whitespace, i.e., be
+in the next command-line argument.
+
+Some versions of
+.B getopt
+provide an
+.B optopt
+variable.
+.B optopt
+is incompatible across systems:
+for example,
+GNU
+.B getopt
+uses it the same way that this clone version uses
+.BR optproblem ,
+while
+BSD
+.B getopt
+uses it to
+indicate the last option character returned by
+.BR getopt .
+This clone version does not provide
+.BR optopt .
+The use of
+.B optopt
+is strongly discouraged.
+
+Some versions of
+.B getopt
+do not recognize a double hyphen as the end of arguments.
+This version allows a double hyphen, or in fact any argument beginning
+with two hyphens.
+
+A lone hyphen is always recognized as the end of arguments.
+Some versions of
+.B getopt
+allow lone hyphens as options.
+This practice is wrong and is strongly discouraged.
+.SH "SYNTAX NOTE"
+.B getopt
+is actually a macro abbreviation for
+.BR getoptmine .
+The external
+.B opterr
+and
+.B optprogname
+variables
+are macros for
+.B getopterr
+and
+.BR getoptprogname .
+All the other
+.B opt
+variables are macros
+for
+.BR subgetopt .
+These macros are defined in
+.BR <getopt.h> ,
+unless
+.B GETOPTNOSHORT
+is defined.
+Further macros are defined in
+.BR <subgetopt.h> ,
+which is included by
+.BR <getopt.h> ,
+unless
+.B SUBGETOPTNOSHORT
+is defined.
+.SH VERSION
+getopt version 1.9, 931129.
+.SH AUTHOR
+Placed into the public domain by Daniel J. Bernstein.

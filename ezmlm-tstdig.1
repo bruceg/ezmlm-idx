@@ -1,0 +1,112 @@
+.TH ezmlm-tstdig 1
+.SH NAME
+ezmlm-tstdig \- Tests if a digest should be created
+.SH SYNOPSIS
+.B ezmlm-tstdig
+[
+.B -k
+.I kbytes
+] [
+.B -m
+.I msg
+] [
+.B \-t
+.I time
+]
+.I dir
+
+.B ezmlm-tstdig
+reads files in the list directory
+.I dir
+and determines if any of the criteria specified by the options are met.
+If they are, or if all options specified are 0,
+.B ezmlm-tstdig
+exits with success (0). Otherwise,
+.B ezmlm-tstdig
+exits (99), or in case of errors, (100) for permanent and (111) for temporary
+errors.
+
+The normal use of
+.B ezmlm-tstdig
+is to place it in a script so that
+.B ezmlm-get(1)
+is executed if
+.B ezmlm-tstdig
+exists 0, but skipped otherwise.
+
+.B ezmlm-tstdig
+uses LOCAL to adapt its behavior so that it
+can be used from the command line, a script, or from within
+.IR dir\fB/editor ,
+or
+.IR dir\fB/manager .
+If invoked from
+.IR dir\fB/editor ,
+the
+.B ezmlm-tstdig
+line should end in '|| exit 99'.
+When used here,
+.B ezmlm-tstdig
+if digest generation criteria are met
+tests a
+timestamp in
+.IR dir\fB/tstdig .
+If
+.I dir\fB/tstdig
+is more than 1 hour old or a digest has been successfully created since
+.I dir\fB/tstdig
+was written,
+.B ezmlm-tstdig
+will set the timestamp to the current time and exit 0. Otherwise it will
+exit 99. This is to guard against initiating duplicate digests when messages
+arrive while digesting is in progress.
+.SH OPTIONS
+.TP
+.B \-k
+Success if more than
+.I kbytes
+of message body has accumulated since the latest digest.
+.TP
+.B \-m
+Success if more than
+.I msg
+messages have accumulated since the latest digest.
+.TP
+.B \-t
+Success if more than
+.I time
+hours have passed since the latest digest.
+.SH USAGE
+This is an example script for ezmlm-tstdig usage.
+
+.RS
+.nf
+#!/bin/sh
+#usage: script dir diglist@host
+#digest if > 64 kbytes message bodies,
+#          > 30 messages, or
+#          > 48 hours since last digest.
+
+# ezmlm bin path - modify for your setup
+EZPATH='/usr/local/bin/ezmlm'
+
+EZTST="${EZPATH}/ezmlm-tstdig"
+EZGET="${EZPATH}/ezmlm-get"
+${EZTST} -k64 -m30 -t48 "$1" || exit 0
+${EZGET} -t "'$2'" "'$1'" < /dev/null
+# improve by testing exit status
+.fi
+.RE
+.PP
+.SH BUGS
+Obviously,
+.B ezmlm-tstdig
+should be integrated into the digesting program so that 
+.I dir\fB/tstdig
+will not be not necessary. This may be done in the next version.
+.SH "SEE ALSO"
+ezmlm-get(1),
+ezmlm-make(1),
+ezmlm-manage(1),
+ezmlm-send(1),
+ezmlm(5)

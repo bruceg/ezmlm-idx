@@ -1,0 +1,80 @@
+.TH ezmlm-unsub 1
+.SH NAME
+ezmlm-unsub \- manually remove addresses from a mailing list
+.SH SYNOPSIS
+.B ezmlm-unsub
+[
+.B \-mMHvV
+] [
+.B \-h\fBhash
+]
+.I dir
+[
+.I box\fB@\fIdomain ...
+]
+.SH DESCRIPTION
+.B ezmlm-unsub
+removes each address
+.I box\fB@\fIdomain
+from the mailing list stored in
+.IR dir .
+
+If no command line argument is given,
+.B ezmlm-unsub
+will process stdin instead.
+
+If
+.I box\fB@\fIdomain
+is not on the mailing list,
+.B ezmlm-unsub
+keeps it off.
+
+.B ezmlm-unsub
+converts
+.I domain
+to lowercase before removing
+.I box\fB@\fIdomain
+from the mailing list.
+.SH "GENERAL OPTIONS"
+.TP
+.B \-v
+Display
+.B ezmlm-unsub(1)
+version information.
+.TP
+.B \-V
+Display
+.B ezmlm-unsub(1)
+version information.
+.SH "MYSQL OPTIONS"
+These option is silently ignored in the absence of mysql support.
+.TP
+.B \-h \fIhash
+With mysql support the argument is used as the hash. The argument should
+be between 1 and 99. The hash is used in
+in the distribution of addresses between sublists. As the hash is normally
+between 0 and 52, controlling the hash makes it possible to remove addresses
+that cannot be manipulated remotely. A hash of 99 is reserved for sublists,
+and a hash of 98 is reserved for ``receipt'' addresses serviced by
+.B ezmlm-receipt(1).
+.TP
+.B \-H
+(Default.)
+The address can be removed if it has a hash in the normal range (0..52).
+.TP
+.B \-m
+(Default.)
+Use SQL support if available.
+.TP
+.B \-M
+Do not use SQL support even if available.
+This option can be used to manipulate
+a normal local subscriber database even for lists with SQL support.
+.SH "SEE ALSO"
+ezmlm-list(1),
+ezmlm-manage(1),
+ezmlm-make(1),
+ezmlm-receipt(1),
+ezmlm-send(1),
+ezmlm-sub(1),
+ezmlm(5)

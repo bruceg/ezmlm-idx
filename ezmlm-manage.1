@@ -1,0 +1,578 @@
+.TH ezmlm-manage 1
+.SH NAME
+ezmlm-manage \- automatically manage a mailing list
+.SH SYNOPSIS
+.B ezmlm-manage [-bBcCdDeEfFlLmMsSqQuUvV]
+.I dir
+.SH DESCRIPTION
+.B ezmlm-manage
+handles administrative requests for the mailing list
+stored in
+.IR dir ,
+as well as for the associated digest list.
+
+.B ezmlm-manage
+is normally invoked from a
+.B .qmail
+file.
+It reads a mail message from its standard input,
+and a mail envelope from the
+.BR SENDER ,
+.BR LOCAL ,
+and
+.BR HOST
+environment variables.
+
+.B ezmlm-manage
+expects
+.B LOCAL
+to be of the form
+.IR list\fB-\fIaction\fB-\fIbox\fB=\fIdomain .
+Here
+.I list
+is the first line of
+.IR dir\fB/inlocal ,
+.I action
+is a request,
+and
+.I box\fB@\fIdomain
+is the target of the request.
+.B ezmlm-manage
+sends a response to the target.
+It attaches the original message to the end of its response.
+
+.B LOCAL
+may instead be of the form
+.IR list\fB-\fIaction .
+Then the envelope sender
+is used as the target.
+
+.B ezmlm-manage
+expects
+.B HOST
+to match the first line of
+.IR dir\fB/inhost .
+
+If
+.I list
+is the first line of
+.IR dir\fB/inlocal
+followed by ``-digest'', the request is assumed to be for the
+associated digest list.
+.B ezmlm-manage
+handles these requests similarly, except that digest list subscriber addresses
+are stored in
+.IR dir\fB/digest/subscribers ,
+rather than in
+.IR dir\fB/subscribers .
+
+If
+.I list
+.IR dir\fB/inlocal
+followed by ``-allow'', the request is assumed to be for the
+associated
+.I dir\fB/allow/
+database. This database is used to store aliases of subscribers for lists
+allowing only posts only if the envelope sender is a subscriber.
+Actions on the
+.I dir\fB/allow/
+database follow the same rules as for the main list. The ezmlm messages are
+the same as those used for normal subscription, but refer to the
+.I list\fB-allow@\fIhost
+list. As this feature is designed for advanced uses and remote administrators
+only, this is not a problem.
+.B NOTE:
+No message is sent out to confirm additions to or removals from this
+database. However, the user can
+verify the change using the
+.I query
+action.
+The
+.I list\fB-deny
+addresses similarly controls
+.I dir\fB/deny/
+database for blocking posts with certain envelope senders.
+This database is available
+to remote administrators only, and only if the list has been set up with
+this feature (see
+.BR ezmlm-manage(1) ).
+.B NOTE:
+No message is sent out to confirm additions to or removals from this database.
+However, the remote admin can
+verify the change using the
+.I query
+action.
+
+.B ezmlm-manage
+copies
+.I dir\fB/mailinglist
+into a
+.B Mailing-List
+field in its response.
+If the incoming message has a
+.B Mailing-List
+field,
+.B ezmlm-manage
+refuses to respond.
+.B ezmlm-manage
+also refuses to respond to bounce messages.
+.SH OPTIONS
+.TP 5
+.B \-b
+(Default.)
+.B ezmlm-manage
+will add general instructions and the request to the outgoing message.
+.TP 5
+.B \-B
+.B ezmlm-manage
+will not add general instructions and the request to the outgoing message.
+This information gives the recipient of a confirmation request some
+information about the inciting message. Use of this switch will deny the
+recipient that information.
+.TP 5
+.B \-c
+(Default.)
+.B ezmlm-manage
+will reply to
+.I \-get
+commands.
+.TP
+.B \-C
+.B ezmlm-manage
+will not reply to
+.I \-get
+commands. This is useful for closed lists, where the owner for
+some reason wants to keep an archive, without making it available.
+.TP 5
+.B \-d
+Alias for the
+.B \-e
+switch for backwards compatibility.
+.TP 5
+.B \-D
+Alias for the
+.B \-E
+switch for backwards compatibility.
+.TP 5
+.B \-e
+.B ezmlm-manage
+allows remote administrators to edit files in
+.I dir\fB/text/
+via E-mail.
+.TP 5
+.B \-E
+(Default.)
+Text file editing not allowed.
+.TP 5
+.B \-f
+(Default.)
+The information in the ``From:'' is extracted from subscribe confirm
+messages and added to
+.I dir\fB/Log
+together with the subscriber address. This makes it easier for the list owner
+to help a subscriber who cannot determine his/her subscription address. If the
+.B \-S
+switch is used, the information is instead extracted from the subscribe
+request.
+.TP 5
+.B \-F
+Ignore ``From:'' headers.
+.TP 5
+.B \-l
+.B ezmlm-manage
+will send a subscriber list in reply to the 
+.I \-list
+command and
+the number of subscribers in reply to the
+.I \-listn
+comman if
+.I dir\fB/modsub
+or
+.I dir\fB/remote
+exist and target (the address the reply is to be sent to) is a moderator.
+.TP 5
+.B \-L
+(Default.)
+.B ezmlm-manage
+will ignore the
+.I \-list
+and
+.I \-listn
+commands.
+.TP 5
+.B \-m
+For lists with moderated subscription, require moderator approval also
+for unsubscribe requests. Remote admins are normally informed about
+unsuccessful unsubscribes. This creates problems when there is more
+than one moderator. Therefore, when the
+.B \-m
+switch is used, the notification is suppressed. Moderators can still
+determine the result by using the
+.I \-query
+command.
+.TP 5
+.B \-M
+(Default.)
+Requests to unsubscribe from moderated lists do not require moderator approval.
+.TP 5
+.I \-n
+(Default.)
+Target addresses
+will be notified if the are added or removed from the subscriber list.
+.TP 5
+.I \-N
+Target addresses will not be notified if they are added/removed from the
+subscriber list by remote admin or moderator action. Also, the target will
+not be notified if they were successfully added/removed when the
+.B \-S
+and
+.B \-U
+switches, respectively, are used.
+.TP 5
+.B \-q
+(Default.)
+Quiet. The list-owner is not notified of subscription events.
+.TP 5
+.B \-Q
+The list-owner is notified about failed unsubscribe attempts. Usually, these
+are from subscribers that do not remember their subscription address and
+require administrative assistance. Remote admins are notified when a unsubscribe
+request initiated by them fails. Thus, the owner is not notified about these
+events even if the
+.B \-Q
+switch is used.
+.TP 5
+.B \-QQ
+As for
+.BR \-Q ,
+and in addition, the list-owner is notified about all additions to or removals
+from the subscriber database. This is sometimes desired by owners of small
+lists.
+.TP 5
+.B \-s
+(Default.)
+.B ezmlm-manage
+will handle subscriptions with the normal target handshake.
+.TP 5
+.B \-S
+.B ezmlm-manage
+will eliminate the target handshake from the subscription
+process. This allows anyone to subscribe anybody else. DO NOT use this
+option, unless you know what you are doing. This option may be useful for 
+some moderated lists.
+.TP 5
+.B \-u
+(Default.)
+.B ezmlm-manage
+will handle unsubscribe requests with the normal target
+handshake.
+.TP 5
+.B \-U
+.B ezmlm-manage
+will eliminate the target handshake from the unsubscription
+process. This allows anyone to unsubscribe anybody else. DO NOT use this
+option, unless you know what you are doing.
+.TP 5
+.B \-v
+Display
+.B ezmlm-manage
+version information.
+.TP 5
+.B \-V
+Display
+.B ezmlm-manage
+version information.
+.SH "CHARACTER SETS"
+If
+.I dir\fB/charset
+exists,
+.B ezmlm-manage
+will use the character set listed for all messages. Otherwise, the
+default ``us-ascii'' will be used. The character set can be suffixed
+by ``:'' followed by a code. If the code is ``Q'', outgoing messages are 
+sent as ``Quoted-Printable'', if it is ``B'' they are sent ``base64'' encoded.
+Otherwise, text is sent as is.
+
+Incoming text for the
+.I \-edit
+is accepted unencoded or in either of these encodings.
+.SH SUBSCRIPTIONS
+If
+.I action
+is
+.BR sc.\fIcookie ,
+where
+.I cookie
+is an appropriate code
+(depending on the target, the approximate time, and other factors),
+.B ezmlm-manage
+adds the target to the mailing list
+if subscriptions are not moderated.
+For subscription moderated lists,
+.B ezmlm-manage
+sends a confirmation request to the moderators with the right
+.BR tc.\fIcookie
+address in its response.
+ 
+If
+.I action
+is
+.BR tc.\fIcookie ,
+where
+.I cookie
+is an appropriate code
+(depending on the target, the approximate time, and other factors),
+.B ezmlm-manage
+adds the target to the mailing list. If the target was not already a
+subscriber, a welcome message is sent to the target.
+
+If
+.I action
+is
+.BR subscribe ,
+.B ezmlm-manage
+does not subscribe the target,
+but it identifies the right
+.BR sc.\fIcookie
+address in its response.
+
+This confirmation mechanism
+(1) verifies that the target is reachable 
+and
+(2) protects the target against forged subscription requests.
+
+Actions of
+.B uc.\fIcookie
+and
+.B unsubscribe
+are used in the same way to delete the target from the mailing list.
+Unsubscribes do not require moderator confirmation.
+
+Actions of
+.B vc.\fIcookie
+are used to confirm moderator-initiated unsubscribes for lists configured
+with remote administration (see MODERATION).
+
+If
+.I action
+is
+.BR query ,
+.B ezmlm-manage
+returns a message to the target indicating whether or not the target address
+is a subscriber.
+
+If
+.I action
+is
+.B info
+or
+.BR faq ,
+.B ezmlm-manage
+returns the contents of
+.I dir\fB/text/info
+or
+.IR dir\fB/text/info ,
+respectively.
+
+If
+.I dir\fB/public
+does not exist,
+.B ezmlm-manage
+rejects all subscription and unsubscription attempts.
+However, if the list is configured with remote administration,
+moderator-initiated subscribe and unsubscribe requests will still be
+honored. Also, if
+.I action
+is
+.IR help ,
+.B ezmlm-manage
+will still send help.
+.SH "TEXT FILE EDITING"
+If
+.I action
+is
+.BR edit ,
+the
+.B \-e
+switch is used, and the target address is that of a remote administrator,
+.B ezmlm-manage
+will reply with a list of editable file in
+.I dir\fB/text/
+and instructions for editing. Cookies for editing expire approximately 27.8
+hours after they are issued, or when a file has been changed, whichever is
+sooner. The size of the updated file is limited to 5120 bytes.
+
+If
+.I action
+is
+.BR edit.\fIfile ,
+the
+.B \-e
+switch is used, and the target address is that of a remote administrator,
+.B ezmlm-manage
+will return an editable copy of
+.IR file .
+
+If
+.I action
+is
+.BR ed.\fIcookie ,
+.B ezmlm-manage
+will verify that the edit cookie is still valid and that the file has
+not been modified since the cookie was issued. If the cookie passes
+these tests,
+.B ezmlm-manage
+will update
+.IR dir\fB/text\fI/file .
+.SH "ARCHIVE RETRIEVALS"
+If
+.I action
+is
+.BR get.\fInum ,
+.B ezmlm-manage
+sends back message
+.I num
+from
+.IR dir\fB/archive/ .
+This can be disabled with the
+.B \-C
+command line switch.
+
+If
+.I dir\fB/public
+does not exist,
+.B ezmlm-manage
+rejects all archive retrieval attempts.
+.SH MODERATION
+If
+.I dir\fB/modsub
+exists, subscriptions are moderated. Users can
+unsubscribe without moderator action, but moderator confirmation is required
+for subscriptions.
+
+If
+.I dir\fB/modsub
+starts with a forward slash, it is assumed that the content this is the base
+directory for the moderator database (
+.IR moddir ).
+Otherwise,
+.I moddir
+is assumed to be
+.IR dir\fB/mod/ .
+
+The moderator names are assumed
+to be stored in a set of files in
+.IR /moddir\fB/subscribers/ .
+
+I to add, remove, and list moderators, use respectively:
+
+.EX
+.B ezmlm-sub
+.I moddir
+.IR user@host
+.EE
+
+.EX
+.B ezmlm-unsub
+.I moddir
+.IR user@host
+.EE
+
+.EX
+.B ezmlm-list
+.I moddir
+.EE
+
+Subscription requests from potential
+subscribers will be sent for a second round of confirmation to all the
+moderators.
+If a moderator approves the request, a message confirming the
+subscription will be sent to the subscriber. The
+subscriber will not know which moderator approved the subscription.
+
+If more than one moderator replies to the confirmation request, the subscriber
+will not receive duplicate messages about being on (or not on) the mailing list.
+
+Unsubscribe requests from users are handled as for non-moderated lists.
+
+All subscribe confirmation requests requiring moderator action have a subject of
+.B CONFIRM subscribe to\fI listname@host.
+All unsubscribe confirmation requests in reply to moderator-initiated
+unsubscribe dialogs have a subject of
+.B CONFIRM unsubscribe from\fI listname@host.
+
+If
+.I dir\fB/remote
+exists (remote administration), moderators can initiate a request to
+subscribe a user 'username@userhost' by sending mail to
+.IR listname-subscribe\fB\-username=userhost\fI@host .
+The moderator (not the subscriber) will receive the confirmation request,
+and can complete the transaction. Moderators' request to unsubscribe
+users are handled analogously. Once an address is successfully added to
+or removed from the subscriber database by a moderator or remote admin,
+the user is notified of the action. If a moderator or remote admin's subscribe
+confirmation does not result in a change, i.e. if the address already was a
+subscriber, no notification is sent. If a remote admin's
+unsubscribe confirmation does not result in a change, i.e. the address was
+not a subscriber, a notification is sent to the remote admin. This is to make
+the remote admin aware that the address unsubscribed most likely is not the
+subscriber's subscription address.
+
+.I dir\fB/remote
+starts with a forward slash, it is assumed that the content this is the base
+directory for the moderator database (
+.IR moddir ).
+The moderator names are assumed
+to be stored in a set of files in
+.IR /moddir\fB/subscribers/ .
+If both
+.I dir\fB/modsub
+and
+.I dir\fB/remote
+exist, and both contain directory names, the directory name in
+.I dir\fB/modsub
+is used, and the
+.I dir\fB/remote
+entry is ignored.
+
+It is possible to set up
+a mailinglist for moderators only by using
+.I dir\fB/mod/
+as the list directory. Make sure that such a list is not public! Otherwise,
+anyone can become a moderator by subscribing to this list.
+
+If action is
+.B \-help
+and target is a moderator,
+.B ezmlm-manage
+will in addition to the usual help send
+.I dir\fB/text/mod-help
+containing instructions for moderators.
+
+If action is
+.B \-list
+and target is a moderator, the list is set up for subscription moderation
+or remote administration, and the
+.I \-l
+command line switch is used,
+.B ezmlm-manage
+will reply with an unsorted subscriber list. Extensions for digest subscribers
+and auxillary databases are supported (see above).
+
+If action is
+.BR \-log ,
+.B ezmlm-manage
+will reply with the contents of the
+.I Log
+file with the same access restrictions as for the
+.B \-list
+action.
+.SH "SEE ALSO"
+ezmlm-make(1),
+ezmlm-return(1),
+ezmlm-send(1),
+ezmlm-sub(1),
+ezmlm-unsub(1),
+ezmlm-list(1),
+ezmlm(5),
+qmail-command(8)

@@ -1,0 +1,24 @@
+BODY { background-color: #ffffe0; margin-left: 5%; margin-right: 5% }
+
+  a:link { color: black }
+  a:active { color: black }
+
+  H1 { color: red; font-size: 200% ; text-align: center}
+  H2 { color: green; font-size: 150%; text-align: left }
+
+  HR { border: medium; color: #00426B }
+
+  DIV.idx { margin-left: 5%; margin-right: 5% }
+  a.alk { color: green; font-style: italic }
+
+  LI.subjbody { margin-left: 15% }
+  LI.authbody { margin-left: 10% }
+
+  DIV.rfc822hdr { text-align: left; font-size: 100% }
+    EM.rfc822hdr { font-weight: bold; font-family: arial, sans-serif }
+      SPAN.subject { font-weight: bold; font-size: 150% }
+	a.relk { color: red }
+
+DIV.copyright { font-size: 50%; text-align: right }
+
+

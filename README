@@ -1,0 +1,31 @@
+ezmlm 0.53, alpha.
+19970629
+Copyright 1997
+D. J. Bernstein, djb@pobox.com
+
+ezmlm is an easy-to-use, high-speed mailing list manager for qmail. See
+BLURB for a more detailed advertisement.
+
+INSTALL says how to set up and test ezmlm.
+
+See http://pobox.com/~djb/ezmlm.html for the latest information about
+ezmlm.
+
+The rest of this file is a list of systypes where various versions of
+ezmlm have been reported to work.
+
+0.52: aix-4-1-:-:-:00910033a000-:- (tnx KJJ)
+0.52: freebsd-2.1.6-release-:i386-:-:-:- (tnx TM)
+0.52: freebsd-2.2-stable-:i386-:-:pentium-:- (tnx fedi=???)
+0.52: linux-2.0.18-:i386-:-:ppro-:- (tnx MAN)
+0.52: linux-2.0.28-osfmach3-:-:-:ppc-:- (tnx CWG)
+0.52: linux-2.0.29-:i386-:-:i486-:- (tnx FPL)
+0.52: linux-2.0.29-:i386-:-:pentium-:- (tnx AG)
+0.52: linux-2.0.30-:i386-:-:pentium-:- (tnx CH)
+0.52: linux-2.0.30-:i386-:-:pentium-:- (tnx LMB)
+0.52: linux-2.1.32-:i386-:-:pentium-:- (tnx JF)
+0.52: netbsd-1.2c-:i386-:-:intel.pentium.(p54c).(586-class)-:- (tnx GW)
+0.52: news-os-6.1.2-#2-:news5000-:-:news5000-:- (tnx yamada=???)
+0.52: openbsd-2.0-generic#0-:openbsd.m68k-:-:mac68k-:- (tnx GS)
+0.52: sunos-5.5-generic_103093-06-:sparc-:sun4-:sun4d-:sun4d- (tnx KT)
+0.52: sunos-5.5.1-generic-:sparc-:sun4-:sun4c-:sun4c- (tnx CWG)

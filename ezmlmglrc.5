@@ -1,0 +1,71 @@
+.TH ezmlmglrc 5
+.SH NAME
+ezmlmglrc \- set up the global ezmlm interface
+.SH SYNOPSIS
+.B ezmlm-make
+.B \-C ezmlmglrc
+[
+.B \-5\fI owner
+]
+.I dir dot local host
+.SH DESCRIPTION
+.B ezmlmglrc
+instructs
+.B ezmlm-make(1)
+to create
+.I dir
+and files within it to support the
+.I local\fB@\fIhost
+address as a global ezmlm interface.
+.I dot
+and
+.I dot\fB-default
+are linked to
+.I dir\fB/ezdomo
+which uses
+.B ezmlm-request(1)
+to handle requests as well as 
+bounces and ezmlm-style command addresses for the global interface.
+The configuration file
+.I dir\fB/config.cf
+should be created separately with
+.BR ezmlm-glconf(1) .
+.SH OPTIONS
+.TP
+.B -5\fI owner
+Forward mail addressed to
+.I local\fB-owner@\fIhost
+to
+.I owner
+rather than storing it in a local mailbox.
+.SH USAGE
+Typical use by ``joe'' to set up
+.B joe-\fImajordomo\fB@\fIthis.com:
+
+.EX
+ezmlm-make -Cezmlmglrc ~/domo ~/.qmail-majordomo joe-majordomo this.com
+.EE
+
+Typical use by ``alias'' to set up
+.I majordomo\fB@\fIthis.com:
+
+.EX
+ezmlm-make -Cezmlmglrc ~/domo ~/.qmail-majordomo majordomo this.com
+.EE
+
+Typical use by ``virt'' controlling the virtual domain
+.I lists.com
+to set up
+.I majordomo\fB@\fIlist.com:
+
+.EX
+ezmlm-make -Cezmlmglrc ~/domo ~/.qmail-majordomo majordomo list.com
+
+echo "virt-majordomo" > ~/domo/inlocal
+.EE
+The ``echo'' line is required only if used with qmail<1.02.
+.SH "SEE ALSO"
+ezmlm-glconf(1),
+ezmlm-make(1),
+ezmlm-request(1),
+ezmlm(5)

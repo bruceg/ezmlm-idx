@@ -1,0 +1,245 @@
+.TH ezmlm-cron 1
+.SH NAME
+ezmlm-cron \- Sets up digest request messages generation via crond
+.SH SYNOPSIS
+.B ezmlm-cron
+[
+.B \-cCdDlL
+][
+.B \-w \fIdow
+][
+.B \-t \fIhh:mm
+][
+.B \-i \fIhrs
+]
+.I listadr code[f]
+.SH DESCRIPTION
+.B ezmlm-cron
+is a very restrictive interface to
+.BR crond(8) .
+It edits the effective user's ~/crontab (see crontab(5))
+file. It then executes
+.B crontab(1)
+to update crond(8) with the changes.
+
+.B ezmlm-cron
+sets up the generation of trigger messages to the list
+.I listadr
+and the digest code
+.IR code .
+A optional digest format specifier
+.I f
+can be added to
+.IR code .
+
+.B ezmlm-cron
+reads
+.IR dir\fB/ezcronrc ,
+where
+.I dir
+is the home directory of the effective user. The first line of this file is the
+host name, 'host', to which bounces should be sent. Any bounces for lists
+set up by 'user' will go to 'user@host'. Subsequent lines are entries
+for users made up of:
+.IR user:local:host:num:[list1[,list2...]] .
+The ':'-separated parameters are:
+.TP
+.I user
+the user name to which this line corresponds.
+.TP
+.I local
+the list address must start with exactly these characters (case sensitive).
+If this field is empty, any list local address is allowed.
+.TP
+.I host
+the list host name must exactly match this parameter (case insensitive).
+If this field is empty, any list host address is allowed. (Host names for
+the list and the digest list must still match.)
+.TP
+.I num
+the user is permitted a maximum of
+.I num
+entries.
+.TP
+.I list1 [,list2...]
+a set of complete list names separated by commas. The user may edit
+entries for these lists, even if they do not match the criteria set
+above. If these lists exist, they are counted in determining
+.IR num .
+No while space is allowed before or between list names. If no list names
+are specified, the final ':' can be omitted.
+
+The first line matching the executing user will be used.
+
+If
+.B ezmlm-cron
+is installed SUID
+.IR euser ,
+the configuration and crontab files from that user's home directory
+will be used for all
+.B ezmlm-cron
+actions. This way, users on a system can be given limited
+.B crond(8)
+access via
+.B ezmlm-cron
+restricted by
+.I dir\fB/ezcronrc
+and to the generation of digest trigger messages. This is especially
+useful for users without shell access or access to
+.BR crond(8) .
+.I euser
+is usually 'ezmlm'.
+To install
+.B ezmlm-cron
+SUID ezmlm:
+
+.EX
+  # chown ezmlm /usr/local/bin/ezmlm/ezmlm-cron
+  # chmod 4555 /usr/local/bin/ezmlm/ezmlm-cron
+.EE
+
+.B ezmlm-cron
+refuses to run if installed SUID root.
+.B ezmlm-cron
+when executed by 'root',
+will still use the files in ~root.
+
+To allow
+.B crond(8)
+access, you may need to list the effective user (all users allowed access
+or ~ezmlm if
+.B ezmlm-cron
+is installed SUID ezmlm) in
+.BR /etc/cron.allow .
+See
+.B crontab(1)
+for further information.
+.SH OPTIONS
+The
+.BR \-c ,
+.BR \-d ,
+and
+.B \-l
+switches are mutually exclusive.
+
+.TP
+.B \-c
+List user entry from
+.IR ezcronrc .
+.TP
+.B \-C
+(Default.)
+Do not list user entry.
+.TP
+.B \-d
+Delete entry.
+.B ezmlm-cron
+will search
+.I ~euser\fB/crontab
+for an entry belonging to the executing user, permitted by
+.I ~euser\fB/ezcronrc
+and matching the command line arguments supplied.
+.I code
+is ignored and may be omitted.
+.TP
+.B \-D
+(Default.)
+Do not delete entry.
+.TP
+.B \-i\fI hrs
+Generate trigger message with
+.I hrs
+hours interval. Accepted intervals are 0, 1 ,2, 3, 6, 12, 24, 48, and 72 hours.
+Other numbers will be silently adjusted upwards to the nearest accepted
+interval
+(intervals above 72 hours will result in weekly trigger messages).
+.TP
+.B \-l
+List entries. If no other command line arguments are given,
+.B ezmlm-cron
+lists the entries created in the name of the user. If
+.I listadr
+is given,
+.B ezmlm-cron
+will list the entries for all the matching lists, even if the entries
+were not set up by the current user. Arguments, if given, still have to
+comply with the rules set in
+.IR ezcronrc .
+
+Crude
+.B crontab(5)
+lines are listed. These are taken from the ~/crontab file. Usually,
+these are active entries, although if the last execution of
+.B crontab(1)
+failed, they may not be.
+.TP
+.B \-L
+(Default.)
+Do not list entry.
+.TP
+.B \-t\fI hh:mm
+The time for the trigger message. Other trigger messages will be sent
+.I hrs
+hours before and after this time.
+.TP
+.B \-w\fI dow
+The days of the week on which trigger messages are sent. day 0 and 7 are
+Sunday, 1 is Monday, etc (see crontab(5)). The string specified for
+.I dow
+must consists of single comma-separated digits in the range '0'-'7'
+only. The default is every day, except for
+.I hrs
+of 48 (default Monday, Wednesday, Friday), 72 (default Monday and Thursday),
+or greater than 72 (default Monday).
+Both
+.I hrs
+and
+.I dow
+can be specified. In this case, trigger messages are sent
+on the day specified by
+.I dow
+at the interval
+specified by
+.IR hrs .
+If
+.I hrs
+is greater than 24 h, it is ignored and
+trigger messages are generated daily or as specified by
+.IR dow .
+.SH FILES
+.TP
+.I ~euser/ezcronrc
+The configuration file for
+.BR ezmlm-cron .
+.I euser
+is the effective user id. This is the executing user, unless
+.B ezmlm-cron
+is installed SUID
+.IR otheruser ,
+in which case it is
+.IR otheruser .
+.TP
+.I ~euser/crontab
+The file edited by
+.BR ezmlm-cron .
+.I euser
+is the effective user.
+.TP
+.I ~euser/crontabl
+The lock file used to assure that only one process at a time is editing the
+.B crond(8)
+settings.
+.I euser
+is the effective user.
+.SH BUGS
+.B ezmlm-cron
+should use the output of 'crontab -l' to list crontab lines, rather than
+parse the crontab file (and assume that the last execution of
+.B crontab(1)
+was successful).
+.SH "SEE ALSO"
+crond(8),
+crontab(1),
+crontab(5),
+ezmlm(5),
+ezmlm-get(1)

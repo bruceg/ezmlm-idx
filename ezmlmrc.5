@@ -1,0 +1,746 @@
+.TH ezmlmrc 5
+.UC 4
+.SH NAME
+ezmlmrc \- ezmlm-make configuration file
+.SH SYNOPSIS
+ezmlmrc
+.SH DESCRIPTION
+.LP
+.B .ezmlmrc
+is a file that configures
+.B ezmlm-make(1)
+for setting up new lists.
+.B ezmlmrc
+if a plain text with four types
+of tags. All start in
+the first position of the line.
+No other text is allowed on the same line. For
+security reasons, no periods are allowed anywhere in a tag.
+Any line with a ``#'' in position 1 is ignored,
+as is any text preceding the first tag.
+
+The first line
+in
+.B .ezmlmrc
+is unique. It should start in position 1 with ``x.yz'', where
+``x'' is the major version number, ``y'' a minor version number, and ``z''
+a bugfix version number.
+.B ezmlm-make(1)
+will print a warning message if it is used with an
+.B .ezmlmrc
+file that lacks the version identifier, or
+with an
+.B ezmlmrc
+file that has a version identifier that differs in
+either major or minor version numbers from the
+.B ezmlm-make
+version.
+
+The
+.B .ezmlmrc
+file is processed top down. Text preceding the first tag is ignored.
+Subsequently, one and only one file is open for writing. Any text encountered
+in
+.B \.ezmlmrc
+is copied to that file as is with a few substitutions (see below). Text
+following conditional tags is copied only if the condition is met. A file is
+automatically closed when a new file is opened. Opening a file overwrites
+any preexisting file with that name.
+Tags are:
+
+.TP
+.B </filename#aI/>
+The following text will be copied to
+.IR dir\fB/filename
+if the options specified after the ``#'' are active, in this case
+.I archived
+and not
+.IR indexed .
+Any number of flags can be specified. This
+is used to adapt the files and
+messages to the type of list created. If no flags are
+used, the ``#'' can be omitted. If the file name is the same as the previous
+tag, or if it is omitted, the text will be added to the previous file.
+When a new file is opened the previous file is closed. Attempts to add
+more text to a already closed file overwrites its contents.
+For all letter switches (except
+.BR \-cCvV ),
+upper and lower
+case tags are opposite and mutually exclusive. Thus, if
+.B \-g
+is specified,
+.B \-G
+is not set and
+if
+.B \-G
+is set,
+.B -g
+is not.
+
+The tag
+.B #E
+has special meaning. It is false if the list is being edited, e.g.
+.B ezmlm-make
+.B \-e
+or
+.BR \+ ,
+but true
+if switches
+.B \-ee
+or
+.BR \-++
+are used, or if
+.B ezmlm-make
+.I local
+is specified. Thus, for normal edits with unchanged list name, the files
+tagged with
+.B #E
+are not overwritten (preserving manual customizations), but if the list name
+changes or if explicitly specified by
+.B \-ee
+or
+.BR \-++
+the
+.B #E
+switch is ignored.
+
+.TP
+.B </filename#^5^i/>
+This is an alternative way of specifying ``if switch \-5 is specified and
+the \-i switch is not specified''. ``^'' is used as ``not''.
+.TP
+.B </-filename#eA/>
+.IR dir\fB/filename
+will be erased, if the options after the ``#'' are active, in this case
+.I not archived
+and
+.IR edit .
+An alternative to specify that a flag, e.g. ``4'' should not be active is
+to use ``^4''.
+.TP
+.B </+directory#aI/>
+The directory ``directory'' is created if the flags specified are active, in
+this case
+.I archived
+and not
+.IR indexed .
+If no flags are specified, the ``#'' can be
+omitted.
+.TP
+.B </:link/directory#aI/>
+.B dot\fI\-link
+is symlinked to
+.I dir/directory
+if the flags specified are active, in
+this case
+.I archived
+and not
+.IR indexed .
+If no flags are specified, the ``#'' can be
+omitted.
+.PP
+In addition,
+.I local
+is substituted for
+.BR <#L#> ,
+the part of
+.I dot
+between the first 2 hyphens (if any) for
+.BR <#1#> ,
+the part of
+.I dot
+between the second and third hyphen (if any) for
+.BR <#2#> ,
+.I host
+for
+.BR <#H#> ,
+.I dir
+for
+.BR <#D#> ,
+.I dot
+for
+.BR <#T#> ,
+.I digestcode
+for
+.BR <#C#> ,
+and the path to the
+.B ezmlm
+binaries for
+.BR <#B#>
+anywhere in the text. Other tags of this format are copied to the files as is.
+
+.BR <#l#> ,
+.BR <#h#> ,
+.BR <#A#> ,
+.BR <#R#> ,
+will be substituted on-the-fly where appropriate for the
+.IR local
+or
+.IR local\fB\-digest
+local part of the list address, the
+.IR host ,
+the subscriber address or the moderation accept address,
+and the subscription reply address or moderation reject address, respectively.
+The use of
+.BR <#l#>
+is to allow the same text file to be used for requests pertaining to both
+the main list and the digest list.
+
+Before the template file is processed,
+.B ezmlm-make
+will create the list directory.
+.B ezmlm-make
+will also create
+.IR dir\fB/key .
+.SH "DESCRIPTION OF EZMLMRC"
+The ezmlmrc file is preconfigured to act upon
+.B ezmlm-make(1)
+switches to produce the results as described in the
+.B ezmlm-make(1)
+man page.
+A number of files are created via
+.B ezmlmrc
+independently of any switched. These are
+.I dir\fB/text/info
+with a short description of the list,
+.I dir\fB/text/faq
+with frequently asked questions about the list,
+.I dir\fB/headeradd
+adding ``Precedence: bulk'' and ``X-No-Archive: yes'' to outgoing messages,
+.I dir\fB/headerremove
+removing ``Return-Path'', ``Return-Receipt-To'', ``Content-length'',
+ and ``Precedence'' from list messages, and
+.I dir\fB/text/sub-ok
+with text sent after successful subscription. These files are not overwritten
+when lists are edited.
+
+Also created are the following files within
+.IR dir\fB/text/ :
+.BR bottom ,
+.BR bounce-bottom ,
+.BR bounce-num ,
+.BR dig-bounce-num ,
+.BR bounce-probe
+.BR bounce-warn ,
+.BR get-bad ,
+.BR help ,
+.BR mod-help ,
+.BR mod-request ,
+.BR mod-reject ,
+.BR mod-timeout ,
+.BR mod-sub-confirm ,
+.BR mod-unsub-confirm ,
+.BR sub-bad ,
+.BR sub-confirm ,
+.BR sub-nop
+.BR unsub-bad ,
+.BR unsub-confirm ,
+.BR unsub-nop ,
+.BR unsub-ok ,
+.BR top .
+
+.I dir\fB/bouncer
+is set up to invoke
+.B ezmlm-weed(1)
+and
+.B ezmlm-return(1)
+to handle bounces.
+In addition to switch-dependent lines, an invocation of
+.B ezmlm-warn(1)
+is placed at the end of
+.IR dir\fB/editor ,
+.IR dir\fB/manager ,
+and
+.I dir\fB/owner
+to process the contents of the bounce directory.
+.BR ezmlm-reject(1)
+is placed first in
+.I dir\fB/editor
+ (unless the
+.B \-0\ mainlist@mainhost
+switch is used) to reject undesirable messages.
+ Below is a description of the switches and the consequences
+the have for list creation with the standard
+.B ezlmrc
+file.
+.B emzlm-make(1)
+by default sets the
+.BR \-a ,
+and
+.B \-p
+switches.
+.TP
+.B \-a
+.I dir\fB/archived
+and
+.I dir\fB/indexed
+are created.
+.I dir\fB/text/bottom
+is adjusted to mention archive access.
+.B \-A
+.I dir\fB/archived
+and
+.I dir\fB/indexed
+are removed.
+.TP
+.B \-b
+Block archive. The list set up with
+.B ezmlm-get -P
+to allow only moderators archive access.
+.TP
+.B \-B
+The
+.B ezmlm-get -P
+switch is not used.
+.TP
+.B \-d
+.I dir\fB/digest/
+is created.
+.I dir\fB/digest/lock
+is created.
+.I dir\fB/digest/lockbounce
+is created.
+.I dir\fB/digest/bounce/
+is created.
+.I dir\fB/digest/subscribers/
+is created.
+.I dot\fB-digest-owner
+is linked to
+.IR dir\fB/owner .
+.I dot\fB-digest-return-default
+is linked to
+.IR dir\fB/bouncer .
+An invocation of
+.B ezmlm-warn(1) -d
+is added to
+.I dir\fB/editor
+and
+.IR dir\fB/manager .
+Invocations of
+.B ezmlm-tstdig(1)
+and
+.B ezmlm-get(1)
+are added with default arguments to
+.IR dir\fB/editor .
+A note on digest (un)subscription is added to
+.I dir\fB/text/bottom
+and to
+.IR dir\fB/text/mod-help .
+.I dir\fB/text/digest
+is created for the ``Administrivia'' section of the digest.
+.TP
+.B \-D
+The items mentioned under switch
+.B \-d
+are not done. The result is that the references to the digest
+in the text files is removed.
+.TP
+.B \-f
+The text ``[\fIlocal\fR]'' is placed in
+.I dir\fB/prefix
+resulting in the text being used as the list's subject index.
+.TP
+.B \-F
+.I dir\fB/prefix
+is removed.
+.TP
+.B \-g
+The -s switch is added to the
+.B ezmlm-get(1)
+line in
+.I dir\fB/manager
+so that only subscribers can access the archive.
+.TP
+.B \-G
+The -s switch for
+.B ezmlm-get(1)
+is not used. Anyone can access the archive if archive (access) in general
+is enabled (see
+.B \-p
+for ``public'',
+.B \-a
+for ``archived'', and
+.B \-i
+for ``indexed''.
+.TP
+.B \-i
+.I dir\fB/editor
+(for normal lists)
+or
+.I dir\fB/moderator
+(for moderated lists)
+are set up to run
+.B ezmlm-archive(1)
+after messages are posted. This sets up the cross-reference for
+.B ezmlm-cgi(1)
+WWW access.
+.TP
+.B \-I
+.B ezmlm-archive(1)
+is not configured.
+.TP
+.B \-j
+.I dir\fB/manager
+uses
+.B ezmlm-manage -U
+to allow unconfirmed unsubscribe.
+.B \-J
+The
+.B ezmlm-manage -U
+switch is not used.
+.TP
+.B \-k
+Blacklist. A
+.B ezmlm-issubn(1)
+line that tests the envelope sender against the address database in
+.I dir\fB/deny
+is inserted into
+.IR dir\fB/editor .
+As a consequence, posts from such senders are rejected. This switch is ignored
+for sublists (i.e. if the
+.B \-0\ mainlist@mainhost
+switch is used).
+.TP
+.B \-K
+The
+.B ezmlm-issubn(1)
+line testing the envelope sender against the ``blacklist'' in
+.I dir\fB/deny
+is not used.
+.TP
+.B \-l
+The -l switch is added to the
+.B ezmlm-manage(1)
+command line in
+.I dir\fB/manager
+to allow retrieval of subscriber list and list log by remote administrators.
+.BR NOTE :
+This is pointless, unless the list is also set up for remote administration
+with the
+.B \-r
+switch.
+.I dir\fB/text/mod-help
+is adjusted.
+.TP
+.B \-L
+Do not allow access to the subscriber list under any circumstances. The
+.B ezmlm-manage(1)
+\-l switch is not specified.
+.TP
+.B \-m
+Message moderation.
+.I dir\fB/modpost
+is created.
+.I dir\fB/editor
+is set up with
+.B ezmlm-store(1)
+instead of
+.BR ezmlm-send(1) .a
+.I dir\fB/moderator
+is set up with
+.BR ezmlm-moderate(1) ,
+and
+.BR ezmlm-clean(1) .
+.I dot\fB/\-accept-default
+and
+.I dot\fB/-reject-default
+are linked to
+.IR dir\fB/moderator .
+.I dir\fB/text/mod-help
+is adjusted.
+Special action is taken when the
+.B \-m
+switch is combined with
+.BR \-u .
+In this case, the setup is as for the
+.B \-m
+switch alone, but
+.I dir\fB/editor
+is set up with
+.B ezmlm-gate(1)
+which will fork
+.B ezmlm-send(1)
+for posts with an envelope sender that is a subscriber or a moderator, and
+for
+.B ezmlm-store(1)
+for posts with other envelope senders. The consequence is that posts from
+subscribers (with the usual caveats for SENDER checks) are posted directly,
+whereas other posts are sent for moderation.
+.TP
+.B \-M
+No message moderation.
+.I dir\fB/editor
+is set up with
+.B ezmlm-send(1)
+as usual.
+.I dir\fB/moderator
+is removed.
+.TP
+.B \-n
+Allow text file editing.
+.ezmlm-manage(1)
+in
+.I dir\fB/manager
+is set up with the \-e switch to allow remote admins to via E-mail edit
+the files in
+.IR dir\fB/text/ .
+.BR NOTE :
+This is pointless, unless the list is also set up for remote administration
+with the
+.B \-r
+switch.
+.I dir\fB/text/mod-help
+is adjusted.
+.TP
+.B \-N
+Remote editing of files in
+.I dir\fB/text
+is not allowed.
+The -e switch for
+.B ezmlm-manage
+will not be used. 
+.TP
+.B \-o
+For moderated lists, the
+.B ezmlm-store -P
+switch is used so that posts from non-moderators are rejected rather than
+sent for moderation. This is for some announcement lists.
+.TP
+.B \-O
+The
+.B ezmlm-store -P
+switch is not used.
+.TP
+.B \-p
+Public.
+.I dir\fB/public
+is created.
+.TP
+.B \-P
+Not public.
+.I dir\fB/public
+is removed.
+.TP
+.B \-q
+A line with
+.B ezmlm-request(1)
+is added to
+.I dir\manager
+to service commands in the ``Subject'' line of messages sent to the
+``list-request'' address.
+.TP
+.B \-Q
+.B ezmlm-request(1)
+is not used.
+.TP
+.B \-r
+Remote admin.
+.I dir\fB/remote
+is created.
+.I dir\fB/text/mod-help
+is adjusted.
+.TP
+.B \-R
+.I dir\fB/remote
+is removed.
+.TP
+.B \-s
+Subscription moderation.
+.I dir\fB/modsub
+is created.
+.I dir\fB/text/mod-help
+is adjusted.
+.I dir\fB/text/sub-confirm
+is adjusted.
+.TP
+.B \-S
+.I dir\fB/modsub
+is removed.
+.TP
+.B \-t
+.I dir\fB/text/trailer
+is created with instructions on how to unsubscribe.
+.TP
+.B \-T
+.I dir\fB/text/trailer
+is removed.
+.TP
+.B \-u
+User-only posts.
+.I dir\fB/editor
+is set up with an
+.B ezmlm-issubn(1)
+line to check the envelope sender against the subscriber address databases.
+If the sender is not found, the post is rejected. This results in
+subscriber-only posts, with the usual caveats for SENDER checks.
+Special action is taken when the
+.B \-u
+switch is combined with
+.BR \-m .
+In this case, the setup is as for the
+.B \-m
+switch alone, but
+.I dir\fB/editor
+is set up with
+.B ezmlm-gate(1)
+which will fork
+.B ezmlm-send(1)
+for posts with an envelope sender that is a subscriber or a moderator, and
+for
+.B ezmlm-store(1)
+for posts with other envelope senders.
+.B ezmlm-clean(1)
+is set up with the \-R switch.
+The consequence is that posts from
+subscribers (with the usual caveats for SENDER checks) are posted directly,
+whereas other posts are sent for moderation.
+.B ezmlm-clean(1)
+is set up with the \-R switch.
+Thus, ignored posts are silently
+removed rather than returned to sender.
+.TP
+.B \-U
+The
+.B ezmlm-issubn(1)
+line
+restricting posts by envelope sender is not used.
+.TP
+.B \-w
+The
+Remove the
+.B ezmlm-warn(1)
+invocations from the list setup. It is assumed that
+.B ezmlm-warn(1)
+for both
+.I local@host
+and
+.I local-digest@host
+will be run by other means, such as crond.
+If the
+.B \-6
+switch is used with this switch, the local list name will be added to the
+SQL config info for
+.I dir\fB/sql
+and
+.I dir\fB/digest/sql .
+This is to support building the main list for a distributed list using
+a SQL address database. In addition,
+.B ezmlm-receipt(1)
+will be set up for bounce handling in
+.I dir\fB/bouncer
+instead of
+.BR ezmlm-return(1).
+.TP
+.B \-W
+No action taken.
+.TP
+.B \-xyzXYZ
+User configurable. By default, if the
+.B \-x
+switch is specified,
+.I dir\fB/mimeremove 
+is created. This file contains many MIME types not routinely supported.
+MIME types in
+.I dir\fB/mimeremove are stripped from multipart posts before archiving
+and distribution.
+To view the list of
+MIME types, see
+.B ezmlmrc
+or create a list and list
+.IR dir\fB/mimeremove .
+In addition
+.I dir\fB/msgsize
+is created containing ``40000:2'' causing
+.B ezmlm-reject(1)
+to reject all posts that have a body of less than 2 bytes (empty) or
+more than 40000 bytes (too large).
+.TP
+.B \-0\fI\ mainlist@mainhost
+.I dir\fB/sublist
+is created with ``mainlist@mainhost''.
+.B dir\fB/ezmlm-reject
+is not used in
+.I dir\fB/editor
+to avoid rejecting messages that the main list has accepted.
+.TP
+.B \-3\fI\ fromarg
+The list is set up to add ``from'' to
+.I dir/fB/headerremove
+and
+.B From:\fI fromarg
+to
+.IR dir\fB/headeradd .
+This replaces the incoming ``From:'' header as desirable for some announcement
+lists.
+.TP
+.B \-4\fI\ tstdigopts
+.I tstdigopts
+will be used as the arguments for
+.ezmlm-tstdig(1)
+in
+.IR dir\fB/editor .
+This must be both switches and their arguments for
+.BR ezmlm-tstdig(1) .
+.BR NOTE :
+This is pointless, unless the list is also set up for digests
+with the
+.B \-d
+switch.
+.TP
+.B \-5\fI\ owner@ownerhost
+.I owner@ownerhost is placed in
+.I dir\fB/owner
+so that mail to ``list-owner'' is forwarded to that address, rather than
+being stored in
+.IR dir\fB/Mailbox .
+If the address does not start with an underscore or alphanumeric character,
+the argument must start with an ampersand.
+.TP
+.B \-6\fI\ host:port:user:password:datab:table
+.TP
+The string, followed by the list name is placed in
+.IR dir\fB/sql .
+The same string with ``table'' suffixed with ``_digest'' and ``_allow''
+is placed in
+.I dir\fB/digest/sql
+and
+.IR dir\fB/allow/sql ,
+respectively.
+.B \-7\fI\ /msgmodPath
+.I msgmodPath
+is placed in
+.IR dir\fB/modpost
+is the list is set up for message moderation with the
+.B \-m
+switch.
+.TP
+.B \-8\fI\ /submodPath
+.I submodPath
+is placed in
+.IR dir\fB/modsub
+is the list is set up for subscription moderation with the
+.B \-s
+switch.
+.TP
+.B \-9\fI\ /remoteAdminPath
+.I remoteAdminPath
+is placed in
+.IR dir\fB/remote
+is the list is set up for remote administration with the
+.B \-r
+switch.
+.SH "SEE ALSO"
+ezmlm(5),
+ezmlm-clean(1),
+ezmlm-gate(1),
+ezmlm-get(1),
+ezmlm-issubn(1),
+ezmlm-make(1),
+ezmlm-manage(1),
+ezmlm-moderate(1),
+ezmlm-request(1),
+ezmlm-return(1),
+ezmlm-send(1),
+ezmlm-store(1),
+ezmlm-tstdig(1),
+ezmlm-warn(1),

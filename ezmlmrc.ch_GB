@@ -1,0 +1,966 @@
+0.324 - This version identifier must be on line 1 and start in pos 1.
+#
+#$Id: ezmlmrc.ch_GB,v 1.2 1999/12/23 23:08:19 lindberg Exp $
+#$Name: ezmlm-idx-040 $
+#
+# ezmlmrc 
+# #######
+# Controls the actions of ezmlm-make as patched with ezmlm-idx-0.31 or later.
+#
+# The base directory 'DIR' is always created by ezmlm-make, as is DIR/key.
+# Everything else is done from here.
+#
+# ezmlm-make looks for this file, first as .ezmlmrc in the directory that the
+# lists .qmail files will be placed in (if you've used the -c command line
+# switch), then /etc/ezmlmrc, then ezmlmrc in the ezmlm-make binary directory.
+# Thus, you can customize ezmlm-make on a global level by placing a customized
+# copy of ezmlmrc in /etc and on a user level by copying it to .ezmlmrc in
+# the user's home directory AND use the ezmlm-make -c switch.
+#
+# Tags are:
+#	</filename/>       : put succeeding text lines in DIR/filename
+#	</-filename/>      : erase DIR/filename.
+#	</+dirname/>       : create directory DIR/dirname
+#	</:lname/dirname>  : symlink DIR/.qmail-list-lname -> DIR/dirname
+#
+# The name in the tag can be suffixed with '#' and any number of flags,
+# corresponding to command line switches. The item will be created/extended
+# only if all the flags listed are set. Files can be extended as long as they
+# were the last one created, but not if another file has been started since
+# then. Flags that are not recognized are silently ignored.
+# 
+# Thus, </filename#aP/> creates the file if and only if the list is archived
+# (-a) and not public (-P). If the next tag is </filename#m/>, the file is
+# extended with the lines up to the next tag if the list is message moderated
+# (-m). If the next tag is </another/>, 'filename' is closed. Any further
+# tags leading to the reopenining of 'filename' will overwrite the file, not
+# extend it.
+#
+# A set of user-defined command line switches (xX, yY, zZ) are available for
+# customization.
+#
+# Within the text, certain tags are substituted. Other tags are copied as
+# is. <#A#> and <#R#> are substituted by ezmlm-manage and -store (see man pages)
+# and <#l#> (lower case L) is replaced dynamically by the list name for
+# programs handling both 'list' and 'list-digest'.
+#
+# Substitutions are:
+# <#B#> ezmlm binaries path   <#C#> digest code         <#D#> dir
+# <#H#> host                  <#L#> local               <#F#> flags
+# <#T#> dot                   <#0#> arg for -0. <#3#>...<#9#> arg for -3..9
+# <#1#> ext1                  <#2#> ext2 [if dot is /path/.qmail-ext1-ext2-name]
+# The latter useful when a single user is controlling several virtual domains.
+#
+# -0 is used for the main list address when setting up sublists
+# -4 for specifying the ezmlm-tstdig switches used in dir/editor. Default
+#    -k64 -m30 -t24. Only used if -g is used.
+# -5 for list-owner address. Mail to list-owner will be forwarded to this addr.
+# -6 for sql connection info
+# -7 for contents of DIR/modpost
+# -8 for contents of DIR/modsub
+# -9 for contents of DIR/remote
+#
+# For demonstration purposes, the '-x' switch results in the following
+# non-standard actions:
+# - Removal of many non-text MIME parts from messages.
+# - Limit posts to 2 bytes <= msg body size <= 40000
+#
+# Attempts to create links or directories that already exist, will result
+# in a FATAL error. Attempts to open files that have already been closed
+# or already exits, will cause the old file to be overwritten.
+#
+# One of the major problems with ezmlm-lists is DIR/inlocal. For normal
+# users, it is set up to the list name (user-list or so), which is correct.
+# However, for user 'ezmlm' in control of virtual domain 'host.dom.com'
+# the list name is 'list@host.dom.com', but inlocal should be 'ezmlm-list',
+# not 'list'. Similarly, if ezmlm-domain1 is in control of 'host.dom.com,
+# list@host.dom.com, should yield an inlocal of 'ezmlm-domain1-list'. To
+# always get the lists correct, place this file as '.ezmlmrc' in the 
+# users home directory (~ezmlm/.ezmlmrc) and change the inlocal text below
+# to 'ezmlm-<#L#>' or 'ezmlm-<#1#>-<#L#>, respectively.
+# config to support future editing without giving ezmlm-make command line
+# arguments other than dir. Useful for GUI/WWW editing tools
+</config/>
+F:<#F#>
+D:<#D#>
+T:<#T#>
+L:<#L#>
+H:<#H#>
+C:<#C#>
+0:<#0#>
+3:<#3#>
+4:<#4#>
+5:<#5#>
+6:<#6#>
+7:<#7#>
+8:<#8#>
+9:<#9#>
+</inlocal/>
+<#L#>
+</sublist#0/>
+<#0#>
+</+archive/>
+</+subscribers/>
+</+bounce/>
+</+text/>
+# dirs for digests
+</+digest#d/>
+</+digest/subscribers#d/>
+</+digest/bounce#d/>
+# for extra address db
+</+allow/>
+</+allow/subscribers/>
+# for blacklist
+</+deny#k/>
+</+deny/subscribers#k/>
+# moderator db & mod queue dirs. Needed for -m, -r -s, so we just
+# make them by default.
+</+mod/>
+</+mod/subscribers/>
+</+mod/pending/>
+</+mod/accepted/>
+</+mod/rejected/>
+# links: dot -> dir/editor
+</:/editor/>
+</:-owner/owner/>
+</:-digest-owner/owner#d/>
+</:-return-default/bouncer/>
+</:-digest-return-default/digest/bouncer#d/>
+</:-default/manager/>
+# for message moderation only
+</:-accept-default/moderator#m/>
+</:-reject-default/moderator#m/>
+# Get rid of configuration flags for editing mode so we can start with a
+# clean slate.
+</-modpost#eM/>
+</-modsub#eS/>
+</-remote#eR/>
+</-public#eP/>
+</-indexed#eI/>
+</-archived#eA/>
+</-prefix#eF/>
+</-text/trailer#eT/>
+</-sublist#e^0/>
+</-mimeremove#eX/>
+# Not needed, except for message moderation.
+</-moderator#eM/>
+# We don't clean out text files to make it easier for users
+# doing manual config by e.g. touching dir/remote.
+# subscription moderation
+</modsub#s/>
+<#8#>
+# remote admin
+</remote#r/>
+<#9#>
+# message moderation
+</modpost#m/>
+<#7#>
+# List owner mail
+</owner#5/>
+<#5#>
+</owner#^5/>
+<#D#>/Mailbox
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# Handles subscription. Add flags if you want a non-default digest format.
+# Service subject commands to the # request address if the -q switch is given.
+# Also -l and -d enable subscriber listing/text file editing, for remote adms.
+# -u gives subscriber only archive access
+</manager#iG/>
+|<#B#>/ezmlm-get '<#D#>' <#C#>
+</manager#ig/>
+|<#B#>/ezmlm-get -s '<#D#>' <#C#>
+</manager#q/>
+|<#B#>/ezmlm-request '<#D#>'
+# Ok to add -l/-d even for non-mod lists, since ezmlm-manage
+# won't allow it unless there are remote admins.
+</manager#LN/>
+|<#B#>/ezmlm-manage '<#D#>'
+</manager#lN/>
+|<#B#>/ezmlm-manage -l '<#D#>'
+</manager#Ln/>
+|<#B#>/ezmlm-manage -e '<#D#>'
+</manager#ln/>
+|<#B#>/ezmlm-manage -le '<#D#>'
+</manager#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</editor/>
+# reject shouldn't be configured for sublist.
+</#^0/>
+# full reject is now default, to get To/Cc: listaddress requirement
+|<#B#>/ezmlm-reject '<#D#>'
+# -k => reject posts from blacklisted addresses. Done for moderated
+# lists as well - allows removal of unwanted noise.
+</#k^0/>
+|<#B#>/ezmlm-issubn -n '<#D#>/deny' || { echo "Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this (#5.7.2)"; exit 100 ; }
+# switch -u=> restrict to subs of list & digest. If not m
+# do it with ezmlm-issubn, if 'm' do it with ezmlm-gate
+</#uM/>
+|<#B#>/ezmlm-issubn '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod' || { echo "Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included (#5.7.2)"; exit 100 ; }
+</#um/>
+|<#B#>/ezmlm-gate '<#D#>' '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod'
+# For message moderation, editor has store/clean
+</#mU/>
+|<#B#>/ezmlm-store '<#D#>'
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+# for non-message moderated lists, it has send
+</#M/>
+|<#B#>/ezmlm-send '<#D#>'
+# all lists have warn unless -w.
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# for digest bounces
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</#d^4/>
+|<#B#>/ezmlm-tstdig -m30 -k64 -t48 '<#D#>' || exit 99
+</#d4/>
+|<#B#>/ezmlm-tstdig <#4#> '<#D#>' || exit 99
+</#d/>
+|<#B#>/ezmlm-get '<#D#>' || exit 0
+# bouncer is complicated. We use ezmlm-receipt if -6 AND -w, but ezmlm-return
+# if (-6 and -W) OR (not -6 and -w). Since there is no or, we need 2 lines.
+</bouncer/>
+|<#B#>/ezmlm-weed
+</#^6/>
+|<#B#>/ezmlm-return -D '<#D#>'
+</#6W/>
+|<#B#>/ezmlm-return -D '<#D#>'
+</#6w/>
+|<#B#>/ezmlm-receipt -D '<#D#>'
+</digest/bouncer#d/>
+|<#B#>/ezmlm-weed
+</#^6d/>
+|<#B#>/ezmlm-return -d '<#D#>'
+</#6Wd/>
+|<#B#>/ezmlm-return -d '<#D#>'
+</#6wd/>
+|<#B#>/ezmlm-receipt -d '<#D#>'
+# moderator is set up only for message moderated lists. However, '-e' does
+# not remove it since we can't remove the symlinks to it (they're outside
+# of the list dir.
+</moderator#m/>
+|<#B#>/ezmlm-moderate '<#D#>'
+</#mU/>
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+</headerremove#E/>
+return-path
+return-receipt-to
+content-length
+precedence
+x-confirm-reading-to
+x-pmrqc
+# Only one allowed
+list-help
+list-unsubscribe
+list-post
+To
+</lock/>
+</lockbounce/>
+</digest/lockbounce#d/>
+</digest/lock#d/>
+</public#p/>
+</archived#a/>
+</indexed#i/>
+</inhost/>
+<#H#>
+</outhost/>
+<#H#>
+</outlocal/>
+<#L#>
+</mailinglist/>
+contact <#L#>-help@<#H#>; run by ezmlm
+# Headeradd needs to always exist
+</headeradd#E/>
+# Good for mailing list stuff (and vacation program)
+Precedence: bulk
+# To prevent indexing by findmail.com
+X-No-Archive: yes
+# rfc2369
+list-help: <mailto:<#l#>-help@<#h#>>
+list-unsubscribe: <mailto:<#l#>-unsubscribe@<#h#>>
+list-post: <mailto:<#L#>@<#H#>>
+To:##L@##H
+# max & min message size
+</msgsize#x/>
+40000:2
+# remove mime parts if -x
+</mimeremove#x/>
+application/excel
+application/rtf
+application/msword
+application/ms-tnef
+text/html
+text/rtf
+text/enriched
+text/x-vcard
+application/activemessage
+application/andrew-inset
+application/applefile
+application/atomicmail
+application/dca-rft
+application/dec-dx
+application/mac-binhex40
+application/mac-compactpro
+application/macwriteii
+application/news-message-id
+application/news-transmission
+application/octet-stream
+application/oda
+application/pdf
+application/postscript
+application/powerpoint
+application/remote-printing
+application/slate
+application/wita
+application/wordperfect5.1
+application/x-bcpio
+application/x-cdlink
+application/x-compress
+application/x-cpio
+application/x-csh
+application/x-director
+application/x-dvi
+application/x-hdf
+application/x-httpd-cgi
+application/x-koan
+application/x-latex
+application/x-mif
+application/x-netcdf
+application/x-stuffit
+application/x-sv4cpio
+application/x-sv4crc
+application/x-tar
+application/x-tcl
+application/x-tex
+application/x-texinfo
+application/x-troff
+application/x-troff-man
+application/x-troff-me
+application/x-troff-ms
+application/x-ustar
+application/x-wais-source
+audio/basic
+audio/mpeg
+audio/x-aiff
+audio/x-pn-realaudio
+audio/x-pn-realaudio
+audio/x-pn-realaudio-plugin
+audio/x-realaudio
+audio/x-wav
+image/gif
+image/ief
+image/jpeg
+image/png
+image/tiff
+image/x-cmu-raster
+image/x-portable-anymap
+image/x-portable-bitmap
+image/x-portable-graymap
+image/x-portable-pixmap
+image/x-rgb
+image/x-xbitmap
+image/x-xpixmap
+image/x-xwindowdump
+text/x-sgml
+video/mpeg
+video/quicktime
+video/x-msvideo
+video/x-sgi-movie
+x-conference/x-cooltalk
+x-world/x-vrml
+# These can also be excluded, but for many lists it is desirable
+# to allow them. Uncomment to add to mimeremove.
+# application/zip
+# application/x-gtar
+# application/x-gzip
+# application/x-sh
+# application/x-shar
+# chemical/x-pdb
+# --------------------- Handle SQL connect info
+</-sql#^6e/>
+</-digest/sql#^6e/>
+</-allow/sql#^6e/>
+</sql#6W/>
+<#6#>
+</sql#6w/>
+<#6#>:<#L#>@<#H#>
+</digest/sql#6dW/>
+<#6#>_digest
+</digest/sql#6dw/>
+<#6#>_digest:<#L#>_digest@<#H#>
+</allow/sql#6/>
+<#6#>_allow
+# -------------------- End sql stuff
+</prefix#f/>
+[<#L#>]
+</text/trailer#t/>
+---------------------------------------------------------------------
+取消注册，将电子邮件发送到：<#L#>-unsubscribe@<#H#>，如果需要更多的帮助，将
+电子邮件发送到：<#L#>-help@<#H#>。
+</text/bottom/>
+
+---<#l#> 邮件列表的管理命令---
+
+系统能够自动处理对邮件列表的管理请求。将需要处理的命令发送到以下的电子邮件
+地址：
+
+注册邮件列表，将电子邮件发送到：
+   <<#L#>-subscribe@<#H#>>
+
+取消注册邮件列表，将电子邮件发送到：
+   <<#L#>-unsubscribe@<#H#>>
+
+将电子邮件发送到下面的地址能够获得邮件列表的介绍信息：
+   <<#L#>-info@<#H#>>
+
+将电子邮件发送到下面的地址能够获得邮件列表的常见问题解答（FAQ）：
+   <<#L#>-faq@<#H#>>
+
+</#d/>
+注册邮件列表的摘要，将电子邮件发送到：
+   <<#L#>-digest-subscribe@<#H#>>
+
+取消注册邮件列表的摘要，将电子邮件发送到：
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+# ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
+# multi-get!
+</text/bottom#ai/>
+获得邮件列表从123到145的历史邮件（每次最多获得100个历史邮件），将电子邮件发
+送到：
+   <<#L#>-get.123_145@<#H#>>
+
+</text/bottom#aI/>
+获得邮件列表第12条历史邮件，将电子邮件发送到：
+   <<#L#>-get.12@<#H#>>
+
+</text/bottom#i/>
+获得邮件列表从123到456的历史邮件的主题与作者的索引，将电子邮件发送到：
+   <<#L#>-index.123_456@<#H#>>
+
+# Lists need to be both archived and indexed for -thread to work
+</text/bottom#ai/>
+获得与历史邮件12345相同主题的历史邮件，将电子邮件发送到：
+   <<#L#>-thread.12345@<#H#>>
+
+# The '#' in the tag below is optional, since no flags follow.
+# The name is optional as well, since the file will always be open
+# at this point.
+</text/bottom#/>
+
+你可以通过电子邮件的方式注册一个其它的地址，举例来讲，你希望通过电子邮件的方式注
+册“john@host.domain”，只要在命令后（subscribe）添加“-”并且用“=”代替“@”：
+<<#L#>-subscribe-john=host.domain@<#H#>>
+
+取消注册邮件列表，将电子邮件发送到：
+<<#L#>-unsubscribe-john=host.domain@<#H#>>
+
+使用这种方式注册、取消注册邮件列表时，系统将向该地址发送确认的电子邮件，当该地址
+收到电子邮件时，只要回复电子邮件就能够完成注册和取消注册。
+
+</text/bottom/>
+如果你在使用的过程中有任何问题，请将电子邮件发送到邮件列表的管理者<#L#>-owner@<#H#>。
+如果不能解决问题，请与系统的管理员联系。
+</text/bottom/>
+
+--- 随信附上的是系统收到的你发送的邮件。
+
+</text/bounce-bottom/>
+
+--- 随信附上的是系统收到的系统弹回（bounce）的邮件。
+
+</text/bounce-num/>
+
+系统已经保存了一份从<#L#>邮件列表发送到你的电子邮件地址被弹回（bounce）电子邮件。
+
+</#a/>
+这些电子邮件的拷贝可能已经保存在历史文档中。
+</#aI/>
+获得邮件列表第12345条历史邮件，将电子邮件发送到：
+   <<#L#>-get.12345@<#H#>>
+
+</#ia/>
+获得邮件列表从123到145的历史邮件（每次最多获得100个历史邮件），将电子邮件发送到：
+   <<#L#>-get.123_145@<#H#>>
+
+获得邮件列表从123到456的历史邮件的主题与作者的索引，将电子邮件发送到：
+   <<#L#>-index.123-456@<#H#>>
+
+<//>
+下面是电子邮件的编号：
+
+</text/dig-bounce-num/>
+
+系统已经保存了一份从<#L#>邮件列表发送到你的电子邮件地址被弹回（bounce）的摘要邮件。
+对于你错过的每份摘要，系统已经包含在发送给你的摘要邮件中的第一个邮件。系统没有将你
+错过的摘要邮件发送给你，但是你可以通过邮件列表的历史文档中获得。
+
+</#aI/>
+获得邮件列表第12345条历史邮件，将电子邮件发送到：
+   <<#L#>-get.12345@<#H#>>
+
+</#ia/>
+获得邮件列表从123到145的历史邮件（每次最多获得100个历史邮件），将电子邮件发送到：
+   <<#L#>-get.123_145@<#H#>>
+
+获得邮件列表从123到456的历史邮件的主题与作者的索引，将电子邮件发送到：
+   <<#L#>-index@<#H#>>
+
+<//>
+下面是摘要邮件的编号：
+
+</text/bounce-probe/>
+
+从<#l#>邮件列表发送给你的电子邮件已经被弹回（bounce）。系统已经向你发送了一个警告的
+邮件，但是这个邮件同样被弹回（bounce）。系统将附上弹回（bounce）的邮件。
+
+这个邮件是系统为检测你的电子邮件地址是否能够到达而发送的。如果这封用于检测的电子邮件
+也被弹回（bounce），系统将把你的电子邮件地址从<#l#>@<#H#>邮件列表中取消注册并不在通
+知你。同样你也可以通过向下面的地址发送电子邮件的方式重新注册邮件列表：
+   <<#l#>-subscribe@<#H#>>
+
+</text/bounce-warn/>
+
+从<#l#>邮件列表发送给你的电子邮件已经被弹回（bounce）。系统已经将被弹回（bounce）的
+第一个电子邮件附上。
+
+如果这个电子邮件同样被弹回，系统将向你的电子邮件地址发送一个检测你的电子邮件地址是否
+正确的电子邮件，如果这个电子邮件同样被弹回，系统将把你的电子邮件地址从<#l#>邮件列表
+取消注册并不在通知你。
+
+</text/digest#d/>
+注册邮件列表的摘要，将电子邮件发送到：
+	<#L#>-digest-subscribe@<#H#>
+
+取消注册邮件列表的摘要，将电子邮件发送到：
+	<#L#>-digest-unsubscribe@<#H#>
+
+向邮件列表发送电子邮件，将电子邮件发送到下面的地址：
+	<#L#>@<#H#>
+
+</text/get-bad/>
+在邮件列表的历史文档中不能发现这条邮件。
+
+</text/help/>
+系统收到的电子邮件中没有包括系统能够处理的命令。
+
+</text/mod-help/>
+你现在已经成为<#L#>@<#H#>邮件列表的管理者（moderator），下面将介绍作为一个邮件列表
+的所有者或管理者（moderator）你可以通过下面的方式对邮件列表的各个方面进行管理。
+
+
+用户注册和取消注册的管理
+----------------------
+作为邮件列表的管理者，你能够注册和取消注册邮件列表的任何用户。你希望通过电子邮件的方
+式注册“john@host.domain”，只要在命令后（subscribe）添加“-”并且用“=”代替“@”，举
+例来讲，注册上面所讲的地址，将电子邮件发送到：
+   <<#L#>-subscribe-john=host.domain@<#H#>>
+
+同样，取消注册上面的电子邮件地址，将电子邮件发送到：
+   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+
+</#d/>
+同样对于注册和取消注册邮件列表的摘要：
+   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+
+<//>
+所有的注册和取消注册都不需要有邮件主题和邮件内容!
+
+</#r/>
+系统将向你发送确认的电子邮件，确认是你发送的请求。你只要回复电子邮件就能完成所有的请求。
+</#R/>
+系统将向用户发送确认的电子邮件，如上面所说的电子邮件地址<john@host.domain>。用户必须
+回复电子邮件才能完成所有的请求。
+<//>
+
+确认的方式防止了其他人随意的向邮件列表添加和删除用户。
+
+系统将通知用户他/她的注册状态已经改变。
+
+注册和取消注册
+-------------
+
+任何用户可以通过向下面的地址发送电子邮件进行注册或取消注册：
+
+<#L#>-subscribe@<#H#>
+<#L#>-unsubscribe@<#H#>
+
+</#d/>
+同样对于注册和取消注册邮件列表的摘要：
+
+<#L#>-digest-subscribe@<#H#>
+<#L#>-digest-unsubscribe@<#H#>
+
+<//>
+用户将从系统收到确认信他/她电子邮件地址的确认信。一旦电子邮件地址被确认，注册或取消注册将完成。
+
+</#s/>
+因为邮件列表对于用户注册是需要经过管理者（moderator）的批准后才能完成，所以系统在完成对用户
+电子邮件地址的验证后将向邮件列表的管理者（moderator）发送请求管理者确认地址注册邮件列表
+的请求。如果你希望用户注册邮件列表，只要回复电子邮件进行完成确认。如果你不希望用户注册
+邮件列表，你可以删除这封电子邮件。
+</#S/>
+注册也是同样的方式
+<//>
+
+同样用户也可以使用下面的方法取消注册：
+
+   <<#L#>-subscribe-mary=host.domain@<#H#>>
+   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+
+"mary@host.domain"将收到系统发送的确认取消注册的电子邮件.在验证完成后就能取消注册。
+
+</#rl/>
+通过电子邮件的方式获得<#L#>@<#H#>邮件列表的注册用户，将电子邮件发送到下面的地址:
+   <<#L#>-list@<#H#>>
+
+通过电子邮件的方式获得<#L#>@<#H#>邮件列表的日志（Log）文件, 将电子邮件发送到下
+面的地址:
+   <<#L#>-log@<#H#>>
+
+</#rld/>
+同样，通过电子邮件获得邮件列表摘要的注册用户：
+   <<#L#>-digest-list@<#H#>>
+同样，通过电子邮件获得邮件列表摘要的日志文件：
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+你可以通过对一些文件的编辑来定制邮件列表的回应邮件。得到需要编辑的文件及如何编辑，将电子邮件发送
+到下面的地址：
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+有管理的投递
+-----------
+当一个邮件列表设置成所有发送到邮件列表的邮件都要经过管理者的审核后才能发送时，系统将保存投递到
+邮件列表的邮件并将邮件的拷贝发送到邮件列表的管理者。这封邮件的特征是在邮件的主题中有
+“MODERATE for ...”。
+
+如果你希望在邮件列表中转发邮件，你只要回复电子邮件。
+
+如果你不希望转发邮件并要删除此邮件，将电子邮件发送到’发件人：‘的电子邮件地址。通常你只要点击
+“全部回复”，然后删除除‘reject’以外的所有电子邮件地址。同时你也可以在'%'间添加为什么没有转
+发的的评论，系统将这些评论自动的发送到邮件的发件人。
+
+系统将对根据邮件列表管理者对邮件回复的先后顺序对邮件进行处理（系统总是按照最先回复的进行处理）。
+如果你请求处理的电子邮件系统已经进行了处理（发送或删除），系统会用电子邮件的方式通知你。
+
+如果系统在一段时间内（通常是5天）没有收到任何处理的方式，系统将邮件自动的退回到发件人并解释为什
+么没有进行处理。同样你也可以设置“”的信息通知发件人为什么没有处理。
+<//>
+
+外出
+----
+如果你只是临时的更换电子邮件地址，只要将有正确的邮件列表头(或者邮件的主题是以
+'MODERATE for <#L#>@<#H#>'或'CONFIRM subscribe to <#L#>@<#H#>'开头的电子邮件) 转发到新的
+电子邮件地址就可以了。你可以通过新的地址对邮件列表进行管理。同样，你也可以将电子邮件转发到你
+的朋友的电子邮件信箱，委托他/她替你临时管理邮件列表。
+
+当你外出时，如果你希望系统自动验证所有的请求，在你的电子邮件客户端设置成自动回复符合上述条件的
+电子邮件。
+
+</#r/>
+如果你试图通过一个并不是你的电子邮件地址管理你的邮件列表，系统将向用户发送确认的邮件，在邮件确
+认后，一封要求邮件列表管理者进行确认的电子邮件将发送到邮件列表的所有管理者。系统这样处理是因为
+系统不能确认是谁发送的请求。
+
+<//>
+
+注意：如果你在使用的过程中有任何的问题，请你与邮件列表的所有者(<#L#>-owner@<#H#>)联系。
+
+</text/mod-reject/>
+对不起，你发送到邮件列表的邮件没有被邮件列表的管理者批准。如果邮件列表的管理者对你的邮件
+做了评论，也附在这封邮件中。
+</text/mod-request/>
+这封邮件是某人发送到<#L#>@<#H#>邮件列表中的。如果你希望邮件列表的注册用户都收到这封邮件，请
+将电子邮件发送到下面的地址：
+
+!A
+
+通常，你只要直接回复电子邮件就能将电子邮件发送到邮件列表。地址的格式是"<#L#>-accept"。或者
+将地址直接拷贝到邮件中的”收件人“。
+</#x/>
+
+同样，也可以点击下面的地址：
+	mailto:<#A#>
+<//>
+
+删除这封邮件并将这封邮件直接退回发信人，请将这封邮件发送到下面的地址：
+
+!R
+
+通常，你只要点击”全部回复“，并将除了"<#L#>-reject"的地址全部删除。
+</#x/>
+
+同样，也可以点击下面的地址：
+	mailto:<#R#>
+<//>
+
+如果你希望对于退回的邮件加上你的评论，请你将你的评论添加在”%%% Start comment“
+和”%%% End comment“之间：
+
+%%% Start comment
+%%% End comment
+
+谢谢你的帮助！
+
+--- 随信附上的是投递到邮件列表的电子邮件。
+
+</text/mod-sub#E/>
+--- 由于<#l#>@<#H#>管理者的请求，系统已经将你注册或取消注册邮件列表。
+
+如果注册或取消注册并不符合你的想法，请你直接将电子邮件发送到邮件列表的所有者(<#l#>-owner@<#H#>)。
+
+如果你希望得到更多的帮助，请将电子邮件发送到<#L#>-help@<#H#>。
+
+</text/mod-timeout/>
+对不起，<#L#>邮件列表的管理者不能够处理你投递的邮件。系统将邮件退回给你，请你重新投递邮件或与邮
+件列表的管理者联系。
+
+--- 随信附上的是投递到邮件列表的电子邮件。
+
+</text/mod-sub-confirm/>
+用户!A请求注册<#l#>邮件列表，
+他的请求必须得到你的确认后才能完成，请将电子邮件发送到下面的地址：
+
+!R
+
+通常，你只要直接回复电子邮件就能完成确认。或者将地址直接拷贝到邮件中的”收件人“。
+</#x/>
+
+同样，也可以点击下面的地址：
+	mailto:<#R#>
+<//>
+
+如果你不想让用户注册邮件列表，你只要忽略这封邮件就可以了。
+
+谢谢你的帮助！
+
+</text/mod-unsub-confirm/>
+用户!A请求取消注册<#l#>邮件列表，
+他的请求必须得到你的确认后才能完成，请将电子邮件发送到下面的地址：
+
+!R
+
+通常，你只要直接回复电子邮件就能完成确认。或者将地址直接拷贝到邮件中的”收件人“。
+</#x/>
+
+同样，也可以点击下面的地址：
+	mailto:<#R#>
+<//>
+
+如果你不想让用户从邮件列表中取消注册，你只要忽略这封邮件就可以了。
+
+谢谢你的帮助！
+
+</text/sub-bad/>
+用于确认的标记是非法的。
+
+最大的可能性是因为标记已经过期。用于确认的标记在10天内是有效的。还有一种可能是因为用于
+确认的回复邮件并没有包括所有的确认信息。
+
+系统已经生成了一个新的确认标记。完成确认
+
+!A
+
+加入<#l#>邮件列表，请将电子邮件发送到下面的地址：
+
+!R
+</#x/>
+
+同样，也可以点击下面的地址：
+	mailto:<#R#>
+<//>
+
+注意，在你确认你的注册以前请核对回复地址。
+
+	<#L#>-Owner <<#l#>-owner@<#H#>>
+
+</text/sub-confirm/>
+为了完成注册<#l#>邮件列表，你需要确认下面的地址是否正确
+
+!A
+
+为了完成确认，请将电子邮件发送到下面的地址：
+
+!R
+
+通常，你只要直接回复电子邮件就能完成确认。或者将地址直接拷贝到邮件中的”收件人“。
+</#x/>
+
+同样，也可以点击下面的地址：
+	mailto:<#R#>
+<//>
+
+通过确认，系统可以：
+1.确认是否能够从你的电子邮件地址收到邮件。
+2.它能够防止某些人冒用你的名义进行注册。
+
+</#q/>
+有些电子邮件的客户端程序不能够解析很长的地址。如果你不能够直接回复这封电子邮件，你可
+以向<<#L#>-request@<#H#>>发送邮件并将上面的地址放在邮件的主题中。
+
+</text/sub-confirm#s/>
+这个邮件列表的注册是需要经过邮件列表的管理者批准的。一旦你回复了确认信，注册请求将直
+接发送到邮件列表的管理者。系统将通知你当邮件列表的管理者同意你加入邮件列表。
+
+</text/sub-nop/>
+下面的电子邮件地址
+
+!A
+
+已经是<#l#>邮件列表的注册用户。你不能重复注册一个邮件列表。
+
+</text/sub-ok#E/>
+下面的电子邮件地址
+
+!A
+
+已经成功的注册<#l#>邮件列表。
+
+欢迎加入<#l#>@<#H#>邮件列表!
+
+请你保存这封电子邮件，以便以后取消注册或改变注册的电子邮件地址。
+
+</text/top/>
+邮件列表的名称是：<#l#>@<#H#>
+
+</#x/>
+邮件列表所有者的电子邮件地址：<#l#>-owner@<#H#>.
+
+</text/unsub-bad/>
+用于确认的标记是非法的。
+
+最大的可能性是因为标记已经过期。用于确认的标记在10天内是有效的。还有一种可能是因为用于
+确认的回复邮件并没有包括所有的确认标记。
+
+系统已经生成了一个新的确认标记。完成确认
+
+!A
+
+从<#l#>邮件列表中删除，请将电子邮件发送到下面的地址：
+
+!R
+</#x/>
+
+同样，也可以点击下面的地址：
+	mailto:<#R#>
+<//>
+
+注意，在你确认取消你的注册以前请核对回复地址。
+
+	<#l#>-Owner <<#l#>-owner@<#H#>>
+
+</text/unsub-confirm/>
+为了完成从<#l#>邮件列表中取消注册，你需要确认下面的地址是否正确
+
+!A
+
+为了完成确认，请将电子邮件发送到下面的地址：
+
+!R
+
+通常，你只要直接回复电子邮件就能完成确认。或者将地址直接拷贝到邮件中的”收件人“。
+</#x/>
+
+同样，也可以点击下面的地址：
+	mailto:<#R#>
+<//>
+
+系统不能确认你的电子邮件地址是否是邮件列表的注册用户。你可以使用下面的方法获得你使用什么
+地址注册邮件列表：在你收到的从邮件列表发送的电子邮件中，每个电子邮件的退回路径
+（Return path）中包括了你注册用的电子邮件地址，例如，mary@xdd.ff.com收到的电子邮件中包
+括的退回路径（Return path）是<<#l#>-return-<number>-mary=xdd.ff.com@<#H#>。
+
+</#q/>
+有些电子邮件的客户端程序不能够解析很长的地址。如果你不能够直接回复这封电子邮件，你可以向
+<<#L#>-request@<#H#>>发送邮件并将上面的地址放在邮件的主题中。
+
+</text/unsub-nop/>
+下面的电子邮件地址
+
+!A
+
+并没有注册<#l#>邮件列表。
+
+如果你已经取消注册，但是你还是收到从邮件列表发送来得的电子邮件，请你核对这封邮件的：
+
+'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+
+你只要将电子邮件发送到：
+'<#l#>-unsubscribe-user=host.dom@<#H#>'.
+就能够取消注册，‘user=host.dom’是你的电子邮件地址，在这封邮件发出后，你将收到系统发
+送的有关取消注册的确认信，你只要回复电子邮件就能完成取消注册，最后系统将向你发送取消
+注册成功的电子邮件。
+
+如果你在使用的过程中有任何问题，请将电子邮件发送到：
+
+    <#l#>-owner@<#H#>
+
+他负责管理这个邮件列表。
+
+</text/unsub-ok/>
+下面的地址
+
+!A
+
+已经成功的从<#l#>邮件列表中取消注册。
+
+</text/edit-do#n/>
+请你编辑下面的文件并将他们发送到下面的地址：
+
+!R
+
+以'%%%'开始的文字是不能够编辑的。
+
+
+</text/edit-list#n/>
+<#L#>-edit.file 者条命令可以用于远程的编辑<#L#>@<#H#>邮件列表的各种控制
+文件。
+
+下面是你可以通过电子邮件的方式编辑的文件的名称。你只要将需要编辑的文件发送到<#L#>-edit.file
+就能完成编辑。
+
+文件名              用途
+
+bottom              添加在系统自动反馈邮件尾部的信息。
+digest              摘要处理的信息。
+faq                 邮件列表的常见问题解答。
+get_bad             在邮件列表的历史文档中没有发现文档的信息。
+help                邮件列表的帮助文件。
+info                邮件列表的信息文件，用于介绍这个邮件列表的主要用途。
+mod_help            邮件列表管理者的帮助文件。
+mod_reject          发送给发信人拒绝投递的信息。
+mod_request         发送给邮件列表者的请求信息。
+mod_sub             在邮件列表管理者同意你的注册后发送给用户的信息。
+mod_sub_confirm     发送给邮件列表管理者要求确认某用户注册的信息。
+mod_timeout         发送给发信人超时投递的信息。
+mod_unsub_confirm   发送给邮件列表管理者要求确认某用户取消注册的信息。
+sub_bad             如果注册的确认信息损坏，发送给用户的信息。
+sub_confirm         需要用户确认的注册信息。
+sub_nop             发送给重复注册用户注册列表的信息。
+sub_ok              注册成功后的发送给用户的信息。
+top                 添加在系统自动反馈邮件顶部的信息。
+</#tn/>
+trailer             添加在邮件列表转发邮件尾部的信息。
+</#n/>
+unsub_bad           如果取消注册的确认信息损坏，发送给用户的信息。
+unsub_confirm       需要用户确认的取消注册信息。
+unsub_nop           发送给不是邮件列表注册用户要求取消注册邮件列表的信息。
+unsub_ok            取消注册成功后发送给用户的信息。
+
+</text/edit-done#n/>
+已经成功的更新配置文件。
+</text/info#E/>
+邮件列表的介绍文件不存在。
+</text/faq#E/>
+FAQ - 有关<#l#>邮件列表的常见问题解答。
+

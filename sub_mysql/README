@@ -1,0 +1,153 @@
+$Id: README,v 1.3 1999/02/20 20:05:19 lindberg Exp $
+$Name: ezmlm-idx-040 $
+INFORMATION ON BUILDING/USING EZMLM WITH MYSQL SUPPORT
+
+(c) 1999,	Frederik Lindberg,
+		lindberg@id.wustl.edu
+		You may use under GPL.
+
+For information on MySQL, see http://www.tcx.se.
+
+Most of this information is available in FAQ.idx.
+
+If you are interested in contributing/testing a subscriber db interface
+for another SQL server, please see sub_std/README and the routines here,
+and contact lindberg@id.wustl.edu (it may already be in process). See end
+of this file for other ways to contribute.
+
+conf-mysql must be edited to reflect your system. On many systems, you
+also need to include ``-lsocket'', as well as change the paths to the
+/usr/local equivalents. For the i386.rpm-based systems, you need at
+least MySQL-devel to build the files. Look at your mysql docs for more info.
+
+TABLES USED FOR (My)SQL SUPPORT
+
+The basic philosophy is that the database can be on any host (if you use
+SENDER restrictions, connectivity to the main host is more important than
+to the sublists), and you choose the database and "table root" names. The
+default database is ``ezmlm'' and the default table root is ``list''. Each
+list has a separate table root. Any number of lists can share a database.
+
+The main list address table is named with the table root only, others have
+that name with various suffixes. In the following ``list'' is used as the
+table root.
+
+ADDRESS TABLES
+list		subscriber addresses
+list_slog	subscriber address log
+list_allow	subscriber aliases for posts on SENDER checked lists.
+list_allow_slog	subscriber log for list_allow
+list_deny	blacklisted addresses for posts on SENDER checked lists.
+list_deny_slog	log for list_deny.
+list_mod	moderator addresses
+list_mod_slog	log for list_mod
+list_digest	subscriber log for digest list.
+list_digest_slog	log for list_digest
+
+MESSAGE LOGGING TABLES
+list_cookie	message cookie table for main list
+list_mlog	message logging table for main list
+list_digest_cookie	message cookie table for digest list
+list_digest_mlog	message logging table for digest list
+
+SUBLIST SPLIT TABLES
+list_name	sublist split table for main list
+list_digest_name	sublist split table for digest list.
+
+
+ezmlm-mktab(1) is a script that outputs the table definintions. Look at
+the output for a detailed field description.
+
+The address tables contain (address,domain,hash,h,num). For normal
+lists only the address field is used. For main->sublist clusters, the other
+fields are used for load splitting. The domain is the first up to 3 characters
+of the last part of the domain name. The hash is a address hash [0-52] differnt
+from the one used by ezmlm for splitting within DIR/subscribers. When using
+the address field as a primary key, the size of the index was unreasonable.
+Therefore, ``num'' is used as a dummy primary key, and ``h'' (a 32 bit hash
+of the address) is used as an index. This markedly speeds up (un)sub with
+large (>30,000 rows) subscriber tables.
+
+The *_slog tables contain the same info as DIR/Log, i.e. address, timestamp,
+entry-type, entry-direction, and fromline. The entry-type is the first letter
+of the type of entry (probe, manual, `` '' for normal), entry-direction is
+``+'' for addition, ``-'' for removal. Fromline is the From: header contents
+taken from the subscribe confirm message or from ezmlm-sub (if used with -n).
+It is blank for all address removals, and may be blank also for additions. It
+is used by the list-log.xx command. It is trivial to JOIN this table with the
+address table to get e.g. subsciber names, subscription dates, etc. These
+tables also have the 32-bit hash ``h'' as an index. Joins should be done on
+``h'' as well as ``address'' for better performance.
+
+The *_cookie tables contain message number, timestamp, and cookie. For each
+message a pseudo-random cookie is generated that is ``impossible'' to guess
+beforehand. For lists with sublists, this is used as basic authentication,
+i.e. the sublist will refuse to process a message that doesn't contain the
+correct cookie or that the sublist has already successfully processed.
+
+The *_mlog tables contain log entries from main and sublists. These are
+timestamp, listno, done. Listno is the lowest listnumber for an active list
+entry with the name of this sublist as looked up in the *_name table. Done
+is -1 for bounce, 0 for arrived, 1 for finished processing, and 2 for receipt
+received. The routines are set up so that only the first attempt for each
+combination (listno,code) is logged.
+
+The *_name tables contain listno,name,domain,hash_lo,hash_hi,msgnum_lo,
+msgnum_hi,notuse. Listno is auto_increment and unique. Name is the name of the
+sublist. domain is the last up to 3 characters of the top domain name for
+addresses served by this list (default = ''). It is is '', the list servers
+all_domains_that_are_not_served_by_another list (in addition to domain '').
+Of the addresses that match the domain criterion, the list serves the subset
+with hash between hash_lo and hash_hi (defaults 0, 52). Any entry is ingnored if
+notuse != 0 OR the current message number is not between msgnum_lo and
+msgnum_hi.
+
+For normal lists that are not distributed (i.e. they are a single list),
+entries in the *_name tables are not needed and logging is not very
+relevant.
+
+For most lists, the only addresses that are stored in the SQL database are
+the subscribers of list and digest, and the ``allow'' aliases. It is NOT
+normally advisable to store moderator addresses there, since they are
+needed only at the main list and secrecy is more important. ``Deny'' addresses
+are few and again only needed at the main list. ``Allow'' are put in the
+SQL database when using the default ezmlmrc file only to make all relevant
+addresses manipulatable via the SQL server. The other tables are created, in
+case they are  wanted (the cost for having them as empty table is zero). The
+basedir/sql file is the decision point. If it exists, an SQL table is used;
+if not a local ezmlm db is used.
+
+CONTRIBUTIONS REQESTED
+
+I would be very grateful if there are users out there willing to do any of
+the following and contribute it to this package. Please check with me first
+(lindberg@id.wustl.edu), as the project may already be in progress/done.
+
+1. Interfaces for other SQL servers. Oracle, SyBase, ...
+
+2. A GUI admin utility to add/remove/manipulate the sublist split, essentially
+   by modifying list_[digest_]name in a safe way. Ideally WWW if it can be
+   done securely. If you use some standard interface (JDBC/DBD) it would be
+   useful also with other SQL severs. This could even be an Access program
+   using ODBC, although writing it for a platform running qmail/ezmlm makes
+   most sense.
+
+3. a WWW GUI that allows users to subscribe/unsubscribe in a safe way. A random
+   password would be created the first time and stored in a new address->pw
+   table and mailed to the subscriber address. With that password, the user
+   would be able to [un]subscribe to lists, edit the name (for compatibility
+   implemented by adding a subscribe line to list_[digest]slog). Add/remove
+   aliases. Ideally, it should also allow searching by subscriber name. This
+   would search *_slog.fromline. If less that 'x' alternatives are found, the
+   user would be presented with names (not addresses), allowing the user to
+   cause the subscription name and password to be sent to the respective
+   subscription address. With that info, the subscriber can then unsubscribe,
+   even if s/he has forgotten the subscription address. It is complicated
+   slightly by the fact that ``fromline'' is the crude line and needs to be
+   rfc822 parsed. Again, use of a standard interface is encouraged to make it
+   compatible also with other SQL servers.
+
+The aim of all this is to make it easy to use ezmlm to run very large lists,
+easy to set up sites that handle subscriber interaction, archive access, etc,
+and hopefully easier to integrate many ezmlm as done by some WWW sites today.
+

@@ -1,0 +1,112 @@
+.TH ezmlm-warn 1
+.SH NAME
+ezmlm-warn \- send out bounce warnings
+.SH SYNOPSIS
+.B ezmlm-warn
+[
+.B \-dD
+][
+.B \-t
+.I timeout
+][
+.B \-l
+.I lockout
+]
+.I dir
+.SH DESCRIPTION
+.B ezmlm-warn
+sends out warning messages
+for the mailing list stored in
+.IR dir .
+
+.B ezmlm-warn
+scans
+.I dir\fB/bounce/d/
+for directories older than
+.I timeout
+days ago (see
+.BR \-t ).
+The directories are created by
+B ezmlm-return
+and contain bounces.
+If
+.B ezmlm-warn
+sees a distribution bounce for
+.I box\fB@\fIdomain
+received more than
+.I timeout
+days ago,
+it sends
+.I box\fB@\fIdomain
+a list of all the message numbers missed recently,
+and deletes the bounce.
+If it sees a warning bounce for
+.I box\fB@\fIdomain
+received more than
+.I timeout
+days ago,
+it sends
+.I box\fB@\fIdomain
+a probe,
+and deletes the bounce.
+
+.B ezmlm-warn
+uses
+.I dir\fB/bounce/lastd
+to keep track of when it was last run. If insufficient time has
+passed (see
+.BR \-l )
+.B ezmlm-warn
+exits without further action.
+
+.B ezmlm-warn
+keeps files with the bounced message numbers in
+.IR dir\fB/bounce/h .
+Expired files are removed and
+.I dir\fB/bounce/lasth
+keeps track of the last subdirectory scanned.
+
+.B ezmlm-warn
+will not send a warning or probe to an address that is
+not currently a subscriber.
+.SH OPTIONS
+.TP
+.B \-d
+process bounces for the digest list, rather than for the main list.
+Digest list bounces are stored in
+.I dir\fB/digest/bounce/
+rather than in
+.IR dir\fB/bounce/ .
+.TP
+.B \-D
+(Default.)
+Process bounces for the main list.
+.TP
+.B \-l \fIlockout
+.B ezmlm-warn
+will abort execution if it was run less than
+.I lockout
+seconds ago. The default is
+.I timeout /
+50, which with the default
+.I timeout
+is 20,000 seconds (approx. 5.6 hours). There is no reason to use this
+switch, except for testing and possibly in combination with
+.BR \-t.
+.TP
+.B \-t \fItimeout
+Bounces received more than
+.I timeout
+days ago are processed. This overrides the default of 1,000,000
+seconds (approximately 10 days)
+and may possibly be useful for very large busy lists. Also, a
+.I timeout
+of zero can be used to send a warning to all addresses for which
+a bounce has been received and a probe for all addresses for which a
+warning has bounces.
+This is useful to rapidly clear
+out bouncing addresses from a (low quality) address list.
+.SH "SEE ALSO"
+ezmlm-make(1),
+ezmlm-return(1),
+ezmlm(5)

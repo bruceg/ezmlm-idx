@@ -1,0 +1,117 @@
+.TH ezmlm-clean 1
+.SH NAME
+ezmlm-clean \- clean moderation directory
+.SH SYNOPSIS
+.B ezmlm-clean [mMrRvV]
+.I dir
+.SH DESCRIPTION
+If
+.I dir\fB/modpost
+exists,
+.B ezmlm-clean
+sends out messages for timed-out posts in the moderation directory
+and removes stubs for rejected and accepted posts
+for the mailing list stored in
+.IR dir .
+If
+.I dir\fB/modpost
+does not exist,
+.B ezmlm-clean
+does nothing and exits.
+
+.B ezmlm-clean
+reads
+.I dir\fB/modtime
+and extracts a time-out ``time'' in hours from it. If ``time'' is 0 or
+.I dir\fB/modtime
+is empty or doesn't exist,
+a default of 120 h is used. If a time is given, it is limited to
+the range 24 h to 240 h.
+
+.B ezmlm-clean
+then looks through
+.I dir\fB/mod/accepted/
+and
+.I dir\fB/mod/rejected/
+and removes message stubs older than ``time''. ``Time'' is
+a minimum retention time. Since the files are processed only
+when
+.B ezmlm-clean
+is run, the delay before a message is timed-out may
+be substantially longer if the list does not receive many messages.
+
+Message age
+determined by the time parsed
+.I from the file name,
+not from the creation time.
+Thus, there is no good way to extend the life of
+the file by e.g. touching it. Also, files in these directories are not
+checked for the proper format. Thus, most non-message files in these
+directories will be deleted the first time
+.B ezmlm-clean
+is run.
+
+For messages in
+.I dir\fB/mod/pending/
+no action is taken on read-only files. Messages without the owner execute
+bit set are silently removed, as they are the result of incomplete
+.B ezmlm-store(1)
+executions. For other messages, a notification of the time out is sent
+to the sender, before the file is removed.
+
+.B ezmlm-clean
+logs errors to the mail log.
+Re-delivery should be avoided by suffixing any
+.I \.qmail
+line invoking
+.B ezmlm-clean
+with '|| exit 0'.
+.SH OPTIONS
+.TP
+.B \-m
+(Default.)
+The timed-out post is sent as a MIME enclosure.
+.TP
+.B \-M
+The timed-out post is appended to the message.
+.TP
+.B \-r
+(Default.)
+The timed-out post is returned to sender.
+.TP
+.B \-R
+The timed-out post is discarded without sender notification.
+.B Note:
+.B ezmlm-clean
+is normally run from both
+.I dir\fB/editor
+and
+.IR dir\fB/moderator .
+To suppress sender notification, the switch needs to be specified
+for all invocations of
+.BR ezmlm-clean .
+.TP
+.B \-v
+Display
+.B ezmlm-clean
+version information.
+.TP
+.B \-V
+Display
+.B ezmlm-clean
+version information.
+.SH "CHARACTER SETS"
+If
+.I dir\fB/charset
+exists,
+.B ezmlm-clean
+will use the character set listed for all messages. Otherwise, the
+default ``us-ascii'' will be used. The character set can be suffixed
+by ``:'' followed by a code. If the code is ``Q'', outgoing messages are 
+sent as ``Quoted-Printable'', if it is ``B'' they are sent ``base64'' encoded.
+Otherwise, text is sent as is.
+.SH "SEE ALSO"
+ezmlm-make(1),
+ezmlm-moderate(1),
+ezmlm-store(1),
+ezmlm(5)

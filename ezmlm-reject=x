@@ -1,0 +1,9 @@
+getln.a
+strerr.a
+substdio.a
+error.a
+stralloc.a
+alloc.a
+str.a
+getopt.a
+case.a

@@ -1,0 +1,4 @@
+-L/usr/lib/mysql -lmysqlclient -lnsl -lm
+
+# the top line will be used when linking. Edit to reflect your mysql
+# installation. This is for a the MySQL-3.22.10.i386 rpm.

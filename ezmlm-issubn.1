@@ -1,0 +1,74 @@
+.TH ezmlm-issubn 1
+.SH NAME
+ezmlm-issubn \- test to see if an address is subscribed to a mailing list
+.SH SYNOPSIS
+.B ezmlm-issubn
+[
+.B \-nN
+]
+.I dir
+.I [ dir1 ... ]
+.SH DESCRIPTION
+.B ezmlm-issubn
+checks to see if the address obtained from the environment variable
+.I SENDER
+is subscribed to the mailing list stored in
+.I dir 
+or the mailing list in
+.I dir1 
+or ...
+
+If
+.I SENDER
+is not defined
+.B ezmlm-issubn
+exits with an error.
+
+If
+.I SENDER
+is on [any of] the mailing list[s],
+.B ezmlm-issubn
+exits with a zero exit code.
+
+If
+.I box\fB@\fIdomain
+is not on the mailing list,
+.B ezmlm-issubn
+exits 99. This exit code is non-success from a shell point of view, but to
+qmail it means "success and skip remaining lines in the .qmail file). Thus,
+a simple way to execute a delivery if the
+.ezmlm-issubn
+criteria are met is to place the
+.B ezmlm-issubn
+line first, followed by the action line. If SENDER is a subscriber, the
+action line is executed, if not, the line is ignored without the generation
+of an error condition. To generate a fatal error, just:
+
+.EX
+|/path/ezmlm-issubn
+.I dir1 ...
+|| (echo "err msg"; exit 100)
+
+|/path/action_for_subscribers
+|/path/more_for_subscribers
+.EE
+
+.B ezmlm-issubn
+exits 100 on permanent and 111 on temporary errors.
+.SH OPTIONS
+.TP
+.B \-n
+Negate exit code. Exit 99 if SENDER is a subscriber and exit 0 if not.
+This is useful when trying to exclude SENDERs.
+.TP
+.B \-N
+(Default.)
+Normal exit codes: 0 is the address is in any of the lists, 99 if not.
+.SH "SEE ALSO"
+ezmlm-list(1),
+ezmlm-manage(1),
+ezmlm-make(1),
+ezmlm-send(1),
+ezmlm-sub(1),
+ezmlm-unsub(1),
+ezmlm(5)

@@ -1,0 +1,171 @@
+.de Vb
+.ft CW
+.nf
+.ne \\$1
+..
+.de Ve
+.ft R
+
+.fi
+..
+.TH ezmlm-split 1
+.SH NAME
+ezmlm-split \- distribute (un)subscribe requests to sublists
+.SH SYNOPSIS
+.B ezmlm-split
+.I dir
+[
+.B \-dD
+][
+.I splitfile
+]
+.SH DESCRIPTION
+If the action is
+.I \-subscribe
+or
+.IR \-unsubscribe ,
+.B ezmlm-split
+analyzes the target of the request,
+ computing a hash in the range 0-52 from
+the address, and determines the ``domain key'', i.e. 
+the two top levels of the host address in reverse order.
+Thus, the domain entry for ``d@a.b.c'' becomes ``c.b''
+and the one for ``d@a'' becomes ``a''.
+
+The hash and domain parts are then tested against successive lines of
+.I splitfile
+(default is
+.IR dir\fB/split ).
+If a match is found, the request is forwarded to the corresponding
+sublist, and
+.B ezmlm-split
+exits 99. If a match is not found or action is not
+.I \-subscribe
+or
+.IR \-unsubscribe ,
+.B ezmlm-split
+exits 0.
+
+In
+.IR splitfile ,
+blank lines and lines with ``#'' in position 1 are ignored. Other lines are
+expected to be of the format ``dom:low:hi:list@host'', where ``dom'' is
+the top level domain, ``low''-``hi'' the range of the hash (defaults 0 and 52),
+and ``list@host'' the name of the corresponding list (default is the
+local list). A line is considered to match if the address hash is
+between ``low'' and ``hi'' inclusive and ``dom'' is empty,
+or if the ``domain key'' matches ``dom'' for the full length of ``dom''. Thus,
+the address ``user@aol.com'' would match ``com'' and ``aol.com'',
+but not ``host.com''.
+
+If the domain
+specified is the top level domain up to 3 characters, the split is identical
+as that used by the SQL subscriber interface. This is recommended.
+There can be several entries for a given sublist.
+
+.B ezmlm-split
+can be used also for list with SQL-based sublisting. In this case,
+addresses matching the
+.I splitfile
+are forwarded to the respective non-SQL sublist, and non-matching addresses
+are handed by the SQL sublist.
+
+.SH OPTIONS
+.TP
+.B \-d
+(Default.)
+Do. Forward requests to the appropriate list.
+.TP
+.B \-D
+Do not process messages. Rather, read addresses, one per line from stdin, and
+print ``sublist@host: address'' where ``sublist@host'' is the address to which
+the request would have been forwarded in normal operation. This is used to
+process a set of existing addresses into a set of address collections, one
+per sublist. The output can be sorted and easily processed into a set of files,
+one per sublist containing the addresses that sublist handles.
+.SH "SPLIT LIST SETUP"
+To use a hierarchy of sublists, set up the master list and add a
+.B ezmlm-split
+line before the
+.B ezmlm-manage(1)
+line in
+.IR dir\fB/manager .
+Create any number of sublists of the main list on other local or
+distant hosts. Ideally, these should be non-archived, to point to the correct
+message numbers of the main list archive (see
+.BR ezmlm-send(1) .
+You can use
+.B ezmlm-make -C\fIezmlmsubrc
+for this. If you don't, use the text files from the main list, except
+.IR bounce-bottom .
+Next, create
+.I split
+in the main list directory to achieve an appropriate split. Load splitting
+between several local hosts is best achieved by hash, with a blank domain.
+Geographical splitting with hosts in different countries is best done
+via ``domain'' and naturally, a large domain can be subdivided by hash.
+
+Subscribers will receive all messages 'From:' the main list. When they
+subscribe or unsubscribe, the request will be forwarded to the appropriate
+sublist, which will handle the confirmation. All information, except
+.I bounce-bottom
+refers the user to the main list. Thus, to the user the list appears as
+a single list with the address of the main list, and distribution among
+sublists is at the discretion of the administrator of the main list.
+
+.SH "ADDING/REMOVING SUBLISTS"
+In general, the main list should be disabled, while changing the sublist
+split. This can be done by changing the mode of
+.I dir\fB/lock
+to 0 or by setting the sticky bit for the home directory of the user
+controlling the list.
+
+To remove a sublist, edit the lines for that sublist in the splitfile to
+point to another list, and add the existing subscribers of the removed
+sublist to the sublist taking the load.
+When splitting a sublist into several sublists, create the new sublists,
+and edit the split file to distribute the load
+between them (usually by hash). Process the subscribers of the old list
+with:
+
+.Vb 1
+ | ezmlm-split -D dir | sort | program
+.Ve
+where to get one file of addresses per new sublist, ``program'' could be:
+
+.Vb 12
+\&#!/usr/bin/perl
+\&while (<>) {
+\&  ($f,$t) = split (':');
+\&  $t =~ s/^\ //;
+\&  if ($f ne $of) {
+\&    $of = $f;
+\&    close(OUT) if ($of);
+\&    open(OUT,">$f") or die("Unable to open $f");
+\&  }
+\&  print OUT $t;
+\&}
+\&close(OUT) if ($of);
+.Ve
+
+Remove all subscribers from the old list,
+and add the respective subscribers to each list.
+
+For any more drastic reorganizations, collect all the subscribes of the
+affected sublists, create the new subscriber lists, and update the
+subscribers of the affected lists.
+
+Reorganizations are easier done when lists use SQL support. By
+temporarily using SQL support, reorganizations can be done on running
+lists even when normally using
+.B ezmlm-split
+and local subscriber databases.
+.SH "SEE ALSO"
+ezmlm-list(1),
+ezmlm-make(1),
+ezmlm-manage(1),
+ezmlm-sub(1)
+ezmlm-unsub(1),
+ezmlm(5),
+ezmlmrc(5),
+ezmlmsubrc(5)

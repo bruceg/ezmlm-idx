@@ -1,0 +1,216 @@
+#!/bin/sh
+# Simple script to generate input to psql to generate tables for a list
+# All tables are created, even though it is not advisable to put e.g. the
+# moderator table in the SQL database nor is it very useful to put the
+# blacklist/deny table there. The subscriber lists for the main and digest
+# lists should be there, and it's reasonable to put the "extra" list there
+# if used.
+ECHO='echo'
+CAT='cat'
+CUT='cut'
+
+CREATE='y'
+DROP='n'
+TROOT='list'
+# size of std cookie
+COOKIE='20'
+
+					# not everyone has getopt :-(
+while [ "`${ECHO} "$1" | ${CUT} -c1`" = "-" ]; do
+	case "$1" in
+		-c)	CREATE='y'; shift;;
+		-C)	CREATE='n'; shift;;
+		-d)	DROP='y'; shift;;
+		-D)	DROP='n'; shift;;
+		-cd|-dc)	CREATE='y'; DROP='y'; shift;;
+		-cD|-Dc)	CREATE='y'; DROP='n'; shift;;
+		-Cd|-dC)	CREATE='n'; DROP='y'; shift;;
+		-CD|-DC)	CREATE='n'; DROP='n'; shift;;
+		--)	shift; break;;
+		*)	echo "usage: emzlm-mktab [-cCdD] table_toot"; exit 100;;
+	esac
+done
+
+[ ! -z "$1" ] && TROOT="$1";
+
+if [ "$DROP" = "y" ]; then
+  cat <<EOF
+
+/* drop old tables.  */
+/* Usage: */
+/* ezmlm-mktab [-d] troot | psql -h host -u userid -d database */
+
+DROP TABLE ${TROOT};
+DROP TABLE ${TROOT}_slog;
+DROP TABLE ${TROOT}_digest;
+DROP TABLE ${TROOT}_digest_slog;
+DROP TABLE ${TROOT}_mod;
+DROP TABLE ${TROOT}_mod_slog;
+DROP TABLE ${TROOT}_allow;
+DROP TABLE ${TROOT}_allow_slog;
+DROP TABLE ${TROOT}_deny;
+DROP TABLE ${TROOT}_deny_slog;
+DROP TABLE ${TROOT}_name;
+DROP TABLE ${TROOT}_cookie;
+DROP TABLE ${TROOT}_mlog;
+DROP TABLE ${TROOT}_digest_name;
+DROP TABLE ${TROOT}_digest_cookie;
+DROP TABLE ${TROOT}_digest_mlog;
+DROP SEQUENCE ${TROOT}_name_listno_seq;
+DROP SEQUENCE ${TROOT}_digest_name_listno_seq;
+
+EOF
+
+fi
+
+if [ $CREATE = 'y' ]; then
+  cat << EOF
+
+/* Main address table */
+create TABLE ${TROOT} (
+	hash		INT4 NOT NULL,
+	address		VARCHAR(255) PRIMARY KEY );
+
+/* Subscription log table. No addr idx to make insertion fast, since that is */
+/* almost the only thing we do with this table */
+create TABLE ${TROOT}_slog (
+	tai		TIMESTAMP DEFAULT now(),
+	address		VARCHAR(255) NOT NULL,
+	fromline	VARCHAR(255) NOT NULL,
+	edir		CHAR NOT NULL,
+	etype		CHAR NOT NULL
+	);
+
+/* digest list table */
+create TABLE ${TROOT}_digest (
+	hash		INT4 NOT NULL,
+	address		TEXT NOT NULL
+	);
+
+/* digest list subscription log */
+create TABLE ${TROOT}_digest_slog (
+	tai		TIMESTAMP DEFAULT now(),
+	address		VARCHAR(255) NOT NULL,
+	fromline	VARCHAR(255) NOT NULL,
+	edir		CHAR NOT NULL,
+	etype		CHAR NOT NULL
+	);
+
+/* moderator addresses */
+create TABLE ${TROOT}_mod (
+	hash		INT4 NOT NULL,
+	address		TEXT NOT NULL
+);
+
+/* moderator subscription log */
+create TABLE ${TROOT}_mod_slog (
+	tai		TIMESTAMP DEFAULT now(),
+	address		VARCHAR(255) NOT NULL,
+	fromline	VARCHAR(255) NOT NULL,
+	edir		CHAR NOT NULL,
+	etype		CHAR NOT NULL
+	);
+
+/* "allow" address table */
+create TABLE ${TROOT}_allow (
+	hash		INT4 NOT NULL,
+	address		VARCHAR(255) NOT NULL
+	);
+
+/* extra address table log */
+create TABLE ${TROOT}_allow_slog (
+	tai		TIMESTAMP DEFAULT now(),
+	address		VARCHAR(255) NOT NULL,
+	fromline	VARCHAR(255) NOT NULL,
+	edir		CHAR NOT NULL,
+	etype		CHAR NOT NULL
+	);
+
+/* blacklist address table */
+create TABLE ${TROOT}_deny (
+	hash		INT4  NOT NULL,
+	address		VARCHAR(255) NOT NULL
+	);
+
+/* blacklist subscription log */
+create TABLE ${TROOT}_deny_slog (
+	tai		TIMESTAMP,
+	address		VARCHAR(255) NOT NULL,
+	fromline	VARCHAR(255) NOT NULL,
+	edir		CHAR NOT NULL,
+	etype		CHAR NOT NULL
+	);
+
+/* sublist restriction table */
+/* notuse != 0 => defer message. = 0 => process message */
+/* no reason for index - will always be small */
+create TABLE ${TROOT}_name (
+	listno		SERIAL,
+	name		VARCHAR(255) NOT NULL,
+	notuse		INT4 NOT NULL DEFAULT 0,
+	msgnum_lo	INT8 NOT NULL DEFAULT 0,
+	msgnum_hi	INT8 NOT NULL DEFAULT 4294967295,
+	hash_lo		INT4 NOT NULL DEFAULT 0,
+	hash_hi		INT4 NOT NULL DEFAULT 52,
+	domain		CHAR(3) NOT NULL DEFAULT '',
+	PRIMARY KEY (listno));
+
+/* main list inserts a cookie here. Sublists check it */
+CREATE TABLE ${TROOT}_cookie (
+	msgnum		INT4 NOT NULL,
+	tai 		TIMESTAMP NOT NULL DEFAULT now(),
+	cookie		CHAR(20) NOT NULL,
+	chunk		INT4 NOT NULL DEFAULT 0,
+	bodysize	INT4 NOT NULL DEFAULT 0,
+	PRIMARY KEY (msgnum));
+
+/* main and sublist log here when the message is done */
+/* done=0 for arrived, done=1 for sent. tai reflects last change, as e.g. */
+/* done=0 may be overwritten in case first delivery to the list fails.    */
+CREATE TABLE ${TROOT}_mlog (
+	msgnum    INT4 NOT NULL,
+	listno    INT4 NOT NULL,
+	tai       TIMESTAMP DEFAULT now(),
+	subs	  INT4 NOT NULL DEFAULT 0,
+	done      INT4 NOT NULL DEFAULT 0,
+	PRIMARY KEY (listno,msgnum,done));
+
+/* digest sublist restriction table */
+/* notuse != 0 => defer message. = 0 => process message */
+/* no index, since table unlikely to have >30 or so rows */
+create TABLE ${TROOT}_digest_name (
+	listno		SERIAL,
+	name		VARCHAR(255) NOT NULL,
+	notuse		INT4 NOT NULL DEFAULT 0,
+	msgnum_lo	INT8 NOT NULL DEFAULT 0,
+	msgnum_hi	INT8 NOT NULL DEFAULT 4294967295,
+	hash_lo		INT4 NOT NULL DEFAULT 0,
+	hash_hi		INT4 NOT NULL DEFAULT 52,
+	domain    	CHAR(3) NOT NULL DEFAULT '',
+	PRIMARY KEY (listno));
+
+/* ezmlm-get when creating a digests inserts a cookie here. Sublists check it*/
+CREATE TABLE ${TROOT}_digest_cookie (
+	msgnum		INT4 NOT NULL,
+	tai		TIMESTAMP NOT NULL DEFAULT now(),
+	cookie		CHAR(20) NOT NULL,
+	chunk		INT4 NOT NULL DEFAULT 0,
+	bodysize	INT4 NOT NULL DEFAULT 0,
+	PRIMARY KEY (msgnum));
+
+/* ezmlm-get and digest sublists log here when the message is done */
+/* done=0 for arrived, done=1 for sent. tai reflects last change */
+CREATE TABLE ${TROOT}_digest_mlog (
+	msgnum		INT4 NOT NULL,
+	listno		INT4 NOT NULL,
+	tai		TIMESTAMP DEFAULT now(),
+	subs		INT4 NOT NULL DEFAULT 0,
+	done		INT4 NOT NULL DEFAULT 0,
+	PRIMARY KEY (listno,msgnum,done));
+
+EOF
+
+fi
+exit 0
+
+

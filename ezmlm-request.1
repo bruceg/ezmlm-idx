@@ -1,0 +1,216 @@
+.TH ezmlm-request 1
+.SH NAME
+ezmlm-request \- Process subject line and body ezmlm commands
+.SH SYNOPSIS
+.B ezmlm-request
+[
+.B \-f\fI config
+]
+.I dir
+.SH DESCRIPTION
+.B ezmlm-request
+processes ezmlm commands in the subject line or message body.
+.B ezmlm-request
+enables these uses to send the message to
+.I list\fB\-request\fI@host
+with the complete command address line in the subject field,
+or with commands and arguments separated by white
+space.
+.B ezmlm-request
+uses the text to construct a ezmlm command message to the list.
+If the subject does not start with a letter,
+.B ezmlm-request
+instead uses the first body line that starts with a letter. Processing
+terminates if a line with a hyphen in the first position is encountered.
+
+All commands are expected to be in ezmlm command address format or formatted
+as:
+
+.EX
+.BR command [list@listhost [user@userhost]]
+.EE
+
+.B ezmlm-request
+when invoked with the
+.B \-f
+switch and a configuration file (see below), ignores the subject and processes
+the first body line (per rules above) in conjunction with the configuration
+file. It also services the 
+.B lists
+and
+.B which
+commands. This can be used
+to construct a global list interface, similar to that used by some other
+mailing list managers.
+
+Messages at the 
+.I list\fB\-request\fI@host
+are restricted to the local list. When
+.B ezmlm-request
+is invoked with the
+.B \-f\fI config
+switch, command messages are limited to lists in
+.I config
+or at the local host.
+
+Invalid requests for an existing ezmlm list will
+lead to a ``help'' message from
+.BR ezmlm-manage(1) .
+.SH OPTIONS
+.TP
+.B \-f\fI config
+Function as a global interface to ezmlm lists in accordance with
+.IR config.
+This file consists of lines starting in the first position
+with ``list@host:listdir:description''. Lines that are blank or start
+ with ``#'' are ignored. ``listdir''
+and ``description'' are optional. If only ``list@host'' is given, the list
+is used to restrict commands (see below), but not listed. To allow the list
+to be shown by a ``list'' command, use ``list@host:''. To specify only
+the list name and description, use ``list@host::description''.
+If ``listdir'' is
+present, the
+.B which
+command attempts to determine if the user is a subscriber of the list.
+.B NOTE:
+this will work only if the user running
+.B ezmlm-request
+has read access to the lists subscriber database.
+
+If ``listhost'' is not specified,
+.B ezmlm-request
+will use the ``listhost'' from the first
+.I config
+entry matching ``listlocal''. If ``listhost'' is specified, but not found
+in
+.IR config ,
+it is set to the contents of
+.IR dir\fB/outhost .
+.SH USAGE
+Place an invocation of
+.B ezmlm-request
+in
+.I dir\fB/manager
+anywhere before the
+.B ezmlm-manage(1)
+line.
+
+Alternatively, set up
+.I dir\fB/request
+with an invocation of
+.BR ezmlm-request .
+Make a link from
+.I ~/.qmail-list-request
+to this file.
+
+For the global interface, place 
+.B /path/ezmlm-request -f \fIconfig dir
+into a file.
+Link
+.I ~/.qmail-ezmlm
+and
+.I ~/.qmail-ezmlm-default
+to this file. The latter allows
+.B ezmlm-request
+to handle its own bounces as well as to reply to messages to e.g.
+\``user-ezmlm-lists@listhost''.
+Create
+.IR dir\fB/inlocal
+and
+.IR dir\fB/outlocal
+with ``user-ezmlm'',
+.IR dir\fB/outhost
+with ``listhost'',
+.IR dir\fB/headerremove
+with headers to be stripped (copy from a list),
+.IR dir/text\fB/help ,
+.IR dir/text\fB/top ,
+and
+.I dir/text\fB/bottom
+with the appropriate texts.
+Also, create
+.I config
+with the appropriate contents.
+
+Mail to ``user-ezmlm@listhost'' will now be answered by
+.BR ezmlm-request .
+.SH "RECOGNIZED COMMANDS"
+Any command not recognized by
+.B ezmlm-request
+is assumed to be valid, as long as it consists of only letters, numbers,
+hyphen, underscore, period, and ``+''. This allows
+.B ezmlm-request
+to correctly handle commands added by the list owner.
+
+A number of commands are recognized by
+.B ezmlm-request
+but not processed. Instead they are mapped to
+.B help 
+without arguments. These
+are:
+.BR system ,
+.BR put ,
+and
+.BR set .
+
+.B ezmlm-request
+also handles a number of aliases for ezmlm commands. Since
+.B ezmlm-request
+only passes on requests to the list, local restrictions apply.
+For commands that have aliases, accepted aliases are listed:
+.TP
+.B subscribe
+sub
+.TP
+.B unsubscribe
+unsub, signoff, remove.
+.TP
+.B index
+ind.
+.TP
+.B list
+recipients, showdist, review, rev, who.
+.TP
+
+Some commands are handled differently when used without arguments:
+.TP
+.B query
+Treated like ``which''.
+.TP
+.B list
+Treated like ``lists''.
+.SH BUGS
+.B ezmlm-request
+places stricter requirements on addresses than rfc822. Thus, some addresses
+that are rfc822-compliant cannot be used as
+.B ezmlm-request
+command arguments. If you fix this,
+please send a patch to lindberg@id.wustl.edu. I think qmail has the same
+restriction, though.
+
+.B ezmlm-request
+uses NUL as a line terminator internally. Thus, if will fail if NUL is found
+within the line it tries to interpret as a command. It is harmless, other than
+that the remainder of the line will be ignored.
+
+The
+.B ezmlm-request
+\``which''
+command does not differentiate between a list for which the command is not
+available, a list for which the subscriber db is not accessible, and a list
+for which the address is not a subscriber. This should be considered a feature.
+.SH BUGS
+.B ezmlm-request
+when used as a global interface and receiving multipart messages assumes that
+the first line of the fist part is the command. Further, it assumes that the
+first line starting``--'' is the first MIME boundary. This is virtually
+always true, but it is easy to construct legal messages that do not fit these
+assumptions.
+.B ezmlm-request
+in the global interface role
+will fail if this first part or the entire message is base64 encoded.
+.SH "SEE ALSO"
+ezmlm-get(1),
+ezmlm-manage(1),
+ezmlm-send(1),
+ezmlm(5)

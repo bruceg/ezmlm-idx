@@ -1,0 +1,69 @@
+.TH surfpcs 3
+.SH NAME
+surfpcs \- SURF protected counter sums
+.SH SYNTAX
+.B #include <surfpcs.h>
+
+void \fBsurfpcs_init\fP(&\fIs\fR,\fIseed\fR);
+
+void \fBsurfpcs_add\fP(&\fIs\fR,\fIbuf\fR,\fIlen\fR);
+
+void \fBsurfpcs_out\fP(&\fIs\fR,\fIh\fR);
+
+surfpcs \fIs\fR;
+.br
+uint32 \fIseed\fR[32];
+.br
+unsigned char *\fIbuf\fR;
+.br
+unsigned int \fIlen\fR;
+.br
+unsigned char \fIh\fR[SURFPCS_LEN];
+.SH DESCRIPTION
+.B surfpcs
+converts a character string to a 256-bit output,
+under control of a 1024-bit seed.
+When the seed is secret,
+.B surfpcs
+appears to be indistinguishable from a completely random
+variable-length-to-256-bit function.
+
+Applying
+.B surfpcs
+takes three steps.
+First, initialize a
+.B surfpcs
+variable,
+.IR s ,
+with
+.BR surfpcs_init .
+The seed will be recorded inside
+.IR s .
+
+Second, feed the input to
+.BR surfpcs_add .
+.I buf
+is a pointer to
+.I len
+characters of input.
+You can split the input across any number of
+.B surfpcs_add
+calls.
+
+Third, call
+.BR surfpcs_out .
+The output will be placed into
+.IR h ,
+an array of
+.B SURFPCS_LEN
+bytes.
+.B SURFPCS_LEN
+is 32.
+
+To apply
+.B surfpcs
+to another input you must call
+.B surfpcs_init
+again.
+.SH "SEE ALSO"
+surf(3)

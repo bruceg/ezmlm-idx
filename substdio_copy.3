@@ -1,0 +1,41 @@
+.TH substdio_copy 3
+.SH NAME
+substdio_copy \- copy an entire input to an output
+.SH SYNTAX
+.B #include <substdio.h>
+
+int \fBsubstdio_copy\fP(&\fIsout\fR,&\fIsin\fR);
+
+substdio \fIsout\fR;
+.br
+substdio \fIsin\fR;
+.SH DESCRIPTION
+.B substdio_copy
+reads characters from
+.I sin
+until end of file,
+writing each character to
+.IR sout .
+It then returns 0.
+It does not flush
+.IR sout .
+
+Upon a
+.I sin
+error,
+.B substdio_copy
+returns -2,
+leaving
+.B errno
+set appropriately.
+
+Upon a
+.I sout
+error,
+.B substdio_copy
+returns -3,
+leaving
+.B errno
+set appropriately.
+.SH "SEE ALSO"
+substdio(3)

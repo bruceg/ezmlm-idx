@@ -1,0 +1,140 @@
+.TH substdio_in 3
+.SH NAME
+substdio_in \- substdio input routines
+.SH SYNTAX
+.B #include <substdio.h>
+
+int \fBsubstdio_get\fP(&\fIs\fR,\fIto\fR,\fIlen\fR);
+
+int \fBsubstdio_bget\fP(&\fIs\fR,\fIto\fR,\fIlen\fR);
+
+int \fBsubstdio_feed\fP(&\fIs\fR);
+
+char *\fBsubstdio_peek\fP(&\fIs\fR);
+
+void \fBsubstdio_seek\fP(&\fIs\fR,\fIlen\fR);
+
+substdio \fIs\fR;
+.br
+char *\fIto\fR;
+.br
+int \fIlen\fR;
+.SH DESCRIPTION
+.B substdio_get
+reads at most
+.I len
+characters from
+.I s
+into the character array
+.IR to .
+It returns the number of characters read,
+0 for end of file,
+or -1 for error,
+setting
+.B errno
+appropriately.
+
+.B substdio_bget
+has the same function as
+.BR substdio_get .
+The difference is what happens when there is no buffered data and
+.I len
+exceeds the buffer size:
+.B substdio_get
+tries to read
+.I len
+characters, whereas
+.B substdio_bget
+tries to read one buffer of characters.
+In some cases
+.B substdio_bget
+will be more efficient than
+.BR substdio_get .
+
+.B substdio_feed
+makes sure that there is buffered data,
+so that the next
+.B substdio_get
+or
+.B substdio_bget
+will succeed.
+If the buffer is empty,
+.B substdio_feed
+tries to fill it;
+it returns 0 for end of file, -1 for error,
+or the number of buffered characters on success.
+If the buffer already had data,
+.B substdio_feed
+leaves it alone and returns the number of buffered characters.
+
+.B substdio_peek
+returns a pointer to the buffered data.
+
+.B substdio_seek
+throws away
+.I len
+buffered characters,
+as if they had been read.
+.I len
+must be at least 0 and at most the amount of buffered data.
+
+The
+.B substdio_PEEK
+and
+.B substdio_SEEK
+macros behave the same way as
+.B substdio_peek
+and
+.B substdio_seek
+but may evaluate their arguments several times.
+
+The point of
+.B substdio_peek
+and
+.B substdio_seek
+is to read data without unnecessary copies.
+Sample code:
+
+.EX
+  for (;;) {
+.br
+    n = substdio_feed(s);
+.br
+    if (n <= 0) return n;
+.br
+    x = substdio_PEEK(s);
+.br
+    handle(x,n);
+.br
+    substdio_SEEK(s,n);
+.br
+  }
+.EE
+
+The
+.B SUBSTDIO_INSIZE
+macro is defined as a reasonably large input buffer size for
+.BR substdio_fdbuf .
+.SH "INTERNALS"
+When a
+.B substdio
+variable
+.I s
+is used for input,
+there is free buffer space from
+.I s\fB.x
+to
+.I s\fB.x\fR +
+.I s\fB.n\fR;
+data is buffered from
+.I s\fB.x\fR +
+.I s\fB.n
+to
+.I s\fB.x\fR +
+.I s\fB.n\fR +
+.I s\fB.p\fR;
+the total buffer length is
+.I s\fB.n\fR +
+.I s\fB.p\fR.
+.SH "SEE ALSO"
+substdio(3)

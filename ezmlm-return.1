@@ -1,0 +1,114 @@
+.TH ezmlm-return 1
+.SH NAME
+ezmlm-return \- handle mailing list bounces
+.SH SYNOPSIS
+.B ezmlm-return
+[
+.B \-dD
+]
+.I dir
+.SH DESCRIPTION
+.B ezmlm-return
+handles bounces for the mailing list
+stored in
+.I dir
+and, if it exists, the associated digest list.
+
+.B ezmlm-return
+is normally invoked from a
+.B .qmail
+file.
+It reads a mail message from its standard input,
+and a mail envelope from the
+.BR SENDER ,
+.BR LOCAL ,
+and
+.BR HOST
+environment variables.
+
+.B ezmlm-return
+exits 99, not 0, upon success.
+.SH OPTIONS
+.TP
+.B \-d
+.B ezmlm-return
+will assume the bounce is for a digest list.
+Normally,
+.B ezmlm-return
+will autodetect this from the bounce address. Autodetection makes
+.B ezmlm-return
+less flexible and will be removed in future versions.
+.TP
+.B \-D
+.B ezmlm-return
+will assume that the bounce is for a normal (non-digest) list.
+Normally,
+.B ezmlm-return
+will autodetect this from the bounce address. Autodetection makes
+.B ezmlm-return
+less flexible and will be removed in future versions.
+.B \-D
+will become the default.
+.SH ADDRESSES
+.B ezmlm-return
+handles mail sent to any of the following addresses:
+.TP
+.I local\fB\-return\-
+Trash.
+A help message or subscription acknowledgment bounced.
+.TP
+.I local\fB\-return\-\fImsg\fB\-\fIbox\fB=\fIdomain
+Distribution bounce.
+Message number
+.I msg
+was lost on the way to
+.IR box\fB@\fIdomain .
+.TP
+.I local\fB\-return\-\fImsg\fB\-
+Pre-VERP distribution bounce, in QSBMF format.
+Message number
+.I msg
+was lost on the way to one or more addresses;
+.B ezmlm-return
+will parse the bounce to figure out the addresses.
+.TP
+.I local\fB\-return\-warn\-\fIcookie\fB-\fIbox\fB=\fIdomain
+Warning bounce.
+A warning message from
+.B ezmlm-warn
+bounced.
+.TP
+.I local\fB\-return\-probe\-\fIcookie\fB-\fIbox\fB=\fIdomain
+Probe bounce.
+A probe from
+.B ezmlm-warn
+bounced.
+.B ezmlm-return
+will remove
+.I box\fB@\fIdomain
+from the mailing list.
+.TP
+.I local\fB\-return\-receipt\-\fIcookie\-fImsg\-
+A receipt from the list. This is logged. For SQL supporting lists,
+.I cookie
+is verified and receipt logged only if the cookie is correct. The arrival
+of the receipt shows that qmail at the sending host is running.
+
+For all the above addresses if,
+.I local
+is followed by
+.IR \-digest ,
+bounces are assumed to be from the digest list, and are stored in
+.I dir\fB/digest/bounce
+rather than in
+.I dir \fB/bounce .
+.SH "SEE ALSO"
+ezmlm-manage(1),
+ezmlm-make(1),
+ezmlm-send(1),
+ezmlm-sub(1),
+ezmlm-unsub(1),
+ezmlm-warn(1),
+ezmlm-weed(1),
+ezmlm(5),
+qmail-command(8)

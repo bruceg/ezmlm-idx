@@ -1,0 +1,107 @@
+.TH ezmlm-sub 1
+.SH NAME
+ezmlm-sub \- manually add addresses to a mailing list
+.SH SYNOPSIS
+.B ezmlm-sub
+[
+.B \-HmMnNsSvV
+][
+.B \-h
+.I hash
+]
+.B 
+.I dir
+[
+.I box\fB@\fIdomain 
+[
+.I name
+]
+.I ...
+]
+.SH DESCRIPTION
+.B ezmlm-sub
+adds each address
+.I box\fB@\fIdomain
+to the mailing list stored in
+.IR dir .
+.I name
+is added as a comment to the subscription log, if the
+.B \-n
+switch is used.
+
+If no argument is given on the command line,
+.B ezmlm-sub
+processes stdin.
+
+If
+.I box\fB@\fIdomain
+is already on the mailing list,
+.B ezmlm-sub
+leaves it there and does not modify the subscription log.
+
+.B ezmlm-sub
+converts
+.I domain
+to lowercase before adding
+.I box\fB@\fIdomain
+to the mailing list.
+
+.I box\fB@\fIdomain
+cannot be longer than 400 characters (255 characters with mysql support).
+.SH "GENERAL OPTIONS"
+.TP
+.B \-n
+Assume arguments are pairs of
+.I box\fB@\fIdomain
+and
+.IR name
+(or other subscriber info)
+rather than addresses alone.
+.B ezmlm-sub(1)
+will add the first argument in each pair to the subscriber list. If it is
+a new address,
+.I name
+will be added to the subscription log.
+.TP
+.B \-N
+(Default.)
+Arguments are all addresses of the type
+.IR box\fB@\fIdomain .
+.TP
+.B \-v
+Display
+.B ezmlm-sub(1)
+version information.
+.TP
+.B \-V
+Display
+.B ezmlm-sub(1)
+version information.
+.SH "MYSQL OPTIONS"
+These option is silently ignored in the absence of mysql support.
+.TP
+.B \-h \fIhash
+With mysql support the argument is used as the hash. The argument should
+be between 1 and 99. The hash is used in
+in the distribution of addresses between sublists. As the hash is normally
+between 0 and 52, controlling the hash makes it possible to add addresses
+that cannot be manipulated remotely.
+.TP
+.B \-m
+(Default.)
+Use SQL support if available.
+.TP
+.B \-M
+Do not use SQL support even if available. This option can be used to build
+a normal local subscriber database even for lists with SQL support. Use
+in combination with
+.B ezmlm-list(1)
+to convert an SQL address db to a ezmlm standard address database.
+.SH "SEE ALSO"
+ezmlm-list(1),
+ezmlm-manage(1),
+ezmlm-make(1),
+ezmlm-receipt(1),
+ezmlm-send(1),
+ezmlm-unsub(1),
+ezmlm(5)

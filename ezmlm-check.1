@@ -1,0 +1,52 @@
+.TH ezmlm-check 1
+.SH NAME
+ezmlm-check \- Mails back results of ezmlm list check
+.SH SYNOPSIS
+.B ezmlm-check
+[
+.B \-sS
+]
+.I [dir]
+.SH DESCRIPTION
+.B ezmlm-check
+mails useful environment variables to SENDER via
+.BR qmail-inject .
+It is usually invoked for debugging purposes in a
+.I .qmail
+file to determine the value of relevant environment variables.
+If
+.I dir
+is specified,
+.B ezmlm-check
+attempts to evaluate the
+.I ezmlm
+mailing list set up in
+.I dir
+and return information about the setup as well as possible
+errors.
+
+.B ezmlm-check
+will flag errors with
+.BR ``???\ ERROR'' ,
+likely errors with
+.BR ``???'' ,
+and potential errors/problems with
+.BR ``!!!'' .
+
+If
+.B ezmlm-check
+is invoked from the shell, it will print to stdout.
+In this case, diagnostics are more limited,
+since important environment variables
+normally supplied by qmail are not available.
+.SH OPTIONS
+.TP 5
+.B \-s
+(Default.) List subscribers.
+.TP 5
+.B \-S
+Do not list subscribers.
+.SH "SEE ALSO"
+ezmlm(5),
+qmail(7),
+qmail-inject(8)

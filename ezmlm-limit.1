@@ -1,0 +1,127 @@
+.TH ezmlm-limit 1
+.SH NAME
+ezmlm-limit \- Limits traffic to list
+.SH SYNOPSIS
+.B ezmlm-limit
+[
+.B -f\fI file
+][
+.B -dDF
+][
+.B \-t
+.I secs
+][
+.B -n
+.I msgs
+]
+.I dir
+
+.B ezmlm-limit
+is intended to limit traffic to a list in case an outside
+source sends excessive messages. Traffic is limited by converting the list
+to a message moderated list, or by deferring messages.
+
+.B ezmlm-limit
+reads
+.IR dir\fB/loopnum .
+If it does not exist or contains a time stamp more than
+.I secs
+seconds old, it is updated.
+If it exists, contains a time stamp less than
+.I secs
+seconds old, and
+.I msgs
+messages or more have passed since
+.I dir\fB/loopnum
+was created,
+.B ezmlm-limit
+creates
+.IR dir\fB/modpost .
+For lists set up with
+.B ezmlm-store(1)
+this results in future messages being moderated.
+
+As long as
+.I dir\fB/modpost
+does not exist,
+.B ezmlm-store(1)
+will simply forward the message to
+.BR ezmlm-send(1).
+Once
+.I dir\fB/modpost
+exists, messages will be queued for moderation. Thus, in case of error (such
+as misconfigured auto responders) subscribers are spared
+messages in excess of the limit. However, no messages are lost, since the
+moderator(s) can (selectively) approve queued messages. 
+
+If
+.I dir\fB/modpost
+already exists,
+.B ezmlm-limit
+will not take any action.
+
+Resetting the list requires manual
+removal of
+.IR dir\fB/modpost . Queued messages can be managed with regular moderation
+or approved in bulk with
+.BR ezmlm-accept(1) .
+
+.B ezmlm-limit
+is not required for normal lists, since qmail and
+ezmlm loop detection prevent problems caused by regular bounces. However,
+it affords some protection against malice, and severely misconfigured
+subscribers.
+
+.SH OPTIONS
+.TP
+.B \-d
+Defer excess traffic. Excess messages are deferred and qmail will re-deliver. As
+a consequence, traffic will be throttled to the maximum allowed. Due to qmail
+delivery back-off, messages may not be disseminated in the order received. If
+traffic is continuously above or close to the limit, some messages may be
+delayed for a long time or even bounced.
+.TP
+.B \-D
+(Default.)
+Make the list moderated once excess traffic is detected. This requires the
+list to be configured up with
+.B ezmlm-store(1)
+rather than
+.BR ezmlm-send(1) ,
+which is easiest done by first creating a message moderated list, then removing
+.IR dir\fB/modpost .
+.TP
+.B \-n\fI msgs
+Trigger after
+.I msgs
+messages (default 30).
+.TP
+.B \-f\fI file
+Instead of
+.I dir\fB/loopnum
+use
+.I file
+as the time stamp. This allows the use of multiple instances of
+.B ezmlm-limit
+for the same list. For instance, you may allow 60 messages per hour with one
+instance and 150 messages per day with another. If
+.I file
+is relative, this is relative to
+.IR dir .
+.TP
+.B \-F
+(Default.)
+Use
+.I dir\fB/loopnum
+as the time stamp.
+.TP
+.B \-t\fI secs
+Check the number of messages within period of
+.I secs
+seconds (default 3600 seconds).
+.SH "SEE ALSO"
+ezmlm-accept(1),
+ezmlm-make(1),
+ezmlm-send(1),
+ezmlm-store(1),
+ezmlm(5)

@@ -1,0 +1,1097 @@
+0.324 - This version identifier must be on line 1 and start in pos 1.
+#
+#$Id: ezmlmrc.da,v 1.17 1999/12/23 23:08:19 lindberg Exp $
+#$Name: ezmlm-idx-040 $
+#
+# ezmlmrc 
+# #######
+# Controls the actions of ezmlm-make as patched with ezmlm-idx-0.31 or later.
+#
+# The base directory 'DIR' is always created by ezmlm-make, as is DIR/key.
+# Everything else is done from here.
+#
+# ezmlm-make looks for this file, first as .ezmlmrc in the directory that the
+# lists .qmail files will be placed in (if you've used the -c command line
+# switch), then /etc/ezmlmrc, then ezmlmrc in the ezmlm-make binary directory.
+# Thus, you can customize ezmlm-make on a global level by placing a customized
+# copy of ezmlmrc in /etc and on a user level by copying it to .ezmlmrc in
+# the user's home directory AND use the ezmlm-make -c switch.
+#
+# Tags are:
+#	</filename/>       : put succeeding text lines in DIR/filename
+#	</-filename/>      : erase DIR/filename.
+#	</+dirname/>       : create directory DIR/dirname
+#	</:lname/dirname>  : symlink DIR/.qmail-list-lname -> DIR/dirname
+#
+# The name in the tag can be suffixed with '#' and any number of flags,
+# corresponding to command line switches. The item will be created/extended
+# only if all the flags listed are set. Files can be extended as long as they
+# were the last one created, but not if another file has been started since
+# then. Flags that are not recognized are silently ignored.
+# 
+# Thus, </filename#aP/> creates the file if and only if the list is archived
+# (-a) and not public (-P). If the next tag is </filename#m/>, the file is
+# extended with the lines up to the next tag if the list is message moderated
+# (-m). If the next tag is </another/>, 'filename' is closed. Any further
+# tags leading to the reopenining of 'filename' will overwrite the file, not
+# extend it.
+#
+# A set of user-defined command line switches (xX, yY, zZ) are available for
+# customization.
+#
+# Within the text, certain tags are substituted. Other tags are copied as
+# is. <#A#> and <#R#> are substituted by ezmlm-manage and -store (see man pages)
+# and <#l#> (lower case L) is replaced dynamically by the list name for
+# programs handling both 'list' and 'list-digest'.
+#
+# Substitutions are:
+# <#B#> ezmlm binaries path   <#C#> digest code         <#D#> dir
+# <#H#> host                  <#L#> local               <#F#> flags
+# <#T#> dot                   <#0#> arg for -0. <#3#>...<#9#> arg for -3..9
+# <#1#> ext1                  <#2#> ext2 [if dot is /path/.qmail-ext1-ext2-name]
+# The latter useful when a single user is controlling several virtual domains.
+#
+# -0 is used for the main list address when setting up sublists
+# -4 for specifying the ezmlm-tstdig switches used in dir/editor. Default
+#    -k64 -m30 -t24. Only used if -g is used.
+# -5 for list-owner address. Mail to list-owner will be forwarded to this addr.
+# -6 for sql connection info
+# -7 for contents of DIR/modpost
+# -8 for contents of DIR/modsub
+# -9 for contents of DIR/remote
+#
+# For demonstration purposes, the '-x' switch results in the following
+# non-standard actions:
+# - Removal of many non-text MIME parts from messages.
+# - Limit posts to 2 bytes <= msg body size <= 40000
+#
+# Attempts to create links or directories that already exist, will result
+# in a FATAL error. Attempts to open files that have already been closed
+# or already exits, will cause the old file to be overwritten.
+#
+# One of the major problems with ezmlm-lists is DIR/inlocal. For normal
+# users, it is set up to the list name (user-list or so), which is correct.
+# However, for user 'ezmlm' in control of virtual domain 'host.dom.com'
+# the list name is 'list@host.dom.com', but inlocal should be 'ezmlm-list',
+# not 'list'. Similarly, if ezmlm-domain1 is in control of 'host.dom.com,
+# list@host.dom.com, should yield an inlocal of 'ezmlm-domain1-list'. To
+# always get the lists correct, place this file as '.ezmlmrc' in the 
+# users home directory (~ezmlm/.ezmlmrc) and change the inlocal text below
+# to 'ezmlm-<#L#>' or 'ezmlm-<#1#>-<#L#>, respectively.
+# config to support future editing without giving ezmlm-make command line
+# arguments other than dir. Useful for GUI/WWW editing tools
+</config/>
+F:<#F#>
+D:<#D#>
+T:<#T#>
+L:<#L#>
+H:<#H#>
+C:<#C#>
+0:<#0#>
+3:<#3#>
+4:<#4#>
+5:<#5#>
+6:<#6#>
+7:<#7#>
+8:<#8#>
+9:<#9#>
+</charset/>
+# Explicitly specify character-set, when this ezmlmrc was used.
+# Use Quoted-Printable to make averyone happy.
+iso-8859-1:Q
+</inlocal/>
+<#L#>
+</sublist#0/>
+<#0#>
+</+archive/>
+</+subscribers/>
+</+bounce/>
+</+text/>
+# dirs for digests
+</+digest#d/>
+</+digest/subscribers#d/>
+</+digest/bounce#d/>
+# for extra address db
+</+allow/>
+</+allow/subscribers/>
+# for blacklist
+</+deny#k/>
+</+deny/subscribers#k/>
+# moderator db & mod queue dirs. Needed for -m, -r -s, so we just
+# make them by default.
+</+mod/>
+</+mod/subscribers/>
+</+mod/pending/>
+</+mod/accepted/>
+</+mod/rejected/>
+# links: dot -> dir/editor
+</:/editor/>
+</:-owner/owner/>
+</:-digest-owner/owner#d/>
+</:-return-default/bouncer/>
+</:-digest-return-default/digest/bouncer#d/>
+</:-default/manager/>
+# for message moderation only
+</:-accept-default/moderator#m/>
+</:-reject-default/moderator#m/>
+# Get rid of configuration flags for editing mode so we can start with a
+# clean slate.
+</-modpost#eM/>
+</-modsub#eS/>
+</-remote#eR/>
+</-public#eP/>
+</-indexed#eI/>
+</-archived#eA/>
+</-prefix#eF/>
+</-text/trailer#eT/>
+</-sublist#e^0/>
+</-mimeremove#eX/>
+# Not needed, except for message moderation.
+</-moderator#eM/>
+# We don't clean out text files to make it easier for users
+# doing manual config by e.g. touching dir/remote.
+# subscription moderation
+</modsub#s/>
+<#8#>
+# remote admin
+</remote#r/>
+<#9#>
+# message moderation
+</modpost#m/>
+<#7#>
+# List owner mail
+</owner#5/>
+<#5#>
+</owner#^5/>
+<#D#>/Mailbox
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# Handles subscription. Add flags if you want a non-default digest format.
+# Service subject commands to the # request address if the -q switch is given.
+# Also -l and -d enable subscriber listing/text file editing, for remote adms.
+# -u gives subscriber only archive access
+</manager#iG/>
+|<#B#>/ezmlm-get '<#D#>' <#C#>
+</manager#ig/>
+|<#B#>/ezmlm-get -s '<#D#>' <#C#>
+</manager#q/>
+|<#B#>/ezmlm-request '<#D#>'
+# Ok to add -l/-d even for non-mod lists, since ezmlm-manage
+# won't allow it unless there are remote admins.
+</manager#LN/>
+|<#B#>/ezmlm-manage '<#D#>'
+</manager#lN/>
+|<#B#>/ezmlm-manage -l '<#D#>'
+</manager#Ln/>
+|<#B#>/ezmlm-manage -e '<#D#>'
+</manager#ln/>
+|<#B#>/ezmlm-manage -le '<#D#>'
+</manager#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</editor/>
+# reject shouldn't be configured for sublist.
+</#^0/>
+# full reject is now default, to get To/Cc: listaddress requirement
+|<#B#>/ezmlm-reject '<#D#>'
+# -k => reject posts from blacklisted addresses. Done for moderated
+# lists as well - allows removal of unwanted noise.
+</#k^0/>
+|<#B#>/ezmlm-issubn -n '<#D#>/deny' || { echo "Desværre. Jeg har fået instruktion om at afvise post fra dig. Kontakt <#L#>-owner@<#H#> hvis du mener der må være sket en fejl (#5.7.2)"; exit 100 ; }
+# switch -u=> restrict to subs of list & digest. If not m
+# do it with ezmlm-issubn, if 'm' do it with ezmlm-gate
+</#uM/>
+|<#B#>/ezmlm-issubn '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod' || { echo "Beklager, kun tilmeldte må poste. Hvis du er tilmeldt under et andet navn, videresend venligst dette brev til <#L#>-owner@<#H#> så din nye adresse kan blive tilmeldt (#5.7.2)"; exit 100 ; }
+</#um/>
+|<#B#>/ezmlm-gate '<#D#>' '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod'
+# For message moderation, editor has store/clean
+</#mU/>
+|<#B#>/ezmlm-store '<#D#>'
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+# for non-message moderated lists, it has send
+</#M/>
+|<#B#>/ezmlm-send '<#D#>'
+# all lists have warn unless -w.
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# for digest bounces
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</#d^4/>
+|<#B#>/ezmlm-tstdig -m30 -k64 -t48 '<#D#>' || exit 99
+</#d4/>
+|<#B#>/ezmlm-tstdig <#4#> '<#D#>' || exit 99
+</#d/>
+|<#B#>/ezmlm-get '<#D#>' || exit 0
+# bouncer is complicated. We use ezmlm-receipt if -6 AND -w, but ezmlm-return
+# if (-6 and -W) OR (not -6 and -w). Since there is no or, we need 2 lines.
+</bouncer/>
+|<#B#>/ezmlm-weed
+</#^6/>
+|<#B#>/ezmlm-return -D '<#D#>'
+</#6W/>
+|<#B#>/ezmlm-return -D '<#D#>'
+</#6w/>
+|<#B#>/ezmlm-receipt -D '<#D#>'
+</digest/bouncer#d/>
+|<#B#>/ezmlm-weed
+</#^6d/>
+|<#B#>/ezmlm-return -d '<#D#>'
+</#6Wd/>
+|<#B#>/ezmlm-return -d '<#D#>'
+</#6wd/>
+|<#B#>/ezmlm-receipt -d '<#D#>'
+# moderator is set up only for message moderated lists. However, '-e' does
+# not remove it since we can't remove the symlinks to it (they're outside
+# of the list dir.
+</moderator#m/>
+|<#B#>/ezmlm-moderate '<#D#>'
+</#mU/>
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+</headerremove#E/>
+return-path
+return-receipt-to
+content-length
+precedence
+x-confirm-reading-to
+x-pmrqc
+# Only one allowed
+list-help
+list-unsubscribe
+list-post
+</lock/>
+</lockbounce/>
+</digest/lockbounce#d/>
+</digest/lock#d/>
+</public#p/>
+</archived#a/>
+</indexed#i/>
+</inhost/>
+<#H#>
+</outhost/>
+<#H#>
+</outlocal/>
+<#L#>
+</mailinglist/>
+contact <#L#>-help@<#H#>; run by ezmlm
+# Headeradd needs to always exist
+</headeradd#E/>
+# Good for mailing list stuff (and vacation program)
+Precedence: bulk
+# To prevent indexing by findmail.com
+X-No-Archive: yes
+# rfc2369
+list-help: <mailto:<#l#>-help@<#h#>>
+list-unsubscribe: <mailto:<#l#>-unsubscribe@<#h#>>
+list-post: <mailto:<#L#>@<#H#>>
+# max & min message size
+</msgsize#x/>
+40000:2
+# remove mime parts if -x
+</mimeremove#x/>
+application/excel
+application/rtf
+application/msword
+application/ms-tnef
+text/html
+text/rtf
+text/enriched
+text/x-vcard
+application/activemessage
+application/andrew-inset
+application/applefile
+application/atomicmail
+application/dca-rft
+application/dec-dx
+application/mac-binhex40
+application/mac-compactpro
+application/macwriteii
+application/news-message-id
+application/news-transmission
+application/octet-stream
+application/oda
+application/pdf
+application/postscript
+application/powerpoint
+application/remote-printing
+application/slate
+application/wita
+application/wordperfect5.1
+application/x-bcpio
+application/x-cdlink
+application/x-compress
+application/x-cpio
+application/x-csh
+application/x-director
+application/x-dvi
+application/x-hdf
+application/x-httpd-cgi
+application/x-koan
+application/x-latex
+application/x-mif
+application/x-netcdf
+application/x-stuffit
+application/x-sv4cpio
+application/x-sv4crc
+application/x-tar
+application/x-tcl
+application/x-tex
+application/x-texinfo
+application/x-troff
+application/x-troff-man
+application/x-troff-me
+application/x-troff-ms
+application/x-ustar
+application/x-wais-source
+audio/basic
+audio/mpeg
+audio/x-aiff
+audio/x-pn-realaudio
+audio/x-pn-realaudio
+audio/x-pn-realaudio-plugin
+audio/x-realaudio
+audio/x-wav
+image/gif
+image/ief
+image/jpeg
+image/png
+image/tiff
+image/x-cmu-raster
+image/x-portable-anymap
+image/x-portable-bitmap
+image/x-portable-graymap
+image/x-portable-pixmap
+image/x-rgb
+image/x-xbitmap
+image/x-xpixmap
+image/x-xwindowdump
+text/x-sgml
+video/mpeg
+video/quicktime
+video/x-msvideo
+video/x-sgi-movie
+x-conference/x-cooltalk
+x-world/x-vrml
+# These can also be excluded, but for many lists it is desirable
+# to allow them. Uncomment to add to mimeremove.
+# application/zip
+# application/x-gtar
+# application/x-gzip
+# application/x-sh
+# application/x-shar
+# chemical/x-pdb
+# --------------------- Handle SQL connect info
+</-sql#^6e/>
+</-digest/sql#^6e/>
+</-allow/sql#^6e/>
+</sql#6W/>
+<#6#>
+</sql#6w/>
+<#6#>:<#L#>@<#H#>
+</digest/sql#6dW/>
+<#6#>_digest
+</digest/sql#6dw/>
+<#6#>_digest:<#L#>_digest@<#H#>
+</allow/sql#6/>
+<#6#>_allow
+# -------------------- End sql stuff
+</prefix#f/>
+[<#L#>]
+</text/trailer#t/>
+---------------------------------------------------------------------
+Vil du fjernes fra listen, så skriv til: <#L#>-unsubscribe@<#H#>
+Vil du have en kommandooversigt, skriv til: <#L#>-help@<#H#>
+</text/bottom/>
+
+--- Kommandooversigt:
+
+Jeg kan håndtere administrative forespørgsler automatisk.
+De må IKKE sendes til <#L#>, da de så kommer ud til
+alle tilmeldte på listen (og det virker ikke).
+Send blot et brev uden indhold til en af adresserne som eksemplerne
+viser:
+
+Tilmelding: send et tomt brev til:
+   <<#L#>-subscribe@<#H#>>
+
+Framelding: send et tomt brev til:
+   <<#L#>-unsubscribe@<#H#>>
+
+Send email til følgende for at få info eller FAQ for denne liste:
+   <<#L#>-info@<#H#>>
+   <<#L#>-faq@<#H#>>
+  
+
+</#d/>
+Lignende adresser findes for udtræks listen:
+   <<#L#>-digest-subscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+# ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
+# multi-get!
+</text/bottom#ai/>
+Hent alle brevene i intervallet 123 til 145 (max. 100 ad gangen),
+send et tomt brev til:
+   <<#L#>-get.123_145@<#H#>>
+
+</text/bottom#aI/>
+Hent brev nummer 12, send et tomt brev til:
+   <<#L#>-get.12@<#H#>>
+
+</text/bottom#i/>
+Hent en oversigt over breve i intervallet 123 til 456, send et
+tomt brev til:
+   <<#L#>-index.123_456@<#H#>>
+
+Resultatet kommer i breve med hundrede titler pr. brev,
+max. 2000 i alt, så eksemplet vil vise dig brev 100 til 499.
+
+# Lists need to be both archived and indexed for -thread to work
+</text/bottom#ai/>
+Hent alle breve med samme emne som brev 123:
+   <<#L#>-thread.123@<#H#>>
+
+# The '#' in the tag below is optional, since no flags follow.
+# The name is optional as well, since the file will always be open
+# at this point.
+</text/bottom#/>
+Dine administrative breve behøver ikke at være tomme, men deres
+indhold vil blive ignoreret. Kommandoen ligger alene i
+modtageradressen 
+
+Hvis du vil tilmelde dig med en anden adresse end den du skriver
+fra, f.eks. jens@ferieby.dk, skal du skrive til:
+<<#L#>-subscribe-jens=ferieby.dk@<#H#>>
+Bemærk -jens og at @ i adressen er lavet om til et =.
+
+Du kan framelde din alternative adresse ved at skrive til:
+<<#L#>-unsubscribe-jens=ferieby.dk@<#H#>>
+
+jens@ferieby.dk vil i begge tilfælde få et brev som skal
+bekræftes for at få udført til/fra meldingen.
+
+</text/bottom/>
+Hvis disse instruktioner ikke er tilstrækkelige, og du ikke
+har held med dine kommandoer, kan du skrive til min ejer
+<#L#>-owner@<#H#>, som er et menneske
+(og som derfor ikke svarer så hurtigt som jeg gør).
+
+Uanset hvor håbløst det ser ud, så forsøg IKKE at skrive
+til selve mailing listen, f.eks. for at blive frameldt.
+</text/bottom/>
+
+--- Vedlagt: En kopi af det kommando brev du sendte til mig.
+
+</text/bounce-bottom/>
+
+--- Vedlagt: En kopi af det brev som ikke kunne afleveres.
+
+</text/bounce-num/>
+
+Jeg har hold øje med hvilke breve fra <#L> listen der er
+kommet retur fordi de ikke kunne afleveres til dig.
+
+</#a/>
+Kopier af disse brev er muligvis i arkivet.
+</#aI/>
+Du kan f.eks. hente brev 123 fra arkivet ved at send et tomt
+brev til:
+   <<#L#>-get.123@<#H#>>
+
+</#ia/>
+Du kan f.eks. hente brev 123-145 (max. 100 ad gangen), ved at
+sende et tomt brev til:
+   <<#L#>-get.123_145@<#H#>>
+
+Du kan få en oversigt over emne og afsender for de sidste 100
+breve ved at sende et tomt brev til:
+   <<#L#>-index@<#H#>>
+
+<//>
+Her er brevnumrene:
+
+</text/dig-bounce-num/>
+
+Jeg har gemt en liste over hvilke udtræk fra <#L#> listen som er
+kommet retur fordi de ikke kunne afleveres. Kopier af disse breve
+kan hentes i arkivet. For hvert udtræk du mangler, kender jeg
+nummeret på det første brev i udtrækket.
+Jeg gemmer ikke selve udtrækkene, men hvis brevene er der endnu,
+kan du f.eks. få brev 12345 ved at sende et tomt brev til:
+<#L#>-get.12345@<#H#>.
+
+</#ia/>
+Du kan hente en oversigt over brevene 123-145 (max. 100 ad gangen)
+ved at sende et tomt brev til:
+   <<#L#>-get.123_145@<#H#>>
+
+Du kan hente en oversigt over emne og afsender i de nyeste 100
+breve ved at sende et tomt brev til:
+   <<#L#>-index@<#H#>>
+
+<//>
+Her er en liste over brevnumre i udtrækket:
+
+</text/bounce-probe/>
+
+<#L#> listen har haft svigtende held med at aflevere breve til dig.
+Jeg har sendt dig en advarsel, men den kom retur. Fejlmeddelse vedlagt.
+
+Dette er en test for at se om post kan afleveres til dig. Hvis
+det ikke lykkes, bliver du automatisk fjernet fra <#L#>listen.
+Du kan melde dig til igen ved at sende et tomt brev til:
+   <<#l#>-subscribe@<#H#>>
+
+</text/bounce-warn/>
+
+Mine breve til dig fra <#l#> er kommet retur uden at kunne afleveres.
+Kopi af fejlmeddelsen er vedlagt.
+
+Hvis dette brev også kommer retur uden at kunne afleveres, sender
+jeg et test brev. Hvis det heller ikke kan afleveres, fjerner jeg
+din adresse fra modtagerlisten uden at give yderligere besked.
+
+</text/digest#d/>
+Du kan abonnere på listeudtræk ved at sende et tomt brev til:
+	<#L#>-digest-subscribe@<#H#>
+
+Du kan ophæve listeudtræk abonnementet ved at sende et tomt
+brev til:
+	<#L#>-digest-unsubscribe@<#H#>
+
+Du kan sende et brev ud til alle liste modtagerne ved at skrive til:
+	<#L#>@<#H#>
+
+</text/get-bad/>
+Ikke godt. Det brev findes ikke i arkivet.
+
+</text/help/>
+Dette er en generel hjælpetekst. Det brev jeg modtog fra dig var
+ikke sendt til nogen af mine kommandoadresser.
+
+</text/mod-help/>
+Tak fordi du vil moderere <#L#>@<#H#> listen.
+
+Mine kommandoer er lidt anderledes end i andre postlister,
+men jeg tror du bliver glad for mig når du lærer mig at kende.
+
+Her er en oversigt over hvordan du gør:
+
+Fjernadministration
+--------------------
+Som moderator kan du til- og framelde hvem som helst,
+f.eks. jens@ferieby.dk, ved at sende et tomt brev til:
+   <<#L#>-subscribe-jens=ferieby.dk@<#H#>> eller
+   <<#L#>-unsubscribe-jens=ferieby.dk@<#H#>>
+Bemærk at det ene @ er lavet om til =.
+
+</#d/>
+For udtrækslisterne (digest):
+   <<#L#>-digest-subscribe-jens=ferieby.dk@<#H#>>
+   <<#L#>-digest-unsubscribe-jens=ferieby.dk@<#H#>>
+
+<//>
+Så simpelt er det. Der behøver hverken være emne eller
+indhold i dine kommandobreve.
+
+</#r/>
+Jeg sender dig så et brev som du skal kvittere for ved at
+sende et tomt svar på tilbage.
+</#R/>
+Jeg sender et brev til brugeren som vedkommende skal bekræfte,
+for at abonnementet kan træde i kraft.
+<//>
+
+Disse dialoger er nødvendige for at sikre at den person jeg har
+kontakt med er den han/hun giver sig ud for at være. Ellers
+kunne en fremmed tilmelde et uvidende offer til en masse
+postlister.
+
+Jeg sender en bekræftelse til brugeren når abonnementsstatus
+er ændret.
+
+Tilmelding
+----------
+
+Enhver kan til- eller framelde sig ved at sende et tomt
+brev til:
+
+<#L#>-subscribe@<#H#>
+<#L#>-unsubscribe@<#H#>
+
+</#d/>
+For udtrækslisterne:
+
+<#L#>-digest-subscribe@<#H#>
+<#L#>-digest-unsubscribe@<#H#>
+
+Brugeren vil modtage et brev som skal bekræftes med et tomt
+svar for at sikre at vedkommende råder over den pågældende
+postadresse.
+
+</#s/>
+Eftersom denne liste er tilmeldingsmodereret, skal en moderator
+godkende tilmeldingen. Du kan godkende tilmeldingen ved at
+leve et tomt svar på CONFIRM brevet. (Eller du kan lade være).
+ 
+</#S/>
+Tilmelding sker på samme måde.
+<//>
+
+Brugeren kan også skrive til:
+
+   <<#L#>-subscribe-mary=host.domain@<#H#>>
+   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+
+for at tilmelde "mary@host.domain". Kun hvis hun modtager post
+på den adresse, vil hun modtage bekræftelses forespørgslen og
+være i stand til at svare på den.
+
+Din adresse og identitet er skjult for abonnenten medmindre
+du skriver direkte til vedkommende.
+
+</#rl/>
+En liste over tilmeldte fås ved at sende et tomt brev til:
+  <<#L#>-list@<#H#>>
+
+En transaksjonslog fås ved at sende et tomt brev til:
+  <<#L#>-list@<#H#>>
+
+</#rld/>
+Over digest tilmeldte:
+   <<#L#>-digest-list@<#H#>>
+og:
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+Du kan fjernrette de tekstsvar som listen udsender. En liste
+over filer samt instruktioner fås ved at sende et tomt brev til:
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Modererede lister
+-----------------
+Når listen er modereret, gemmer jeg det indsendte brev og sender
+dig en kopi sammen med en instruktion. Brevet du modtager vil
+have teksten "MODERATE for ..." i emne linjen.
+
+Du godkender at brevet bliver sendt til listen ved blot at
+svare på "MODERATE for ..." brevet. Du behøver ikke inkludere
+selve brevets indhold i dit svar.
+
+Hvis du vil afvise det indsendte brev, svarer du til brevets
+'From:' adresse istedetfor som normalt, dets 'Reply-To:" adresse.
+Du kan skrive en kommentar til indsenderen, om hvorfor du afviser
+brevet, imellem de to linjer som begynder med %%%. Din identitet
+forbliver anonym.
+
+Det første svar jeg får fra en moderator afgør det videre
+forløb. Hvis en anden moderator har svaret før dig, får du
+besked.
+
+Hvis jeg ikke får svar fra en moderator inden for en bestemt
+tid (normalt 5 dage), returnerer jeg brevet til afsender med
+en forklaring. Din administrator kan evt. konfigurere listen
+så ignorerede "MODERATE for ..." breve bliver slettet uden
+at brevskriveren informeres.
+<//>
+
+Ferie
+-----
+Hvis du midlertidigt har en anden adresse, kan du videresende alle
+breve som har en korrekt 'Mailing-List:' linje i brevhovedet, eller
+med andre ord, har titlen 'MODERATE for <#L#>@<#H#>'
+eller 'CONFIRM subscribe to <#L#>@<#H#>' til din nye adresse eller en
+anden som passer moderator hvervet mens du er væk. Sørg for at listens
+ejer er indforstået med dette.
+
+Hvis du hellere vil lave automatisk godkendelse af alle breve
+mens du er væk, kan du bede dit post program om at lave auto-svar
+på alle breve som har et emne der svarer til de ovennævnte kriterier.
+
+</#r/>
+Hvis du forsøger at fjernadministrere fra en adresse som ikke er
+din, bliver abonnenten spurgt om bekræftelse, derefter moderator(erne).
+Jeg er nødt til at gøre det på den måde når jeg ikke kan verificere
+din identitet.
+
+Bemærk at din originale forespørgsel (og din adresse) bliver sendt
+til abonnenten i dette filfælde!
+<//>
+
+Held og lykke!
+
+PS: Kontakt venligst liste ejeren (<#L#>-owner@<#H#>)
+hvis du har spørgsmål eller problemer.
+
+</text/mod-reject/>
+Jeg må desværre meddele at dit brev (vedlagt) ikke er blevet godkendt
+af moderator. Hvis moderatoren har skrevet en kommentar, ses den
+nedenfor.
+</text/mod-request/>
+Det vedlagte brev er blevet postet til <#L#>@<#H#> listen.
+Hvis du vil godkende at det kommer ud til alle abonnenterne,
+skriver du til:
+
+!A
+
+Bekræftelse sker normalt blot ved at svare på dette brev. Svar adressen
+skulle gerne starte med "<#L#>-accept". Hvis det ikke er tilfældet, må
+den korrekte svar adresse overføres manuelt til modtagerfeltet, evt.
+med klippe/klistre.
+Mulighederne afhænger af at du har et fornuftigt postprogram.
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#A#>
+<//>
+
+Hvis du istedet vil afvise at brevet postes til listen, svar til:
+
+!R
+
+Normalt er det nemmest at lave et "svar-til-alle", og fjerne alle
+adresserne undtagen den der starter med
+"<#L#>-reject".
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#R#>
+<//>
+
+Du behøver ikke inkludere brevet i dit svar for at acceptere eller
+afvise det. Hvis du vil sende en besked til afsenderen af et
+afvist brev, kan du skrive beskeden mellem de to linjer der
+begynder med %%%.
+
+%%% Kommentar start
+%%% Kommentar slut
+
+Tak for hjælpen!
+
+--- Her er det indsendte brev.
+
+</text/mod-sub#E/>
+--- Jeg har til- eller afmeldt dig fra <#l#>@<#H#> på begæring
+af moderator.
+
+Hvis du ikke er indforstået med dette, skriv snarest til liste
+ejeren på (<#l#>-owner@<#H#>).
+
+Hvis du ønsker oplysninger om hvordan man bruger <#L#> arkivet,
+send et tomt brev til <#L#>-help@<#H#>.
+
+</text/mod-timeout/>
+Moderator fra <#L#> listen har desværre ikke reageret på dit brev.
+Derfor sender jeg det hermed retur til dig. Hvis du mener det er
+en fejl, send brevet igen eller kontakt en moderator direkte.
+
+--- Enclosed, please find the message you sent.
+
+</text/mod-sub-confirm/>
+Jeg beder hermed om din tilladelse til at tilføje
+
+!A
+
+som abonnent på <#l#> listen. Denne forespørgsel kom enten fra
+dig, eller den er allerede blevet godkendt af den potentielle
+abonnent.
+
+Bekræft ved at sende et tomt svar til denne adresse:
+
+!R
+
+Dit post program burde have en svarfunktion som automatisk bruger
+den adresse. (Ellers må man klippe/klistre).
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#R#>
+<//>
+
+Hvis du ikke vil godkende, kan du bare glemme dette brev.
+
+Tak for hjælpen!
+
+</text/mod-unsub-confirm/>
+Nogen har bedt om at få fjernet
+
+!A
+
+fra <#l#> listen. Du kan godkende ved at lave et tomt svar
+til denne adresse:
+
+!R
+
+Normalt sker dette ved at du svarer på dette brev. Der behøver ikke
+være noget indhold. Hvis det ikke virker, må svaradressen kopieres
+over i modtagerfeltet på dit svarbrev, f.eks. med en mus.
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#R#>
+<//>
+
+Hvis du ikke vil godkende, kan du bare ignorere dette brev.
+
+Tak for hjælpen!
+
+</text/sub-bad/>
+Ups, bekræftelsesnummeret er ikke gyldigt.
+
+Den mest almindelige grund til ugyldige numre er at deres levetid
+er udløbet. De gælder kun i 10 dage.
+Det kan også være at noget af nummeret mangler i det brev du har
+sendt til mig. Nogle post programmer kan ikke finde ud af lange
+adresser.
+
+Hermed et nyt bekræftelsesnummer. For at bekræfte at du vil have
+
+!A
+
+tilføjet til <#l#> listen, send et tomt svar til denne adresse:
+
+!R
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#R#>
+<//>
+
+Kontroller hellere adressen igen, for at være sikker på det hele
+er der, inden du svarer.
+
+Undskyld besværet.
+
+	<#L#>-Owner <<#l#>-owner@<#H#>>
+
+</text/sub-confirm/>
+Hvis du vil bekræfte at du vil have
+
+!A
+
+tilføjet til <#l#> listen, send et tomt svar til denne adresse:
+
+!R
+
+Normalt kan det simpelthen gøres ved at besvare dette brev.
+Der behøver ikke være noget indhold i brevet.
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#R#>
+<//>
+
+Denne bekræftelse tjener to formål. For det firste konstateres om
+jeg er i stand til at sende post til dig. For det andet sikrer det
+dig imod at andre melder sig til med din adresse.
+
+</#q/>
+Nogle post programmer er for dårlige og kan ikke håndtere lange
+adresser. Hvis du er ramt af et sådant, kan du istedet skrive
+til <<#L#>-request@<#H#>> og indsætte
+hele adressen ovenfor i emne linjen.
+
+</text/sub-confirm#s/>
+Denne liste er modereret. Når du har sendt denne bekræftelse,
+vil moderator få besked om af godkende. Du får besked når
+din tilmelding er blevet aktiv.
+
+</text/sub-nop/>
+Anerkendelse: Adressen
+
+!A
+
+var allerede tilmeldt <#l#> listen da jeg fik din tilmelding,
+og er fortsæt tilmeldt.
+
+</text/sub-ok#E/>
+Anerkendelse: Jeg har tilføjet adressen
+
+!A
+
+til <#l#> listen.
+
+Velkommen til <#l#>@<#H#>!
+
+Gem dette brev så du ved hvilken adresse du er tilmeldt med, da
+du skal bruge denne adresse hvis du senere vil frameldes eller
+ændre din tilmeldingsadresse.
+
+</text/top/>
+Hej! Dette er ezmlm programmet. Jeg håndterer <#l#>@<#H#> listen.
+
+</#x/>
+Jeg arbejder for min ejer som kan nås på
+<#l#>-owner@<#H#>.
+
+</text/unsub-bad/>
+Ups! Bekræftelsesnummeret er ikke gyldigt.
+
+Den mest almindelige grund til ugyldige numre er at deres levetid
+er udløbet. De gælder kun i 10 dage.
+Det kan også være at noget af nummeret mangler i det brev du har
+sendt til mig. Nogle post programmer kan ikke finde ud af lange
+adresser.
+
+Hermed et nyt bekræftelsesnummer. For at bekræfte at du vil have
+
+!A
+
+fjernet fra <#l#> listen, send et tomt svar til denne adresse:
+
+!R
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#R#>
+<//>
+
+Check hellere adressen igen, for at være sikker på det hele er der,
+inden du svarer.
+
+Undskyld besværet.
+
+        <#l#>-Owner <<#l#>-owner@<#H#>>
+
+</text/unsub-confirm/>
+Hvis du vil bekræfte at du vil have
+
+!A
+
+fjernet fra <#l#> listen, send et tomt svar til denne adresse:
+
+!R
+
+Normalt kan det simpelthen gøres ved at besvare dette brev.
+Der behøver ikke være noget indhold i brevet.
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#R#>
+<//>
+
+Jeg har ikke undersøgt om din adresse er tilmeldt i øjeblikket.
+Du kan se hvilken adresse du har brugt i din tilmelding ved
+at kigge på de breve du modtager fra listen. Hvert brev har
+din abonnementsadresse gemt i sin retur sti, f.eks. modtager
+mary@xdd.ff.com breve med retur stien
+<<#l#>-return-<number>-mary=xdd.ff.com@<#H#>.
+
+</#q/>
+Nogle post programmer er meget syge og kan ikke håndtere lange
+adresser. Hvis du er ramt af et sådant, kan du istedet skrive
+til <<#L#>-request@<#H#>> og putte hele adressen ovenfor i emne
+linjen.
+
+</text/unsub-nop/>
+Anerkendelse: Adressen
+
+!A
+
+var ikke tilmeldt <#l#> listen da jeg fik din tilmelding, og
+er det stadig ikke.
+
+Hvis du afmelder, men stadig får post, er du tilmeldt med en
+andren adresse end den du bruger i øjeblikket. Kig i brevhoved
+efter noget der ser sådan ud:
+
+'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+
+Afmeldingsadressen for denne bruger ville blive:
+'<#l#>-unsubscribe-user=host.dom@<#H#>'.
+
+Send nu post til denne adresse, erstat user=host.dom med rigtige
+værdier, og du burde modtage et brev om at du er frameldt listen.
+
+I nogle post programmer, skal man gøre brevhovedet synligt for
+at se retur stien:
+
+I Eudora 4.0, klik på (øh, hvem kender Eudora?) knappen.
+I PMMail, klik på "Window->Show entire message/header"
+   hvis du har en engelsk udgave ;-)
+
+Hvis dette stadig ikke virker, kan jeg nok ikke hjælpe dig mere.
+Så videresend din liste kommando til liste ejeren sammen med en
+besked om hvad det er du prøver at opnå, samt en liste over de
+andresser du evt. kan være tilmeldt under. Ejeren,
+
+    <#l#>-owner@<#H#>
+
+Vil tage sig af det. Min ejer er ikke så hurtig som mig, så hav
+venligst lidt tålmodighed.
+
+</text/unsub-ok/>
+Anderkendelse: Jeg har fjernet adressen
+
+!A
+
+fra <#l#> listen. Adressen er ikke længere tilmeldt.
+
+</text/edit-do#n/>
+Ret den følgende tekst og send den til denne adresse:
+
+!R
+
+Dit post program har en svar facilitet som bruger denne adresse
+automatisk.
+
+Jeg kan fjerne de de gåseøjne dit post program tilføjer i
+teksten, bare du ikke retter i selve markeringslinjerne.
+
+Markeringslinjerne er de linjer der starter med %%%. De må ikke
+ændres.
+
+</text/edit-list#n/>
+<#L#>-edit.file kommandoen kan bruges af en fjernadministrator,
+til at rette teksterne i de fleste af svarteksterne i
+svar-tekst filerne .
+
+Her følger en list en liste over svar-tekst filer samt en
+kort beskrivelse af hvornår deres indhold bliver brugt.
+For at rette en fil, skriv til <#L#>-edit.file, erstat
+"file" delen med filnavnet. Editeringsinstruktioner følger
+med tekst filen.
+
+filnavn             Anvendelse
+
+bottom              Afslutning på alle breve. Generel kommando information.
+digest              'administrationsdelen' af et udtræk.
+faq                 De mest spurgte spørgsmål om denne postliste.
+get_bad             Istedetfor breve som ikke kan findes i arkivet.
+help                generel hjælp (mellem 'top' og 'bottom').
+info                liste information. Første linje skal give mening i sig selv
+mod_help            specifik hjælp til liste moderatorer.
+mod_reject          til afsender af afvist post.
+mod_request         til post moderatorer sammen med brevet.
+mod_sub             til abonnent når moderator har bekræftet tilmelding.
+mod_sub_confirm     til tilmeldingsmoderator for at bekræfte tilmelding.
+mod_timeout         til afsender af brev som moderator ikke har reageret på.
+mod_unsub_confirm   til fjernadministrator om at framelde.
+sub_bad             til afsender hvis manglende bekræftelse.
+sub_confirm         til afsender for at bekræfte tilmelding.
+sub_nop             til afsender efter gentilmelding.
+sub_ok              til afsender efter vellykket tilmelding.
+top                 Begynnelse på alle breve.
+</#tn/>
+trailer             tilføjes til alle breve som udsendes fra listen.
+</#n/>
+unsub_bad           til afsender hvis frameldingsbekræftelse ikke var korrekt.
+unsub_confirm       til afsender for at bekræfte frameldingsbekræftelse.
+unsub_nop           til ikke-tilmeldte efter framelding.
+unsub_ok            til ex-tilmeldte efter vellykket framelding.
+
+</text/edit-done#n/>
+Denne text er med held blevet opdateret
+</text/info#E/>
+Der findes pt. ingen information om denne liste.
+</text/faq#E/>
+FAQ - Ofte stillede spørgsmål om <#l#>@<#H#> listen.
+
+Der ikke lavet nogen endnu.
+

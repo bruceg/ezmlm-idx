@@ -1,0 +1,1334 @@
+0.40 - This version identifier must be on line 1 and start in pos 1.
+#
+#$Id: ezmlmrc.jp,v 1.28 1999/12/22 04:02:15 lindberg Exp $
+#$Name: ezmlm-idx-040 $
+#
+# ezmlmrc.jp - Translated: Masashi Fujita <objectx@bandit.co.jp>
+# #######
+# Controls the actions of ezmlm-make as patched with ezmlm-idx-0.31 or later.
+#
+# The base directory 'DIR' is always created by ezmlm-make, as is DIR/key.
+# Everything else is done from here.
+#
+# ezmlm-make looks for this file, first as .ezmlmrc in the directory that the
+# lists .qmail files will be placed in (if you've used the -c command line
+# switch), then /etc/ezmlmrc, then ezmlmrc in the ezmlm-make binary directory.
+# Thus, you can customize ezmlm-make on a global level by placing a customized
+# copy of ezmlmrc in /etc and on a user level by copying it to .ezmlmrc in
+# the user's home directory AND use the ezmlm-make -c switch.
+#
+# Tags are:
+#       </filename/>       : put succeeding text lines in DIR/filename
+#       </-filename/>      : erase DIR/filename.
+#       </+dirname/>       : create directory DIR/dirname
+#       </:lname/dirname>  : symlink DIR/.qmail-list-lname -> DIR/dirname
+#
+# The name in the tag can be suffixed with '#' and any number of flags,
+# corresponding to command line switches. The item will be created/extended
+# only if all the flags listed are set. Files can be extended as long as they
+# were the last one created, but not if another file has been started since
+# then. Flags that are not recognized are silently ignored.
+# 
+# Thus, </filename#aP/> creates the file if and only if the list is archived
+# (-a) and not public (-P). If the next tag is </filename#m/>, the file is
+# extended with the lines up to the next tag if the list is message moderated
+# (-m). If the next tag is </another/>, 'filename' is closed. Any further
+# tags leading to the reopenining of 'filename' will overwrite the file, not
+# extend it.
+#
+# A set of user-defined command line switches (xX, yY, zZ) are available for
+# customization.
+#
+# Within the text, certain tags are substituted. Other tags are copied as
+# is. <#A#> and <#R#> are substituted by ezmlm-manage and -store (see man pages)
+# and <#l#> (lower case L) is replaced dynamically by the list name for
+# programs handling both 'list' and 'list-digest'.
+#
+# Substitutions are:
+# <#B#> ezmlm binaries path   <#C#> digest code         <#D#> dir
+# <#H#> host                  <#L#> local               <#F#> flags
+# <#T#> dot                   <#0#> arg for -0. <#3#>...<#9#> arg for -3..9
+# <#1#> ext1                  <#2#> ext2 [if dot is /path/.qmail-ext1-ext2-name]
+# The latter useful when a single user is controlling several virtual domains.
+#
+# -0 is used for the main list address when setting up sublists
+# -3 is for the new from header if we want that header replaced
+# -4 for specifying the ezmlm-tstdig switches used in dir/editor. Default
+#    -k64 -m30 -t24. Only used if -g is used.
+# -5 for list-owner address. Mail to list-owner will be forwarded to this addr.
+# -6 for sql connection info
+# -7 for contents of DIR/modpost
+# -8 for contents of DIR/modsub
+# -9 for contents of DIR/remote
+#
+# For demonstration purposes, the '-x' switch results in the following
+# non-standard actions:
+# - Removal of many non-text MIME parts from messages.
+# - Limit posts to 2 bytes <= msg body size <= 40000
+#
+# Attempts to create links or directories that already exist, will result
+# in a FATAL error. Attempts to open files that have already been closed
+# or already exits, will cause the old file to be overwritten.
+#
+# One of the major problems with ezmlm-lists is DIR/inlocal. For normal
+# users, it is set up to the list name (user-list or so), which is correct.
+# However, for user 'ezmlm' in control of virtual domain 'host.dom.com'
+# the list name is 'list@host.dom.com', but inlocal should be 'ezmlm-list',
+# not 'list'. Similarly, if ezmlm-domain1 is in control of 'host.dom.com,
+# list@host.dom.com, should yield an inlocal of 'ezmlm-domain1-list'. To
+# always get the lists correct, place this file as '.ezmlmrc' in the 
+# users home directory (~ezmlm/.ezmlmrc) and change the inlocal text below
+# to 'ezmlm-<#L#>' or 'ezmlm-<#1#>-<#L#>, respectively.
+# config to support future editing without giving ezmlm-make command line
+# arguments other than dir. Useful for GUI/WWW editing tools
+</config/>
+F:<#F#>
+X:<#X#>
+D:<#D#>
+T:<#T#>
+L:<#L#>
+H:<#H#>
+C:<#C#>
+0:<#0#>
+3:<#3#>
+4:<#4#>
+5:<#5#>
+6:<#6#>
+7:<#7#>
+8:<#8#>
+9:<#9#>
+</inlocal/>
+<#L#>
+</sublist#0/>
+<#0#>
+</+archive/>
+</+subscribers/>
+</+bounce/>
+</+text/>
+# dirs for digests
+</+digest#d/>
+</+digest/subscribers#d/>
+</+digest/bounce#d/>
+# for extra address db
+</+allow/>
+</+allow/subscribers/>
+# for blacklist
+</+deny#k/>
+</+deny/subscribers#k/>
+# moderator db & mod queue dirs. Needed for -m, -r -s, so we just
+# make them by default.
+</+mod/>
+</+mod/subscribers/>
+</+mod/pending/>
+</+mod/accepted/>
+</+mod/rejected/>
+# links: dot -> dir/editor
+</:/editor/>
+</:-owner/owner/>
+</:-digest-owner/owner#d/>
+</:-return-default/bouncer/>
+</:-digest-return-default/digest/bouncer#d/>
+</:-default/manager/>
+# for message moderation only
+</:-accept-default/moderator#m/>
+</:-reject-default/moderator#m/>
+# Get rid of configuration flags for editing mode so we can start with a
+# clean slate.
+</-modpost#eM/>
+</-modsub#eS/>
+</-remote#eR/>
+</-public#eP/>
+</-indexed#eA/>
+</-archived#eA/>
+</-prefix#eF/>
+</-text/trailer#eT/>
+</-sublist#e^0/>
+</-mimeremove#eX/>
+# Not needed, except for message moderation.
+</-moderator#eM/>
+# We don't clean out text files to make it easier for users
+# doing manual config by e.g. touching dir/remote.
+# subscription moderation
+</modsub#s/>
+<#8#>
+# remote admin
+</remote#r/>
+<#9#>
+# message moderation
+</modpost#m/>
+<#7#>
+# List owner mail
+</owner#5/>
+<#5#>
+</owner#^5/>
+<#D#>/Mailbox
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# Handles subscription. Add flags if you want a non-default digest format.
+# Service subject commands to the # request address if the -q switch is given.
+# Also -l and -d enable subscriber listing/text file editing, for remote adms.
+# -u gives subscriber only archive access
+</manager#ab/>
+|<#B#>/ezmlm-get -P '<#D#>' <#C#>
+</manager#aGB/>
+|<#B#>/ezmlm-get '<#D#>' <#C#>
+</manager#agB/>
+|<#B#>/ezmlm-get -s '<#D#>' <#C#>
+</manager#q/>
+|<#B#>/ezmlm-request '<#D#>'
+# Ok to add -l/-d even for non-mod lists, since ezmlm-manage
+# won't allow it unless there are remote admins. The lack of logic other than
+# AND makes this very tedious ...
+# first lists with normal confirmation:
+</manager#LNHJ/>
+|<#B#>/ezmlm-manage '<#D#>'
+</manager#lNHJ/>
+|<#B#>/ezmlm-manage -l '<#D#>'
+</manager#LnHJ/>
+|<#B#>/ezmlm-manage -e '<#D#>'
+</manager#lnHJ/>
+|<#B#>/ezmlm-manage -le '<#D#>'
+# ... now no confirmation for subscribe ...
+</manager#LNhJ/>
+|<#B#>/ezmlm-manage -S '<#D#>'
+</manager#lNhJ/>
+|<#B#>/ezmlm-manage -lS '<#D#>'
+</manager#LnhJ/>
+|<#B#>/ezmlm-manage -eS '<#D#>'
+</manager#lnhJ/>
+|<#B#>/ezmlm-manage -leS '<#D#>'
+# ... now no confirmation for unsubscribe ...
+</manager#LNHj/>
+|<#B#>/ezmlm-manage -U '<#D#>'
+</manager#lNHj/>
+|<#B#>/ezmlm-manage -lU '<#D#>'
+</manager#LnHj/>
+|<#B#>/ezmlm-manage -eU '<#D#>'
+</manager#lnHj/>
+|<#B#>/ezmlm-manage -leU '<#D#>'
+# ... and finally no confirmation at all ...
+</manager#LNhj/>
+|<#B#>/ezmlm-manage -US '<#D#>'
+</manager#lNhj/>
+|<#B#>/ezmlm-manage -lUS '<#D#>'
+</manager#Lnhj/>
+|<#B#>/ezmlm-manage -eUS '<#D#>'
+</manager#lnhj/>
+|<#B#>/ezmlm-manage -leUS '<#D#>'
+</manager#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</editor/>
+# reject shouldn't be configured for sublist.
+</#^0/>
+# full reject is now default, to get To/Cc: listaddress requirement
+|<#B#>/ezmlm-reject '<#D#>'
+# -k => reject posts from blacklisted addresses. Done for moderated
+# lists as well - allows removal of unwanted noise.
+</#k^0/>
+|<#B#>/ezmlm-issubn -n '<#D#>/deny' || { echo "Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this (#5.7.2)"; exit 100 ; }
+# switch -u=> restrict to subs of list & digest. If not m
+# do it with ezmlm-issubn, if 'm' do it with ezmlm-gate
+</#uM/>
+|<#B#>/ezmlm-issubn '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod' || { echo "Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included (#5.7.2)"; exit 100 ; }
+</#um/>
+|<#B#>/ezmlm-gate '<#D#>' '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod'
+# For message moderation, editor has store/clean
+</#mUO/>
+|<#B#>/ezmlm-store '<#D#>'
+</#mUo/>
+|<#B#>/ezmlm-store -P '<#D#>'
+</#mU/>
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+# for non-message moderated lists, it has send
+</#M/>
+|<#B#>/ezmlm-send '<#D#>'
+# ezmlm-archive here for normal lists. Put into moderator for mess-mod lists
+</#Mi/>
+|<#B#>/ezmlm-archive '<#D#>' || exit 0
+# all lists have warn unless -w.
+</#W/>
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
+# for digest bounces
+</#dW/>
+|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
+</#d^4/>
+|<#B#>/ezmlm-tstdig -m30 -k64 -t48 '<#D#>' || exit 99
+</#d4/>
+|<#B#>/ezmlm-tstdig <#4#> '<#D#>' || exit 99
+</#d/>
+|<#B#>/ezmlm-get '<#D#>' || exit 0
+# bouncer for list and digest
+</bouncer/>
+|<#B#>/ezmlm-weed
+|<#B#>/ezmlm-return -D '<#D#>'
+</digest/bouncer#d/>
+|<#B#>/ezmlm-weed
+|<#B#>/ezmlm-return -d '<#D#>'
+# moderator is set up only for message moderated lists. However, '-e' does
+# not remove it since we can't remove the symlinks to it (they're outside
+# of the list dir.
+</moderator#m/>
+|<#B#>/ezmlm-moderate '<#D#>'
+</#mi/>
+|<#B#>/ezmlm-archive '<#D#>' || exit 0
+</#mU/>
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
+</#mu/>
+|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
+</headerremove#E/>
+return-path
+return-receipt-to
+content-length
+precedence
+x-confirm-reading-to
+x-pmrqc
+list-subscribe
+list-unsubscribe
+list-help
+</headerremove#E^0/>
+# For sublists, these should be left in
+list-post
+# remove from header if -3 'new_from_line'
+</#3E/>
+from
+</lock/>
+</lockbounce/>
+</digest/lockbounce#d/>
+</digest/lock#d/>
+</public#p/>
+</archived#a/>
+</indexed#a/>
+</inhost/>
+<#H#>
+</outhost/>
+<#H#>
+</outlocal/>
+<#L#>
+</mailinglist/>
+contact <#L#>-help@<#H#>; run by ezmlm
+# Headeradd needs to always exist but leave out stuff for sublists
+</headeradd#E^0/>
+# Good for mailing list stuff (and vacation program)
+Precedence: bulk
+# To prevent indexing by findmail.com
+X-No-Archive: yes
+# rfc2369, first from main list only, others from sublist only
+List-Post: <mailto:<#L#>@<#H#>>
+</headeradd#E/>
+List-Help: <mailto:<#l#>-help@<#h#>>
+List-Unsubscribe: <mailto:<#l#>-unsubscribe@<#h#>>
+List-Subscribe: <mailto:<#l#>-subscribe@<#h#>>
+# add new from line "From: arg" if -3 'arg'
+</#3E/>
+From: <#3#>
+# max & min message size
+</msgsize#x/>
+30000:2
+# remove mime parts if -x
+</mimeremove#xE/>
+application/excel
+application/rtf
+application/msword
+application/ms-tnef
+text/html
+text/rtf
+text/enriched
+text/x-vcard
+application/activemessage
+application/andrew-inset
+application/applefile
+application/atomicmail
+application/dca-rft
+application/dec-dx
+application/mac-binhex40
+application/mac-compactpro
+application/macwriteii
+application/news-message-id
+application/news-transmission
+application/octet-stream
+application/oda
+application/pdf
+application/postscript
+application/powerpoint
+application/remote-printing
+application/slate
+application/wita
+application/wordperfect5.1
+application/x-bcpio
+application/x-cdlink
+application/x-compress
+application/x-cpio
+application/x-csh
+application/x-director
+application/x-dvi
+application/x-hdf
+application/x-httpd-cgi
+application/x-koan
+application/x-latex
+application/x-mif
+application/x-netcdf
+application/x-stuffit
+application/x-sv4cpio
+application/x-sv4crc
+application/x-tar
+application/x-tcl
+application/x-tex
+application/x-texinfo
+application/x-troff
+application/x-troff-man
+application/x-troff-me
+application/x-troff-ms
+application/x-ustar
+application/x-wais-source
+audio/basic
+audio/mpeg
+audio/x-aiff
+audio/x-pn-realaudio
+audio/x-pn-realaudio
+audio/x-pn-realaudio-plugin
+audio/x-realaudio
+audio/x-wav
+image/gif
+image/ief
+image/jpeg
+image/png
+image/tiff
+image/x-cmu-raster
+image/x-portable-anymap
+image/x-portable-bitmap
+image/x-portable-graymap
+image/x-portable-pixmap
+image/x-rgb
+image/x-xbitmap
+image/x-xpixmap
+image/x-xwindowdump
+text/x-sgml
+video/mpeg
+video/quicktime
+video/x-msvideo
+video/x-sgi-movie
+x-conference/x-cooltalk
+x-world/x-vrml
+# These can also be excluded, but for many lists it is desirable
+# to allow them. Uncomment to add to mimeremove.
+# application/zip
+# application/x-gtar
+# application/x-gzip
+# application/x-sh
+# application/x-shar
+# chemical/x-pdb
+# --------------------- Handle SQL connect info
+</-sql#^6e/>
+</-digest/sql#^6e/>
+</-allow/sql#^6e/>
+</sql#6W/>
+<#6#>
+</sql#6w/>
+<#6#>:<#L#>@<#H#>
+</digest/sql#6dW/>
+<#6#>_digest
+</digest/sql#6dw/>
+<#6#>_digest:<#L#>_digest@<#H#>
+</allow/sql#6/>
+<#6#>_allow
+# -------------------- End sql stuff
+</prefix#fE/>
+[<#L#>]
+</text/trailer#tE/>
+---------------------------------------------------------------------
+To unsubscribe, e-mail: <#L#>-unsubscribe@<#H#>
+For additional commands, e-mail: <#L#>-help@<#H#>
+</text/bottom#E/>
+
+--- mailing list <#l#> で利用可能な command 一覧です ---
+
+ezmlm は以下の command を自動で実行します。
+
+[[[ 絶対に mailing list 本体に command を送らないで下さい ]]]
+
+command は以下の address 宛に空の message を送ることで実行されます。
+
+   * 利用可能な command 一覧を取り出す
+     <<#L#>-help@<#H#>>
+     (Get help and commands)
+
+   * 購読を開始する
+     <<#L#>-subscribe@<#H#>>
+     (Start subscription) 
+
+購読を中止するには mailing list <#L#> からの message の header に
+含まれている ``List-Unsubscribe'' 行が示す address に空 message
+を送ってください。または以下の address 宛てに空 message を送って
+下さい。
+     <<#L#>-unsubscribe@<#H#>>
+     (Stop subscription)
+
+</#dE/>
+digest の購読を中止するには以下の address 宛てに空の message を
+送って下さい。
+     <<#L#>-digest-unsubscribe@<#H#>>
+     (Stop digest subscription)
+
+</#E/>
+購読の開始および中止の際には ezmlm は確認の為の message を
+指定された address 宛てに送信します。その確認の為の message
+に対して、reply を返すことで確認の手続きは終了します。
+
+以上の指示に従っても、望んだ結果にならない場合等は、
+mailing list <#L#> の主宰者の
+<#L#>-owner@<#H#> 迄連絡して下さい。
+（返事が遅れるかもしれません。ご了承下さい）
+
+問題の解析を進めやすくする為に ezmlm から送られてきた message を
+『全ての header を含めて』添付してください。
+
+--- 以下に送られてきた message を添付しておきます ---
+
+</text/bounce-bottom#E/>
+
+--- 以下に返送されてきた message を添付しておきます ---
+
+</text/bounce-num#E/>
+
+mailing list <#L#> が貴方宛に送った message の内
+配送に失敗したものの番号を添付しておきます。
+
+</#aE/>
+message は archive 中に保存されています。
+
+</#aE/>
+空の message を以下の command address に送ることで、貴方が受け取れ
+なかった message を archive 内から取り出すことが出来ます。
+
+例）
+   * 123 番から 145 番迄の message を取り出す
+     <<#L#>-get.123_145@<#H#>>
+     （一度に取り出せるのは最大で 100通です）
+
+   * 最新 100通の投稿者と Subject: 行を取り出す
+     <<#L#>-index@<#H#>>
+
+</#E/>
+配送に失敗した message の番号は以下の通りです:
+
+</text/dig-bounce-num#E/>
+
+配送に失敗した mailing list <#L#> の digest 版に
+含まれていた最初の message 番号を添付しておきます。
+
+</#aE/>
+ezmlm は digest 自体は保存していません。
+ですが、以下の command address に空の message を送る事で
+mailing list <#L#> 本体の
+archive から、貴方が受け取れなかった message 群を取り出す
+ことができます。
+
+例）
+   * 123 番から 145 番迄の message を取り出す
+     <<#L#>-get.123_145@<#H#>>
+     （一度に取り出せるのは最大で 100通です）
+
+   * 最新 100通の投稿者と Subject: 行を取り出す
+     <<#L#>-index@<#H#>>
+
+</#E/>
+--- 以下は digest 版の開始 message 番号一覧です ---
+
+</text/bounce-probe#E/>
+
+貴方宛に mailing list <#L#> が送った
+message の幾つかが配送出来ず、確認の為に ezmlm が送信した
+message も配送に失敗してしまいました。
+
+配送に失敗して返送されてきた message を添付しておきます。
+
+この message は、貴方宛に配送が可能か否かを調べるためのものです。
+この message も配送に失敗した場合は、ezmlm は貴方の address を
+mailing list <#L#>@<#H#> から
+自動的に削除します。
+
+もう一度購読をしたい場合は、以下の address
+
+        <<#L#>-subscribe@<#H#>>
+
+宛に空の message を送って、新規に購読をしなおして下さい。
+
+</text/bounce-warn#E/>
+
+貴方宛に mailing list <#L#> が送った message の幾つかで
+配送に失敗しました。
+
+配送に失敗した message の最初の一通を添付しておきます。
+
+もしもこの message 自体も配送に失敗した場合には
+ezmlm は確認の message を送ります。その message も配送に失敗した場合
+貴方の address は mailing list <#L#> から
+無条件に削除されます。
+
+</text/digest#dE/>
+digest の購読を希望する場合は、空の message を
+
+        <<#L#>-digest-subscribe@<#H#>>
+        (To subscribe to the digest)
+
+宛に送って下さい。
+
+digest の購読をやめる場合は、空の message を
+
+        <<#L#>-digest-unsubscribe@<#H#>>
+        (To unsubscribe from the digest)
+
+宛に送って下さい。
+
+mailing list <#L#> への post は
+
+        <<#L#>@<#H#>>
+        (To post to the list)
+
+宛にお願いします。
+
+</text/get-bad#E/>
+申し訳有りませんが、指定された message は archive 中に
+ありませんでした。
+
+</text/help#E/>
+これは汎用の help message です。
+貴方の message は ezmlm の command としては認識されませんでした。
+
+以下に利用可能な command address 以下の通りです：
+（空 message を指定された command address に送信することで実行されます）
+
+   * mailing list <#l#> の説明を取り出します。
+     <<#L#>-info@<#H#>>
+     (Get information) 
+   * mailing list <#l#> の『よく尋ねられる質問とその答え』を取り出します。
+     <<#L#>-faq@<#H#>>
+     (Get FAQ) 
+
+</#dE/>
+   * digest list <#L#>-digest の購読を開始する
+     <<#L#>-digest-subscribe@<#H#>>
+     (Start digest subscription) 
+
+   * digest list <#L#>-digest の購読を中止する
+     <<#L#>-digest-unsubscribe@<#H#>>
+     (Stop digest subscription) 
+
+# ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
+# multi-get!
+</#aE/>
+   * 123 番から 145 番迄の message を取り出す
+     <<#L#>-get.123_145@<#H#>>
+     （一度に取り出せるのは最大で 100通です）
+
+   * 123 番から 145 番迄の message の送信者と Subject: を取り出す
+     <<#L#>-index.123_456@<#H#>>
+
+   * message 12345 番の Subject: と同じ Subject: を持つ message を
+     取り出す
+     <<#L#>-thread.12345@<#H#>>
+
+</#E/>
+command address 宛ての message は address のみが必要です。中身は
+何があっても無視されます。
+
+必要であれば通常とは異なる address で mailing list <#L#> からの
+message を受け取るように出来ます。
+
+例）john@host.domain で受け取る様にする
+
+    受け取り address を以下の様に変換して
+
+        john@host.domain
+                ↓      （'@' --> '='）
+        john=host.domain
+                ↓
+        <<#L#>-subscribe-john=host.domain@<#H#>>
+
+<#L#>-subscribe-john=host.domain@<#H#> 宛てに空 message を送ることで
+john@host.domain での購読を開始できます。
+
+この場合、購読を中止するには <#L#>-unsubscribe-john=host.domain@<#H#>
+宛てに空 message を送ってください。
+
+</text/mod-help#E/>
+--- 管理者の皆様へ ---
+
+mailing list <#L#>@<#H#> の管理に
+協力していただき感謝します。
+
+ezmlm の command は、他の mailing list program とは若干異なって
+見えるかもしれまんが、command が直感的であり、使用が簡単だと
+思えるでしょう。
+
+以下は mailing list の管理者としての作業のための手引きです。
+
+Remote subscription
+-------------------
+管理者は任意の address を購読者に加えたり外したりする事が出来ます。
+例えば "john@host.domain" を購読者に加える場合は、
+
+                john@host.domain
+                        ↓
+                john=host.domain
+                        ↓
+        <<#L#>-subscribe-john=host.domain@<#H#>>
+
+の様にして command address を生成し、その address へ
+空の message を送って下さい。
+
+また、john@host.domain を購読者から外す場合は
+
+        <<#L#>-unsubscribe-john=host.domain@<#H#>>
+
+へ空の message を送って下さい。
+
+</#dE/>
+digest list に加えたり・外したりする場合も同様にして
+
+        <<#L#>-digest-subscribe-john=host.domain@<#H#>>
+        <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+
+の様になります。
+
+</#E/>
+message の中身は必要ありません。address だけが重要です。
+
+</#rE/>
+ezmlm は貴方に確認の message を送ります。これは request が
+本当に貴方からのものかを確認するためです。送られた message に
+reply する事で手続きは完了します。
+
+</#RE/>
+ezmlm は user に対して確認の message を送ります。
+上記の場合は <john@host.domain> 宛に確認の message が送られる
+ことになります。確認の message を受け取った user は reply を
+することで確認が終了します。
+</#E/>
+
+この確認によって、第三者による攻撃を困難なものにしています。
+
+また、ezmlm は購読の状態が変化したことを user に通知します。
+
+
+Subscription
+------------
+管理者に限らず、誰でも以下の address 宛に空の message を
+送る事で購読を開始したり・終了させたり出来ます。
+
+        <<#L#>-subscribe@<#H#>>
+	(Start subscription)
+
+	<<#L#>-unsubscribe@<#H#>>
+	(Stop subscription)
+
+</#dE/>
+digest list の購読開始・終了は以下の command address です。
+
+        <<#L#>-digest-subscribe@<#H#>>
+	(Start digest subscription)
+
+	<<#L#>-digest-unsubscribe@<#H#>>
+	(Stop digest subscription)
+
+</#E/>
+発信者には確認の message が ezmlm から送られます。
+
+</#sE/>
+この mailing list の購読開始・脱退は管理者の監督下で行われる様
+設定されています。管理者宛に確認を出す前に ezmlm は request を
+出した発信者へ確認の message を送り、request が本物か否かを確認
+しているので、その request が本物であると考えても大丈夫です。
+
+request が正当なものと思うのであれば、ezmlm から届いた確認の
+message に対して reply して下さい。正当でないと思うのであれば
+ezmlm からの message を単純に無視して下さい。そして、必要なら
+request の発信者に連絡してみて下さい。
+</#SE/>
+購読開始・脱退は自動で処理されます。
+</#E/>
+
+また、
+
+        <<#L#>-subscribe-mary=host.domain@<#H#>>
+	(Start subscription as mary@host.domain)
+
+	<<#L#>-unsubscribe-mary=host.domain@<#H#>>
+	(Stop subscription as mary@host.domain)
+
+の様にする事で、発信元とは異なる address（この場合は mary@host.domain）
+で mailing list からの message を受け取る様にする事も出来ます。
+確認は mary@host.domain 宛に発行され、その message に対して
+正しい reply が帰ってきた場合のみ購読・脱退は有効になります。
+
+管理者の address その他の情報は購読者には一切連絡されません。
+（勿論、貴方が直接 mail を送った場合は別です）
+
+</#rlE/>
+mailing list <#L#>@<#H#> の講読者一覧は
+以下の address から得られます。
+        <<#L#>-list@<#H#>>
+ezmlm の log は以下の address から得られます。
+        <<#L#>-log@<#H#>>
+
+</#rldE/>
+mailing list <#L#>@<#H#> の digest 版の講読者一覧は
+以下の address から得られます。
+        <<#L#>-digest-list@<#H#>>
+digest 版に関する log は以下の address です。
+        <<#L#>-digest-log@<#H#>>
+
+</#rnE/>
+ezmlm が送り出す message text を編集するには、以下の command address:
+
+        <<#L#>-edit@<#H#>>
+
+宛に空の e-mail を送って下さい。
+（編集可能な message 一覧及び、編集方法は返信に含まれています）
+
+</#mE/>
+Moderated posts
+---------------
+message を審査する様に設定されている場合は、ezmlm は post された
+message を一旦保存し、審査手続きの説明を付けたものを管理者宛に
+送ります。その message は "Subject: MODERATE for ..." となって
+います。
+
+post を認める場合は、ezmlm が "Reply-To:" に設定した address
+宛に reply をして下さい。本文の copy は必要ありません。
+（ezmlm は reply の中身は一切見ていません）
+
+post を拒否する場合は、ezmlm が "From:" に設定した address 宛に
+reply をして下さい。通常 Mail User Agent (MUA) の 'reply-to-all'
+の機能を使って message の準備をした後に、不要な address を削る
+だけだと思います。拒否する理由等を３個の'%'で始まる行の後に付け
+３個の'%' で閉じることで同梱する事が出来ます。
+
+繰り返しますが、管理者の address その他の情報は ezmlm 経由では
+明らかにされません。
+
+複数の管理者がいる場合、ezmlm は最初に管理者から届いた message
+のみに反応します。貴方が post を認める reply をした時に、既に
+他の管理者が拒否をしていた場合、及びその逆の場合は ezmlm は
+貴方宛に message を送ります。
+
+ezmlm は定められた期限（通常は 5日）以内に審査の結果を受け
+取れない場合には、発信者宛に理由を同梱して message を返送します。
+（必要とあれば、期限切れの message を単純に削除する様にも
+  設定出来ます）
+</#E/>
+
+Vacations
+---------
+一時的に異なる address で管理の作業をしたい場合は、
+"Mailing-List: contact <#L#>-help@<#H#>; run by ezmlm" や
+"Subject: MODERATE for <#L#>@<#H#>" や
+"Subject: CONFIRM subscribe to <#L#>@<#H#>" 等の
+管理の為の message が望んだ address 宛に届く様に設定すれば
+可能です。
+
+または知人宛に送り直す様にするという手もあります。
+（この場合は事前に主宰者に確認をとって下さい）
+
+貴方が管理の作業を実行出来ない間は、自動で承認を行うというので
+あれば、上記の管理用 message に対して適切な応答を自動生成する
+様に設定して下さい。
+
+</#rE/>
+購読開始・終了の作業を管理者である貴方のものでない address から
+行った場合、購読開始・終了の対象になった address 宛に確認の message
+が届きます。その後に全管理者宛に確認の message が届きます。これは
+request を発行したのが貴方自身か否かを ezmlm が判断する手段を持って
+いない為です。
+
+この場合は、貴方の送信した message や address が対象となった user
+宛に送られる事を覚えておいて下さい。
+
+</#E/>
+お手数をおかけします。
+
+PS: 何か不明な点等がありましたら、主宰者の
+
+        <#L#>-owner@<#H#>
+
+    に連絡して下さい。
+
+</text/mod-reject#E/>
+申し訳有りませんが、貴方の post した message は管理者によって
+拒否されました。管理者が何か comment を付けている場合は
+以下に添付されています。
+</text/mod-request#E/>
+mailing list <#L#> に
+以下に添付された message が post されました。
+post を認める場合は、以下の address
+
+!A
+
+へ reply して下さい。
+
+通常は Mail User Agent (MUA) の reply の機能だけで十分な筈です。
+
+うまくいかない場合は、手動で
+
+        To: <#A#>
+
+を付けて reply message を作成して下さい。
+
+</#xE/>
+
+MUA によっては
+
+        mailto:<#A#>
+
+を click するだけで準備が出来る場合もあるでしょう。
+</#E/>
+
+post を認めない場合は、以下の address
+
+!R
+
+宛に message を送って下さい。
+
+MUA に "reply-to-all" の機能があるのなら <#L#>-reject 以外で
+始まる他の address を削除するのが簡単でしょう。
+</#xE/>
+
+MUA によっては
+
+        mailto:<#R#>
+
+を click するだけで準備が出来る場合もあるでしょう。
+</#E/>
+
+*** post された message 本体は copy する必要はありません ***
+
+post を認めない場合に、何か comment を付けたいのであれば
+以下の様な marker line
+
+%%% Start comment
+%%% End comment
+
+の間に comment を書いて下さい。
+
+--- 以下に送らてきた message を添付しておきます
+
+</text/mod-sub#E/>
+--- 管理者が貴方の
+    mailing list <#L#>@<#H#> での
+    購読の状態を変更しました。
+
+この変更が望んだものでない場合等は、すぐに
+
+        <#L#>-owner@<#H#>
+
+迄連絡を下さい。
+
+mailing list <#L#> の archive に access したい場合は
+
+        <#L#>-help@<#H#>
+
+迄、空の message を送って下さい。
+
+</text/mod-timeout#E/>
+申し訳有りません。
+mailing list <#L#> の管理者が
+貴方の message を審査する前に時間切れになりました。
+
+これが error だと思うのであれば、もう一度 post するか
+管理者に直接相談してみて下さい。
+
+--- 貴方から送られた message を添付しておきます ---
+
+</text/mod-sub-confirm#E/>
+以下の address
+
+!A
+
+を mailing list <#L#> の
+購読者として加えて欲しい旨の request が届きました。
+（この request が購読希望者本人からの request の場合は、
+  必要な確認は済んでいます）
+
+購読を認める場合は、空の message を以下の address
+
+!R
+
+に reply して下さい。
+
+通常は Mail User Agent (MUA) の reply の機能だけで十分な筈です。
+それがうまく行かない場合は、
+
+        To: <#R#>
+
+を手動で設定して message を送って下さい。
+</#xE/>
+
+MUA によっては
+
+        mailto:<#R#>
+
+を click するだけで準備が出来るでしょう。
+</#E/>
+
+購読を認めない場合は、この message を無視してください。
+
+</text/mod-unsub-confirm#E/>
+以下の address
+
+!A
+
+を mailing list <#L#> から
+外すのであれば、以下の address
+
+!R
+
+宛に reply して下さい。
+
+通常は Mail User Agent (MUA) の reply の機能だけで十分な筈です。
+それがうまく行かない場合は、
+
+        To: <#R#>
+
+を手動で設定して message を送って下さい。
+</#xE/>
+
+MUA によっては
+
+        mailto:<#R#>
+
+を click するだけで準備が出来るでしょう。
+</#E/>
+
+脱退を認めない場合は、この message を無視して下さい。
+
+</text/sub-bad#E/>
+確認の為の key が不正です。
+
+幾つかの理由が考えられますが、もっとも多いのが期限切れに
+よるものです。確認は約 10日以内に行われなければなりません。
+また、e-mail を扱う環境によっては ezmlm が使っている長い
+address を切り詰めてしまう事があるので、全ての address が
+正しく伝わっているかどうか確認してみて下さい。
+
+新しい key を用意しました、以下の address
+
+!A
+
+を mailing list <#L#> に
+加えたい場合は、空の message を以下の address
+
+!R
+
+に送って下さい。
+</#xE/>
+
+Mail User Agent (MUA) によっては
+
+        mailto:<#R#>
+
+を click するだけで確認の message を送る準備も出来るでしょう。
+</#E/>
+
+繰り返す様ですが、reply の address 全てが正しく取り込まれて
+いるか、送信前に確認して下さい。
+
+もしうまく行かない様なら
+
+        <#L#>-Owner <<#L#>-owner@<#H#>>
+
+に連絡を下さい。
+
+</text/sub-confirm#E/>
+以下の address
+
+!A
+
+を mailing list <#L#>
+に加える事を認める場合は、空の message を
+
+!R
+
+に返信して下さい。
+
+通常は Mail User Agent (MUA) の reply の機能を使うだけでしょう。
+
+それでうまく行かない場合は
+
+        To:<#R#>
+
+として message を作成して下さい。
+</#xE/>
+
+MUA によっては
+
+        mailto:<#R#>
+
+を click するだけ準備が出来るものもあるでしょう。
+</#E/>
+
+この確認には以下の二つの意味があります。
+
+        * 指定された address で message が送信出来るか否か
+        * 貴方の address を偽った request を排除する
+
+</#qE/>
+e-mail を扱う環境によっては、ezmlm が使う長い address を
+うまく扱えない事があります。その様な場合は以下の address
+
+        <<#L#>-request@<#H#>>
+
+に "Subject: <#R#>" として
+message を送って下さい。
+
+</#sE/>
+mailing list <#L#> は moderated な mailing list です。
+貴方がこの確認を送信すると、全ての管理者宛てに貴方の購読を認めるか否か
+の確認が届きます。管理者が購読を承認した後、貴方宛てにその旨の通知が
+届くはずです。
+
+</text/sub-nop#E/>
+以下の address
+
+!A
+
+は既に mailing list <#L#> の
+購読者になっています。
+
+</text/sub-ok#E/>
+以下の address
+
+!A
+
+を mailing list <#L#> に加えました。
+
+        -       -       -       -       -       -       -       -       -
+
+[[[ Welcome to <#L#>@<#H#>! ]]]
+
+後で確認のために必要になる事がありますので、この message は
+忘れず保存しておいて下さい。
+
+購読を中止する場合は、以下の address 宛てに空の message を送って下さい
+
+    <<#l#>-unsubscribe-<#t#>@<#H#>>
+
+</text/top/>
+こんにちは。私は ezmlm
+
+mailing list <#L#>@<#H#> を管理しています。
+
+</#x/>
+この mailing list の主宰者には
+
+        <#L#>-owner@<#H#>
+
+で連絡することが出来ます。
+
+</text/unsub-bad#E/>
+送られてきた確認の為の key が正しくありません。
+
+幾つかの理由が考えられますが、もっとも多いのが期限切れに
+よるものです。確認は約 10日以内に行われなければなりません。
+また、e-mail を扱う環境によっては ezmlm が使っている長い
+address を切り詰めてしまう事があるので、全ての address が
+正しく伝わっているかどうか確認してみて下さい。
+
+新しい key を用意しました、以下の address
+
+!A
+
+を mailing list <#L#> から
+外したい場合は、空の message を以下の address
+
+!R
+
+に送って下さい。
+</#xE/>
+
+Mail User Agent (MUA) によっては
+
+        mailto:<#R#>
+
+を click するだけで確認の message を送る準備も出来るでしょう。
+</#E/>
+
+繰り返す様ですが、reply の address 全てが正しく取り込まれて
+いるか、送信前に確認して下さい。
+
+もしうまく行かない様なら
+
+        <#L#>-Owner <<#L#>-owner@<#H#>>
+
+に連絡を下さい。
+
+</text/unsub-confirm#E/>
+以下の address
+
+!A
+
+を mailing list <#L#> の
+購読者から外したい場合は、空の message を以下の address
+
+!R
+
+迄送って下さい。
+
+通常は Mail User Agent (MUA) の reply の機能を使えば大丈夫です。
+
+もし、それでうまく行かない場合は、
+
+        To: <#R#>
+
+として message を作成して下さい。
+</#xE/>
+
+また、Mail User Agent (MUA) によっては
+
+        mailto:<#R#>
+
+を click して message を作成する事も出来るでしょう。
+</#E/>
+
+貴方の address が購読者か否かは check していません。
+どの address で購読をしているのかは、mailing list から
+送られてくる message の "Return-Path:" の所に埋め込まれて
+います。例えば、mary@xdd.ff.com が購読の address なら
+
+        Return-Path: <<#L#>-return-<number>-mary=xdd.ff.com@<#H#>>
+
+という具合いです。
+
+</#qE/>
+環境によっては、長い address をうまく扱えない場合が有ります。
+この message に reply をうまく返せない様なら、以下の address
+
+        <<#L#>-request@<#H#>>
+
+に "Subject: <#R#>" を付けて送って下さい。
+
+</text/unsub-nop#E/>
+以下の address
+
+!A
+
+は mailing list <#L#> の
+購読者ではありません。
+
+        -       -       -       -       -       -       -       -
+
+購読を止めたにも関わらず、mailing list <#L#>
+からの mail が届く場合は、貴方が現在使っている e-mail address とは
+違う address で mailing list <#L#> を
+購読しているのかもしれません。
+
+hearder の以下の部分に
+
+'Return-Path: <<#L#>-return-1234-user=host.dom@<#H#>>'
+
+貴方がどの address で購読をしているのかが現れています。
+（この場合、user@host.dom で購読をしていることになります）
+
+address を明示して購読中止の request を出す場合は、以下の様に
+
+        <<#L#>-unsubscribe-user=host.dom@<#H#>>
+
+'<#L#>-unsubscribe-' の後ろに、user@host.dom を user=host.dom に
+書き換えた物を繋いで下さい。
+
+幾つかの Mail User Agent (MUA) は、Return-Path を見るためには
+特別な操作を必要になります。
+
+        * Eudora 4.0 だと『Blah blah ...』ボタンを click する
+        * PMMail だと Window menu の『Show entire message/header』
+          ボタンを click する
+
+        -       -       -       -       -       -       -       -
+
+address を明示した購読中止もうまくいかない場合は、申し訳ありませんが
+
+        * 貴方が何をしようとして失敗したのか
+        * ezmlm からの message
+        * 購読中止を希望する address
+
+を添付して、mailing list <#L#> の owner の
+
+    <#L#>-owner@<#H#>
+
+迄送って下さい。（返事に時間がかかるかもしれませんがご了承下さい）
+
+</text/unsub-ok#E/>
+以下の address
+
+!A
+
+を mailing list <#L#> の購読者から外しました。
+
+</text/edit-do#nE/>
+添付された message text を編集して、以下の address
+
+!R
+
+宛に返送して下さい。
+
+『%%%』で始まる行が message text 開始の marker line に
+なっています。
+
+（この行に貴方の使っている Mail User Agent (MUA) での
+  引用の印 (ex. foo>%%%) が付加されている場合は、message text
+  本体の部分に付いた引用の印は自動除去されます）
+
+</text/edit-list#nE/>
+管理者は <#L#>-edit.FILE command を使うことで ezmlm が出力する
+mailing list <#L#> の為の message text を編集することが出来ます。
+
+以下は編集可能な FILE と、その目的です。file FOO を編集したい
+場合は <#L#>-edit.FOO 宛に空の message を送って下さい。
+編集の仕方は送信される message に含まれています。
+
+File                Use
+
+bottom              ezmlm の command 一覧です。
+                    ezmlm が返送する全ての message に付加されます。
+digest              digest 版の為の command の説明です。
+faq                 mailing list <#L#> での FAQ です。
+get_bad             archive 中に指定された message を見付けられなかった場合に
+                    送られます。
+help                help message です（'top' と 'bottom' の間に入ります）
+info                mailing list <#L#> の情報です。
+mod_help            管理者向けの help message です。
+mod_reject          管理者が受理しなかった post の送り主に対して送られます。
+mod_request         moderated な mailing list に対して post があった場合
+                    管理者に送られます。
+mod_sub             購読希望者に対して、管理者が購読 request を受理した時に送られます。
+mod_sub_confirm     管理者に対して購読 request の確認のため送られます。
+mod_timeout         管理者が受理せず時間切れになった post の送信者に送られます。
+mod_unsub_confirm   管理者に対して購読中止の確認を取る場合に送られます。
+sub_bad             購読希望者からの購読確認の為の応答が不正な場合に送られます。
+sub_confirm         購読希望者に対して、確認のために送られます。
+sub_nop             既に購読者になっている人が再び購読 request を出した場合に
+                    送られます。
+sub_ok              購読の手続きが終了した後に送られます。
+top                 ezmlm が送信する全ての応答の頭に付きます。
+</#tnE/>
+trailer             この mailing list に対する全ての post の末尾に
+                    付け足されて送られます。
+</#nE/>
+unsub_bad           購読者からの購読中止確認が不正な場合に送られます。
+unsub_confirm       購読者からの購読中止の request の確認のために送られます。
+unsub_nop           購読者以外が購読を中止しようとした時に送られます。
+unsub_ok            購読者からの購読中止の request が受理された時に送られます。
+
+</text/edit-done#nE/>
+message text の更新に成功しました。
+
+</text/info#E/>
+--- mailing list <#L#>@<#H#> について ---
+（現在工事中です）
+</text/faq#E/>
+--- mailing list <#L#>@<#H#> に関して、よく尋ねられる質問とその答え ---
+（現在工事中です）
+

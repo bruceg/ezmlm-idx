@@ -1,0 +1,52 @@
+Like any other piece of software (and information generally), ezmlm
+comes with NO WARRANTY.
+
+
+Things you have to decide before starting:
+
+* Where programs will be installed, normally /usr/local/bin/ezmlm. To
+change this directory, edit conf-bin now.
+
+* Where man pages will be installed, normally /usr/local/man. To change
+this directory, edit conf-man now.
+
+* Where the qmail home directory is, normally /var/qmail. To change this
+directory, edit conf-qmail now.
+
+
+How to install:
+
+ 1. Compile the programs:
+       % make
+ 2. Format the man pages:
+       % make man
+ 3. Install the programs and man pages:
+       # make setup
+
+
+How to test:
+
+ 4. Make sure ezmlm-make is in your path. Create a mailing list:
+       % ezmlm-make ~/testlist ~/.qmail-testlist me-testlist host
+    Replace ``me'' and ``host'' with your e-mail address.
+ 5. Subscribe yourself to the list manually:
+       % ezmlm-sub ~/testlist me@host
+ 6. Send a message to the list:
+       % echo subject:testing | qmail-inject me-testlist@host
+    You should receive a copy of the message at me@host.
+ 7. View the list membership:
+       % ezmlm-list ~/testlist
+    You should see just one line, containing your address.
+ 8. Unsubscribe yourself through e-mail:
+       % qmail-inject me-testlist-unsubscribe@host < /dev/null
+    When you receive the confirmation number, reply to complete your
+    unsubscription. Use ezmlm-list to check that the list is empty.
+ 9. Retrieve the first message from the archive:
+       % qmail-inject me-testlist-get.1@host < /dev/null
+    You should receive a copy of your subject:testing message.
+
+
+That's it! To report success:
+       % ( echo 'First M. Last'; cat `cat SYSDEPS` ) \
+         | mail djb-qst@koobera.math.uic.edu
+Replace First M. Last with your name.

@@ -1,0 +1,61 @@
+.TH subfd 3
+.SH NAME
+subfd \- standard input, output, error for substdio
+.SH SYNTAX
+.B #include <subfd.h>
+
+substdio *\fBsubfdin\fP;
+.br
+substdio *\fBsubfdout\fP;
+.br
+substdio *\fBsubfderr\fP;
+
+int \fBsubfd_read\fP(\fIfd\fR,\fIbuf\fR,\fIlen\fR);
+
+substdio *\fBsubfdinsmall\fP;
+.br
+substdio *\fBsubfdoutsmall\fP;
+
+int \fBsubfd_readsmall\fP(\fIfd\fR,\fIbuf\fR,\fIlen\fR);
+
+int \fIfd\fR;
+.br
+char *\fIbuf\fR;
+.br
+int \fIlen\fR;
+.SH DESCRIPTION
+.B subfderr
+writes data to descriptor 2.
+
+.B subfdout
+writes data to descriptor 1.
+
+.B subfdin
+reads data from descriptor 0.
+It coordinates with
+.BR subfdout :
+it flushes
+.B subfdout
+before refilling its buffer.
+This eliminates the need for
+.B subfdout
+flushing in most programs.
+To set up the same flushing mechanism for another input descriptor,
+use
+.B subfd_read
+in place of
+.BR read .
+
+.BR subfdoutsmall ,
+.BR subfd_readsmall ,
+and
+.B subfdinsmall
+behave the same way as
+.BR subfdout ,
+.BR subfd_read ,
+and
+.BR subfdin ,
+except that they use small (256-byte) buffers.
+This is appropriate for programs that read data in small chunks.
+.SH "SEE ALSO"
+substdio(3)

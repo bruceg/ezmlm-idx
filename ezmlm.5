@@ -1,0 +1,942 @@
+.TH ezmlm 5
+.SH NAME
+ezmlm \- format of ezmlm directory
+.SH OVERVIEW
+An
+.B ezmlm
+directory,
+.IR dir ,
+stores information about an
+.B ezmlm
+mailing list.
+.B ezmlm-make
+creates
+.IR dir ;
+.B ezmlm-sub
+and
+.B ezmlm-unsub
+manipulate the subscriber list stored under
+.IR dir ;
+.B ezmlm-manage
+handles administrative requests automatically;
+.B ezmlm-send
+sends a message to all subscribers listed in
+.I dir
+and also maintains a message archive and message subject index if the list
+is configured to do so.
+.B ezmlm-reject
+rejects messages that have an empty subject, or a subject consisting of
+only a command word;
+.B ezmlm-return
+handles bounces;
+.B ezmlm-warn
+warns users for which messages bounce and eventually removes them from
+the subscriber list.
+.B ezmlm-idx
+can create a subject index from an existing list archive.
+.B ezmlm-get
+manages message, index, and thread retrieval from the archive, as well
+as the generation of message digests;
+.B ezmlm-cron
+provides a restricted interface to cron for the generation of
+digest generation trigger messages;
+.B ezmlm-store
+queues messages of moderated lists and sends a moderation request to
+the moderator(s);
+.B ezmlm-moderate
+processes moderation requests to accept the queued message to the list
+via
+.B ezmlm-send,
+or to return the message to the sender;
+.B ezmlm-clean
+cleans up the moderation queue and returns to the sender
+any messages that have timed-out;
+.B ezmlm-gate
+posts messages that come from a SENDER in an address database, and sends
+remaining messages out for moderation;
+.B ezmlm-check
+is used to diagnose problems with ezmlm mailing list configuration;
+.B ezmlm-issub
+and
+.B ezmlm-issubn
+determine if a SENDER is a subscriber or a member of a
+collection of addresses;
+.B ezmlm-tstdig
+determines if it is time to create a new digest based on the number and
+volume of messages and the amount of time that has passed since the last
+digest was issued;
+.B ezmlm-request
+can be used to answer
+.B ezmlm
+commands in the subject line easing migration from other mailing list
+managers. It can also function as a global interface mimicking
+the interface of other mailing list manager.
+.B ezmlm-glmake
+can set up the global interface, and
+.B ezmlm-glconf
+can create a configuration file for the global interface from your lists.
+.SH SUBSCRIBERS
+.I dir\fB/subscribers
+is a directory containing the subscriber list.
+.B ezmlm-manage
+allows automatic subscription if
+.I dir\fB/public
+exists.
+
+The list is hashed into 53 files, named
+.B @ 
+through
+.B t
+in ASCII.
+A nonexistent file is treated as an empty file.
+
+Each file contains a series of addresses.
+An address can be any string of non-NUL characters up to 400 bytes long.
+Each address is preceded by the letter T and followed by a NUL.
+
+For reliability,
+when an address is added to or removed from the mailing list,
+the relevant file is recreated under a temporary name
+inside
+.I dir\fB/subscribers
+and then moved into place.
+
+.I dir\fB/key
+is a binary file.
+.B ezmlm-manage
+uses
+.I dir\fB/key
+to create confirmation numbers.
+Anyone who can guess the contents of
+.I dir\fB/key
+can forge subscription requests.
+.B ezmlm-make
+does not put much effort into making
+.I dir\fB/key
+difficult to guess;
+for better security, you should add some random garbage to
+.IR dir\fB/key .
+.SH ARCHIVE
+.I dir\fB/archive
+is a directory containing messages previously sent to subscribers.
+.B ezmlm-send
+archives all new messages if
+.I dir\fB/archived
+exists. If
+.I dir\fB/indexed
+exists,
+.B ezmlm-send
+also maintains a message subject and author index.
+
+Messages sent to the mailing list are numbered from 1 upwards,
+whether or not they are archived.
+.I dir\fB/num
+is the number of messages sent so far followed by ':', followed by the
+cumulative amount of message body that has passed
+.B ezmlm-send
+stored as kbytes * 4 (4 corresponds to 1kb).
+
+.I dir\fB/archive
+has subdirectories,
+each subdirectory storing up to 100 messages.
+Message number 100m+n, with n between 0 and 99, is stored in
+.IR dir\fB/archive/\fIm\fB/\fIn .
+For example, message number 15307 is stored in
+.IR dir\fB/archive/153/07 .
+The message index is stored in the file
+.B index
+in the same subdirectory of
+.I dir\fB/archive
+holding the corresponding messages.
+Thus, the subject index contains up to 100 entries.
+
+The subject index contains message subjects that are normalized so that
+the original message and all replies have the same entry. The subject index
+is used for advanced message retrieval functions. For safety, the subject
+index is created under a temporary name
+inside
+.I dir\fB/archive
+and then moved into place.
+
+.B ezmlm-manage
+will ignore message files without the owner-execute bit set.
+.B ezmlm-send
+turns on the owner-execute bit after safely writing the message to disk.
+
+.B ezmlm-make
+by default adds
+.B ezmlm-get
+to
+.I dir\fB/manager
+to handle 
+.I \-get, \-index,
+and
+.I \-thread
+requests. If
+.B ezmlm-make
+is invoked with a 
+.I digcode
+command line argument, digest creation
+is enabled by putting this argument on the
+.B ezmlm-get
+command line.
+.SH BOUNCES
+.I dir\fB/bounce
+is a directory containing bounce messages.
+.B ezmlm-return
+stores several types of files here.
+.SH "DELIVERY INSTRUCTIONS"
+.B ezmlm-make
+sets up four files to control mailing list deliveries.
+Each file is a series of delivery instructions in
+.B dot-qmail
+format.
+
+.I dir\fB/editor
+handles incoming mailing list submissions.
+.B ezmlm-make
+sets up
+.I dir\fB/editor
+to invoke
+.B ezmlm-send
+to immediately forward each message to all subscribers
+and then to run
+.BR ezmlm-warn .
+
+.I dir\fB/owner
+handles incoming messages for the mailing list's owner.
+.B ezmlm-make
+sets up 
+.I dir\fB/owner
+to store messages in
+.I dir\fB/Mailbox
+and then to run
+.BR ezmlm-warn .
+
+.I dir\fB/bouncer
+handles incoming bounce messages.
+.B ezmlm-make
+sets up
+.I dir\fB/bouncer
+to invoke
+.BR ezmlm-return .
+.B ezmlm-warn
+is no longer invoked here due to the load it places on systems with many
+large lists with many bounces.
+
+.I dir\fB/manager
+handles incoming administrative requests.
+.B ezmlm-make
+sets up
+.I dir\fB/manager
+to invoke
+.BR ezmlm-get ,
+.BR ezmlm-manage ,
+and then
+.BR ezmlm-warn .
+
+.I dir\fB/moderator
+handles incoming message
+.I accept
+and
+.I reject
+requests for moderated lists.
+.B ezmlm-make
+sets up
+.I dir\fB/moderator
+to invoke
+.BR ezmlm-moderate ,
+and .BR ezmlm-clean .
+.SH DIGESTS
+.B ezmlm-get
+can create digests if it is invoked from the command line, from
+.IR dir\fB/editor ,
+or from
+.IR dir\fB/manager .
+The program functions in slightly different ways in these 3 settings (see
+.BR ezmlm-get(1) ).
+
+To enable automatic digests for a mailing list, use the
+.B ezmlm-make \-d
+switch. To also enable the generation of digests at specific times dictated
+by mailed trigger messages, a
+.I digcode
+should be specified on the
+.B ezmlm-get
+command line.
+This can be done by specifying
+.I digcode
+as a fifth argument to
+.B ezmlm-make
+when setting up the list.
+.I digcode
+must be alphanumeric and is case-insensitive.
+
+To generate trigger messages, use
+.B ezmlm-cron(1)
+as an interface to
+.B crond(8)
+or use
+.B crond
+directly.
+
+.I dir\fB/num
+contains the number of the last message processed, followed by ':' and a
+number that is increased by 1 for each 256 bytes of message body text
+processed. The latter number is used by
+.B ezmlm-tstdig
+to determine if a new digest is due.
+
+.I dir\fB/dignum
+contains the contents of
+.I dir\fB/num
+at the time of the last regular digest creation, followed by a ':',
+followed by a timestamp.
+It is updated after each regular digest is sent.
+
+.I dir\fB/digissue
+contains the issue number of the last regular digest. It is incremented
+for each regular digest sent.
+
+The following user crontab entry (all on one line)
+generates a digest of the list
+.I list@host.domain
+at 1600 every day:
+
+.EX
+  00 16 * * * /var/qmail/bin/qmail-inject list-dig.digcode
+.EE
+
+Alternatively,
+.B ezmlm-cron
+can be used:
+
+.EX
+  % ezmlm-cron -t 16:00 list@host digcode
+.EE
+
+.B ezmlm-get
+can also be run from the shell: To generate a digest to
+.I list-digest@host
+from the list housed in
+.IR ~joe/list :
+
+.EX
+  % ezmlm-get ~joe/list
+.EE
+
+Like other
+.B ezmlm-get
+replies, digest can be sent in several formats. See
+.B ezmlm-get(1)
+for more info.
+.SH MODERATION
+There are three aspects of moderation: moderation of posts, moderation
+of subscriptions, and "remote administration", i.e. giving the
+moderator the right to (un)subscribe any user.
+.B ezmlm
+handles these three aspects separately. The two first aspects enhance
+security, while the third decreases security, but makes list administration
+considerably easier. By default, the moderator database is the same for all
+three functions. While "remote administration" and subscription moderation
+always use the same database, the moderators for message moderation can
+be different.
+
+Even with subscription moderation, the user has to verify the request. This
+is to ensure that the user initiating the request really controls the address.
+.B ezmlm-manage
+options exist to disable the user handshake, which may be useful in some
+circumstances.
+
+For moderation options, the moderators are by stored in a subscriber
+list in
+.IR moddir\fB/subscribers .
+By default
+.I moddir
+is
+.IR dir\fB/mod .
+
+Moderators can be added and removed with:
+
+.EX
+.B ezmlm-sub
+.I moddir
+.I moderator@host
+.EE
+
+.EX
+.B ezmlm-unsub
+.I moddir
+.I moderator@host
+.EE
+
+For subscription moderation, touch
+.IR dir\fB/modsub
+after adding moderator(s).
+For remote administration, touch
+.IR dir\fB/remote .
+If the contents of these files start with a leading forward slash, it is 
+assumed to be the name of
+.B moddir
+subscription
+moderation. If both files exist and start with a forward slash, the
+.I dir\fB/remote
+contents are ignored. Moderators are stored in a subscriber list in the
+.B subscribers
+subdirectory of
+.BR moddir .
+If no directory names are specified,
+the default,
+.IR dir\fB/mod ,
+is used.
+In all cases, the
+.I subscribers
+subdirectory of the base directory must exists/be created.
+
+Moderation of messages is achieved by
+creating
+.I dir\fB/modpost
+and  modifying
+.IR dir\fB/editor
+to invoke
+.B ezmlm-store.
+.B ezmlm-store
+stores the message in
+.IR dir\fB/mod/pending
+and sends a moderation request to all moderators stored in
+.IR moddir .
+
+If
+.I dir\fB/modpost
+does not exist,
+.B ezmlm-store
+posts messages directly, and
+.B ezmlm-clean
+does nothing.
+
+If
+.I dir\fB/modpost
+contains a directory name starting with a forward slash,
+this directory is used as
+.I moddir
+for message moderation.
+Moderators are stored in a subscriber list in the
+.I subscribers
+subdirectory of
+.IR moddir .
+If no directory names are specified,
+the default,
+.IR dir\fB/mod ,
+is used.
+
+.IR dir\fB/moderator
+is linked to
+.IR dot\fB\-accept-default
+and
+.IR dot\fB\-reject-default .
+It handles replies from the moderators.
+
+In addition to a moderator list, the directories
+.IR dir\fB/mod/pending ,
+.IR dir\fB/mod/accepted ,
+and
+.IR dir\fB/mod/rejected
+must exist. These directories contain the message moderation queue.
+
+If
+.IR dir\fB/mod/modtime
+it determines the minimal time in hours that messages wait in the moderation
+queue, before they are returned to sender with the message in
+.IR dir\fB/text/mod-timeout .
+
+If a
+.I \-help
+command is send for a moderator and
+.IR dir\fB/modsub
+or
+.IR dir\fB/remote
+exist, a more detailed help message stored in
+.I dir\fB/text/mod-help
+will be sent together with the regular help. This text should not contain
+secrets.
+If
+.I dir\fB/text/mod-help
+does not exist,
+.I dir\fB/text/help
+will be sent.
+
+If a
+.I \-list
+command is sent for a moderator and
+.IR dir\fB/modsub
+or
+.IR dir\fB/remote
+exist, and the
+.B ezmlm-manage \-l
+command line switch is specified, a subscriber list will be returned.
+
+If an
+.I \-edit.file
+command is sent for a moderator and
+.IR dir\fB/remote
+exist, and the
+.B ezmlm-manage \-d
+command line switch is specified,
+.B text\fB/file
+is returned together with an
+.B ezmlm
+cookie. The remote administrator may return an edited version of the
+file, which will be stored, provided that the cookie is valid.
+See
+.B ezmlm-manage(1)
+for more info.
+.SH TEXT
+.I dir\fB/text
+is a directory
+containing files sent out by
+.B ezmlm-manage
+in response to administrative requests:
+.TP 15
+.B top
+Introducing
+.BR ezmlm .
+This is placed at the top of each response.
+.TP
+.B bottom
+Explaining how to use
+.BR ezmlm .
+This is placed at the bottom of each response.
+.TP
+.B sub-confirm
+Explaining how to confirm a subscription request.
+.TP
+.B sub-ok
+Acknowledging successful subscription.
+.TP
+.B sub-nop
+Acknowledging a subscription request for an address already
+on the mailing list.
+.TP
+.B sub-bad
+Rejecting a bad subscription confirmation number.
+.TP
+.B unsub-confirm
+Explaining how to confirm an unsubscription request,
+and explaining how to figure out the subscription address.
+.TP
+.B unsub-ok
+Acknowledging successful unsubscription.
+.TP
+.B unsub-nop
+Acknowledging an unsubscription request for an address not
+on the mailing list.
+.TP
+.B unsub-bad
+Rejecting a bad unsubscription confirmation number.
+.TP
+.B get-bad
+Rejecting a bad archive retrieval request.
+.TP
+.B digest
+Text copied into the
+.I Administrativia
+section of the digest. Usually, this will contain subscription info
+for the digest, as well as information on how to post to the list.
+.TP
+.B trailer
+If this files exists, it is copied to the end of all messages to the list.
+.TP
+.B faq
+Sent in response to the
+.I faq
+command. Usually contains frequently asked questions and answers specific
+for the mailing list.
+.TP
+.B info
+Sent in response to the
+.I info
+command. Usually contains a descripition, policy, etc, for the list. The
+first line should in itself be a very brief description of the list.
+.TP
+.B bounce-warn
+Pointing out that messages have bounced.
+.TP
+.B bounce-probe
+Pointing out that a warning message has bounced.
+.TP
+.B bounce-num
+Explaining that
+.B ezmlm-return
+has kept a list of bounced message numbers.
+.TP
+.B dig-bounce-num
+Explaining that digest messages have bounced. All other text files are used
+for both the main list and the digest list.
+.TP
+.B bounce-bottom
+Separating the bounce message.
+.TP
+.B mod-help
+is set to list moderators issuing a
+.I \-help
+command. It contains instructions for moderators, but it is relatively
+trivial for a non-moderator to read it. Don't put secrets here.
+.TP
+.B mod-reject
+is the returned to the sender of a rejected post.
+.TP
+.B mod-timeout
+is returned if the message timed-out without moderator action.
+.TP
+.B mod-sub
+is added to the text confirming subscription and unsubscription
+instead of
+.B bottom
+and the requesting message, for actions that were approved
+by a moderator. Not copying the requesting message
+hides the moderator identity
+from the subscriber.
+.TP
+.B mod-request
+is the text sent to the moderators to request moderator action on
+a posted message.
+.TP
+.B mod-unsub-confirm
+Requesting that the moderator confirm a request to subscribe.
+If this file does not exist,
+.B sub-confirm
+will be used.
+.TP
+.B mod-unsub-confirm
+Requesting that the moderator confirm a request to unsubscribe.
+If this file does not exist,
+.B unsub-confirm
+will be used.
+.TP
+.B edit-do
+Instructions sent to the remote administrator together with a copy
+of a
+.I dir\fB/text
+file and editing instructions.
+.TP
+.B edit-list
+A list of editable files in
+.I dir\fB/text
+with a one-line description send to a remote administrator in response to a
+.I -edit
+command.
+.TP
+.B edit-done
+Sent to the remote administrator after an edited
+.I dir\fB/text
+file has been successfully saved.
+.PP
+Several tags in the text files are replaced by ezmlm programs.
+All programs replace the tag
+.B <#l#>
+with the name of the list or the list-digest, as appropriate for the request,
+and
+.B <#h#>
+with the hostname for the list.
+.B ezmlm-send
+and
+.B ezmlm-get
+replace
+.B <#n#>
+with the current message number in added headers from
+.I dir\fB/headeradd
+and text files.
+.B ezmlm-get
+does this for digest messages, where the current message is the number of
+the first message in the digest.
+.B ezmlm-manage
+replaces the tag
+.B <#A#>
+anywhere on a line with the subscription address, and
+.B <#R#>
+anywhere on a line
+with the address the subscriber must reply to. Only the first tag on any
+line is processed.
+.PP
+For backwards compatibility,
+.B ezmlm-manage
+replaces the line
+.B !A
+in any of these files
+with the name of the subscription address.
+It replaces the line
+.B !R
+in
+.B sub-confirm
+and
+.B unsub-confirm
+with the address that the subscriber must reply to.
+.PP
+.B ezmlm-store
+replaces the tag
+.B <#A#>
+anywhere on a line with the address for accepting the message, and
+.B <#R#>
+anywhere on a line
+with the address for rejecting the message.
+Only the first tag on any line is processed.
+.PP
+For backwards compatibility,
+.B ezmlm-store
+also replaces the line
+.B !A
+with the address for accepting the message and the line
+.B !R
+with the address for rejecting the message.
+.SH "OUTGOING MESSAGE EDITING"
+.I dir\fB/headerremove
+is a list of bad header field names,
+one per line.
+.B ezmlm-send
+removes these header fields from all outgoing messages.
+.B ezmlm-make
+sets up
+.I dir\fB/headerremove
+to remove
+.BR Return-Path ,
+.BR Return-Receipt-To ,
+and
+.B Return-Path
+fields.
+
+.I dir\fB/headeradd
+is a list of new header fields.
+.B ezmlm-send
+adds these fields to every outgoing message.
+.B ezmlm-send
+sets up
+.I dir\fB/headeradd
+to add
+.B X-No-Archive: yes
+and
+.BR Precedence: bulk .
+
+If
+.I dir\fB/mimeremove
+exists,
+.B ezmlm-send
+removed parts with the corresponding content-types from composite MIME
+messages. If the
+.B ezmlm-reject
+.I dir
+argument is specified,
+simple MIME messages of these content-types are rejected.
+
+If
+.I dir\fB/mimereject
+exists, and the
+.B ezmlm-reject
+.I dir
+argument is specified,
+simple MIME messages of these content-types, or
+composite MIME messages with any body part of these content-types are rejected.
+
+If
+.I dir\fB/sequence
+exists, the first line is added as a header to all outgoing messages, followed
+by a space and the message number. The message number is useful for archive
+retrievals, since some mail systems do not reveal the return-path to the user.
+.B NOTE:
+Sublists have their own message counter. Adding a sequence header from a
+sublists will give you the sublist message number which is different from
+the main list message number.
+
+.I dir\fB/prefix
+is a subject prefix. If this file exists, its contents are prefixed to the
+subject of the post in the outgoing message. The archived message is not
+processed. Attempts are made to not duplicate an existing prefix in replies.
+Think twice before using this option.
+A prefix takes unnecessary space on the subject line and most mail clients
+can easily filter on other headers, such as 'Mailing-List:'. If
+.I dir\fB/prefix contains a single '#', this will be replaced by the message
+number. The use of this feature is inadvisable and violates internet mail
+standards. However, it is very popular in e.g. Japan. If you must use this
+feature, make sure you are aware that you may be causing problems to users,
+sublists, etc.
+
+.I dir\fB/text/trailer
+is a message trailer. If this file exists, it's contents are copied to the 
+end of outgoing messages. Only lines terminated with new-line are copied.
+No trailer is copied to the archived version of the message.
+.SH MISCELLANY
+The first line of
+.I dir\fB/mailinglist
+is a line of text.
+.B ezmlm-send
+creates a new
+.B Mailing-List
+field, showing the contents of
+.IR dir\fB/mailinglist ,
+in every outgoing message.
+
+If
+.I dir\fB/listid
+exists,
+ezmlm programs create a new
+.B List-ID
+field, showing the contents of the first line of
+.IR dir\fB/listid ,
+in every outgoing message. The list-id should be unique and within name
+space controlled by the owner. It should remain constant even if lists
+move and be of the format
+
+.EX
+List-ID: optional_text <unique_id.domain>
+.EE
+
+This header would result from a
+.I dir\fB/listid
+file containing ``optional_text <unique_id.domain>''. See
+.I http://www.within.com/~chandhok/ietf/listid.shtml
+for more info.
+
+The first lines of
+.I dir\fB/outlocal
+and
+.I dir\fB/outhost
+give the outgoing name of the mailing list.
+These are used by
+.B ezmlm-manage
+and
+.B ezmlm-send
+to construct sender addresses for outgoing messages.
+
+The first lines of
+.I dir\fB/inlocal
+and
+.I dir\fB/inhost
+give the incoming name of the mailing list.
+These are used by
+.B ezmlm-manage
+to parse incoming envelopes.
+Normally
+.I inlocal
+and
+.I inhost
+are the same as
+.I outlocal
+and
+.IR outhost ,
+but sometimes they are different,
+with
+.I outlocal\fB@\fIouthost
+forwarded to
+.IR inlocal\fB@\fIinhost .
+
+If
+.I dir\fB/sublist
+exists,
+this mailing list is a sublist,
+redistributing messages from a parent mailing list.
+The first line of
+.I dir\fB/sublist
+is the name of the parent list.
+This affects the behavior of
+.BR ezmlm-send .
+
+If
+.I dir\fB/qmqpservers
+exists,
+.B ezmlm-send
+and
+.B ezmlm-get
+will use
+.B qmail-qmqpc(1)
+to send posts and digests. Other mail will use the normal qmail mechanism.
+If
+.B qmail-qmqpc
+is modified correctly, server IP addresses listed one per line in
+.I dir\fB/qmqpsevers
+will be tried in order, rather than the default servers specified in
+.IR /var/qmail/control .
+
+If
+.I dir\fB/msgsize
+exists, it is assumed to contain ``max:min'', where ``max'' is the maximum
+size in bytes of an acceptable message body, and ``min'' the corresponding
+minimal size. Either will be ignored if zero or omitted. If the
+.B ezmlm-reject
+command line specifies the list directory, messages not meeting the size
+criteria are rejected.
+
+If
+.I dir\fB/charset
+exists, the first line is assumed to represent a valid MIME character set,
+which is used for all outgoing MIME messages sent by
+.B ezmlm-get 
+and the message moderation programs. The character set string may be suffixed
+with ':' and 'Q' or 'B' to send all outgoing
+text (ezmlm messages, digest table-of-contents, moderation requests, etc)
+encoded in ``Quoted-Printable'' or ``base64'' encoding. By default, no encoding
+is done, which may result in the transmission of characters with the high
+bit set. When encoding is specified, trigger messages and other parts of the
+reply that should not be encoded are sent as separate MIME parts.
+
+.I dir\fB/lock
+is an empty file.
+Any program that reads or writes the subscriber list,
+or adds messages to the archive,
+locks
+.IR dir\fB/lock .
+
+.I dir\fB/Log
+is an advisory log of subscription and unsubscription actions.
+.B WARNING:
+.B Log
+is not protected against system crashes.
+Log entries may be missing or corrupted if the system goes down. There is
+Log for each of the accessory address databases as well. Thus, the log
+for digest subscribers is
+.IR dir\fB/digest/Log .
+If enabled, these logs can be retrieved by remote administrators (see
+.BR ezmlm-manage(1) ).
+
+.I dir\fB/digest
+contains items specific for the digest list.
+
+.I dir\fB/digest/subscribers
+contains hash files of digest subscriber addresses.
+
+.IR dir\fB/digest/Log ,
+.IR dir\fB/digest/bounce ,
+.IR dir\fB/digest/lockbounce ,
+and
+.I dir\fB/digest/lock
+have functions for the digest list that mirror that of the corresponding
+files in
+.IR dir .
+
+.I dir\fB/sql
+contains SQL server access information for list that are configured to
+use an SQL database for storage.
+
+.I dir\fB/tstdig
+is a timestamp used temporarily by
+.B ezmlm-tstdig(1)
+to coordinate digesting.
+.SH "SEE ALSO"
+ezmlm-check(1),
+ezmlm-clean(1),
+ezmlm-gate(1),
+ezmlm-get(1),
+ezmlm-idx(1),
+ezmlm-issub(1),
+ezmlm-issubn(1),
+ezmlm-list(1),
+ezmlm-make(1),
+ezmlm-manage(1),
+ezmlm-moderate(1),
+ezmlm-request(1),
+ezmlm-return(1),
+ezmlm-send(1),
+ezmlm-store(1),
+ezmlm-sub(1),
+ezmlm-tstdig(1),
+ezmlm-unsub(1),
+ezmlm-warn(1),
+dot-qmail(5)

@@ -1,0 +1,210 @@
+.TH ezmlm-store 1
+.SH NAME
+ezmlm-store \- store messages posted to a moderated lists and send
+moderation requests to the moderator(s).
+.SH SYNOPSIS
+.B ezmlm-store [-bBcCmMpPrRsSvV]
+.I dir
+.SH DESCRIPTION
+.B ezmlm-store
+reads a mail message and
+stores it in
+.I dir\fB/mod/pending/.
+.B ezmlm-store
+also sends a moderation request with a copy of the message to the list of
+moderators stored in
+.I dir\fB/mod/subscribers/.
+If
+.I dir\fB/modpost
+contains a directory name,
+.IR moddir ,
+with a leading forward slash, the moderator list in
+.I /moddir/subscribers/
+is used instead. This allows separate sets of moderators for
+subscription and message moderation, as
+well as the use of the same moderator list for several
+.B ezmlm
+mailing lists, owned by the same user. If the
+.B \-s
+switch is used, the moderators are divided into two sets. Those pointed to by
+.I dir\fB/modpost
+which will receive confirmation requests for posts with their SENDER address,
+and those stored with the base directory
+.I dir\fB/mod/
+which will receive moderation requests for messages posted from SENDERs not
+part of the first group. This can be used to have a set of trusted
+users (``moderating'' themselves to thwart SENDER faking), and a set of more
+traditional moderators, which receive approval requests for other posts.
+
+.B Note:
+The contents of
+.I dir\fB/modpost
+do not affect the location of the message moderation queue.
+
+If SENDER is a moderator, the request is sent
+to that moderator only.
+
+The moderation request includes cookies for message rejection and acceptance.
+The moderator can take either action by replying to the appropriate address.
+For moderator convenience, the
+.I accept
+address is given in
+the ``Reply-To:'' header, and the
+.I reject
+address in the ``From:'' header.
+
+If the list is set up with remote administration and the sender is not a
+moderator, the ``Cc:'' header will contain a confirmation address to add
+the sender to the ``allow'' database. This allows the moderator to both
+approve the post and add the sender to the list of accepted posters by
+replying to ``all''.
+
+The (default) subject of all message moderation requests is
+.B MODERATE for\fI listname@host.
+
+Once the request has been successfully sent to the moderators, 
+.B ezmlm-store
+sets the owner-execute bit of the message in
+.I dir\fB/mod/pending/.
+Messages without this bit set are the result of incomplete executions of
+.B ezmlm-store
+and are ignored.
+
+At the beginning of the message,
+.B ezmlm-store
+prints a new
+.B Mailing-List
+field with the contents of
+.IR dir\fB/mailinglist .
+It rejects the message if there is already a
+.B Mailing-List
+field.
+
+.B ezmlm-store
+does not distribute bounce messages:
+if the environment variable
+.B SENDER
+is set, and is either empty or
+.BR #@[] ,
+.B ezmlm-store
+rejects the message.
+.SH OPTIONS
+.TP
+.B \-b
+(Default.)
+With the moderation request,
+send both headers and body of the message to be moderated.
+.TP
+.B \-B
+With the moderation request,
+send header, but not body of the message to be moderated.
+This may be useful if moderation is used to allow one or a few poorly
+connected addresses to post, and posts are very large (e.g. when the list
+is used as a distribution channel of e.g. catalogs).
+.TP
+.B \-cCrR
+Passed on to
+.B ezmlm-send(1)
+in case this program is executed. This happens only if
+.I dir\fB/modpost
+does not exist.
+.TP
+.B \-m
+(Default.)
+The post is sent as a MIME enclosure.
+.TP
+.B \-M
+The post is appended to the message.
+.TP
+.B \-s
+The contents of
+.I dir\fB/modpost
+with the default
+.I dir\fB/mod/
+are used as the base directory for self-approving users, whereas
+.I dir\fB/mod/
+is used as the base directory
+for the moderators to whom approval requests for other
+posts are sent.
+.TP
+.B \-S
+(Default.)
+The contents of
+.I dir\fB/modpost
+with the default
+.I dir\fB/mod/
+are used as the base directory
+for the moderators for all moderator functions.
+.TP
+.B \-p
+(Default.)
+Anyone can post. Posts that are not from a moderator are sent out to
+all moderators for approval. Posts that are from a moderator are
+sent only to that moderator.
+.TP
+.B \-P
+Only moderators can post. Those posts are sent to the posting moderator
+for approval. Posts from other addresses are bounced. This can be used
+to relatively securely restrict posts to messages originating from
+a given set of addresses.
+.TP
+.B \-v
+Display
+.B ezmlm-manage
+version information.
+.TP
+.B \-V
+Display
+.B ezmlm-manage
+version information.
+.SH USAGE
+First of all, remember that
+.B ezmlm-store
+will simply execute
+.B ezmlm-send(1)
+unless
+.I dir\fB/modpost
+exists.
+For the switches, use
+.B \-P
+for lists where only moderators can post securely, i.e. they are
+asked to approve their own posts after posting,
+whereas other SENDERs are rejected. For
+low-security more convenient versions of this type of restriction, see
+.BR ezmlm-gate(1) .
+
+Normally (no switches),
+posts from moderators are sent for approval only to the sending
+moderator, whereas posts from other addresses are sent to all moderators.
+Thus, you can set up an announcement list by adding all potential posters
+as moderators. However, you may also want to allow others to post, as
+long as the posts are approved. This would be default
+.B ezmlm-store
+function.
+
+To make the set of ``approved posters'' who approve their own posts, different
+from the set of addresses that approve posts from other users, use the
+.B \-s
+switch. Add a directory name to
+.IR dir\fB/modpost .
+This directory is the base directory of the ``approved posters''
+database. Add the moderators for other posts to
+.I dir\fB/mod/
+using
+.BR ezmlm-sub(1) .
+.SH "CHARACTER SETS"
+If
+.I dir\fB/charset
+exists,
+.B ezmlm-store
+will use the character set listed for all messages. Otherwise, the
+default ``us-ascii'' will be used. The character set can be suffixed
+by ``:'' followed by a code. If the code is ``Q'', outgoing messages are 
+sent as ``Quoted-Printable'', if it is '`B'' they are sent ``base64'' encoded.
+Otherwise, text is sent as is.
+.SH "SEE ALSO"
+ezmlm-clean(1),
+ezmlm-manage(1),
+ezmlm-make(1),
+ezmlm-moderate(1),
+ezmlm(5)

@@ -1,0 +1,54 @@
+.TH ezmlm-glconf 1
+.SH NAME
+ezmlm-glconf \- create config file for global ezmlm-request address
+.SH SYNOPSIS
+.B ezmlm-glconf
+[
+.B \-n
+]
+.IR dotdir [dotdir1 ...] >
+.I config_file
+.SH DESCRIPTION
+.B ezmlm-glconf
+scans
+.IR dotdir ,
+usually the users home directory,
+for files of type
+.BR .qmail-return-*-default .
+For normal ezmlm-lists, these are links to
+.B bouncer
+files, which on their last line have a call to
+.B ezmlm-return(1)
+or
+.BR ezmlm-warn(1).
+.B ezmlm-glconf
+extracts the list directory from these,
+and builds a
+line for
+.I config_file
+from the information in the list directory. The first line of
+the
+.B /text/info
+file of the list is assumed to contain a brief description of the list. If
+not found ``no information available'' is used.
+
+.B ezmlm-glconf
+output is sorted alphabetically by list name and if a digest list
+exists, the digest list entry immediately follows the list entry.
+
+.SH OPTIONS
+.TP
+.B \-n
+Add information on the current number of subscribers to the list information.
+.SH CONFIGURATION
+The descriptive text
+.B ezmlm-glconf
+uses for digest lists and the text used if
+.B /text/info
+is not readable/available can be changed by editing the script.
+.SH "SEE ALSO"
+ezmlm-glmake(1),
+ezmlm-request(1),
+ezmlm-return(1),
+ezmlm-warn(1),
+ezmlm(5)

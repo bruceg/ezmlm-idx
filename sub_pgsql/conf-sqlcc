@@ -1,0 +1,6 @@
+-I/usr/include/pgsql
+
+# the top line will be used when compiling. Edit to reflect your PostgreSQL
+# installation. The above is correct for RedHat rpms.
+# -I/usr/local/pgsql/include would be correct for BSD installations.
+ 
