@@ -185,9 +185,7 @@ int argc;
 char **argv;
 {
   char *dir;
-  char *local;
   char *action;
-  char *def;
   char *dtline;
   char *nhost;
   const char *err;
