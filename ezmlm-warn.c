@@ -145,12 +145,12 @@ int flagw;
   if (!quote2(&quoted,addr.s)) die_nomem();
   hdr_add2("To: ",quoted.s,quoted.len);
   /* to accomodate transfer-encoding */
-  hdr_mime(flagcd ? "multipart/mixed" : "text/plain");
+  hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
   hdr_adds(flagw ? "Subject: ezmlm probe" : "Subject: ezmlm warning");
 
   if (flagcd) {			/* first part for QP/base64 multipart msg */
     hdr_boundary(0);
-    hdr_ctype("text/plain");
+    hdr_ctype(CTYPE_TEXT);
     hdr_transferenc();
   } else
     qmail_puts(&qq,"\n");
@@ -193,7 +193,7 @@ int flagw;
       qmail_put(&qq,line.s,line.len);	/* flush */
     }
     hdr_boundary(0);
-    hdr_ctype("message/rfc822");
+    hdr_ctype(CTYPE_MESSAGE);
     qmail_puts(&qq,"\n");
   }
   if (substdio_copy(&ssqq,&ssin) < 0) die_read();

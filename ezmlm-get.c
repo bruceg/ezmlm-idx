@@ -307,7 +307,7 @@ char format;
 	qmail_put(&qq,line.s,line.len);
       }
       hdr_boundary(0);
-      hdr_ctype("message/rfc822");
+      hdr_ctype(CTYPE_MESSAGE);
       hdr_adds("Content-Disposition: inline; filename=request.msg");
       qmail_puts(&qq,"\n");
     }
@@ -340,14 +340,14 @@ char format;		/* output format type (see idx.h) */
     case VIRGIN:
     case NATIVE:
     case MIXED:
-        hdr_mime((format == MIXED) ? "multipart/mixed" : "multipart/digest");
+        hdr_mime((format == MIXED) ? CTYPE_MULTIPART : CTYPE_DIGEST);
 	hdr_add2("Subject: ",subject->s,subject->len);
 	hdr_boundary(0);
-	hdr_ctype("text/plain");
+	hdr_ctype(CTYPE_TEXT);
 	hdr_transferenc();	/* content-transfer-enc header if needed */
 	break;
     case RFC1153:
-        hdr_mime("text/plain");
+        hdr_mime(CTYPE_TEXT);
 	hdr_add2("Subject: ",subject->s,subject->len);
 	qmail_puts(&qq,"\n");
 	flagcd = '\0';	/* We make 8-bit messages, not QP/base64 for rfc1153 */
@@ -587,7 +587,7 @@ void mime_getbad(msg)
 unsigned long msg;
 {
    hdr_boundary(0);
-   hdr_ctype("text/plain");
+   hdr_ctype(CTYPE_TEXT);
    qmail_puts(&qq,"Content-Disposition: inline; filename=\"");
    qmail_put(&qq,listname.s,listname.len);
    qmail_puts(&qq,"_");
@@ -629,7 +629,7 @@ unsigned long msg; char format;
           mime_getbad(msg);
         } else {
 	  hdr_boundary(0);
-	  hdr_ctype("message/rfc822");
+	  hdr_ctype(CTYPE_MESSAGE);
           qmail_puts(&qq,"Content-Disposition: inline; filename=\"");
 	  qmail_put(&qq,listname.s,listname.len);
 	  qmail_puts(&qq,"_");

@@ -675,7 +675,7 @@ char **argv;
     qmail_put(&qq,mydtline.s,mydtline.len);
     if (!quote2(&line,to.s)) die_nomem();
     hdr_add2("To: ",line.s,line.len);
-    hdr_mime(flagcd ? "multipart/mixed" : "text/plain");
+    hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
     qmail_puts(&qq,"Subject: ");
     if (!quote2(&line,outlocal.s)) die_nomem();
     qmail_put(&qq,line.s,line.len);
@@ -748,7 +748,7 @@ char **argv;
         qmail_put(&qq,line.s,line.len);
       }
       hdr_boundary(0);
-      hdr_ctype("message/rfc822");
+      hdr_ctype(CTYPE_MESSAGE);
       hdr_adds("Content-Disposition: inline; filename=request.msg");
       qmail_puts(&qq,"\n");
     }

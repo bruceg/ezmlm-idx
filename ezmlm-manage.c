@@ -435,7 +435,7 @@ void msg_headers()
     if (flaggoodfield)
       qmail_put(&qq,line.s,line.len);
   }
-  hdr_mime(flagcd ? "multipart/mixed" : "text/plain");
+  hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
 }
 
 int geton(action)
@@ -591,7 +591,7 @@ void copybottom()
 	qmail_put(&qq,line.s,line.len);
       }
       hdr_boundary(0);
-      hdr_ctype("message/rfc822");
+      hdr_ctype(CTYPE_MESSAGE);
       hdr_adds("Content-Disposition: inline; filename=request.msg");
       qmail_puts(&qq,"\n");
     }

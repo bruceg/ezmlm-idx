@@ -685,7 +685,7 @@ char **argv;
           if (flagtrailer) {
             qmail_puts(&qq,"\n");
 	    hdr_add(boundary.s,boundary.len);
-	    hdr_ctype("text/plain");
+	    hdr_ctype(CTYPE_TEXT);
             hdr_transferenc();		/* trailer for multipart message */
 	    copy(&qq,"text/trailer",flagcd,FATAL);
             if (flagcd == 'B')	{	/* need to do our own flushing */

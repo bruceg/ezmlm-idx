@@ -166,9 +166,9 @@ char *d;
         } else
           if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
         if (!stralloc_0(&charset)) die_nomem();
-	hdr_mime("multipart/mixed");
+	hdr_mime(CTYPE_MULTIPART);
 	hdr_boundary(0);
-	hdr_ctype("text/plain");
+	hdr_ctype(CTYPE_TEXT);
         hdr_transferenc();
       } else
       qmail_puts(&qq,"\n\n");
@@ -182,7 +182,7 @@ char *d;
 
       if (flagmime) {
 	hdr_boundary(0);
-	hdr_ctype("message/rfc822");
+	hdr_ctype(CTYPE_MESSAGE);
         qmail_puts(&qq,"\n");
       }
 
