@@ -83,7 +83,7 @@ fi
     ${ECHO} "#!/bin/sh"
     ${ECHO} "${CAT} >'${QQMSG}'"
     ${ECHO} "${CAT} <&1 >'${QQENV}'"
-    ${ECHO} "${SED} -ne '/^$/q' -e p <'${QQMSG}' >'${QQHDR}'"
+    ${ECHO} "${SED} -e '/^$/,$d' <'${QQMSG}' >'${QQHDR}'"
     ${ECHO} "${SED} -e '1,/^$/d' <'${QQMSG}' >'${QQBODY}'"
     ${ECHO} "exit 0"
   ) > "${QQTEST}"
