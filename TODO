@@ -5,5 +5,14 @@ test Delivered-To handling
 test cookie expiration for ezmlm-return
 test ezmlm-warn only handling susbcribers
 test ezmlm-return only handling susbcribers
+ezmlm-reject.1 does not document -[fF]
 
 Correct sv translation sed
+
+Refactor all header generation into a single module:
+-Write headers into a stralloc.
+-Code functions to find/add/replace/remove headers.
+-Code functions to generate common header parts, such as Content-Type:
+and Content-Transfer-Encoding:
+-Parse a file to do above as well.
+-Dump the block to qmail and free.
