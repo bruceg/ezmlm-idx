@@ -99,7 +99,7 @@ ACKNOWLEDGEMENTS (from Fred Lindberg)
   and for testing the example script.
 - Torben Fjerdingstad (TF; unitfj@tfj.uni-c.dk) for testing case-insensitive
   issub.c and subscribe.c, for TARGETS, for suggesting a no-copy-to-SENDER
-  option, for ezmlmrc.dk, for reporting missing MIME end for base64/QP
+  option, for ezmlmrc.da, for reporting missing MIME end for base64/QP
   moderated [un]sub confirms, and for pre-release testing.
 - Shinya O'Hira (SOH; Shinya_Oohira@justsystem.co.jp) for reporting the
   ezmlm-make-0.22 lock file name bug and for testing the fix. Also for many
@@ -121,7 +121,7 @@ ACKNOWLEDGEMENTS (from Fred Lindberg)
   message numbers in subjects. I've added code to ezmlm-idx-0.30 implementing
   this is a similar manner. Sen Nagata (sen_ml@eccosys.com) for suggesting this
   earlier. Bugfix for missing MIME boundary in -index reply.
-- Sebastian Andersson (SA; sa@hogia.net) for ezmlmrc.se, MIME suggestions,
+- Sebastian Andersson (SA; sa@hogia.net) for ezmlmrc.sv, MIME suggestions,
   ezmlm-weed patch, ezmlmrc version check suggestion and pre-release testing.
 - Giorgos Stathakopoulos (GS; stathako@cti.gr) for pre-release testing.
 - David Summers (DS; david@summersoft.fay.ar.us) for pre-release testing,

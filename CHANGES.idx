@@ -23,10 +23,14 @@ Acknowledgements, some are missing. Please write bruceg@em.ca if you're
 missing.
 
 Some ezmlmrc are not updated and may not work right:
-cn_GB,cs,pl,ru,dk,pt_BR,pt
+cn_GB,cs,pl,ru,da,pt_BR,pt
 
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
+
+=========================
+-Un-fixed the Swedish and Danish translation names, as they should match
+ ISO 639 language codes, not ISO 3166 country codes.
 
 ezmlm-idx-0.431, 20041229
 =========================
