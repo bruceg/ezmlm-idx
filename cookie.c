@@ -3,13 +3,12 @@
 #include "uint32.h"
 #include "surfpcs.h"
 
-void cookie(hash,key,keylen,date,addr,action)
-char *hash;
-char *key;
-unsigned int keylen;
-char *date;
-char *addr;
-char *action;
+void cookie(char *hash,
+	    const char *key,
+	    unsigned int keylen,
+	    const char *date,
+	    const char *addr,
+	    const char *action)
 {
   surfpcs s;
   uint32 seed[32];
