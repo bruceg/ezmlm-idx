@@ -1,5 +1,5 @@
-/*$Id: ezmlm-cgi.c,v 1.17 1999/12/24 04:21:26 lindberg Exp $*/
-/*$Name: ezmlm-idx-040 $*/
+/*$Id: ezmlm-cgi.c,v 1.18 2000/01/08 02:42:38 lindberg Exp lindberg $*/
+/*$Name:  $*/
 
 /* Please leave. Will hopefully help pay for further improvement. */
 #define EZ_CRIGHT "<a href=\"http://www.lindeinc.com\">(c) 1999 Lin-De, Inc</a>"
@@ -88,7 +88,7 @@ char cmdstr[5] = "xxx:";
 #define ITEM_DATE 4
 #define ITEM_INDEX 5
 
-#define DIRECT "psnpn"
+#define DIRECT "psnpnz"
 #define DIRECT_SAME 0
 #define DIRECT_NEXT 1
 #define DIRECT_PREV -1
@@ -136,7 +136,7 @@ int cache;	/* 0 = don't; 1 = don't know; 2 = do */
 int child,wstat;
 int flagtoplevel;
 unsigned int flagmime;
-unsigned int cs,csbase;
+unsigned int cs,csbase,pos;
 int flagrobot;
 int flagpre;
 int precharcount;
@@ -145,6 +145,20 @@ char cn2 = 0;
 char lastjp[] = "B";	/* to get back to the correct JP after line break */
 char *bannerargs[4];
 
+
+struct msginfo {	/* clean info on the target message */
+  char item;		/* What we want */
+  char direction;	/* Relation to current msg */
+  char axis;		/* Axis of desired movement [may be calculated] */
+  unsigned long source;	/* reference message number */
+  unsigned long target;
+  unsigned long date;
+  unsigned long *authnav;	/* msgnav structure */
+  unsigned long *subjnav;	/* msgnav structure */
+  char *author;
+  char *subject;
+  char *cgiarg;			/* sub/auth as expected from axis */
+} msginfo;
 
 mime_info *mime_current = 0;
 mime_info *mime_tmp = 0;
@@ -197,20 +211,6 @@ void cgierr(char *s,char *s1,char *s2)
 
 unsigned long msgnav[5]; /* 0 prev prev 1 prev 2 this 3 next 4 next-next */
 
-struct msginfo {	/* clean info on the target message */
-  char item;		/* What we want */
-  char direction;	/* Relation to current msg */
-  char axis;		/* Axis of desired movement [may be calculated] */
-  unsigned long source;	/* reference message number */
-  unsigned long target;
-  unsigned long date;
-  unsigned long *authnav;	/* msgnav structure */
-  unsigned long *subjnav;	/* msgnav structure */
-  char *author;
-  char *subject;
-  char *cgiarg;			/* sub/auth as expected from axis */
-} msginfo;
-
 void toggle_flagpre(int flag)
 {
   flagpre = flag;
@@ -254,7 +254,7 @@ unsigned int decode_charset(register char *s, register unsigned int l)
   return CS_BAD;
 }
 
-void htmlencode_put (register char *s,register unsigned int l)
+void html_put (register char *s,register unsigned int l)
 /* At this time, us-ascii, iso-8859-? create no problems. We just encode  */
 /* some html chars. iso-2022 may have these chars as character components.*/
 /* cs is set for these, 3 for CN, 2 for others. Bit 0 set means 2 byte    */
@@ -382,7 +382,7 @@ void htmlencode_put (register char *s,register unsigned int l)
 	    case 5:  state = 0; break;		/* 4th char of ESC $ *|+|) X */
 	    case 11: state = 0; break;		/* 3nd char of ESC . */
 	    case 21: state = 0; break;		/* ESC ( X for JP */
-	    default: die_prog("bad state in htmlencode_put"); break;
+	    default: die_prog("bad state in html_put"); break;
 	  }
       } else if (so && flagpre && precharcount >= 84) {
 		/* 84 is nicer than 78/80 since most use GUI browser */
@@ -429,6 +429,58 @@ void urlencode_put (register char *s,register unsigned int l)
 void urlencode_puts(register char *s)
 {
   urlencode_put(s,str_len(s));
+}
+
+void anchor_put(unsigned char *s, unsigned int l)
+/* http://, ftp:// only */
+{
+  unsigned char *cpl,*cpafter,*cpstart,*cpend;
+  unsigned int pos,i;
+
+  pos = byte_chr(s,l,':');
+  if (pos + 3 >= l || !pos) {			/* no ':' no URL (most lines) */
+    html_put(s,l);
+    return;
+  }
+
+  cpl = s;
+  cpafter = s + l;
+  for (;;) {
+    cpstart = (char *) 0;
+    if (s[pos + 1] == '/' && s[pos + 2] == '/') {
+      cpend = s + pos + 2;
+      for (i = pos - 1; i + 6 >= pos; i--) {		/* pos always >=1 */
+        if ((s[i] < 'a' || s[i] > 'z') && (s[i] < 'A' || s[i] > 'Z')) {
+          cpstart = s + i + 1;	/* "[:alpha:]{1,5}://" accepted */
+	  break;
+        }
+	if (!i && i + 6 < pos) {
+	  cpstart = s;
+	  break;
+	}
+      }
+    }
+    if (cpstart) {					/* found URL */
+      while (cpend < cpafter && str_chr(" \t\n",*cpend) == 3) cpend++;
+      cpend--;						/* locate end */
+      while (cpend > cpstart && str_chr(".,;])>\"\'",*cpend) != 8) cpend--;
+      html_put(cpl,cpstart - cpl);			/* std txt */
+      oputs("<a href=\"");				/* link start */
+      oput(cpstart,cpend - cpstart + 1);		/* link */
+      oputs("\">");
+      html_put(cpstart,cpend - cpstart + 1);		/* visible */
+      oputs("</a>");					/* end */
+      cpl = cpend + 1;
+      pos = cpend - s;
+      if (pos >= l) return;
+    } else
+      pos++;
+    pos += byte_chr(s + pos,l - pos,':');
+    if (pos + 3 >= l) {
+      html_put(cpl,cpafter - cpl);	/* std txt */
+      return;
+    }
+  }
 }
 
 int checkhash(register char *s)
@@ -514,7 +566,7 @@ void link(struct msginfo *infop,char item,char axis,unsigned long msg,
     default: oputs("#b\">"); break;
   }
   if (HASHLEN + 1 < l)
-    htmlencode_put(data + HASHLEN + 1,l - HASHLEN - 1);
+    html_put(data + HASHLEN + 1,l - HASHLEN - 1);
   else
     oputs("(none)");
   oputs("</A>");
@@ -722,7 +774,7 @@ void html_header(char *t,char *s, unsigned int l,char *class,int flagspecial)
     oputs(": ");
   }
   if (t) oputs(t);
-  if (s) htmlencode_put(s,l);
+  if (s) html_put(s,l);
   oputs("</TITLE>\n");
   if (class && *class && stylesheet && *stylesheet) {
     oputs("<LINK href=\"");
@@ -852,14 +904,14 @@ void latestdate(struct msginfo *infop,int flagfail)
   }
 }
 
-void firstdate(struct msginfo *infop,int flagfail)
+void firstdate(struct msginfo *infop)
 {
     infop->date = 0;
     infop->direction = DIRECT_NEXT;
     finddate(infop);
 }
 
-void getdate(struct msginfo *infop,int flagfail)
+void gtdate(struct msginfo *infop,int flagfail)
 /* infop->date has to be 0 or valid on entry. Month outside of [1-12] on */
 /* entry causes GIGO */
 {
@@ -1249,6 +1301,7 @@ void decode_transfer_encoding(register char *s,register unsigned int l)
 			/* base64/QP ignored for multipart */
   r = CTENC_NONE;
   while (l && (*s == ' ' || *s == '\t')) { s++; l--; }	/* skip LWSP */
+s[l-1] = 0;
   if (case_startb(s,l,"quoted-printable")) {
     r = CTENC_QP;
   } else if (case_startb(s,l,"base64")) {
@@ -1316,6 +1369,7 @@ void start_message_page(struct msginfo *infop)
 	hdr[HDR_VERSION - 1].len);
   html_header(decline.s,line.s,line.len - 1,
 		"msgbody",SPC_BASE);
+  decline.len = 0;		/* reset */
   msglinks(infop);
   oputs("<DIV class=message>\n");
 }
@@ -1347,7 +1401,14 @@ void show_part(struct msginfo *infop,int flagshowheaders,
       strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
     if (!match) return;
     if ((btype = check_boundary())) {
-      if (flagpre) {
+      if (decline.len) {		/* flush last line that doesn't */
+	if (flaghtml)			/* end in \n for QP/base64 */
+	  oput(decline.s,decline.len);
+	else
+          anchor_put(decline.s,decline.len);
+        decline.len = 0;
+      }
+      if (flagpre) {			/* ending part was <PRE> */
 	oputs("</PRE>");
 	toggle_flagpre(0);
       }
@@ -1389,10 +1450,10 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 	    if (flagobscure && i == HDR_FROM - 1) {
 	      oputs(" ");
 	      decodeHDR(cp,author_name(&cp,line.s,line.len),&decline,"",FATAL);
-	      htmlencode_put(decline.s,decline.len);
+	      html_put(decline.s,decline.len);
 	    } else {
 	      decodeHDR(hdr[i].s,hdr[i].len,&decline,"",FATAL);
-              htmlencode_put(decline.s,decline.len - 1);
+              html_put(decline.s,decline.len - 1);
 	    }
 	    if (i == HDR_SUBJECT - 1 && flagtoplevel)
 	      oputs("</A></SPAN>");
@@ -1468,17 +1529,20 @@ void show_part(struct msginfo *infop,int flagshowheaders,
     } else {
       if (flaggoodfield) {
 	if (mime_current->ctenc) {
-	  if (!stralloc_copy(&decline,&line)) die_nomem();
-	  line.len = 0;
 	  if (mime_current->ctenc == CTENC_QP)
-	    decodeQ(decline.s,decline.len,&line);
+	    decodeQ(line.s,line.len,&decline);
 	  else
-	    decodeB(decline.s,decline.len,&line);
+	    decodeB(line.s,line.len,&decline);
+	  if (decline.s[decline.len - 1] == '\n') {	/* complete line */
+	    if (!stralloc_copy(&line,&decline)) die_nomem();
+	    decline.len = 0;
+	  } else				/* incomplete - wait for next */
+	    line.len = 0;			/* in case URL is split */
 	}
 	if (flaghtml)
 	  oput(line.s,line.len);
 	else {
-          htmlencode_put(line.s,line.len);		/* body */
+          anchor_put(line.s,line.len);		/* body */
 	}
       }
     }
@@ -1675,7 +1739,7 @@ void setmsg(struct msginfo *infop)
       strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
-  if (infop->source != ITEM_DATE) {
+  if (infop->axis != ITEM_DATE) {
     if (getln(&ssin,&line,&match,'\n') == -1)	/* first line */
       strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
     if (!match)
@@ -1690,8 +1754,13 @@ void setmsg(struct msginfo *infop)
     if (!match) break;
     msgnav[0] = msgnav[1];
     msgnav[1] = msgnav[2];
-    (void) scan_ulong(line.s,&(msgnav[2]));
-    if (infop->direction == DIRECT_FIRST) break;
+    pos = scan_ulong(line.s,&(msgnav[2]));
+    if (infop->direction == DIRECT_FIRST && infop->axis == ITEM_DATE) {
+      if (pos + HASHLEN + 1 < line.len)
+        if (!stralloc_copyb(&subject,line.s+pos+1,HASHLEN)) die_nomem();
+	if (!stralloc_0(&subject)) die_nomem();
+      break;
+    }
     if (msgnav[2] == infop->source) {
       if (getln(&ssin,&line,&match,'\n') == -1)
         strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
@@ -1713,8 +1782,12 @@ void setmsg(struct msginfo *infop)
       infop->date = 0;
       break;
     case ITEM_SUBJECT:
-      infop->subjnav = msgnav + 2 + infop->direction;
-      infop->target = *(infop->subjnav);
+      if (infop->direction == DIRECT_FIRST)
+        infop->target = msgnav[2];
+      else {
+        infop->subjnav = msgnav + 2 + infop->direction;
+        infop->target = *(infop->subjnav);
+      }
       infop->author = (char *)0;	/* what we know is not for this msg */
       infop->date = 0;
       break;
@@ -1722,6 +1795,7 @@ void setmsg(struct msginfo *infop)
       infop->target = msgnav[2];
       infop->subject = (char *)0;	/* what we know is not for this msg */
       infop->author = (char *)0;	/* what we know is not for this msg */
+      break;
     default:
       die_prog("Bad item in setmsg");
   }
@@ -1743,9 +1817,15 @@ void subj2msg(struct msginfo *infop)
 }
 
 void date2msg(struct msginfo *infop)
+/* this is all a terrible hack */
 {
   (void) makefn(&fn,ITEM_DATE,infop->date,"");
-  setmsg(infop);
+  infop->direction = DIRECT_FIRST;
+  infop->axis = ITEM_DATE;
+  setmsg(infop);		/* got first thread */
+  infop->subject = subject.s;
+  infop->axis = ITEM_SUBJECT;
+  subj2msg(infop);		/* get 1st message no in that thread */
 }
 
 void findlastmsg(struct msginfo *infop)
@@ -1843,15 +1923,13 @@ int do_cmd(struct msginfo *infop)
 	      case ITEM_DATE:
 		if (!infop->date && infop->source)
 		  if (!msg2hash(infop)) return 0;
-		  getdate(infop,0);
+		  gtdate(infop,0);
 		break;
 	    }
 	    break;
 	  case ITEM_INDEX:	/* ignore direction etc - only for index */
 	    if (!infop->target)
 	      infop->target = infop->source;
-	    if (!infop->target)
-	      findlastmsg(infop);
 	    break;
   }
   return 1;
@@ -1996,6 +2074,9 @@ char **argv;
   cmd = env_get("QUERY_STRING");			/* get command */
   cppath = env_get("PATH_INFO");			/* get path_info */
 
+  if (!cmd && !cppath)
+    cmd = argv[1];
+
   if (!cppath || !*cppath) {
     if (cmd && *cmd) {
       cmd += scan_ulong(cmd,&thislistno);
@@ -2003,7 +2084,7 @@ char **argv;
     } else
       thislistno = 0L;
   } else {
-    cppath++;
+    if (*cppath == '/') cppath++;
       cppath += scan_ulong(cppath,&thislistno);		/* this listno */
       if (!thislistno || *cppath++ == '/') {
 	if (str_start(cppath,"index")) {
@@ -2120,6 +2201,7 @@ char **argv;
 
 /********************* Get info from server on BASE etc ****************/
 
+  if (!stralloc_copys(&url,"<A HREF=\"")) die_nomem();
   if (!stralloc_copys(&base,"<BASE href=\"http://")) die_nomem();
   cp = env_get("SERVER_PORT");
   if (cp) {			/* port */
@@ -2132,18 +2214,15 @@ char **argv;
       if (!stralloc_cats(&base,":")) die_nomem();
       if (!stralloc_catb(&base,strnum,fmt_ulong(strnum,port))) die_nomem();
   }
-  if (!(cp = env_get("HTTP_HOST")))
-    if (!(cp = env_get("SERVER_NAME")))
-      strerr_die2x(100,FATAL,"both HTTP_HOST and SERVER_NAME are empty");
-  if (!stralloc_cats(&base,cp)) die_nomem();
-  if (!(cp = env_get("SCRIPT_NAME")))
-    strerr_die2x(100,FATAL,"empty SCRIPT_NAME");
-  if (!stralloc_cats(&base,cp)) die_nomem();
+  if ((cp = env_get("HTTP_HOST")) || (cp = env_get("SERVER_NAME")))
+    if (!stralloc_cats(&base,cp)) die_nomem();
+  if (cp = env_get("SCRIPT_NAME")) {
+    if (!stralloc_cats(&base,cp)) die_nomem();
+    pos = str_rchr(cp,'/');
+    if (cp[pos])
+      if (!stralloc_cats(&url,cp + pos + 1)) die_nomem();
+  }
   if (!stralloc_cats(&base,"\">\n")) die_nomem();
-  if (!stralloc_copys(&url,"<A HREF=\"")) die_nomem();
-  pos = str_rchr(cp,'/');
-  if (cp[pos])
-    if (!stralloc_cats(&url,cp + pos + 1)) die_nomem();
   if (!stralloc_cats(&url,"?")) die_nomem();
   if (thislistno) {
     if (!stralloc_catb(&url,strnum,fmt_ulong(strnum,thislistno))) die_nomem();
@@ -2166,7 +2245,7 @@ char **argv;
 
   switch (msginfo.item) {
     case ITEM_MESSAGE:
-	if (!show_message(&msginfo)) {		/* assume next exists ... */
+	if (!(ret = show_message(&msginfo))) {	/* assume next exists ... */
 	  cache = 0;				/* border cond. - no cache */
 	  msginfo.target = msginfo.source;	/* show same */
 	  msginfo.subjnav = 0;
@@ -2175,32 +2254,35 @@ char **argv;
 	}
 	break;
     case ITEM_AUTHOR:
-	if (!show_object(&msginfo,ITEM_AUTHOR))
+	if (!(ret = show_object(&msginfo,ITEM_AUTHOR)))
 	  cgierr ("I couldn't find the author for that message","","");
 	break;
     case ITEM_SUBJECT:
-	if (!show_object(&msginfo,ITEM_SUBJECT))
+	if (!(ret = show_object(&msginfo,ITEM_SUBJECT)))
 	  cgierr ("I couldn't find the subject for that message","","");
 	break;
     case ITEM_DATE:
-	if (!show_object(&msginfo,ITEM_DATE)) {
+	if (!(ret = show_object(&msginfo,ITEM_DATE))) {
 	  finddate(&msginfo);
 	  ret = show_object(&msginfo,ITEM_DATE);
 	}
 	break;
     case ITEM_INDEX:
-	if (!show_index(&msginfo)) {
-	  tmptarget = msginfo.target;
-	  findlastmsg(&msginfo);
-	  cache = 0;			/* latest one - no cache */
-	  if (!msginfo.target || msginfo.target > tmptarget) {
-	    cache = 2;			/* won't change */
-            firstdate(&msginfo,1);	/* first thread index */
-	    msginfo.direction = DIRECT_FIRST;
-	    date2msg(&msginfo);		/* (may not be 1 if parts removed) */
-	  }
+	ret = 1;
+	if (show_index(&msginfo)) break;/* msgnumber valid */
+	tmptarget = msginfo.target;
+	findlastmsg(&msginfo);
+	cache = 0;			/* latest one - no cache */
+	if (msginfo.target > tmptarget) {
+	  cache = 2;			/* first one won't change */
+	  msginfo.target = 1;		/* try */
+	  if (show_index(&msginfo)) break;
+	  msginfo.date = 0;		/* first indexes missing */
+          firstdate(&msginfo);		/* instead get first msg of first */
+	  date2msg(&msginfo);		/* thread. */
+	  if (show_index(&msginfo)) break;
+	} else
 	  ret = show_index(&msginfo);
-	}
 	break;
     default:
 	strerr_die2x(100,FATAL,"bad item in main");
