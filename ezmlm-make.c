@@ -42,7 +42,7 @@ stralloc dotplus = {0};
 stralloc dirplus = {0};
 stralloc line = {0};
 
-#define FATAL "ezmlm-make: fatal: "
+const char FATAL[] = "ezmlm-make: fatal: ";
 #define WARNING "ezmlm-make: warning: "
 
 void die_usage()

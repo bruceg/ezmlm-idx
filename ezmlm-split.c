@@ -26,7 +26,7 @@
 #include "errtxt.h"
 #include "idx.h"
 
-#define FATAL "ezmlm-split: fatal: "
+const char FATAL[] = "ezmlm-split: fatal: ";
 #define INFO "ezmlm-split: info: "
 
 int flagdo = 1;		/* default is manager function */

@@ -35,7 +35,7 @@
 #include "yyyymm.h"
 #include "cgi.h"
 
-#define FATAL "ezmlm-cgi: fatal: "
+const char FATAL[] = "ezmlm-cgi: fatal: ";
 #define GET "-getv"
 #define THREAD "-threadv"
 #define SUBSCRIBE "-subscribe"

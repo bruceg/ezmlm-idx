@@ -48,7 +48,7 @@ char flagcd = '\0';		/* default: don't use quoted-printable */
 int flagbody = 1;		/* body of message enclosed with mod request */
 				/* 0 => headers only */
 
-#define FATAL "ezmlm-store: fatal: "
+const char FATAL[] = "ezmlm-store: fatal: ";
 
 void die_usage()
 {

@@ -39,7 +39,7 @@
 int flagmime = MOD_MIME;	/* default is message as attachment */
 char flagcd = '\0';		/* default: do not use transfer encoding */
 
-#define FATAL "ezmlm-moderate: fatal: "
+const char FATAL[] = "ezmlm-moderate: fatal: ";
 #define INFO "ezmlm-moderate: info: "
 
 void die_usage() { strerr_die1x(100,

@@ -24,7 +24,7 @@
 #include "errtxt.h"
 #include "auto_version.h"
 
-#define FATAL "ezmlm-archive: fatal: "
+const char FATAL[] = "ezmlm-archive: fatal: ";
 #define WARNING "ezmlm-archive: warning: inconsistent index: "
 
 substdio ssin;

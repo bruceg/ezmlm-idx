@@ -34,7 +34,7 @@
 #include "idx.h"
 #include "auto_version.h"
 
-#define FATAL "ezmlm-request: fatal: "
+const char FATAL[] = "ezmlm-request: fatal: ";
 #define INFO "ezmlm-request: info: "
 
 void die_usage()

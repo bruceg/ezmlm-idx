@@ -52,7 +52,7 @@ stralloc fnmsg = {0};
 
 /* The defines are in "idx.h" */
 
-#define FATAL "ezmlm-clean: fatal: "
+const char FATAL[] = "ezmlm-clean: fatal: ";
 
 void die_read()
 {

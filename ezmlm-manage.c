@@ -36,7 +36,7 @@
 #include "idx.h"
 #include "auto_version.h"
 
-#define FATAL "ezmlm-manage: fatal: "
+const char FATAL[] = "ezmlm-manage: fatal: ";
 #define INFO "ezmlm-manage: info: "
 
 int flagverbose = 0;	/* default: Owner not informed about subdb changes */

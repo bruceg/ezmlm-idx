@@ -30,7 +30,7 @@
 #include "errtxt.h"
 #include "idx.h"
 
-#define FATAL "ezmlm-return: fatal: "
+const char FATAL[] = "ezmlm-return: fatal: ";
 #define INFO "ezmlm-return: info: "
 void die_usage()
 { strerr_die1x(100,"ezmlm-return: usage: ezmlm-return [-dD] dir"); }

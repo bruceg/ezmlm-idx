@@ -50,7 +50,7 @@ const char *digsz =
 		"from\\to\\subject\\reply-to\\date\\message-id\\cc\\"
 		"mime-version\\content-type\\content-transfer-encoding";
 
-#define FATAL "ezmlm-get: fatal: "
+const char FATAL[] = "ezmlm-get: fatal: ";
 
 void die_usage() {
   strerr_die1x(100,

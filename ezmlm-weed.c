@@ -14,7 +14,7 @@
 char buf0[256];
 substdio ss0 = SUBSTDIO_FDBUF(read,0,buf0,sizeof(buf0));
 
-#define FATAL "ezmlm-weed: fatal: "
+const char FATAL[] = "ezmlm-weed: fatal: ";
 
 void die_nomem()
 {

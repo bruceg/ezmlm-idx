@@ -41,7 +41,7 @@ int flagnoreceived = 1;		/* suppress received headers by default. They*/
 				/* copied. */
 int flaglog = 1;		/* for lists with mysql support, use tags */
 				/* and log traffic to the database */
-#define FATAL "ezmlm-send: fatal: "
+const char FATAL[] = "ezmlm-send: fatal: ";
 
 void die_usage()
 {

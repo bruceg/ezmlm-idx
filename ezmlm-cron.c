@@ -26,7 +26,7 @@
 #include "idx.h"
 #include "wrap.h"
 
-#define FATAL "ezmlm-cron: fatal: "
+const char FATAL[] = "ezmlm-cron: fatal: ";
 
 void die_usage()
 {

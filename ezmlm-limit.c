@@ -19,7 +19,7 @@
 #include "errtxt.h"
 #include "idx.h"
 
-#define FATAL "ezmlm-limit: fatal: "
+const char FATAL[] = "ezmlm-limit: fatal: ";
 #define INFO "ezmlm-limit: info: "
 
 unsigned long deltasecs = LIMSECS;	/* interval to test over (seconds) */

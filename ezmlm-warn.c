@@ -34,7 +34,7 @@
 #include "idx.h"
 #include "subscribe.h"
 
-#define FATAL "ezmlm-warn: fatal: "
+const char FATAL[] = "ezmlm-warn: fatal: ";
 void die_usage()
 {
   strerr_die1x(100,"ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir");

@@ -11,7 +11,7 @@
 stralloc target = {0};
 char *to;
 
-#define FATAL "install: fatal: "
+const char FATAL[] = "install: fatal: ";
 void nomem() { strerr_die2x(111,FATAL,"out of memory"); }
 
 char inbuf[SUBSTDIO_INSIZE];

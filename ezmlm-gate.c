@@ -23,7 +23,7 @@
 #include "wrap.h"
 #include "auto_version.h"
 
-#define FATAL "ezmlm-gate: fatal: "
+const char FATAL[] = "ezmlm-gate: fatal: ";
 
 void die_usage()
 {

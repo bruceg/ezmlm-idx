@@ -21,7 +21,7 @@
 #include "idx.h"
 #include "auto_version.h"
 
-#define FATAL "ezmlm-reject: fatal: "
+const char FATAL[] = "ezmlm-reject: fatal: ";
 
 int flagrejectcommands = 1;	/* reject if subject is simple command */
 int flagneedsubject = 1;	/* reject if subject is missing */

@@ -26,7 +26,7 @@
 #include "idx.h"
 #include "errtxt.h"
 
-#define FATAL "ezmlm-receipt: fatal: "
+const char FATAL[] = "ezmlm-receipt: fatal: ";
 #define INFO "ezmlm-receipt: info: "
 
 void die_usage()

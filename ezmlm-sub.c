@@ -14,7 +14,7 @@
 #include "idx.h"
 #include "auto_version.h"
 
-#define FATAL "ezmlm-sub: fatal: "
+const char FATAL[] = "ezmlm-sub: fatal: ";
 
 void *psql = (void *) 0;
 

@@ -31,11 +31,7 @@
 #include "mime.h"
 #include "open.h"
 #include "byte.h"
-
-extern void die_nomem(const char *);
-
-			/* for public setup functions only */
-#define FATAL "copy: fatal: "
+#include "idx.h"
 
 static stralloc line = {0};
 static stralloc outline = {0};
@@ -54,13 +50,13 @@ void set_cpoutlocal(const stralloc *ln)
 {	/* must be quoted for safety. Note that substitutions that use */
 	/* outlocal within an atom may create illegal addresses */
   if (!quote(&outlocal,ln))
-        strerr_die2x(111,FATAL,ERR_NOMEM);
+    die_nomem();
 }
 
 void set_cpouthost(const stralloc *ln)
 {
   if (!stralloc_copy(&outhost,ln))
-        strerr_die2x(111,FATAL,ERR_NOMEM);
+    die_nomem();
 }
 
 void set_cptarget(const char *tg)
@@ -157,30 +153,30 @@ void copy(struct qmail *qqp,
             line.s[pos+4] == '>') {	/* tag. Copy first part of line */
           done = 1;				/* did something */
           if (!stralloc_catb(&outline,line.s+nextpos,pos-nextpos))
-			 die_nomem(fatal);
+			 die_nomem();
           switch(line.s[pos+2]) {
             case 'A':
 	      if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
-              if (!stralloc_cats(&outline,target)) die_nomem(fatal);
+              if (!stralloc_cats(&outline,target)) die_nomem();
               break;
             case 'R':
-              if (!stralloc_cats(&outline,confirm)) die_nomem(fatal);
+              if (!stralloc_cats(&outline,confirm)) die_nomem();
               break;
 	    case 'r':
-	      if (!stralloc_catb(&outline,confirm,confirmlocal)) die_nomem(fatal);
+	      if (!stralloc_catb(&outline,confirm,confirmlocal)) die_nomem();
 	      break;
             case 'l':
-              if (!stralloc_cat(&outline,&outlocal)) die_nomem(fatal);
+              if (!stralloc_cat(&outline,&outlocal)) die_nomem();
               break;
             case 'h':
-              if (!stralloc_cat(&outline,&outhost)) die_nomem(fatal);
+              if (!stralloc_cat(&outline,&outhost)) die_nomem();
               break;
             case 't':
 	      if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
-              if (!stralloc_cats(&outline,verptarget)) die_nomem(fatal);
+              if (!stralloc_cats(&outline,verptarget)) die_nomem();
               break;
             case 'n':
-              if (!stralloc_cats(&outline,szmsgnum)) die_nomem(fatal);
+              if (!stralloc_cats(&outline,szmsgnum)) die_nomem();
               break;
             default:
               break;			/* unknown tags killed */
@@ -194,7 +190,7 @@ void copy(struct qmail *qqp,
         codeput(line.s,line.len,q,fatal);
       else {
         if (!stralloc_catb(&outline,line.s+nextpos,line.len-nextpos))
-		die_nomem(fatal);		/* remainder */
+		die_nomem();		/* remainder */
         codeput(outline.s,outline.len,q,fatal);
       }
 

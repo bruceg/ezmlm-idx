@@ -20,7 +20,7 @@
 #include "slurp.h"
 #include "auto_version.h"
 
-#define FATAL "ezmlm-dispatch: fatal: "
+const char FATAL[] = "ezmlm-dispatch: fatal: ";
 
 void die_usage(void)
 {

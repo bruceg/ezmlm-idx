@@ -29,7 +29,7 @@
 #include "makehash.h"
 #include "auto_version.h"
 
-#define FATAL "ezmlm-idx: fatal: "
+const char FATAL[] = "ezmlm-idx: fatal: ";
 
 char strnum[FMT_ULONG];
 char hash[HASHLEN];

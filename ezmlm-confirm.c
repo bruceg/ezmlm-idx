@@ -39,7 +39,7 @@
 
 static int flagmime = MOD_MIME;	/* default is message as attachment */
 
-#define FATAL "ezmlm-confirm: fatal: "
+const char FATAL[] = "ezmlm-confirm: fatal: ";
 #define INFO "ezmlm-confirm: info: "
 
 static void die_usage() { strerr_die1x(100,

@@ -22,7 +22,7 @@
 #include "idx.h"
 #include "auto_version.h"
 
-#define FATAL "ezmlm-tstdig: fatal: "
+const char FATAL[] = "ezmlm-tstdig: fatal: ";
 
 void die_usage()
 {

@@ -12,7 +12,7 @@
 #include "idx.h"
 #include "auto_version.h"
 
-#define FATAL "ezmlm-list: fatal: "
+const char FATAL[] = "ezmlm-list: fatal: ";
 
 int flagnumber = 0;	/* default list subscribers, not number of */
 
