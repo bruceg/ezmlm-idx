@@ -12,6 +12,7 @@ auto_cron.c
 auto_cron.o
 auto_qmail.c
 auto_qmail.o
+auto_version.o
 byte_chr.o
 byte_copy.o
 byte_cr.o
@@ -69,8 +70,8 @@ ezmlm-clean
 ezmlm-clean.0
 ezmlm-clean.o
 ezmlm-confirm
-ezmlm-confirm.o
 ezmlm-confirm.0
+ezmlm-confirm.o
 ezmlm-cron
 ezmlm-cron.0
 ezmlm-cron.o
@@ -146,8 +147,8 @@ ezmlmrc
 ezmlmrc.0
 ezmlmrc.ch_GB
 ezmlmrc.cs
-ezmlmrc.dk
 ezmlmrc.de
+ezmlmrc.dk
 ezmlmrc.en_US
 ezmlmrc.es
 ezmlmrc.fr
@@ -185,6 +186,14 @@ getopt.a
 hasflock.h
 hassgact.h
 haswaitp.h
+hdr.a
+hdr_add.o
+hdr_boundary.o
+hdr_ctboundary.o
+hdr_datemsgid.o
+hdr_from.o
+hdr_mime.o
+hdr_transferenc.o
 idxthread.o
 install
 install.o
