@@ -31,6 +31,7 @@ in the next version.
 =========================
 -Fixed a problem in passing options to ezmlm-send in ezmlm-confirm,
  ezmlm-moderate, and ezmlm-store.  Thanks Ueli Heuer.
+-Fixed the Japanese language code from "jp" to "ja" as per ISO 639.
 
 ezmlm-idx-0.432, 20050101
 =========================

@@ -848,7 +848,7 @@ ezmlmrc.5
 
 ezmlmrc.all: \
 ezmlmrc.ch_GB ezmlmrc.cs ezmlmrc.da ezmlmrc.de ezmlmrc.en_US \
-ezmlmrc.es ezmlmrc.fr ezmlmrc.hu ezmlmrc.id ezmlmrc.it ezmlmrc.jp \
+ezmlmrc.es ezmlmrc.fr ezmlmrc.hu ezmlmrc.id ezmlmrc.it ezmlmrc.ja \
 ezmlmrc.nl ezmlmrc.pl ezmlmrc.pt ezmlmrc.pt_BR ezmlmrc.ru ezmlmrc.sv
 
 ezmlmrc.ch_GB: \
@@ -891,9 +891,9 @@ ezmlmrc.it: \
 makelang ezmlmrc.template lang/it.text lang/it.sed
 	./makelang it
 
-ezmlmrc.jp: \
-makelang ezmlmrc.template lang/jp.text lang/jp.sed
-	./makelang jp
+ezmlmrc.ja: \
+makelang ezmlmrc.template lang/ja.text lang/ja.sed
+	./makelang ja
 
 ezmlmrc.nl: \
 makelang ezmlmrc.template lang/nl.text lang/nl.sed
@@ -1641,9 +1641,9 @@ ita: \
 ezmlmrc.it
 	cp -f ezmlmrc.it ezmlmrc
 
-jp: \
-ezmlmrc.jp
-	cp -f ezmlmrc.jp ezmlmrc
+ja: \
+ezmlmrc.ja
+	cp -f ezmlmrc.ja ezmlmrc
 
 nl: \
 ezmlmrc.nl
