@@ -234,16 +234,21 @@ a URL based on QUERY_STRING will in addition have a ``noindex'' robot META tag
 to avoid trapping robots in the archive.
 .SH EXECUTION
 .B ezmlm-cgi
-can operate in three modes,
-.IR SUID\ root ,
-.IR SUID\ user ,
+can operate in two modes,
+.I SUID\ root
 and
 .IR normal .
+.B ezmlm-cgi
+should not be installed SUID
+.I user
+other than root.
+Please see the
+.B SECURITY
+section before installing SUID
+.IR root .
 
 In
 .I normal
-and
-.I SUID user
 mode,
 .B ezmlm-cgi
 will read the configuration file
@@ -255,9 +260,7 @@ definition this should be the same directory as
 .B ezmlm-cgi
 is in), then
 change directory to the list directory. ``uid'' is ignored.
-.I SUID user
-may be required to read the particular archive if it is not owned by the
-httpd user. For user installations or systems where
+For user installations or systems where
 the httpd user has access to all the lists,
 .I normal
 mode usually gives sufficient access.
@@ -277,22 +280,10 @@ uid of the process invoking
 directory is not, it is safest to leave ``uid'' blank. The httpd user will still
 be able to read the files.
 .SH "EXECUTION OF BANNER PROGRAMS"
-A banner program can be specified in the config file. It is executed
-immediately before the end of the text. The formatting for
-``<BODY>'' is active and the banner program output is encapsulated in
-a ``<DIV class=banner>'' segment to allow additional formatting.
-The banner program is called for all summary views, but not for the message
-view itself.
+.B ezmlm-cgi
+supports display of banners, but not execution of banner programs. To
+obtain dynamic banners, use a URL that points to a banner program elsewhere.
 
-The banner program is give the list local name as argument 1, and the host
-name as argument 2. It is expected to exit 0 on success. The return code is
-checked, but the archive page (and whatever the banner program has already
-produced) is output even if the banner program fails.
-
-.B chroot(3)
-may make it difficult to run banner programs that depend on e.g. ``sh''
-or ``perl''. For this reason, the chroot call can be suppressed by prefixing
-the ``uid'' with a ``-''.
 .SH SECURITY
 .B ezmlm-cgi
 will refuse to run as root.
@@ -308,14 +299,8 @@ user, httpd user is list user, or httpd user has sufficient access to all
 list directories and archives).
 
 .B ezmlm-cgi
-will allow execution of banner programs that are located outside of the list
-directory. These are executed with the privileges of the userid set in the
-config file. If the program is installed SUID root, banner programs outside
-of the list directory are not normally accessible. Even when this is overridden,
-.B ezmlm-cgi
-will never execute the program with root permissions.
+will not allow execution of banner programs.
 
-Input to the CGI script is not propagated to the banner program.
 .SH BUGS
 .B ezmlm-send(1)
 updates the list message counter once a message is safely archived, but

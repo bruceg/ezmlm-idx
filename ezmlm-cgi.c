@@ -753,31 +753,8 @@ void html_footer(int flagspecial)
   if ((flagspecial & SPC_BANNER) && banner && *banner) {
     oputs("<DIV class=banner>\n");
     if (*banner == '<') oputs(banner);
-    else {
-      substdio_flush(&ssout);
-      sig_pipeignore();
-      bannerargs[0] = banner;
-      bannerargs[1] = host;
-      bannerargs[2] = local;
-      bannerargs[3] = 0;
-	/* We log errors but just complete the page anyway, since we're */
-	/* already committed to output something. */
-      switch(child = fork()) {
-        case -1:
-          strerr_warn3(FATAL,ERR_FORK,"banner program: ",&strerr_sys);
-          break;
-        case 0:
-          execv(*bannerargs,bannerargs);
-          strerr_die3x(100,FATAL,ERR_EXECUTE,"banner program: ");
-	  break;
-      }
-         /* parent */
-      wait_pid(&wstat,child);
-      if (wait_crashed(wstat))
-        strerr_warn2(FATAL,ERR_CHILD_CRASHED,(struct strerr *) 0);
-      if (wait_exitcode(wstat))
-        strerr_warn2(FATAL,ERR_CHILD_UNKNOWN,(struct strerr *) 0);
-    }
+    else
+      strerr_die2x(100,FATAL,"Sorry - banner programs not supported");
     oputs("</DIV>\n");
   }
   oputs("</BODY>\n</HTML>\n");
