@@ -3,6 +3,8 @@
 
 #include "substdio.h"
 
+extern substdio *const subfdin;
+extern substdio *const subfdout;
 extern substdio *const subfderr;
 
 #endif

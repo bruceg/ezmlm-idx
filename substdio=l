@@ -2,4 +2,6 @@ substdio.o
 substdi.o
 substdo.o
 subfderr.o
+subfdin.o
+subfdout.o
 substdio_copy.o
