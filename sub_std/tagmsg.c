@@ -47,6 +47,7 @@ char *fatal;
       case 0:
 	strerr_die3x(100,fatal,"key",ERR_NOEXIST);
     }
+    if (seed == 0) seed = "";
     cookie(hash,key.s,key.len,strnum,seed,action);
     for (i = 0; i < COOKIE; i++)
       hashout[i] = hash[i];
