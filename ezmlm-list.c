@@ -4,6 +4,7 @@
 #include "strerr.h"
 #include "readwrite.h"
 #include "substdio.h"
+#include "subfd.h"
 #include "subscribe.h"
 #include "exit.h"
 #include "fmt.h"
@@ -30,14 +31,11 @@ void die_usage(void)
   strerr_die1x(100,"ezmlm-list: usage: ezmlm-list [-mMnNvV] dir");
 }
 
-static char outbuf[512];
-static substdio ssout = SUBSTDIO_FDBUF(write,1,outbuf,sizeof(outbuf));
-
 int subwrite(s,l)
 char *s;
 unsigned int l;
 {
-  return substdio_put(&ssout,s,l) | substdio_put(&ssout,"\n",1);
+  return substdio_put(subfdout,s,l) | substdio_put(subfdout,"\n",1);
 }
 
 int dummywrite(s,l)
@@ -79,11 +77,11 @@ char **argv;
 
   if (flagnumber) {
     n = putsubs(dir,0L,52L,dummywrite,flagmysql);
-    if (substdio_put(&ssout,strnum,fmt_ulong(strnum,n)) == -1) die_write();
-    if (substdio_put(&ssout,"\n",1) == -1) die_write();
+    if (substdio_put(subfdout,strnum,fmt_ulong(strnum,n)) == -1) die_write();
+    if (substdio_put(subfdout,"\n",1) == -1) die_write();
   } else
     (void) putsubs(dir,0L,52L,subwrite,flagmysql);
-  if (substdio_flush(&ssout) == -1) die_write();
+  if (substdio_flush(subfdout) == -1) die_write();
   closesql();
   _exit(0);
 }

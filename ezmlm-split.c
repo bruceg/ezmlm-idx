@@ -17,6 +17,7 @@
 #include "getln.h"
 #include "case.h"
 #include "qmail.h"
+#include "subfd.h"
 #include "substdio.h"
 #include "readwrite.h"
 #include "quote.h"
@@ -73,12 +74,6 @@ int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
 }
 char qqbuf[1];
 substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,(int) sizeof(qqbuf));
-
-char outbuf[1];
-substdio ssout = SUBSTDIO_FDBUF(write,1,outbuf,(int) sizeof(outbuf));
-
-char inbuf[1024];
-substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
 
 int findname()
 /* returns 1 if a matching line was found, 0 otherwise. name will contain */
@@ -269,7 +264,7 @@ char **argv;
       if (qmail_open(&qq,(stralloc *) 0) == -1)
         strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
       qmail_puts(&qq,dtline);				/* delivered-to */
-      if (substdio_copy(&ssqq,&ssin) != 0)
+      if (substdio_copy(&ssqq,subfdin) != 0)
         strerr_die2sys(111,FATAL,ERR_READ_INPUT);
       qmail_from(&qq,from.s);
       qmail_to(&qq,to.s);
@@ -284,7 +279,7 @@ char **argv;
   } else {
 
     for (;;) {
-      if (getln(&ssin,&line,&match,'\n') == -1)
+      if (getln(subfdin,&line,&match,'\n') == -1)
 	  strerr_die2sys(111,FATAL,ERR_READ_INPUT);
       if (!match) break;
       if (line.len == 1) continue;	/* ignore blank lines */
@@ -295,10 +290,10 @@ char **argv;
       if (!stralloc_cats(&name,": ")) die_nomem();
       if (!stralloc_cats(&name,target.s)) die_nomem();
       if (!stralloc_append(&name,"\n")) die_nomem();
-      if (substdio_put(&ssout,name.s,name.len) == -1)
+      if (substdio_put(subfdout,name.s,name.len) == -1)
 	strerr_die2sys(111,ERR_WRITE,"output: ");
     }
-    if (substdio_flush(&ssout) == -1)
+    if (substdio_flush(subfdout) == -1)
       strerr_die2sys(111,ERR_FLUSH,"output: ");
     _exit(0);
   }

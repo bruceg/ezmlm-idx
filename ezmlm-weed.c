@@ -7,12 +7,10 @@
 #include "case.h"
 #include "readwrite.h"
 #include "substdio.h"
+#include "subfd.h"
 #include "getln.h"
 #include "strerr.h"
 #include "errtxt.h"
-
-char buf0[256];
-substdio ss0 = SUBSTDIO_FDBUF(read,0,buf0,sizeof(buf0));
 
 const char FATAL[] = "ezmlm-weed: fatal: ";
 
@@ -25,7 +23,7 @@ void get(sa)
 stralloc *sa;
 {
   int match;
-  if (getln(&ss0,sa,&match,'\n') == -1)
+  if (getln(subfdin,sa,&match,'\n') == -1)
     strerr_die2sys(111,FATAL,ERR_READ_INPUT);
   if (!match) _exit(0);
 }

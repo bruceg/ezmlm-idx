@@ -18,6 +18,7 @@
 #include "getln.h"
 #include "qmail.h"
 #include "substdio.h"
+#include "subfd.h"
 #include "readwrite.h"
 #include "seek.h"
 #include "quote.h"
@@ -152,9 +153,6 @@ int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
 }
 char qqbuf[1];
 substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
-
-char inbuf[512];
-substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,sizeof(inbuf));
 
 substdio sstext;
 char textbuf[1024];
@@ -356,7 +354,7 @@ char **argv;
     if (!stralloc_copys(&text,"")) die_nomem();
     if (!stralloc_ready(&text,1024)) die_nomem(); 
     for (;;) {		/* copy moderator's rejection comment */
-      if (getln(&ssin,&line,&match,'\n') == -1)
+      if (getln(subfdin,&line,&match,'\n') == -1)
         strerr_die2sys(111,FATAL,ERR_READ_INPUT);
       if (!match) break;
       if (flaginheader) {

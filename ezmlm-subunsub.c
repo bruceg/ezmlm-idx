@@ -8,15 +8,13 @@
 #include "sgetopt.h"
 #include "stralloc.h"
 #include "substdio.h"
+#include "subfd.h"
 #include "readwrite.h"
 #include "getln.h"
 #include "scan.h"
 #include "errtxt.h"
 #include "idx.h"
 #include "auto_version.h"
-
-char inbuf[512];
-substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,sizeof(inbuf));
 
 stralloc line = {0};
 
@@ -83,7 +81,7 @@ void subunsub_main(int submode,
     }
   } else {		/* stdin */
     for (;;) {
-      if (getln(&ssin,&line,&match,'\n') == -1)
+      if (getln(subfdin,&line,&match,'\n') == -1)
 	strerr_die2sys(111,FATAL,ERR_READ_INPUT);
       if (!match) break;
       if (line.len == 1 || *line.s == '#') continue;

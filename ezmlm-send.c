@@ -193,9 +193,6 @@ char *sender;
 substdio ssnumnew;
 char numnewbuf[16];
 
-char buf0[256];
-substdio ss0 = SUBSTDIO_FDBUF(read,0,buf0,sizeof(buf0));
-
 void numwrite()
 {		/* this one deals with msgnum, not outnum! */
   int fd;
@@ -544,7 +541,7 @@ char **argv;
   flagfromline = 0;
   flagreceived = 0;
   for (;;) {
-    if (getln(&ss0,&line,&match,'\n') == -1)
+    if (getln(subfdin,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
     if (flaginheader && match) {
       if (line.len == 1) {		/* end of header */

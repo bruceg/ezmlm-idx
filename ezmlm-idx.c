@@ -68,9 +68,6 @@ struct strerr index_err;
 
 stralloc num = {0};
 
-char buf0[256];
-substdio ss0 = SUBSTDIO_FDBUF(read,0,buf0,sizeof(buf0));
-
 void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-idx: usage: ezmlm-idx [-dDF] [-f msg] dir");
