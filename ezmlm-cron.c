@@ -7,7 +7,6 @@
 #include "error.h"
 #include "str.h"
 #include "fmt.h"
-#include "fork.h"
 #include "wait.h"
 #include "readwrite.h"
 #include "auto_qmail.h"
@@ -481,15 +480,12 @@ char **argv;
   if (!stralloc_0(&line)) die_nomem();
   sendargs[2] = line.s;
   sendargs[3] = 0;
-  switch(child = fork()) {
-      case -1:
-        strerr_die2sys(111,FATAL,ERR_FORK);
-      case 0:
-        if (setreuid(euid,euid) == -1)
-          strerr_die2sys(100,FATAL,ERR_SETUID);
-	wrap_execvp(sendargs, FATAL);
+  if ((child = wrap_fork(FATAL)) == 0) {
+    if (setreuid(euid,euid) == -1)
+      strerr_die2sys(100,FATAL,ERR_SETUID);
+    wrap_execvp(sendargs, FATAL);
   }
-         /* parent */
+  /* parent */
   switch (wrap_waitpid(child, FATAL)) {
       case 0:
         _exit(0);

@@ -16,7 +16,6 @@
 #include "fmt.h"
 #include "readwrite.h"
 #include "auto_bin.h"
-#include "fork.h"
 #include "wait.h"
 #include "exit.h"
 #include "substdio.h"
@@ -220,13 +219,9 @@ char **argv;
     if (!stralloc_0(&line)) die_nomem();
     sendargs[2] = line.s;
     sendargs[3] = 0;
-    switch(child = fork()) {
-      case -1:
-        strerr_die2sys(111,FATAL,ERR_FORK);
-      case 0:
-	wrap_execvp(sendargs, FATAL);
-    }
-         /* parent */
+    if ((child = wrap_fork(FATAL)) == 0)
+      wrap_execvp(sendargs, FATAL);
+    /* parent */
     wrap_exitcode(child, FATAL);
   }
 

@@ -9,7 +9,6 @@
 #include "sig.h"
 #include "str.h"
 #include "seek.h"
-#include "fork.h"
 #include "wait.h"
 #include "exit.h"
 #include "getconf.h"
@@ -50,13 +49,9 @@ int mailprog(s)
     sendargs[1] = "-c";		/* 0 rec ok, others bounce */
     sendargs[2] = s;
     sendargs[3] = (char *)0;
-    switch(child = fork()) {
-      case -1:
-	strerr_die2sys(111,FATAL,ERR_FORK);
-      case 0:
-	wrap_execv(sendargs, FATAL);
-    }
-         /* parent */
+    if ((child = wrap_fork(FATAL)) == 0)
+      wrap_execv(sendargs, FATAL);
+    /* parent */
     switch((r = wrap_waitpid(child, FATAL))) {
       case 0: case 99: case 100: break;
       case 111:					/* temp error */
@@ -187,13 +182,9 @@ char **argv;
     return;
   }
 
-  switch(child = fork()) {
-    case -1:
-      strerr_die2sys(111,FATAL,ERR_FORK);
-    case 0:
-      wrap_execv(sendargs, FATAL);
-   }
-         /* parent */
+  if ((child = wrap_fork(FATAL)) == 0)
+    wrap_execv(sendargs, FATAL);
+   /* parent */
    wrap_exitcode(child, FATAL);
 }
 

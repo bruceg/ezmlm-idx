@@ -9,7 +9,6 @@
 #include "env.h"
 #include "error.h"
 #include "sig.h"
-#include "fork.h"
 #include "wait.h"
 #include "slurp.h"
 #include "getconf.h"
@@ -568,15 +567,12 @@ char **argv;
         }
         sendargs[3] = 0;
 
-    switch(child = fork()) {
-      case -1:
-        strerr_die2sys(111,FATAL,ERR_FORK);
-      case 0:		/* child */
-        close(0);
-        dup(fd);	/* make fnmsg.s stdin */
-	wrap_execv(sendargs, FATAL);
+    if ((child = wrap_fork(FATAL)) == 0) {
+      close(0);
+      dup(fd);	/* make fnmsg.s stdin */
+      wrap_execv(sendargs, FATAL);
     }
-         /* parent */
+      /* parent */
       close(fd);
       wrap_exitcode(child, FATAL);
       if (!stralloc_copys(&fnnew,"mod/accepted/")) die_nomem();
