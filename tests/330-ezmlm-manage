@@ -1,0 +1,67 @@
+################
+# ezmlm-manage #
+################
+
+if [ "$SECT" -le "3" ]; then
+
+  prompt "ezmlm-manage (3/4):   "
+
+  SENDER="${MOD}@$HOST"; export SENDER
+  ${EZBIN}/ezmlm-issubn "${DIR}" && \
+	{ ${ECHO} "unsub without mod for moderated list failed"; exit 100; }
+
+  SUB3=`${GREP} -l 'sub3' $MODDIR/new/*` || \
+	{ ${ECHO} "failed getting subscribe moderation confirm request"; \
+	 exit 100; }
+
+# confirm subscription request
+  LOCAL=`${GREP} "Reply-To:" "$SUB3" | cut -d' ' -f2 | cut -d'@' -f1` || \
+	{ ${ECHO} "no confirm address in sub3 mod confirm request"; exit 100; }
+  export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+  fi
+  ${ECHO} "X-num: modR1" > "${DIR}/__tmp"
+  ${ECHO} "FROM: moderator agrees <$SENDER>" >> "${DIR}/__tmp"
+  ${ECHO} >> "${DIR}/__tmp"
+  ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${DIR}/__tmp"\
+		>/dev/null 2>&1 || \
+	{ ${ECHO} "failed to send digest sub mod accept for sub3"; exit 100; }
+
+# complete edit. SENDER can be any address
+  SENDER="${MAN}@$HOST"; export SENDER
+  EDIT3=`${GREP} -l 'edit3' $MODDIR/new/*` || \
+	{ ${ECHO} "failed getting edit reply for edit3"; \
+	 exit 100; }
+  ${GREP} "#TEST_TEXT#" "$EDIT3" >/dev/null 2>&1 || \
+	{ ${ECHO} "old text missing in edit3 edit reply"; exit 100; }
+  LOCAL=`${GREP} "Reply-To:" "$EDIT3" | cut -d' ' -f2 | cut -d'@' -f1` || \
+	{ ${ECHO} "no reply address in edit3 edit reply"; exit 100; }
+  export LOCAL
+  if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+  fi
+  ${ECHO} "X-num: edit4" > "${DIR}/__tmp"
+  ${ECHO} >> "${DIR}/__tmp"
+  ${ECHO} "%%% START OF TEXT FILE" >> "${DIR}/__tmp"
+  ${ECHO} "#NEW_TEXT#" >> "${DIR}/__tmp"
+  ${ECHO} "%%% END OF TEXT FILE" >> "${DIR}/__tmp"
+  ${EZBIN}/ezmlm-manage -e "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to send edit4 reply for edit3"; exit 100; }
+
+# check results of log/list
+  LOG3=`${GREP} -l 'log3' $MODDIR/new/*` || \
+	{ ${ECHO} "failed getting -log reply to log3"; \
+	 exit 100; }
+  ${GREP} "aaa@bbb" "$LOG3" | ${GREP} "+m" > /dev/null 2>&1 || \
+	{ ${ECHO} "failed to get log reply to log3"; exit 100; }
+
+  LIST3=`${GREP} -l 'list3' $MODDIR/new/*` || \
+	{ ${ECHO} "failed getting -list reply to list3"; \
+	 exit 100; }
+  ${GREP} "aaa@bbb" "$LIST3" > /dev/null 2>&1 || \
+	{ ${ECHO} "failed to get list reply to list3"; exit 100; }
+
+  ${ECHO} "OK"
+
+fi

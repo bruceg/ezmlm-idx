@@ -1,0 +1,28 @@
+##################
+# ezmlm-moderate #
+##################
+
+if [ "$SECT" -le "3" ]; then
+
+  prompt "ezmlm-moderate (2/2): "
+
+  MOD1=`${GREP} -l "mod1" $SINKDIR/new/* | head -n 1` || \
+	{ ${ECHO} "failed to send rejection notice for message mod1"; exit 100; }
+
+# ${SND}@$HOST means it was rejected, not send through the list
+  ${GREP} "To: ${SND}@$HOST" "$MOD1" > /dev/null 2>&1 || \
+	{ ${ECHO} "failed to reject message mod1"; exit 100; }
+
+  MOD3=`${GREP} -l "mod3" $SINKDIR/new/* | head -n 1`
+  if [ -z "$MOD3" ]; then
+    ${ECHO} "failed to post message mod3"
+    exit 100
+  fi
+
+# ${LOC}@$HOST means it was not rejected, but sent through the list
+  ${GREP} "To: ${LOC}@$HOST" "$MOD3" > /dev/null 2>&1 || \
+	{ ${ECHO} "failed to reject message mod3"; exit 100; }
+
+  ${ECHO} "OK"
+
+fi

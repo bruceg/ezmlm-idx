@@ -1,0 +1,9 @@
+if [ "$SECT" -le "3" ]; then
+
+########################
+# waiting for delivery #
+########################
+
+  send_test 4
+
+fi			# end section 3

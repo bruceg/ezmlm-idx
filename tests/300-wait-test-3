@@ -1,0 +1,6 @@
+######################################### start of section 3
+if [ "$SECT" -le "3" ]; then
+
+  wait_test 3
+
+fi
