@@ -1,13 +1,11 @@
 /* 19970320, overlap allowed 19970406 */
 
 #include "surf.h"
-#include "uint32.h"
 
 #define ROTATE(x,b) (((x) << (b)) | ((x) >> (32 - (b))))
 #define MUSH(i,b) x = t[i] += (((x ^ seed[i]) + sum) ^ ROTATE(x,b));
 
-void surf(out,in,seed)
-uint32 out[8]; uint32 in[12]; uint32 seed[32];
+void surf(uint32 out[8],const uint32 in[12],const uint32 seed[32])
 {
   uint32 t[12]; uint32 x; uint32 sum = 0;
   int r; int i; int loop;
