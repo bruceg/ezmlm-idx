@@ -338,8 +338,8 @@ void idx_mkthreads(pmsgtable,psubtable,pauthtable,pdatetable,
 	    lastdate = pmsgt->date;
 	    if (datepos >= datemax) {		/* more space */
 	      datemax += DATENO;
-	      if (!(*pdatetable = (dateentry *) alloc_re(*pdatetable,
-			datetablesize,datetablesize+datetableunit)))
+	      if (!alloc_re((void**)pdatetable,
+			    datetablesize,datetablesize+datetableunit))
 		die_nomem(fatal);
 	    }
 	    (*pdatetable)[datepos].msg = msg;	/* first msg this mo */
