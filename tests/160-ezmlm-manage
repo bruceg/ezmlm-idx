@@ -9,9 +9,7 @@ if [ "$SECT" = "1" ]; then
   prompt "ezmlm-manage (1/4):   "
 
   LOCAL="$LOC-unsubscribe"; export LOCAL
-  if [ "$QMVER" = "n" ]; then
-	DEFAULT='unsubscribe'; export DEFAULT
-  fi
+  DEFAULT='unsubscribe'; export DEFAULT
   SENDER="${SND}@$HOST"; export SENDER
 
   ${EZBIN}/ezmlm-sub "${DIR}" "${SND}@$HOST"
@@ -21,16 +19,12 @@ if [ "$SECT" = "1" ]; then
 	{ ${ECHO} "unsubscribe with -U failed"; exit 100; }
 
   LOCAL="$LOC-digest-subscribe"; export LOCAL
-  if [ "$QMVER" = "n" ]; then
-	DEFAULT='digest-subscribe'; export DEFAULT
-  fi
+  DEFAULT='digest-subscribe'; export DEFAULT
   ${EZBIN}/ezmlm-unsub "${DIR}/digest" "${SND}@$HOST"
 
 # test that access to the deny db is restricted to remote admins
   LOCAL="$LOC-deny-subscribe"; export LOCAL
-  if [ "$QMVER" = "n" ]; then
-	DEFAULT='deny-subscribe'; export DEFAULT
-  fi
+  DEFAULT='deny-subscribe'; export DEFAULT
   ${EZBIN}/ezmlm-manage "${DIR}" </dev/null >/dev/null 2>&1 && \
 	{
 	 ${ECHO} "Deny open to regular subscribers: 0.31 bug, OK in 0.321."
@@ -62,9 +56,7 @@ if [ "$SECT" = "1" ]; then
   touch "${DIR}/remote" || \
 	{ ${ECHO} "Failed to remove DIR/remote"; exit 99; }
   LOCAL="$LOC-digest-subscribe"; export LOCAL
-  if [ "$QMVER" = "n" ]; then
 	DEFAULT='digest-subscribe'; export DEFAULT
-  fi
 
   ${EZBIN}/ezmlm-manage -S "${DIR}" </dev/null >"${ERR}" 2>&1 || \
 	{ ${ECHO} "failed with -S"; exit 100; }
@@ -85,18 +77,14 @@ if [ "$SECT" = "1" ]; then
 
   ${EZBIN}/ezmlm-sub "${DIR}" "${MAN}@$HOST"
   LOCAL="$LOC-unsubscribe"; export LOCAL
-  if [ "$QMVER" = "n" ]; then
-	DEFAULT='unsubscribe'; export DEFAULT
-  fi
+  DEFAULT='unsubscribe'; export DEFAULT
   ${ECHO} "X-num: sub2" > "${DIR}/__tmp"
   ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
 	{ ${ECHO} "unsubscribe request failed"; exit 100; }
 
 # -get function for backwards compatibility
   LOCAL="$LOC-get.1"; export LOCAL
-  if [ "$QMVER" = "n" ]; then
-	DEFAULT='get.1'; export DEFAULT
-  fi
+  DEFAULT='get.1'; export DEFAULT
   ${ECHO} "X-num: manget1" > "${DIR}/__tmp"
   ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
 	{ ${ECHO} "get failed"; exit 100; }

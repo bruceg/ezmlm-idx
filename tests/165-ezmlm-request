@@ -10,9 +10,7 @@ if [ "$SECT" = "1" ]; then
 
   SENDER="${SND}@$HOST"; export SENDER
   LOCAL="$LOC-request"; export LOCAL
-  if [ "$QMVER" = "n" ]; then
-	DEFAULT='request'; export DEFAULT
-  fi
+  DEFAULT='request'; export DEFAULT
 
   ${ECHO} "X-num: req1" > "${DIR}/__tmp"
 # use a non-existing command

@@ -20,9 +20,7 @@ if [ "$SECT" -le "3" ]; then
   LOCAL=`${GREP} "Reply-To:" "$SUB3" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	{ ${ECHO} "no confirm address in sub3 mod confirm request"; exit 100; }
   export LOCAL
-  if [ "$QMVER" = "n" ]; then
-	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
-  fi
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
   ${ECHO} "X-num: modR1" > "${DIR}/__tmp"
   ${ECHO} "FROM: moderator agrees <$SENDER>" >> "${DIR}/__tmp"
   ${ECHO} >> "${DIR}/__tmp"
@@ -40,9 +38,7 @@ if [ "$SECT" -le "3" ]; then
   LOCAL=`${GREP} "Reply-To:" "$EDIT3" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	{ ${ECHO} "no reply address in edit3 edit reply"; exit 100; }
   export LOCAL
-  if [ "$QMVER" = "n" ]; then
-	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
-  fi
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
   ${ECHO} "X-num: edit4" > "${DIR}/__tmp"
   ${ECHO} >> "${DIR}/__tmp"
   ${ECHO} "%%% START OF TEXT FILE" >> "${DIR}/__tmp"

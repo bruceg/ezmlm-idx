@@ -6,7 +6,6 @@
 
 if [ "$SECT" = "1" ]; then
 
-if [ "$QMVER" = "n" ]; then
   prompt "ezmlm-split (1/2):    "
 # set up split file
   ${ECHO} "edu:1:26:l1@h1" > "${DIR}/split"
@@ -31,9 +30,7 @@ if [ "$QMVER" = "n" ]; then
   SENDER="${MOD}@$HOST"; export SENDER
   DTLINE="Delivered-To: ezmlm-split@$HOST"; export DTLINE
   LOCAL="$LOC-subscribe-${SND}=$HOST"; export LOCAL
-  if [ "$QMVER" = "n" ]; then
-	DEFAULT="subscribe-${SND}=$HOST"; export DEFAULT
-  fi
+  DEFAULT="subscribe-${SND}=$HOST"; export DEFAULT
   ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "${DIR}" >"${ERR}" 2>&1
 
   EC="$?"
@@ -48,6 +45,5 @@ if [ "$QMVER" = "n" ]; then
 	{ ${ECHO} "failed to exit 0 after failing to match"; exit 100; }
 
   ${ECHO} "OK"
-fi
 
 fi

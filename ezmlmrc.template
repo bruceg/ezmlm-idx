@@ -70,15 +70,6 @@
 # in a FATAL error. Attempts to open files that have already been closed
 # or already exits, will cause the old file to be overwritten.
 #
-# One of the major problems with ezmlm-lists is DIR/inlocal. For normal
-# users, it is set up to the list name (user-list or so), which is correct.
-# However, for user 'ezmlm' in control of virtual domain 'host.dom.com'
-# the list name is 'list@host.dom.com', but inlocal should be 'ezmlm-list',
-# not 'list'. Similarly, if ezmlm-domain1 is in control of 'host.dom.com,
-# list@host.dom.com, should yield an inlocal of 'ezmlm-domain1-list'. To
-# always get the lists correct, place this file as '.ezmlmrc' in the 
-# users home directory (~ezmlm/.ezmlmrc) and change the inlocal text below
-# to 'ezmlm-<#L#>' or 'ezmlm-<#1#>-<#L#>, respectively.
 # config to support future editing without giving ezmlm-make command line
 # arguments other than dir. Useful for GUI/WWW editing tools
 </config/>
@@ -97,8 +88,6 @@ C:<#C#>
 7:<#7#>
 8:<#8#>
 9:<#9#>
-</inlocal/>
-<#L#>
 </sublist#0/>
 <#0#>
 </+archive/>

@@ -114,27 +114,11 @@ char **argv;
   local = env_get("LOCAL");
   if (local && *local) {			/* in editor or manager */
     def = env_get("DEFAULT");
-    if (def && *def) {				/* qmail>=1.02 and manager */
+    if (def && *def) {				/* in manager */
       if (!case_starts(def,"dig") || case_starts(def,"digest-"))
         _exit(0);
-    } else {				/* older qmail versions or editor */
-      if (!getconf_line(&line,"inlocal",0,FATAL,dir)) {
-	flaglocal = 1;
-      } else {
-	pos = str_len(local);
-	if (pos <= line.len) {		/* maybe qmail>=1.02 and editor */
-	  flaglocal = 1;		/* editor and qmail>=1.02. No harm */
-					/* if we're wrong */
-	} else {			/* older qmail */
-	  if (case_diffb(local,line.len,line.s))	/* local */
-	    flaglocal = 1;		/* minimal harm */
-          else if (pos < line.len +4 ||	/* in manager and non-digest */
-		!case_starts(local+line.len,"-dig"))
-	    _exit(0);
-          else if (case_starts(local+line.len,"-digest-"))
-	    _exit(0);
-	}
-      }
+    } else {					/* in editor */
+      flaglocal = 1;
     }
   }
 

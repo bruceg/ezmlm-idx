@@ -66,7 +66,6 @@ void die_badaddr()
 }
 
 stralloc outhost = {0};
-stralloc inlocal = {0};
 stralloc outlocal = {0};
 stralloc listname = {0};
 stralloc mailinglist = {0};
@@ -863,7 +862,7 @@ char **argv;
   local = env_get("LOCAL");
   def = env_get("DEFAULT");
   sender = env_get("SENDER");
-  if (local && *local) {	/* in editor local = inlocal */
+  if (local && *local) {	/* in editor local = outlocal */
     if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
     if (!*sender)
       strerr_die2x(100,FATAL,ERR_BOUNCE);
@@ -871,7 +870,7 @@ char **argv;
       strerr_die2x(100,FATAL,ERR_BOUNCE);
     if (!sender[str_chr(sender,'@')])
       strerr_die2x(100,FATAL,ERR_ANONYMOUS);
-    if (def) {			/* qmail>=1.02 support only */
+    if (def) {
       if (*def) {
 	action = def;
 	goodexit = 99;

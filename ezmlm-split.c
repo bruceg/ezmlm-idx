@@ -34,7 +34,6 @@ int flagdo = 1;		/* default is manager function */
 const char *sender;
 const char *split;
 stralloc outhost = {0};
-stralloc inlocal = {0};
 stralloc outlocal = {0};
 stralloc target = {0};
 stralloc lctarget = {0};
@@ -225,17 +224,8 @@ char **argv;
     if (str_equal(sender,"#@[]"))
       strerr_die2x(100,FATAL,ERR_BOUNCE);
 
-    def = env_get("DEFAULT");
-    if (def) {
-      action = def;
-    } else {
-      local = env_get("LOCAL");
-      if (!local) strerr_die2x(100,FATAL,ERR_NOLOCAL);
-      getconf_line(&inlocal,"inlocal",1,FATAL,dir);
-      if (inlocal.len > str_len(local)) die_badaddr();
-      if (case_diffb(inlocal.s,inlocal.len,local)) die_badaddr();
-      action = local + inlocal.len + 1;
-    }
+    action = env_get("DEFAULT");
+    if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
     if (!stralloc_copys(&target,sender)) die_nomem();
     if (action[0]) {
       i = str_chr(action,'-');

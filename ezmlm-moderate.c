@@ -55,7 +55,6 @@ void die_badaddr() {
 }
 
 stralloc outhost = {0};
-stralloc inlocal = {0};
 stralloc outlocal = {0};
 stralloc key = {0};
 stralloc mydtline = {0};
@@ -235,6 +234,7 @@ char **argv;
   local = env_get("LOCAL");
   if (!local) strerr_die2x(100,FATAL,ERR_NOLOCAL);
   def = env_get("DEFAULT");
+  if (!def) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
   if (!*sender)
     strerr_die2x(100,FATAL,ERR_BOUNCE);
@@ -258,20 +258,12 @@ char **argv;
   set_cpoutlocal(&outlocal);	/* for copy() */
   set_cpouthost(&outhost);	/* for copy() */
 
-  if (def) {			/* qmail>=1.02 */
-	/* local should be >= def, but who knows ... */
-    cp = local + str_len(local) - str_len(def) - 2;
-    if (cp < local) die_badformat();
-    action = local + byte_rchr(local,cp - local,'-');
-    if (action == cp) die_badformat();
-    action++;
-  } else {			/* older versions of qmail */
-    getconf_line(&inlocal,"inlocal",1,FATAL,dir);
-    if (inlocal.len > str_len(local)) die_badaddr();
-    if (case_diffb(inlocal.s,inlocal.len,local)) die_badaddr();
-    action = local + inlocal.len;
-    if (*(action++) != '-') die_badaddr();
-  }
+  /* local should be >= def, but who knows ... */
+  cp = local + str_len(local) - str_len(def) - 2;
+  if (cp < local) die_badformat();
+  action = local + byte_rchr(local,cp - local,'-');
+  if (action == cp) die_badformat();
+  action++;
 
   if (!action[0]) die_badformat();
   if (!str_start(action,ACTION_ACCEPT) && !str_start(action,ACTION_REJECT))

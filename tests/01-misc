@@ -59,10 +59,6 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 			SQLHOST="$2"; shift; shift;;
 		-l)
 			SQLUSER="$2"; shift; shift;;
-		-n)
-			QMVER=n; shift;;
-		-o)
-			QMVER=o; shift;;
 		-p)
 			PW="$2"; USESQL=1; shift; shift;;
 		-u)
@@ -75,7 +71,7 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 			shift; break;;
 		*)
 			${ECHO} "$i"
-			${ECHO} "Usage: ezmlm-test [-/] [-on] [-u user]" \
+			${ECHO} "Usage: ezmlm-test [-/] [-u user]" \
 				"[-p sqlpassword [-l sqluser] [-d sqldb]" \
 				"[-t sqltable] [-h sqlhost]] [-s section]"
 			${ECHO}
@@ -84,7 +80,6 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 			${ECHO} "defaults: -d ezmlm"
 			${ECHO} "          -h [empty => RDBMS default]"
 			${ECHO} "          -l eztest or -u arg if specified"
-			${ECHO} "          -n/o [autodetected]"
 			${ECHO} "          -p [empty - don't use SQL support]"
 			${ECHO} "          -s 1 [run test from beginning]"
 			${ECHO} "          -t list"
@@ -336,7 +331,6 @@ if [ "$?" = "0"	]; then
 	DLC=''
 	DUC=''
 	EZVER='31'
-	QMVER='o'
 	ALLOW='extra'		# support old nomenclature
 	DENY='blacklist'
 else
@@ -348,14 +342,4 @@ else
 	fi
 ########## should add testing of From line logging for non-0.31x
 	SW_FROM="-f"
-fi
-
-# Now see if we support old qmail
-
-  ${ECHO} "$THIS_VER" | ${GREP} "ezmlm-idx-0.32" >/dev/null 2>&1 && \
-	EZVER='32'; 
-
-if [ "$EZVER" != '31' -a "$EZVER" != '32' -a "$QMVER" = 'o' ]; then
-	${ECHO} "Sorry, this version of ezmlm-idx requires qmail>=1.02"
-	exit 100;
 fi

@@ -29,6 +29,7 @@ If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
 =========================
+-Removed support for qmail older than version 1.02.
 -Removed all references to "inhost" which was completely unused but
  still referenced in documentation and tests.
 

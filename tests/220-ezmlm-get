@@ -22,25 +22,19 @@ ${EZBIN}/ezmlm-sub "${DIR}/digest" "${DIG}@$HOST"
 
 SENDER="${BNC}@$HOST"; export SENDER
 LOCAL="$LOC-xxxx"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT='xxxx'; export DEFAULT
-fi
+DEFAULT='xxxx'; export DEFAULT
 ${ECHO} "X-num: index1" > "${DIR}/__tmp"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
 	{ ${ECHO} " failed to exit 0 for non-recognized commands"; exit 100; }
 
 # This should not give a digest
 LOCAL="$LOC-"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT=''; export DEFAULT
-fi
+DEFAULT=''; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
 	{ ${ECHO} " failed to exit 0 for list-@host"; exit 100; }
 
 LOCAL="$LOC-index"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT='index'; export DEFAULT
-fi
+DEFAULT='index'; export DEFAULT
 ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	{ ${ECHO} "-s failed to reject -index from non-sub"; exit 100; }
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
@@ -60,9 +54,7 @@ fi
 SENDER="${BNC}@$HOST"; export SENDER
 ${ECHO} "X-num: get1" > "${DIR}/__tmp"
 LOCAL="$LOC-get.2_4"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT='get.2_4'; export DEFAULT
-fi
+DEFAULT='get.2_4'; export DEFAULT
 ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	{ ${ECHO} "-s failed to reject -get from non-sub"; exit 100; }
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
@@ -81,9 +73,7 @@ fi
 # test formats for -get
 ${ECHO} "X-num: get3" > "${DIR}/__tmp"
 LOCAL="$LOC-getr.2_4"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT='getr.2_4'; export DEFAULT
-fi
+DEFAULT='getr.2_4'; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	${ECHO} "failed to exit 99 after -getr"
@@ -91,9 +81,7 @@ if [ "$?" != "99" ]; then
 fi
 ${ECHO} "X-num: get4" > "${DIR}/__tmp"
 LOCAL="$LOC-getn.2_4"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT='getn.2_4'; export DEFAULT
-fi
+DEFAULT='getn.2_4'; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	${ECHO} "failed to exit 99 after -getn"
@@ -102,9 +90,7 @@ fi
 
 ${ECHO} "X-num: get5" > "${DIR}/__tmp"
 LOCAL="$LOC-getv.2_4"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT='getv.2_4'; export DEFAULT
-fi
+DEFAULT='getv.2_4'; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	${ECHO} "failed to exit 99 after -getv"
@@ -113,9 +99,7 @@ fi
 
 ${ECHO} "X-num: get6" > "${DIR}/__tmp"
 LOCAL="$LOC-getx.2_4"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT='getx.2_4'; export DEFAULT
-fi
+DEFAULT='getx.2_4'; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	${ECHO} "failed to exit 99 after -getx"
@@ -124,14 +108,10 @@ fi
 
 SENDER="${BNC}@$HOST"; export SENDER
 LOCAL="$LOC-index"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT='index'; export DEFAULT
-fi
+DEFAULT='index'; export DEFAULT
 ${ECHO} "X-num: thread1" > "${DIR}/__tmp"
 LOCAL="$LOC-thread.1"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT='thread.1'; export DEFAULT
-fi
+DEFAULT='thread.1'; export DEFAULT
 ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	{ ${ECHO} "-s failed to reject -thread from non-sub"; exit 100; }
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
@@ -165,9 +145,7 @@ mv -f "${DIR}/headeradd" "${DIR}/headeradd.bak"
 ${ECHO} "X-num: dig1" > "${DIR}/headeradd"
 SENDER="${BNC}@$HOST"; export SENDER
 LOCAL="$LOC-dig.code"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT='dig.code'; export DEFAULT
-fi
+DEFAULT='dig.code'; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	{ ${ECHO} "failed to reject -dig when no digest code was on cmd-line"
 	  exit 100
@@ -200,9 +178,7 @@ ${EZBIN}/ezmlm-get "${DIR}" 'cod' < "${DIR}/__tmp" >/dev/null 2>&1 && \
 # now in the editor position:
 ${RM} -f "${DIR}/dignum"
 LOCAL="$LOC"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	${UNSET} DEFAULT
-fi
+${UNSET} DEFAULT
 ${ECHO} "X-num: dig2" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
 	{ ${ECHO} "failed to exit 0 after digest in editor"; exit 100; }

@@ -28,9 +28,7 @@ ${EZBIN}/ezmlm-sub "${DIR}/mod" "${MOD}@$HOST"
 LOCAL=`${GREP} "Reply-To:" "$SUB1" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	{ ${ECHO} "failed to find confirm address in -subscribe reply"; exit 100; }
 export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
-fi
+DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
 ${ECHO} "X-num: sub3" > "${DIR}/__tmp"
 ${ECHO} "From: Mr. $EZTEST confirms <$SENDER>" >> "${DIR}/__tmp"
 ${ECHO} >> "${DIR}/__tmp"
@@ -42,9 +40,7 @@ LOCAL=`${GREP} "Reply-To:" "$SUB2" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	{ ${ECHO} "failed to find confirm address in -unsubscribe reply"
 	  exit 100; }
 export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
-fi
+DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
 ${ECHO} "X-num: sub4" > "${DIR}/__tmp"
 ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
 	{ ${ECHO} "failed to send conf for sub2"; exit 100; }
@@ -56,16 +52,12 @@ ${EZBIN}/ezmlm-sub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff"
 # test -edit
 ${ECHO} "#TEST_TEXT#" > "${DIR}/text/test"
 LOCAL="$LOC-edit.test-$MAN=$HOST"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT="edit.test-$MAN=$HOST"; export DEFAULT
-fi
+DEFAULT="edit.test-$MAN=$HOST"; export DEFAULT
 ${ECHO} "X-num: edit1" > "${DIR}/__tmp"
 ${EZBIN}/ezmlm-manage -e "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	{ ${ECHO} "failed to reject edit request from non-mod"; exit 100; }
 LOCAL="$LOC-edit.test-$MOD=$HOST"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT="edit.test-$MOD=$HOST"; export DEFAULT
-fi
+DEFAULT="edit.test-$MOD=$HOST"; export DEFAULT
 ${ECHO} "X-num: edit2" > "${DIR}/__tmp"
 ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 && \
 	{ ${ECHO} "-E failed for edit2"; exit 100; }
@@ -75,25 +67,19 @@ ${EZBIN}/ezmlm-manage -e "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
 
 # test list/log
 LOCAL="$LOC-allow-list-$MAN=$HOST"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT="allow-list-$MAN=$HOST"; export DEFAULT
-fi
+DEFAULT="allow-list-$MAN=$HOST"; export DEFAULT
 ${ECHO} "X-num: list1" > "${DIR}/__tmp"
 ${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	{ ${ECHO} "failed to reject list request from non-mod"; exit 100; }
 
 LOCAL="$LOC-allow-log-$MAN=$HOST"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT="allow-log-$MAN=$HOST"; export DEFAULT
-fi
+DEFAULT="allow-log-$MAN=$HOST"; export DEFAULT
 ${ECHO} "X-num: log1" > "${DIR}/__tmp"
 ${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	{ ${ECHO} "failed to reject log request from non-mod"; exit 100; }
 
 LOCAL="$LOC-allow-list-$MOD=$HOST"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT="allow-list-$MOD=$HOST"; export DEFAULT
-fi
+DEFAULT="allow-list-$MOD=$HOST"; export DEFAULT
 ${ECHO} "X-num: list2" > "${DIR}/__tmp"
 ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	{ ${ECHO} "-L failed to reject list request"; exit 100; }
@@ -103,9 +89,7 @@ ${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
 	{ ${ECHO} "-l failed for remote admin for list3"; exit 100; }
 
 LOCAL="$LOC-allow-log-$MOD=$HOST"; export LOCAL
-if [ "$QMVER" = "n" ]; then
-	DEFAULT="allow-log-$MOD=$HOST"; export DEFAULT
-fi
+DEFAULT="allow-log-$MOD=$HOST"; export DEFAULT
 ${ECHO} "X-num: log2" > "${DIR}/__tmp"
 ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 && \
 	{ ${ECHO} "-L failed to reject log request"; exit 100; }

@@ -259,7 +259,6 @@ char **argv;
 {
   char *local;
   char *action;
-  char *def;
   const char *ret;
   char *cp;
   unsigned long msgnum;
@@ -295,7 +294,8 @@ char **argv;
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
   local = env_get("LOCAL");
   if (!local) strerr_die2x(100,FATAL,ERR_NOLOCAL);
-  def = env_get("DEFAULT");		/* qmail-1.02 */
+  action = env_get("DEFAULT");
+  if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
   if (chdir(dir) == -1)
     strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
@@ -307,7 +307,6 @@ char **argv;
       strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
   }
   workdir = dir;
-  action = def;
 
     if (str_start(action,"receipt-")) {
       flagreceipt = 1;

@@ -67,7 +67,6 @@ stralloc qline = {0};
 stralloc usr = {0};
 stralloc lhost = {0};
 stralloc subject = {0};
-stralloc inlocal = {0};
 stralloc outlocal = {0};
 stralloc listname = {0};
 stralloc hostname = {0};
@@ -236,7 +235,7 @@ char *cp;
       }
     }
   } else {				/* '@' before ' ' means complete cmd */
-    if (str_chr(cp,'@') < str_chr(cp,' '))	/* addr where inlocal failed */
+    if (str_chr(cp,'@') < str_chr(cp,' '))	/* addr where local failed */
 	strerr_die2x(100,FATAL,ERR_REQ_LOCAL);
 						/* to match */
     command = cp;
@@ -333,9 +332,9 @@ char **argv;
 	/* it's invoked in line with e.g. ezmlm-manage */
 
   def = env_get("DEFAULT");
-  if (def) {			/* qmail>=1.02 */
+  if (def) {
     action = def;
-  } else if (cfname) {		/* older qmail OR just list-mdomo */
+  } else if (cfname) {		/* just list-mdomo */
     local = env_get("LOCAL");
     if (!local) strerr_die2x(100,FATAL,ERR_NOLOCAL);
     len = str_len(local);
@@ -343,16 +342,8 @@ char **argv;
       action = (char*)"return-";	/* our bounce with qmail<1.02 */
     } else
       action = (char*)"";	/* list-mdomo-xxx won't work for older lists */
-  } else {			/* older qmail versions */
-    local = env_get("LOCAL");
-    if (!local) strerr_die2x(100,FATAL,ERR_NOLOCAL);
-    getconf_line(&inlocal,"inlocal",1,FATAL,dir);
-    if (inlocal.len > str_len(local)) die_badaddr();
-    if (case_diffb(inlocal.s,inlocal.len,local)) die_badaddr();
-    action = local + inlocal.len;
-    if (*action)
-      if (*(action++) != '-') die_badaddr();	/* check anyway */
-  }
+  } else
+    strerr_die3x(100,FATAL,ERR_NODEFAULT," and -f not used");
 	/* at this point action = "request" or "request-..." for std use; */
 	/* "" for majordomo@ */
   if (!cfname) {				/* expect request */

@@ -6,7 +6,6 @@
 
 if [ "$SECT" -le "3" ]; then
 
-if [ "$QMVER" = "n" ]; then
   prompt "ezmlm-split (2/2):    "
 
 # we know that ezmlm-manage works. A bounce would go to MODDIR, so a
@@ -25,6 +24,5 @@ if [ "$QMVER" = "n" ]; then
 	  exit 100; }
 
   ${ECHO} "OK"
-fi
 
 fi

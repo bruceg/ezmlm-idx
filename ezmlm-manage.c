@@ -84,7 +84,6 @@ void die_cookie()
 }
 
 stralloc outhost = {0};
-stralloc inlocal = {0};
 stralloc outlocal = {0};
 stralloc key = {0};
 stralloc mailinglist = {0};
@@ -623,7 +622,6 @@ int argc;
 char **argv;
 {
   char *local;
-  char *def;
   char *action;
   char *x, *y;
   char *fname;
@@ -681,7 +679,8 @@ char **argv;
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
   local = env_get("LOCAL");
   if (!local) strerr_die2x(100,FATAL,ERR_NOLOCAL);
-  def = env_get("DEFAULT");
+  action = env_get("DEFAULT");
+  if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
   if (!*sender)
     strerr_die2x(100,FATAL,ERR_BOUNCE);
@@ -714,17 +713,6 @@ char **argv;
   } else
     if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
   if (!stralloc_0(&charset)) die_nomem();
-
-  if (def)			/* qmail-1.02 */
-    action = def;		/* .qmail-list-default */
-  else {			/* older version of qmail */
-    getconf_line(&inlocal,"inlocal",1,FATAL,dir);
-    if (inlocal.len > str_len(local)) die_badaddr();
-    if (case_diffb(inlocal.s,inlocal.len,local)) die_badaddr();
-    action = local + inlocal.len;
-    if (*(action++) != '-') die_badaddr();
-				/* has to be '-' to match link. Check anyway */
-  }
 
   if (!stralloc_copys(&ddir,dir)) die_nomem();
 

@@ -6,6 +6,8 @@
 
 if [ "$SECT" != "9" ]; then
 
+prompt "testing for qmail:    "
+
 ${ECHO} "Subject: zzz-test" > "${DIR}/__tmp"
 ${QMPATH}/bin/qmail-local "$EZTEST" "$HOME" "$SND-zzz" "$DASH" \
 		"$LIST-$SINK-zzz" "$HOST" \
@@ -18,21 +20,9 @@ if [ ! -r "${DIR}/default" ]; then
 	exit 99
 fi
 
-if [ `cat "${DIR}/default"` = "zzz" ]; then
-	if [ -z "$QMVER" ]; then
-		QMVER="n"
-	fi
-else
-	if [ -z "$QMVER" ]; then
-		QMVER="o"
-	fi
-fi
-
-prompt "testing for qmail:    "
-if [ "$QMVER" = "n" ]; then
-	${ECHO} ">=1.02"
-else
-	${ECHO} "[any]"
+if [ `cat "${DIR}/default"` != "zzz" ]; then
+	${ECHO} "qmail version is older than 1.02"
+	exit 99
 fi
 
 # if testing for old version, make sure DEFAULT is not defined. If printenv
@@ -45,13 +35,6 @@ ${UNSET} A
 [ -z "$A" ] || BADUNSET='y'
 
 ${UNSET} DEFAULT
-
-if [ "$QMVER" = "o" ]; then
-  printenv PATH >/dev/null 2>&1 && \
-    printenv DEFAULT > /dev/null 2>&1 && \
-      { ${ECHO} "Can't test for old version of qmail if DEFAULT is defined. ";
-      ${ECHO} "Please undefine it."; exit 99; }
-fi
 
 # correct bouncer for our binaries:
 ###################################
@@ -67,11 +50,9 @@ fi
     ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/digest/bouncer"
   fi
 
-# if testing qmail>=1.02, remove inlocal - shouldn't be used
-  if [ "$QMVER" = "n" ]; then
-	${RM} -f "${DIR}/inlocal" > /dev/null || \
-	  { ${ECHO} "failed to remove inlocal for testlist"; exit 100; }
-  fi
+  # remove inlocal/inhost - shouldn't be used
+  ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
+    { ${ECHO} "failed to remove inlocal/inhost for testlist"; exit 100; }
 
 ###########################
 # set up bouncing account #
@@ -88,5 +69,7 @@ fi
     ${ECHO} "exit 0"
   ) > "${QQTEST}"
   ${CHMOD} 755 "${QQTEST}"
+
+  ${ECHO} OK
 
 fi

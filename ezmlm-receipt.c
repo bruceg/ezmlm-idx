@@ -53,7 +53,6 @@ stralloc paragraph = {0};
 stralloc ddir = {0};
 stralloc outhost = {0};
 stralloc outlocal = {0};
-stralloc inlocal = {0};
 stralloc tagline = {0};
 stralloc listaddr = {0};
 stralloc fndate = {0};
@@ -164,7 +163,6 @@ char **argv;
   char *local;
   char *host;
   char *action;
-  char *def;
   int flagdig = 1;
   int flaghaveintro;
   int flaghaveheader;
@@ -195,34 +193,19 @@ char **argv;
     strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
 
   sender = env_get("SENDER");
-  def = env_get("DEFAULT");
+  action = env_get("DEFAULT");
   local = env_get("LOCAL");
+  if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
   getconf_line(&outhost,"outhost",1,FATAL,dir);
   getconf_line(&outlocal,"outlocal",1,FATAL,dir);
   workdir = dir;
-  if (def) {				/* qmail>=1.02 */
-    action = def;			/* now see if -digest-return- */
-    if (flagdig == 1) {
-      flagdig = 0;
-      if (str_len(local) >= str_len(def) + 14)
-	if (str_start(local + str_len(local) - 14 - str_len(def),"digest-"))
-	  flagdig = 2;
-    }
-  } else {				/* older version of qmail */
-    getconf_line(&inlocal,"inlocal",1,FATAL,dir);
-    if (inlocal.len > str_len(local)) die_badaddr();
-    if (case_diffb(inlocal.s,inlocal.len,local)) die_badaddr();
-    action = local + inlocal.len;
-    if (flagdig == 1) {
-      flagdig = 0;
-      if (str_start(action,"-digest")) {
+  /* now see if -digest-return- */
+  if (flagdig == 1) {
+    flagdig = 0;
+    if (str_len(local) >= str_len(def) + 14)
+      if (str_start(local + str_len(local) - 14 - str_len(def),"digest-"))
 	flagdig = 2;
-	action += 7;
-      }
-    }
-    if (!str_start(action,"-return-")) die_badaddr();
-    action += 8;
   }
   if (flagdig) {
     if (!stralloc_copys(&ddir,dir)) die_nomem();
