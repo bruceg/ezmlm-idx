@@ -2212,12 +2212,13 @@ char **argv;
       if (!stralloc_copys(&base,"<BASE href=\"https://")) die_nomem();
     }
   }
-  if (port && (unsigned int) port != 80 && (unsigned int) port != 443) {
+  if ((cp = env_get("HTTP_HOST")) || (cp = env_get("SERVER_NAME"))) {
+    if (!stralloc_cats(&base,cp)) die_nomem();
+    if (port && (unsigned int) port != 80 && (unsigned int) port != 443) {
       if (!stralloc_cats(&base,":")) die_nomem();
       if (!stralloc_catb(&base,strnum,fmt_ulong(strnum,port))) die_nomem();
+    }
   }
-  if ((cp = env_get("HTTP_HOST")) || (cp = env_get("SERVER_NAME")))
-    if (!stralloc_cats(&base,cp)) die_nomem();
   if (cp = env_get("SCRIPT_NAME")) {
     if (!stralloc_cats(&base,cp)) die_nomem();
     pos = str_rchr(cp,'/');
