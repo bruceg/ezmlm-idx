@@ -1,4 +1,5 @@
 auto_version.o
+ezmlm-subunsub.o
 log.o
 now.o
 subdb.a

@@ -10,7 +10,6 @@ ezmlm-sub \- manually add addresses to a mailing list
 .B \-h
 .I hash
 ]
-.B 
 .I dir
 [
 .I box\fB@\fIdomain 
@@ -32,7 +31,7 @@ switch is used.
 
 If no argument is given on the command line,
 .B ezmlm-sub
-processes stdin.
+will process standard input instead.
 
 If
 .I box\fB@\fIdomain
@@ -78,7 +77,7 @@ version information.
 Display
 .B ezmlm-sub(1)
 version information.
-.SH "MYSQL OPTIONS"
+.SH "SQL OPTIONS"
 These option is silently ignored in the absence of mysql support.
 .TP
 .B \-h \fIhash
@@ -88,14 +87,18 @@ in the distribution of addresses between sublists. As the hash is normally
 between 0 and 52, controlling the hash makes it possible to add addresses
 that cannot be manipulated remotely.
 .TP
+.B \-H
+(Default.)
+The address can be removed if it has a hash in the normal range (0..52).
+.TP
 .B \-m
 (Default.)
 Use SQL support if available.
 .TP
 .B \-M
-Do not use SQL support even if available. This option can be used to build
-a normal local subscriber database even for lists with SQL support. Use
-in combination with
+Do not use SQL support even if available.  This option can be used to
+build a normal local subscriber database even for lists with SQL
+support. Use in combination with
 .B ezmlm-list(1)
 to convert an SQL address db to a ezmlm standard address database.
 .SH "SEE ALSO"

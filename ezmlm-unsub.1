@@ -5,13 +5,18 @@ ezmlm-unsub \- manually remove addresses from a mailing list
 .SH SYNOPSIS
 .B ezmlm-unsub
 [
-.B \-mMHvV
+.B \-HmMnNvV
 ] [
-.B \-h\fBhash
+.B \-h
+.I hash
 ]
 .I dir
 [
-.I box\fB@\fIdomain ...
+.I box\fB@\fIdomain
+[
+.I name
+]
+.I ...
 ]
 .SH DESCRIPTION
 .B ezmlm-unsub
@@ -19,10 +24,14 @@ removes each address
 .I box\fB@\fIdomain
 from the mailing list stored in
 .IR dir .
+.I name
+is added as a comment to the subscription log, if the
+.B \-n
+switch is used.
 
-If no command line argument is given,
+If no argument is given on the command line,
 .B ezmlm-unsub
-will process stdin instead.
+will process standard input instead.
 
 If
 .I box\fB@\fIdomain
@@ -36,7 +45,26 @@ converts
 to lowercase before removing
 .I box\fB@\fIdomain
 from the mailing list.
+
 .SH "GENERAL OPTIONS"
+.TP
+.B \-n
+Assume arguments are pairs of
+.I box\fB@\fIdomain
+and
+.IR name
+(or other subscriber info)
+rather than addresses alone.
+.B ezmlm-unsub(1)
+will remove the first argument in each pair from the subscriber list. If
+it is a new address,
+.I name
+will be added to the subscription log.
+.TP
+.B \-N
+(Default.)
+Arguments are all addresses of the type
+.IR box\fB@\fIdomain .
 .TP
 .B \-v
 Display
@@ -47,7 +75,7 @@ version information.
 Display
 .B ezmlm-unsub(1)
 version information.
-.SH "MYSQL OPTIONS"
+.SH "SQL OPTIONS"
 These option is silently ignored in the absence of mysql support.
 .TP
 .B \-h \fIhash
@@ -68,9 +96,9 @@ The address can be removed if it has a hash in the normal range (0..52).
 Use SQL support if available.
 .TP
 .B \-M
-Do not use SQL support even if available.
-This option can be used to manipulate
-a normal local subscriber database even for lists with SQL support.
+Do not use SQL support even if available.  This option can be used to
+manipulate a normal local subscriber database even for lists with SQL
+support.
 .SH "SEE ALSO"
 ezmlm-list(1),
 ezmlm-manage(1),
