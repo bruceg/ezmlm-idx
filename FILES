@@ -56,7 +56,6 @@ getconf.h
 getconf.c
 log.h
 log.c
-issub.h
 issub.c
 subscribe.h
 subscribe.c
