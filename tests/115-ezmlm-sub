@@ -57,11 +57,11 @@ if [ "$SECT" = "1" ]; then
 
 # remove subscriber
   ${EZBIN}/ezmlm-unsub "${DIR}" "xYzZy@hOst" || \
-	{ ${ECHO} "ezmlm-sub: failed to add subscriber"; exit 100; }
+	{ ${ECHO} "ezmlm-unsub: failed to remove subscriber"; exit 100; }
 
 # see that it was removed
   ${EZBIN}/ezmlm-list "${DIR}" | ${GREP} "xyZZy" >"${ERR}" 2>&1 && \
-	{ ${ECHO} "ezmlm-unsub: failed to remove subscriber"; exit 100; }
+	{ ${ECHO} "ezmlm-unsub: failed to remove address"; exit 100; }
 
   SENDER="zztop@HOst"; export SENDER
 
