@@ -31,6 +31,7 @@
 #include "errtxt.h"
 #include "copy.h"
 #include "idx.h"
+#include "wrap.h"
 
 int flagmime = MOD_MIME;	/* default is message as attachment */
 char flagcd = '\0';		/* default: do not use transfer encoding */
@@ -211,9 +212,8 @@ char **argv;
   unsigned int pos,i;
   int child;
   int opt;
-  char *sendargs[4];
+  const char *sendargs[4];
   char *cp,*cpnext,*cpfirst,*cplast,*cpafter;
-  int wstat;
 
   (void) umask(022);
   sig_pipeignore();
@@ -574,28 +574,11 @@ char **argv;
       case 0:		/* child */
         close(0);
         dup(fd);	/* make fnmsg.s stdin */
-        execv(*sendargs,sendargs);
-        if (errno == error_txtbsy || errno == error_nomem ||
-            errno == error_io)
-          strerr_die5sys(111,FATAL,ERR_EXECUTE,"/bin/sh -c ",sendargs[2],": ");
-        else
-          strerr_die5sys(100,FATAL,ERR_EXECUTE,"/bin/sh -c ",sendargs[2],": ");
-       }
+	wrap_execv(sendargs, FATAL);
+    }
          /* parent */
-      wait_pid(&wstat,child);
       close(fd);
-      if (wait_crashed(wstat))
-        strerr_die3x(111,FATAL,sendargs[2],ERR_CHILD_CRASHED);
-      switch(wait_exitcode(wstat)) {
-        case 100:
-          strerr_die2x(100,FATAL,"Fatal error from child");
-        case 111:
-           strerr_die2x(111,FATAL,"Temporary error from child");
-        case 0:
-          break;
-        default:
-          strerr_die2x(111,FATAL,"Unknown temporary error from child");
-      }
+      wrap_exitcode(child, FATAL);
       if (!stralloc_copys(&fnnew,"mod/accepted/")) die_nomem();
 
       if (!stralloc_cats(&fnnew,fnbase.s)) die_nomem();

@@ -14,6 +14,7 @@
 #include "auto_cron.h"
 #include "errtxt.h"
 #include "idx.h"
+#include "wrap.h"
 
 #define FATAL "ezmlm-cron: fatal: "
 
@@ -129,8 +130,7 @@ char **argv;
 
 {
   int child;
-  char *sendargs[4];
-  int wstat;
+  const char *sendargs[4];
 
   (void) umask(077);
   sig_pipeignore();
@@ -487,18 +487,10 @@ char **argv;
       case 0:
         if (setreuid(euid,euid) == -1)
           strerr_die2sys(100,FATAL,ERR_SETUID);
-        execvp(*sendargs,sendargs);
-        if (errno == error_txtbsy || errno == error_nomem ||
-            errno == error_io)
-          strerr_die4sys(111,FATAL,ERR_EXECUTE,sendargs[2],": ");
-        else
-          strerr_die4sys(100,FATAL,ERR_EXECUTE,sendargs[2],": ");
+	wrap_execvp(sendargs, FATAL);
   }
          /* parent */
-  wait_pid(&wstat,child);
-  if (wait_crashed(wstat))
-    strerr_die2x(111,FATAL,ERR_CHILD_CRASHED);
-  switch(wait_exitcode(wstat)) {
+  switch (wrap_waitpid(child, FATAL)) {
       case 0:
         _exit(0);
       default:

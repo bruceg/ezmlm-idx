@@ -31,6 +31,7 @@
 #include "copy.h"
 #include "subscribe.h"
 #include "mime.h"
+#include "wrap.h"
 
 int flagmime = MOD_MIME;	/* default is message as attachment */
 int flagpublic = 1;		/* default anyone can post */
@@ -161,8 +162,8 @@ char **argv;
   int opt;
   unsigned int i;
   char szchar[2] = "-";
-  char *sendargs[4];
-  int child,wstat;
+  const char *sendargs[4];
+  int child;
 
   (void) umask(022);
   sig_pipeignore();
@@ -223,27 +224,10 @@ char **argv;
       case -1:
         strerr_die2sys(111,FATAL,ERR_FORK);
       case 0:
-        execvp(*sendargs,sendargs);
-        if (errno == error_txtbsy || errno == error_nomem ||
-            errno == error_io)
-          strerr_die5sys(111,FATAL,ERR_EXECUTE,"/bin/sh -c ",sendargs[2],": ");
-        else
-          strerr_die5sys(100,FATAL,ERR_EXECUTE,"/bin/sh -c ",sendargs[2],": ");
+	wrap_execvp(sendargs, FATAL);
     }
          /* parent */
-    wait_pid(&wstat,child);
-    if (wait_crashed(wstat))
-      strerr_die2x(111,FATAL,ERR_CHILD_CRASHED);
-    switch(wait_exitcode(wstat)) {
-      case 100:
-        strerr_die2x(100,FATAL,"Fatal error from child");
-      case 111:
-         strerr_die2x(111,FATAL,"Temporary error from child");
-      case 0:
-        _exit(0);
-      default:
-        strerr_die2x(111,FATAL,"Unknown temporary error from child");
-    }
+    wrap_exitcode(child, FATAL);
   }
 
   if (!moderators.len || !(moderators.s[0] == '/')) {

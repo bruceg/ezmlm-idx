@@ -18,6 +18,7 @@
 #include "errtxt.h"
 #include "idx.h"
 #include "subscribe.h"
+#include "wrap.h"
 
 #define FATAL "ezmlm-gate: fatal: "
 
@@ -36,9 +37,8 @@ stralloc storeopt = {0};
 void *psql = (void *) 0;
 
 char szchar[2] = "-";
-  char *sendargs[4];
+  const char *sendargs[4];
   int child;
-  int wstat;
   const char *pmod;
 
 int mailprog(s)
@@ -54,20 +54,10 @@ int mailprog(s)
       case -1:
 	strerr_die2sys(111,FATAL,ERR_FORK);
       case 0:
-	execv(*sendargs,sendargs);
-	if (errno == error_txtbsy || errno == error_nomem ||
-	  errno == error_io)
-	        strerr_die5sys(111,FATAL,ERR_EXECUTE,
-		  "/bin/sh -c ",sendargs[2],": ");
-        else
-		strerr_die5sys(100,FATAL,ERR_EXECUTE,
-		  "/bin/sh -c ",sendargs[2],": ");
+	wrap_execv(sendargs, FATAL);
     }
          /* parent */
-    wait_pid(&wstat,child);
-    if (wait_crashed(wstat))
-	strerr_die2x(111,FATAL,ERR_CHILD_CRASHED);
-    switch((r = wait_exitcode(wstat))) {
+    switch((r = wrap_waitpid(child, FATAL))) {
       case 0: case 99: case 100: break;
       case 111:					/* temp error */
         strerr_die2x(111,FATAL,ERR_CHILD_TEMP);
@@ -188,7 +178,7 @@ char **argv;
   sendargs[3] = 0;
 
   if (dontact) {
-    char **s;
+    const char **s;
     for (s = sendargs; *s; s++) {
       substdio_puts(subfderr, *s);
       if (s[1]) substdio_puts(subfderr, " ");
@@ -201,26 +191,9 @@ char **argv;
     case -1:
       strerr_die2sys(111,FATAL,ERR_FORK);
     case 0:
-      execv(*sendargs,sendargs);
-      if (errno == error_txtbsy || errno == error_nomem ||
-          errno == error_io)
-        strerr_die5sys(111,FATAL,ERR_EXECUTE,"/bin/sh -c ",sendargs[2],": ");
-      else
-        strerr_die5sys(100,FATAL,ERR_EXECUTE,"/bin/sh -c ",sendargs[2],": ");
+      wrap_execv(sendargs, FATAL);
    }
          /* parent */
-   wait_pid(&wstat,child);
-   if (wait_crashed(wstat))
-     strerr_die2x(111,FATAL,ERR_CHILD_CRASHED);
-   switch(wait_exitcode(wstat)) {
-     case 100:
-       strerr_die2x(100,FATAL,ERR_CHILD_FATAL);
-     case 111:
-        strerr_die2x(111,FATAL,ERR_CHILD_TEMP);
-     case 0:
-       _exit(0);
-     default:
-       strerr_die2x(111,FATAL,ERR_CHILD_UNKNOWN);
-   }
+   wrap_exitcode(child, FATAL);
 }
 

@@ -336,8 +336,8 @@ date822fmt.h direntry.h fmt.h strerr.h errtxt.h idx.h sgetopt.h subgetopt.h
 ezmlm-cron: \
 load ezmlm-cron.o strerr.a stralloc.a alloc.a error.a open.a auto_qmail.o \
 getopt.a getln.a str.a substdio.a sig.a fs.a open.a fd.a lock.a wait.a \
-case.a auto_cron.o
-	./load ezmlm-cron getopt.a getln.a strerr.a substdio.a \
+case.a auto_cron.o wrap.a
+	./load ezmlm-cron getopt.a getln.a wrap.a strerr.a substdio.a \
 	stralloc.a alloc.a sig.a fs.a open.a fd.a lock.a error.a \
 	wait.a case.a str.a auto_qmail.o auto_cron.o
 
@@ -354,9 +354,9 @@ fmt.h auto_cron.h
 ezmlm-gate: \
 load ezmlm-gate.o subdb.a auto_bin.o getopt.a getln.a env.a sig.a strerr.a \
 stralloc.a alloc.a error.a str.a case.a wait.a substdio.a open.a lock.a \
-fs.a getconf.o slurpclose.o slurp.o seek.a sql.lib
+fs.a getconf.o slurpclose.o slurp.o seek.a wrap.a sql.lib
 	./load ezmlm-gate subdb.a getconf.o slurpclose.o slurp.o \
-	getopt.a getln.a auto_bin.o env.a sig.a fs.a \
+	getopt.a getln.a auto_bin.o env.a sig.a fs.a wrap.a \
 	strerr.a substdio.a stralloc.a alloc.a error.a str.a case.a wait.a \
 	open.a lock.a seek.a `cat sql.lib`
 
@@ -578,11 +578,11 @@ ezmlm-mktab.1
 ezmlm-moderate: \
 load ezmlm-moderate.o auto_qmail.o getconf.o auto_bin.o copy.o mime.a \
 cookie.o now.o datetime.o date822fmt.o slurpclose.o slurp.o qmail.o quote.o \
-surf.a getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a \
+surf.a getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a wrap.a \
 error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a getopt.a
 	./load ezmlm-moderate auto_qmail.o getconf.o copy.o mime.a \
-	cookie.o now.o datetime.o date822fmt.o slurpclose.o \
-	slurp.o qmail.o quote.o surf.a getln.a env.a sig.a strerr.a \
+	cookie.o now.o datetime.o date822fmt.o slurpclose.o slurp.o \
+	qmail.o quote.o surf.a getln.a env.a sig.a wrap.a strerr.a \
 	substdio.a stralloc.a alloc.a error.a str.a fs.a case.a \
 	auto_bin.o open.a seek.a wait.a lock.a fd.a getopt.a
 
@@ -757,9 +757,10 @@ ezmlm-store: \
 load ezmlm-store.o auto_qmail.o getconf.o subdb.a log.o auto_bin.o mime.a \
 cookie.o now.o datetime.o date822fmt.o slurpclose.o slurp.o qmail.o quote.o \
 surf.a getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a sql.lib \
-error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a getopt.a copy.o
+error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a getopt.a copy.o \
+wrap.a
 	./load ezmlm-store auto_qmail.o getconf.o subdb.a copy.o mime.a \
-	log.o cookie.o now.o datetime.o date822fmt.o slurpclose.o \
+	log.o cookie.o now.o datetime.o date822fmt.o slurpclose.o wrap.a \
 	slurp.o qmail.o quote.o surf.a getln.a env.a sig.a strerr.a \
 	substdio.a stralloc.a alloc.a error.a str.a fs.a case.a \
 	open.a seek.a wait.a lock.a fd.a getopt.a auto_bin.o `cat sql.lib`
@@ -1563,6 +1564,22 @@ makelib wait_pid.o
 wait_pid.o: \
 compile wait_pid.c wait_pid.c wait_pid.c error.h haswaitp.h
 	./compile wait_pid.c
+
+wrap.a: \
+makelib wrap_execv.o wrap_exitcode.o wrap_waitpid.o
+	./makelib wrap.a wrap_execv.o wrap_exitcode.o wrap_waitpid.o
+
+wrap_execv.o: \
+compile wrap_execv.c error.h errtxt.h strerr.h wrap.h
+	./compile wrap_execv.c
+
+wrap_exitcode.o: \
+compile wrap_exitcode.c errtxt.h strerr.h wrap.h
+	./compile wrap_exitcode.c
+
+wrap_waitpid.o: \
+compile wrap_waitpid.c wait.h errtxt.h strerr.h wrap.h
+	./compile wrap_waitpid.c
 
 yyyymm.a: \
 makelib date2yyyymm.o dateline.o
