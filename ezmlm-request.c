@@ -673,7 +673,7 @@ char **argv;
     set_cpouthost(&hostname);		/* necessary in case there are <#h#> */
 					/* we don't want to be send to a list*/
     hdr_adds("Mailing-List: ezmlm-request");
-    if (getconf(&line,"listid",0,FATAL))
+    if (getconf_line(&line,"listid",0,FATAL,dir))
       hdr_add2("List-ID: ",line.s,line.len);
     hdr_datemsgid(now());
     hdr_from((cmdidx == EZREQ_HELP) ? "-return-" : "-help");

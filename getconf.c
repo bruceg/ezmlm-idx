@@ -1,4 +1,5 @@
 /*$Id$*/
+
 #include "stralloc.h"
 #include "byte.h"
 #include "slurp.h"
@@ -7,18 +8,13 @@
 
 static stralloc data = {0};
 
-void nomem(fatal)
-char *fatal;
+void nomem(const char *fatal)
 {
   strerr_die2x(111,fatal,"out of memory");
 }
 
-int getconf(sa,fn,flagrequired,fatal,dir)
-stralloc *sa;
-char *fatal;
-int flagrequired;
-char *dir;
-char *fn;
+int getconf(stralloc *sa,const char *fn,int flagrequired,
+	    const char *fatal,const char *dir)
 {
   int i;
   int j;
@@ -50,12 +46,8 @@ char *fn;
   return 1;
 }
 
-int getconf_line(sa,fn,flagrequired,fatal,dir)
-stralloc *sa;
-char *fatal;
-int flagrequired;
-char *dir;
-char *fn;
+int getconf_line(stralloc *sa,const char *fn,int flagrequired,
+		 const char *fatal,const char *dir)
 {
   if (!getconf(sa,fn,flagrequired,fatal,dir)) return 0;
   sa->len = byte_chr(sa->s,sa->len,0);
