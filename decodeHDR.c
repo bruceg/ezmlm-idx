@@ -9,24 +9,21 @@
 #include "mime.h"
 #include "errtxt.h"
 
-static void die_nomem(fatal)
-  char *fatal;
+static void die_nomem(const char *fatal)
 {
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
 
-void decodeHDR(indata,n,outdata,charset,fatal)
-char *indata;
-unsigned int n;
-stralloc *outdata;
-char *charset;
-char *fatal;
-
+void decodeHDR(const char *indata,
+	       unsigned int n,
+	       stralloc *outdata,
+	       const char *charset,
+	       const char *fatal)
 /* decodes indata depending on charset. May put '\n' and '\0' into out */
 /* data and can take them as indata. */
 {
   unsigned int pos;
-  char *cp,*cpnext,*cpstart,*cpenc,*cptxt,*cpend,*cpafter;
+  const char *cp,*cpnext,*cpstart,*cpenc,*cptxt,*cpend,*cpafter;
 
   cpnext = indata;
   cpafter = cpnext + n;
@@ -71,7 +68,7 @@ char *fatal;
             case 'b':
             case 'B':
               pos = outdata->len;
-              decodeB(cptxt,cpend-cptxt,outdata,2,fatal);
+              decodeB(cptxt,cpend-cptxt,outdata,fatal);
               cpnext = cpend + 2;
               cpstart = cpnext;
               break;

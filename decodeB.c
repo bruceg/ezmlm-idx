@@ -4,7 +4,7 @@
 #include "errtxt.h"
 
 	/* Characters and translation as per rfc2047. */
-static char char64table[128] = {
+static const char char64table[128] = {
     -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
     -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
     -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,62, -1,-1,-1,63,
@@ -17,17 +17,13 @@ static char char64table[128] = {
 
 #define char64enc(c)  (((c) & 0x80) ? -1 : char64table[(c)])
 
-static void die_nomem(fatal)
-  char *fatal;
+static void die_nomem(const char *fatal)
 {
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
 
-void decodeB(cpfrom,n,outdata,fatal)
-char *cpfrom;
-unsigned int n;
-stralloc *outdata;
-char *fatal;
+void decodeB(const char *cpfrom,unsigned int n,stralloc *outdata,
+	     const char *fatal)
 /* does B decoding of the string pointed to by cpfrom up to the character */
 /* before the one pointed to by cpnext, and appends the results to mimeline*/
 {
@@ -35,7 +31,8 @@ char *fatal;
   char holdch[4] = "???";
   int i,j;
   char c;	/* needs to be signed */
-  char *cp, *cpnext;
+  const unsigned char *cp;
+  const unsigned char *cpnext;
 
   cp = cpfrom;
   cpnext = cp + n;

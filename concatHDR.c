@@ -9,18 +9,18 @@
 
 extern void die_nomem(const char *);
 
-void concatHDR(indata,n,outdata,fatal)
-char *indata;
-unsigned int n;
-stralloc *outdata;
-char *fatal;
+void concatHDR(char *indata,
+	       unsigned int n,
+	       stralloc *outdata,
+	       const char *fatal)
 /* takes a concatenated string of line and continuation line, trims leading */
 /* and trailing LWSP and collapses line breaks and surrounding LWSP to ' '. */
 /* indata has to end in \n or \0 or this routine will write beyond indata!  */
 /* if indata ends with \0, this will be changed to \n. */
 
 {
-  register char *cp,*cpout;
+  char *cp;
+  char *cpout;
   char *cplast;
   if (!stralloc_copys(outdata,"")) die_nomem(fatal);
   if (!stralloc_ready(outdata,n)) die_nomem(fatal);

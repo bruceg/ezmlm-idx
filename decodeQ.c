@@ -10,7 +10,7 @@
 /* NUL and LF in the input are allowed, but anything that decodes to these   */
 /* values is ignored. */
 
-static char char16table[128] = {
+static const char char16table[128] = {
     -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
     -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
     -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
@@ -21,56 +21,44 @@ static char char16table[128] = {
     -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1
 };
 
-#define char16enc(c)  (((c) & 0x80) ? -1 : char16table[(c)])
+#define char16enc(c)  (((c) & 0x80) ? -1 : char16table[(int)(c)])
 
-static void die_nomem(fatal)
-  char *fatal;
+static void die_nomem(const char *fatal)
 {
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
 
-void decodeQ(cpfrom,n,outdata,fatal)
-char *cpfrom;
-unsigned int n;
-stralloc *outdata;
-char *fatal;
+void decodeQ(const char *cpfrom,unsigned int n,stralloc *outdata,
+	     const char *fatal)
 /* does Q decoding of the string pointed to by cpfrom up to the character */
-/* before the one pointed to by cpnext, and appends the results to mimeline*/
+/* before the one pointed to by cpnext, and appends the results to outdata */
 {
-  char *cp,*cpnext,*cpmore;
-  char holdch[2];
+  const char *cp,*cpnext;
   char ch1,ch2;		/* need to be signed */
+  char ch;
 
-  cpmore = cpfrom;
   cp = cpfrom;
   cpnext = cp + n;
   if (!stralloc_readyplus(outdata,n)) die_nomem(fatal);
 
   while (cp < cpnext) {
-    if (*cp == '_') *cp = ' ';		/* '_' -> space */
-    else if (*cp == '=') {		/* "=F8" -> '\xF8' */
-					/* copy stuff before */
-      if (!stralloc_catb(outdata,cpmore,cp-cpmore)) die_nomem(fatal);
-      cpmore = cp;
-      ++cp;
+    ch = *cp++;
+    if (ch == '_') ch = ' ';		/* '_' -> space */
+    if (ch == '=') {			/* "=F8" -> '\xF8' */
       if (*cp == '\n') {		/* skip soft line break */
         ++cp;
-        cpmore = cp;
         continue;
       }
-      ch1 = char16enc(*cp);
-      if (++cp >= cpnext)
+      ch1 = char16enc(*cp); ++cp;
+      if (cp >= cpnext)
         break;
-      ch2 = char16enc(*cp);
+      ch2 = char16enc(*cp); ++cp;
       if (ch1 >= 0 && ch2 >= 0) {	/* ignore illegals */
-        holdch[0] = (ch1 << 4 | ch2) & 0xff;
-        if (!stralloc_catb(outdata,holdch,1)) die_nomem(fatal);
-        cpmore += 3;
+        ch = (ch1 << 4 | ch2) & 0xff;
       }
     }
-    ++cp;
-  }					/* copy stuff after */
-  if (!stralloc_catb(outdata,cpmore,cpnext-cpmore)) die_nomem(fatal);
+    if (!stralloc_append(outdata,&ch)) die_nomem(fatal);
+  }
 }      
 
 

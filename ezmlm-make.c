@@ -218,7 +218,7 @@ char **argv;
   char *oldflags = (char *) 0;
   char *code = (char *) 0;
   const char *cfname = (char *) 0;	/* config file if spec as -C cf_file */
-  char ch;
+  unsigned char ch;
 
   keyadd((unsigned long) getpid());
   keyadd((unsigned long) getppid());

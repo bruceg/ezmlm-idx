@@ -6,13 +6,12 @@
 #include "strerr.h"
 #include "errtxt.h"
 
-static void die_nomem(fatal)
-  char *fatal;
+static void die_nomem(const char *fatal)
 {
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
 
-static unsigned char base64char[] =
+static const unsigned char base64char[64] =
    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 static unsigned int pos = 0;
@@ -20,8 +19,7 @@ static unsigned int i = 0;
 static uint32 hold32;
 static unsigned char *cpout;
 
-static void addone(ch)
-unsigned char ch;
+static void addone(unsigned char ch)
 {
  if (!(pos++))
     hold32 = (uint32) ch;
@@ -40,7 +38,7 @@ unsigned char ch;
   }
 }
 
-static void dorest()
+static void dorest(void)
 {
   switch (pos) {
     case 2:
@@ -63,12 +61,9 @@ static void dorest()
   *cpout++ = '\n';
 }   
 
-void encodeB(indata,n,outdata,control,fatal)
-unsigned char *indata;
-unsigned int n;
-stralloc *outdata;
-int control;	/* 1 = init, 2 = flush */
-char *fatal;
+void encodeB(const unsigned char *indata,unsigned int n,stralloc *outdata,
+	     int control,	/* 1 = init, 2 = flush */
+	     const char *fatal)
 	/* converts any character with the high order bit set to */
 	/* base64. In: n chars of indata, out: stralloc outdata  */
 	/* as '=' is not allowed within the block, we cannot flush after */
@@ -76,7 +71,7 @@ char *fatal;
 	/* call to encodeB should have control = 2 to do the flushing.   */
 	/* control = 0 resets, and the routine starts out reset. */
 {
-  register unsigned char ch;
+  unsigned char ch;
 
   if (control == 1) {
     pos = 0;

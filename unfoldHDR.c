@@ -103,7 +103,7 @@ char *fatal;
 static int trimend(indata,np,fatal)
 char *indata;
 unsigned int *np;
-char *fatal;
+const char *fatal;
 	/* looks at indata of length n from the end removing LWSP & '\n' */
 	/* and any trailing '-Reply'. Sets n to new length and returns:  */
 	/* 0 - not reply, 1 - reply. */
@@ -131,14 +131,13 @@ char *fatal;
   return r;
 }
 
-int unfoldHDR(indata,n,outdata,charset,prefix,flagtrimsub,fatal)
-char *indata;
-unsigned int n;
-stralloc *outdata;
-char *charset;
-stralloc *prefix;
-int flagtrimsub;
-char *fatal;
+int unfoldHDR(char *indata,
+	      unsigned int n,
+	      stralloc *outdata,
+	      const char *charset,
+	      stralloc *prefix,
+	      int flagtrimsub,
+	      const char *fatal)
 	/* takes a header as indata. Removal of reply-indicators is done */
 	/* but removal of line breaks and Q and B decoding should have   */
 	/* been done. Returns a */

@@ -71,18 +71,17 @@ stralloc num = {0};
 char buf0[256];
 substdio ss0 = SUBSTDIO_FDBUF(read,0,buf0,sizeof(buf0));
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-idx: usage: ezmlm-idx [-dDF] [-f msg] dir");
-
 }
 
-void die_nomem()
+void die_nomem(void)
 {
   strerr_die2x(100,FATAL,ERR_NOMEM);
 }
 
-int idx_get_trimsubject()
+int idx_get_trimsubject(void)
 
 /* reads an open message from 'fd', extracts the subject (if any), and    */
 /* returns the subject in 'sub', the author in 'author', and the received */

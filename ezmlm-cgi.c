@@ -521,8 +521,8 @@ int makefn(stralloc *sa,char item,unsigned long n,const char *hash)
   return 1;
 }
 
-void alink(struct msginfo *infop,char item,char axis,unsigned long msg,
-	   const char *data,unsigned int l)
+void alink(struct msginfo *infop,unsigned char item,unsigned char axis,
+	   unsigned long msg,const char *data,unsigned int l)
 /* links with targets other msg -> msg. If the link is for author, we    */
 /* still supply subject, since most navigation at the message level will */
 /* be along threads rather than author and we don't have an author index.*/
@@ -569,7 +569,7 @@ void alink(struct msginfo *infop,char item,char axis,unsigned long msg,
   oputs("</A>");
 }
 
-void linktoindex(struct msginfo *infop,char item)
+void linktoindex(struct msginfo *infop,unsigned char item)
 /* for links from message view back to author/subject/threads index */
 {
   oput(url.s,url.len);
@@ -601,7 +601,7 @@ void linktoindex(struct msginfo *infop,char item)
   oputs("#b\"");
 }
 
-void link_msg(struct msginfo *infop,char axis,char direction)
+void link_msg(struct msginfo *infop,unsigned char axis,unsigned char direction)
 /* Creates <a href="mapa:123:aaaaa...."> using a maximum of available */
 /* info only for links where the target is a message */
 {
@@ -1526,9 +1526,9 @@ void show_part(struct msginfo *infop,int flagshowheaders,
       if (flaggoodfield) {
 	if (mime_current->ctenc) {
 	  if (mime_current->ctenc == CTENC_QP)
-	    decodeQ(line.s,line.len,&decline);
+	    decodeQ(line.s,line.len,&decline,FATAL);
 	  else
-	    decodeB(line.s,line.len,&decline);
+	    decodeB(line.s,line.len,&decline,FATAL);
 	  if (decline.s[decline.len - 1] == '\n') {	/* complete line */
 	    if (!stralloc_copy(&line,&decline)) die_nomem();
 	    decline.len = 0;

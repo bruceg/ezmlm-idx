@@ -11,22 +11,17 @@ static void die_nomem(fatal)
   strerr_die2x(111,fatal,ERR_NOMEM);
 }
 
-static const char hexchar[] = "0123456789ABCDEF";
+static const char hexchar[16] = "0123456789ABCDEF";
 
-void encodeQ(indata,n,outdata,fatal)
-char *indata;
-unsigned int n;
-stralloc *outdata;
-char *fatal;
-
+void encodeQ(const char *indata,unsigned int n,stralloc *outdata,
+	     const char *fatal)
 	/* converts any character with the high order bit set to */
 	/* quoted printable. In: n chars of indata, out: stralloc outdata*/
-
 {
-  register char *cpout;
-  register char ch;
+  char *cpout;
+  char ch;
   unsigned int i;
-  char *cpin;
+  const char *cpin;
 
   cpin = indata;
   i = 0;
