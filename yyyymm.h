@@ -3,7 +3,7 @@
 
 #include "stralloc.h"
 
-extern unsigned int date2yyyymm(char *);
+extern unsigned int date2yyyymm(const char *);
 extern int dateline(stralloc *, unsigned long);
 
 #endif

@@ -2,8 +2,7 @@
 /*$Id$*/
 #include "yyyymm.h"
 
-unsigned int date2yyyymm(s)
-char *s;
+unsigned int date2yyyymm(const char *s)
 /* expects a qmail date string s and returns yyyymm */
 /* if there are problems, it returns 0. If there is no terminating char */
 /* we may segfault if the syntax is bad. Assure that the ';' is there   */
