@@ -41,6 +41,7 @@ static char textbuf[256];
 static char *target = "?????";
 static char *verptarget = "?????";
 static char *confirm = "?????";
+static unsigned int confirmlocal;
 static char *szmsgnum = "?????";
 
 void set_cpoutlocal(ln)
@@ -74,6 +75,7 @@ void set_cpconfirm(cf)
 char *cf;
 {
   confirm = cf;
+  confirmlocal = str_chr(cf, '@');
 }
 
 void set_cpnum(cf)
@@ -173,6 +175,9 @@ char *fatal;		/* FATAL error string */
             case 'R':
               if (!stralloc_cats(&outline,confirm)) die_nomem(fatal);
               break;
+	    case 'r':
+	      if (!stralloc_catb(&outline,confirm,confirmlocal)) die_nomem(fatal);
+	      break;
             case 'l':
               if (!stralloc_cat(&outline,&outlocal)) die_nomem(fatal);
               break;

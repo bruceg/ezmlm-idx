@@ -39,10 +39,11 @@
 # A set of user-defined command line switches (xX, yY, zZ) are available for
 # customization.
 #
-# Within the text, certain tags are substituted. Other tags are copied as
-# is. <#A#> and <#R#> are substituted by ezmlm-manage and -store (see man pages)
-# and <#l#> (lower case L) is replaced dynamically by the list name for
-# programs handling both 'list' and 'list-digest'.
+# Within the text, certain tags are substituted. Other tags are copied
+# as is. <#A#>, <#R#>, and <#r#> are substituted by ezmlm-manage and
+# -store (see man pages) and <#l#> (lower case L) is replaced
+# dynamically by the list name for programs handling both 'list' and
+# 'list-digest'.
 #
 # Substitutions are:
 # <#B#> ezmlm binaries path   <#C#> digest code         <#D#> dir

@@ -37,6 +37,8 @@ in the next version.
  Adapted from patch by Tullio Andreatta.
 -Got rid of the frivolous uses of /bin/sh to exec ezmlm-send.
 -Always reject bounce messages in ezmlm-reject.
+-Substitute <#r#> in (un)subscribe confirm messages with just the local
+part of the reply address (for web-based confirmation).
 
 ezmlm-idx-0.421, 20040602
 =========================
