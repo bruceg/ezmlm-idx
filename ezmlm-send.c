@@ -363,7 +363,6 @@ char **argv;
   char *ret;
   char *err;
   int flagmlwasthere;
-  int flagqmqp = 0;	/* don't use qmqp by default */
   int flaglistid = 0;	/* no listid header added */
   int match;
   unsigned int i;
@@ -403,8 +402,8 @@ char **argv;
 		if (hash_lo > hash_hi) hash_lo = hash_hi;
 
  break;
-      case 'q': flagqmqp = 0; break;
-      case 'Q': flagqmqp = 1; break;
+      case 'q': break;
+      case 'Q': break;
       case 'v':
       case 'V': strerr_die2x(0,
 		"ezmlm-send version: ezmlm-0.53+",EZIDX_VERSION);
@@ -465,12 +464,10 @@ char **argv;
   set_cpouthost(&outhost);
   flagsublist = getconf_line(&sublist,"sublist",0,FATAL,dir);
 
-  if (flagqmqp) {			/* forward compatibility ;-) */
-    if (!stralloc_copys(&line,QMQPSERVERS)) die_nomem();
-    if (!stralloc_cats(&line,"/0")) die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
-    (void) getconf_line(&qmqpservers,line.s,0,FATAL,dir);
-  }
+  if (!stralloc_copys(&line,QMQPSERVERS)) die_nomem();
+  if (!stralloc_cats(&line,"/0")) die_nomem();
+  if (!stralloc_0(&line)) die_nomem();
+  (void) getconf(&qmqpservers,line.s,0,FATAL,dir);
 
   getconf(&headerremove,"headerremove",1,FATAL,dir);
   if (!constmap_init(&headerremovemap,headerremove.s,headerremove.len,0))
@@ -534,10 +531,7 @@ char **argv;
     if (substdio_put(&ssarchive,line.s,line.len) == -1) die_archive();
   }
 
-  if (flagqmqp) {
     if (qmail_open(&qq,&qmqpservers) == -1)		/* open qmqp */
-      strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
-  } else if (qmail_open(&qq,(stralloc *) 0) == -1)	/* open queue */
       strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
 
   if (!flagsublist) {

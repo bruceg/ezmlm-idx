@@ -19,6 +19,7 @@ stralloc *sa;
   int pim[2];
   int pie[2];
   unsigned i,j;
+  char *cp;
   char **cpp;
 
   qq->msgbytes = 0L;
@@ -36,23 +37,25 @@ stralloc *sa;
       if (fd_move(0,pim[0]) == -1) _exit(120);
       if (fd_move(1,pie[0]) == -1) _exit(120);
       if (chdir(auto_qmail) == -1) _exit(61);
-      j = 2;				/* empty sa - qmqpc c control args */
-      if (sa) {				/* count args */
-	for (i = 0; i + 1 < sa->len; i++) {
+      if (sa && sa->len) {		/* count args */
+	j = 2;				/* empty sa - qmqpc c control args */
+	for (i = 0; i < sa->len; i++) {
 	  if (sa->s[i] == '\0') j++;
 	}				/* make space */
 	if (!(cpp = (char **) alloc(j * sizeof (char *)))) _exit(51);
 	cpp[0] = PROG_QMAIL_QMQPC;
-	cpp[j - 1] = (char *) 0;
-	if (sa->len) cpp[1] = sa->s;
-	j = 2;
-	for (i = 0; i + 1 < sa->len; i++) {
-	  if (sa->s[i] == '\0')
-	    cpp[j++] = sa->s + i + 1;	/* build args */
+	cp = sa->s;
+	j = 1;
+	for (i = 0; i < sa->len; i++) {
+	  if (sa->s[i]) continue;
+	  cpp[j++] = cp;
+	  cp = sa->s + i + 1;
 	}
+	cpp[j] = (char *) 0;
 	execv(*cpp,cpp);
-      } else
-	execv(*binqqargs,binqqargs);
+	_exit(120);
+      }
+      execv(*binqqargs,binqqargs);
       _exit(120);
   }
 
