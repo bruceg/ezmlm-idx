@@ -6,10 +6,7 @@
 #include "slurpclose.h"
 #include "error.h"
 
-int slurpclose(fd,sa,bufsize)
-int fd;
-stralloc *sa;
-int bufsize;
+int slurpclose(int fd,stralloc *sa,int bufsize)
 {
   int r;
   for (;;) {
