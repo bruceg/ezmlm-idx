@@ -1201,7 +1201,7 @@ ezmlmsubrc.0 ezmlm-mktab.0 ezmlm-split.0 ezmlm-archive.0 ezmlm-cgi.0 \
 getopt.0 now.0 sgetopt.0 stralloc.0 subfd.0 subgetopt.0 substdio.0 \
 substdio_copy.0 substdio_in.0 substdio_out.0 surf.0 surfpcs.0 wait.0 \
 ezmlm-clean.0 ezmlm-moderate.0 ezmlm-store.0 ezmlm-request.0 ezmlmrc.0 \
-ezmlm-limit.0
+ezmlm-limit.0 ezmlm-confirm.0
 
 mime.a: \
 makelib concatHDR.o decodeHDR.o unfoldHDR.o \
