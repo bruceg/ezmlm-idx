@@ -31,8 +31,8 @@ HOST=''
 
 # Version of ezmlm-idx for which this test script is designed
 OLD_VER='ezmlm-idx-031'		# ezmlm-idx-0.31x
-VER='ezmlm-idx-0.421'
-EZVER='421'			# default version
+VER='ezmlm-idx-0.431'
+EZVER='431'			# default version
 
 #does the current version have qmail<1.02 support?
 OLD_QMAIL='n'
