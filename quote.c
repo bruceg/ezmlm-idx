@@ -9,16 +9,14 @@ no, 821 and 822 don't have the same encoding. they're not even close.
 no special encoding here for bytes above 127.
 */
 
-static char ok[128] = {
+static const char ok[128] = {
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 ,0,7,0,7,7,7,7,7,0,0,7,7,0,7,7,7 ,7,7,7,7,7,7,7,7,7,7,0,0,0,7,0,7
 ,0,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7 ,7,7,7,7,7,7,7,7,7,7,7,0,0,0,7,7
 ,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7 ,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,0
 } ;
 
-static int doit(saout,sain)
-stralloc *saout;
-stralloc *sain;
+static int doit(stralloc *saout,const stralloc *sain)
 {
  char ch;
  int i;
@@ -39,9 +37,7 @@ stralloc *sain;
  return 1;
 }
 
-int quote_need(s,n)
-char *s;
-unsigned int n;
+int quote_need(const char *s,unsigned int n)
 {
  unsigned char uch;
  int i;
@@ -58,9 +54,7 @@ unsigned int n;
  return 0;
 }
 
-int quote(saout,sain)
-stralloc *saout;
-stralloc *sain;
+int quote(stralloc *saout,const stralloc *sain)
 {
  if (quote_need(sain->s,sain->len)) return doit(saout,sain);
  return stralloc_copy(saout,sain);
@@ -68,9 +62,7 @@ stralloc *sain;
 
 static stralloc foo = {0};
 
-int quote2(sa,s)
-stralloc *sa;
-char *s;
+int quote2(stralloc *sa,const char *s)
 {
  int j;
  j = str_rchr(s,'@');
