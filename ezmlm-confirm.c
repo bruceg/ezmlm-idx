@@ -138,7 +138,7 @@ void main(int argc, char **argv)
   sig_pipeignore();
   when = now();
 
-  if (!stralloc_copys(&sendopt," -")) die_nomem();
+  if (!stralloc_copys(&sendopt,"-")) die_nomem();
   while ((opt = getopt(argc,argv,"cCmMrRt:T:vV")) != opteof)
     switch(opt) {	/* pass on ezmlm-send options */
       case 'c':			/* ezmlm-send flags */

@@ -154,7 +154,7 @@ char **argv;
   (void) umask(022);
   sig_pipeignore();
 
-  if (!stralloc_copys(&sendopt," -")) die_nomem();
+  if (!stralloc_copys(&sendopt,"-")) die_nomem();
   while ((opt = getopt(argc,argv,"bBcCmMpPrRsSvVyY")) != opteof)
     switch(opt) {
       case 'b': flagbody = 1; break;
