@@ -9,13 +9,13 @@ struct constmap {
   constmap_hash *hash;
   int *first;
   int *next;
-  char **input;
+  const char **input;
   int *inputlen;
 } ;
 
-extern int constmap_init();
-extern void constmap_free();
-extern char *constmap();
-extern char *constmap_get();
-extern int constmap_index();
+extern int constmap_init(struct constmap *cm,const char *s,int len,int flagcolon);
+extern void constmap_free(struct constmap *cm);
+extern const char *constmap(struct constmap *cm,const char *s,int len);
+extern const char *constmap_get(struct constmap *cm,int idx);
+extern int constmap_index(const struct constmap *cm,const char *s,int len);
 #endif

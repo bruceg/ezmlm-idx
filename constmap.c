@@ -2,9 +2,7 @@
 #include "alloc.h"
 #include "case.h"
 
-static constmap_hash hash(s,len)
-char *s;
-int len;
+static constmap_hash hash(const char *s,int len)
 {
   unsigned char ch;
   constmap_hash h;
@@ -20,10 +18,7 @@ int len;
 
 /* Returns index of string in constmap. 1 = first string, 2 = second ... */
 /* 0 not found. Use for commands */ 
-int constmap_index(cm,s,len)
-struct constmap *cm;
-char *s;
-int len;
+int constmap_index(const struct constmap *cm,const char *s,int len)
 {
   constmap_hash h;
   int pos;
@@ -40,10 +35,7 @@ int len;
 }
 
 /* returns pointer to sz of string with index "idx". 1 = first, 2 = second...*/
-char *constmap_get(cm,idx)
-struct constmap *cm;
-int idx;
-
+const char *constmap_get(struct constmap *cm,int idx)
 {
   if (idx <= 0 || idx > cm->num)
     return 0;
@@ -51,10 +43,7 @@ int idx;
     return cm->input[idx-1];
 }
 
-char *constmap(cm,s,len)
-struct constmap *cm;
-char *s;
-int len;
+const char *constmap(struct constmap *cm,const char *s,int len)
 {
   constmap_hash h;
   int pos;
@@ -70,14 +59,10 @@ int len;
   return 0;
 }
 
-int constmap_init(cm,s,len,flagcolon)
+int constmap_init(struct constmap *cm,const char *s,int len,int flagcolon)
 /* if flagcolon is true, we process only the stuff before the colon on */
 /* each line. Otherwise, it's the entire line. Still, the entire line */
 /* is stored! */
-struct constmap *cm;
-char *s;
-int len;
-int flagcolon;
 {
   int i;
   int j;
@@ -94,7 +79,7 @@ int flagcolon;
  
   cm->first = (int *) alloc(sizeof(int) * h);
   if (cm->first) {
-    cm->input = (char **) alloc(sizeof(char *) * cm->num);
+    cm->input = (const char **) alloc(sizeof(char *) * cm->num);
     if (cm->input) {
       cm->inputlen = (int *) alloc(sizeof(int) * cm->num);
       if (cm->inputlen) {
@@ -139,8 +124,7 @@ int flagcolon;
   return 0;
 }
 
-void constmap_free(cm)
-struct constmap *cm;
+void constmap_free(struct constmap *cm)
 {
   alloc_free(cm->next);
   alloc_free(cm->hash);
