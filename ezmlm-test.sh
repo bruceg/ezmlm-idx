@@ -629,7 +629,7 @@ if [ "$SECT" = "1" ]; then
 
 #too small
   ${ECHO} "5000:1000" > "${DIR}/msgsize"
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1` && \
+  { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; } >/dev/null 2>&1 && \
 	{ ${ECHO} "ezmlm-reject failed to reject too small message"; \
 		exit 100; }
 
@@ -641,73 +641,71 @@ if [ "$SECT" = "1" ]; then
 
 #too large
   ${ECHO} "20:10" > "${DIR}/msgsize"
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1` && \
-	{ ${ECHO} "ezmlm-reject failed to reject too large message"; \
-		exit 100; }
+  { make_message  | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null 2>&1 && \
+        { ${ECHO} "ezmlm-reject failed to reject too large message"; \
+                exit 100; }
 
 # restore
   ${RM} -f "${DIR}/msgsize"
 
 # without subject
   SUBJECT=''
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1` && \
-	{ ${ECHO} "ezmlm-reject failed to reject message without subject"; \
-		exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject 2>&1` && \
-	{ ${ECHO} "ezmlm-reject failed to reject message without subject"; \
-		exit 100; }
+   { make_message  | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null 2>&1 && \
+        { ${ECHO} "ezmlm-reject failed to reject null subject"; \
+                exit 100; }
+   { make_message  | ${EZBIN}/ezmlm-reject ; } > /dev/null 2>&1 && \
+        { ${ECHO} "ezmlm-reject failed to reject null subject"; \
+                exit 100; }		
 
 # with empty subject
   SUBJECT='(NUll)'
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1` && \
-	{ ${ECHO} "ezmlm-reject failed to reject null subject"; \
-		exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject 2>&1` && \
-	{ ${ECHO} "ezmlm-reject failed to reject null subject"; \
-		exit 100; }
-
+   { make_message  | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null 2>&1 && \
+        { ${ECHO} "ezmlm-reject failed to reject null subject with dir"; \
+                exit 100; }
+   { make_message  | ${EZBIN}/ezmlm-reject; } > /dev/null 2>&1 && \
+        { ${ECHO} "ezmlm-reject failed to reject null subject without dir"; \
+                exit 100; }
 # testing -S
-  OUT=`make_message | ${EZBIN}/ezmlm-reject -S "${DIR}"` || \
+  { make_message | ${EZBIN}/ezmlm-reject -S "${DIR}"; } > /dev/null || \
 	{ ${ECHO} "-S switch failed with dir"; exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject -S ` || \
+  { make_message | ${EZBIN}/ezmlm-reject -S; } > /dev/null || \
 	{ ${ECHO} "-S switch failed without dir"; exit 100; }
 
 # with command subject
   SUBJECT='REmOVE'
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1` && \
+  { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null 2>&1 && \
 	{ ${ECHO} "failed to reject command subject with dir"; \
 		exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject 2>&1` && \
+  { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null 2>&1 && \
 	{ ${ECHO} "failed to reject command subject without dir"; \
 		exit 100; }
-
 # testing -C
-  OUT=`make_message | ${EZBIN}/ezmlm-reject -C "${DIR}"` || \
+  { make_message | ${EZBIN}/ezmlm-reject -C "${DIR}"; } > /dev/null || \
 	{ ${ECHO} "-C switch failed with dir"; exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject -C ` || \
+  { make_message | ${EZBIN}/ezmlm-reject -C;  } > /dev/null || \
 	{ ${ECHO} "-C switch failed without dir"; exit 100; }
 
-  SUBJECT='test'
+SUBJECT='test'
 
 # Test with list name in Cc:
   CC="$TO"
   TO="nobody@$HOST"
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}"` || \
+  { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null || \
 	{ ${ECHO} "failed to accept good Cc: with dir"; \
 		exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject` || \
+  { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	{ ${ECHO} "failed to accept good Cc: without dir"; \
 		exit 100; }
 
 # Bad To/Cc
   CC="$TO"
-  OUT=`make_message "$MESSAGE" | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1` && \
+  { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null 2>&1 && \
 		{ ${ECHO} "failed to reject bad To/Cc with dir"; \
 		exit 100; }
   if [ "$?" != "100" ]; then
 	${ECHO} "failed to exit 100 on error"; exit 100
   fi
-  OUT=`make_message "$MESSAGE" | ${EZBIN}/ezmlm-reject -q "${DIR}" 2>&1` && \
+  { make_message | ${EZBIN}/ezmlm-reject -q "${DIR}"; } > /dev/null 2>&1 && \
 		{ ${ECHO} "failed to reject bad To/Cc with dir"; \
 		exit 100; }
   if [ "$?" -ne "99" ]; then
@@ -716,14 +714,14 @@ if [ "$SECT" = "1" ]; then
 
 # for backwards-compatibility and since we don't know inlocal@inhost without
 # dir, ezmlm-reject doesn't check To/Cc when there is no dir
-  OUT=`make_message "$MESSAGE" | ${EZBIN}/ezmlm-reject` || \
+  { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 		{ ${ECHO} "failed to accept bad To/Cc without dir"; \
 		exit 100; }
 
 # testing -T
-  OUT=`make_message | ${EZBIN}/ezmlm-reject -T "${DIR}"` || \
+  { make_message | ${EZBIN}/ezmlm-reject -T "${DIR}"; } > /dev/null || \
 	{ ${ECHO} "-T switch failed with dir"; exit 100; }
-OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
+  { make_message | ${EZBIN}/ezmlm-reject -T; } > /dev/null || \
 	{ ${ECHO} "-T switch failed without dir"; exit 100; }
 
 # restore good TO
@@ -732,23 +730,23 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
 # if part is mimereject message should be rejected
   touch "${DIR}"/mimeremove
   ${ECHO} "text/html" > "${DIR}"/mimereject
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1` && \
+  { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; }  > /dev/null 2>&1 && \
 	{ ${ECHO} "mimereject failed with dir"; exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject` || \
+  { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	{ ${ECHO} "mimereject without dir"; exit 100; }
 
 # if part is removed ezmlm-reject should not reject
   ${ECHO} "tExt/htMl" > "${DIR}"/mimeremove
   ${ECHO} "" > "${DIR}"/mimereject 
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}"` || \
+  { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null || \
 	{ ${ECHO} "mimeremove failed with dir"; exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject` || \
+  { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	{ ${ECHO} "mimeremove without dir"; exit 100; }
 
 # test content-type with something after boundary=xxx
   AFTERBOUND=';micalg=pgp-md5'
   ${ECHO} "text/html" > "${DIR}"/mimereject
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1` && \
+  { make_message | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1; } > /dev/null 2>&1 && \
 	{ ${ECHO} "err with text after boundary: 0.30 bug fixed in 0.322"
 	  prompt "ezmlm-reject.......   "
 	  BUG="${BUG} reject_bound"
@@ -760,9 +758,9 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
 
 # if entire message is mimeremove type is should be rejected
   ${ECHO} "multipart/mixed" > "${DIR}"/mimeremove
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}" 2>&1` && \
+  { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null 2>&1  && \
 	{ ${ECHO} "mimereject failed with dir"; exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject` || \
+  { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	{ ${ECHO} "mimereject without dir"; exit 100; }
 
 # restore
@@ -770,18 +768,18 @@ OUT=`make_message | ${EZBIN}/ezmlm-reject -T ` || \
 
 # test headerreject
   ${ECHO} "Content-TYPE" > "${DIR}"/headerreject
-  OUT=`make_message | ${EZBIN}/ezmlm-reject -H "${DIR}"` || \
+  { make_message | ${EZBIN}/ezmlm-reject -H "${DIR}"; } > /dev/null || \
 	{ ${ECHO} "headerreject -H failed with dir"; exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject -h "${DIR}" 2>&1` && \
+  { make_message | ${EZBIN}/ezmlm-reject -h "${DIR}"; } > /dev/null 2>&1 && \
 	{ ${ECHO} "headerreject failed with dir"; exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject` || \
+  { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	{ ${ECHO} "headerreject failed without dir"; exit 100; }
-  OUT=`make_message | ${EZBIN}/ezmlm-reject -h 2>&1` && \
+  { make_message | ${EZBIN}/ezmlm-reject -h; }  > /dev/null 2>&1  && \
 	{ ${ECHO} "-h was accepted without dir"; exit 100; }
 
 # Suppress content-type header
   CONTENT=''
-  OUT=`make_message | ${EZBIN}/ezmlm-reject "${DIR}"` || \
+  { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null || \
 	{ ${ECHO} "headerreject rejected even though header isn't there"; \
 	exit 100; }
 
