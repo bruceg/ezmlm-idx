@@ -10,6 +10,7 @@ test -f lang/"$1".text -a -f lang/"$1".sed || {
 }
 
 (
+  echo `sed -e 's/^.*-//' -e q VERSION` - This version identifier must be on line 1 and start in pos 1.
   sed -f lang/"$1".sed ezmlmrc.template
   cat lang/"$1".text
 ) > ezmlmrc."$1"
