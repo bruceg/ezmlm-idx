@@ -34,6 +34,7 @@ in the next version.
  Thanks Sami Farin.
 -Replaced many library with public-domain sources.
 -Fixed "log" function conflicting with built-in math function.
+-Fixed problem with "test -e" in makelang.sh for Solaris.
 
 ezmlm-idx-0.42, 20040114 (New maintainer: Bruce Guenter <bruceg@em.ca>)
 =======================================================================
