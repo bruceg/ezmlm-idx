@@ -241,7 +241,7 @@ BOUNCE='bnc'
 BNC="$LOC-bnc"
 
 if [ -z "$HOST" ]; then
-  HOST=`${HEAD} -1 ${QMPATH}/control/me` || \
+  HOST=`${HEAD} -n 1 ${QMPATH}/control/me` || \
 	{ ${ECHO} "unable to get host name. Set HOST in script" ; exit 99; }
 fi
 
