@@ -65,7 +65,7 @@ HOW TO BUILD, TEST, AND INSTALL:
     If you're familiar with C programming for the particular RDBMS, it will
     take you no more than a few hours to adapt the files in sub_mysql (see
     docs there). Create a new sub_????, tar and gzip it and send it to
-    lindberg#@id.wustl.edu for inclusion into the package.
+    bruceg@em.ca for inclusion into the package.
 
  6. Compile the programs and man pages:
        % make clean
@@ -271,5 +271,5 @@ HOW TO BUILD, TEST, AND INSTALL:
 
 Replace First M. Last with your name.
 
-Send bugs reports, ideally with patch, to 'lindberg@id.wustl.edu'.
+Send bugs reports, ideally with patch, to 'ezmlm@list.cr.yp.to'.
 
