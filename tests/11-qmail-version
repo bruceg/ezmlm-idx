@@ -1,0 +1,80 @@
+###########################
+# determine qmail version #
+###########################
+
+if [ "$SECT" != "9" ]; then
+
+${ECHO} "Subject: zzz-test" > "${DIR}/__tmp"
+${QMPATH}/bin/qmail-local "$EZTEST" "$HOME" "$SND-zzz" "$DASH" \
+		"$LIST-$SINK-zzz" "$HOST" \
+		"<>" '' < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "-failed to deliver message with qmail-local"; exit 100; }
+
+if [ ! -r "${DIR}/default" ]; then
+	${ECHO} "qmail-local failed to deliver the message. Can't determine"
+	${ECHO} "qmail version"
+	exit 99
+fi
+
+if [ `cat "${DIR}/default"` = "zzz" ]; then
+	if [ -z "$QMVER" ]; then
+		QMVER="n"
+	fi
+else
+	if [ -z "$QMVER" ]; then
+		QMVER="o"
+	fi
+fi
+
+prompt "testing for qmail:    "
+if [ "$QMVER" = "n" ]; then
+	${ECHO} ">=1.02"
+else
+	${ECHO} "[any]"
+fi
+
+# if testing for old version, make sure DEFAULT is not defined. If printenv
+# is not available, we hope for the best and continue. unset should work ...
+# Set BADUNSET if unset doesn't do the job
+
+A='a'
+export A
+${UNSET} A
+[ -z "$A" ] || BADUNSET='y'
+
+${UNSET} DEFAULT
+
+if [ "$QMVER" = "o" ]; then
+  printenv PATH >/dev/null 2>&1 && \
+    printenv DEFAULT > /dev/null 2>&1 && \
+      { ${ECHO} "Can't test for old version of qmail if DEFAULT is defined. ";
+      ${ECHO} "Please undefine it."; exit 99; }
+fi
+
+# correct bouncer for our binaries:
+###################################
+# NOTE: This is duplicated (and should be) after next ezmlm-make block.
+  ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/bouncer"
+  ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/digest/bouncer"
+  if [ "$EZVER" = "31" ]; then	# autodetecting bouncer for 0.31x
+    ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/bouncer"
+    ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/digest/bouncer"
+  else				# split bouncer with args for later versions
+	# edited for ezmlm-new
+    ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/bouncer"
+    ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/digest/bouncer"
+  fi
+
+# if testing qmail>=1.02, remove inlocal/inhost - shouldn't be used
+  if [ "$QMVER" = "n" ]; then
+	${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
+	  { ${ECHO} "failed to remove inlocal/inhost for testlist"; exit 100; }
+  fi
+
+###########################
+# set up bouncing account #
+###########################
+  ${ECHO} "|${GREP} 'MAILER-DAEMON' >/dev/null && exit 99" > "$DOT-$BOUNCE"
+  ${ECHO} "|exit 100" > "$DOT-$BOUNCE"
+
+fi

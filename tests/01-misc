@@ -1,0 +1,359 @@
+if ${ECHO} -n | grep n > /dev/null 2>&1; then
+	prompt() {
+		${ECHO} "$*\c"
+	}
+else
+	prompt() {
+		${ECHO} -n "$*"
+	}
+fi
+
+if ps auxw > /dev/null 2>&1; then
+	PS='ps auxw'
+else
+	PS='ps -ef'
+fi
+
+if (whoami) > /dev/null 2>&1; then
+	USER=`whoami`
+elif (id) > /dev/null 2>&1; then
+	USER=`id | cut -d'(' -f2 | cut -d')' -f1`
+# the remaining two tests work only if "su -" was used
+# perhaps delete them
+elif (logname) > /dev/null 2>&1; then
+	USER=`logname`
+elif (who am i) > /dev/null 2>&1; then
+	USER=`who am i | cut -d' ' -f1 | cut -d'!' -f2`
+else
+	${ECHO} "Could not determine current user name."
+	${ECHO} "If you're not \"${EZTEST}\" the test will fail."
+	USER="${EZTEST}"
+fi
+
+SQLUSER=''	# must be empty
+ARR='-------------------->'
+ALLOW='allow'
+DENY='deny'
+DASH='-'
+# switch for ezmlm-return
+DLC='-d'
+DUC='-D'
+# file for ezmlm-request testing
+REQ="${DIR}/__req"
+# Set if we've found bug from old version
+BUG=''
+# Use RDBMS, set if -p was specified even if PW empty, e.g. Postgres
+USESQL=''
+# process arguments
+
+SECT="1"
+while [ ! -z "$1" ]; do		# not everyone has getopt :-(
+	case "$1" in
+		-/)
+			DASH='-/'; shift;;
+		-d)
+			DB="$2"; shift; shift;;
+		-h)
+			SQLHOST="$2"; shift; shift;;
+		-l)
+			SQLUSER="$2"; shift; shift;;
+		-n)
+			QMVER=n; shift;;
+		-o)
+			QMVER=o; shift;;
+		-p)
+			PW="$2"; USESQL=1; shift; shift;;
+		-u)
+			EZTEST="$2"; SQLUSR="$2"; shift; shift;;
+		-s)
+			SECT="$2"; shift; shift;;
+		-t)
+			TABLE="$2"; shift; shift;;
+		--)
+			shift; break;;
+		*)
+			${ECHO} "$i"
+			${ECHO} "Usage: ezmlm-test [-/] [-on] [-u user]" \
+				"[-p sqlpassword [-l sqluser] [-d sqldb]" \
+				"[-t sqltable] [-h sqlhost]] [-s section]"
+			${ECHO}
+			${ECHO} "args have to be separated from switches!"
+			${ECHO}
+			${ECHO} "defaults: -d ezmlm"
+			${ECHO} "          -h [empty => RDBMS default]"
+			${ECHO} "          -l eztest or -u arg if specified"
+			${ECHO} "          -n/o [autodetected]"
+			${ECHO} "          -p [empty - don't use SQL support]"
+			${ECHO} "          -s 1 [run test from beginning]"
+			${ECHO} "          -t list"
+			${ECHO} "          -u eztest"
+			${ECHO}
+			exit 99;;
+	esac
+done
+
+if [ -z "$SQLUSER" ]; then
+	SQLUSER="$SQLUSR"
+fi
+
+if [ "$USER" != "${EZTEST}" ]; then 
+  ${ECHO} "Must be user ${EZTEST} to execute"; exit 99
+fi
+
+# test for the common uid=0 error; not foolproof
+# any system w/o id or UID ?
+if (id) > /dev/null 2>&1 && \
+   test "x`id|cut -d'(' -f1 |cut -d'=' -f2`" = "x0"; then
+	${ECHO} 'uid is 0 but superuser does not receive mail under qmail'
+	exit 1  
+elif test "x$UID" = "x0" ; then
+	${ECHO} '$UID = 0 but superuser does not receive mail under qmail'
+	exit 1
+fi
+
+LOC="$EZTEST-$LIST"
+# calculate position in LOCAL where [normally] default starts
+LOCLEN=`${ECHO} "$LOC-" | ${WC} -c | ${SED} 's/ //g'`
+REJLEN=`${ECHO} "$LOC-reject-" | ${WC} -c | ${SED} 's/ //g'`
+ACCLEN=`${ECHO} "$LOC-accept-" | ${WC} -c | ${SED} 's/ //g'`
+
+${UMASK} >/dev/null || \
+      {
+	${ECHO} "Umask failed. Usually, this is OK. Fix this if ezmlm-test"
+	${ECHO} "fails and messages remain queued with the qmail error"
+	${ECHO} "'Uh-oh: .qmail file is writable'."
+	${ECHO}
+      }
+
+DOT="$HOME/.qmail$DASH$LIST"
+
+if [ "$SECT" != "1" ]; then
+	${ECHO} "Starting with section $SECT ..."
+fi
+ 
+# test addresses. These are all within the list dir and all addresses
+# are subaddresses of the list address. You can change this, but it is
+# usually pointless.
+SINK='sink'
+SINKDIR="${DIR}/${SINK}"
+SND="${LOC}-${SINK}"
+
+# moddir
+MODACC='modacc'
+MODDIR="${DIR}/${MODACC}"
+MOD="$LOC-${MODACC}"
+
+# digdir
+DIGGG='dig'
+DIGDIR="${DIR}/${DIGGG}"
+DIG="$LOC-${DIGGG}"
+
+# mandir
+MANAG="man"
+MANDIR="${DIR}/${MANAG}"
+MAN="$LOC-${MANAG}"
+
+# bouncedir
+BOUNCE='bnc'
+BNC="$LOC-bnc"
+
+if [ -z "$HOST" ]; then
+  HOST=`${HEAD} -n 1 ${QMPATH}/control/me` || \
+	{ ${ECHO} "unable to get host name. Set HOST in script" ; exit 99; }
+fi
+
+if [ ! -x "${EZBIN}/ezmlm-make" ]; then
+	${ECHO} "can't execute ${EZBIN}/ezmlm-make. Most likely, user ``$USER''"
+	${ECHO} "doesn't have execute permission to files in directory"
+	${ECHO} "``${EZBIN}''. Adjust permissions or edit the script to"
+	${ECHO} "use a different test user."
+	exit 99
+fi
+
+if [ ! -x "${QMPATH}/bin/qmail-local" ]; then
+	${ECHO} "can't find qmail-local. Please correct the path in the script"
+	exit 99
+fi
+if [ ! -x "${QMPATH}/bin/qmail-inject" ]; then
+	${ECHO} "can't find qmail-inject. Please correct the path in the script"
+	exit 99
+fi
+# Check if qmail is running. Don't fail if not, as it's most likely a
+# ps issue and not a lack of qmail.
+${PS} | ${GREP} qmai\l-send >/dev/null 2>&1 || \
+	{
+	 ${ECHO} "qmail isn't running or ps doesn't work as expected. If"
+	 ${ECHO} "qmail is not running, this script will fail. Will continue..."
+	}
+
+###############################
+# message generating function #
+###############################
+make_body()
+{
+  ${ECHO} "This is a simple message body"
+  ${ECHO} "--bound123ary"
+  ${ECHO} "Content-type: Text/pLAIn"
+  ${ECHO}
+  ${ECHO} "plain text"
+  ${ECHO} "--bound123ary"
+  ${ECHO} "Content-type: texT/Html"
+  ${ECHO}
+  ${ECHO} "html text"
+  ${ECHO} "--bound123ary--"
+  ${ECHO}
+  ${ECHO} "junk after boundary"
+  return 0
+}
+
+make_message()
+{
+  ${ECHO} "ReCEIved: #LAST#"
+  ${ECHO} "ReCeIved: #PENULTIMATE#"
+  ${ECHO} "retuRN-RECeipt-to: nobody"
+  ${ECHO} "To: $TO"
+  ${ECHO} "CC: "
+  ${ECHO} " $CC"
+  ${ECHO} "FROM: $FROM"
+  if [ ! -z "$CONTENT" ]; then
+	${ECHO} "MIME-Version: 1.0"
+	${ECHO} "Content-type: $CONTENT;"
+	${ECHO} " boundary=bound123ary${AFTERBOUND}"
+  fi
+  if [ ! -z "$SUBJECT" ]; then
+	${ECHO} "Subject: $SUBJECT"
+  fi
+  ${ECHO}
+  make_body
+  return 0
+}
+
+############################
+# function to test testmsg #
+############################
+send_test()
+{
+  {
+	${ECHO} "X-num: #TSTMSG$1#"
+	${ECHO} "To: ${SND}@$HOST"
+  } | ${QMPATH}/bin/qmail-inject
+  return 0
+}
+
+############################
+# sleeping 5 secs function #
+############################
+sleep_5()
+{
+  sleep 1; prompt "."; sleep 1; prompt "."
+  sleep 1; prompt "."; sleep 1; prompt "."
+  sleep 1; prompt "${1}"
+  return 0
+}
+
+################################
+# waiting for delivery fuction #
+################################
+wait_test()
+{
+prompt "max 35s for delivery: "
+sleep_5 5s
+TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
+if [ -z "$TSTMSG" ]; then
+  sleep_5 10s
+  TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
+  if [ -z "$TSTMSG" ]; then
+    sleep_5 15s
+    TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
+    if [ -z "$TSTMSG" ]; then
+      sleep_5 20s
+      TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
+      if [ -z "$TSTMSG" ]; then
+        sleep_5 25s
+        TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
+        if [ -z "$TSTMSG" ]; then
+          sleep_5 30s
+          TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
+          if [ -z "$TSTMSG" ]; then
+  		${ECHO}
+		${ECHO} "Delivery of test message failed. Fix qmail or wait"
+		${ECHO} "longer and continue with argument \"-s $1\""
+ 		exit 100
+          fi
+        fi
+      fi
+    fi
+  fi
+fi
+sleep_5 OK
+${ECHO}
+${RM} -f "$TSTMSG" > "${ERR}" 2>&1 || \
+	{ ${ECHO} "failed to remove test message for section $1"; exit 100; }
+TSTMSG=''
+return 0
+}
+
+########################
+# remove old test list #
+########################
+if [ "$SECT" = "1" ]; then
+  if [ $USESQL ]; then
+	${EZBIN}/ezmlm-unsub "${DIR}/digest" "${MAN}@$HOST" "${DIG}@$HOST" \
+		>"${ERR}" 2>&1
+	${EZBIN}/ezmlm-unsub "${DIR}/mod" "${MOD}@$HOST" \
+		>"${ERR}" 2>&1
+	${EZBIN}/ezmlm-unsub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff" \
+		>"${ERR}" 2>&1
+  fi
+  ${RM} -rf "${DIR}" ${DOT}* "${ERR}" >/dev/null 2>&1
+fi
+${ECHO}
+
+#################
+# check version #
+#################
+
+# assume ezmlm-idx and ezmlm-test are different versions
+SAME_VER='n'
+
+TMP_VER=`${EZBIN}/ezmlm-make -V 2>&1` || \
+	{
+		${ECHO} "This program only works with ezmlm-idx"
+		exit 100
+	}
+# ezmlm-idx-0313 does not support DEFAULT, so no sense testing it
+THIS_VER=`${ECHO} "$TMP_VER" | cut -d'+' -f2`
+${ECHO} "$THIS_VER" | ${GREP} "ezmlm-idx" > /dev/null 2>&1 ||
+  THIS_VER=`${ECHO} "$TMP_VER" | cut -d' ' -f4`
+
+${ECHO} "testing ezmlm-idx:    $THIS_VER"
+${ECHO} "Using FQDN host name: $HOST"
+
+${ECHO} "$THIS_VER" | ${GREP} "$OLD_VER" >/dev/null 2>&1
+if [ "$?" = "0"	]; then
+	DLC=''
+	DUC=''
+	EZVER='31'
+	QMVER='o'
+	ALLOW='extra'		# support old nomenclature
+	DENY='blacklist'
+else
+	${ECHO} "$THIS_VER" | ${GREP} "$VER" >/dev/null 2>&1
+	if [ "$?" != "0" ]; then
+		${ECHO} "Warning: ezmlm-make version is not $VER"
+		${ECHO} "         test info may not be reliable"
+		${ECHO}
+	fi
+########## should add testing of From line logging for non-0.31x
+	SW_FROM="-f"
+fi
+
+# Now see if we support old qmail
+
+  ${ECHO} "$THIS_VER" | ${GREP} "ezmlm-idx-0.32" >/dev/null 2>&1 && \
+	EZVER='32'; 
+
+if [ "$EZVER" != '31' -a "$EZVER" != '32' -a "$QMVER" = 'o' ]; then
+	${ECHO} "Sorry, this version of ezmlm-idx requires qmail>=1.02"
+	exit 100;
+fi

@@ -34,6 +34,7 @@ in the next version.
 -Fixed up the broken Swedish translation.  Thanks Mads E. Eilertsen.
 -Fixed naming of translations to match their ISO 3166 country codes:
  sv => se (Sweden) and da => dk (Denmark)
+-Internal reorganization of ezmlm-test
 
 ezmlm-idx-0.43, 20041125
 ========================

@@ -838,10 +838,10 @@ strerr.h subscribe.h log.h errtxt.h sgetopt.h scan.h idx.h
 	./compile ezmlm-sub.c
 
 ezmlm-test: \
-ezmlm-test.sh warn-auto.sh conf-bin
+warn-auto.sh conf-qmail tests tests/* Makefile
 	(cat warn-auto.sh; \
 	echo QMPATH=\'`head -n 1 conf-qmail`\'; \
-	cat ezmlm-test.sh ) > ezmlm-test; \
+	cat tests/* ) >ezmlm-test;
 	chmod 755 ezmlm-test
 
 ezmlm-test.0: \

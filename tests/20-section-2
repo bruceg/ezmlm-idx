@@ -1,0 +1,626 @@
+####################################### start of section 2
+
+if [ "$SECT" -le "2" ]; then
+  wait_test 2
+
+#############
+# ezmlm-idx #
+#############
+  prompt "ezmlm-idx:            "
+  ${RM} -f "${DIR}/archive/0/index" "${DIR}/indexed"
+  ${EZBIN}/ezmlm-idx "${DIR}" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed to run"; exit 100; }
+  if [ ! -r "${DIR}/indexed" ]; then
+	${ECHO} "failed to create DIR/indexed"; exit 100
+  fi
+  if [ ! -r "${DIR}/archive/0/index" ]; then
+	${ECHO} "failed to create index"; exit 100
+  fi 
+  ${ECHO} "OK"
+
+#############
+# ezmlm-get #
+#############
+prompt "ezmlm-get (1/2):      "
+
+# blast digest recipient account with all these excerpts.
+${EZBIN}/ezmlm-sub "${DIR}/digest" "${DIG}@$HOST"
+
+# first ezmlm-get in the manager position:
+
+# index1/get1/thread1 should bounce and will not be looked for
+# index2 ... should be in DIG@HOST's inbox
+# get3 - r format to DIG@HST
+# get4 - n
+# get5 - v
+# get6 - x
+
+SENDER="${BNC}@$HOST"; export SENDER
+LOCAL="$LOC-xxxx"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT='xxxx'; export DEFAULT
+fi
+${ECHO} "X-num: index1" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} " failed to exit 0 for non-recognized commands"; exit 100; }
+
+# This should not give a digest
+LOCAL="$LOC-"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=''; export DEFAULT
+fi
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} " failed to exit 0 for list-@host"; exit 100; }
+
+LOCAL="$LOC-index"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT='index'; export DEFAULT
+fi
+${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "-s failed to reject -index from non-sub"; exit 100; }
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" -ne "99" ]; then
+	${ECHO} "failed to exit 99 after -index"
+	exit 100
+fi
+
+${ECHO} "X-num: index2" > "${DIR}/__tmp"
+SENDER="${DIG}@$HOST"; export SENDER
+${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" -ne "99" ]; then
+	${ECHO} "-s failed to exit 99 after -index"
+	exit 100
+fi
+
+SENDER="${BNC}@$HOST"; export SENDER
+${ECHO} "X-num: get1" > "${DIR}/__tmp"
+LOCAL="$LOC-get.2_4"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT='get.2_4'; export DEFAULT
+fi
+${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "-s failed to reject -get from non-sub"; exit 100; }
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	${ECHO} "failed to exit 99 after -get"
+	exit 100
+fi
+${ECHO} "X-num: get2" > "${DIR}/__tmp"
+SENDER="${DIG}@$HOST"; export SENDER
+${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	${ECHO} "-s failed to exit 99 after -get"
+	exit 100
+fi
+
+# test formats for -get
+${ECHO} "X-num: get3" > "${DIR}/__tmp"
+LOCAL="$LOC-getr.2_4"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT='getr.2_4'; export DEFAULT
+fi
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	${ECHO} "failed to exit 99 after -getr"
+	exit 100
+fi
+${ECHO} "X-num: get4" > "${DIR}/__tmp"
+LOCAL="$LOC-getn.2_4"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT='getn.2_4'; export DEFAULT
+fi
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	${ECHO} "failed to exit 99 after -getn"
+	exit 100
+fi
+
+${ECHO} "X-num: get5" > "${DIR}/__tmp"
+LOCAL="$LOC-getv.2_4"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT='getv.2_4'; export DEFAULT
+fi
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	${ECHO} "failed to exit 99 after -getv"
+	exit 100
+fi
+
+${ECHO} "X-num: get6" > "${DIR}/__tmp"
+LOCAL="$LOC-getx.2_4"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT='getx.2_4'; export DEFAULT
+fi
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	${ECHO} "failed to exit 99 after -getx"
+	exit 100
+fi
+
+SENDER="${BNC}@$HOST"; export SENDER
+LOCAL="$LOC-index"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT='index'; export DEFAULT
+fi
+${ECHO} "X-num: thread1" > "${DIR}/__tmp"
+LOCAL="$LOC-thread.1"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT='thread.1'; export DEFAULT
+fi
+${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "-s failed to reject -thread from non-sub"; exit 100; }
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	${ECHO} "failed to exit 99 after -thread"
+	exit 100
+fi
+${ECHO} "X-num: thread2" > "${DIR}/__tmp"
+SENDER="${DIG}@$HOST"; export SENDER
+${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	${ECHO} "-s failed to exit 99 after -thread"
+	exit 100
+fi
+
+######### digests
+# we use headeradd to label them since trigger headers aren't propagated
+${ECHO} "X-num: not_propagated" > "${DIR}/__tmp"
+
+# dig1 from manager will go to DIG@HOST
+# dig2 from editor
+# dig3 from command line
+# dig4 -fr format check from command line. We check only that they get there.
+# dig5 -fn
+# dig6 -fx
+# dig7 -fv
+# we check that dignum is created and digissue is updated 
+
+# now -dig in the manager position:
+mv -f "${DIR}/headeradd" "${DIR}/headeradd.bak"
+${ECHO} "X-num: dig1" > "${DIR}/headeradd"
+SENDER="${BNC}@$HOST"; export SENDER
+LOCAL="$LOC-dig.code"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT='dig.code'; export DEFAULT
+fi
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to reject -dig when no digest code was on cmd-line"
+	  exit 100
+	}
+if [ -r "${DIR}/dignum" ]; then
+	${ECHO} "script error: dignum exists"; exit 100
+fi
+${EZBIN}/ezmlm-get "${DIR}" 'code' < "${DIR}/__tmp" >"${ERR}" 2>&1
+if [ "$?" != "99" ]; then
+	${ECHO} "failed to exit 99 after digest in manager position"
+	exit 100
+fi
+if [ ! -r "${DIR}/dignum" ]; then
+	${ECHO} "failed to generate dignum"; exit 100
+fi
+if [ ! -r "${DIR}/digissue" ]; then
+	${ECHO} "failed to generate digissue"; exit 100
+fi
+${EZBIN}/ezmlm-get "${DIR}" 'code' < "${DIR}/__tmp" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	${ECHO} "failed to exit 99 when nothing to digest in manager position"
+	exit 100
+fi
+
+${EZBIN}/ezmlm-get "${DIR}" 'coden' < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to reject -dig with bad digest code 'coden'"; exit 100; }
+${EZBIN}/ezmlm-get "${DIR}" 'cod' < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to reject -dig with bad digest code 'cod'"; exit 100; }
+
+# now in the editor position:
+${RM} -f "${DIR}/dignum"
+LOCAL="$LOC"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	${UNSET} DEFAULT
+fi
+${ECHO} "X-num: dig2" > "${DIR}/headeradd"
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed to exit 0 after digest in editor"; exit 100; }
+
+# This causes an error on systems where 'unset' doesn't work
+# For these, we skip this test.
+  if [ -z "$BADUNSET" ]; then
+    if [ ! -r "${DIR}/dignum" ]; then
+	${ECHO} "failed to generate dignum after digest in editor"; exit 100
+    fi
+
+    ${GREP} "2:" "${DIR}/digissue" >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to update digissue after digest in editor";
+	  exit 100; }
+    ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed to exit 0 when nothing to digest in editor";
+	  exit 100; }
+  fi
+
+# now from the command line with formats ...
+${RM} -f "${DIR}/dignum"
+LOCAL=''; export LOCAL
+${ECHO} "X-num: dig3" > "${DIR}/headeradd"
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to exit 0 after cmd line digest"; exit 100; }
+${GREP} "3:" "${DIR}/digissue" >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to update digissue after cmd line digest"; exit 100; }
+${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to exit 0 when nothing to digest from cmd line"
+	exit 100; }
+${RM} -f "${DIR}/dignum"
+${ECHO} "X-num: dig4" > "${DIR}/headeradd"
+${EZBIN}/ezmlm-get -fr "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} "-fr failed for digest"; exit 100; }
+${RM} -f "${DIR}/dignum"
+${ECHO} "X-num: dig5" > "${DIR}/headeradd"
+${EZBIN}/ezmlm-get -fn "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} "-fn failed for digest"; exit 100; }
+${RM} -f "${DIR}/dignum"
+${ECHO} "X-num: dig6" > "${DIR}/headeradd"
+${EZBIN}/ezmlm-get -fv "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} "-fv failed for digest"; exit 100; }
+${RM} -f "${DIR}/dignum"
+${ECHO} "X-num: dig7" > "${DIR}/headeradd"
+${EZBIN}/ezmlm-get -fx "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} "-fx failed for digest"; exit 100; }
+
+# restore headeradd
+mv -f "${DIR}/headeradd.bak" "${DIR}/headeradd"
+
+${ECHO} "OK"
+
+##############
+# ezmlm-send #
+##############
+prompt "ezmlm-send (2/2):     "
+MSG1=`${GREP} -l "msg1" $SINKDIR/new/*` || \
+	{ ${ECHO} "failed to deliver message 1 to subscriber"; \
+	exit 100; }
+# make sure headeradd was done
+  ${GREP} -i 'precedence: bulk' < "$MSG1" >/dev/null 2>&1 ||
+	{ ${ECHO} "failed to add headeradd"; exit 100; }
+# check on received: header handling
+${GREP} '#PENULTIMATE#' "$MSG1" >/dev/null && \
+	{ ${ECHO} "-r failed to remove received header"; \
+	exit 100; }
+${GREP} '#LAST#' "$MSG1" >/dev/null || \
+	{ ${ECHO} "-r failed to leave last received header"; \
+	exit 100; }
+${GREP} 'Subject:' "$MSG1" | ${GREP} 'PFX' >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to add subject prefix"; exit 100; }
+	# the trailer should be a MIME part, so not at the very end
+${TAIL} -n 6 "$MSG1" | ${HEAD} -n 2 | ${GREP} 'TRAILER' >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to add trailer"; exit 100; }
+
+MSG2=`${GREP} -l "msg2" $SINKDIR/new/*` || \
+	{ ${ECHO} "failed to deliver message 2 to subscriber"; \
+	exit 100; }
+${GREP}  '#PENULTIMATE#' "$MSG2" >/dev/null || \
+	{ ${ECHO} "-R failed to leave received header"; \
+	exit 100; }
+
+${GREP} "msg3" $SINKDIR/new/* >/dev/null 2>&1 && \
+	{ ${ECHO} "-C failed to exclude sender (no longer supported)"; \
+	  BUG="${BUG}_noself"; \
+	  prompt "ezmlm-send:           "; }
+
+MSG5=`${GREP} -l "msg5" $SINKDIR/new/*` || \
+	{ ${ECHO} "failed to deliver message 5 to subscriber"; \
+	exit 100; }
+${GREP} 'TRAILER' "$MSG5" >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to add trailer to non-mime message"; \
+	exit 100; }
+
+MSG6=`${GREP} -l "msg6" $SINKDIR/new/*` || \
+	{ ${ECHO} "failed to deliver message 6 to subscriber"; \
+	exit 100; }
+
+${GREP} 'TRAILER' "$MSG6" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to suppress trailer for multipart/signed message"; \
+	  ${ECHO} "                      0.31 bug fixed in 0.316/0.323";
+	  BUG="${BUG}_signed"; \
+	  prompt "ezmlm-send ......:    "; }
+
+${GREP} "msg3" $SINKDIR/new/* >/dev/null 2>&1 && \
+	{ 
+	  ${ECHO} "${BUG}" | ${GREP} 'noself' >/dev/null 2>&1 || \
+	  {
+	    ${ECHO} "-C failed to exclude sender (no longer supported)"
+	    BUG="${BUG}_noself"
+	    prompt "ezmlm-send ......:   ${BUG} "
+	  }
+	}
+
+${ECHO} "OK"
+###############
+# ezmlm-clean #
+###############
+
+prompt "ezmlm-clean (2/2):    "
+
+${GREP} "clean1" ${DIGDIR}/new/* >/dev/null 2>&1 && \
+	{ ${ECHO} "removal of non-x mod queue entry 1 wasn't silent"; exit 100; }
+${GREP} "clean2" ${DIGDIR}/new/* >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to notify sender of mod queue entry 2 time out"
+	  exit 100
+	}
+${GREP} "clean3" ${DIGDIR}/new/* >/dev/null 2>&1 && \
+	{ ${ECHO} "notified sender about entry 3 even though it wasn't rejected"
+	  exit 100
+	}
+${GREP} "clean4" ${DIGDIR}/new/* >/dev/null 2>&1 && \
+	{ ${ECHO} "-R failed: notified sender about entry 3 rejection"; exit 100; }
+
+
+# clean1 should be silently removed (no -x).
+# clean2 should result in a message
+# clean3 should not since it's time hasn't come
+# clean4 should be removed, but not result in a message since we use -R
+
+${ECHO} "OK"
+
+###############
+# ezmlm-store #
+###############
+prompt "ezmlm-store (2/2):    "
+
+MOD1=`${GREP} -l "mod1" $SINKDIR/new/* 2>/dev/null`
+if [ -z "$MOD1" ]; then
+	${ECHO} "ezmlm-store: failed to deliver mod request to moderator"
+	exit 100
+fi
+${GREP} "mod2" $SINKDIR/new/* >/dev/null && \
+	{ ${ECHO} "ezmlm-store: didn't post directly in absence of DIR/modpost"; \
+	exit 100; }
+MOD3=`${GREP} -l "mod3" $SINKDIR/new/* 2>/dev/null`
+if [ -z "$MOD3" ]; then
+	${ECHO} "ezmlm-store: -P failed to deliver mod request to moderator"
+	exit 100
+fi
+${GREP} "mod4" $SINKDIR/new/* >/dev/null && \
+	{ ${ECHO} "ezmlm-store: -P failed to reject message from non-mod"; \
+	exit 100; }
+
+${ECHO} "OK"
+
+################
+# ezmlm-manage #
+################
+prompt "ezmlm-manage (2/4):   "
+
+# check digest-subscribe and list-unsubscribe replies
+SUB1=`${GREP} -l 'sub1' $MANDIR/new/*` || \
+	{ ${ECHO} "failed getting digest-subscribe confirm request"; exit 100; }
+
+SUB2=`${GREP} -l 'sub2' $MANDIR/new/*` || \
+	{ ${ECHO} "failed getting -unsubscribe confirm request"; exit 100; }
+
+# Check -get.1 reply
+MANGET1=`${GREP} -l 'manget1' $MANDIR/new/*` || \
+	{ ${ECHO} "failed getting -get.1 reply"; exit 100; }
+
+${GREP} 'msg1' "$MANGET1" >/dev/null || \
+	{ ${ECHO} "get.1 failed to return archived message"; exit 100; }
+
+# Add moderator
+${EZBIN}/ezmlm-sub "${DIR}/mod" "${MOD}@$HOST"
+
+LOCAL=`${GREP} "Reply-To:" "$SUB1" | cut -d' ' -f2 | cut -d'@' -f1` || \
+	{ ${ECHO} "failed to find confirm address in -subscribe reply"; exit 100; }
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+fi
+${ECHO} "X-num: sub3" > "${DIR}/__tmp"
+${ECHO} "From: Mr. $EZTEST confirms <$SENDER>" >> "${DIR}/__tmp"
+${ECHO} >> "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${DIR}/__tmp" \
+		>"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed to send user conf for sub1"; exit 100; }
+
+LOCAL=`${GREP} "Reply-To:" "$SUB2" | cut -d' ' -f2 | cut -d'@' -f1` || \
+	{ ${ECHO} "failed to find confirm address in -unsubscribe reply"
+	  exit 100; }
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+fi
+${ECHO} "X-num: sub4" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to send conf for sub2"; exit 100; }
+
+# now test remote admin functions
+# add a few addresses to allow
+${EZBIN}/ezmlm-sub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff"
+
+# test -edit
+${ECHO} "#TEST_TEXT#" > "${DIR}/text/test"
+LOCAL="$LOC-edit.test-$MAN=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="edit.test-$MAN=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: edit1" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -e "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to reject edit request from non-mod"; exit 100; }
+LOCAL="$LOC-edit.test-$MOD=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="edit.test-$MOD=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: edit2" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 && \
+	{ ${ECHO} "-E failed for edit2"; exit 100; }
+${ECHO} "X-num: edit3" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -e "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "-e failed for remote admin for edit3"; exit 100; }
+
+# test list/log
+LOCAL="$LOC-allow-list-$MAN=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="allow-list-$MAN=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: list1" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to reject list request from non-mod"; exit 100; }
+
+LOCAL="$LOC-allow-log-$MAN=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="allow-log-$MAN=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: log1" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to reject log request from non-mod"; exit 100; }
+
+LOCAL="$LOC-allow-list-$MOD=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="allow-list-$MOD=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: list2" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
+	{ ${ECHO} "-L failed to reject list request"; exit 100; }
+
+${ECHO} "X-num: list3" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "-l failed for remote admin for list3"; exit 100; }
+
+LOCAL="$LOC-allow-log-$MOD=$HOST"; export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT="allow-log-$MOD=$HOST"; export DEFAULT
+fi
+${ECHO} "X-num: log2" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 && \
+	{ ${ECHO} "-L failed to reject log request"; exit 100; }
+
+${ECHO} "X-num: log3" > "${DIR}/__tmp"
+${EZBIN}/ezmlm-manage -l "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "-l failed for remote admin for log3"; exit 100; }
+
+
+${ECHO} "OK"
+
+##################
+# ezmlm-moderate #
+##################
+
+prompt "ezmlm-moderate (1/2): "
+
+# MOD1 and MOD3 are defined from ezmlm-store testing
+
+REJ=`${GREP} "From: $LOC-reject" "$MOD1"| cut -d' ' -f2`
+if [ -z "$REJ" ]; then
+	${ECHO} "No From: ...-reject header in mod request for mod1"
+	exit 100
+fi
+
+ACC=`${GREP} "Reply-To: $LOC-accept" "$MOD3"| cut -d' ' -f2`
+if [ -z "$ACC" ]; then
+	${ECHO} "No From: ...-accept header in mod request for mod3"
+	exit 100
+fi
+
+# remove moderation request from sinkdir
+${RM} -f "$MOD1" 2>/dev/null || \
+	{ ${ECHO} "failed to remove mod request for mod1"; exit 100; }
+${RM} -f "$MOD3" 2>/dev/null || \
+	{ ${ECHO} "failed to remove mod request for mod3"; exit 100; }
+
+# make sure we get the (mis)accepted message(s)
+${EZBIN}/ezmlm-sub "${DIR}" "${SND}@$HOST"
+
+LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
+export LOCAL
+
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	</dev/null >"${ERR}" 2>&1 || \
+		{ ${ECHO} "failed on rejection"; exit 100; }
+
+LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	 </dev/null >"${ERR}" 2>&1 || \
+		{ ${ECHO} "failed on acceptance"; exit 100; }
+
+ls -l "${DIR}/mod/rejected/" | ${GREP} '[0-9]' >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to write reject stub"; exit 100; }
+ls -l "${DIR}/mod/accepted/" | ${GREP} '[0-9]' >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to write accept stub"; exit 100; }
+
+REJ1=`${ECHO} "$REJ" | sed s/reject/accept/`
+LOCAL=`${ECHO} "$REJ1" | cut -d@ -f1`
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	</dev/null >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to bounce accept of rejected message"; exit 100; }
+LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	</dev/null >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to silently ignore re-rejection"; exit 100; }
+
+ACC1=`${ECHO} "$ACC" | sed s/accept/reject/`
+LOCAL=`${ECHO} "$ACC1" | cut -d@ -f1`
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	</dev/null >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to bounce reject of accepted message"; exit 100; }
+LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
+export LOCAL
+if [ "$QMVER" = "n" ]; then
+	DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`; export DEFAULT
+fi
+${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
+	</dev/null >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to silently ignore re-acceptance"; exit 100; }
+
+${ECHO} "OK"
+
+# cleanup
+${EZBIN}/ezmlm-unsub "${DIR}" "${SND}@$HOST"
+
+##############
+# ezmlm-warn #
+##############
+prompt "ezmlm-warn (2/3):     "
+
+${EZBIN}/ezmlm-warn -t0 "${DIR}" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed with normal bounce for warning"; exit 100; }
+
+${EZBIN}/ezmlm-warn -d -t0 "${DIR}" >"${ERR}" 2>&1 || \
+	{ ${ECHO} "failed with digest bounce for warning"; exit 100; }
+
+${ECHO} "OK"
+
+#################
+# ezmlm-request #
+#################
+
+  prompt "ezmlm-request (2/2):  "
+
+  ${GREP} "$LOC-qqqq-$SND=$HOST" "${REQ}" >/dev/null || \
+	{ ${ECHO} "'qqqq' subject query rewriting failed"; exit 100; }
+
+  ${GREP} "$LOC-unsubscribe-$SND=$HOST" "${REQ}" >/dev/null || \
+	{ ${ECHO} "ezmlm 'remove' subject query rewriting failed"; exit 100; }
+
+  ${ECHO} "OK"
+
+########################
+# waiting for delivery #
+########################
+  send_test 3
+fi		# end section 2

@@ -1,0 +1,29 @@
+####################################### start of section 4
+if [ "$SECT" -le "4" ]; then
+  wait_test 4
+
+##############
+# ezmlm-warn #
+##############
+  prompt "ezmlm-warn (3/3):     "
+
+  SENDER="${BNC}@${HOST}"
+  export SENDER
+  ${EZBIN}/ezmlm-issubn -n "${DIR}" || \
+	{ ${ECHO} "failed to remove bouncing subscriber"; exit 100; }
+  ${EZBIN}/ezmlm-issubn -n "${DIR}/digest" || \
+	{ ${ECHO} "failed to remove bouncing digest subscriber"; exit 100; }
+
+  ${ECHO} "OK"
+
+################
+# ezmlm-manage #
+################
+  prompt "ezmlm-manage (4/4):   "
+
+  ${GREP} "#NEW_TEXT#" "${DIR}/text/test" >/dev/null 2>&1 || \
+	{ ${ECHO} "edit4 failed to update text file"; exit 100; }
+
+  ${ECHO} "OK"
+
+fi			# end section 4

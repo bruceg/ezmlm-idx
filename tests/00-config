@@ -1,0 +1,83 @@
+# Above should have been added a QMPATH definition
+# DEBUG=1
+# This program is meant to test ezmlm-idx.
+# Several criteria have to be met for this to work:
+# 0. you need to have qmail installed allowing mail delivery to
+#    "eztest@host" and subaddresses.
+# 2. you need to have a user "eztest" or edit the script to change to a
+#	user that exists on your system.
+# 3. you need to be that user when you invoke this script and the script
+#	needs to reside in the same dir as the binaries you want to test.
+# 4. this user needs to have execute permission for the build dir
+#
+# The script will use ~eztest/__TSTDIR and ~eztest/__TSTDIR__err and destroy
+# any files therein. Both user name and directory names etc can be configured
+# below, but this should only very rarely be necessary.
+#
+# This program is experimental and not yet properly documented. Please
+# send comments to lindberg@id.wustl.edu. I'm attempting to make this a
+# rigorous test for future ezmlm+idx installations so that full function
+# can be verified when upgrading to a new version.
+
+# must be absolute
+EZBIN=`pwd`
+
+# the user that should run the scripts (test list is created in this
+# users home directory).
+EZTEST='eztest'
+
+# HOST is normally set from /var/qmail/control/me. Set it here to override
+HOST=''
+
+# Version of ezmlm-idx for which this test script is designed
+OLD_VER='ezmlm-idx-031'		# ezmlm-idx-0.31x
+VER='ezmlm-idx-0.431'
+EZVER='431'			# default version
+
+#does the current version have qmail<1.02 support?
+OLD_QMAIL='n'
+
+# basedir for test list. It and all files therein are destroyed by
+# the script
+DIR="$HOME/__TSTDIR"
+
+# part that follows user name of local name of the list
+LIST='__tstlist'
+
+# file not within listdir where some error output is stored. If something
+# fails, this file may have more info.
+ERR="${DIR}__err"
+
+# file that can hold crated test msg to avoid sigpipe
+TMP="${DIR}/__tmp"
+
+# defaults for SQL version - overridden by command line switches
+TABLE='list'
+DB='ezmlm'
+SQLHOST=''
+SQLUSR="$EZTEST"	# -u overrides, -l overrides that
+
+# sets umask so that qmail paternalism doesn't complain. With most
+# installations, there is a umask in the user's profile. 022 should be ok,
+# but 002 is safer.
+
+UMASK='umask 002'
+
+#programs:
+# to report disk usage summary
+DU='du -s'
+# Need full path in case qmail doesn't have these in the path
+ECHO=`which echo` 2>/dev/null || ECHO='echo'
+GREP=`which grep` 2>/dev/null || GREP='grep'
+# std programs
+HEAD='head'
+MKDIR='mkdir'
+MV='mv'
+RM='rm'
+SED='sed'
+STRINGS='strings'
+TAIL='tail'
+UNSET='unset'
+WC='wc'
+
+###################### END CONFIRGRABLE ITEMS #########################

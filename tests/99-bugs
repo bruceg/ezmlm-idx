@@ -1,0 +1,79 @@
+${ECHO}
+if [ ! -z "${BUG}" ]; then
+  ${ECHO} "${BUG}" | ${GREP} "config" >/dev/null 2>&1 && \
+    {
+	${ECHO}
+	${ECHO} "The config bug prevents editing lists created with"
+	${ECHO} "ezmlm-idx<0.31 or ezmlm-0.53. 'touch DIR/config' is a work-"
+	${ECHO} "around, and upgrading to >=0.314 corrects it."
+    }
+  ${ECHO} "${BUG}" | ${GREP} "deny" >/dev/null 2>&1 && \
+    {
+	${ECHO}
+    if [ "$EZVER" = '31' ]; then
+	${ECHO} "The DENY bug allows users to remove themselves"
+	${ECHO} "from DIR/blacklist which is not intended, but OTOH,"
+	${ECHO} "DIR/blacklist is not intended for this and as a SENDER check"
+	${ECHO} "inherently insecure anyway. If you need this feature and the"
+	${ECHO} "bug is a problem, upgrade to >=0.321."
+    else
+	${ECHO} "DENY access means that subscribers can remove";
+	${ECHO} "themselves from DIR/deny. This is a bug, but DENY"
+	${ECHO} "is easy to circumvent and not intended to keep users from"
+	${ECHO} "posting, anyway."
+	${ECHO} "The bug is fixed in >=0.321."
+    fi
+    }
+  ${ECHO} "${BUG}" | ${GREP} "return" >/dev/null 2>&1 && \
+    {
+	${ECHO}
+	${ECHO} "The failure to add the ezmlm-return lines means"
+	${ECHO} "that old lists will work correctly, but bounce handling"
+	${ECHO} "won't work in lists created with this version."
+	${ECHO} "The bug is fixed in >=0.321."
+    }
+  ${ECHO} "${BUG}" | ${GREP} "tstdig" >/dev/null 2>&1 && \
+    {
+	${ECHO}
+	${ECHO} "The ezmlm-tstdig bug means that DIR/inlocal still needs to be"
+	${ECHO} "adjusted for with digests within virtual domains."
+	${ECHO} "The bug is fixed in >=0.321."
+    }
+  ${ECHO} "${BUG}" | ${GREP} "digest" >/dev/null 2>&1 && \
+    {
+	${ECHO}
+	${ECHO} "The ezmlm-tstdig -digest- bug means that ezmlm-tstdig when"
+	${ECHO} "in DIR/manager does not pass on digest subscribe request."
+	${ECHO} "Upgrade to ezmlm-idx>=0.321 if you use ezmlm-tstdig in"
+	${ECHO} "DIR/manager (this is NOT used except in custom or very"
+	${ECHO} "old (ezlm-idx<0.30) digest setups)."
+    }
+  ${ECHO} "${BUG}" | ${GREP} "_bound" >/dev/null 2>&1 && \
+    {
+	${ECHO}
+	${ECHO} "The ezmlm-send/reject mimeremove bug caused erroneous"
+	${ECHO} "rejection of messages with text after the mime boundary in the"
+	${ECHO} "Content-type header when DIR/mimeremove was used. This type"
+	${ECHO} "of message is very rare (mainly Mutt with PGP MIME)."
+    }
+  ${ECHO} "${BUG}" | ${GREP} "_noself" >/dev/null 2>&1 && \
+    {
+	${ECHO}
+	${ECHO} "The ezmlm-send -C switch 'not to sender' is no longer" 
+	${ECHO} "supported. For backwards compatibility the switch is"
+	${ECHO} "ignored. Instead, implement this feature in the recipients"
+	${ECHO} "mailbox by rejecting messages from the list with the"
+	${ECHO} "recipient's address in the From: header."
+    }
+  ${ECHO} "${BUG}" | ${GREP} "_signed" >/dev/null 2>&1 && \
+    {
+	${ECHO}
+	${ECHO} "The trailer is added as a separate MIME part to multipart"
+	${ECHO} "messages, but should be suppressed not only for multipart"
+	${ECHO} "alternative, but also for many other multipart types,"
+	${ECHO} "including multipart/signed."
+    }
+    ${ECHO}
+fi
+
+exit 0
