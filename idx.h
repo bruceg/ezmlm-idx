@@ -104,6 +104,9 @@
 /* Subject: MODERATE for inlocal@inhost */
 #define TXT_MODERATE "MODERATE for "
 
+/* Subject: Confirm post to inlocal@inhost */
+#define TXT_CONFIRM_POST "Confirm post to "
+
 /* Subject: Returned post for inlocal@inhost */
 /* (used both for rejected and timed-out posts) */
 #define TXT_RETURNED_POST "Returned post for "
@@ -184,6 +187,10 @@
 #define ACTION_ACCEPT "accept-"
 #define ACTION_REJECT "reject-"
 
+/* actions for post confirmation/discard */
+#define ACTION_CONFIRM "confirm-"
+#define ACTION_DISCARD "discard-"
+ 
 /* ezmlm-manage actions */
 #define ACTION_LIST "list"
 #define ACTION_LISTN "listn"

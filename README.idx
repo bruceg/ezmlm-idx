@@ -68,6 +68,7 @@ ACKNOWLEDGEMENTS
 - Fred B. Ringel, first and foremost, for a great collaboration, ideas, testing,
   docs clarification. This makes it so much more fun.
 - Dan J. Bernstein for qmail, ezmlm, and great libraries.
+- Tullio Andreatta, for the confirm (-y option) patches.
 - Toshinori Maeno (TM; tmaeno@hpcl.titech.ac.jp) for finding an ezmlm-idx-0.20
   bug, and MIME suggestions, suggestions about hopcount and received headers,
   return-path header in archive, sublist loop detection, ezmlm-limit suggestion,

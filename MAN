@@ -14,6 +14,7 @@ c:::644:/man1/:ezmlm-make.1:
 c:::644:/man1/:ezmlm-mktab.1:
 c:::644:/man1/:ezmlm-manage.1:
 c:::644:/man1/:ezmlm-moderate.1:
+c:::644:/man1/:ezmlm-confirm.1:
 c:::644:/man1/:ezmlm-reject.1:
 c:::644:/man1/:ezmlm-request.1:
 c:::644:/man1/:ezmlm-return.1:
@@ -44,6 +45,7 @@ c:::644:/cat1/:ezmlm-make.0:
 c:::644:/cat1/:ezmlm-mktab.0:
 c:::644:/cat1/:ezmlm-manage.0:
 c:::644:/cat1/:ezmlm-moderate.0:
+c:::644:/cat1/:ezmlm-confirm.0:
 c:::644:/cat1/:ezmlm-request.0:
 c:::644:/cat1/:ezmlm-reject.0:
 c:::644:/cat1/:ezmlm-return.0:

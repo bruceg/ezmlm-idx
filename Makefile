@@ -333,6 +333,30 @@ qmail.h substdio.h readwrite.h seek.h quote.h datetime.h now.h cookie.h \
 date822fmt.h direntry.h fmt.h strerr.h errtxt.h idx.h sgetopt.h subgetopt.h
 	./compile ezmlm-clean.c
 
+ezmlm-confirm: \
+load ezmlm-confirm.o auto_qmail.o getconf.o auto_bin.o copy.o mime.a \
+cookie.o now.o datetime.o date822fmt.o slurpclose.o slurp.o qmail.o quote.o \
+surf.a getln.a env.a sig.a strerr.a substdio.a stralloc.a alloc.a wrap.a \
+error.a str.a fs.a case.a open.a seek.a wait.a lock.a fd.a getopt.a
+	./load ezmlm-confirm auto_qmail.o getconf.o copy.o mime.a \
+	cookie.o now.o datetime.o date822fmt.o slurpclose.o slurp.o \
+	qmail.o quote.o surf.a getln.a env.a sig.a wrap.a strerr.a \
+	substdio.a stralloc.a alloc.a error.a str.a fs.a case.a \
+	auto_bin.o open.a seek.a wait.a lock.a fd.a getopt.a
+
+ezmlm-confirm.0: \
+ezmlm-confirm.1
+	nroff -man ezmlm-confirm.1 > ezmlm-confirm.0
+
+ezmlm-confirm.o: \
+compile ezmlm-confirm.c error.h stralloc.h gen_alloc.h str.h \
+env.h sig.h slurp.h getconf.h strerr.h byte.h getln.h case.h \
+qmail.h substdio.h readwrite.h seek.h quote.h datetime.h now.h \
+date822fmt.h fmt.h strerr.h cookie.h errtxt.h idx.h copy.h mime.h \
+subgetopt.h sgetopt.h auto_bin.h fork.h wait.h
+	./compile ezmlm-confirm.c
+
+
 ezmlm-cron: \
 load ezmlm-cron.o strerr.a stralloc.a alloc.a error.a open.a auto_qmail.o \
 getopt.a getln.a str.a substdio.a sig.a fs.a open.a fd.a lock.a wait.a \
@@ -1103,7 +1127,7 @@ open.h byte.h case.h lock.h error.h subscribe.h strerr.h uint32.h fmt.h
 
 it: \
 ezmlm-idx ezmlm-accept ezmlm-archive ezmlm-check ezmlm-gate ezmlm-get \
-ezmlm-clean ezmlm-glconf ezmlm-moderate ezmlm-store ezmlm-tstdig \
+ezmlm-clean ezmlm-confirm ezmlm-glconf ezmlm-moderate ezmlm-store ezmlm-tstdig \
 ezmlm-make ezmlm-manage ezmlm-send ezmlm-reject ezmlm-return \
 ezmlm-warn ezmlm-weed ezmlm-list ezmlm-sub ezmlm-unsub ezmlm-cgi ezmlm-limit \
 ezmlm-issubn ezmlm-cron ezmlm-request ezmlm-test ezmlm-split ezmlmrc.all \

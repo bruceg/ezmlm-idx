@@ -37,6 +37,8 @@ ezmlm-check.1
 ezmlm-check.sh
 ezmlm-clean.1
 ezmlm-clean.c
+ezmlm-confirm.1
+ezmlm-confirm.c
 ezmlm-cron.1
 ezmlm-cron.c
 ezmlm-gate.1

@@ -37,6 +37,7 @@ int flagpublic = 1;		/* default anyone can post */
 int flagself = 0;		/* `modpost` mods approve own posts */
 				/* but mod/ is used for moderators */
 				/* of other posts. Def=no=0 */
+int flagconfirm = -1;           /* if true, sender must approve its own posts */
 char flagcd = '\0';		/* default: don't use quoted-printable */
 int flagbody = 1;		/* body of message enclosed with mod request */
 				/* 0 => headers only */
@@ -82,6 +83,7 @@ stralloc quoted = {0};
 stralloc key = {0};
 stralloc subject = {0};
 stralloc moderators = {0};
+stralloc confirmpost = {0};
 stralloc charset = {0};
 stralloc sendopt = {0};
 
@@ -166,7 +168,7 @@ char **argv;
   sig_pipeignore();
 
   if (!stralloc_copys(&sendopt," -")) die_nomem();
-  while ((opt = getopt(argc,argv,"bBcCmMpPrRsSvV")) != opteof)
+  while ((opt = getopt(argc,argv,"bBcCmMpPrRsSvVyY")) != opteof)
     switch(opt) {
       case 'b': flagbody = 1; break;
       case 'B': flagbody = 0; break;
@@ -176,6 +178,8 @@ char **argv;
       case 'P': flagpublic = 0; break;	/* only moderators can post */
       case 's': flagself = 1; break;	/* modpost and DIR/mod diff fxns */
       case 'S': flagself = 0; break;	/* same fxn */
+      case 'y': flagconfirm = 1; break; /* force post confirmation */
+      case 'Y': flagconfirm = 0; break; /* disable post confirmation */
       case 'c':				/* ezmlm-send flags */
       case 'C':
       case 'r':
@@ -202,9 +206,14 @@ char **argv;
   if (chdir(dir) == -1)
     strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
 
+  if (flagconfirm == -1)
+    flagconfirm = getconf_line(&confirmpost,"confirmpost",0,FATAL,dir);
+  else
+    getconf_line(&confirmpost,"confirmpost",0,FATAL,dir);
+
   flagmodpost = getconf_line(&moderators,"modpost",0,FATAL,dir);
   flagremote = getconf_line(&line,"remote",0,FATAL,dir);
-  if (!flagmodpost) {			/* not msg-mod. Pipe to ezmlm-send */
+  if (!flagmodpost && !flagconfirm) {	/* not msg-mod. Pipe to ezmlm-send */
     if ((child = wrap_fork(FATAL)) == 0)
       wrap_execbin("/ezmlm-send", &sendopt, dir, FATAL);
     /* parent */
@@ -244,7 +253,9 @@ char **argv;
   if (lock_ex(fdlock) == -1)
     strerr_die4sys(111,FATAL,ERR_OBTAIN,dir,"/mod/lock: ");
 
-  if (!stralloc_copys(&mydtline,"Delivered-To: moderator for ")) die_nomem();
+  if (!stralloc_copys(&mydtline, flagconfirm
+    ? "Delivered-To: confirm to "
+    : "Delivered-To: moderator for ")) die_nomem();
   if (!stralloc_catb(&mydtline,outlocal.s,outlocal.len)) die_nomem();
   if (!stralloc_append(&mydtline,"@")) die_nomem();
   if (!stralloc_catb(&mydtline,outhost.s,outhost.len)) die_nomem();
@@ -265,7 +276,7 @@ char **argv;
  for (i = 0;;++i)		/* got lock - nobody else can add files */
   {
    when = now();		/* when is also used later for date! */
-   if (!stralloc_copys(&fnmsg,"mod/pending/")) die_nomem();
+   if (!stralloc_copys(&fnmsg, flagconfirm?"mod/unconfirmed/":"mod/pending/")) die_nomem();
    if (!stralloc_copyb(&fnbase,strnum,fmt_ulong(strnum,when))) die_nomem();
    if (!stralloc_append(&fnbase,".")) die_nomem();
    if (!stralloc_catb(&fnbase,strnum,fmt_ulong(strnum,pid))) die_nomem();
@@ -279,7 +290,7 @@ char **argv;
   }
 
   if (!stralloc_copys(&action,"-")) die_nomem();
-  if (!stralloc_cats(&action,ACTION_REJECT)) die_nomem();
+  if (!stralloc_cats(&action,flagconfirm?ACTION_DISCARD:ACTION_REJECT)) die_nomem();
   if (!stralloc_cat(&action,&fnbase)) die_nomem();
   if (!stralloc_0(&action)) die_nomem();
   makehash(&action);
@@ -289,7 +300,7 @@ char **argv;
   if (!stralloc_0(&reject)) die_nomem();
 
   if (!stralloc_copys(&action,"-")) die_nomem();
-  if (!stralloc_cats(&action,ACTION_ACCEPT)) die_nomem();
+  if (!stralloc_cats(&action,flagconfirm?ACTION_CONFIRM:ACTION_ACCEPT)) die_nomem();
   if (!stralloc_cat(&action,&fnbase)) die_nomem();
   if (!stralloc_0(&action)) die_nomem();
   makehash(&action);
@@ -331,11 +342,18 @@ char **argv;
   qmail_puts(&qq,line.s);
 		/* "unique" MIME boundary as hash of messageid */
   cookie(boundary,"",0,"",line.s,"");
-  qmail_puts(&qq,">\nFrom: ");
-  qmail_puts(&qq,reject.s);
+  if (flagconfirm) {
+    qmail_puts(&qq,">\nFrom: ");
+    qmail_put(&qq,outlocal.s,outlocal.len);
+    qmail_puts(&qq,"-owner@");
+    qmail_put(&qq,outhost.s,outlocal.len);
+  } else {
+    qmail_puts(&qq,">\nFrom: ");
+    qmail_puts(&qq,reject.s);
+  }
   qmail_puts(&qq,"\nReply-To: ");
   qmail_puts(&qq,accept.s);
-  if (!pmod && flagremote) {	/* if remote admin add -allow- address */
+  if (!flagconfirm && !pmod && flagremote) {	/* if remote admin add -allow- address */
     qmail_puts(&qq,"\nCc: ");	/* for ezmlm-gate users */
     strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
     cookie(hash,key.s,key.len-FLD_ALLOW,strnum,sender,"t");
@@ -355,9 +373,25 @@ char **argv;
     qmail_puts(&qq,"@");
     qmail_put(&qq,outhost.s,outhost.len);
   }
-  qmail_puts(&qq,"\nTo: Recipient list not shown: ;");
+  if (flagconfirm) {
+    qmail_puts(&qq,"\nTo: <");
+    if (sender)
+      qmail_puts(&qq, sender);
+    qmail_puts(&qq,">");
+  } else {
+    qmail_puts(&qq,"\nTo: Recipient list not shown: ;");
+  }
   if (!stralloc_copys(&subject,"\nSubject: ")) die_nomem();
-  if (!stralloc_cats(&subject,TXT_MODERATE)) die_nomem();
+  if (flagconfirm) {
+    if (confirmpost.len) {
+      if (!stralloc_cat(&subject,&confirmpost)) die_nomem();
+      if (!stralloc_cats(&subject," ")) die_nomem();
+    } else {
+      if (!stralloc_cats(&subject,TXT_CONFIRM_POST)) die_nomem();
+    }
+  } else {
+    if (!stralloc_cats(&subject,TXT_MODERATE)) die_nomem();
+  }
   if (!quote(&quoted,&outlocal)) die_nomem();
   if (!stralloc_cat(&subject,&quoted)) die_nomem();
   if (!stralloc_append(&subject,"@")) die_nomem();
@@ -387,7 +421,7 @@ char **argv;
     qmail_put(&qq,subject.s,subject.len);
     qmail_puts(&qq,"\n\n");
   }
-  copy(&qq,"text/mod-request",flagcd,FATAL);
+  copy(&qq,flagconfirm?"text/post-confirm":"text/mod-request",flagcd,FATAL);
   if (flagcd == 'B') {
     encodeB("",0,&line,2,FATAL);
     qmail_put(&qq,line.s,line.len);
@@ -446,12 +480,18 @@ char **argv;
 
   close(fdlock);
 
-  if (!stralloc_copy(&line,&outlocal)) die_nomem();
-  if (!stralloc_cats(&line,"-return-@")) die_nomem();
-  if (!stralloc_cat(&line,&outhost)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
-  qmail_from(&qq,line.s);			/* envelope sender */
-  if (pmod)					/* to moderator only */
+  if (flagconfirm) {
+    qmail_from(&qq,reject.s);			/* envelope sender */
+  } else {
+    if (!stralloc_copy(&line,&outlocal)) die_nomem();
+    if (!stralloc_cats(&line,"-return-@")) die_nomem();
+    if (!stralloc_cat(&line,&outhost)) die_nomem();
+    if (!stralloc_0(&line)) die_nomem();
+    qmail_from(&qq,line.s);			/* envelope sender */
+  }
+  if (flagconfirm)				/* to sender */
+    qmail_to(&qq,sender);
+  else if (pmod)				/* to moderator only */
     qmail_to(&qq,pmod);
   else {
     if (flagself) {				/* to all moderators */

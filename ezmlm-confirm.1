@@ -1,0 +1,118 @@
+.TH ezmlm-confirm 1
+.SH NAME
+ezmlm-confirm \- process user actions for message
+confirm and discard
+.SH SYNOPSIS
+.B ezmlm-confirm [-cCrRvV]
+.I dir ['/path/program args']
+
+.SH DESCRIPTION
+.B ezmlm-confirm
+reads a mail message, expecting it to contain an
+.I -confirm
+or 
+.I -discard
+action request for the mailing list stored in
+.I dir.
+
+.B ezmlm-confirm
+verifies the cookie sent as part of the action request, and if correct
+attempts to find the corresponding message in
+.IR dir\fB/mod/unconfirmed/ .
+If the message is found, it is either discarded or posted to the list,
+depending on the action request.
+
+Posts to the list are handled by
+piping the message to
+.B ezmlm-send(1)
+located in the ezmlm binary directory, as set at compile time. This is
+usually the directory that ezmlm-moderate resides in.
+.B ezmlm-send(1)
+is provided with
+.I dir
+as the first argument.
+
+If the optional second argument is given,
+.B ezmlm-confirm
+pipes the message to that program, as executed by sh.
+No parameters are supplied.
+
+.I dir
+is passed as an argument to
+.BR ezmlm-send(1) ,
+but NOT to any program specified as the optional
+.B ezmlm-confirm
+command line argument.
+
+.B ezmlm-confirm
+does not bother to correctly set sender.
+.B ezmlm-send(1)
+doesn't care, and any other program that might be used can parse the
+sender from the first line of the message, which is always
+.I Return-Path: <address@host.domain>
+as build from SENDER originally passed to
+.BR ezmlm-store(1) .
+
+Once the message has been successfully accepted or discarded, it is removed from
+.IR dir\fB/mod/unconfirmed/ .
+
+If the message is not found in
+.IR dir\fB/mod/unconfirmed/ ,
+it has timed out and the message or
+the message stub has been removed by
+.BR ezmlm-clean(1) .
+In this case,
+.B ezmlm-confirm
+notifies the sender of the failure.
+Notification is in the form of a fatal error from qmail.
+
+At the beginning of the message,
+.B ezmlm-confirm
+prints a new
+.B Mailing-List
+field with the contents of
+.IR dir\fB/mailinglist .
+It rejects the message if there is already a
+.B Mailing-List
+field.
+
+.B ezmlm-confirm
+does not distribute bounce messages:
+if the environment variable
+.B SENDER
+is set, and is either empty or
+.BR #@[] ,
+.B ezmlm-confirm
+rejects the message.
+.SH OPTIONS
+.TP
+.B \-cCrR
+Passed on to ezmlm-send(1).
+.TP
+.TP
+.B \-v
+Display
+.B ezmlm-confirm
+version information.
+.TP
+.B \-V
+Display
+.B ezmlm-confirm
+version information.
+.SH "CHARACTER SETS"
+If
+.I dir\fB/charset
+exists,
+.B ezmlm-confirm
+will use the character set listed for all messages. Otherwise, the
+default ``us-ascii'' will be used. The character set can be suffixed
+by ``:'' followed by a code. If the code is ``Q'', outgoing messages are 
+sent as ``Quoted-Printable'', if it is ``B'' they are sent ``base64'' encoded.
+Otherwise, text is sent as is.
+.SH "SEE ALSO"
+ezmlm-moderate(1),
+ezmlm-clean(1),
+ezmlm-make(1),
+ezmlm-send(1),
+ezmlm-store(1),
+ezmlm(5)

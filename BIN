@@ -6,6 +6,7 @@ c:::755:/:ezmlm-glconf:
 c:::755:/:ezmlm-make:
 c:::755:/:ezmlm-mktab:
 c:::755:/:ezmlm-manage:
+c:::755:/:ezmlm-confirm:
 c:::755:/:ezmlm-send:
 c:::755:/:ezmlm-request:
 c:::755:/:ezmlm-reject:

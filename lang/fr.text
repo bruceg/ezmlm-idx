@@ -752,6 +752,7 @@ mod_sub             a l'abonne apres confirmation d'inscription du moderateur.
 mod_sub_confirm     aux moderateurs pour valider une inscription.
 mod_timeout         a l'expediteur d'un message non valide depuis longtemps.
 mod_unsub_confirm   a un administrateur pour demander une desinscription.
+post-confirm        a l'expediteur pour valider l'envois.
 sub_bad             a l'abonne si la confirmation etait mauvaise.
 sub_confirm         a l'abonne pour confirmer sa requete.
 sub_nop             a l'abonne apres une nouvelle inscription.

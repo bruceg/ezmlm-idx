@@ -29,6 +29,8 @@ If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
 =========================
+-Added per-post sender confirmation patch from Tullio Andreatta.
+ See the documentation for ezmlm-make -y for details.
 -Changed all example domain names in text files to the RFC 2606 mandated
  example.com domain name.
 -Several documentation and comment fixes.  Thanks Tullio Andreatta.

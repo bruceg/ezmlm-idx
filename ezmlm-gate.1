@@ -2,7 +2,7 @@
 .SH NAME
 ezmlm-gate \- Gate posts depending on message SENDER
 .SH SYNOPSIS
-.B ezmlm-gate [-0cCmMpPrRsSvV] [-q file]
+.B ezmlm-gate [-0cCmMpPrRsSvVyY] [-q file]
 .I dir [moddir1] [moddir2 ...]
 .SH DESCRIPTION
 .B ezmlm-gate
@@ -21,11 +21,10 @@ If not, the message is sent for moderation via
 The default is to send the message for moderation.
 .SH OPTIONS
 .TP
-.B \-cCmMpPQrRsS
-Passed on to ezmlm-store(1) and ezmlm-send(1).
-.TP
 .B \-cCrR
 Passed on to ezmlm-send(1).
+.B \-mMpPQsSyY
+Passed on to ezmlm-store(1) and ezmlm-send(1).
 .TP
 .B \-q\fI file
 Execute arbitration programs in

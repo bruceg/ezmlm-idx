@@ -68,6 +68,8 @@ ezmlm-check.0
 ezmlm-clean
 ezmlm-clean.0
 ezmlm-clean.o
+ezmlm-confirm
+ezmlm-confirm.o
 ezmlm-cron
 ezmlm-cron.0
 ezmlm-cron.o

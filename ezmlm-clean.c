@@ -35,7 +35,8 @@ char flagcd = '\0';		/* default: no transferencoding */
 stralloc fnmsg = {0};
 
 /* When ezmlm-clean is run, messages and message stubs in pending/      */
-/* rejected/accepted are erased if they are older than delay hours.     */
+/* rejected/accepted/unconfirmed are erased if they are older than      */
+/* delay hours.                                                         */
 /* Timeouts in h for messages. If modtime has a number, it is made to be*/
 /* in the range DELAY_MIN..DELAY_MAX. If the number is 0 or there is no */
 /* number, DELAY_DEFAULT is used. Messages that are read-only are       */
@@ -349,6 +350,7 @@ char **argv;
   dodir("mod/pending/",flagreturn);
   dodir("mod/accepted/",0);
   dodir("mod/rejected/",0);
+  dodir("mod/unconfirmed/",0);
   _exit(0);
 }
 

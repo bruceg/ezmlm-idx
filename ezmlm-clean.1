@@ -5,19 +5,12 @@ ezmlm-clean \- clean moderation directory
 .B ezmlm-clean [-mMrRvV]
 .I dir
 .SH DESCRIPTION
-If
-.I dir\fB/modpost
-exists,
 .B ezmlm-clean
-sends out messages for timed-out posts in the moderation directory
+sends out messages for timed-out posts in the moderation directory,
+removes timed-out messages awaiting confirm,
 and removes stubs for rejected and accepted posts
 for the mailing list stored in
 .IR dir .
-If
-.I dir\fB/modpost
-does not exist,
-.B ezmlm-clean
-does nothing and exits.
 
 .B ezmlm-clean
 reads
@@ -30,9 +23,11 @@ the range 24 h to 240 h.
 
 .B ezmlm-clean
 then looks through
-.I dir\fB/mod/accepted/
+.IR dir\fB/mod/accepted/ ,
+.IR dir\fB/mod/rejected/ ,
+.IR dir\fB/mod/unconfirmed/ ,
 and
-.I dir\fB/mod/rejected/
+.I dir\fB/mod/pending/
 and removes message stubs older than ``time''. ``Time'' is
 a minimum retention time. Since the files are processed only
 when
@@ -53,11 +48,22 @@ is run.
 
 For messages in
 .I dir\fB/mod/pending/
+and
+.IR dir\fB/mod/unconfirmed/ ,
 no action is taken on read-only files. Messages without the owner execute
 bit set are silently removed, as they are the result of incomplete
 .B ezmlm-store(1)
-executions. For other messages, a notification of the time out is sent
+executions.
+For other messages in
+.IR dir\fB/mod/pending/ ,
+a notification of the time out is sent
 to the sender, before the file is removed.
+Messages in
+.IR dir\fB/mod/unconfirmed/ ,
+.IR dir\fB/mod/accepted/ ,
+and
+.I dir\fB/mod/rejected/
+are silently removed.
 
 .B ezmlm-clean
 logs errors to the mail log.
@@ -111,6 +117,7 @@ by ``:'' followed by a code. If the code is ``Q'', outgoing messages are
 sent as ``Quoted-Printable'', if it is ``B'' they are sent ``base64'' encoded.
 Otherwise, text is sent as is.
 .SH "SEE ALSO"
+ezmlm-confirm(1),
 ezmlm-make(1),
 ezmlm-moderate(1),
 ezmlm-store(1),

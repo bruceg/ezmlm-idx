@@ -83,7 +83,7 @@ char **argv;
   if (!stralloc_copys(&storeopt,"-")) die_nomem();
 
   while ((opt = getopt(argc,argv,
-      "0cCmMpPq:Q:sSrRt:T:vV")) != opteof)
+      "0cCmMpPq:Q:sSrRt:T:vVyY")) != opteof)
     switch(opt) {	/* pass on unrecognized options */
       case 'c':			/* ezmlm-send flags */
       case 'C':
@@ -100,6 +100,8 @@ char **argv;
       case 'P':
       case 's':
       case 'S':
+      case 'y':
+      case 'Y':
         szchar[0] = opt;
         if (!stralloc_append(&storeopt,szchar)) die_nomem();
         break;

@@ -385,6 +385,30 @@ Grazie per il tuo aiuto!
 
 --- In allegato, per favore verifica il messaggio inviato.
 
+</text/post-confirm#E/>
+Sembra che tu abbia spedito il messaggio allegato alla mailing
+list <#L#>@<#H#> .
+Per impedire abusi della lista, tutti i mittenti devono confermare
+i loro messaggi. Se tu intendi confermare la distribuzione del tuo
+messaggio a tutti gli iscritti, scrivi all'indirizzo:
+
+!A
+
+Di solito, è sufficiente premere il bottone "rispondi a" e poi
+eventualmente controllare che l'indirizzo a cui va la risposta
+cominci con "<#L#>-confirm".
+Se non funziona, copia nel campo "A:" di un nuovo messaggio
+l'indirizzo.
+</#xE/>
+
+Oppure, clicca qui:
+      mailto:<#A#>
+</#E/>
+Se non intendi confermare la pubblicazione del messaggio,
+non occorre che tu faccia nulla.
+
+--- In allegato, per favore verifica il messaggio inviato.
+
 </text/mod-sub#E/>
 --- Ti ho iscritto o cancellato dietro richiesta del moderatore della mailing
 list  <#l#>@<#H#>.
@@ -696,6 +720,7 @@ mod_sub       agli iscritti dopo che il moderatore ha confermato l'iscrizione.
 mod_sub_confirm  ai moderatori per avere conferma delle iscrizioni.
 mod_timeout   al mittente del messaggio scaduto. 
 mod_unsub_confirm  all'amministratore remoto per chiedere conferma di cancellazione
+post-confirm  al mittente di un messaggio da confermare.
 sub_bad        all'iscritto se la richiesta di iscrizione è sbagliata.
 sub_confirm   all'iscritto per chiedere conferma dell'iscrizione.
 sub_nop       all'iscritto dopo una re-iscrizione.

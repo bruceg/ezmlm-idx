@@ -3,9 +3,62 @@
 ezmlm-store \- store messages posted to a moderated lists and send
 moderation requests to the moderator(s).
 .SH SYNOPSIS
-.B ezmlm-store [-bBcCmMpPrRsSvV]
+.B ezmlm-store [-bBcCmMpPrRsSvVyY]
 .I dir
 .SH DESCRIPTION
+.B ezmlm-store
+stores a main message sent to a ezmlm mailing list awaiting
+message moderation or user confirmation.
+
+If
+.I dir\fB/confirmpost
+exists and
+.B \-Y
+is not set, it work in user confirmation mode.
+If
+.I dir\fB/confirmpost
+does not exists and
+.B \-y
+is not set and
+.I dir\fB/modpost
+exists, it work in message moderation mode.
+Otherwise the message is passed on to
+.BR ezmlm-send(1) .
+
+.SH "USER CONFIRMATION"
+.B ezmlm-store
+reads a mail message and
+stores it in
+.IR dir\fB/mod/unconfirmed/ .
+.B ezmlm-store
+also sends a user confirmation request with a copy of the message to the
+envelope sender of the message.
+The confirm request includes cookies for message rejection and acceptance.
+
+The sender can take either action by replying to the appropriate address.
+For user convenience, the
+.I confirm
+address is given in
+the ``Reply-To:'' header.
+
+If the file
+.I dir\fb/confirmpost
+is not empty, the subject of all message confirmation request is
+the first line of that file, followed by
+.IR listname@host .
+Otherwise the subject of all message confirmation requests is
+.B Confirm post to
+.IR listname@host .
+
+Once the confirmation request has been successfully sent,
+.B ezmlm-store
+sets the owner-execute bit of the message in
+.IR dir\fB/mod/unconfirmed/ .
+Messages without this bit set are the result of incomplete executions of
+.B ezmlm-store
+and are ignored.
+
+.SH MODERATION
 .B ezmlm-store
 reads a mail message and
 stores it in
@@ -70,6 +123,7 @@ Messages without this bit set are the result of incomplete executions of
 .B ezmlm-store
 and are ignored.
 
+.SH "CONFIRMATION AND MODERATION MESSAGES"
 At the beginning of the message,
 .B ezmlm-store
 prints a new
@@ -107,6 +161,8 @@ Passed on to
 .B ezmlm-send(1)
 in case this program is executed. This happens only if
 .I dir\fB/modpost
+and
+.I dir\fB/confirmpost
 does not exist.
 .TP
 .B \-m
@@ -148,6 +204,18 @@ for approval. Posts from other addresses are bounced. This can be used
 to relatively securely restrict posts to messages originating from
 a given set of addresses.
 .TP
+.B \-y
+Run in post confirmation mode even if
+.IR dir\fB/confirmpost
+does not exists.
+.TP
+.B \-Y
+Ignore
+.IR dir\fB/confirmpost.
+(This option is useful if
+.B ezmlm-store
+is called after post confirmation, to allow message moderation.)
+.TP
 .B \-v
 Display
 .B ezmlm-store
@@ -164,7 +232,12 @@ will simply execute
 .B ezmlm-send(1)
 unless
 .I dir\fB/modpost
-exists.
+exists,
+.I dir\fB/confirmpost
+exists,
+or
+.B \-y
+option is specified.
 For the switches, use
 .B \-P
 for lists where only moderators can post securely, i.e. they are
@@ -204,6 +277,7 @@ sent as ``Quoted-Printable'', if it is '`B'' they are sent ``base64'' encoded.
 Otherwise, text is sent as is.
 .SH "SEE ALSO"
 ezmlm-clean(1),
+ezmlm-confirm(1),
 ezmlm-manage(1),
 ezmlm-make(1),
 ezmlm-moderate(1),
