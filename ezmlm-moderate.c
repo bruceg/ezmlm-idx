@@ -25,7 +25,6 @@
 #include "date822fmt.h"
 #include "fmt.h"
 #include "sgetopt.h"
-#include "auto_bin.h"
 #include "cookie.h"
 #include "errtxt.h"
 #include "copy.h"
@@ -549,25 +548,13 @@ char **argv;
     if (seek_begin(fd) == -1)	/* rewind, since we read an entire buffer */
       strerr_die4sys(111,FATAL,ERR_SEEK,fnmsg.s,": ");
 
-/* ##### NO REASON TO USE SH HERE ##### */
-        if (argc > optind) {
-          command = argv[optind];
-        } else {
-          if (!stralloc_copys(&send,auto_bin)) die_nomem();
-          if (!stralloc_cats(&send,"/ezmlm-send")) die_nomem();
-          if (sendopt.len > 2)
-            if (!stralloc_cat(&send,&sendopt)) die_nomem();
-          if (!stralloc_cats(&send," '")) die_nomem();
-          if (!stralloc_cats(&send,dir)) die_nomem();
-          if (!stralloc_cats(&send,"'")) die_nomem();
-          if (!stralloc_0(&send)) die_nomem();
-          command = send.s;
-        }
-
     if ((child = wrap_fork(FATAL)) == 0) {
       close(0);
       dup(fd);	/* make fnmsg.s stdin */
-      wrap_execsh(command, FATAL);
+      if (argc > optind)
+        wrap_execsh(argv[optind], FATAL);
+      else
+        wrap_execbin("/ezmlm-send", &sendopt, dir, FATAL);
     }
       /* parent */
       close(fd);

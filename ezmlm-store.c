@@ -15,7 +15,6 @@
 #include "str.h"
 #include "fmt.h"
 #include "readwrite.h"
-#include "auto_bin.h"
 #include "wait.h"
 #include "exit.h"
 #include "substdio.h"
@@ -206,16 +205,8 @@ char **argv;
   flagmodpost = getconf_line(&moderators,"modpost",0,FATAL,dir);
   flagremote = getconf_line(&line,"remote",0,FATAL,dir);
   if (!flagmodpost) {			/* not msg-mod. Pipe to ezmlm-send */
-    if (!stralloc_copys(&line,auto_bin)) die_nomem();
-    if (!stralloc_cats(&line,"/ezmlm-send")) die_nomem();
-    if (sendopt.len > 2)
-      if (!stralloc_cat(&line,&sendopt)) die_nomem();
-    if (!stralloc_cats(&line," '")) die_nomem();
-    if (!stralloc_cats(&line,dir)) die_nomem();
-    if (!stralloc_cats(&line,"'")) die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
     if ((child = wrap_fork(FATAL)) == 0)
-      wrap_execsh(line.s, FATAL);
+      wrap_execbin("/ezmlm-send", &sendopt, dir, FATAL);
     /* parent */
     wrap_exitcode(child, FATAL);
   }

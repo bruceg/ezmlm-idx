@@ -30,7 +30,6 @@ void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 stralloc line = {0};
 stralloc cmds = {0};
-stralloc send = {0};
 stralloc sendopt = {0};
 stralloc storeopt = {0};
 void *psql = (void *) 0;
@@ -73,13 +72,15 @@ char **argv;
   int ret = 0;
   int dontact = 0;
   unsigned int i,j,k;
+  const char *program;
+  stralloc *opts;
 
   umask(022);
   sig_pipeignore();
 	/* storeopts to ezmlm-store only. Others to both (ezmlm-store may */
 	/* pass them on to ezmlm-send. */
-  if (!stralloc_copys(&sendopt," -")) die_nomem();
-  if (!stralloc_copys(&storeopt," -")) die_nomem();
+  if (!stralloc_copys(&sendopt,"-")) die_nomem();
+  if (!stralloc_copys(&storeopt,"-")) die_nomem();
 
   while ((opt = getopt(argc,argv,
       "0cCmMpPq:Q:sSrRt:T:vV")) != opteof)
@@ -91,6 +92,7 @@ char **argv;
       case 'R':
         szchar[0] = opt;
         if (!stralloc_append(&sendopt,szchar)) die_nomem();
+        if (!stralloc_append(&storeopt,szchar)) die_nomem();
         break;
       case 'm':			/* ezmlm-store flags */
       case 'M':
@@ -147,32 +149,28 @@ char **argv;
     }
   }
 
-  if (!stralloc_copys(&send,auto_bin)) die_nomem();
   if (pmod) {
-    if (!stralloc_cats(&send,"/ezmlm-send")) die_nomem();
-    if (sendopt.len > 2)
-      if (!stralloc_cat(&send,&sendopt)) die_nomem();
-
-  } else {
-    if (!stralloc_cats(&send,"/ezmlm-store")) die_nomem();
-    if (storeopt.len > 2)
-      if (!stralloc_cat(&send,&storeopt)) die_nomem();
-    if (sendopt.len > 2)
-      if (!stralloc_cat(&send,&sendopt)) die_nomem();
+    program = "/ezmlm-send";
+    opts = &sendopt;
   }
-  if (!stralloc_cats(&send," '")) die_nomem();
-  if (!stralloc_cats(&send,dir)) die_nomem();
-  if (!stralloc_cats(&send,"'")) die_nomem();
-  if (!stralloc_0(&send)) die_nomem();
+  else {
+    program = "/ezmlm-store";
+    opts = &storeopt;
+  }
 
   if (dontact) {
-    substdio_puts(subfderr, send.s);
+    substdio_puts(subfderr, auto_bin);
+    substdio_puts(subfderr, program);
+    substdio_put(subfderr, " ", 1);
+    substdio_put(subfderr, opts->s, opts->len);
+    substdio_put(subfderr, " ", 1);
+    substdio_puts(subfderr, dir);
     substdio_putsflush(subfderr, "\n");
     return;
   }
 
   if ((child = wrap_fork(FATAL)) == 0)
-    wrap_execsh(send.s, FATAL);
+    wrap_execbin(program, opts, dir, FATAL);
   /* parent */
   wrap_exitcode(child, FATAL);
 }

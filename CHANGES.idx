@@ -33,6 +33,7 @@ in the next version.
 -Added conf-sub control file, used to choose which subscriber
  mechanism to use.  This replaces the "make std/mysql/pgsql" mechanism.
  Adapted from patch by Tullio Andreatta.
+-Got rid of the frivolous uses of /bin/sh to exec ezmlm-send.
 
 ezmlm-idx-0.421, 20040602
 =========================
