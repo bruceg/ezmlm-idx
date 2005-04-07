@@ -256,7 +256,6 @@ void main(argc,argv)
 int argc;
 char **argv;
 {
-  char *local;
   char *action;
   const char *ret;
   char *cp;
@@ -291,8 +290,6 @@ char **argv;
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
-  local = env_get("LOCAL");
-  if (!local) strerr_die2x(100,FATAL,ERR_NOLOCAL);
   action = env_get("DEFAULT");
   if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
