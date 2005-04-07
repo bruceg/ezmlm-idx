@@ -124,7 +124,7 @@ void main(int argc, char **argv)
   const char *def;
   const char *local;
   const char *action;
-  int fd, fdlock;
+  int fd;
   int match;
   char szchar[2] = "-";
   const char *replyto = (char *) 0;
