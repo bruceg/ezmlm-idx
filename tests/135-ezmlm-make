@@ -56,7 +56,7 @@ ${ECHO} "OK"
     ${ECHO} "|/${EZBIN}/ezmlm-return -d '${DIR}'" >> "${DIR}/digest/bouncer"
   fi
 
-  # remove inlocal - shouldn't be used
+  # remove inlocal/inhost - shouldn't be used
   ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
     { ${ECHO} "failed to remove inlocal/inhost for testlist"; exit 100; }
 

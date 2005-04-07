@@ -56,7 +56,7 @@ if [ ! -z "$1" -a ! -d "$1" ]; then
 fi
 
 # reset variables
-GET=''; DIGEST=''; FLAGARCH=''; FLAGIND=''; INLOCAL=''; INLOCALOK='' 
+GET=''; DIGEST=''; FLAGARCH=''; FLAGIND='';
 MANAGE=''; OUTLOCAL=''; OUTHOST=''; SPEC=''; SRESTRICT=''; STORE=''; REMOTE=''
 MODSUB=''; MODPOST=''; SPEC=''
 
@@ -98,26 +98,6 @@ MODSUB=''; MODPOST=''; SPEC=''
 	  if [ -e "$1/lockbounce" -a ! -w "$1/lockbounce" ]; then
 	    ${ECHO} "$EZERR User $USER does not have write premission to $1/lockbounce"
 	  fi
-	  if [ ! -r "$1/inlocal" ]; then
-	    ${ECHO} "$EZERR $1/inlocal does not exist"
-	  else
-	    INLOCAL=`${CAT} "$1/inlocal"| ${HEAD} -1`
-	    if [ -z "$HOST" ]; then
-	      ${ECHO} "$EZERR HOST is empty. Likely running from the command"
-	      ${ECHO} "    line. Run from $1/editor to check if LOCAL matches"
-	      ${ECHO} "    $1/inlocal."
-	      ${ECHO} "    Mismatches here are the most common setup error."
-	      ${ECHO}
-	    else
-	      if ${ECHO} "$LOCAL" | ${GREP} -G "^$INLOCAL" >/dev/null 2>&1
-              then
-	        ${ECHO} "... $1/inlocal OK"
-	      else
-	        ${ECHO} \
-		 "$EZERR LOCAL does not begin with contents of $1/inlocal"
-	      fi
-	    fi
-	  fi
 	  if [ ! -r "$1/outlocal" ]; then
 	    ${ECHO} "$EZERR $1/outlocal does not exist"
 	  else
@@ -129,43 +109,6 @@ MODSUB=''; MODPOST=''; SPEC=''
 	      OUTHOST=`${CAT} "$1/outhost"| ${HEAD} -1`
 	  fi
 	  ${ECHO} "... The list is named ${OUTLOCAL}@${OUTHOST}"
-	  if ${ECHO} "$INLOCAL" | ${GREP} "^${USER}" >/dev/null ; then
-	    USERSTART='1'; INLOCALOK='1'
-	  fi
-	  if [ -z "$USERSTART" ]; then
-	    ${ECHO}
-	    ${ECHO} "??? $1/inlocal does not start with the user name."
-	    ${ECHO} "    This is an error, unless $INLOCAL starts with"
-	    ${ECHO} "    an alias of \"$USER\"."
-	  fi
-	  if [ "$INLOCAL" = "$OUTLOCAL" ]; then
-	    ${ECHO} "... $1/inlocal matches $1/outlocal"
-	    ${ECHO} "    suggesting that this is a regular user-owned list."
-	    CHARS=`${ECHO} " $USER" | ${WC} -c`
-	    LIST=`${ECHO} "$OUTLOCAL" | cut -c$CHARS-`
-	  else
-	    if  ${ECHO} "$INLOCAL" | ${GREP} "$OUTLOCAL$" >/dev/null ; then
-	      if [ ! -z "$USERSTART" ]; then
-		${ECHO} "... It appears that $OUTHOST is a virtual domain"
-		${ECHO} "    controlled by $USER."
-		LIST="$OUTLOCAL"
-	        if [ ! -z "$HOSTMATCH" ]; then
-		  ${ECHO} "   This part of the setup appears correct."
-	        fi
-	      else
-	   	${ECHO}
-		${ECHO} "$EZWARN $1/inlocal ends with the contents"
-		${ECHO} "    of $1/outlocal, but does not start with"
-		${ECHO} "    $USER. If this message persists when you"
-		${ECHO} "    run this program from $1/editor,"
-		${ECHO} "    there is a setup error."
-	      fi
-	    else
-	      ${ECHO}
-	      ${ECHO} "$EZWARN $1/inlocal does not end with the contents"
-	      ${ECHO} "    of $1/outlocal. This is almost always wrong."
-	    fi
-          fi
 	  if [ ! -r "$1/editor" ]; then
 	      ${ECHO} "$EZERR $1/editor does not exist"
 	  else
@@ -287,7 +230,7 @@ MODSUB=''; MODPOST=''; SPEC=''
 	  ${ECHO} "    ~/.qmail-{list}-default -> $1/manager"
 	  ${ECHO} "    ~/.qmail-{list}-owner -> $1/owner"
 	  ${ECHO} "    ~/.qmail-{list}-return-default -> $1/bouncer"
-	  if [ ! -z "$LIST" -a ! -z "$INLOCALOK" ]; then
+	  if [ ! -z "$LIST" ]; then
 	    ${ECHO}
 	    ${ECHO} "    As far as I can see, '{list}' should be '$LIST'."
 	    ${ECHO} "    If so and if .qmail files should be in $HOME ..."
@@ -360,7 +303,7 @@ MODSUB=''; MODPOST=''; SPEC=''
 	    ${ECHO} "... links should be:"
 	    ${ECHO} "    ~/.qmail-{list}-digest-return-default -> $1/bouncer"
 	    ${ECHO} "    ~/.qmail-{list}-digest-owner -> $1/owner"
-	    if [ ! -z "$LIST" -a ! -z "$INLOCALOK" ]; then
+	    if [ ! -z "$LIST" ]; then
 	      ${ECHO}
 	      ${ECHO} "    As far as I can see, '{list}' should be '$LIST'."
 	      ${ECHO} "    If so and if .qmail files should be in $HOME ..."
@@ -571,7 +514,7 @@ MODSUB=''; MODPOST=''; SPEC=''
 	    ${ECHO} "    ~/.qmail-{list}-accept-default -> $1/moderator"
 	    ${ECHO} "    ~/.qmail-{list}-reject-default -> $1/moderator"
 	    ${ECHO}
-	    if [ ! -z "$LIST" -a ! -z "$INLOCALOK" ]; then
+	    if [ ! -z "$LIST" ]; then
 	      ${ECHO}
 	      ${ECHO} "    As far as I can see, '{list}' should be '$LIST'."
 	      ${ECHO} "    If so and if .qmail files should be in $HOME ..."

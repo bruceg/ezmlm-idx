@@ -807,22 +807,6 @@ and
 .B ezmlm-send
 to construct sender addresses for outgoing messages.
 
-The first line of
-.I dir\fB/inlocal
-gives the incoming name of the mailing list.
-This is used by
-.B ezmlm-manage
-to parse incoming envelopes.
-Normally
-.I inlocal
-is the same as
-.IR outlocal ,
-but sometimes it is different,
-with
-.I outlocal\fB@\fIouthost
-forwarded to
-.IR inlocal .
-
 If
 .I dir\fB/sublist
 exists,

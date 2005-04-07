@@ -20,8 +20,6 @@
 </ezdomo/>
 |<#B#>/ezmlm-request -f ezdomo.cf '<#D#>'
 # standard stuff
-</inlocal/>
-<#L#>
 </outlocal/>
 <#L#>
 </outhost/>

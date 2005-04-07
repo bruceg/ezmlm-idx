@@ -186,17 +186,6 @@ or other graphical user interface to use
 .B ezmlm-make
 to manipulate ezmlm list setups.
 .SH "VIRTUAL DOMAINS"
-For virtual domains,
-.B qmail(5)
-prefixes the name of the controlling user to the LOCAL part of the recipient
-address.
-.B ezmlm(5)
-needs to be informed of this in order to correctly interpret list commands.
-This is done by adjusting
-.IR dir\fB/inlocal .
-This adaptation is necessary only when ezmlm is used with qmail version 1.01
-or earlier.
-
 To create the list ``tl@virtual.dom'' where ``virtual.dom'' is controlled
 by ``vu'' (virtual.dom:vu), change identity to ``vu'' or chown files to
 that user after:
@@ -205,13 +194,7 @@ that user after:
 	ezmlm-make ~vu/dir ~vu/.qmail-tl tl virtual.dom
 .EE
 
-.EX
-	echo "vu-tl" > ~vu/inlocal
-.EE
-
-Thus, create the list exactly as for a list under ``alias'', but adjust
-.I dir\fB/inlocal
-to the list local name prefixed with the controlling user name.
+Thus, create the list exactly as for a list under ``alias''.
 .SH OPTIONS
 All
 .B ezmlm-make

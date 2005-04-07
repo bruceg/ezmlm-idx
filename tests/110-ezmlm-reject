@@ -123,7 +123,7 @@ SUBJECT='test'
 	${ECHO} "-q failed"; exit 100
   fi
 
-# for backwards-compatibility and since we don't know inlocal without
+# for backwards-compatibility and since we don't know outlocal without
 # dir, ezmlm-reject doesn't check To/Cc when there is no dir
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 		{ ${ECHO} "failed to accept bad To/Cc without dir"; \

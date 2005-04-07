@@ -64,8 +64,6 @@ C:<#C#>
 |<#B#>/ezmlm-return -d '<#D#>'
 </outhost/>
 <#H#>
-</inlocal/>
-<#L#>
 </outlocal/>
 <#L#>
 </mailinglist/>

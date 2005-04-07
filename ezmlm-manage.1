@@ -20,19 +20,17 @@ It reads a mail message from its standard input,
 and a mail envelope from the
 .BR SENDER ,
 .BR LOCAL ,
+.BR DEFAULT ,
 and
 .BR HOST
 environment variables.
 
 .B ezmlm-manage
 expects
-.B LOCAL
+.B DEFAULT
 to be of the form
-.IR list\fB-\fIaction\fB-\fIbox\fB=\fIdomain .
+.IR action\fB-\fIbox\fB=\fIdomain .
 Here
-.I list
-is the first line of
-.IR dir\fB/inlocal ,
 .I action
 is a request,
 and
@@ -42,17 +40,16 @@ is the target of the request.
 sends a response to the target.
 It attaches the original message to the end of its response.
 
-.B LOCAL
-may instead be of the form
-.IR list\fB-\fIaction .
+.B DEFAULT
+may instead be of the (simple) form
+.IR action .
 Then the envelope sender
 is used as the target.
 
 If
-.I list
-is the first line of
-.IR dir\fB/inlocal
-followed by ``-digest'', the request is assumed to be for the
+.I action
+starts with
+``digest'', the request is assumed to be for the
 associated digest list.
 .B ezmlm-manage
 handles these requests similarly, except that digest list subscriber addresses
@@ -62,9 +59,8 @@ rather than in
 .IR dir\fB/subscribers .
 
 If
-.I list
-.IR dir\fB/inlocal
-followed by ``-allow'', the request is assumed to be for the
+.I action
+starts with ``allow'', the request is assumed to be for the
 associated
 .I dir\fB/allow/
 database. This database is used to store aliases of subscribers for lists
@@ -82,9 +78,9 @@ database. However, the user can
 verify the change using the
 .I query
 action.
-The
-.I list\fB-deny
-addresses similarly controls
+If
+.I action
+starts with ``deny'', the command is applied simiparly to the
 .I dir\fB/deny/
 database for blocking posts with certain envelope senders.
 This database is available
