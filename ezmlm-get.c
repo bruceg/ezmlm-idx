@@ -60,11 +60,6 @@ void die_usage() {
 
 void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_badaddr()
-{
-  strerr_die2x(100,FATAL,ERR_BAD_ADDRESS);
-}
-
 stralloc outhost = {0};
 stralloc outlocal = {0};
 stralloc listname = {0};

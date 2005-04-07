@@ -52,11 +52,6 @@ void die_usage() {
 
 void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_badaddr()
-{
-  strerr_die2x(100,FATAL,ERR_BAD_ADDRESS);
-}
-
 void die_syntax()
 {
   strnum[fmt_ulong(strnum,lineno)] = '\0';

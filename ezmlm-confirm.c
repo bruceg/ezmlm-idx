@@ -50,8 +50,6 @@ void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 void die_badformat() { strerr_die2x(100,FATAL,ERR_BAD_REQUEST); }
 
-void die_badaddr() { strerr_die2x(100,FATAL,ERR_BAD_ADDRESS); }
-
 static stralloc outhost = {0};
 static stralloc outlocal = {0};
 static stralloc key = {0};

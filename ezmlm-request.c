@@ -47,11 +47,6 @@ void die_nomem()
   strerr_die2x(111,FATAL,ERR_NOMEM);
 }
 
-void die_badaddr()
-{
-  strerr_die2x(100,FATAL,ERR_BAD_ADDRESS);
-}
-
 char strnum[FMT_ULONG];
 
 char *userlocal = (char *) 0;
