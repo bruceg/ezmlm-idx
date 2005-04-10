@@ -1,6 +1,8 @@
 dependon \
 symlinks \
+ezmlm-accept \
 ezmlm-archive \
+ezmlm-check \
 ezmlm-cgi \
 ezmlm-clean \
 ezmlm-confirm \
@@ -8,6 +10,7 @@ ezmlm-cron \
 ezmlm-dispatch \
 ezmlm-gate \
 ezmlm-get \
+ezmlm-glconf \
 ezmlm-idx \
 ezmlm-issubn \
 ezmlm-limit \

@@ -41,6 +41,9 @@ error.0 \
 error_str.0 \
 error_temp.0 \
 ezmlm.0 \
+ezmlmglrc.0 \
+ezmlmsubrc.0 \
+ezmlmrc.0 \
 fd_copy.0 \
 fd_move.0 \
 getln.0 \
