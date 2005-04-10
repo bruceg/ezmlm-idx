@@ -29,7 +29,11 @@ formake() {
 }
 
 nosuchtarget() {
-    error "No such target: $target";
+    if [ -e "$target" ]; then
+	echo "$target" >>$S
+    else
+	error "No such target: $target"
+    fi
 }
 
 directtarget() {
@@ -54,13 +58,9 @@ target() {
     if [ -e $t/$target.deps ]; then
     	return
     fi
-    if [ -e $target ]; then
-	echo $target >>$S
-	return
-    fi
-    echo $target >>$T
     #c target: $target
-    tmp=$target.tmp.$$
+    starget=`echo $target | tr / :`
+    tmp=$starget.tmp.$$
     (
 	ext=${target##*.}
 	base=${target%%.*}
@@ -71,7 +71,7 @@ target() {
 	else
 	    . default.do $target $base $tmp
 	fi
-    ) 3>$t/$target.deps 4>$t/$target.cmds
+    ) 3>$t/$starget.deps 4>$t/$starget.cmds
 #    if [ -s $tmp ]; then
 #	mv -f $tmp $target
 #    else
@@ -100,14 +100,16 @@ EOF
 	    echo "$target: \\"
 	    echo `uniq $deps`
 	    cat $cmds
+	    echo $target >&2
 	fi
 	rm -f $deps $cmds
     done
-) >Makefile
+) >Makefile 2>$T
 
 echo SOURCES >>$S
+echo Makefile >>$S
 sort -u $S >SOURCES
-sort -u $T >TARGETS
+sort -u $T | fgrep -vxf SOURCES >TARGETS
 rm -f $S $T
 
 echo "done."
