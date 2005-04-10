@@ -1,9 +1,11 @@
 #!/bin/sh
 #$Id$
 
-t=Makefile.targets
-trap 'rm -fv *.tmp.$$; rm -r $t' EXIT
-rm -rf $t
+t=makemake.targets
+T=makemake.TARGETS
+S=makemake.SOURCES
+trap 'rm -fv *.tmp.$$ $T $S; rm -r $t' EXIT
+rm -rf $t $T $S
 mkdir -p $t
 rm -f `cat TARGETS`
 
@@ -49,9 +51,14 @@ depend() {
 
 target() {
     target=$1
-    if [ -e $target -o -e $t/$target.deps ]; then
+    if [ -e $t/$target.deps ]; then
+    	return
+    fi
+    if [ -e $target ]; then
+	echo $target >>$S
 	return
     fi
+    echo $target >>$T
     #c target: $target
     tmp=$target.tmp.$$
     (
@@ -97,5 +104,10 @@ EOF
 	rm -f $deps $cmds
     done
 ) >Makefile
+
+echo SOURCES >>$S
+sort -u $S >SOURCES
+sort -u $T >TARGETS
+rm -f $S $T
 
 echo "done."
