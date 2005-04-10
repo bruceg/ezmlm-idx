@@ -7,3 +7,4 @@ stralloc_cat.o
 stralloc_cats.o
 stralloc_catb.o 
 stralloc_arts.o
+stralloc_num.o
