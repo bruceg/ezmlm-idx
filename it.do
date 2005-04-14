@@ -29,5 +29,6 @@ ezmlm-tstdig \
 ezmlm-unsub \
 ezmlm-warn \
 ezmlm-weed \
+ezmlm-test \
 ezmlmrc.all \
 ezmlmrc
