@@ -51,6 +51,9 @@ fgrep -vxf REPLACED FILES \
 echo "Generating ChangeLog"
 svn log --verbose file:///home/subversion/repos/ezmlm-idx >$base/ChangeLog
 
+echo "Generating FILES.idx"
+( cd $base && find * -type f >FILES.idx )
+
 echo "Creating final tarball"
 tar -czf $base.tar.gz $base
 chmod 444 $base.tar.gz
