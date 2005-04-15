@@ -28,6 +28,9 @@ cn_GB,cs,pl,ru,da,pt
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
+=========================
+-Fixed lack of quoting in PgSQL subscribe code.  Thanks Dan O'Neill.
+
 ezmlm-idx-0.440, 20050415
 =========================
 -Wrote a script to automatically generate the Makefile and TARGETS.
@@ -38,7 +41,6 @@ ezmlm-idx-0.440, 20050415
 -Removed all references to "inhost" and "inlocal" which were completely
  unused but still referenced in documentation and tests.
 
->>>>>>> .merge-right.r253
 ezmlm-idx-0.435, 20050308
 =========================
 -Fixed string realocation bug in ezmlm-manage.  Thanks Tom Moertel.

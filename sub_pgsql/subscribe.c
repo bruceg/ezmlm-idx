@@ -28,6 +28,7 @@ static stralloc lcaddr = {0};
 static stralloc line = {0};
 static stralloc domain = {0};
 static stralloc logline = {0};
+static stralloc quoted = {0};
 static stralloc fnnew = {0};
 static stralloc fn = {0};
 static stralloc fnlock = {0};
@@ -253,6 +254,16 @@ int subscribe(const char *dbname,
     cpat = addr.s + j;
     case_lowerb(cpat + 1,addr.len - j - 1);
 
+    if (!stralloc_ready(&quoted,2 * addr.len + 1)) die_nomem();
+    quoted.len = PQescapeString(quoted.s,addr.s,addr.len);
+	/* stored unescaped, so it should be ok if quoted.len is >255, as */
+	/* long as addr.len is not */
+
+    if (!stralloc_ready(&quoted,2 * addr.len + 1)) die_nomem();
+    quoted.len = PQescapeString(quoted.s,addr.s,addr.len);
+	/* stored unescaped, so it should be ok if quoted.len is >255, as */
+	/* long as addr.len is not */
+
     if (forcehash < 0) {
       if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
       case_lowerb(lcaddr.s,j);		/* make all-lc version of address */
@@ -271,7 +282,7 @@ int subscribe(const char *dbname,
       if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
       if (!stralloc_cats(&line,table)) die_nomem();
       if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
-      if (!stralloc_cat(&line,&addr)) die_nomem();	/* addr */
+      if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
       if (!stralloc_cats(&line,"$'")) die_nomem();
       if (!stralloc_0(&line)) die_nomem();
       result = PQexec(pgsql,line.s);
@@ -289,7 +300,7 @@ int subscribe(const char *dbname,
 	if (!stralloc_cats(&line,table)) die_nomem();
 	if (!stralloc_cats(&line," (address,hash) VALUES ('"))
 		die_nomem();
-	if (!stralloc_cat(&line,&addr)) die_nomem();	/* addr */
+	if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
 	if (!stralloc_cats(&line,"',")) die_nomem();
 	if (!stralloc_cats(&line,szhash)) die_nomem();	/* hash */
 	if (!stralloc_cats(&line,")")) die_nomem();
@@ -304,7 +315,7 @@ int subscribe(const char *dbname,
       if (!stralloc_copys(&line,"DELETE FROM ")) die_nomem();
       if (!stralloc_cats(&line,table)) die_nomem();
       if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
-      if (!stralloc_cat(&line,&addr)) die_nomem();	/* addr */
+      if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
       if (forcehash >= 0) {
 	if (!stralloc_cats(&line,"$' AND hash=")) die_nomem();
 	if (!stralloc_cats(&line,szhash)) die_nomem();
@@ -332,7 +343,7 @@ int subscribe(const char *dbname,
     if (!stralloc_cats(&logline,table)) die_nomem();
     if (!stralloc_cats(&logline,
 	"_slog (address,edir,etype,fromline) VALUES ('")) die_nomem();
-    if (!stralloc_cat(&logline,&addr)) die_nomem();
+    if (!stralloc_cat(&logline,&quoted)) die_nomem();
     if (flagadd) {						/* edir */
       if (!stralloc_cats(&logline,"','+','")) die_nomem();
     } else {
@@ -342,7 +353,10 @@ int subscribe(const char *dbname,
       if (!stralloc_catb(&logline,event+1,1)) die_nomem();	/* etype */
     if (!stralloc_cats(&logline,"','")) die_nomem();
     if (comment && *comment) {
-      if (!stralloc_cats(&logline,comment)) die_nomem();
+      j = str_len(comment);
+      if (!stralloc_ready(&quoted,2 * j + 1)) die_nomem();
+      quoted.len = PQescapeString(quoted.s,comment,j); /* from */
+      if (!stralloc_cat(&logline,&quoted)) die_nomem();
     }
     if (!stralloc_cats(&logline,"')")) die_nomem();
 
