@@ -1,0 +1,57 @@
+#!/bin/bash
+set -e
+
+if ! [ -s CHANGES.idx -a -s README.idx -a -s VERSION ]; then
+  echo "Run this script from in the ezmlm-idx source directory."
+  exit 1
+fi
+
+version=`sed -e 's/^ezmlm-idx-//' -e q VERSION`
+base=ezmlm-idx-$version
+
+if ! grep -q "^${base}, " CHANGES.idx; then
+  echo "$0: CHANGES.idx is missing release stamp."
+  exit 1
+fi
+
+if ! grep -q " ${base}, " HISTORY; then
+  echo "$0: HISTORY is missing release stamp."
+  exit 1
+fi
+
+if [ `svn diff | wc -c` -gt 0 ]; then
+  echo "$0: uncommitted changes exist."
+  exit 1
+fi
+
+if [ `head -n 1 conf-sub` != std ]; then
+  echo "$0: Please put 'std' into the conf-sub file"
+  exit 1
+fi
+
+sh makemake.sh
+
+echo "Building the idx.patch"
+sh makepatch.sh
+
+echo "Setting up the temporary directory"
+trap 'rm -r $base' EXIT
+mkdir $base
+cp --parents `cat SOURCES EXTRADIST` sub_*/* $base/
+mv idx.patch $base/
+chmod -R +r $base
+
+#echo "Building symlinks"
+#make -C $base symlinks
+
+echo "Removing ezmlm-0.53 sources"
+fgrep -vxf REPLACED FILES \
+| ( cd $base && xargs rm -f; )
+
+echo "Generating ChangeLog"
+svn log --verbose file:///home/subversion/repos/ezmlm-idx >$base/ChangeLog
+
+echo "Creating final tarball"
+tar -czf $base.tar.gz $base
+chmod 444 $base.tar.gz
+ls -l $base.tar.gz
