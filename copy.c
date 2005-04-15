@@ -195,7 +195,7 @@ void copy(struct qmail *qqp,
 
       /* Last line is missing its trailing newline, add one on output. */
       if (!match)
-	codeput("\n",1,q,fatal);
+	codeput("\n",1,q);
     } else
       break;
   }
