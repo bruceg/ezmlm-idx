@@ -31,12 +31,14 @@ in the next version.
 ezmlm-idx-0.440, 20050415
 =========================
 -Wrote a script to automatically generate the Makefile and TARGETS.
+-Fixed a problem with handling text files with no final newline.
 -Added a new program, ezmlm-dispatch, to be run from a global
  .qmail-default file
 -Removed support for qmail older than version 1.02.
 -Removed all references to "inhost" and "inlocal" which were completely
  unused but still referenced in documentation and tests.
 
+>>>>>>> .merge-right.r253
 ezmlm-idx-0.435, 20050308
 =========================
 -Fixed string realocation bug in ezmlm-manage.  Thanks Tom Moertel.

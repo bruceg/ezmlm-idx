@@ -119,7 +119,8 @@ void copy(struct qmail *qqp,
   for (;;) {
     if (getln(&sstext,&line,&match,'\n') == -1)
       strerr_die4sys(111,FATAL,ERR_READ,fn,": ");
-    if (match) {	/* suppress blank line for 'H'eader mode */
+    if (line.len > 0) {		/* line.len is always > 0 if match is true */
+      /* suppress blank line for 'H'eader mode */
       if (line.len == 1 && q == 'H') continue;
       if (line.s[0] == '!') {
 	if (line.s[1] == 'R') {
@@ -192,6 +193,9 @@ void copy(struct qmail *qqp,
         codeput(outline.s,outline.len,q);
       }
 
+      /* Last line is missing its trailing newline, add one on output. */
+      if (!match)
+	codeput("\n",1,q,fatal);
     } else
       break;
   }
