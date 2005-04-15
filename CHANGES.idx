@@ -28,12 +28,14 @@ cn_GB,cs,pl,ru,da,pt
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
+ezmlm-idx-0.440, 20050415
 =========================
+-Wrote a script to automatically generate the Makefile and TARGETS.
 -Added a new program, ezmlm-dispatch, to be run from a global
  .qmail-default file
 -Removed support for qmail older than version 1.02.
--Removed all references to "inhost" which was completely unused but
- still referenced in documentation and tests.
+-Removed all references to "inhost" and "inlocal" which were completely
+ unused but still referenced in documentation and tests.
 
 ezmlm-idx-0.435, 20050308
 =========================
