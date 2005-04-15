@@ -29,10 +29,10 @@ if [ `head -n 1 conf-sub` != std ]; then
   exit 1
 fi
 
-sh makemake.sh
+tools/makemake
 
 echo "Building the idx.patch"
-sh makepatch.sh
+tools/makepatch
 
 echo "Setting up the temporary directory"
 trap 'rm -r $base' EXIT
