@@ -57,6 +57,7 @@ getconf.c
 log.h
 log.c
 issub.c
+issub.h
 subscribe.h
 subscribe.c
 cookie.h
