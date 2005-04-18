@@ -5,7 +5,7 @@ ezmlm-reject \- reject messages unsuitable for distribution
 .SH SYNOPSIS
 .B ezmlm-reject
 [
-.B \-bBcChHqQsStT
+.B \-bBcChFfHqQsStT
 ][
 .I dir
 ]
@@ -83,6 +83,16 @@ is rejected.
 .TP
 .B \-C
 Commands are permitted in the subject line.
+.TP
+.B \-f
+Forward all messages having a command as the subject line to the list's
+-request address for processing.  This is only effective if
+.B \-c
+is also set.
+.TP
+.B \-F
+(Default.)
+Do not forward command messages.
 .TP
 .B \-h
 Reject message if any of the headers in

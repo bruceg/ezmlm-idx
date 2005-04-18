@@ -1,6 +1,5 @@
 Fix email addresses in INSTALL.idx
 add ezmlm-receipt to build system (needs to be fixed to compile)
-ezmlm-reject.1 does not document -[fF]
 fix manual subscriptions to mod/allow/deny/digest when using SQL
 break down the ezmlmrc language parts into individual files
 add support for simultaneous multiple languages
