@@ -125,19 +125,19 @@ char textbuf[512];
 substdio ssfrom;	/* writing "from" */
 char frombuf[512];
 
-int fdlock;
+static int fdlock;
 
-void lock()
+void lock(void)
 {
     fdlock = lockfile("lock");
 }
 
-void unlock()
+void unlock(void)
 {
     close(fdlock);
 }
 
-void make_verptarget()
+void make_verptarget(void)
 /* puts target with '=' instead of last '@' into stralloc verptarget */
 /* and does set_cpverptarget */
 {
@@ -153,12 +153,11 @@ void make_verptarget()
   set_cpverptarget(verptarget.s);
 }
 
-void store_from(frl,adr)
+void store_from(stralloc *frl,	/* from line */
+		const char *adr)
 /* rewrites the from file removing all that is older than 1000000 secs  */
 /* and add the curent from line (frl). Forget it if there is none there.*/
 /* NOTE: This is used only for subscribes to moderated lists!           */
-stralloc *frl;	/* from line */
-char *adr;
 {
   int fdin;
   int fdout;
@@ -204,7 +203,8 @@ char *adr;
   unlock();
 }
 
-char *get_from(adr,act)
+const char *get_from(const char *adr, /* target address */
+		     const char *act) /* action */
 /* If we captured a from line, it will be from the subscriber, except   */
 /* when -S is used when it's usually from the subscriber, but of course */
 /* could be from anyone. The matching to stored data is required only   */
@@ -215,12 +215,9 @@ char *get_from(adr,act)
 /* itself. act + 3 must be a legal part of the string returns pointer to*/
 /* fromline, NULL if not found. Since the execution time from when to   */
 /* storage may differ, we can't assume that the timestamps are in order.*/
-
-char *adr;		/* target address */
-char *act;		/* action */
 {
   int fd;
-  char *fl;
+  const char *fl;
   unsigned int pos;
   unsigned long thistime;
   unsigned long linetime;
@@ -258,11 +255,9 @@ char *act;		/* action */
   return fl;
 }
 
-int hashok(action,ac)
-char *action;
-char *ac;
+int hashok(const char *action,const char *ac)
 {
-  char *x;
+  const char *x;
   datetime_sec u;
 
   x = action + 3;
@@ -281,7 +276,7 @@ char *ac;
 }
 
 struct qmail qq;
-int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
+int qqwrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return len;
@@ -290,9 +285,7 @@ int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
 char qqbuf[1];
 substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,(int) sizeof(qqbuf));
 
-int code_qput(s,n)
-char *s;
-unsigned int n;
+int code_qput(const char *s,unsigned int n)
 {
     if (!flagcd)
       qmail_put(&qq,s,n);
@@ -306,9 +299,7 @@ unsigned int n;
     return 0;		/* always succeeds */
 }
 
-int subto(s,l)
-char *s;
-unsigned int l;
+int subto(const char *s,unsigned int l)
 {
   qmail_put(&qq,"T",1);
   qmail_put(&qq,s,l);
@@ -316,23 +307,20 @@ unsigned int l;
   return (int) l;
 }
 
-int code_subto(s,l)
-char *s;
-unsigned int l;
+int code_subto(const char *s,unsigned int l)
 {
   code_qput(s,l);
   code_qput("\n",1);
   return (int) l;
 }
 
-int dummy_to(s,l)
-char *s;	/* ignored */
-unsigned int l;
+int dummy_to(const char *s,	/* ignored */
+	     unsigned int l)
 {
   return (int) l;
 }
 
-void to_owner()
+void to_owner(void)
 {
 	if (!stralloc_copy(&owner,&outlocal)) die_nomem();
 	if (!stralloc_cats(&owner,"-owner@")) die_nomem();
@@ -341,7 +329,7 @@ void to_owner()
 	qmail_to(&qq,owner.s);
 }
 
-void mod_bottom()
+void mod_bottom(void)
 {
       copy(&qq,"text/mod-sub",flagcd);
       copy(&qq,"text/bottom",flagcd);
@@ -354,8 +342,9 @@ void mod_bottom()
       }
       qmail_from(&qq,from.s);
 }
-void msg_headers()
-		/* Writes all the headers up to but not including subject */
+
+void msg_headers(void)
+/* Writes all the headers up to but not including subject */
 {
   int flaggoodfield;
   int flagfromline;
@@ -437,10 +426,9 @@ void msg_headers()
   hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
 }
 
-int geton(action)
-char *action;
+int geton(const char *action)
 {
-  char *fl;
+  const char *fl;
   int r;
   unsigned int i;
   unsigned char ch;
@@ -519,10 +507,10 @@ char *action;
   return r;
 }
 
-void doconfirm(act)
+void doconfirm(const char *act)
 /* This should only be called with valid act for sub/unsub confirms. If act */
 /* is not ACTION_SC or ACTION_TC, it is assumed to be an unsubscribe conf.*/
-char *act;	/* first letter of desired confirm request only as STRING! */
+/* "act" is the first letter of desired confirm request only as STRING! */
 {
   strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
   cookie(hash,key.s,key.len-flagdig,strnum,target.s,act);
@@ -553,12 +541,12 @@ char *act;	/* first letter of desired confirm request only as STRING! */
     copy(&qq,"text/top",flagcd);
 }
 
-void sendtomods()
+void sendtomods(void)
 {
   putsubs(moddir.s,0L,52L,subto,1);
 }
 
-void copybottom()
+void copybottom(void)
 {
   if (flagbottom || act == AC_HELP) {
     copy(&qq,"text/bottom",flagcd);
@@ -592,13 +580,11 @@ void copybottom()
   qmail_from(&qq,from.s);
 }
 
-int main(argc,argv)
-int argc;
-char **argv;
+int main(int argc,char **argv)
 {
   char *action;
   char *x, *y;
-  char *fname;
+  const char *fname;
   const char *pmod;
   const char *err;
   char *cp,*cpfirst,*cplast,*cpnext,*cpafter;
