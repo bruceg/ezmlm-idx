@@ -43,11 +43,11 @@ int flaglog = 1;		/* for lists with mysql support, use tags */
 				/* and log traffic to the database */
 const char FATAL[] = "ezmlm-send: fatal: ";
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-send: usage: ezmlm-send [-cClLqQrR] [-h header] dir");
 }
-void die_nomem()
+void die_nomem(void)
 {
   strerr_die2x(111,FATAL,ERR_NOMEM);
 }
@@ -79,7 +79,7 @@ stralloc dcprefix = {0};
 stralloc dummy = {0};
 stralloc qmqpservers = {0};
 
-void die_indexn()
+void die_indexn(void)
 {
   strerr_die4x(111,FATAL,ERR_WRITE,fnifn.s,": ");
 }
@@ -129,18 +129,13 @@ char outbuf[1];
 char textbuf[512];
 substdio sstext;
 
-unsigned int mywrite(fd,buf,len)
-int fd;
-char *buf;
-unsigned int len;
+unsigned int mywrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return len;
 }
 
-int subto(s,l)
-char *s;
-unsigned int l;
+int subto(const char *s,unsigned int l)
 {
   qmail_put(&qq,"T",1);
   qmail_put(&qq,s,l);
@@ -148,31 +143,30 @@ unsigned int l;
   return (int) l;
 }
 
-void die_archive()
+void die_archive(void)
 {
   strerr_die4sys(111,FATAL,ERR_WRITE,fnaf.s,": ");
 }
-void die_numnew()
+void die_numnew(void)
 {
   strerr_die3sys(111,FATAL,ERR_CREATE,"numnew: ");
 }
 
-void qa_put(buf,len) char *buf; unsigned int len;
+void qa_put(const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   if (flagarchived)
     if (substdio_put(&ssarchive,buf,len) == -1) die_archive();
 }
 
-void qa_puts(buf) char *buf;
+void qa_puts(const char *buf)
 {
   qmail_puts(&qq,buf);
   if (flagarchived)
     if (substdio_puts(&ssarchive,buf) == -1) die_archive();
 }
 
-int sublistmatch(sender)
-char *sender;
+int sublistmatch(const char *sender)
 {
   unsigned int i;
   unsigned int j;
@@ -193,7 +187,7 @@ char *sender;
 substdio ssnumnew;
 char numnewbuf[16];
 
-void numwrite()
+void numwrite(void)
 {		/* this one deals with msgnum, not outnum! */
   int fd;
 
@@ -216,7 +210,7 @@ void numwrite()
 
 stralloc mydtline = {0};
 
-int idx_copy_insertsubject()
+int idx_copy_insertsubject(void)
 /* copies old index file up to but not including msg, then adds a line with */
 /* 'sub' trimmed of reply indicators, then closes the new index and moves it*/
 /* to the name 'index'. Errors are dealt with directly, and if the routine  */
@@ -325,7 +319,7 @@ int idx_copy_insertsubject()
   return r;
 }
 
-void getcharset()
+void getcharset(void)
 {
     if (getconf_line(&charset,"charset",0,dir)) {
       if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
@@ -341,9 +335,7 @@ void getcharset()
     if (!stralloc_0(&charset)) die_nomem();
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   unsigned long subs;
   int fdlock;

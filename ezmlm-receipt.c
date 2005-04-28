@@ -29,18 +29,18 @@
 const char FATAL[] = "ezmlm-receipt: fatal: ";
 #define INFO "ezmlm-receipt: info: "
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-receipt: usage: ezmlm-receipt [-dD] dir");
 }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_badaddr()
+void die_badaddr(void)
 {
   strerr_die2x(100,FATAL,ERR_BAD_ADDRESS);
 }
-void die_trash()
+void die_trash(void)
 {
   strerr_die2x(0,INFO,"trash address");
 }
@@ -61,9 +61,9 @@ stralloc fndate = {0};
 stralloc fndir = {0};
 stralloc fndatenew = {0};
 
-void die_datenew()
+void die_datenew(void)
 { strerr_die4sys(111,FATAL,ERR_WRITE,fndatenew.s,": "); }
-void die_msgin()
+void die_msgin(void)
 { strerr_die2sys(111,FATAL,ERR_READ_INPUT); }
 
 char strnum[FMT_ULONG];
@@ -82,16 +82,13 @@ char *workdir;
 stralloc listno = {0};
 
 
-void doit(addr,msgnum,when,bounce)
+void doit(const char *addr,unsigned long msgnum,unsigned long when,
+	  const stralloc *bounce)
 /* Just stores address\0nsgnum\0 followed by bounce. File name is          */
 /* dttt.ppp[.n], where 'ttt' is a time stamp, 'ppp' the pid, and 'n' the   */
 /* number when there are more than 1 addresses in a pre-VERP bounce. In    */
 /* this case, the first one is just dttt.ppp, the decond dttt.ppp.2, etc.  */
 /* For a main list, bounces come from sublists. They are rare and serious. */
-char *addr;
-unsigned long msgnum;
-unsigned long when;
-stralloc *bounce;
 {
   int fd;
   unsigned int pos;
@@ -157,9 +154,7 @@ stralloc *bounce;
     strerr_die6sys(111,FATAL,ERR_MOVE,fndatenew.s," to ",fndate.s,": ");
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *local;
   char *host;

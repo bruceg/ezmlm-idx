@@ -49,18 +49,16 @@ struct ca {
   unsigned int l;	/* length */
 } ca;
 
-void die_usage() {
+void die_usage(void) {
   strerr_die1x(100,
     "ezmlm-archive: usage: "
 	"ezmlm-archive [-cCFsSTvV] [-f min_msg] [-t max_msg] dir");
 }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void close_proper(ss,s,sn)
+void close_proper(substdio *ss,const char *s,const char *sn)
 /* flush,sync,close,move sn->s) */
-substdio *ss;
-char *s, *sn;
 {
    if (substdio_flush(ss) == -1)
      strerr_die6sys(111,FATAL,ERR_FLUSH,dir,"/",s,": ");
@@ -73,18 +71,19 @@ char *s, *sn;
      strerr_die6sys(111,FATAL,ERR_MOVE,dir,"/",sn,": ");
 }
 
-void write_threads(msgtable,subtable,authtable,datetable,from,to)
+void write_threads(const msgentry *msgtable,
+		   subentry *subtable,
+		   const authentry *authtable,
+		   const dateentry *datetable,
+		   unsigned long from,unsigned long to)
 /* Add the current threading data to the thread database without dups */
 /* Writes the subject index first, then processes the individual files */
-msgentry *msgtable; subentry *subtable; authentry *authtable;
-dateentry *datetable;
-unsigned long from,to;
 {
-  msgentry *pmsgt;
+  const msgentry *pmsgt;
   subentry *psubt,*psubtm, *psubtlast;
   subentry *presubt = (subentry *)0;
-  authentry *pautht;
-  dateentry *pdatet;
+  const authentry *pautht;
+  const dateentry *pdatet;
   const char *cp;
   const char *cp1;
   unsigned long msg;
@@ -352,9 +351,7 @@ unsigned long from,to;
   }
 }
 
-int main(argc,argv)
-int argc;
-char **argv;
+int main(int argc,char **argv)
 {
   unsigned long archnum = 0L;
   unsigned long to = 0L;

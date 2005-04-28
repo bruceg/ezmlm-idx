@@ -13,19 +13,17 @@ const char FATAL[] = "ezmlm-issubn: fatal: ";
 
 void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-issubn: usage: ezmlm-issubn [-nN] dir [dir1 ...]");
 }
 
-void die_sender()
+void die_sender(void)
 {
   strerr_die2x(100,FATAL,ERR_NOSENDER);
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *dir;
   char *addr;

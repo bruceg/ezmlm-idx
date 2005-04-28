@@ -52,13 +52,13 @@ const char *digsz =
 
 const char FATAL[] = "ezmlm-get: fatal: ";
 
-void die_usage() {
+void die_usage(void) {
   strerr_die1x(100,
     "ezmlm-get: usage: "
 	"ezmlm-get [-bBcClLpPsSvV] [-f fmt] [digestcode]");
 }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 stralloc outhost = {0};
 stralloc outlocal = {0};
@@ -129,15 +129,13 @@ char *sender;
 char *digestcode;
 
 struct qmail qq;
-int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
+int qqwrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return len;
 }
 
-int subto(s,l)
-char *s;
-unsigned int l;
+int subto(const char *s,unsigned int l)
 {
   qmail_put(&qq,"T",1);
   qmail_put(&qq,s,l);
@@ -163,7 +161,7 @@ char indexbuf[1024];
 
 int fdlock;
 
-void lockup()
+void lockup(void)
 /* lock unless locked */
 {
   if(!flaglocked) {
@@ -172,7 +170,7 @@ void lockup()
   }
 }
 
-void unlock()
+void unlock(void)
 /* unlock if locked */
 {
   if (flaglocked) {
@@ -181,9 +179,7 @@ void unlock()
   }
 }
 
-void code_qput(s,n)
-char *s;
-unsigned int n;
+void code_qput(const char *s,unsigned int n)
 {
     if (!flagcd)
       qmail_put(&qq,s,n);
@@ -197,11 +193,10 @@ unsigned int n;
     }
 }
 
-void zapnonsub(szerr)
+void zapnonsub(const char *szerr)
 /* fatal error if flagsub is set and sender is not a subscriber */
 /* expects the current dir to be the list dir. Error is szerr */
 /* added check for undefined sender as a precaution */
-char *szerr;
 {
   if (sender && *sender) {	/* "no sender" is not a subscriber */
     if (!flagsub)
@@ -216,7 +211,7 @@ char *szerr;
   strerr_die4x(100,FATAL,ERR_SUBSCRIBER_CAN,szerr,ERR_571);
 }
 
-void tosender()
+void tosender(void)
 {
   qmail_puts(&qq,"To: ");
   if (!quote2(&quoted,sender)) die_nomem();
@@ -224,7 +219,7 @@ void tosender()
   qmail_puts(&qq,"\n");
 }
 
-void get_num()
+void get_num(void)
 {
 /* read dir/num -> max. max/cumsizen left alone if not present */
 /* Both of these should have been initialized to 0L */
@@ -238,7 +233,7 @@ void get_num()
   }
 }
 
-unsigned long dignum()
+unsigned long dignum(void)
 {
 /* return dignum if exists, 0 otherwise. */
 
@@ -250,10 +245,9 @@ unsigned long dignum()
   return retval;
 }
 
-void write_ulong(num,cum,dat,fn,fnn)
+void write_ulong(unsigned long num,unsigned long cum,unsigned long dat,
+		 const char *fn,const char *fnn)
 /* write num to "fnn" add ':' & cum if cum <>0, then move "fnn" to "fn" */
-char *fn, *fnn;
-unsigned long num,cum,dat;
 {
   int fd;
 
@@ -285,8 +279,7 @@ unsigned long num,cum,dat;
      strerr_die4sys(111,FATAL,ERR_MOVE,fnn,": ");
 }
 
-void normal_bottom(format)
-char format;
+void normal_bottom(char format)
 /* Copies bottom text and the original message to the new message */
 {
   if (flagbottom) {
@@ -317,13 +310,11 @@ char format;
   }
 }
 
-void presub(from,to,subject,factype,format)
+void presub(unsigned long from,unsigned long to,stralloc *subject,
+	    int factype,	/* action type (AC_THREAD,AC_GET,AC_DIGEST) */
+	    char format)	/* output format type (see idx.h) */
 /* Starts within header, outputs "subject" and optional headers, terminates*/
 /* header and handles output before table-of-contents                      */
-unsigned long from,to;
-stralloc *subject;
-int factype;		/* action type (AC_THREAD, AC_GET, AC_DIGEST) */
-char format;		/* output format type (see idx.h) */
 {
   switch(format) {
     case MIME:
@@ -356,10 +347,9 @@ char format;		/* output format type (see idx.h) */
     }
 }
 
-void postsub(factype,format)
+void postsub(int factype, /* action type (AC_THREAD, AC_GET, AC_DIGEST) */
+	     char format)	/* output format type (see idx.h) */
 /* output after TOC and before first message. */
-int factype;		/* action type (AC_THREAD, AC_GET, AC_DIGEST) */
-char format;		/* output format type (see idx.h) */
 {
     code_qput(TXT_ADMINISTRIVIA,str_len(TXT_ADMINISTRIVIA));
     if(factype == AC_DIGEST) {
@@ -376,8 +366,7 @@ char format;		/* output format type (see idx.h) */
       qmail_puts(&qq,"\n");
 }
 
-void postmsg(format)
-char format;
+void postmsg(char format)
 {
     switch(format) {
 	case MIME:
@@ -395,9 +384,8 @@ char format;
     }
 }
 
-void copymsg(msg,fd,format)
+void copymsg(unsigned long msg,int fd,char format)
 /* Copy archive message "msg" itself from open file handle fd, in "format" */
-unsigned long msg; int fd; char format;
 {
   int match;
   int flaginheader;
@@ -572,9 +560,8 @@ unsigned long msg; int fd; char format;
   }
 }
 
-void mime_getbad(msg)
+void mime_getbad(unsigned long msg)
 /* Message not found as a MIME multipart */
-unsigned long msg;
 {
    hdr_boundary(0);
    hdr_ctype(CTYPE_TEXT);
@@ -587,9 +574,8 @@ unsigned long msg;
    copy(&qq,"text/get-bad",flagcd);
 }
 
-void msgout(msg,format)
+void msgout(unsigned long msg,char format)
 /* Outputs message (everything that's needed per message) */
-unsigned long msg; char format;
 {
   int fd;
   unsigned int len;
@@ -660,13 +646,15 @@ unsigned long msg; char format;
     }
 }
 
-void digest(msgtable,subtable,authtable,from,to,subj,factype,format)
+void digest(msgentry *msgtable,
+	    subentry *subtable,
+	    authentry *authtable,
+	    unsigned long from,unsigned long to,
+	    stralloc *subj,int factype,char format)
 /* Output digest range from-to as per msgtable/subtable (from mkthread(s)). */
 /* "Subject is the subject of the _entire_ digest/set. */
-msgentry *msgtable; subentry *subtable; authentry *authtable;
-unsigned long from,to; stralloc *subj; int factype; char format;
 {
-  msgentry *pmsgt;
+  const msgentry *pmsgt;
   subentry *psubt;
   const char *cp;
   int ffirstmsg;
@@ -732,7 +720,7 @@ unsigned long from,to; stralloc *subj; int factype; char format;
   idx_destroythread(msgtable,subtable,authtable);
 }
 
-void doheaders()
+void doheaders(void)
 {
   int flaggoodfield,match;
 
@@ -780,9 +768,7 @@ void doheaders()
 }
 
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *def;
   char *local;

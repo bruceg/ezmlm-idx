@@ -50,15 +50,15 @@ int flagbody = 1;		/* body of message enclosed with mod request */
 
 const char FATAL[] = "ezmlm-store: fatal: ";
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-store: usage: ezmlm-store [-cCmMpPrRsSvV] dir");
 }
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 stralloc fnmsg = {0};
 
-void die_msg() { strerr_die4sys(111,FATAL,ERR_WRITE,fnmsg.s,": "); }
+void die_msg(void) { strerr_die4sys(111,FATAL,ERR_WRITE,fnmsg.s,": "); }
 
 int fdmsg;
 int fdmod;
@@ -90,15 +90,13 @@ stralloc charset = {0};
 stralloc sendopt = {0};
 
 struct qmail qq;
-int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
+int qqwrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return len;
 }
 
-int subto(s,l)
-char *s;
-unsigned int l;
+int subto(const char *s,unsigned int l)
 {
   qmail_put(&qq,"T",1);
   qmail_put(&qq,s,l);
@@ -121,9 +119,9 @@ char textbuf[512];
 substdio sssub;
 char subbuf[512];
 
-void makeacthash(act)
-stralloc *act;					/* has to be 0-terminated  */
-/* act is expected to be -reject-ddddd.ttttt or -accept-ddddd.ttttt        */
+void makeacthash(stralloc *act)
+/* act is expected to be -reject-ddddd.ttttt or -accept-ddddd.ttttt and
+ * has to be 0-terminated. */
 /* The routine will add .hash@outhost to act. act will NOT be 0-terminated */
 {
   int d;
@@ -136,9 +134,7 @@ stralloc *act;					/* has to be 0-terminated  */
   if (!stralloc_cat(act,&outhost)) die_nomem();
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *dir;
   int fdlock;

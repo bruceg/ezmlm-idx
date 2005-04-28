@@ -28,18 +28,18 @@
 
 const char FATAL[] = "ezmlm-cron: fatal: ";
 
-void die_usage()
+void die_usage(void)
 {
  strerr_die2x(100,FATAL,
   "usage: ezmlm-cron [-cCdDlLvV] [-w dow] [-t hh:mm] [-i hrs] listadr code");
 }
 
-void die_dow()
+void die_dow(void)
 {
   strerr_die2x(100,FATAL,ERR_DOW);
 }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 unsigned long deltah = 24L;	/* default interval 24h */
 unsigned long hh = 4L;		/* default time 04:12 */
@@ -81,26 +81,25 @@ int fdlock,fdin,fdout;
 
 char *local = (char *) 0;	/* list = local@host */
 const char *host = (char *) 0;
-const char *code = (char *) 0;	/* digest code */
+char *code = (char *) 0;	/* digest code */
 const char *cp;
 
-void die_syntax()
+void die_syntax(void)
 {
   if (!stralloc_0(&line)) die_nomem();
   strerr_die5x(100,FATAL,TXT_EZCRONRC," ",ERR_SYNTAX,line.s);
 }
 
-void die_argument()
+void die_argument(void)
 {
   strerr_die2x(100,FATAL,ERR_NOT_CLEAN);
 }
 
-int isclean(addr,flagaddr)
+int isclean(char *addr,
+	    int flagaddr) /* 1 for addresses with '@', 0 for other args */
 	/* assures that addr has only letters, digits, "-_" */
 	/* also checks allows single '@' if flagaddr = 1 */
 	/* returns 1 if clean, 0 otherwise */
-  char *addr;
-  int flagaddr;		/* 1 for addresses with '@', 0 for other args */
 {
   unsigned int pos;
   char ch;
@@ -134,10 +133,7 @@ substdio ssin;
 char outbuf[512];
 substdio ssout;
 
-void main(argc,argv)
-int argc;
-char **argv;
-
+void main(int argc,char **argv)
 {
   int child;
   const char *sendargs[4];

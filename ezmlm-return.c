@@ -32,14 +32,14 @@
 
 const char FATAL[] = "ezmlm-return: fatal: ";
 #define INFO "ezmlm-return: info: "
-void die_usage()
+void die_usage(void)
 { strerr_die1x(100,"ezmlm-return: usage: ezmlm-return [-dD] dir"); }
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
-void die_badaddr()
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_badaddr(void)
 {
   strerr_die2x(100,FATAL,ERR_BAD_RETURN_ADDRESS);
 }
-void die_trash()
+void die_trash(void)
 {
   strerr_die2x(99,INFO,"trash address");
 }
@@ -68,25 +68,21 @@ char *sender;
 char *dir;
 char *workdir;
 
-void die_hashnew()
+void die_hashnew(void)
 { strerr_die4sys(111,FATAL,ERR_WRITE,fnhashnew.s,": "); }
-void die_datenew()
+void die_datenew(void)
 { strerr_die4sys(111,FATAL,ERR_WRITE,fndatenew.s,": "); }
-void die_msgin()
+void die_msgin(void)
 { strerr_die2sys(111,FATAL,ERR_READ_INPUT); }
 
-void makedir(s)
-char *s;
+void makedir(const char *s)
 {
   if (mkdir(s,0755) == -1)
     if (errno != error_exist)
       strerr_die4x(111,FATAL,ERR_CREATE,s,": ");
 }
 
-void dowit(addr,when,bounce)
-char *addr;
-unsigned long when;
-stralloc *bounce;
+void dowit(const char *addr,unsigned long when,const stralloc *bounce)
 {
   int fd;
   unsigned int wpos;
@@ -133,11 +129,8 @@ stralloc *bounce;
     strerr_die6sys(111,FATAL,ERR_MOVE,fndatenew.s," to ",fndate.s,": ");
 }
 
-void doit(addr,msgnum,when,bounce)
-char *addr;
-unsigned long msgnum;
-unsigned long when;
-stralloc *bounce;
+void doit(const char *addr,unsigned long msgnum,unsigned long when,
+	  const stralloc *bounce)
 {
   int fd;
   int fdnew;
@@ -252,9 +245,7 @@ stralloc key = {0};
 char msginbuf[1024];
 substdio ssmsgin;
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *action;
   const char *ret;

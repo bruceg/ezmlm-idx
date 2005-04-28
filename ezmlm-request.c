@@ -37,12 +37,12 @@
 const char FATAL[] = "ezmlm-request: fatal: ";
 #define INFO "ezmlm-request: info: "
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-request: usage: ezmlm-request [-f lists.cfg] dir");
 }
 
-void die_nomem()
+void die_nomem(void)
 {
   strerr_die2x(111,FATAL,ERR_NOMEM);
 }
@@ -83,7 +83,7 @@ int flaggotsub = 0;		/* Found a subject */
 	/* program (negative numbers). Note: Any command not matched is    */
 	/* used to make a command address, so ezmlm request can handle     */
 	/* ("transmit") user-added commands.                               */
-const char *cmdstring =
+const char cmdstring[] =
 		"system\\help\\"			/* 1,2 */
 		"subscribe\\unsubscribe\\index\\"	/* 3,4,5 */
 		"info\\list\\query\\"			/* 6,7,8 */
@@ -120,7 +120,7 @@ char textbuf[1024];
 
 struct qmail qq;
 
-int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
+int qqwrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return len;
@@ -138,9 +138,7 @@ char outbuf[1];
 
 stralloc mydtline = {0};
 
-int code_qput(s,n)
-char *s;
-unsigned int n;
+int code_qput(const char *s,unsigned int n)
 {
     if (!flagcd)
       qmail_put(&qq,s,n);
@@ -156,10 +154,9 @@ unsigned int n;
 
 /* Checks the argument. Only  us-ascii letters, numbers, ".+-_" are ok. */
 /* NOTE: For addresses this is more restrictive than rfc821/822.        */
-void checkarg(s)
-char *s;
+void checkarg(const char *s)
 {
-  char *cp;
+  const char *cp;
   char ch;
   cp = s;
   if (!cp) return;				/* undef is ok */
@@ -195,9 +192,7 @@ char *s;
 /* is accepted to allow commands that take arguments that are not       */
 /* addresses (e.g. -get12-34).                                          */
 
-void parseline(cp)
-char *cp;
-
+void parseline(char *cp)
 {
   char *cp1;
   char *cp2;
@@ -279,9 +274,7 @@ char *cp;
   checkarg(listlocal); checkarg(listhost);
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *dir;
   char *local;

@@ -25,12 +25,12 @@
 
 const char FATAL[] = "ezmlm-gate: fatal: ";
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-gate: usage: ezmlm-gate [-cCmMpPqrRsSvV] "
 			"dir [moddir [...]]");
 }
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 stralloc line = {0};
 stralloc cmds = {0};
@@ -41,8 +41,7 @@ char szchar[2] = "-";
   int child;
   const char *pmod;
 
-int mailprog(s)
-  char *s;
+int mailprog(const char *s)
 {
     int r;
 
@@ -63,9 +62,7 @@ int mailprog(s)
     return r;
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *dir;
   char *sender;

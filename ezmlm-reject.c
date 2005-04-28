@@ -53,7 +53,7 @@ substdio ssin = SUBSTDIO_FDBUF(read,0,buf0,(int) sizeof(buf0));
 substdio ssin2 = SUBSTDIO_FDBUF(read,0,buf0,(int) sizeof(buf0));
 
 struct qmail qq;
-int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
+int qqwrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return len;
@@ -72,24 +72,22 @@ stralloc boundary = {0};
 stralloc precd = {0};
 stralloc mydtline = {0};
 
-void die_nomem()
+void die_nomem(void)
 {
   strerr_die2x(100,FATAL,ERR_NOMEM);
 }
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die2x(100,FATAL,"usage: ezmlm-reject [-bBcCfFhHqQsStT] [dir]");
 }
 
-unsigned int findlocal(sa,n)
+unsigned int findlocal(const stralloc *sa,unsigned int n)
 	/* n is index of '@' within sa. Returns index to last postition */
 	/* of local, n otherwise. */
-stralloc *sa;		/* line */
-unsigned int n;
 {
-  char *first;
-  char *s;
+  const char *first;
+  const char *s;
   int level = 0;
 
   first = sa->s;
@@ -114,18 +112,15 @@ unsigned int n;
       default:
         return (unsigned int) (s - first);
     }
-#include "env.h"
   }
 }
 
-unsigned int findhost(sa,n)
+unsigned int findhost(const stralloc *sa,unsigned int n)
 	/* s in index to a '@' within sa. Returns index to first pos of */
 	/* host part if there is one, n otherwise. */
-stralloc *sa;		/* line */
-unsigned int n;
 {
-  char *last;
-  char *s;
+  const char *last;
+  const char *s;
   int level = 0;
 
   last = sa->s + sa->len - 1;
@@ -154,9 +149,8 @@ unsigned int n;
   }
 }
 
-int getto(sa)
+int getto(const stralloc *sa)
 	/* find list address in line. If found, return 1, else return 0. */
-  stralloc *sa;
 {
   unsigned int pos = 0;
   unsigned int pos1;
@@ -178,9 +172,7 @@ int getto(sa)
   return 0;
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   unsigned long maxmsgsize = 0L;
   unsigned long minmsgsize = 0L;
@@ -188,9 +180,9 @@ char **argv;
   int opt;
   char linetype = ' ';
   char *cp, *cpstart, *cpafter;
-  char *dir;
+  const char *dir;
   const char *err;
-  char *sender;
+  const char *sender;
   unsigned int len;
   int match;
 

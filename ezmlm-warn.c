@@ -35,12 +35,12 @@
 #include "subscribe.h"
 
 const char FATAL[] = "ezmlm-warn: fatal: ";
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir");
 }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 stralloc key = {0};
 stralloc outhost = {0};
@@ -66,10 +66,9 @@ stralloc lasth = {0};
 stralloc lastd = {0};
 struct stat st;
 
-void die_read() { strerr_die4sys(111,FATAL,ERR_READ,fn.s,": "); }
+void die_read(void) { strerr_die4sys(111,FATAL,ERR_READ,fn.s,": "); }
 
-void makedir(s)
-char *s;
+void makedir(const char *s)
 {
   if (mkdir(s,0755) == -1)
     if (errno != error_exist)
@@ -90,7 +89,7 @@ stralloc line = {0};
 stralloc qline = {0};
 
 struct qmail qq;
-int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
+int qqwrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return len;
@@ -98,9 +97,7 @@ int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
 char qqbuf[1];
 substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
 
-void code_qput(s,n)
-char *s;
-unsigned int n;
+void code_qput(const char *s,unsigned int n)
 {
     if (!flagcd)
       qmail_put(&qq,s,n);
@@ -113,8 +110,7 @@ unsigned int n;
     }
 }
 
-void doit(flagw)
-int flagw;
+void doit(int flagw)
 {
   unsigned int i;
   int fd;
@@ -245,9 +241,7 @@ int flagw;
     strerr_die4sys(111,FATAL,ERR_DELETE,fn.s,": ");
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   DIR *bouncedir, *bsdir, *hdir;
   direntry *d, *ds;

@@ -43,13 +43,13 @@ char flagcd = '\0';		/* default: do not use transfer encoding */
 const char FATAL[] = "ezmlm-moderate: fatal: ";
 #define INFO "ezmlm-moderate: info: "
 
-void die_usage() { strerr_die1x(100,
+void die_usage(void) { strerr_die1x(100,
     "ezmlm-moderate: usage: ezmlm-moderate [-cCmMrRvV] [-t replyto] "
     "dir [/path/ezmlm-send]"); }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_badformat() { strerr_die2x(100,FATAL,ERR_BAD_REQUEST); }
+void die_badformat(void) { strerr_die2x(100,FATAL,ERR_BAD_REQUEST); }
 
 stralloc outhost = {0};
 stralloc outlocal = {0};
@@ -85,9 +85,7 @@ struct stat st;
 
 struct qmail qq;
 
-void code_qput(s,n)
-char *s;
-unsigned int n;
+void code_qput(const char *s,unsigned int n)
 {
     if (!flagcd)
       qmail_put(&qq,s,n);
@@ -100,8 +98,7 @@ unsigned int n;
     }
 }
 
-int checkfile(fn)
-char *fn;
+int checkfile(const char *fn)
 /* looks for DIR/mod/{pending|rejected|accept}/fn.*/
 /* Returns:                                       */
 /*          1 found in pending                    */
@@ -142,7 +139,7 @@ char *fn;
   return 0;
 }
 
-int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
+int qqwrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return len;
@@ -153,7 +150,7 @@ substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
 substdio sstext;
 char textbuf[1024];
 
-void maketo()
+void maketo(void)
 /* expects line to be a return-path line. If it is and the format is valid */
 /* to is set to to the sender. Otherwise, to is left untouched. Assuming   */
 /* to is empty to start with, it will remain empty if no sender is found.  */
@@ -172,9 +169,7 @@ void maketo()
     }
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *sender;
   char *def;

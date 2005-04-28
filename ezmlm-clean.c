@@ -54,17 +54,17 @@ stralloc fnmsg = {0};
 
 const char FATAL[] = "ezmlm-clean: fatal: ";
 
-void die_read()
+void die_read(void)
 {
   strerr_die4x(111,FATAL,ERR_READ,fnmsg.s,": ");
 }
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-clean: usage: ezmlm-clean [-mMrRvV] dir");
 }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 datetime_sec when;
 unsigned int older;
@@ -73,7 +73,7 @@ char textbuf[1024];
 substdio sstext;
 
 struct qmail qq;
-int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
+int qqwrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return len;
@@ -106,7 +106,7 @@ unsigned long msgnum = 0;
 			/* ezmlm started within x seconds, and with the    */
 			/* same pid. Very unlikely.                        */
 
-void readconfigs()
+void readconfigs(void)
 /* gets outlocal, outhost, etc. This is done only if there are any timed-out*/
 /* messages found, that merit a reply to the author. */
 {
@@ -119,8 +119,7 @@ void readconfigs()
   set_cpoutlocal(&outlocal);
 }
 
-void sendnotice(d)
-char *d;
+void sendnotice(const char *d)
 /* sends file pointed to by d to the address in the return-path of the  */
 /* message. */
 {
@@ -209,8 +208,7 @@ char *d;
      strerr_warn2("ezmlm-clean: info: qp ",strnum,0);
 }
 
-void dodir(dirname,reply)
-char *dirname; int reply;
+void dodir(const char *dirname,int reply)
 /* parses file names in directory 'dirname'. Files that are not owner */
 /* writable (w) are ignored. If the files are older (by name!) than   */
 /* now-delay, action is taken:                                        */
@@ -262,9 +260,7 @@ char *dirname; int reply;
 }
 
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   int fdlock;
   unsigned long delay;

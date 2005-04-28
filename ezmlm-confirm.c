@@ -42,13 +42,13 @@ static int flagmime = MOD_MIME;	/* default is message as attachment */
 const char FATAL[] = "ezmlm-confirm: fatal: ";
 #define INFO "ezmlm-confirm: info: "
 
-static void die_usage() { strerr_die1x(100,
+static void die_usage(void) { strerr_die1x(100,
     "ezmlm-confirm: usage: ezmlm-confirm [-cCmMrRvV] "
     "dir [/path/ezmlm-send]"); }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_badformat() { strerr_die2x(100,FATAL,ERR_BAD_REQUEST); }
+void die_badformat(void) { strerr_die2x(100,FATAL,ERR_BAD_REQUEST); }
 
 static stralloc outhost = {0};
 static stralloc outlocal = {0};
@@ -88,7 +88,7 @@ static int checkfile(const char *fn)
   return 0;
 }
 
-static int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
+static int qqwrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return len;

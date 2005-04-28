@@ -45,29 +45,29 @@ stralloc line = {0};
 const char FATAL[] = "ezmlm-make: fatal: ";
 #define WARNING "ezmlm-make: warning: "
 
-void die_usage()
+void die_usage(void)
 {
  strerr_die1x(100,
   "ezmlm-make: usage: ezmlm-make [-+] [ -a..zA..Z03..9 ] dir dot local host");
 }
-void die_relative()
+void die_relative(void)
 {
   strerr_die2x(100,FATAL,ERR_SLASH);
 }
-void die_newline()
+void die_newline(void)
 {
   strerr_die2x(100,FATAL,ERR_NEWLINE);
 }
-void die_quote()
+void die_quote(void)
 {
   strerr_die2x(100,FATAL,ERR_QUOTE);
 }
-void die_nomem()
+void die_nomem(void)
 {
   strerr_die2x(111,FATAL,ERR_NOMEM);
 }
 
-void die_read()
+void die_read(void)
 {
   strerr_die4sys(111,FATAL,ERR_READ,dirplus.s,": ");
 }
@@ -89,8 +89,7 @@ stralloc key = {0};
 struct timeval tv;
 char sz[2] = "?";
 
-void keyadd(u)
-unsigned long u;
+void keyadd(unsigned long u)
 {
   char ch;
   ch = (char) u; if (!stralloc_append(&key,&ch)) die_nomem(); u >>= 8;
@@ -99,7 +98,7 @@ unsigned long u;
   ch = (char) u; if (!stralloc_append(&key,&ch)) die_nomem();
 }
 
-void keyaddtime()
+void keyaddtime(void)
 {
   gettimeofday(&tv,(struct timezone *) 0);
   keyadd(tv.tv_usec);
@@ -110,17 +109,14 @@ char *dot;
 char *local = (char *) 0;
 char *host = (char *) 0;
 
-void dirplusmake(slash)
-char *slash;
+void dirplusmake(const char *slash)
 {
   if (!stralloc_copys(&dirplus,dir)) die_nomem();
   if (!stralloc_cats(&dirplus,slash)) die_nomem();
   if (!stralloc_0(&dirplus)) die_nomem();
 }
 
-void linkdotdir(dash,slash)
-char *dash;
-char *slash;
+void linkdotdir(const char *dash,const char *slash)
 {
   if (!stralloc_copys(&dotplus,dot)) die_nomem();
   if (!stralloc_cats(&dotplus,dash)) die_nomem();
@@ -135,8 +131,7 @@ char *slash;
   keyaddtime();
 }
 
-void dcreate(slash)
-char *slash;
+void dcreate(const char *slash)
 {
   dirplusmake(slash);
   if (mkdir(dirplus.s,0755) == -1)
@@ -148,8 +143,7 @@ char *slash;
 substdio ss;
 char ssbuf[SUBSTDIO_OUTSIZE];
 
-void f_open(slash)
-char *slash;
+void f_open(const char *slash)
 {
   int fd;
 
@@ -161,21 +155,18 @@ char *slash;
   substdio_fdbuf(&ss,write,fd,ssbuf,sizeof(ssbuf));
 }
 
-void f_put(buf,len)
-char *buf;
-unsigned int len;
+void f_put(const char *buf,unsigned int len)
 {
   if (substdio_bput(&ss,buf,len) == -1)
     strerr_die4sys(111,FATAL,ERR_WRITE,dirplus.s,": ");
 }
-void f_puts(buf)
-char *buf;
+void f_puts(const char *buf)
 {
   if (substdio_bputs(&ss,buf) == -1)
     strerr_die4sys(111,FATAL,ERR_WRITE,dirplus.s,": ");
 }
 
-void f_close()
+void f_close(void)
 {
   if (substdio_flush(&ss) == -1)
     strerr_die4sys(111,FATAL,ERR_FLUSH,dirplus.s,": ");
@@ -186,8 +177,7 @@ void f_close()
   keyaddtime();
 }
 
-void frm(slash)
-char *slash;
+void frm(const char *slash)
 {
   dirplusmake(slash);
   if (unlink(dirplus.s) == -1)
@@ -196,9 +186,7 @@ char *slash;
 }
 
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   unsigned long euid;
   int opt;

@@ -31,16 +31,16 @@ int flagmod;				/* list moderated */
 int flagloop;
 const char *fn = TXT_LOOPNUM;
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,
 	"ezmlm-limit: usage: ezmlm-limit [-f file] [-dDF] [-n messages]"
 	" [-t secs] dir");
 }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_new() { strerr_die4sys(111,FATAL,ERR_WRITE,fn,": "); }
+void die_new(void) { strerr_die4sys(111,FATAL,ERR_WRITE,fn,": "); }
 
 stralloc line = {0};
 
@@ -49,9 +49,7 @@ char newbuf[16];
 
 char strnum[FMT_ULONG];
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *dir;
   int opt;

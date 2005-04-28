@@ -14,13 +14,12 @@
 
 const char FATAL[] = "ezmlm-weed: fatal: ";
 
-void die_nomem()
+void die_nomem(void)
 {
   strerr_die2x(111,FATAL,ERR_NOMEM);
 }
 
-void get(sa)
-stralloc *sa;
+void get(stralloc *sa)
 {
   int match;
   if (getln(subfdin,sa,&match,'\n') == -1)
@@ -53,7 +52,7 @@ int flagas = 0;
 int flagbw = 0;
 int flagdsn = 0;
 
-int isboundary()
+int isboundary(void)
 /* returns 1 if line.len contains the mime bondary, 0 otherwise */
 {
     if (line.s[0] == '-' && line.s[1] == '-' && line.len >= boundary.len + 3)
@@ -62,7 +61,7 @@ int isboundary()
     return 0;
 }
 
-void main()
+void main(void)
 {
   unsigned int i,j;
 

@@ -31,23 +31,17 @@ void die_usage(void)
   strerr_die1x(100,"ezmlm-list: usage: ezmlm-list [-mMnNvV] dir");
 }
 
-int subwrite(s,l)
-char *s;
-unsigned int l;
+int subwrite(const char *s,unsigned int l)
 {
   return substdio_put(subfdout,s,l) | substdio_put(subfdout,"\n",1);
 }
 
-int dummywrite(s,l)
-char *s;		/* ignored */
-unsigned int l;
+int dummywrite(const char *s,unsigned int l)
 {
   return (int) l;
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *dir;
   int flagmysql = 1;	/* use if supported */

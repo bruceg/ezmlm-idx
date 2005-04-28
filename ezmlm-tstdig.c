@@ -24,12 +24,12 @@
 
 const char FATAL[] = "ezmlm-tstdig: fatal: ";
 
-void die_usage()
+void die_usage(void)
 {
   strerr_die1x(100,"ezmlm-tstdig: usage: ezmlm-tstdig [-k kbytes] [-m messages] [-t hours] dir");
 }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 stralloc line = {0};
 
@@ -40,9 +40,7 @@ char strnum[FMT_ULONG];
 
 int flaglocal = 0;
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *dir;
   char *local;

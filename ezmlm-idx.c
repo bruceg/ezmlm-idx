@@ -183,9 +183,7 @@ unsigned int pos,pos1;
   return r;
 }
 
-int main(argc,argv)
-int argc;
-char **argv;
+int main(int argc,char **argv)
 {
   char *dir,*cp;
   unsigned long msgnum = 0L;

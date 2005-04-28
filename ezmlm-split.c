@@ -47,12 +47,12 @@ char strnum[FMT_ULONG];
 unsigned long lineno;
 int flagfound;
 
-void die_usage() {
+void die_usage(void) {
   strerr_die1x(100,"ezmlm-split: usage: ezmlm-split [-dD] dir [splitfile]"); }
 
-void die_nomem() { strerr_die2x(111,FATAL,ERR_NOMEM); }
+void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
-void die_syntax()
+void die_syntax(void)
 {
   strnum[fmt_ulong(strnum,lineno)] = '\0';
   strerr_die6x(111,FATAL,split," syntax error line ",strnum,": ",line.s);
@@ -62,7 +62,7 @@ char spbuf[1024];	/* should normally hold entire file */
 substdio sssp;
 
 struct qmail qq;
-int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
+int qqwrite(int fd,const char *buf,unsigned int len)
 {
   qmail_put(&qq,buf,len);
   return (int) len;
@@ -70,7 +70,7 @@ int qqwrite(fd,buf,len) int fd; char *buf; unsigned int len;
 char qqbuf[1];
 substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,(int) sizeof(qqbuf));
 
-int findname()
+int findname(void)
 /* returns 1 if a matching line was found, 0 otherwise. name will contain */
 /* the correct list address in either case */
 {
@@ -170,9 +170,7 @@ int findname()
   }
 }
 
-void main(argc,argv)
-int argc;
-char **argv;
+void main(int argc,char **argv)
 {
   char *dir;
   char *action;
