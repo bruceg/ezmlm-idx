@@ -40,8 +40,8 @@ const char FATAL[] = "ezmlm-cgi: fatal: ";
 #define THREAD "-threadv"
 #define SUBSCRIBE "-subscribe"
 #define FAQ "-faq"
-#define TXT_CGI_SUBSCRIBE "\">[eSubscribe]</a>\n"
-#define TXT_CGI_FAQ "\">[eFAQ]</a>\n"
+#define TXT_CGI_SUBSCRIBE "\">[Subscribe To List]</a>\n"
+#define TXT_CGI_FAQ "\">[List FAQ]</a>\n"
 
 int flagshowhtml = 1;	/* show text/html parts. This leads to duplication */
 			/* when both text/plain and text/html are in a     */
@@ -533,7 +533,7 @@ void alink(struct msginfo *infop,unsigned char item,unsigned char axis,
 	/* this should be separate routine. Works because all index views */
 	/* have at least a subject link */
   if (axis == ITEM_SUBJECT && infop->target == msg)
-    oputs("<a name=b></a>");
+    oputs("<a name=\"b\"></a>");
   oput(url.s,url.len);
   cmdstr[0] = ITEM[item];
   cmdstr[1] = ITEM[axis];
@@ -557,16 +557,16 @@ void alink(struct msginfo *infop,unsigned char item,unsigned char axis,
     oput(cp,HASHLEN);
   }
   switch (item) {
-    case ITEM_MESSAGE: oputs("\" class=mlk>"); break;
-    case ITEM_AUTHOR: oputs("#b\" class=alk>"); break;
-    case ITEM_SUBJECT: oputs("#b\" class=slk>"); break;
+    case ITEM_MESSAGE: oputs("\" class=\"mlk\">"); break;
+    case ITEM_AUTHOR: oputs("#b\" class=\"alk\">"); break;
+    case ITEM_SUBJECT: oputs("#b\" class=\"slk\">"); break;
     default: oputs("#b\">"); break;
   }
   if (HASHLEN + 1 < l)
     html_put(data + HASHLEN + 1,l - HASHLEN - 1);
   else
     oputs("(none)");
-  oputs("</A>");
+  oputs("</a>");
 }
 
 void linktoindex(struct msginfo *infop,unsigned char item)
@@ -696,27 +696,27 @@ void subfaqlinks()
 void msglinks(struct msginfo *infop)
 /* Creates the html for all links from one message view */
 {
-  oputs("<DIV class=msglinks><STRONG>Msg by: ");
+  oputs("<div class=\"msglinks\"><strong>Msg by: ");
   link_msg(infop,ITEM_SUBJECT,DIRECT_PREV);
-  oputs("[&lt;-</A> ");
+  oputs("[&lt;-</a> ");
   linktoindex(infop,ITEM_SUBJECT);
-  oputs(">thread</A> ");
+  oputs(">thread</a> ");
   link_msg(infop,ITEM_SUBJECT,DIRECT_NEXT);
-  oputs("-&gt;]</A> \n");
+  oputs("-&gt;]</a> \n");
   link_msg(infop,ITEM_MESSAGE,DIRECT_PREV);
-  oputs("[&lt;-</A> ");
+  oputs("[&lt;-</a> ");
   linktoindex(infop,ITEM_INDEX);
-  oputs(">time</A> ");
+  oputs(">time</a> ");
   link_msg(infop,ITEM_MESSAGE,DIRECT_NEXT);
-  oputs("-&gt;]</A> \n");
+  oputs("-&gt;]</a> \n");
   link_msg(infop,ITEM_AUTHOR,DIRECT_PREV);
-  oputs("[&lt;-</A> ");
+  oputs("[&lt;-</a> ");
   linktoindex(infop,ITEM_AUTHOR);
-  oputs(">author</A> ");
+  oputs(">author</a> ");
   link_msg(infop,ITEM_AUTHOR,DIRECT_NEXT);
-  oputs("-&gt;]</A> |\n");
+  oputs("-&gt;]</a> |\n");
   linktoindex(infop,ITEM_DATE);
-  oputs(">[Threads]</A>\n");
+  oputs(">[Threads]</a>\n");
   homelink();
   oputs("\n<a href=\"mailto:");
   oputs(local);
@@ -726,7 +726,7 @@ void msglinks(struct msginfo *infop)
   oputs("@");
   oputs(host);
   justpress();
-  oputs("\">[eMsg]</A>\n");
+  oputs("\">[Email Msg]</a>\n");
   oputs("<a href=\"mailto:");
   oputs(local);
   oputs(THREAD);
@@ -734,9 +734,9 @@ void msglinks(struct msginfo *infop)
   oputs("@");
   oputs(host);
   justpress();
-  oputs("\">[eThread]</A>\n");
+  oputs("\">[Email Thread]</a>\n");
   subfaqlinks();
-  oputs("</STRONG></DIV>\n");
+  oputs("</strong></div>\n");
 }
 
 #define SPC_BASE 1
@@ -762,8 +762,8 @@ void html_header(const char *t,const char *s,unsigned int l,const char *class,in
 	break;
   }
   oputs("\n\n");
-  oputs("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\">\n");
-  oputs("<HTML><HEAD>\n<TITLE>");
+  oputs("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n");
+  oputs("<html xmlns=\"http://www.w3.org/1999/xhtml\"><head>\n<title>");
   if (local) {
     oputs(local);
     oputs("@");
@@ -772,38 +772,38 @@ void html_header(const char *t,const char *s,unsigned int l,const char *class,in
   }
   if (t) oputs(t);
   if (s) html_put(s,l);
-  oputs("</TITLE>\n");
+  oputs("</title>\n");
   if (class && *class && stylesheet && *stylesheet) {
-    oputs("<LINK href=\"");
+    oputs("<link href=\"");
     oputs(stylesheet);
-    oputs("\" rel=\"stylesheet\" type=\"text/css\">\n");
+    oputs("\" rel=\"stylesheet\" type=\"text/css\" />\n");
   }
   if (!flagrobot)	/* robot access allowed to follow */
-    oputs("<META NAME=\"robots\" CONTENT=\"noindex\">\n");
+    oputs("<meta name=\"robots\" content=\"noindex\" />\n");
   if (flagrobot < 2)
-    oputs("<META NAME=\"robots\" CONTENT=\"nofollow\">\n");
+    oputs("<meta name=\"robots\" content=\"nofollow\" />\n");
   if (flagspecial & SPC_BASE)
     oput(base.s,base.len);
-  oputs("</HEAD>\n");
+  oputs("</head>\n");
   if (class && *class) {
-    oputs("<BODY class=");
+    oputs("<body class=\"");
     oputs(class);
-    oputs(">\n");
+    oputs("\">\n");
   } else
-    oputs("<BODY>\n");
+    oputs("<body>\n");
 
 }
 
 void html_footer(int flagspecial)
 {
   if ((flagspecial & SPC_BANNER) && banner && *banner) {
-    oputs("<DIV class=banner>\n");
+    oputs("<div class=\"banner\">\n");
     if (*banner == '<') oputs(banner);
     else
       strerr_die2x(100,FATAL,"Sorry - banner programs not supported");
-    oputs("</DIV>\n");
+    oputs("</div>\n");
   }
-  oputs("</BODY>\n</HTML>\n");
+  oputs("</body>\n</html>\n");
   substdio_flush(&ssout);
 }
 
@@ -842,7 +842,7 @@ void datelink(struct msginfo *infop,unsigned long d,char direction)
 	oputs("[-&gt;&gt;]");
 	break;
   }
-  oputs("</A>");
+  oputs("</a>");
 }
 
 void finddate(struct msginfo *infop)
@@ -928,24 +928,24 @@ int indexlinks(struct msginfo *infop)
 
   tmpmsg = infop->target;
   infop->target = 1;
-  oputs("<DIV class=idxlinks><STRONG>");
+  oputs("<div class=\"idxlinks\"><strong>");
   linktoindex(infop,ITEM_INDEX);
-  oputs(">[&lt;&lt;-]</A>\n");
+  oputs(">[&lt;&lt;-]</a>\n");
   if (tmpmsg >= 100) infop->target = tmpmsg - 100;
   linktoindex(infop,ITEM_INDEX);
-  oputs(">[&lt;-]</A>\n");
+  oputs(">[&lt;-]</a>\n");
   infop->target = tmpmsg + 100;
   linktoindex(infop,ITEM_INDEX);
-  oputs(">[-&gt;]</A>\n");
+  oputs(">[-&gt;]</a>\n");
   infop->target = MAXULONG;
   linktoindex(infop,ITEM_INDEX);
-  oputs(">[-&gt;&gt;]</A> |\n");
+  oputs(">[-&gt;&gt;]</a> |\n");
   infop->target = tmpmsg;
   linktoindex(infop,ITEM_DATE);
-  oputs(">[Threads by date]</A>\n");
+  oputs(">[Threads by date]</a>\n");
   subfaqlinks();
   homelink();
-  oputs("</STRONG></DIV>\n");
+  oputs("</strong></div>\n");
 }
 
 int show_index(struct msginfo *infop)
@@ -967,11 +967,11 @@ int show_index(struct msginfo *infop)
   if (!stralloc_cats(&line,"xx")) die_nomem();
   html_header("Messages ",line.s,line.len,"idxbody",SPC_BANNER | SPC_BASE);
   indexlinks(infop);
-  oputs("<HR><H1 id=\"idxhdr\">");
+  oputs("<div><hr /></div><h1 id=\"idxhdr\">");
   oputs("Messages ");
   oput(line.s,line.len);
-  oputs("</H1>\n");
-  oputs("<HR><DIV class=idx>\n");
+  oputs("</h1>\n");
+  oputs("<div class=\"idx\"><hr />\n");
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
       strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
@@ -1002,12 +1002,12 @@ int show_index(struct msginfo *infop)
 	oputs("(");
 	alink(infop,ITEM_AUTHOR,ITEM_AUTHOR,thismsg,line.s+pos+1,
 		line.len - pos - 2);
-	oputs(")<BR>\n");
+	oputs(")<br />\n");
       }
     }
   }
   close(fd);
-  oputs("\n</DIV><HR>\n");
+  oputs("\n<hr /></div>\n");
   indexlinks(infop);
   html_footer(SPC_BANNER);
   return 1;
@@ -1015,7 +1015,7 @@ int show_index(struct msginfo *infop)
 
 void objectlinks(struct msginfo *infop, char item)
 {
-  oputs("<DIV class=objlinks><STRONG>\n");
+  oputs("<div class=\"objlinks\"><strong>\n");
   if (item == ITEM_DATE) {
     datelink(infop,0,DIRECT_FIRST);
     datelink(infop,infop->date,DIRECT_PREV);
@@ -1025,15 +1025,15 @@ void objectlinks(struct msginfo *infop, char item)
   } else {
     if (!infop->target) infop->axis = ITEM_DATE;
     linktoindex(infop,ITEM_DATE);
-    oputs(">[Threads by date]</A>\n");
+    oputs(">[Threads by date]</a>\n");
   }
   if (item != ITEM_INDEX) {
     linktoindex(infop,ITEM_INDEX);
-    oputs(">[Messages by date]</A>\n");
+    oputs(">[Messages by date]</a>\n");
   }
   homelink();
   subfaqlinks();
-  oputs("</STRONG></DIV>\n");
+  oputs("</strong></div>\n");
 }
 
 int show_object(struct msginfo *infop,char item)
@@ -1077,17 +1077,17 @@ if ((fd = open_read(fn.s)) == -1)
 	html_header("Thread on: ",line.s + HASHLEN + 1,
 		line.len - HASHLEN - 2,"subjbody",SPC_BANNER | SPC_BASE);
 	objectlinks(infop,item);
-	oputs("<HR><H1>On: ");
+	oputs("<div><hr /></div><h1>On: ");
 	oput(line.s+HASHLEN+1,line.len-HASHLEN-2);
-	oputs("</H1>\n");
+	oputs("</h1>\n");
 	break;
     case ITEM_AUTHOR:
 	html_header("Posts by: ",line.s + HASHLEN + 1,
 		line.len - HASHLEN - 2,"authbody",SPC_BANNER | SPC_BASE);
 	objectlinks(infop,item);
-	oputs("<HR><H1>By: ");
+	oputs("<div><hr /></div><h1>By: ");
 	oput(line.s+HASHLEN+1,line.len-HASHLEN-2);
-	oputs("</H1>\n");
+	oputs("</h1>\n");
 	break;
     case ITEM_DATE:
 /*	targetitem = ITEM_SUBJECT;*/	/* thread index is target */
@@ -1096,14 +1096,14 @@ if ((fd = open_read(fn.s)) == -1)
 	html_header("Threads for ",
 		dtline.s,dtline.len,"threadsbody",SPC_BANNER | SPC_BASE);
 	objectlinks(infop,item);
-	oputs("<HR><H1>Threads for ");
+	oputs("<div><hr /></div><h1>Threads for ");
 	oput(dtline.s,dtline.len);
-	oputs("</H1>\n");
+	oputs("</h1>\n");
 	break;
     default: die_prog("unrecognized object type in show_object");
   }
 
-  oputs("<DIV class=obj>\n");
+  oputs("<div class=\"obj\">\n");
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)	/* read subject */
       strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
@@ -1121,27 +1121,35 @@ if ((fd = open_read(fn.s)) == -1)
     if (line.len < pos + HASHLEN + 2)
 	strerr_die4x(100,FATAL,"entry in ",fn.s," lacks hash");
     if (thisdate != lastdate) {
-      if (!lastdate)
-	oputs("<UL>\n");
-      else
-        oputs("<P>");
-      oputs("<LI><H2>");
+      oputs("<h2>");
       datelink(infop,thisdate,DIRECT_SAME);
       lastdate = thisdate;
-      oputs("</H2>\n");
+      oputs("</h2>\n");
+	/* moved <h2> out of <ul> */
+      /* if (!lastdate)
+	  oputs("<ul>\n");
+      else
+        oputs("<p>");
+      oputs("<li>\n"); */
+
+	oputs("<ul>\n");
+
     }
+    /* li at beginning of each link */
+    oputs("<li>");
+
     if (item == ITEM_SUBJECT)
       linkitem = ITEM_AUTHOR;
     else
       linkitem = ITEM_SUBJECT;
     alink(infop,targetitem,linkitem,thismsg,line.s+pos,line.len - pos - 1);
-    oputs("<BR>\n");
+    oputs("</li>\n");
   }
   close(fd);
-  oputs("</UL>\n");
+  oputs("</ul>\n");
   if (!infop->target)
-    oputs("<a name=b></a>");
-  oputs("<HR></DIV>\n");
+    oputs("<a name=\"b\"></a>");
+  oputs("<hr /></div>\n");
   objectlinks(infop,item);
   html_footer(SPC_BANNER);
   return 1;
@@ -1345,7 +1353,7 @@ void start_message_page(struct msginfo *infop)
 /* messages entirely in the charset of the message. This is ok, since    */
 /* headers will be us-ascii or have encoded segments usually matching    */
 /* the charset in the message. Of course, we should be able to used e.g. */
-/* <DIV charset=iso-2022-jp> with internal resources as well as internal */
+/* <div charset=iso-2022-jp> with internal resources as well as internal */
 /* ones. One might make other-charset messages external resources as well*/
 /* Now, the problem is that we need to "preview" MIME info _before_      */
 /* seeing the start boundary. */
@@ -1365,7 +1373,7 @@ void start_message_page(struct msginfo *infop)
 		"msgbody",SPC_BASE);
   decline.len = 0;		/* reset */
   msglinks(infop);
-  oputs("<DIV class=message>\n");
+  oputs("<div class=\"message\">\n");
 }
 
 void show_part(struct msginfo *infop,int flagshowheaders,
@@ -1402,8 +1410,8 @@ void show_part(struct msginfo *infop,int flagshowheaders,
           anchor_put(decline.s,decline.len);
         decline.len = 0;
       }
-      if (flagpre) {			/* ending part was <PRE> */
-	oputs("</PRE>");
+      if (flagpre) {			/* ending part was <pre> */
+	oputs("</pre>");
 	toggle_flagpre(0);
       }
       if (mime_current->level < recursion_level) {
@@ -1423,17 +1431,17 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 	if (flagshowheaders) {		/* rfc822hdr only */
 	  if (flagtoplevel)
 	    start_message_page(infop);	/* so we can put subj in TITLE */
-	  oputs("<DIV class=rfc822hdr><HR>\n");
+	  oputs("<div class=\"rfc822hdr\"><hr />\n");
 	  for (i = 0; i < NO_HDRS; i++) {
 	    if (!hdr[i].len || !headers_shown[i]) continue;
 	    if (i == HDR_SUBJECT - 1 && flagtoplevel)
-	      oputs("<SPAN class=subject>");
-	    oputs("<EM>");
+	      oputs("<span class=\"subject\">");
+	    oputs("<em>");
 	    oputs(constmap_get(&headermap,i + 1));
-	    oputs(":</EM>");
+	    oputs(":</em>");
 	    decodeHDR(hdr[i].s,hdr[i].len,&line,"");
 	    if (i == HDR_SUBJECT - 1 && flagtoplevel) {
-	      oputs("<A class=relk href=\"mailto:");
+	      oputs("<a class=\"relk\" href=\"mailto:");
 	      oputs(local);
 	      oput("@",1);
 	      oputs(host);
@@ -1452,10 +1460,10 @@ void show_part(struct msginfo *infop,int flagshowheaders,
               html_put(decline.s,decline.len - 1);
 	    }
 	    if (i == HDR_SUBJECT - 1 && flagtoplevel)
-	      oputs("</A></SPAN>");
-	    oputs("\n<BR>");
+	      oputs("</a></span>");
+	    oputs("\n<br />");
 	  }
-	  oputs("</DIV>\n");
+	  oputs("</div>\n");
 	}
         flaginheader = 0;
 	flagtoplevel = 0;
@@ -1477,7 +1485,7 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 		flaginheader = 1;
 		continue;
 	  case MIME_MESSAGE_RFC822:
-		oputs("\n<PRE>");
+		oputs("\n<pre>");
 		toggle_flagpre(1);
 		flagshowheaders = 1;
 		flaginheader = 1;
@@ -1485,7 +1493,7 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 		continue;
 	  case MIME_TEXT_HTML:
 		if (flagshowhtml) {
-		  oputs("<HR>\n");
+		  oputs("<hr />\n");
 		  flaghtml = 1;
 		} else {
 		  oputs("<strong>[\"");
@@ -1497,12 +1505,12 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 	  case MIME_TEXT_PLAIN:
 	  case MIME_TEXT:		/* in honor of Phil using "text" on */
 	  case MIME_NONE:		/* the qmail list and rfc2045:5.2 */
-		oputs("<HR>\n<PRE>\n");
+		oputs("<hr />\n<pre>\n");
 		toggle_flagpre(1);
 		continue;
 	  case MIME_TEXT_VCARD:
 	  default:		/* application/octetstream...*/
-		oputs("<HR><strong>[\"");
+		oputs("<hr /><strong>[\"");
 		oput(mime_current->ctype.s,mime_current->ctype.len);
 		oputs("\" not shown]</strong>\n");
 		flaggoodfield = 0;	/* hide */
@@ -1574,9 +1582,9 @@ int show_message(struct msginfo *infop)
 
   show_part(infop,1,0,1);	/* do real work, including html header etc */
   if (flagpre)
-    oputs("</PRE>\n");
+    oputs("</pre>\n");
   close(fd);
-  oputs("<HR></DIV>\n");
+  oputs("<hr /></div>\n");
   msglinks(infop);
   html_footer(0);
   return 1;
@@ -1946,7 +1954,7 @@ void list_lists()
     cfline.s[cfline.len - 1] = '\0';			/* so all are sz */
     (void) scan_ulong(cfline.s,&lno);			/* listno for line */
     if (lno) {				/* don't expose default list */
-      oputs("<A href=\"");
+      oputs("<a href=\"");
       oput(strnum,fmt_ulong(strnum,lno));
       oputs("/index\">[link]</a>\n");
    }
@@ -2197,13 +2205,13 @@ char **argv;
 
 /********************* Get info from server on BASE etc ****************/
 
-  if (!stralloc_copys(&url,"<A HREF=\"")) die_nomem();
-  if (!stralloc_copys(&base,"<BASE href=\"http://")) die_nomem();
+  if (!stralloc_copys(&url,"<a href=\"")) die_nomem();
+  if (!stralloc_copys(&base,"<base href=\"http://")) die_nomem();
   cp = env_get("SERVER_PORT");
   if (cp) {			/* port */
     (void) scan_ulong(cp,&port);
     if ((unsigned int) port == 443) {		/* https: */
-      if (!stralloc_copys(&base,"<BASE href=\"https://")) die_nomem();
+      if (!stralloc_copys(&base,"<base href=\"https://")) die_nomem();
     }
   }
   if ((cp = env_get("HTTP_HOST")) || (cp = env_get("SERVER_NAME"))) {
@@ -2219,7 +2227,7 @@ char **argv;
     if (cp[pos])
       if (!stralloc_cats(&url,cp + pos + 1)) die_nomem();
   }
-  if (!stralloc_cats(&base,"\">\n")) die_nomem();
+  if (!stralloc_cats(&base,"\" />\n")) die_nomem();
   if (!stralloc_cats(&url,"?")) die_nomem();
   if (thislistno) {
     if (!stralloc_catb(&url,strnum,fmt_ulong(strnum,thislistno))) die_nomem();
