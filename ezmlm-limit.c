@@ -17,10 +17,13 @@
 #include "scan.h"
 #include "open.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 
 const char FATAL[] = "ezmlm-limit: fatal: ";
-#define INFO "ezmlm-limit: info: "
+const char INFO[] = "ezmlm-limit: info: ";
+const char USAGE[] =
+"ezmlm-limit: usage: ezmlm-limit [-f file] [-dDF] [-n messages] [-t secs] dir";
 
 unsigned long deltasecs = LIMSECS;	/* interval to test over (seconds) */
 unsigned long deltanum = LIMMSG;	/* max no messages in interval */
@@ -30,15 +33,6 @@ int flagd = 0;				/* =0 create modpost, =1 ignore */
 int flagmod;				/* list moderated */
 int flagloop;
 const char *fn = TXT_LOOPNUM;
-
-void die_usage(void)
-{
-  strerr_die1x(100,
-	"ezmlm-limit: usage: ezmlm-limit [-f file] [-dDF] [-n messages]"
-	" [-t secs] dir");
-}
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 void die_new(void) { strerr_die4sys(111,FATAL,ERR_WRITE,fn,": "); }
 

@@ -33,11 +33,14 @@
 #include "scan.h"
 #include "mime.h"
 #include "hdr.h"
+#include "die.h"
 #include "idx.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-manage: fatal: ";
-#define INFO "ezmlm-manage: info: "
+const char INFO[] = "ezmlm-manage: info: ";
+const char USAGE[] =
+"ezmlm-manage: usage: ezmlm-manage [-bBcCdDeEfFlLmMnNqQsSuUvV] dir";
 
 int flagverbose = 0;	/* default: Owner not informed about subdb changes */
 			/* 1 => notified for failed unsub, 2 => for all */
@@ -65,17 +68,6 @@ unsigned int actlen = 0;/* str_len of above */
 char *dir;
 char *workdir;
 char *sender;
-
-void die_usage(void) {
-  strerr_die1x(100,"ezmlm-manage: usage: ezmlm-manage "
-		"[-bBcCdDeEfFlLmMnNqQsSuUvV] dir"); }
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
-
-void die_badaddr(void)
-{
-  strerr_die2x(100,FATAL,ERR_BAD_ADDRESS);
-}
 
 void die_cookie(void)
 {

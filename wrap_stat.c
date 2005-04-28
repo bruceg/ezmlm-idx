@@ -6,6 +6,7 @@
 #include "errtxt.h"
 #include "strerr.h"
 #include "wrap.h"
+#include "die.h"
 #include "idx.h"
 
 int wrap_stat(const char *fn,struct stat *st)

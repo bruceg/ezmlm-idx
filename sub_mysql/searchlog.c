@@ -15,6 +15,7 @@
 #include "error.h"
 #include "errtxt.h"
 #include "subscribe.h"
+#include "die.h"
 #include "idx.h"
 #include <mysql.h>
 

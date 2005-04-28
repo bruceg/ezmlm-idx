@@ -31,6 +31,7 @@
 #include "errtxt.h"
 #include "makehash.h"
 #include "mime.h"
+#include "die.h"
 #include "idx.h"
 #include "yyyymm.h"
 #include "cgi.h"
@@ -167,8 +168,6 @@ struct datetime dt;
 
 char inbuf[4096];
 substdio ssin;
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 void die_syntax(const char *s)
 {

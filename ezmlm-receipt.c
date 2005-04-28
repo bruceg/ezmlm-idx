@@ -23,23 +23,15 @@
 #include "fmt.h"
 #include "now.h"
 #include "seek.h"
+#include "die.h"
 #include "idx.h"
 #include "errtxt.h"
 
 const char FATAL[] = "ezmlm-receipt: fatal: ";
-#define INFO "ezmlm-receipt: info: "
+const char INFO[] = "ezmlm-receipt: info: ";
+const char USAGE[] =
+"ezmlm-receipt: usage: ezmlm-receipt [-dD] dir";
 
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-receipt: usage: ezmlm-receipt [-dD] dir");
-}
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
-
-void die_badaddr(void)
-{
-  strerr_die2x(100,FATAL,ERR_BAD_ADDRESS);
-}
 void die_trash(void)
 {
   strerr_die2x(0,INFO,"trash address");

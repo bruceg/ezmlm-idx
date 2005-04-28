@@ -17,6 +17,7 @@ env.a
 getopt.a
 surf.a
 case.a
+die.a
 strerr.a
 sig.a
 getln.a

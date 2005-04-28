@@ -14,6 +14,7 @@
 #include "fmt.h"
 #include "subscribe.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 #include <mysql.h>
 

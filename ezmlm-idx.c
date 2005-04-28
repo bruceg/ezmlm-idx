@@ -22,6 +22,7 @@
 #include "substdio.h"
 #include "sig.h"
 #include "byte.h"
+#include "die.h"
 #include "idx.h"
 #include "mime.h"
 #include "errtxt.h"
@@ -30,6 +31,8 @@
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-idx: fatal: ";
+const char USAGE[] =
+"ezmlm-idx: usage: ezmlm-idx [-dDF] [-f msg] dir";
 
 char strnum[FMT_ULONG];
 char hash[HASHLEN];
@@ -67,16 +70,6 @@ stralloc charset = {0};
 struct strerr index_err;
 
 stralloc num = {0};
-
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-idx: usage: ezmlm-idx [-dDF] [-f msg] dir");
-}
-
-void die_nomem(void)
-{
-  strerr_die2x(100,FATAL,ERR_NOMEM);
-}
 
 int idx_get_trimsubject(void)
 

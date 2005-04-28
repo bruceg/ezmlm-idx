@@ -20,12 +20,15 @@
 #include "lock.h"
 #include "open.h"
 #include "scan.h"
+#include "die.h"
 #include "idx.h"
 #include "errtxt.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-archive: fatal: ";
-#define WARNING "ezmlm-archive: warning: inconsistent index: "
+const char USAGE[] =
+"ezmlm-archive: usage: ezmlm-archive [-cCFsSTvV] [-f min_msg] [-t max_msg] dir";
+const char WARNING[] = "ezmlm-archive: warning: inconsistent index: ";
 
 substdio ssin;
 char inbuf[1024];
@@ -48,14 +51,6 @@ struct ca {
   char *s;		/* start */
   unsigned int l;	/* length */
 } ca;
-
-void die_usage(void) {
-  strerr_die1x(100,
-    "ezmlm-archive: usage: "
-	"ezmlm-archive [-cCFsSTvV] [-f min_msg] [-t max_msg] dir");
-}
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 void close_proper(substdio *ss,const char *s,const char *sn)
 /* flush,sync,close,move sn->s) */

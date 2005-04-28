@@ -5,6 +5,7 @@
 #include "slurp.h"
 #include "strerr.h"
 #include "getconf.h"
+#include "die.h"
 #include "idx.h"
 
 static stralloc data = {0};

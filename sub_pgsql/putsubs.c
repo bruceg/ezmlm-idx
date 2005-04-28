@@ -13,6 +13,7 @@
 #include "errtxt.h"
 #include "subscribe.h"
 #include "qmail.h"
+#include "die.h"
 #include "idx.h"
 #include <unistd.h>
 #include <libpq-fe.h>

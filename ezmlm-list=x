@@ -2,6 +2,7 @@ getopt.a
 subdb.a
 fs.a
 slurp.a
+die.a
 strerr.a
 getln.a
 substdio.a

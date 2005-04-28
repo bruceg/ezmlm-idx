@@ -14,7 +14,7 @@
 #include "errtxt.h"
 #include "subscribe.h"
 #include "qmail.h"
-#include "idx.h"
+#include "die.h"
 
 static substdio ssin;
 static char inbuf[512];

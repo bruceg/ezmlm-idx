@@ -3,9 +3,9 @@
 #include "qmail.h"
 #include "stralloc.h"
 #include "quote.h"
+#include "die.h"
 
 extern struct qmail qq;
-extern void die_nomem(void);
 extern stralloc quoted;
 extern stralloc outlocal;
 extern stralloc outhost;

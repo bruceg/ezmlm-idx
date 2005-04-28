@@ -4,6 +4,7 @@
 #include "strerr.h"
 #include "errtxt.h"
 #include "mime.h"
+#include "die.h"
 #include "idx.h"
 
 /* takes a string pointed to by cpfrom and adds the next 'n' bytes to        */

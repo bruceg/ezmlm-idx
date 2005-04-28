@@ -3,6 +3,7 @@ getconf.o
 slurp.a
 env.a
 fs.a
+die.a
 strerr.a
 getln.a
 getopt.a

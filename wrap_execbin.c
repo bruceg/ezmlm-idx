@@ -3,6 +3,7 @@
 #include "auto_bin.h"
 #include "stralloc.h"
 #include "wrap.h"
+#include "die.h"
 #include "idx.h"
 
 static stralloc path;

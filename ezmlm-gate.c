@@ -18,19 +18,15 @@
 #include "auto_bin.h"
 #include "sgetopt.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 #include "subscribe.h"
 #include "wrap.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-gate: fatal: ";
-
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-gate: usage: ezmlm-gate [-cCmMpPqrRsSvV] "
-			"dir [moddir [...]]");
-}
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
+const char USAGE[] =
+"ezmlm-gate: usage: ezmlm-gate [-cCmMpPqrRsSvV] dir [moddir [...]]";
 
 stralloc line = {0};
 stralloc cmds = {0};

@@ -4,6 +4,7 @@
 #include "qmail.h"
 #include "stralloc.h"
 #include "quote.h"
+#include "die.h"
 #include "idx.h"
 
 extern struct qmail qq;

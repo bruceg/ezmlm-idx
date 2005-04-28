@@ -30,6 +30,7 @@
 #include "scan.h"
 #include "lock.h"
 #include "hdr.h"
+#include "die.h"
 #include "idx.h"
 #include "mime.h"
 #include "auto_version.h"
@@ -53,18 +54,13 @@ stralloc fnmsg = {0};
 /* The defines are in "idx.h" */
 
 const char FATAL[] = "ezmlm-clean: fatal: ";
+const char USAGE[] =
+"ezmlm-clean: usage: ezmlm-clean [-mMrRvV] dir";
 
 void die_read(void)
 {
   strerr_die4x(111,FATAL,ERR_READ,fnmsg.s,": ");
 }
-
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-clean: usage: ezmlm-clean [-mMrRvV] dir");
-}
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 datetime_sec when;
 unsigned int older;

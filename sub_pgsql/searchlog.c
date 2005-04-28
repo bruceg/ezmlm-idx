@@ -14,6 +14,7 @@
 #include "error.h"
 #include "errtxt.h"
 #include "subscribe.h"
+#include "die.h"
 #include "idx.h"
 #include <unistd.h>
 #include <libpq-fe.h>

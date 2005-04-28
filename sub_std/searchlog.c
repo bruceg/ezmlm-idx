@@ -15,7 +15,7 @@
 #include "error.h"
 #include "errtxt.h"
 #include "subscribe.h"
-#include "idx.h"
+#include "die.h"
 
 static stralloc line = {0};
 static stralloc outline = {0};

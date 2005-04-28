@@ -4,6 +4,7 @@ getopt.a
 getln.a
 env.a
 sig.a
+die.a
 strerr.a
 stralloc.a
 alloc.a

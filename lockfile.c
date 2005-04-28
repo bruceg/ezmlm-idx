@@ -2,6 +2,7 @@
 #include "lock.h"
 #include "errtxt.h"
 #include "strerr.h"
+#include "die.h"
 #include "idx.h"
 #include "open.h"
 

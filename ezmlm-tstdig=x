@@ -4,6 +4,7 @@ now.o
 slurp.a
 getopt.a
 fs.a
+die.a
 strerr.a
 getln.a
 lock.a

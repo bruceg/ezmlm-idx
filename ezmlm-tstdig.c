@@ -19,17 +19,13 @@
 #include "case.h"
 #include "str.h"
 #include "open.h"
+#include "die.h"
 #include "idx.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-tstdig: fatal: ";
-
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-tstdig: usage: ezmlm-tstdig [-k kbytes] [-m messages] [-t hours] dir");
-}
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
+const char USAGE[] =
+"ezmlm-tstdig: usage: ezmlm-tstdig [-k kbytes] [-m messages] [-t hours] dir";
 
 stralloc line = {0};
 

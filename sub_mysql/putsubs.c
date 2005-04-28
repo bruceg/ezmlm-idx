@@ -14,6 +14,7 @@
 #include "errtxt.h"
 #include "subscribe.h"
 #include "qmail.h"
+#include "die.h"
 #include "idx.h"
 #include <mysql.h>
 

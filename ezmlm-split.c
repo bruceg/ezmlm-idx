@@ -25,10 +25,13 @@
 #include "uint32.h"
 #include "fmt.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 
 const char FATAL[] = "ezmlm-split: fatal: ";
-#define INFO "ezmlm-split: info: "
+const char INFO[] = "ezmlm-split: info: ";
+const char USAGE[] =
+"ezmlm-split: usage: ezmlm-split [-dD] dir [splitfile]";
 
 int flagdo = 1;		/* default is manager function */
 
@@ -46,11 +49,6 @@ stralloc to = {0};
 char strnum[FMT_ULONG];
 unsigned long lineno;
 int flagfound;
-
-void die_usage(void) {
-  strerr_die1x(100,"ezmlm-split: usage: ezmlm-split [-dD] dir [splitfile]"); }
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
 
 void die_syntax(void)
 {

@@ -18,10 +18,13 @@
 #include "scan.h"
 #include "env.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-reject: fatal: ";
+const char USAGE[] =
+"ezmlm-reject: usage: ezmlm-reject [-bBcCfFhHqQsStT] [dir]";
 
 int flagrejectcommands = 1;	/* reject if subject is simple command */
 int flagneedsubject = 1;	/* reject if subject is missing */
@@ -71,16 +74,6 @@ stralloc subject = {0};
 stralloc boundary = {0};
 stralloc precd = {0};
 stralloc mydtline = {0};
-
-void die_nomem(void)
-{
-  strerr_die2x(100,FATAL,ERR_NOMEM);
-}
-
-void die_usage(void)
-{
-  strerr_die2x(100,FATAL,"usage: ezmlm-reject [-bBcCfFhHqQsStT] [dir]");
-}
 
 unsigned int findlocal(const stralloc *sa,unsigned int n)
 	/* n is index of '@' within sa. Returns index to last postition */

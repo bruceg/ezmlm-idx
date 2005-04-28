@@ -10,6 +10,7 @@ surf.a
 lock.a
 env.a
 sig.a
+die.a
 strerr.a
 getln.a
 substdio.a

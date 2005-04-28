@@ -28,14 +28,15 @@
 #include "cookie.h"
 #include "subscribe.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 
 const char FATAL[] = "ezmlm-return: fatal: ";
-#define INFO "ezmlm-return: info: "
-void die_usage(void)
-{ strerr_die1x(100,"ezmlm-return: usage: ezmlm-return [-dD] dir"); }
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
-void die_badaddr(void)
+const char INFO[] = "ezmlm-return: info: ";
+const char USAGE[] =
+"ezmlm-return: usage: ezmlm-return [-dD] dir";
+
+void die_badretaddr(void)
 {
   strerr_die2x(100,FATAL,ERR_BAD_RETURN_ADDRESS);
 }
@@ -382,7 +383,7 @@ void main(int argc,char **argv)
     }
   }
   action += scan_ulong(action,&msgnum);
-  if (*action++ != '-') die_badaddr();
+  if (*action++ != '-') die_badretaddr();
   cp = action;
   if (*action >= '0' && *action <= '9') {		/* listno */
     action += scan_ulong(action,&listno);
@@ -411,7 +412,7 @@ void main(int argc,char **argv)
 	else strerr_die2x(99,INFO,ERR_DONE);
       }
    } else if (flagreceipt || flagmaster)
-	die_badaddr();
+	die_badretaddr();
 
   if (*action) {
     i = str_rchr(action,'=');

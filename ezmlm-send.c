@@ -32,6 +32,7 @@
 #include "makehash.h"
 #include "cookie.h"
 #include "hdr.h"
+#include "die.h"
 #include "idx.h"
 #include "copy.h"
 #include "auto_version.h"
@@ -42,15 +43,8 @@ int flagnoreceived = 1;		/* suppress received headers by default. They*/
 int flaglog = 1;		/* for lists with mysql support, use tags */
 				/* and log traffic to the database */
 const char FATAL[] = "ezmlm-send: fatal: ";
-
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-send: usage: ezmlm-send [-cClLqQrR] [-h header] dir");
-}
-void die_nomem(void)
-{
-  strerr_die2x(111,FATAL,ERR_NOMEM);
-}
+const char USAGE[] =
+"ezmlm-send: usage: ezmlm-send [-cClLqQrR] [-h header] dir";
 
 	/* for writing new index file indexn later moved to index. */
 substdio ssindexn;

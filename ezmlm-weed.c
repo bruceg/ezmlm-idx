@@ -11,13 +11,9 @@
 #include "getln.h"
 #include "strerr.h"
 #include "errtxt.h"
+#include "die.h"
 
 const char FATAL[] = "ezmlm-weed: fatal: ";
-
-void die_nomem(void)
-{
-  strerr_die2x(111,FATAL,ERR_NOMEM);
-}
 
 void get(stralloc *sa)
 {

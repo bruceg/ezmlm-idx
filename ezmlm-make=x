@@ -3,6 +3,7 @@ getln.a
 substdio.a
 lock.a
 open.a
+die.a
 strerr.a
 stralloc.a
 alloc.a

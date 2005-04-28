@@ -6,6 +6,7 @@
 #include "byte.h"
 #include "errtxt.h"
 #include "mime.h"
+#include "die.h"
 #include "idx.h"
 
 static stralloc tmpdata = {0};

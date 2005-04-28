@@ -18,7 +18,7 @@
 #include "fmt.h"
 #include "errtxt.h"
 #include "log.h"
-#include "idx.h"
+#include "die.h"
 
 static stralloc addr = {0};
 static stralloc lcaddr = {0};

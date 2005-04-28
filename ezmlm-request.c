@@ -31,21 +31,14 @@
 #include "subscribe.h"
 #include "mime.h"
 #include "hdr.h"
+#include "die.h"
 #include "idx.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-request: fatal: ";
-#define INFO "ezmlm-request: info: "
-
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-request: usage: ezmlm-request [-f lists.cfg] dir");
-}
-
-void die_nomem(void)
-{
-  strerr_die2x(111,FATAL,ERR_NOMEM);
-}
+const char INFO[] = "ezmlm-request: info: ";
+const char USAGE[] =
+"ezmlm-request: usage: ezmlm-request [-f lists.cfg] dir";
 
 char strnum[FMT_ULONG];
 

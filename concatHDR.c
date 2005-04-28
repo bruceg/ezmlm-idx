@@ -6,6 +6,7 @@
 #include "byte.h"
 #include "mime.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 
 void concatHDR(char *indata,

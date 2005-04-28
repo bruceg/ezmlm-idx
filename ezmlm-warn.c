@@ -31,16 +31,13 @@
 #include "mime.h"
 #include "auto_version.h"
 #include "hdr.h"
+#include "die.h"
 #include "idx.h"
 #include "subscribe.h"
 
 const char FATAL[] = "ezmlm-warn: fatal: ";
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir");
-}
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
+const char USAGE[] =
+"ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir";
 
 stralloc key = {0};
 stralloc outhost = {0};

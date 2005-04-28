@@ -5,6 +5,7 @@ getln.a
 seek.a
 subdb.a
 fs.a
+die.a
 strerr.a
 stralloc.a
 env.a

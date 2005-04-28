@@ -33,6 +33,7 @@
 #include "open.h"
 #include "lock.h"
 #include "wrap.h"
+#include "die.h"
 #include "idx.h"
 #include "mime.h"
 #include "auto_version.h"
@@ -40,15 +41,9 @@
 static int flagmime = MOD_MIME;	/* default is message as attachment */
 
 const char FATAL[] = "ezmlm-confirm: fatal: ";
-#define INFO "ezmlm-confirm: info: "
-
-static void die_usage(void) { strerr_die1x(100,
-    "ezmlm-confirm: usage: ezmlm-confirm [-cCmMrRvV] "
-    "dir [/path/ezmlm-send]"); }
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
-
-void die_badformat(void) { strerr_die2x(100,FATAL,ERR_BAD_REQUEST); }
+const char INFO[] = "ezmlm-confirm: info: ";
+const char USAGE[] =
+"ezmlm-confirm: usage: ezmlm-confirm [-cCmMrRvV] dir [/path/ezmlm-send]";
 
 static stralloc outhost = {0};
 static stralloc outlocal = {0};

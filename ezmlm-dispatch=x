@@ -1,4 +1,5 @@
 getopt.a
+die.a
 strerr.a
 error.a
 env.a

@@ -1,5 +1,6 @@
 getconf.o
 slurp.a
+die.a
 strerr.a
 substdio.a
 stralloc.a

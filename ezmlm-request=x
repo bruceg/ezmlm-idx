@@ -10,6 +10,7 @@ qmail.o
 slurp.a
 subdb.a
 getln.a
+die.a
 strerr.a
 getopt.a
 env.a

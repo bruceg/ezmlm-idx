@@ -23,23 +23,13 @@
 #include "auto_cron.h"
 #include "auto_version.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 #include "wrap.h"
 
 const char FATAL[] = "ezmlm-cron: fatal: ";
-
-void die_usage(void)
-{
- strerr_die2x(100,FATAL,
-  "usage: ezmlm-cron [-cCdDlLvV] [-w dow] [-t hh:mm] [-i hrs] listadr code");
-}
-
-void die_dow(void)
-{
-  strerr_die2x(100,FATAL,ERR_DOW);
-}
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
+const char USAGE[] =
+"ezmlm-cron: usage: ezmlm-cron [-cCdDlLvV] [-w dow] [-t hh:mm] [-i hrs] listadr code";
 
 unsigned long deltah = 24L;	/* default interval 24h */
 unsigned long hh = 4L;		/* default time 04:12 */

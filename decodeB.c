@@ -2,6 +2,7 @@
 #include "strerr.h"
 #include "uint32.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 
 	/* Characters and translation as per rfc2047. */

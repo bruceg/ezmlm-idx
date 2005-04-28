@@ -8,6 +8,7 @@
 #include "uint32.h"
 #include "mime.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 
 void decodeHDR(const char *indata,

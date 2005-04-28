@@ -22,6 +22,7 @@
 #include "getln.h"
 #include "scan.h"
 #include "byte.h"
+#include "die.h"
 #include "idx.h"
 #include "errtxt.h"
 #include "substdio.h"

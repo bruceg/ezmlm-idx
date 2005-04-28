@@ -4,6 +4,7 @@
 #include "errtxt.h"
 #include "strerr.h"
 #include "wrap.h"
+#include "die.h"
 #include "idx.h"
 
 int wrap_waitpid(int pid)

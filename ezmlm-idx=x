@@ -4,6 +4,7 @@ mime.a
 wait.a
 getopt.a
 getln.a
+die.a
 strerr.a
 sig.a
 lock.a

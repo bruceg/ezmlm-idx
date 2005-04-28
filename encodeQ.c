@@ -4,6 +4,7 @@
 #include "mime.h"
 #include "stralloc.h"
 #include "strerr.h"
+#include "die.h"
 #include "idx.h"
 
 static const char hexchar[16] = "0123456789ABCDEF";

@@ -2,6 +2,7 @@ getconf.o
 slurp.a
 getln.a
 sig.a
+die.a
 strerr.a
 substdio.a
 stralloc.a

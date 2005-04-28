@@ -5,6 +5,7 @@ now.o
 subdb.a
 slurp.a
 fs.a
+die.a
 strerr.a
 getopt.a
 getln.a

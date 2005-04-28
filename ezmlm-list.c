@@ -10,25 +10,21 @@
 #include "fmt.h"
 #include "sgetopt.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-list: fatal: ";
+const char USAGE[] =
+"ezmlm-list: usage: ezmlm-list [-mMnNvV] dir";
 
 int flagnumber = 0;	/* default list subscribers, not number of */
 
 char strnum[FMT_ULONG];
 
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
-
 void die_write(void)
 {
   strerr_die3sys(111,FATAL,ERR_WRITE,"stdout: ");
-}
-
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-list: usage: ezmlm-list [-mMnNvV] dir");
 }
 
 int subwrite(const char *s,unsigned int l)

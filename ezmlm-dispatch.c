@@ -18,19 +18,12 @@
 #include "seek.h"
 #include "wrap.h"
 #include "slurp.h"
+#include "die.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-dispatch: fatal: ";
-
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-dispatch: usage: ezmlm-dispatch dir [list]");
-}
-
-void die_nomem(void)
-{
-  strerr_die2x(111,FATAL,ERR_NOMEM);
-}
+const char USAGE[] =
+"ezmlm-dispatch: usage: ezmlm-dispatch dir [list]";
 
 static const char *sender;
 static const char *basedir;

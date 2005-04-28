@@ -18,6 +18,7 @@ surf.a
 getln.a
 env.a
 sig.a
+die.a
 strerr.a
 substdio.a
 stralloc.a

@@ -1,4 +1,5 @@
 getln.a
+die.a
 strerr.a
 substdio.a
 error.a

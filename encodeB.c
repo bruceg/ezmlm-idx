@@ -5,6 +5,7 @@
 #include "mime.h"
 #include "strerr.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 
 static const unsigned char base64char[64] =

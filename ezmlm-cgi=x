@@ -4,6 +4,7 @@ slurp.a
 getln.a
 sig.a
 mime.a
+die.a
 strerr.a
 substdio.a
 stralloc.a

@@ -13,12 +13,11 @@
 #include "getln.h"
 #include "scan.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 #include "auto_version.h"
 
 stralloc line = {0};
-
-extern void die_usage(void);
 
 void subunsub_main(int submode,
 		   const char *version,

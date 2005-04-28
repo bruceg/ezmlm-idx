@@ -33,6 +33,7 @@
 #include "mime.h"
 #include "open.h"
 #include "lock.h"
+#include "die.h"
 #include "idx.h"
 #include "wrap.h"
 #include "auto_version.h"
@@ -41,15 +42,9 @@ int flagmime = MOD_MIME;	/* default is message as attachment */
 char flagcd = '\0';		/* default: do not use transfer encoding */
 
 const char FATAL[] = "ezmlm-moderate: fatal: ";
-#define INFO "ezmlm-moderate: info: "
-
-void die_usage(void) { strerr_die1x(100,
-    "ezmlm-moderate: usage: ezmlm-moderate [-cCmMrRvV] [-t replyto] "
-    "dir [/path/ezmlm-send]"); }
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
-
-void die_badformat(void) { strerr_die2x(100,FATAL,ERR_BAD_REQUEST); }
+const char INFO[] = "ezmlm-moderate: info: ";
+const char USAGE[] =
+"ezmlm-moderate: usage: ezmlm-moderate [-cCmMrRvV] [-t replyto] dir [/path/ezmlm-send]";
 
 stralloc outhost = {0};
 stralloc outlocal = {0};

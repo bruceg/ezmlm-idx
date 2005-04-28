@@ -35,6 +35,7 @@
 #include "lock.h"
 #include "scan.h"
 #include "idxthread.h"
+#include "die.h"
 #include "idx.h"
 #include "mime.h"
 #include "errtxt.h"
@@ -51,14 +52,8 @@ const char *digsz =
 		"mime-version\\content-type\\content-transfer-encoding";
 
 const char FATAL[] = "ezmlm-get: fatal: ";
-
-void die_usage(void) {
-  strerr_die1x(100,
-    "ezmlm-get: usage: "
-	"ezmlm-get [-bBcClLpPsSvV] [-f fmt] [digestcode]");
-}
-
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
+const char USAGE[] =
+"ezmlm-get: usage: ezmlm-get [-bBcClLpPsSvV] [-f fmt] [digestcode]";
 
 stralloc outhost = {0};
 stralloc outlocal = {0};

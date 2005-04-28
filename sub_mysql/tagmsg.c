@@ -8,6 +8,7 @@
 #include "errtxt.h"
 #include "subscribe.h"
 #include "makehash.h"
+#include "die.h"
 #include "idx.h"
 #include <mysql.h>
 #include <mysqld_error.h>

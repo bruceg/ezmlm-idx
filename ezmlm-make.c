@@ -17,6 +17,7 @@
 #include "error.h"
 #include "lock.h"
 #include "errtxt.h"
+#include "die.h"
 #include "idx.h"
 #include "auto_version.h"
 
@@ -43,13 +44,10 @@ stralloc dirplus = {0};
 stralloc line = {0};
 
 const char FATAL[] = "ezmlm-make: fatal: ";
-#define WARNING "ezmlm-make: warning: "
+const char WARNING[] = "ezmlm-make: warning: ";
+const char USAGE[] =
+"ezmlm-make: usage: ezmlm-make [-+] [ -a..zA..Z03..9 ] dir dot local host";
 
-void die_usage(void)
-{
- strerr_die1x(100,
-  "ezmlm-make: usage: ezmlm-make [-+] [ -a..zA..Z03..9 ] dir dot local host");
-}
 void die_relative(void)
 {
   strerr_die2x(100,FATAL,ERR_SLASH);
@@ -61,10 +59,6 @@ void die_newline(void)
 void die_quote(void)
 {
   strerr_die2x(100,FATAL,ERR_QUOTE);
-}
-void die_nomem(void)
-{
-  strerr_die2x(111,FATAL,ERR_NOMEM);
 }
 
 void die_read(void)

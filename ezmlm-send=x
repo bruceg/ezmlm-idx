@@ -12,6 +12,7 @@ getopt.a
 hdr.a
 wait.a
 getln.a
+die.a
 strerr.a
 sig.a
 env.a

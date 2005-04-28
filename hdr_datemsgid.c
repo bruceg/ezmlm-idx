@@ -8,6 +8,7 @@
 #include "fmt.h"
 #include "date822fmt.h"
 #include "makehash.h"
+#include "die.h"
 #include "idx.h"
 
 extern struct qmail qq;

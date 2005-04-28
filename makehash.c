@@ -5,6 +5,7 @@
 #include "surf.h"
 #include "uint32.h"
 #include "makehash.h"
+#include "die.h"
 #include "idx.h"
 
 typedef struct {

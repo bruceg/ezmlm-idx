@@ -18,6 +18,7 @@
 #include "fmt.h"
 #include "errtxt.h"
 #include "log.h"
+#include "die.h"
 #include "idx.h"
 #include <mysql.h>
 #include <mysqld_error.h>

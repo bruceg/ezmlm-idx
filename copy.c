@@ -31,6 +31,7 @@
 #include "mime.h"
 #include "open.h"
 #include "byte.h"
+#include "die.h"
 #include "idx.h"
 
 static stralloc line = {0};

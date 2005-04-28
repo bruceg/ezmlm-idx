@@ -3,6 +3,7 @@
 #include "errtxt.h"
 #include "strerr.h"
 #include "wrap.h"
+#include "die.h"
 #include "idx.h"
 
 void wrap_exitcode(int pid)

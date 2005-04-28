@@ -30,6 +30,7 @@
 #include "slurp.h"
 #include "quote.h"
 #include "hdr.h"
+#include "die.h"
 #include "idx.h"
 #include "copy.h"
 #include "subscribe.h"
@@ -49,12 +50,8 @@ int flagbody = 1;		/* body of message enclosed with mod request */
 				/* 0 => headers only */
 
 const char FATAL[] = "ezmlm-store: fatal: ";
-
-void die_usage(void)
-{
-  strerr_die1x(100,"ezmlm-store: usage: ezmlm-store [-cCmMpPrRsSvV] dir");
-}
-void die_nomem(void) { strerr_die2x(111,FATAL,ERR_NOMEM); }
+const char USAGE[] =
+"ezmlm-store: usage: ezmlm-store [-cCmMpPrRsSvV] dir";
 
 stralloc fnmsg = {0};
 
