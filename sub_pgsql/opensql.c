@@ -63,20 +63,20 @@ const char *opensql(const char *dbname,	/* database directory */
   if (!stralloc_0(&myp)) return ERR_NOMEM;
   host = myp.s;
   if (myp.s[j = str_chr(myp.s,':')]) {
-    port = myp.s + j;
     myp.s[j++] = '\0';
+    port = myp.s + j;
     if (myp.s[j += str_chr(myp.s+j,':')]) {
-      user = myp.s + j;
       myp.s[j++] = '\0';
+      user = myp.s + j;
       if (myp.s[j += str_chr(myp.s+j,':')]) {
-        pw = myp.s + j;
 	myp.s[j++] = '\0';
+        pw = myp.s + j;
 	if (myp.s[j += str_chr(myp.s+j,':')]) {
-          db = myp.s + j;
 	  myp.s[j++] = '\0';
+          db = myp.s + j;
 	  if (myp.s[j += str_chr(myp.s+j,':')]) {
-	    ourtable = myp.s + j;
 	    myp.s[j++] = '\0';
+	    ourtable = myp.s + j;
 	  }
 	}
       }

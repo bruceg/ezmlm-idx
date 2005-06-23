@@ -29,6 +29,8 @@ If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
 =========================
+-Fixed critical one-off bug in both *SQL configuration parsers.
+ Thanks Jim Winstead.
 -Fixed lack of quoting in PgSQL subscribe code.  Thanks Dan O'Neill.
 -Updated ezmlm-cgi to generate valid XHTML/CSS output.
  Thanks Brian Ghidinelli

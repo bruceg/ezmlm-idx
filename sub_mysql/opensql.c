@@ -33,7 +33,6 @@ const char *opensql(const char *dbname,	/* database directory */
   const char *user = (char *) 0;
   const char *pw = (char *) 0;
   unsigned int j;
-  char *cp;
 
   if (!stralloc_copys(&fn,dbname)) return ERR_NOMEM;
   if (fn.len == ourdb.len && !str_diffn(ourdb.s,fn.s,fn.len)) {
@@ -64,21 +63,20 @@ const char *opensql(const char *dbname,	/* database directory */
   if (!stralloc_0(&myp)) return ERR_NOMEM;
   host = myp.s;
   if (myp.s[j = str_chr(myp.s,':')]) {
-    cp = myp.s + j++;
-    *(cp++) = '\0';
-    scan_ulong(cp,&port);
+    myp.s[j++] = '\0';
+    scan_ulong(myp.s+j,&port);
     if (myp.s[j += str_chr(myp.s+j,':')]) {
-      j++;
+      myp.s[j++] = '\0';
       user = myp.s + j;
       if (myp.s[j += str_chr(myp.s+j,':')]) {
-        pw = myp.s + j;
 	myp.s[j++] = '\0';
+        pw = myp.s + j;
 	if (myp.s[j += str_chr(myp.s+j,':')]) {
-          db = myp.s + j;
 	  myp.s[j++] = '\0';
+          db = myp.s + j;
 	  if (myp.s[j += str_chr(myp.s+j,':')]) {
-	    ourtable = myp.s + j;
 	    myp.s[j++] = '\0';
+	    ourtable = myp.s + j;
 	  }
 	}
       }
