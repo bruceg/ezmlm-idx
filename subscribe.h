@@ -60,4 +60,17 @@ extern const char *opensql(const char *dir,const char **table);
 
 extern void closesql(void);
 
+struct sqlinfo
+{
+  const char *host;
+  const char *port;
+  const char *db;
+  const char *user;
+  const char *pw;
+};
+
+extern const char *parsesql(const char *dbname,
+			    const char **table,
+			    struct sqlinfo *info);
+
 #endif

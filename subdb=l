@@ -6,3 +6,4 @@ opensql.o
 putsubs.o
 tagmsg.o
 searchlog.o
+sqllib.o

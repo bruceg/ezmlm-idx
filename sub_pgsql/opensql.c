@@ -9,12 +9,6 @@
 #include <unistd.h>
 #include <libpq-fe.h> 
 
-static stralloc myp = {0};
-static stralloc ers = {0};
-static stralloc fn = {0};
-static stralloc ourdb = {0};
-static const char *ourtable = (char *) 0;
-
 PGconn *pgsql = 0;
 
 const char *opensql(const char *dbname,	/* database directory */
@@ -27,75 +21,16 @@ const char *opensql(const char *dbname,	/* database directory */
 /* file. If we already opended dbname the cached info is used, rather than  */
 /* rereading the file. Note that myp is static and all pointers point to it.*/
 {
-  const char *host = (char *) 0;
-  const char *port = (char *) 0;
-  const char *db = "ezmlm";		/* default */
-  const char *user = (char *) 0;
-  const char *pw = (char *) 0;
-  unsigned int j;
+  struct sqlinfo info;
+  const char *err;
+  
+  if ((err = parsesql(dbname,table,&info)) != 0)
+    return err;
 
-  if (!stralloc_copys(&fn,dbname)) return ERR_NOMEM;
-  if (fn.len == ourdb.len && !str_diffn(ourdb.s,fn.s,fn.len)) {
-    if (table) {
-      if (*table) ourtable = *table;
-      else *table = ourtable;
-    }
-    return 0;
-  }
-  if (!stralloc_cats(&fn,"/sql")) return ERR_NOMEM;
-  if (!stralloc_0(&fn)) return ERR_NOMEM;
-		/* host:port:db:table:user:pw:name */
-
-  myp.len = 0;
-  switch (slurp(fn.s,&myp,128)) {
-	case -1:	if (!stralloc_copys(&ers,ERR_READ)) return ERR_NOMEM;
-			if (!stralloc_cat(&ers,&fn)) return ERR_NOMEM;
-			if (!stralloc_0(&ers)) return ERR_NOMEM;
-			return ers.s;
-	case 0: return "";
-  }
-  if (!stralloc_copy(&ourdb,&fn)) return ERR_NOMEM;
-  if (!stralloc_append(&myp,"\n")) return ERR_NOMEM;
-  for (j=0; j< myp.len; ++j) {
-    if (myp.s[j] == '\n') { myp.s[j] = '\0'; break; }
-  }
-						/* get connection parameters */
-  if (!stralloc_0(&myp)) return ERR_NOMEM;
-  host = myp.s;
-  if (myp.s[j = str_chr(myp.s,':')]) {
-    myp.s[j++] = '\0';
-    port = myp.s + j;
-    if (myp.s[j += str_chr(myp.s+j,':')]) {
-      myp.s[j++] = '\0';
-      user = myp.s + j;
-      if (myp.s[j += str_chr(myp.s+j,':')]) {
-	myp.s[j++] = '\0';
-        pw = myp.s + j;
-	if (myp.s[j += str_chr(myp.s+j,':')]) {
-	  myp.s[j++] = '\0';
-          db = myp.s + j;
-	  if (myp.s[j += str_chr(myp.s+j,':')]) {
-	    myp.s[j++] = '\0';
-	    ourtable = myp.s + j;
-	  }
-	}
-      }
-    }
-  }
-
-  if (host && !*host) host = (char *) 0;
-  if (user && !*user) user = (char *) 0;
-  if (pw && !*pw) pw = (char *) 0;
-  if (db && !*db) db = (char *) 0;
-  if (ourtable && !*ourtable) ourtable = (char *) 0;
-  if (table) {
-    if (*table) ourtable = *table;
-    else *table = ourtable;
-    if (!*table) return ERR_NO_TABLE;
-  }
   if (!pgsql) {
     /* Make connection to database */
-    pgsql = PQsetdbLogin( host, port, NULL, NULL, db, user, pw);
+    pgsql = PQsetdbLogin(info.host,info.port,NULL,NULL,
+			 info.db,info.user,info.pw);
     /* Check  to see that the backend connection was successfully made */
     if (PQstatus(pgsql) == CONNECTION_BAD)
       return PQerrorMessage(pgsql);
