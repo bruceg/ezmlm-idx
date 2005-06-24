@@ -34,6 +34,7 @@ in the next version.
 -Fixed lack of quoting in PgSQL subscribe code.  Thanks Dan O'Neill.
 -Updated ezmlm-cgi to generate valid XHTML/CSS output.
  Thanks Brian Ghidinelli
+-Fixed readwrite.h to work on LP64 systems.  Thanks Amitai Schlair
 
 ezmlm-idx-0.440, 20050415
 =========================

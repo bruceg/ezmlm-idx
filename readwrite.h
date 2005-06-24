@@ -1,7 +1,8 @@
 #ifndef READWRITE_H
 #define READWRITE_H
 
-extern int read();
-extern int write();
+#include <sys/types.h>
+extern ssize_t read();
+extern ssize_t write();
 
 #endif
