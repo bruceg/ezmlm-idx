@@ -35,6 +35,7 @@ in the next version.
 -Updated ezmlm-cgi to generate valid XHTML/CSS output.
  Thanks Brian Ghidinelli
 -Fixed readwrite.h to work on LP64 systems.  Thanks Amitai Schlair
+-Don't clobber msgsize file on re-make.  Thanks Stephen Quinney.
 
 ezmlm-idx-0.440, 20050415
 =========================

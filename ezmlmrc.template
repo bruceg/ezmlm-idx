@@ -339,7 +339,7 @@ List-Subscribe: <mailto:<#l#>-subscribe@<#h#>>
 </#3E/>
 From: <#3#>
 # max & min message size
-</msgsize#x/>
+</msgsize#xE/>
 30000:2
 # remove mime parts if -x
 </mimeremove#xE/>
