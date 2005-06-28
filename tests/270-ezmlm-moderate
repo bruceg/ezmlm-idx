@@ -8,24 +8,6 @@ if [ "$SECT" -le "2" ]; then
 
 prompt "ezmlm-moderate (1/2): "
 
-# MOD1 and MOD3 are defined from ezmlm-store testing
-
-REJ=`${GREP} "From: $LOC-reject" "$MOD1"| cut -d' ' -f2`
-if [ -z "$REJ" ]; then
-	fatal "No From: ...-reject header in mod request for mod1"
-fi
-
-ACC=`${GREP} "Reply-To: $LOC-accept" "$MOD3"| cut -d' ' -f2`
-if [ -z "$ACC" ]; then
-	fatal "No From: ...-accept header in mod request for mod3"
-fi
-
-# remove moderation request from sinkdir
-${RM} -f "$MOD1" 2>/dev/null || \
-	fatal "failed to remove mod request for mod1"
-${RM} -f "$MOD3" 2>/dev/null || \
-	fatal "failed to remove mod request for mod3"
-
 # make sure we get the (mis)accepted message(s)
 ${EZBIN}/ezmlm-sub "${DIR}" "${SND}@$HOST"
 

@@ -76,6 +76,11 @@ make_body()
   return 0
 }
 
+qqclean()
+{
+  ${RM} -f ${QQBODY} ${QQENV} ${QQHDR} ${QQMSG}
+}
+
 make_message()
 {
   ${ECHO} "ReCEIved: #LAST#"
