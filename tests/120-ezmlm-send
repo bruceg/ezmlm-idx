@@ -17,7 +17,8 @@ if [ "$SECT" = "1" ]; then
 # set up trailer
   { ${ECHO} "--- TRAILER ---"; ${ECHO}; } > "${DIR}/text/trailer"
 # test
-  make_message | ${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1 || \
+  { ${ECHO} "X-num: msg1"; make_message; } | \
+	${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1 || \
 	fatal "failed to accept normal message"
   if [ `cat "${DIR}/num"` != "1:1" ]; then
 	fatal "failed to create num for normal message 1"; 
@@ -27,9 +28,6 @@ if [ "$SECT" = "1" ]; then
   fi
   ${GREP} "1:" "${DIR}/archive/0/index" >/dev/null 2>&1 || \
 	fatal "failed to index archive"
-
-  ${RM} -f "${DIR}/indexed"
-  ${RM} -f "${DIR}/archived"
 
   ${GREP} "$SENDER" ${QQENV} >/dev/null 2>&1 ||
 	fatal "failed to deliver message to subscriber"
@@ -48,9 +46,13 @@ if [ "$SECT" = "1" ]; then
   ${TAIL} -n 6 ${QQMSG} | ${HEAD} -n 2 | ${GREP} 'TRAILER' >/dev/null 2>&1 || \
 	fatal "failed to add trailer"
 
+  ${RM} -f "${DIR}/indexed"
+  ${RM} -f "${DIR}/archived"
+
 # test to see that trailer is added to nom-mime messages
   CONTENT=''
-  make_message | ${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1  || \
+  { ${ECHO} "X-num: msg5"; make_message; } | \
+	${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1  || \
 	fatal "failed to accept non-mime message"
 
   ${GREP} 'TRAILER' ${QQMSG} >/dev/null 2>&1 || \
@@ -58,7 +60,8 @@ if [ "$SECT" = "1" ]; then
 
 # test to see that trailer is suppressed for multipart/signed
   CONTENT='multipart/signed'
-  make_message | ${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1  || \
+  { ${ECHO} "X-num: msg6"; make_message; } | \
+	${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1  || \
 	fatal "failed to accept multipart/signed message"
 
   ${GREP} 'TRAILER' ${QQMSG} >/dev/null 2>&1 && \
@@ -84,7 +87,8 @@ if [ "$SECT" = "1" ]; then
   ${RM} "${DIR}"/mimeremove
 
 # -r => don't trim received headers
-  make_message | ${EZBIN}/ezmlm-send -r "${DIR}" >"${ERR}" 2>&1 || \
+  { ${ECHO} "X-num: msg2"; make_message; } | \
+	${EZBIN}/ezmlm-send -r "${DIR}" >"${ERR}" 2>&1 || \
 	fatal "failed to accept normal message 2"
 
   ${GREP} "2:" "${DIR}/archive/0/index" >/dev/null 2>&1 && \
@@ -96,7 +100,8 @@ if [ "$SECT" = "1" ]; then
 	fatal "-r failed to leave received header"
 
 # -C eliminate SENDER from addressees
-  make_message | ${EZBIN}/ezmlm-send -C "${DIR}" >"${ERR}" 2>&1 || \
+  { ${ECHO} "X-num: msg3"; make_message; } | \
+	${EZBIN}/ezmlm-send -C "${DIR}" >"${ERR}" 2>&1 || \
 	fatal "failed to accept normal message 3"
   ${EZBIN}/ezmlm-unsub "${DIR}" "$SENDER"
 
@@ -111,7 +116,8 @@ if [ "$SECT" = "1" ]; then
 # test mimeremove
   touch "${DIR}/archived" "${DIR}/indexed"
   ${ECHO} "teXT/hTml" > "${DIR}/mimeremove"
-  make_message | ${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1 || \
+  { ${ECHO} "X-num: msg4"; make_message; } | \
+	${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1 || \
 	fatal "failed to accept mimeremove message"
   ${GREP} -i 'text/html' < "${DIR}/archive/0/04" >/dev/null &&
 	fatal "failed to remove mimeremove part"
