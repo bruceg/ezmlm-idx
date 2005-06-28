@@ -6,7 +6,9 @@
 
 if [ "$SECT" = "1" ]; then
 
-  prompt "ezmlm-send (1/2):     "
+  QMAILQUEUE=${QQTEST}; export QMAILQUEUE
+
+  prompt "ezmlm-send:           "
 
   SENDER="${SND}@$HOST"; export SENDER
   ${EZBIN}/ezmlm-sub "${DIR}" "$SENDER"
@@ -30,17 +32,43 @@ if [ "$SECT" = "1" ]; then
   ${RM} -f "${DIR}/indexed"
   ${RM} -f "${DIR}/archived"
 
+  ${GREP} "$SENDER" ${QQENV} >/dev/null 2>&1 ||
+	fatal "failed to deliver message to subscriber"
+
+# make sure headeradd was done
+  ${GREP} -i 'precedence: bulk' ${QQMSG} >/dev/null 2>&1 ||
+	fatal "failed to add headeradd"
+# check on received: header handling
+  ${GREP} '#PENULTIMATE#' ${QQMSG} >/dev/null && \
+	fatal "-r failed to remove received header"
+  ${GREP} '#LAST#' ${QQMSG} >/dev/null || \
+	fatal "-r failed to leave last received header"
+  ${GREP} 'Subject:' ${QQMSG} | ${GREP} 'PFX' >/dev/null 2>&1 || \
+	fatal "failed to add subject prefix"
+	# the trailer should be a MIME part, so not at the very end
+  ${TAIL} -n 6 ${QQMSG} | ${HEAD} -n 2 | ${GREP} 'TRAILER' >/dev/null 2>&1 || \
+	fatal "failed to add trailer"
+
 # test to see that trailer is added to nom-mime messages
   CONTENT=''
   { ${ECHO} "X-num: msg5"; make_message; } | \
 	${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1  || \
 	fatal "failed to accept non-mime message"
 
+  ${GREP} 'TRAILER' ${QQMSG} >/dev/null 2>&1 || \
+	fatal "failed to add trailer to non-mime message"
+
 # test to see that trailer is suppressed for multipart/signed
   CONTENT='multipart/signed'
   { ${ECHO} "X-num: msg6"; make_message; } | \
 	${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1  || \
 	fatal "failed to accept multipart/signed message"
+
+  ${GREP} 'TRAILER' ${QQMSG} >/dev/null 2>&1 && \
+	{ ${ECHO} "failed to suppress trailer for multipart/signed message"; \
+	  ${ECHO} "                      0.31 bug fixed in 0.316/0.323";
+	  BUG="${BUG}_signed"; \
+	  prompt "ezmlm-send ......:    "; }
 
 # restore
   CONTENT='multipart/mixed'
@@ -68,11 +96,19 @@ if [ "$SECT" = "1" ]; then
   ${GREP} "msg2" ${DIR}/archive/0/* >/dev/null 2>&1 && \
 	fatal "archived message with DIR/archived missing"
 
+  ${GREP}  '#PENULTIMATE#' ${QQMSG} >/dev/null 2>&1 || \
+	fatal "-r failed to leave received header"
+
 # -C eliminate SENDER from addressees
   { ${ECHO} "X-num: msg3"; make_message; } | \
 	${EZBIN}/ezmlm-send -C "${DIR}" >"${ERR}" 2>&1 || \
 	fatal "failed to accept normal message 3"
   ${EZBIN}/ezmlm-unsub "${DIR}" "$SENDER"
+
+  ${GREP} "$SENDER" ${QQENV} >/dev/null 2>&1 && \
+	{ ${ECHO} "-C failed to exclude sender (no longer supported)"; \
+	  BUG="${BUG}_noself"; \
+	  prompt "ezmlm-send:           "; }
 
 # make sure headerremove was done
   ${GREP} -i 'return-receipt-to' < "${DIR}/archive/0/01" >/dev/null &&
@@ -88,4 +124,5 @@ if [ "$SECT" = "1" ]; then
 
   ${ECHO} "OK"
 
+  unset QMAILQUEUE
 fi
