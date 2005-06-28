@@ -78,9 +78,9 @@ if [ "$SECT" = "1" ]; then
                 exit 100; }
 # testing -S
   { make_message | ${EZBIN}/ezmlm-reject -S "${DIR}"; } > /dev/null || \
-	{ ${ECHO} "-S switch failed with dir"; exit 100; }
+	fatal "-S switch failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject -S; } > /dev/null || \
-	{ ${ECHO} "-S switch failed without dir"; exit 100; }
+	fatal "-S switch failed without dir"
 
 # with command subject
   SUBJECT='REmOVE'
@@ -92,9 +92,9 @@ if [ "$SECT" = "1" ]; then
 		exit 100; }
 # testing -C
   { make_message | ${EZBIN}/ezmlm-reject -C "${DIR}"; } > /dev/null || \
-	{ ${ECHO} "-C switch failed with dir"; exit 100; }
+	fatal "-C switch failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject -C;  } > /dev/null || \
-	{ ${ECHO} "-C switch failed without dir"; exit 100; }
+	fatal "-C switch failed without dir"
 
 SUBJECT='test'
 
@@ -131,9 +131,9 @@ SUBJECT='test'
 
 # testing -T
   { make_message | ${EZBIN}/ezmlm-reject -T "${DIR}"; } > /dev/null || \
-	{ ${ECHO} "-T switch failed with dir"; exit 100; }
+	fatal "-T switch failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject -T; } > /dev/null || \
-	{ ${ECHO} "-T switch failed without dir"; exit 100; }
+	fatal "-T switch failed without dir"
 
 # restore good TO
   TO="$EZTEST-__tstlist@$HOST"
@@ -142,17 +142,17 @@ SUBJECT='test'
   touch "${DIR}"/mimeremove
   ${ECHO} "text/html" > "${DIR}"/mimereject
   { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; }  > /dev/null 2>&1 && \
-	{ ${ECHO} "mimereject failed with dir"; exit 100; }
+	fatal "mimereject failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
-	{ ${ECHO} "mimereject without dir"; exit 100; }
+	fatal "mimereject without dir"
 
 # if part is removed ezmlm-reject should not reject
   ${ECHO} "tExt/htMl" > "${DIR}"/mimeremove
   ${ECHO} "" > "${DIR}"/mimereject 
   { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null || \
-	{ ${ECHO} "mimeremove failed with dir"; exit 100; }
+	fatal "mimeremove failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
-	{ ${ECHO} "mimeremove without dir"; exit 100; }
+	fatal "mimeremove without dir"
 
 # test content-type with something after boundary=xxx
   AFTERBOUND=';micalg=pgp-md5'
@@ -170,9 +170,9 @@ SUBJECT='test'
 # if entire message is mimeremove type is should be rejected
   ${ECHO} "multipart/mixed" > "${DIR}"/mimeremove
   { make_message | ${EZBIN}/ezmlm-reject "${DIR}"; } > /dev/null 2>&1  && \
-	{ ${ECHO} "mimereject failed with dir"; exit 100; }
+	fatal "mimereject failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
-	{ ${ECHO} "mimereject without dir"; exit 100; }
+	fatal "mimereject without dir"
 
 # restore
   ${RM} "${DIR}"/mimeremove
@@ -180,13 +180,13 @@ SUBJECT='test'
 # test headerreject
   ${ECHO} "Content-TYPE" > "${DIR}"/headerreject
   { make_message | ${EZBIN}/ezmlm-reject -H "${DIR}"; } > /dev/null || \
-	{ ${ECHO} "headerreject -H failed with dir"; exit 100; }
+	fatal "headerreject -H failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject -h "${DIR}"; } > /dev/null 2>&1 && \
-	{ ${ECHO} "headerreject failed with dir"; exit 100; }
+	fatal "headerreject failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
-	{ ${ECHO} "headerreject failed without dir"; exit 100; }
+	fatal "headerreject failed without dir"
   { make_message | ${EZBIN}/ezmlm-reject -h; }  > /dev/null 2>&1  && \
-	{ ${ECHO} "-h was accepted without dir"; exit 100; }
+	fatal "-h was accepted without dir"
 
 # Suppress content-type header
   CONTENT=''

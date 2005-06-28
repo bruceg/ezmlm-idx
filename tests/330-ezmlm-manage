@@ -10,7 +10,7 @@ if [ "$SECT" -le "3" ]; then
 
   SENDER="${MOD}@$HOST"; export SENDER
   ${EZBIN}/ezmlm-issubn "${DIR}" && \
-	{ ${ECHO} "unsub without mod for moderated list failed"; exit 100; }
+	fatal "unsub without mod for moderated list failed"
 
   SUB3=`${GREP} -l 'sub3' $MODDIR/new/*` || \
 	{ ${ECHO} "failed getting subscribe moderation confirm request"; \
@@ -18,7 +18,7 @@ if [ "$SECT" -le "3" ]; then
 
 # confirm subscription request
   LOCAL=`${GREP} "Reply-To:" "$SUB3" | cut -d' ' -f2 | cut -d'@' -f1` || \
-	{ ${ECHO} "no confirm address in sub3 mod confirm request"; exit 100; }
+	fatal "no confirm address in sub3 mod confirm request"
   export LOCAL
   DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
   ${ECHO} "X-num: modR1" > "${DIR}/__tmp"
@@ -26,7 +26,7 @@ if [ "$SECT" -le "3" ]; then
   ${ECHO} >> "${DIR}/__tmp"
   ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${DIR}/__tmp"\
 		>/dev/null 2>&1 || \
-	{ ${ECHO} "failed to send digest sub mod accept for sub3"; exit 100; }
+	fatal "failed to send digest sub mod accept for sub3"
 
 # complete edit. SENDER can be any address
   SENDER="${MAN}@$HOST"; export SENDER
@@ -34,9 +34,9 @@ if [ "$SECT" -le "3" ]; then
 	{ ${ECHO} "failed getting edit reply for edit3"; \
 	 exit 100; }
   ${GREP} "#TEST_TEXT#" "$EDIT3" >/dev/null 2>&1 || \
-	{ ${ECHO} "old text missing in edit3 edit reply"; exit 100; }
+	fatal "old text missing in edit3 edit reply"
   LOCAL=`${GREP} "Reply-To:" "$EDIT3" | cut -d' ' -f2 | cut -d'@' -f1` || \
-	{ ${ECHO} "no reply address in edit3 edit reply"; exit 100; }
+	fatal "no reply address in edit3 edit reply"
   export LOCAL
   DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
   ${ECHO} "X-num: edit4" > "${DIR}/__tmp"
@@ -45,20 +45,20 @@ if [ "$SECT" -le "3" ]; then
   ${ECHO} "#NEW_TEXT#" >> "${DIR}/__tmp"
   ${ECHO} "%%% END OF TEXT FILE" >> "${DIR}/__tmp"
   ${EZBIN}/ezmlm-manage -e "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to send edit4 reply for edit3"; exit 100; }
+	fatal "failed to send edit4 reply for edit3"
 
 # check results of log/list
   LOG3=`${GREP} -l 'log3' $MODDIR/new/*` || \
 	{ ${ECHO} "failed getting -log reply to log3"; \
 	 exit 100; }
   ${GREP} "aaa@bbb" "$LOG3" | ${GREP} "+m" > /dev/null 2>&1 || \
-	{ ${ECHO} "failed to get log reply to log3"; exit 100; }
+	fatal "failed to get log reply to log3"
 
   LIST3=`${GREP} -l 'list3' $MODDIR/new/*` || \
 	{ ${ECHO} "failed getting -list reply to list3"; \
 	 exit 100; }
   ${GREP} "aaa@bbb" "$LIST3" > /dev/null 2>&1 || \
-	{ ${ECHO} "failed to get list reply to list3"; exit 100; }
+	fatal "failed to get list reply to list3"
 
   ${ECHO} "OK"
 

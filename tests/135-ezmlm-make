@@ -10,33 +10,33 @@ if [ "$SECT" = "1" ]; then
 
 # make sure a few ezmlm-make switches work
   ${EZBIN}/ezmlm-make -+qkgu -C${EZBIN}/ezmlmrc "${DIR}" || \
-	{ ${ECHO} "failed to edit test list to +qkgu"; exit 100; }
+	fatal "failed to edit test list to +qkgu"
   ${GREP} "${DENY}" "${DIR}/editor" >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to implement -k for list"; exit 100; }
+	fatal "failed to implement -k for list"
   ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to implement -q for list"; exit 100; }
+	fatal "failed to implement -q for list"
   ${GREP} "ezmlm-get -s" "${DIR}/manager" >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to implement -g for list"; exit 100; }
+	fatal "failed to implement -g for list"
   ${GREP} "${ALLOW}" "${DIR}/editor" >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to implement -u for list"; exit 100; }
+	fatal "failed to implement -u for list"
 
   ${EZBIN}/ezmlm-make -+QKGU -C${EZBIN}/ezmlmrc "${DIR}" || \
-	{ ${ECHO} "failed to edit test list to +QKGU"; exit 100; }
+	fatal "failed to edit test list to +QKGU"
   ${GREP} "${DENY}" "${DIR}/editor" >/dev/null 2>&1 && \
-	{ ${ECHO} "failed to implement -K for list"; exit 100; }
+	fatal "failed to implement -K for list"
   ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 && \
-	{ ${ECHO} "failed to implement -Q for list"; exit 100; }
+	fatal "failed to implement -Q for list"
   ${GREP} "ezmlm-get -s" "${DIR}/manager" >/dev/null 2>&1 && \
-	{ ${ECHO} "failed to implement -G for list"; exit 100; }
+	fatal "failed to implement -G for list"
   ${GREP} "${ALLOW}" "${DIR}/editor" >/dev/null 2>&1 && \
-	{ ${ECHO} "failed to implement -U for list"; exit 100; }
+	fatal "failed to implement -U for list"
 
 # edit the list (add moderation and remove admin)
   ${EZBIN}/ezmlm-make -+rsm -C${EZBIN}/ezmlmrc "${DIR}" || \
-	{ ${ECHO} "failed to edit test list to +rsm"; exit 100; }
+	fatal "failed to edit test list to +rsm"
 # edit the list (add text file editing and list/log)
 ${EZBIN}/ezmlm-make -+ln -C${EZBIN}/ezmlmrc "${DIR}" || \
-	{ ${ECHO} "failed to edit test list to +ln"; exit 100; }
+	fatal "failed to edit test list to +ln"
 
 # Now to create our own manager for later tests:
 
@@ -58,6 +58,6 @@ ${ECHO} "OK"
 
   # remove inlocal/inhost - shouldn't be used
   ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
-    { ${ECHO} "failed to remove inlocal/inhost for testlist"; exit 100; }
+    fatal "failed to remove inlocal/inhost for testlist"
 
 fi

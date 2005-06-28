@@ -9,10 +9,10 @@ if [ "$SECT" -le "2" ]; then
   prompt "ezmlm-request (2/2):  "
 
   ${GREP} "$LOC-qqqq-$SND=$HOST" "${REQ}" >/dev/null || \
-	{ ${ECHO} "'qqqq' subject query rewriting failed"; exit 100; }
+	fatal "'qqqq' subject query rewriting failed"
 
   ${GREP} "$LOC-unsubscribe-$SND=$HOST" "${REQ}" >/dev/null || \
-	{ ${ECHO} "ezmlm 'remove' subject query rewriting failed"; exit 100; }
+	fatal "ezmlm 'remove' subject query rewriting failed"
 
   ${ECHO} "OK"
 

@@ -9,7 +9,7 @@ if [ "$SECT" -le "2" ]; then
   prompt "ezmlm-idx:            "
   ${RM} -f "${DIR}/archive/0/index" "${DIR}/indexed"
   ${EZBIN}/ezmlm-idx "${DIR}" >"${ERR}" 2>&1 || \
-	{ ${ECHO} "failed to run"; exit 100; }
+	fatal "failed to run"
   if [ ! -r "${DIR}/indexed" ]; then
 	${ECHO} "failed to create DIR/indexed"; exit 100
   fi

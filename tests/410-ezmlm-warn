@@ -11,9 +11,9 @@ if [ "$SECT" -le "4" ]; then
   SENDER="${BNC}@${HOST}"
   export SENDER
   ${EZBIN}/ezmlm-issubn -n "${DIR}" || \
-	{ ${ECHO} "failed to remove bouncing subscriber"; exit 100; }
+	fatal "failed to remove bouncing subscriber"
   ${EZBIN}/ezmlm-issubn -n "${DIR}/digest" || \
-	{ ${ECHO} "failed to remove bouncing digest subscriber"; exit 100; }
+	fatal "failed to remove bouncing digest subscriber"
 
   ${ECHO} "OK"
 

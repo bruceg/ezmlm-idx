@@ -9,6 +9,6 @@ if [ "$SECT" -le "5" ]; then
   ${ECHO} Verifying message header and body contents...
 
   ${EZBIN}/ezmlm-make -+ -S "$DIR" || \
-  { ${ECHO} "ezmlm-make failed"; exit 100; }
+  fatal "ezmlm-make failed"
 
 fi

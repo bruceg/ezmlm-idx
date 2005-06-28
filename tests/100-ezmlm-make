@@ -17,16 +17,16 @@ if [ "$SECT" = "1" ]; then
 # make simple test list
   ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "${DIR}" "${DOT}" \
 	"$LOC" "$HOST" || \
-	{ ${ECHO} "ezmlm-make failed to create test list"; exit 100; }
+	fatal "ezmlm-make failed to create test list"
 
 # remake simple test list which should fail
   ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "${DIR}" "${DOT}" \
 	"$LOC" "$HOST" >/dev/null 2>&1 && \
-	{ ${ECHO} "failed to reject creation of existing list"; exit 100; }
+	fatal "failed to reject creation of existing list"
 
 # edit the list (add digest)
   ${EZBIN}/ezmlm-make -+d -C${EZBIN}/ezmlmrc "${DIR}" || \
-	{ ${ECHO} "ezmlm-make failed to edit test list"; exit 100; }
+	fatal "ezmlm-make failed to edit test list"
 
 # edit the list (add digest)
   ${MV} "${DIR}/config" "${DIR}/config~"
@@ -39,7 +39,7 @@ if [ "$SECT" = "1" ]; then
   ${MV} "${DIR}/config~" "${DIR}/config"
 
   ${GREP} "ezmlm-weed" "${DIR}/bouncer" >/dev/null 2>&1 || \
-	{ ${ECHO} "no ezmlm-weed in bouncer"; exit 100; }
+	fatal "no ezmlm-weed in bouncer"
   ${GREP} "ezmlm-return" "${DIR}/bouncer" >/dev/null 2>&1 || \
 	{ ${ECHO} "no ezmlm-return in bouncer: 0.32 bug, fixed in 0.321."
 	  prompt "ezmlm-make ......     "
@@ -51,7 +51,7 @@ if [ "$SECT" = "1" ]; then
 	${ECHO} "failed to create digest/bouncer"; exit 100;
     fi
     ${GREP} "ezmlm-weed" "${DIR}/digest/bouncer" >/dev/null 2>&1 || \
-	{ ${ECHO} "no ezmlm-weed in bouncer"; exit 100; }
+	fatal "no ezmlm-weed in bouncer"
     ${GREP} "ezmlm-return" "${DIR}/digest/bouncer" >/dev/null 2>&1 || \
 	{ ${ECHO} "no ezmlm-return in digest/bouncer: 0.32 bug, OK in 0.321."
 	  prompt "ezmlm-make ......     "
@@ -66,7 +66,7 @@ prompt "Using RDBMS support:  "
 if [ $USESQL ]; then
   ${EZBIN}/ezmlm-make -+6 "$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
 	-C${EZBIN}/ezmlmrc "${DIR}"|| \
-	{ ${ECHO} "ezmlm-make failed to add SQL config info"; exit 100; }
+	fatal "ezmlm-make failed to add SQL config info"
 
   ${STRINGS} ${EZBIN}/ezmlm-sub | ${GREP} -i 'MySQL' >/dev/null 2>&1 && \
 	RDBMS='MySQL'
@@ -86,22 +86,22 @@ fi
 # set up subscriber/moderator/sender/digest recipient account #
 ###############################################################
   ${MKDIR} "$SINKDIR" "$SINKDIR/new" "$SINKDIR/cur" "$SINKDIR/tmp" || \
-	{ ${ECHO} "mkdir for sinkdir failed"; exit 100; }
+	fatal "mkdir for sinkdir failed"
   ${ECHO} "${SINKDIR}/" > "$DOT-$SINK"
 # link for qmail version testing 
   ${ECHO} '|echo $DEFAULT >' "${DIR}/default" > "$DOT-$SINK-default"
   ${ECHO} "${SINKDIR}/" >> "$DOT-$SINK-default"
 
   ${MKDIR} "$MODDIR" "$MODDIR/new" "$MODDIR/cur" "$MODDIR/tmp" || \
-	{ ${ECHO} "mkdir for moddir failed"; exit 100; }
+	fatal "mkdir for moddir failed"
   ${ECHO} "${MODDIR}/" > "$DOT-$MODACC"
 
   ${MKDIR} "$MANDIR" "$MANDIR/new" "$MANDIR/cur" "$MANDIR/tmp" || \
-	{ ${ECHO} "mkdir for mandir failed"; exit 100; }
+	fatal "mkdir for mandir failed"
   ${ECHO} "${MANDIR}/" > "$DOT-$MANAG"
 
   ${MKDIR} "$DIGDIR" "$DIGDIR/new" "$DIGDIR/cur" "$DIGDIR/tmp" || \
-	{ ${ECHO} "mkdir for digdir failed"; exit 100; }
+	fatal "mkdir for digdir failed"
   ${ECHO} "${DIGDIR}/" > "$DOT-$DIGGG"
 
 fi

@@ -14,10 +14,10 @@ if [ "$SECT" = "1" ]; then
 # message from mod, normal use -> should queue
   { ${ECHO} "X-num: mod1"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store "${DIR}" >"${ERR}" 2>&1 < ${TMP} || \
-	{ ${ECHO} "failed to process message 1"; exit 100; }
+	fatal "failed to process message 1"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod1" > /dev/null || \
-	{ ${ECHO} "failed to queue message 1"; exit 100; }
+	fatal "failed to queue message 1"
 
   ${RM} -f "${DIR}/modpost" 
 
@@ -34,11 +34,11 @@ if [ "$SECT" = "1" ]; then
 	}
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod2" > /dev/null && \
-	{ ${ECHO} "queued message 2 despite non-modpost"; exit 100; }
+	fatal "queued message 2 despite non-modpost"
 
   if [ -z "$EZFORK" ]; then
 	cat ${DIR}/archive/0/* | ${GREP} "mod2" > /dev/null || \
-		{ ${ECHO} "failed to archive message 2 (non-modpost)"; exit 100; }
+		fatal "failed to archive message 2 (non-modpost)"
   fi
 
   touch "${DIR}/modpost"
@@ -46,17 +46,17 @@ if [ "$SECT" = "1" ]; then
 # from moderator. Should be queued, even with -P
   { ${ECHO} "X-num: mod3"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store -P "${DIR}" >"${ERR}" 2>&1 < ${TMP} || \
-	{ ${ECHO} "-P failed to accept mods post 3"; exit 100; }
+	fatal "-P failed to accept mods post 3"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod3" > /dev/null || \
-	{ ${ECHO} "failed to queue message 3"; exit 100; }
+	fatal "failed to queue message 3"
 
   ${EZBIN}/ezmlm-unsub "${DIR}/mod" "$SENDER"
 
 # not from moderator, should be rejected directly with -P
   { ${ECHO} "X-num: mod4"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store -P "${DIR}" >"${ERR}" 2>&1 < ${TMP} && \
-	{ ${ECHO} "-P failed to reject non-mod message 4"; exit 100; }
+	fatal "-P failed to reject non-mod message 4"
 
   ${ECHO} "OK"
 

@@ -23,7 +23,7 @@ if [ "$SECT" = "1" ]; then
   chmod +x "${DIR}/mod/pending/2" "${DIR}/mod/pending/1999999999"
 
   ${EZBIN}/ezmlm-clean "${DIR}" >"${ERR}" 2>&1 ||
-	{ ${ECHO} "failed first invocation"; exit 100; }
+	fatal "failed first invocation"
   if [ -r "${DIR}/mod/pending/1" ]; then
 	${ECHO} "failed to remove non-x moderation queue entry 1"
 	exit 100
@@ -43,7 +43,7 @@ X-num: clean4
 EOF
   chmod +x "${DIR}/mod/pending/4"
   ${EZBIN}/ezmlm-clean -R "${DIR}" >"${ERR}" 2>&1 ||
-	{ ${ECHO} "-R failed"; exit 100; }
+	fatal "-R failed"
   if [ -r  "${DIR}/mod/pending/4" ]; then
 	${ECHO} "failed to remove moderation queue entry 4"; exit 100
   fi

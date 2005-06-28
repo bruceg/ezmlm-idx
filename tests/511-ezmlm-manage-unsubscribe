@@ -7,7 +7,7 @@ if [ "$SECT" -le "5" ]; then
   DEFAULT="unsubscribe"; export DEFAULT
   LOCAL="${LOC}-${DEFAULT}"; export LOCAL
   ${EZBIN}/ezmlm-manage -U "$DIR" <"$TMP" >"$ERR" 2>&1 || \
-  { ${ECHO} "failed to produce unsubscribe confirmation"; exit 100; }
+  fatal "failed to produce unsubscribe confirmation"
 
   grephdr_manage
   grephdr subject: "goodbye from ${LOC}@${HOST}"

@@ -12,7 +12,7 @@ ${ECHO} "Subject: zzz-test" > "${DIR}/__tmp"
 ${QMPATH}/bin/qmail-local "$EZTEST" "$HOME" "$SND-zzz" "$DASH" \
 		"$LIST-$SINK-zzz" "$HOST" \
 		"<>" '' < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
-	{ ${ECHO} "-failed to deliver message with qmail-local"; exit 100; }
+	fatal "-failed to deliver message with qmail-local"
 
 if [ ! -r "${DIR}/default" ]; then
 	${ECHO} "qmail-local failed to deliver the message. Can't determine"
@@ -52,7 +52,7 @@ ${UNSET} DEFAULT
 
   # remove inlocal/inhost - shouldn't be used
   ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
-    { ${ECHO} "failed to remove inlocal/inhost for testlist"; exit 100; }
+    fatal "failed to remove inlocal/inhost for testlist"
 
 ###########################
 # set up bouncing account #

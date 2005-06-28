@@ -14,16 +14,16 @@ if [ "$SECT" = "1" ]; then
 # most testing with -D
   ${ECHO} "lindberg@ezmlm.org" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
 	${GREP} "$LIST@$HOST" >/dev/null || \
-	{ ${ECHO} "failed to split correctly on domain"; exit 100; }
+	fatal "failed to split correctly on domain"
   ${ECHO} "lindberg@id.com" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
 	${GREP} 'l3' >/dev/null || \
-	{ ${ECHO} "failed to split correctly on domain"; exit 100; }
+	fatal "failed to split correctly on domain"
   ${ECHO} "lindberg@id.wustl.edu" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
 	${GREP} 'l1' >/dev/null || \
-	{ ${ECHO} "failed to split correctly on hash + domain"; exit 100; }
+	fatal "failed to split correctly on hash + domain"
   ${ECHO} "cfl@id.wustl.edu" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
 	${GREP} 'l2' >/dev/null || \
-	{ ${ECHO} "failed to split correctly on hash + domain"; exit 100; }
+	fatal "failed to split correctly on hash + domain"
 # one test with delivery - redirect to local manager
 # should exit 99 after redirecting
   ${ECHO} ":::${LOC}@$HOST" > "${DIR}/split"
@@ -42,7 +42,7 @@ if [ "$SECT" = "1" ]; then
 # if no match, should exit 0
   ${ECHO} "___:::${LOC}@$HOST" > "${DIR}/split"
   ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "${DIR}" >"${ERR}" 2>&1 || \
-	{ ${ECHO} "failed to exit 0 after failing to match"; exit 100; }
+	fatal "failed to exit 0 after failing to match"
 
   ${ECHO} "OK"
 

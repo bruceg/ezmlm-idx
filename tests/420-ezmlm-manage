@@ -9,7 +9,7 @@ if [ "$SECT" -le "4" ]; then
   prompt "ezmlm-manage (4/4):   "
 
   ${GREP} "#NEW_TEXT#" "${DIR}/text/test" >/dev/null 2>&1 || \
-	{ ${ECHO} "edit4 failed to update text file"; exit 100; }
+	fatal "edit4 failed to update text file"
 
   ${ECHO} "OK"
 

@@ -25,18 +25,18 @@ LOCAL="$LOC-xxxx"; export LOCAL
 DEFAULT='xxxx'; export DEFAULT
 ${ECHO} "X-num: index1" > "${DIR}/__tmp"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
-	{ ${ECHO} " failed to exit 0 for non-recognized commands"; exit 100; }
+	fatal " failed to exit 0 for non-recognized commands"
 
 # This should not give a digest
 LOCAL="$LOC-"; export LOCAL
 DEFAULT=''; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
-	{ ${ECHO} " failed to exit 0 for list-@host"; exit 100; }
+	fatal " failed to exit 0 for list-@host"
 
 LOCAL="$LOC-index"; export LOCAL
 DEFAULT='index'; export DEFAULT
 ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
-	{ ${ECHO} "-s failed to reject -index from non-sub"; exit 100; }
+	fatal "-s failed to reject -index from non-sub"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" -ne "99" ]; then
 	${ECHO} "failed to exit 99 after -index"
@@ -56,7 +56,7 @@ ${ECHO} "X-num: get1" > "${DIR}/__tmp"
 LOCAL="$LOC-get.2_4"; export LOCAL
 DEFAULT='get.2_4'; export DEFAULT
 ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
-	{ ${ECHO} "-s failed to reject -get from non-sub"; exit 100; }
+	fatal "-s failed to reject -get from non-sub"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	${ECHO} "failed to exit 99 after -get"
@@ -113,7 +113,7 @@ ${ECHO} "X-num: thread1" > "${DIR}/__tmp"
 LOCAL="$LOC-thread.1"; export LOCAL
 DEFAULT='thread.1'; export DEFAULT
 ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
-	{ ${ECHO} "-s failed to reject -thread from non-sub"; exit 100; }
+	fatal "-s failed to reject -thread from non-sub"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	${ECHO} "failed to exit 99 after -thread"
@@ -171,9 +171,9 @@ if [ "$?" != "99" ]; then
 fi
 
 ${EZBIN}/ezmlm-get "${DIR}" 'coden' < "${DIR}/__tmp" >/dev/null 2>&1 && \
-	{ ${ECHO} "failed to reject -dig with bad digest code 'coden'"; exit 100; }
+	fatal "failed to reject -dig with bad digest code 'coden'"
 ${EZBIN}/ezmlm-get "${DIR}" 'cod' < "${DIR}/__tmp" >/dev/null 2>&1 && \
-	{ ${ECHO} "failed to reject -dig with bad digest code 'cod'"; exit 100; }
+	fatal "failed to reject -dig with bad digest code 'cod'"
 
 # now in the editor position:
 ${RM} -f "${DIR}/dignum"
@@ -181,7 +181,7 @@ LOCAL="$LOC"; export LOCAL
 ${UNSET} DEFAULT
 ${ECHO} "X-num: dig2" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
-	{ ${ECHO} "failed to exit 0 after digest in editor"; exit 100; }
+	fatal "failed to exit 0 after digest in editor"
 
 # This causes an error on systems where 'unset' doesn't work
 # For these, we skip this test.
@@ -203,28 +203,28 @@ ${RM} -f "${DIR}/dignum"
 LOCAL=''; export LOCAL
 ${ECHO} "X-num: dig3" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to exit 0 after cmd line digest"; exit 100; }
+	fatal "failed to exit 0 after cmd line digest"
 ${GREP} "3:" "${DIR}/digissue" >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to update digissue after cmd line digest"; exit 100; }
+	fatal "failed to update digissue after cmd line digest"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
 	{ ${ECHO} "failed to exit 0 when nothing to digest from cmd line"
 	exit 100; }
 ${RM} -f "${DIR}/dignum"
 ${ECHO} "X-num: dig4" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fr "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
-	{ ${ECHO} "-fr failed for digest"; exit 100; }
+	fatal "-fr failed for digest"
 ${RM} -f "${DIR}/dignum"
 ${ECHO} "X-num: dig5" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fn "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
-	{ ${ECHO} "-fn failed for digest"; exit 100; }
+	fatal "-fn failed for digest"
 ${RM} -f "${DIR}/dignum"
 ${ECHO} "X-num: dig6" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fv "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
-	{ ${ECHO} "-fv failed for digest"; exit 100; }
+	fatal "-fv failed for digest"
 ${RM} -f "${DIR}/dignum"
 ${ECHO} "X-num: dig7" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fx "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
-	{ ${ECHO} "-fx failed for digest"; exit 100; }
+	fatal "-fx failed for digest"
 
 # restore headeradd
 mv -f "${DIR}/headeradd.bak" "${DIR}/headeradd"

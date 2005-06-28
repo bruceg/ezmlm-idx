@@ -14,9 +14,9 @@ if [ "$SECT" = "1" ]; then
 
   ${EZBIN}/ezmlm-sub "${DIR}" "${SND}@$HOST"
   ${EZBIN}/ezmlm-manage -U "${DIR}" </dev/null >"${ERR}" 2>&1 || \
-	{ ${ECHO} "failed with -U"; exit 100; }
+	fatal "failed with -U"
   ${EZBIN}/ezmlm-issubn "${DIR}" && \
-	{ ${ECHO} "unsubscribe with -U failed"; exit 100; }
+	fatal "unsubscribe with -U failed"
 
   LOCAL="$LOC-digest-subscribe"; export LOCAL
   DEFAULT='digest-subscribe'; export DEFAULT
@@ -34,7 +34,7 @@ if [ "$SECT" = "1" ]; then
   SENDER="${MOD}@$HOST"; export SENDER
   ${EZBIN}/ezmlm-sub "${DIR}/mod" "$SENDER" || exit 100
   ${EZBIN}/ezmlm-manage "${DIR}" </dev/null > "${ERR}" 2>&1 || \
-	{ ${ECHO} "Deny access denied to remote admin!"; exit 100; }
+	fatal "Deny access denied to remote admin!"
 
 # make non-moderated
   ${RM} -f "${DIR}/modsub" || \
@@ -59,9 +59,9 @@ if [ "$SECT" = "1" ]; then
 	DEFAULT='digest-subscribe'; export DEFAULT
 
   ${EZBIN}/ezmlm-manage -S "${DIR}" </dev/null >"${ERR}" 2>&1 || \
-	{ ${ECHO} "failed with -S"; exit 100; }
+	fatal "failed with -S"
   ${EZBIN}/ezmlm-issubn "${DIR}/digest" || \
-	{ ${ECHO} "digest-subscribe with -S failed"; exit 100; }
+	fatal "digest-subscribe with -S failed"
   ${EZBIN}/ezmlm-unsub "${DIR}/digest" "${SND}@$HOST"
   touch "${DIR}/modsub" || \
 	{ ${ECHO} "Failed to restore DIR/modsub"; exit 99; }
@@ -73,24 +73,24 @@ if [ "$SECT" = "1" ]; then
   ${ECHO} >> "${DIR}/__tmp"
   ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${DIR}/__tmp" \
 		>"${ERR}" 2>&1 || \
-	{ ${ECHO} "digest-subscribe with request failed"; exit 100; }
+	fatal "digest-subscribe with request failed"
 
   ${EZBIN}/ezmlm-sub "${DIR}" "${MAN}@$HOST"
   LOCAL="$LOC-unsubscribe"; export LOCAL
   DEFAULT='unsubscribe'; export DEFAULT
   ${ECHO} "X-num: sub2" > "${DIR}/__tmp"
   ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
-	{ ${ECHO} "unsubscribe request failed"; exit 100; }
+	fatal "unsubscribe request failed"
 
 # -get function for backwards compatibility
   LOCAL="$LOC-get.1"; export LOCAL
   DEFAULT='get.1'; export DEFAULT
   ${ECHO} "X-num: manget1" > "${DIR}/__tmp"
   ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
-	{ ${ECHO} "get failed"; exit 100; }
+	fatal "get failed"
 # -C should disable it
   ${EZBIN}/ezmlm-manage -C "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 && \
-	{ ${ECHO} "-C failed to disable -get"; exit 100; }
+	fatal "-C failed to disable -get"
 
   ${ECHO} "OK"
 

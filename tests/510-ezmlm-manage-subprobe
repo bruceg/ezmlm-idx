@@ -7,7 +7,7 @@ if [ "$SECT" -le "5" ]; then
   DEFAULT="subscribe"; export DEFAULT
   LOCAL="${LOC}-${DEFAULT}"; export LOCAL
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
-  { ${ECHO} "failed to produce subscribe probe"; exit 100; }
+  fatal "failed to produce subscribe probe"
 
   grephdr_manage
   grephdr reply-to: "${LOC}-sc\\..*\\..*-test=example.org@${HOST}"

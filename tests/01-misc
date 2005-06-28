@@ -285,7 +285,7 @@ fi
 sleep_5 OK
 ${ECHO}
 ${RM} -f "$TSTMSG" > "${ERR}" 2>&1 || \
-	{ ${ECHO} "failed to remove test message for section $1"; exit 100; }
+	fatal "failed to remove test message for section $1"
 TSTMSG=''
 return 0
 }

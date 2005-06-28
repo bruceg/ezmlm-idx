@@ -9,9 +9,9 @@ if [ "$SECT" = "1" ]; then
   prompt "ezmlm-weed:           "
 
   ${ECHO} "Subject: test" | ${EZBIN}/ezmlm-weed || \
-	{ ${ECHO} "failed to accept good message"; exit 100; }
+	fatal "failed to accept good message"
   ${ECHO} "Subject: success notice" | ${EZBIN}/ezmlm-weed >/dev/null 2>&1 && \
-	{ ${ECHO} "failed to reject bad message"; exit 100; }
+	fatal "failed to reject bad message"
 
   ${ECHO} "OK"
 

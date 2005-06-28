@@ -12,7 +12,7 @@ MSG1=`${GREP} -l "msg1" $SINKDIR/new/*` || \
 	exit 100; }
 # make sure headeradd was done
   ${GREP} -i 'precedence: bulk' < "$MSG1" >/dev/null 2>&1 ||
-	{ ${ECHO} "failed to add headeradd"; exit 100; }
+	fatal "failed to add headeradd"
 # check on received: header handling
 ${GREP} '#PENULTIMATE#' "$MSG1" >/dev/null && \
 	{ ${ECHO} "-r failed to remove received header"; \
@@ -21,10 +21,10 @@ ${GREP} '#LAST#' "$MSG1" >/dev/null || \
 	{ ${ECHO} "-r failed to leave last received header"; \
 	exit 100; }
 ${GREP} 'Subject:' "$MSG1" | ${GREP} 'PFX' >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to add subject prefix"; exit 100; }
+	fatal "failed to add subject prefix"
 	# the trailer should be a MIME part, so not at the very end
 ${TAIL} -n 6 "$MSG1" | ${HEAD} -n 2 | ${GREP} 'TRAILER' >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to add trailer"; exit 100; }
+	fatal "failed to add trailer"
 
 MSG2=`${GREP} -l "msg2" $SINKDIR/new/*` || \
 	{ ${ECHO} "failed to deliver message 2 to subscriber"; \

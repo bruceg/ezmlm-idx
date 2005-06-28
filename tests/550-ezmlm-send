@@ -15,7 +15,7 @@ EOF
 
   LOCAL="${LOC}"; export LOCAL
   ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
-  { ${ECHO} "failed to produce post"; exit 100; }
+  fatal "failed to produce post"
 
   grephdr_list 1
   grephdr precedence: bulk

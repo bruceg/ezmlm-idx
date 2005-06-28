@@ -1,5 +1,10 @@
 # $Id$
 
+fatal() {
+  ${ECHO} "$*"
+  exit 100;
+}
+
 grephdr() {
   # Search for the header line, and produce an error if it didn't match.
   ${GREP} -i "^$*$" "${QQHDR}" >/dev/null 2>&1 || \
