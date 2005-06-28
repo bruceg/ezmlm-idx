@@ -27,7 +27,7 @@ if [ "$SECT" = "1" ]; then
 	{
 	  ${GREP} -v "child" "${ERR}" > /dev/null 2>&1
 	  if [ "$?" != "0" ]; then
-	    ${ECHO} "Failed to process message mod2"; exit 100
+	    fatal "Failed to process message mod2"
 	  else
 	    EZFORK='no'
 	  fi

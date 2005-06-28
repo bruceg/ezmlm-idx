@@ -11,10 +11,10 @@ if [ "$SECT" -le "2" ]; then
   ${EZBIN}/ezmlm-idx "${DIR}" >"${ERR}" 2>&1 || \
 	fatal "failed to run"
   if [ ! -r "${DIR}/indexed" ]; then
-	${ECHO} "failed to create DIR/indexed"; exit 100
+	fatal "failed to create DIR/indexed"
   fi
   if [ ! -r "${DIR}/archive/0/index" ]; then
-	${ECHO} "failed to create index"; exit 100
+	fatal "failed to create index"
   fi 
   ${ECHO} "OK"
 

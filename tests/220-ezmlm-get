@@ -39,16 +39,14 @@ ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	fatal "-s failed to reject -index from non-sub"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" -ne "99" ]; then
-	${ECHO} "failed to exit 99 after -index"
-	exit 100
+	fatal "failed to exit 99 after -index"
 fi
 
 ${ECHO} "X-num: index2" > "${DIR}/__tmp"
 SENDER="${DIG}@$HOST"; export SENDER
 ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" -ne "99" ]; then
-	${ECHO} "-s failed to exit 99 after -index"
-	exit 100
+	fatal "-s failed to exit 99 after -index"
 fi
 
 SENDER="${BNC}@$HOST"; export SENDER
@@ -59,15 +57,13 @@ ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	fatal "-s failed to reject -get from non-sub"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
-	${ECHO} "failed to exit 99 after -get"
-	exit 100
+	fatal "failed to exit 99 after -get"
 fi
 ${ECHO} "X-num: get2" > "${DIR}/__tmp"
 SENDER="${DIG}@$HOST"; export SENDER
 ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
-	${ECHO} "-s failed to exit 99 after -get"
-	exit 100
+	fatal "-s failed to exit 99 after -get"
 fi
 
 # test formats for -get
@@ -76,16 +72,14 @@ LOCAL="$LOC-getr.2_4"; export LOCAL
 DEFAULT='getr.2_4'; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
-	${ECHO} "failed to exit 99 after -getr"
-	exit 100
+	fatal "failed to exit 99 after -getr"
 fi
 ${ECHO} "X-num: get4" > "${DIR}/__tmp"
 LOCAL="$LOC-getn.2_4"; export LOCAL
 DEFAULT='getn.2_4'; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
-	${ECHO} "failed to exit 99 after -getn"
-	exit 100
+	fatal "failed to exit 99 after -getn"
 fi
 
 ${ECHO} "X-num: get5" > "${DIR}/__tmp"
@@ -93,8 +87,7 @@ LOCAL="$LOC-getv.2_4"; export LOCAL
 DEFAULT='getv.2_4'; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
-	${ECHO} "failed to exit 99 after -getv"
-	exit 100
+	fatal "failed to exit 99 after -getv"
 fi
 
 ${ECHO} "X-num: get6" > "${DIR}/__tmp"
@@ -102,8 +95,7 @@ LOCAL="$LOC-getx.2_4"; export LOCAL
 DEFAULT='getx.2_4'; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
-	${ECHO} "failed to exit 99 after -getx"
-	exit 100
+	fatal "failed to exit 99 after -getx"
 fi
 
 SENDER="${BNC}@$HOST"; export SENDER
@@ -116,15 +108,13 @@ ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
 	fatal "-s failed to reject -thread from non-sub"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
-	${ECHO} "failed to exit 99 after -thread"
-	exit 100
+	fatal "failed to exit 99 after -thread"
 fi
 ${ECHO} "X-num: thread2" > "${DIR}/__tmp"
 SENDER="${DIG}@$HOST"; export SENDER
 ${EZBIN}/ezmlm-get -s "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
-	${ECHO} "-s failed to exit 99 after -thread"
-	exit 100
+	fatal "-s failed to exit 99 after -thread"
 fi
 
 ######### digests
@@ -147,27 +137,23 @@ SENDER="${BNC}@$HOST"; export SENDER
 LOCAL="$LOC-dig.code"; export LOCAL
 DEFAULT='dig.code'; export DEFAULT
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 && \
-	{ ${ECHO} "failed to reject -dig when no digest code was on cmd-line"
-	  exit 100
-	}
+	fatal "failed to reject -dig when no digest code was on cmd-line"
 if [ -r "${DIR}/dignum" ]; then
-	${ECHO} "script error: dignum exists"; exit 100
+	fatal "script error: dignum exists"
 fi
 ${EZBIN}/ezmlm-get "${DIR}" 'code' < "${DIR}/__tmp" >"${ERR}" 2>&1
 if [ "$?" != "99" ]; then
-	${ECHO} "failed to exit 99 after digest in manager position"
-	exit 100
+	fatal "failed to exit 99 after digest in manager position"
 fi
 if [ ! -r "${DIR}/dignum" ]; then
-	${ECHO} "failed to generate dignum"; exit 100
+	fatal "failed to generate dignum"
 fi
 if [ ! -r "${DIR}/digissue" ]; then
-	${ECHO} "failed to generate digissue"; exit 100
+	fatal "failed to generate digissue"
 fi
 ${EZBIN}/ezmlm-get "${DIR}" 'code' < "${DIR}/__tmp" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
-	${ECHO} "failed to exit 99 when nothing to digest in manager position"
-	exit 100
+	fatal "failed to exit 99 when nothing to digest in manager position"
 fi
 
 ${EZBIN}/ezmlm-get "${DIR}" 'coden' < "${DIR}/__tmp" >/dev/null 2>&1 && \
@@ -187,15 +173,13 @@ ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
 # For these, we skip this test.
   if [ -z "$BADUNSET" ]; then
     if [ ! -r "${DIR}/dignum" ]; then
-	${ECHO} "failed to generate dignum after digest in editor"; exit 100
+	fatal "failed to generate dignum after digest in editor"
     fi
 
     ${GREP} "2:" "${DIR}/digissue" >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to update digissue after digest in editor";
-	  exit 100; }
+	fatal "failed to update digissue after digest in editor"
     ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
-	{ ${ECHO} "failed to exit 0 when nothing to digest in editor";
-	  exit 100; }
+	fatal "failed to exit 0 when nothing to digest in editor"
   fi
 
 # now from the command line with formats ...
@@ -207,8 +191,7 @@ ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
 ${GREP} "3:" "${DIR}/digissue" >/dev/null 2>&1 || \
 	fatal "failed to update digissue after cmd line digest"
 ${EZBIN}/ezmlm-get "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to exit 0 when nothing to digest from cmd line"
-	exit 100; }
+	fatal "failed to exit 0 when nothing to digest from cmd line"
 ${RM} -f "${DIR}/dignum"
 ${ECHO} "X-num: dig4" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fr "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \

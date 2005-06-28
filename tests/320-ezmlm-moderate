@@ -17,8 +17,7 @@ if [ "$SECT" -le "3" ]; then
 
   MOD3=`${GREP} -l "mod3" $SINKDIR/new/* | head -n 1`
   if [ -z "$MOD3" ]; then
-    ${ECHO} "failed to post message mod3"
-    exit 100
+    fatal "failed to post message mod3"
   fi
 
 # ${LOC}@$HOST means it was not rejected, but sent through the list

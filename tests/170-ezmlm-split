@@ -35,9 +35,9 @@ if [ "$SECT" = "1" ]; then
 
   EC="$?"
   if [ "$EC" -eq "0" ]; then
-	${ECHO} "exited 0 after forwarding, rather than 99"; exit 100
+	fatal "exited 0 after forwarding, rather than 99"
   elif [ "$EC" != "99" ]; then
-	${ECHO} "failed to process message for forwarding"; exit 100
+	fatal "failed to process message for forwarding"
   fi
 # if no match, should exit 0
   ${ECHO} "___:::${LOC}@$HOST" > "${DIR}/split"

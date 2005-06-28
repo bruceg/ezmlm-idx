@@ -17,8 +17,7 @@ if [ "$SECT" = "1" ]; then
   ${ECHO} "Subject: qqqq ${SND}@$HOST" >> "${DIR}/__tmp"
   ${EZBIN}/ezmlm-request "${DIR}" < "${DIR}/__tmp" > "${ERR}" 2>&1
   if [ "$?" != "99" ]; then
-	${ECHO} "qqqq command in subject failed to exit 99"
-	exit 100
+	fatal "qqqq command in subject failed to exit 99"
   fi
 
   ${ECHO} "X-num: req1" > "${DIR}/__tmp"
@@ -26,8 +25,7 @@ if [ "$SECT" = "1" ]; then
   ${ECHO} "Subject: ${LOC}-remove-${SND}=${HOST}@${HOST}" >> "${DIR}/__tmp"
   ${EZBIN}/ezmlm-request "${DIR}" < "${DIR}/__tmp" > "${ERR}" 2>&1
   if [ "$?" != "99" ]; then
-	${ECHO} "full ezmlm command in subject failed to exit 99"
-	exit 100
+	fatal "full ezmlm command in subject failed to exit 99"
   fi
 
   ${ECHO} "OK"

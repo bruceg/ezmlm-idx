@@ -12,14 +12,12 @@ prompt "ezmlm-moderate (1/2): "
 
 REJ=`${GREP} "From: $LOC-reject" "$MOD1"| cut -d' ' -f2`
 if [ -z "$REJ" ]; then
-	${ECHO} "No From: ...-reject header in mod request for mod1"
-	exit 100
+	fatal "No From: ...-reject header in mod request for mod1"
 fi
 
 ACC=`${GREP} "Reply-To: $LOC-accept" "$MOD3"| cut -d' ' -f2`
 if [ -z "$ACC" ]; then
-	${ECHO} "No From: ...-accept header in mod request for mod3"
-	exit 100
+	fatal "No From: ...-accept header in mod request for mod3"
 fi
 
 # remove moderation request from sinkdir

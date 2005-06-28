@@ -11,8 +11,7 @@ if [ "$SECT" = "1" ]; then
 # edit non-existant list
   ${EZBIN}/ezmlm-make -e -C${EZBIN}/ezmlmrc "${DIR}" "${DOT}" \
 	"$LOC" "$HOST" > /dev/null 2>&1 && \
-	{ ${ECHO} "ezmlm-make failed reject edit of non-existing list:"
-	  exit 100; }
+	fatal "ezmlm-make failed reject edit of non-existing list:"
 
 # make simple test list
   ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "${DIR}" "${DOT}" \
@@ -48,7 +47,7 @@ if [ "$SECT" = "1" ]; then
 # digest/bouncer only for >=0.32
   if [  "$EZVER" != '31' ]; then
     if [ ! -f "${DIR}/digest/bouncer" ]; then
-	${ECHO} "failed to create digest/bouncer"; exit 100;
+	fatal "failed to create digest/bouncer";
     fi
     ${GREP} "ezmlm-weed" "${DIR}/digest/bouncer" >/dev/null 2>&1 || \
 	fatal "no ezmlm-weed in bouncer"

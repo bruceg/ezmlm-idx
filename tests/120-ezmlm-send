@@ -19,7 +19,7 @@ if [ "$SECT" = "1" ]; then
 	${EZBIN}/ezmlm-send "${DIR}" >"${ERR}" 2>&1 || \
 	fatal "failed to accept normal message"
   if [ `cat "${DIR}/num"` != "1:1" ]; then
-	${ECHO} "failed to create num for normal message 1"; exit 100; 
+	fatal "failed to create num for normal message 1"; 
   fi
   if [ ! -x "${DIR}/archive/0/01" ]; then
 	fatal "failed to archive normal message"

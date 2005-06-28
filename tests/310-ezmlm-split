@@ -12,16 +12,14 @@ if [ "$SECT" -le "3" ]; then
 # message in SINKDIR means that the request was forwarded to ezmlm-manage,
 # which replied with a confirmation request.
   ${GREP} 'X-num: spl1' $SINKDIR/new/* > /dev/null 2>&1 || \
-	{ ${ECHO} "failed to receive sub conf req.";
-	  ${ECHO} "this could be a failure of ezmlm-split, but usually,";
-	  ${ECHO} "it happens because ezmlm binaries when run by qmail";
-	  ${ECHO} "don't have access to shared libraries required for";
-	  ${ECHO} "RDBMS access. This happens on systems where RDBMS";
-	  ${ECHO} "shared libs are installed in the /usr/local hierarchy.";
-	  ${ECHO} "fix: see ld.so man page on how to modify /etc/ld.so.conf";
-	  ${ECHO} "or compile statically by adding -static to conf-sqlld.";
-	  ${ECHO}
-	  exit 100; }
+	fatal	"failed to receive sub conf req." \
+		"this could be a failure of ezmlm-split, but usually," \
+		"it happens because ezmlm binaries when run by qmail" \
+		"don't have access to shared libraries required for" \
+		"RDBMS access. This happens on systems where RDBMS" \
+		"shared libs are installed in the /usr/local hierarchy." \
+		"fix: see ld.so man page on how to modify /etc/ld.so.conf" \
+		"or compile statically by adding -static to conf-sqlld."
 
   ${ECHO} "OK"
 

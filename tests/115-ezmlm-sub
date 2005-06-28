@@ -16,16 +16,13 @@ if [ "$SECT" = "1" ]; then
 	fatal "ezmlm-list: failed"
 
   ${EZBIN}/ezmlm-list "${DIR}" | ${GREP} '@' >/dev/null 2>&1 && \
-	{ ${ECHO} "already addresses in table - please remove and start again";
-		exit 100; }
+	fatal "already addresses in table - please remove and start again"
 
   ${EZBIN}/ezmlm-list "${DIR}/digest" | ${GREP} '@' >/dev/null 2>&1 && \
-	{ ${ECHO} "already addresses in table - please remove and start again";
-		exit 100; }
+	fatal "already addresses in table - please remove and start again"
 
   ${EZBIN}/ezmlm-list "${DIR}/${ALLOW}" | ${GREP} '@' >/dev/null 2>&1 && \
-	{ ${ECHO} "already addresses in table - please remove and start again";
-		exit 100; }
+	fatal "already addresses in table - please remove and start again"
 
 # not subscriber. Test default
   ${EZBIN}/ezmlm-issubn "${DIR}" "${DIR}/${ALLOW}" && \

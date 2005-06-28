@@ -13,8 +13,7 @@ if [ "$SECT" -le "3" ]; then
 	fatal "unsub without mod for moderated list failed"
 
   SUB3=`${GREP} -l 'sub3' $MODDIR/new/*` || \
-	{ ${ECHO} "failed getting subscribe moderation confirm request"; \
-	 exit 100; }
+	fatal "failed getting subscribe moderation confirm request"
 
 # confirm subscription request
   LOCAL=`${GREP} "Reply-To:" "$SUB3" | cut -d' ' -f2 | cut -d'@' -f1` || \
@@ -31,8 +30,7 @@ if [ "$SECT" -le "3" ]; then
 # complete edit. SENDER can be any address
   SENDER="${MAN}@$HOST"; export SENDER
   EDIT3=`${GREP} -l 'edit3' $MODDIR/new/*` || \
-	{ ${ECHO} "failed getting edit reply for edit3"; \
-	 exit 100; }
+	fatal "failed getting edit reply for edit3"
   ${GREP} "#TEST_TEXT#" "$EDIT3" >/dev/null 2>&1 || \
 	fatal "old text missing in edit3 edit reply"
   LOCAL=`${GREP} "Reply-To:" "$EDIT3" | cut -d' ' -f2 | cut -d'@' -f1` || \
@@ -49,14 +47,12 @@ if [ "$SECT" -le "3" ]; then
 
 # check results of log/list
   LOG3=`${GREP} -l 'log3' $MODDIR/new/*` || \
-	{ ${ECHO} "failed getting -log reply to log3"; \
-	 exit 100; }
+	fatal "failed getting -log reply to log3"
   ${GREP} "aaa@bbb" "$LOG3" | ${GREP} "+m" > /dev/null 2>&1 || \
 	fatal "failed to get log reply to log3"
 
   LIST3=`${GREP} -l 'list3' $MODDIR/new/*` || \
-	{ ${ECHO} "failed getting -list reply to list3"; \
-	 exit 100; }
+	fatal "failed getting -list reply to list3"
   ${GREP} "aaa@bbb" "$LIST3" > /dev/null 2>&1 || \
 	fatal "failed to get list reply to list3"
 

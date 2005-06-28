@@ -25,16 +25,13 @@ if [ "$SECT" = "1" ]; then
   ${EZBIN}/ezmlm-clean "${DIR}" >"${ERR}" 2>&1 ||
 	fatal "failed first invocation"
   if [ -r "${DIR}/mod/pending/1" ]; then
-	${ECHO} "failed to remove non-x moderation queue entry 1"
-	exit 100
+	fatal "failed to remove non-x moderation queue entry 1"
   fi
   if [ -r "${DIR}/mod/pending/2" ]; then
-	${ECHO} "failed to remove moderation queue entry 2"
-	exit 100
+	fatal "failed to remove moderation queue entry 2"
   fi
   if [ ! -r "${DIR}/mod/pending/1999999999" ]; then
-	${ECHO} "removed mod queue entry 3 that wasn't due"
-	exit 100
+	fatal "removed mod queue entry 3 that wasn't due"
   fi
 
 ${ECHO} <<EOF > "${DIR}/mod/pending/4"
@@ -45,7 +42,7 @@ EOF
   ${EZBIN}/ezmlm-clean -R "${DIR}" >"${ERR}" 2>&1 ||
 	fatal "-R failed"
   if [ -r  "${DIR}/mod/pending/4" ]; then
-	${ECHO} "failed to remove moderation queue entry 4"; exit 100
+	fatal "failed to remove moderation queue entry 4"
   fi
 
   ${ECHO} "OK"

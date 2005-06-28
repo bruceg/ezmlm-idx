@@ -37,8 +37,7 @@ ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${DIR}/__tmp" \
 	fatal "failed to send user conf for sub1"
 
 LOCAL=`${GREP} "Reply-To:" "$SUB2" | cut -d' ' -f2 | cut -d'@' -f1` || \
-	{ ${ECHO} "failed to find confirm address in -unsubscribe reply"
-	  exit 100; }
+	fatal "failed to find confirm address in -unsubscribe reply"
 export LOCAL
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
 ${ECHO} "X-num: sub4" > "${DIR}/__tmp"
