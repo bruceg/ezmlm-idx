@@ -183,113 +183,6 @@ ${PS} | ${GREP} qmai\l-send >/dev/null 2>&1 || \
 	 ${ECHO} "qmail is not running, this script will fail. Will continue..."
 	}
 
-###############################
-# message generating function #
-###############################
-make_body()
-{
-  ${ECHO} "This is a simple message body"
-  ${ECHO} "--bound123ary"
-  ${ECHO} "Content-type: Text/pLAIn"
-  ${ECHO}
-  ${ECHO} "plain text"
-  ${ECHO} "--bound123ary"
-  ${ECHO} "Content-type: texT/Html"
-  ${ECHO}
-  ${ECHO} "html text"
-  ${ECHO} "--bound123ary--"
-  ${ECHO}
-  ${ECHO} "junk after boundary"
-  return 0
-}
-
-make_message()
-{
-  ${ECHO} "ReCEIved: #LAST#"
-  ${ECHO} "ReCeIved: #PENULTIMATE#"
-  ${ECHO} "retuRN-RECeipt-to: nobody"
-  ${ECHO} "To: $TO"
-  ${ECHO} "CC: "
-  ${ECHO} " $CC"
-  ${ECHO} "FROM: $FROM"
-  if [ ! -z "$CONTENT" ]; then
-	${ECHO} "MIME-Version: 1.0"
-	${ECHO} "Content-type: $CONTENT;"
-	${ECHO} " boundary=bound123ary${AFTERBOUND}"
-  fi
-  if [ ! -z "$SUBJECT" ]; then
-	${ECHO} "Subject: $SUBJECT"
-  fi
-  ${ECHO}
-  make_body
-  return 0
-}
-
-############################
-# function to test testmsg #
-############################
-send_test()
-{
-  {
-	${ECHO} "X-num: #TSTMSG$1#"
-	${ECHO} "To: ${SND}@$HOST"
-  } | ${QMPATH}/bin/qmail-inject
-  return 0
-}
-
-############################
-# sleeping 5 secs function #
-############################
-sleep_5()
-{
-  sleep 1; prompt "."; sleep 1; prompt "."
-  sleep 1; prompt "."; sleep 1; prompt "."
-  sleep 1; prompt "${1}"
-  return 0
-}
-
-################################
-# waiting for delivery fuction #
-################################
-wait_test()
-{
-prompt "max 35s for delivery: "
-sleep_5 5s
-TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-if [ -z "$TSTMSG" ]; then
-  sleep_5 10s
-  TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-  if [ -z "$TSTMSG" ]; then
-    sleep_5 15s
-    TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-    if [ -z "$TSTMSG" ]; then
-      sleep_5 20s
-      TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-      if [ -z "$TSTMSG" ]; then
-        sleep_5 25s
-        TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-        if [ -z "$TSTMSG" ]; then
-          sleep_5 30s
-          TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-          if [ -z "$TSTMSG" ]; then
-  		${ECHO}
-		${ECHO} "Delivery of test message failed. Fix qmail or wait"
-		${ECHO} "longer and continue with argument \"-s $1\""
- 		exit 100
-          fi
-        fi
-      fi
-    fi
-  fi
-fi
-sleep_5 OK
-${ECHO}
-${RM} -f "$TSTMSG" > "${ERR}" 2>&1 || \
-	fatal "failed to remove test message for section $1"
-TSTMSG=''
-return 0
-}
-
 ########################
 # remove old test list #
 ########################
@@ -314,10 +207,7 @@ ${ECHO}
 SAME_VER='n'
 
 TMP_VER=`${EZBIN}/ezmlm-make -V 2>&1` || \
-	{
-		${ECHO} "This program only works with ezmlm-idx"
-		exit 100
-	}
+	fatal "This program only works with ezmlm-idx"
 # ezmlm-idx-0313 does not support DEFAULT, so no sense testing it
 THIS_VER=`${ECHO} "$TMP_VER" | cut -d'+' -f2`
 ${ECHO} "$THIS_VER" | ${GREP} "ezmlm-idx" > /dev/null 2>&1 ||
