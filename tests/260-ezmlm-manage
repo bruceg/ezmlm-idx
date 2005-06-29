@@ -8,61 +8,7 @@ if [ "$SECT" -le "2" ]; then
 
 setqq
 
-prompt "ezmlm-manage (2/4):   "
-
-# check digest-subscribe and list-unsubscribe replies
-SUB1=`${GREP} -l 'sub1' $MANDIR/new/*` || \
-	fatal "failed getting digest-subscribe confirm request"
-
-SUB2=`${GREP} -l 'sub2' $MANDIR/new/*` || \
-	fatal "failed getting -unsubscribe confirm request"
-
-# Check -get.1 reply
-MANGET1=`${GREP} -l 'manget1' $MANDIR/new/*` || \
-	fatal "failed getting -get.1 reply"
-
-${GREP} 'msg1' "$MANGET1" >/dev/null || \
-	fatal "get.1 failed to return archived message"
-
-# Add moderator
-${EZBIN}/ezmlm-sub "${DIR}/mod" "${MOD}@$HOST"
-
-qqclean
-LOCAL=`${GREP} "Reply-To:" "$SUB1" | cut -d' ' -f2 | cut -d'@' -f1` || \
-	fatal "failed to find confirm address in -subscribe reply"
-export LOCAL
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
-${ECHO} "X-num: sub3" > "${TMP}"
-${ECHO} "From: Mr. $EZTEST confirms <$SENDER>" >> "${TMP}"
-${ECHO} >> "${TMP}"
-${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${TMP}" \
-		>"${ERR}" 2>&1 || \
-	fatal "failed to send user conf for sub1"
-SENDER="${MOD}@$HOST"; export SENDER
-${EZBIN}/ezmlm-issubn "${DIR}" && \
-	fatal "unsub without mod for moderated list failed"
-${GREP} 'sub3' ${QQMSG} >/dev/null 2>&1 || \
-	fatal "failed getting subscribe moderation confirm request"
-
-# confirm subscription request
-LOCAL=`${GREP} "Reply-To:" ${QQMSG} | cut -d' ' -f2 | cut -d'@' -f1` || \
-	fatal "no confirm address in sub3 mod confirm request"
-export LOCAL
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
-${ECHO} "X-num: modR1" > "${TMP}"
-${ECHO} "FROM: moderator agrees <$SENDER>" >> "${TMP}"
-${ECHO} >> "${TMP}"
-${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${TMP}"\
-		>/dev/null 2>&1 || \
-	fatal "failed to send digest sub mod accept for sub3"
-
-LOCAL=`${GREP} "Reply-To:" "$SUB2" | cut -d' ' -f2 | cut -d'@' -f1` || \
-	fatal "failed to find confirm address in -unsubscribe reply"
-export LOCAL
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
-${ECHO} "X-num: sub4" > "${TMP}"
-${EZBIN}/ezmlm-manage "${DIR}" < "${TMP}" >/dev/null 2>&1 || \
-	fatal "failed to send conf for sub2"
+prompt "ezmlm-manage (2/2):   "
 
 # now test remote admin functions
 # add a few addresses to allow

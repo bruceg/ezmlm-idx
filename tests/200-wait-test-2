@@ -1,9 +1,0 @@
-# $Id$
-
-####################################### start of section 2
-
-if [ "$SECT" -le "2" ]; then
-
-  wait_test 2
-
-fi

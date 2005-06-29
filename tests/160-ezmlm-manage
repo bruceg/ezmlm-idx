@@ -6,7 +6,9 @@
 
 if [ "$SECT" = "1" ]; then
 
-  prompt "ezmlm-manage (1/4):   "
+  setqq
+
+  prompt "ezmlm-manage (1/2):   "
 
   LOCAL="$LOC-unsubscribe"; export LOCAL
   DEFAULT='unsubscribe'; export DEFAULT
@@ -75,6 +77,43 @@ if [ "$SECT" = "1" ]; then
 		>"${ERR}" 2>&1 || \
 	fatal "digest-subscribe with request failed"
 
+  ${GREP} T"${MAN}@$HOST" ${QQENV} >/dev/null 2>&1 || \
+	fatal "failed getting digest-subscribe confirm request"
+
+  # Add moderator
+  ${EZBIN}/ezmlm-sub "${DIR}/mod" "${MOD}@$HOST"
+
+  LOCAL=`${GREP} "Reply-To:" ${QQMSG} | cut -d' ' -f2 | cut -d'@' -f1` || \
+	fatal "failed to find confirm address in -subscribe reply"
+  export LOCAL
+  qqclean
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+  ${ECHO} "X-num: sub3" > "${TMP}"
+  ${ECHO} "From: Mr. $EZTEST confirms <$SENDER>" >> "${TMP}"
+  ${ECHO} >> "${TMP}"
+  ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${TMP}" \
+		>"${ERR}" 2>&1 || \
+	fatal "failed to send user conf for sub1"
+  msgexists || \
+	fatal "failed to receive user conf for sub1"
+  SENDER="${MOD}@$HOST"; export SENDER
+  ${EZBIN}/ezmlm-issubn "${DIR}" && \
+	fatal "unsub without mod for moderated list failed"
+  ${GREP} 'sub3' ${QQMSG} >/dev/null 2>&1 || \
+	fatal "failed getting subscribe moderation confirm request"
+
+  # confirm subscription request
+  LOCAL=`${GREP} "Reply-To:" ${QQMSG} | cut -d' ' -f2 | cut -d'@' -f1` || \
+	fatal "no confirm address in sub3 mod confirm request"
+  export LOCAL
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+  ${ECHO} "X-num: modR1" > "${TMP}"
+  ${ECHO} "FROM: moderator agrees <$SENDER>" >> "${TMP}"
+  ${ECHO} >> "${TMP}"
+  ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${TMP}"\
+		>/dev/null 2>&1 || \
+	fatal "failed to send digest sub mod accept for sub3"
+
   ${EZBIN}/ezmlm-sub "${DIR}" "${MAN}@$HOST"
   LOCAL="$LOC-unsubscribe"; export LOCAL
   DEFAULT='unsubscribe'; export DEFAULT
@@ -82,16 +121,37 @@ if [ "$SECT" = "1" ]; then
   ${EZBIN}/ezmlm-manage "${DIR}" < "${TMP}" >"${ERR}" 2>&1 || \
 	fatal "unsubscribe request failed"
 
+  # check digest-subscribe and list-unsubscribe replies
+  ${GREP} T"${MOD}@$HOST" ${QQENV} >/dev/null 2>&1 || \
+	fatal "-unsubscribe confirm request sent to wrong address"
+
+  LOCAL=`${GREP} "Reply-To:" ${QQMSG} | cut -d' ' -f2 | cut -d'@' -f1` || \
+	fatal "failed to find confirm address in -unsubscribe reply"
+  export LOCAL
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+  ${ECHO} "X-num: sub4" > "${TMP}"
+  ${EZBIN}/ezmlm-manage "${DIR}" < "${TMP}" >/dev/null 2>&1 || \
+	fatal "failed to send conf for sub2"
+
 # -get function for backwards compatibility
   LOCAL="$LOC-get.1"; export LOCAL
   DEFAULT='get.1'; export DEFAULT
   ${ECHO} "X-num: manget1" > "${TMP}"
   ${EZBIN}/ezmlm-manage "${DIR}" < "${TMP}" >"${ERR}" 2>&1 || \
 	fatal "get failed"
+
+  # Check -get.1 reply
+  ${GREP} T"${MOD}@$HOST" ${QQENV} >/dev/null 2>&1 || \
+	fatal "delivered manget1 to wrong address"
+  ${GREP} 'msg1' ${QQMSG} >/dev/null || \
+	fatal "get.1 failed to return archived message"
+
 # -C should disable it
   ${EZBIN}/ezmlm-manage -C "${DIR}" < "${TMP}" >"${ERR}" 2>&1 && \
 	fatal "-C failed to disable -get"
 
   ${ECHO} "OK"
+
+  unsetqq
 
 fi
