@@ -6,6 +6,8 @@
 
 if [ "$SECT" -le "3" ]; then
 
+  setqq
+
   prompt "ezmlm-manage (3/4):   "
 
   SENDER="${MOD}@$HOST"; export SENDER
@@ -45,6 +47,9 @@ if [ "$SECT" -le "3" ]; then
   ${EZBIN}/ezmlm-manage -e "${DIR}" < "${TMP}" >/dev/null 2>&1 || \
 	fatal "failed to send edit4 reply for edit3"
 
+  ${GREP} "#NEW_TEXT#" "${DIR}/text/test" >/dev/null 2>&1 || \
+	fatal "edit4 failed to update text file"
+
 # check results of log/list
   LOG3=`${GREP} -l 'log3' $MODDIR/new/*` || \
 	fatal "failed getting -log reply to log3"
@@ -58,4 +63,5 @@ if [ "$SECT" -le "3" ]; then
 
   ${ECHO} "OK"
 
+  unsetqq
 fi
