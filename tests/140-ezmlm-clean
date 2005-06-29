@@ -6,7 +6,9 @@
 
 if [ "$SECT" = "1" ]; then
 
-  prompt "ezmlm-clean (1/2):    "
+  QMAILQUEUE=${QQTEST}; export QMAILQUEUE
+
+  prompt "ezmlm-clean:          "
 
 # clean1 should be silently removed (no -x).
 # clean2 should result in a message
@@ -22,6 +24,7 @@ if [ "$SECT" = "1" ]; then
 
   chmod +x "${DIR}/mod/pending/2" "${DIR}/mod/pending/1999999999"
 
+  qqclean
   ${EZBIN}/ezmlm-clean "${DIR}" >"${ERR}" 2>&1 ||
 	fatal "failed first invocation"
   if [ -r "${DIR}/mod/pending/1" ]; then
@@ -45,6 +48,16 @@ EOF
 	fatal "failed to remove moderation queue entry 4"
   fi
 
+  ${GREP} "clean1" ${QQMSG}.* >/dev/null 2>&1 && \
+	fatal "removal of non-x mod queue entry 1 wasn't silent"
+  ${GREP} "clean2" ${QQMSG}.* >/dev/null 2>&1 || \
+	fatal "failed to notify sender of mod queue entry 2 time out"
+  ${GREP} "clean3" ${QQMSG}.* >/dev/null 2>&1 && \
+	fatal "notified sender about entry 3 even though it wasn't rejected"
+  ${GREP} "clean4" ${QQMSG}.* >/dev/null 2>&1 && \
+	fatal "-R failed: notified sender about entry 3 rejection"
+
   ${ECHO} "OK"
 
+  unset QMAILQUEUE
 fi

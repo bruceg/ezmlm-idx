@@ -66,6 +66,7 @@ ${UNSET} DEFAULT
     ${ECHO} "${CAT} <&1 >'${QQENV}'"
     ${ECHO} "${SED} -e '/^$/,\$d' <'${QQMSG}' >'${QQHDR}'"
     ${ECHO} "${SED} -e '1,/^$/d' <'${QQMSG}' >'${QQBODY}'"
+    ${ECHO} "cp '${QQMSG}' '${QQMSG}'.$$"
     ${ECHO} "exit 0"
   ) > "${QQTEST}"
   ${CHMOD} 755 "${QQTEST}"

@@ -78,7 +78,7 @@ make_body()
 
 qqclean()
 {
-  ${RM} -f ${QQBODY} ${QQENV} ${QQHDR} ${QQMSG}
+  ${RM} -f ${QQBODY} ${QQENV} ${QQHDR} ${QQMSG} ${QQMSG}.*
 }
 
 make_message()
