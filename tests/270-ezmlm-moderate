@@ -6,7 +6,7 @@
 
 if [ "$SECT" -le "2" ]; then
 
-QMAILQUEUE="${QQTEST}"; export QMAILQUEUE
+setqq
 
 prompt "ezmlm-moderate:       "
 
@@ -82,6 +82,6 @@ ${ECHO} "OK"
 # cleanup
 ${EZBIN}/ezmlm-unsub "${DIR}" "${SND}@$HOST"
 
-unset QMAILQUEUE
+unsetqq
 
 fi

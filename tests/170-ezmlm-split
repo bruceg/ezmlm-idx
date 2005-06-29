@@ -6,7 +6,7 @@
 
 if [ "$SECT" = "1" ]; then
 
-  QMAILQUEUE="${QQTEST}"; export QMAILQUEUE
+  setqq
 
   prompt "ezmlm-split:          "
 # set up split file
@@ -53,5 +53,5 @@ if [ "$SECT" = "1" ]; then
 
   ${ECHO} "OK"
 
-  unset QMAILQUEUE
+  unsetqq
 fi

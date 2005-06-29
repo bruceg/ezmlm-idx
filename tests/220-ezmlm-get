@@ -6,7 +6,7 @@
 
 if [ "$SECT" -le "2" ]; then
 
-QMAILQUEUE=${QQTEST}; export QMAILQUEUE
+setqq
 
 qqclean
 
@@ -322,6 +322,6 @@ mv -f "${DIR}/headeradd.bak" "${DIR}/headeradd"
 
 ${ECHO} "OK"
 
-unset QMAILQUEUE
+unsetqq
 
 fi

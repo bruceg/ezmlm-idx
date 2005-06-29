@@ -6,7 +6,7 @@
 
 if [ "$SECT" = "1" ]; then
 
-  QMAILQUEUE=${QQTEST}; export QMAILQUEUE
+  setqq
 
   prompt "ezmlm-send:           "
 
@@ -124,5 +124,5 @@ if [ "$SECT" = "1" ]; then
 
   ${ECHO} "OK"
 
-  unset QMAILQUEUE
+  unsetqq
 fi

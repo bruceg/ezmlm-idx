@@ -180,3 +180,12 @@ exists() {
 msgexists() {
   ${TEST} -s "${QQMSG}" -a -s "${QQENV}"
 }
+
+setqq() {
+  QMAILQUEUE="${QQTEST}"
+  export QMAILQUEUE
+}
+
+unsetqq() {
+  unset QMAILQUEUE
+}

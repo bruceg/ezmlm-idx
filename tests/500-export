@@ -2,7 +2,7 @@
 
 if [ "$SECT" -le "5" ]; then
 
-  QMAILQUEUE="${QQTEST}"; export QMAILQUEUE
+  setqq
   SENDER="test@example.org"; export SENDER
   ${ECHO} "From: Test <${SENDER}>" >"${TMP}"
 
