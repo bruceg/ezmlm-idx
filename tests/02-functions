@@ -166,3 +166,17 @@ ${RM} -f "$TSTMSG" > "${ERR}" 2>&1 || \
 TSTMSG=''
 return 0
 }
+
+#########################
+# Tests for file status #
+#########################
+exists() {
+  for file in "$@"; do
+    ${TEST} -e "$file" || return 1
+  done
+  return 0
+}
+
+msgexists() {
+  ${TEST} -s "${QQMSG}" -a -s "${QQENV}"
+}

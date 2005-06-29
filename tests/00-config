@@ -92,5 +92,6 @@ UNSET='unset'
 WC='wc'
 CHMOD='chmod'
 CAT='cat'
+TEST='test'
 
 ###################### END CONFIRGRABLE ITEMS #########################
