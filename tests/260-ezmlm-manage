@@ -6,6 +6,8 @@
 
 if [ "$SECT" -le "2" ]; then
 
+setqq
+
 prompt "ezmlm-manage (2/4):   "
 
 # check digest-subscribe and list-unsubscribe replies
@@ -25,6 +27,7 @@ ${GREP} 'msg1' "$MANGET1" >/dev/null || \
 # Add moderator
 ${EZBIN}/ezmlm-sub "${DIR}/mod" "${MOD}@$HOST"
 
+qqclean
 LOCAL=`${GREP} "Reply-To:" "$SUB1" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	fatal "failed to find confirm address in -subscribe reply"
 export LOCAL
@@ -35,6 +38,23 @@ ${ECHO} >> "${TMP}"
 ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${TMP}" \
 		>"${ERR}" 2>&1 || \
 	fatal "failed to send user conf for sub1"
+SENDER="${MOD}@$HOST"; export SENDER
+${EZBIN}/ezmlm-issubn "${DIR}" && \
+	fatal "unsub without mod for moderated list failed"
+${GREP} 'sub3' ${QQMSG} >/dev/null 2>&1 || \
+	fatal "failed getting subscribe moderation confirm request"
+
+# confirm subscription request
+LOCAL=`${GREP} "Reply-To:" ${QQMSG} | cut -d' ' -f2 | cut -d'@' -f1` || \
+	fatal "no confirm address in sub3 mod confirm request"
+export LOCAL
+DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+${ECHO} "X-num: modR1" > "${TMP}"
+${ECHO} "FROM: moderator agrees <$SENDER>" >> "${TMP}"
+${ECHO} >> "${TMP}"
+${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${TMP}"\
+		>/dev/null 2>&1 || \
+	fatal "failed to send digest sub mod accept for sub3"
 
 LOCAL=`${GREP} "Reply-To:" "$SUB2" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	fatal "failed to find confirm address in -unsubscribe reply"
@@ -49,6 +69,7 @@ ${EZBIN}/ezmlm-manage "${DIR}" < "${TMP}" >/dev/null 2>&1 || \
 ${EZBIN}/ezmlm-sub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff"
 
 # test -edit
+qqclean
 ${ECHO} "#TEST_TEXT#" > "${DIR}/text/test"
 LOCAL="$LOC-edit.test-$MAN=$HOST"; export LOCAL
 DEFAULT="edit.test-$MAN=$HOST"; export DEFAULT
@@ -63,6 +84,26 @@ ${EZBIN}/ezmlm-manage "${DIR}" < "${TMP}" >"${ERR}" 2>&1 && \
 ${ECHO} "X-num: edit3" > "${TMP}"
 ${EZBIN}/ezmlm-manage -e "${DIR}" < "${TMP}" >"${ERR}" 2>&1 || \
 	fatal "-e failed for remote admin for edit3"
+
+# complete edit. SENDER can be any address
+SENDER="${MAN}@$HOST"; export SENDER
+${GREP} 'edit3' ${QQMSG} >/dev/null 2>&1 || \
+	fatal "failed getting edit reply for edit3"
+${GREP} "#TEST_TEXT#" ${QQMSG} >/dev/null 2>&1 || \
+	fatal "old text missing in edit3 edit reply"
+LOCAL=`${GREP} "Reply-To:" ${QQMSG} | cut -d' ' -f2 | cut -d'@' -f1` || \
+	fatal "no reply address in edit3 edit reply"
+export LOCAL
+DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+${ECHO} "X-num: edit4" > "${TMP}"
+${ECHO} >> "${TMP}"
+${ECHO} "%%% START OF TEXT FILE" >> "${TMP}"
+${ECHO} "#NEW_TEXT#" >> "${TMP}"
+${ECHO} "%%% END OF TEXT FILE" >> "${TMP}"
+${EZBIN}/ezmlm-manage -e "${DIR}" < "${TMP}" >/dev/null 2>&1 || \
+	fatal "failed to send edit4 reply for edit3"
+${GREP} "#NEW_TEXT#" "${DIR}/text/test" >/dev/null 2>&1 || \
+	fatal "edit4 failed to update text file"
 
 # test list/log
 LOCAL="$LOC-allow-list-$MAN=$HOST"; export LOCAL
@@ -83,9 +124,15 @@ ${ECHO} "X-num: list2" > "${TMP}"
 ${EZBIN}/ezmlm-manage "${DIR}" < "${TMP}" >/dev/null 2>&1 && \
 	fatal "-L failed to reject list request"
 
+qqclean
 ${ECHO} "X-num: list3" > "${TMP}"
 ${EZBIN}/ezmlm-manage -l "${DIR}" < "${TMP}" >"${ERR}" 2>&1 || \
 	fatal "-l failed for remote admin for list3"
+
+${GREP} 'list3' ${QQMSG} >/dev/null 2>&1 || \
+	fatal "failed getting -list reply to list3"
+${GREP} "aaa@bbb" ${QQMSG} > /dev/null 2>&1 || \
+	fatal "failed to get list reply to list3"
 
 LOCAL="$LOC-allow-log-$MOD=$HOST"; export LOCAL
 DEFAULT="allow-log-$MOD=$HOST"; export DEFAULT
@@ -93,11 +140,19 @@ ${ECHO} "X-num: log2" > "${TMP}"
 ${EZBIN}/ezmlm-manage "${DIR}" < "${TMP}" >"${ERR}" 2>&1 && \
 	fatal "-L failed to reject log request"
 
+qqclean
 ${ECHO} "X-num: log3" > "${TMP}"
 ${EZBIN}/ezmlm-manage -l "${DIR}" < "${TMP}" >"${ERR}" 2>&1 || \
 	fatal "-l failed for remote admin for log3"
 
+# check results of log/list
+${GREP} 'log3' ${QQMSG} >/dev/null 2>&1 || \
+	fatal "failed getting -log reply to log3"
+${GREP} "aaa@bbb" ${QQMSG} | ${GREP} "+m" > /dev/null 2>&1 || \
+	fatal "failed to get log reply to log3"
 
 ${ECHO} "OK"
+
+unsetqq
 
 fi
