@@ -20,10 +20,10 @@ if [ "$SECT" -le "3" ]; then
 	fatal "no confirm address in sub3 mod confirm request"
   export LOCAL
   DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
-  ${ECHO} "X-num: modR1" > "${DIR}/__tmp"
-  ${ECHO} "FROM: moderator agrees <$SENDER>" >> "${DIR}/__tmp"
-  ${ECHO} >> "${DIR}/__tmp"
-  ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${DIR}/__tmp"\
+  ${ECHO} "X-num: modR1" > "${TMP}"
+  ${ECHO} "FROM: moderator agrees <$SENDER>" >> "${TMP}"
+  ${ECHO} >> "${TMP}"
+  ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${TMP}"\
 		>/dev/null 2>&1 || \
 	fatal "failed to send digest sub mod accept for sub3"
 
@@ -37,12 +37,12 @@ if [ "$SECT" -le "3" ]; then
 	fatal "no reply address in edit3 edit reply"
   export LOCAL
   DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
-  ${ECHO} "X-num: edit4" > "${DIR}/__tmp"
-  ${ECHO} >> "${DIR}/__tmp"
-  ${ECHO} "%%% START OF TEXT FILE" >> "${DIR}/__tmp"
-  ${ECHO} "#NEW_TEXT#" >> "${DIR}/__tmp"
-  ${ECHO} "%%% END OF TEXT FILE" >> "${DIR}/__tmp"
-  ${EZBIN}/ezmlm-manage -e "${DIR}" < "${DIR}/__tmp" >/dev/null 2>&1 || \
+  ${ECHO} "X-num: edit4" > "${TMP}"
+  ${ECHO} >> "${TMP}"
+  ${ECHO} "%%% START OF TEXT FILE" >> "${TMP}"
+  ${ECHO} "#NEW_TEXT#" >> "${TMP}"
+  ${ECHO} "%%% END OF TEXT FILE" >> "${TMP}"
+  ${EZBIN}/ezmlm-manage -e "${DIR}" < "${TMP}" >/dev/null 2>&1 || \
 	fatal "failed to send edit4 reply for edit3"
 
 # check results of log/list

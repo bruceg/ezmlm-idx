@@ -12,18 +12,18 @@ if [ "$SECT" = "1" ]; then
   LOCAL="$LOC-request"; export LOCAL
   DEFAULT='request'; export DEFAULT
 
-  ${ECHO} "X-num: req1" > "${DIR}/__tmp"
+  ${ECHO} "X-num: req1" > "${TMP}"
 # use a non-existing command
-  ${ECHO} "Subject: qqqq ${SND}@$HOST" >> "${DIR}/__tmp"
-  ${EZBIN}/ezmlm-request "${DIR}" < "${DIR}/__tmp" > "${ERR}" 2>&1
+  ${ECHO} "Subject: qqqq ${SND}@$HOST" >> "${TMP}"
+  ${EZBIN}/ezmlm-request "${DIR}" < "${TMP}" > "${ERR}" 2>&1
   if [ "$?" != "99" ]; then
 	fatal "qqqq command in subject failed to exit 99"
   fi
 
-  ${ECHO} "X-num: req1" > "${DIR}/__tmp"
+  ${ECHO} "X-num: req1" > "${TMP}"
 # test full ezmlm cmd in subject and command substitution
-  ${ECHO} "Subject: ${LOC}-remove-${SND}=${HOST}@${HOST}" >> "${DIR}/__tmp"
-  ${EZBIN}/ezmlm-request "${DIR}" < "${DIR}/__tmp" > "${ERR}" 2>&1
+  ${ECHO} "Subject: ${LOC}-remove-${SND}=${HOST}@${HOST}" >> "${TMP}"
+  ${EZBIN}/ezmlm-request "${DIR}" < "${TMP}" > "${ERR}" 2>&1
   if [ "$?" != "99" ]; then
 	fatal "full ezmlm command in subject failed to exit 99"
   fi

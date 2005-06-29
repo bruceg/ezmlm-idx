@@ -8,10 +8,10 @@ if [ "$SECT" != "9" ]; then
 
 prompt "testing for qmail:    "
 
-${ECHO} "Subject: zzz-test" > "${DIR}/__tmp"
+${ECHO} "Subject: zzz-test" > "${TMP}"
 ${QMPATH}/bin/qmail-local "$EZTEST" "$HOME" "$SND-zzz" "$DASH" \
 		"$LIST-$SINK-zzz" "$HOST" \
-		"<>" '' < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+		"<>" '' < "${TMP}" >"${ERR}" 2>&1 || \
 	fatal "-failed to deliver message with qmail-local"
 
 if [ ! -r "${DIR}/default" ]; then

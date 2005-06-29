@@ -68,28 +68,28 @@ if [ "$SECT" = "1" ]; then
 
   SENDER="${MAN}@$HOST"; export SENDER
 
-  ${ECHO} "X-num: sub1" > "${DIR}/__tmp"
-  ${ECHO} "From: Mr. $EZTEST requests <${MAN}@$HOST>" >> "${DIR}/__tmp"
-  ${ECHO} >> "${DIR}/__tmp"
-  ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${DIR}/__tmp" \
+  ${ECHO} "X-num: sub1" > "${TMP}"
+  ${ECHO} "From: Mr. $EZTEST requests <${MAN}@$HOST>" >> "${TMP}"
+  ${ECHO} >> "${TMP}"
+  ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${TMP}" \
 		>"${ERR}" 2>&1 || \
 	fatal "digest-subscribe with request failed"
 
   ${EZBIN}/ezmlm-sub "${DIR}" "${MAN}@$HOST"
   LOCAL="$LOC-unsubscribe"; export LOCAL
   DEFAULT='unsubscribe'; export DEFAULT
-  ${ECHO} "X-num: sub2" > "${DIR}/__tmp"
-  ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+  ${ECHO} "X-num: sub2" > "${TMP}"
+  ${EZBIN}/ezmlm-manage "${DIR}" < "${TMP}" >"${ERR}" 2>&1 || \
 	fatal "unsubscribe request failed"
 
 # -get function for backwards compatibility
   LOCAL="$LOC-get.1"; export LOCAL
   DEFAULT='get.1'; export DEFAULT
-  ${ECHO} "X-num: manget1" > "${DIR}/__tmp"
-  ${EZBIN}/ezmlm-manage "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 || \
+  ${ECHO} "X-num: manget1" > "${TMP}"
+  ${EZBIN}/ezmlm-manage "${DIR}" < "${TMP}" >"${ERR}" 2>&1 || \
 	fatal "get failed"
 # -C should disable it
-  ${EZBIN}/ezmlm-manage -C "${DIR}" < "${DIR}/__tmp" >"${ERR}" 2>&1 && \
+  ${EZBIN}/ezmlm-manage -C "${DIR}" < "${TMP}" >"${ERR}" 2>&1 && \
 	fatal "-C failed to disable -get"
 
   ${ECHO} "OK"
