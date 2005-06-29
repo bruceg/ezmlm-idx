@@ -10,9 +10,6 @@
 # must be absolute
 EZBIN=`pwd`
 
-# HOST is normally set from /var/qmail/control/me. Set it here to override
-HOST=''
-
 # Version of ezmlm-idx for which this test script is designed
 OLD_VER='ezmlm-idx-031'		# ezmlm-idx-0.31x
 
