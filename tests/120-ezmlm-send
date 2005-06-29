@@ -6,8 +6,6 @@
 
 if [ "$SECT" = "1" ]; then
 
-  setqq
-
   prompt "ezmlm-send:           "
 
   SENDER="${SND}@$HOST"; export SENDER
@@ -124,5 +122,4 @@ if [ "$SECT" = "1" ]; then
 
   ${ECHO} "OK"
 
-  unsetqq
 fi

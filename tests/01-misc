@@ -233,3 +233,6 @@ else
 ########## should add testing of From line logging for non-0.31x
 	SW_FROM="-f"
 fi
+
+QMAILQUEUE="$QQTEST"
+export QMAILQUEUE

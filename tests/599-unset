@@ -2,7 +2,6 @@
 
 if [ "$SECT" -le "5" ]; then
 
-  unsetqq
   unset SENDER
   unset LOCAL
   unset DEFAULT

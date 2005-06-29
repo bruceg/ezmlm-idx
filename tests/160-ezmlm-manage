@@ -6,8 +6,6 @@
 
 if [ "$SECT" = "1" ]; then
 
-  setqq
-
   prompt "ezmlm-manage (1/2):   "
 
   LOCAL="$LOC-unsubscribe"; export LOCAL
@@ -151,7 +149,5 @@ if [ "$SECT" = "1" ]; then
 	fatal "-C failed to disable -get"
 
   ${ECHO} "OK"
-
-  unsetqq
 
 fi

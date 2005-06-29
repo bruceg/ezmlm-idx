@@ -6,8 +6,6 @@
 
 if [ "$SECT" -le "2" ]; then
 
-setqq
-
 prompt "ezmlm-manage (2/2):   "
 
 # now test remote admin functions
@@ -98,7 +96,5 @@ ${GREP} "aaa@bbb" ${QQMSG} | ${GREP} "+m" > /dev/null 2>&1 || \
 	fatal "failed to get log reply to log3"
 
 ${ECHO} "OK"
-
-unsetqq
 
 fi

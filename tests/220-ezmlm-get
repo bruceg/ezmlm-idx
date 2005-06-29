@@ -6,8 +6,6 @@
 
 if [ "$SECT" -le "2" ]; then
 
-setqq
-
 qqclean
 
 prompt "ezmlm-get:            "
@@ -321,7 +319,5 @@ msgexists || \
 mv -f "${DIR}/headeradd.bak" "${DIR}/headeradd"
 
 ${ECHO} "OK"
-
-unsetqq
 
 fi

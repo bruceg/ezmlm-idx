@@ -103,70 +103,6 @@ make_message()
   return 0
 }
 
-############################
-# function to test testmsg #
-############################
-send_test()
-{
-  {
-	${ECHO} "X-num: #TSTMSG$1#"
-	${ECHO} "To: ${SND}@$HOST"
-  } | ${QMPATH}/bin/qmail-inject
-  return 0
-}
-
-############################
-# sleeping 5 secs function #
-############################
-sleep_5()
-{
-  sleep 1; prompt "."; sleep 1; prompt "."
-  sleep 1; prompt "."; sleep 1; prompt "."
-  sleep 1; prompt "${1}"
-  return 0
-}
-
-################################
-# waiting for delivery fuction #
-################################
-wait_test()
-{
-prompt "max 35s for delivery: "
-sleep_5 5s
-TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-if [ -z "$TSTMSG" ]; then
-  sleep_5 10s
-  TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-  if [ -z "$TSTMSG" ]; then
-    sleep_5 15s
-    TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-    if [ -z "$TSTMSG" ]; then
-      sleep_5 20s
-      TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-      if [ -z "$TSTMSG" ]; then
-        sleep_5 25s
-        TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-        if [ -z "$TSTMSG" ]; then
-          sleep_5 30s
-          TSTMSG=`${GREP} -l "#TSTMSG$1" $SINKDIR/new/* 2>/dev/null`
-          if [ -z "$TSTMSG" ]; then
-  		fatal	"" \
-			"Delivery of test message failed. Fix qmail or wait" \
-			"longer and continue with argument \"-s $1\""
-          fi
-        fi
-      fi
-    fi
-  fi
-fi
-sleep_5 OK
-${ECHO}
-${RM} -f "$TSTMSG" > "${ERR}" 2>&1 || \
-	fatal "failed to remove test message for section $1"
-TSTMSG=''
-return 0
-}
-
 #########################
 # Tests for file status #
 #########################
@@ -179,13 +115,4 @@ exists() {
 
 msgexists() {
   ${TEST} -s "${QQMSG}" -a -s "${QQENV}"
-}
-
-setqq() {
-  QMAILQUEUE="${QQTEST}"
-  export QMAILQUEUE
-}
-
-unsetqq() {
-  unset QMAILQUEUE
 }
