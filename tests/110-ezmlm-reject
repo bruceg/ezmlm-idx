@@ -10,8 +10,8 @@ if [ "$SECT" = "1" ]; then
 # test ezmlm-reject #
 #####################
   prompt "ezmlm-reject:         "
-  FROM="$EZTEST"
-  TO="$EZTEST-__tstlist@$HOST"
+  FROM="$USER"
+  TO="$USER-__tstlist@$HOST"
   SUBJECT="test"
   CONTENT="multipart/mixed"
   CC="<>"
@@ -118,7 +118,7 @@ SUBJECT='test'
 	fatal "-T switch failed without dir"
 
 # restore good TO
-  TO="$EZTEST-__tstlist@$HOST"
+  TO="$USER-__tstlist@$HOST"
 
 # if part is mimereject message should be rejected
   touch "${DIR}"/mimeremove

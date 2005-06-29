@@ -36,6 +36,7 @@ in the next version.
  Thanks Brian Ghidinelli
 -Fixed readwrite.h to work on LP64 systems.  Thanks Amitai Schlair
 -Don't clobber msgsize file on re-make.  Thanks Stephen Quinney.
+-ezmlm-test can now be run by any user, in any writeable directory.
 
 ezmlm-idx-0.440, 20050415
 =========================

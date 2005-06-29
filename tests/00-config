@@ -1,31 +1,14 @@
-# Above should have been added QMPATH, VER, and EZVER definitions
+# Above should have been added VER, and EZVER definitions
 # $Id$
 # DEBUG=1
 # This program is meant to test ezmlm-idx.
-# Several criteria have to be met for this to work:
-# 0. you need to have qmail installed allowing mail delivery to
-#    "eztest@host" and subaddresses.
-# 2. you need to have a user "eztest" or edit the script to change to a
-#	user that exists on your system.
-# 3. you need to be that user when you invoke this script and the script
-#	needs to reside in the same dir as the binaries you want to test.
-# 4. this user needs to have execute permission for the build dir
 #
-# The script will use ~eztest/__TSTDIR and ~eztest/__TSTDIR__err and destroy
-# any files therein. Both user name and directory names etc can be configured
+# The script will use __TSTDIR and __TSTDIR__err and destroy any files
+# therein. Both user name and directory names etc can be configured
 # below, but this should only very rarely be necessary.
-#
-# This program is experimental and not yet properly documented. Please
-# send comments to lindberg@id.wustl.edu. I'm attempting to make this a
-# rigorous test for future ezmlm+idx installations so that full function
-# can be verified when upgrading to a new version.
 
 # must be absolute
 EZBIN=`pwd`
-
-# the user that should run the scripts (test list is created in this
-# users home directory).
-EZTEST='eztest'
 
 # HOST is normally set from /var/qmail/control/me. Set it here to override
 HOST=''
@@ -35,7 +18,7 @@ OLD_VER='ezmlm-idx-031'		# ezmlm-idx-0.31x
 
 # basedir for test list. It and all files therein are destroyed by
 # the script
-DIR="$HOME/__TSTDIR"
+DIR="$PWD/__TSTDIR"
 
 # part that follows user name of local name of the list
 LIST='__tstlist'
@@ -66,13 +49,7 @@ QQBODY="${DIR}/__qqbody"
 TABLE='list'
 DB='ezmlm'
 SQLHOST=''
-SQLUSR="$EZTEST"	# -u overrides, -l overrides that
-
-# sets umask so that qmail paternalism doesn't complain. With most
-# installations, there is a umask in the user's profile. 022 should be ok,
-# but 002 is safer.
-
-UMASK='umask 002'
+SQLUSR='eztest'		# -u overrides, -l overrides that
 
 #programs:
 # to report disk usage summary

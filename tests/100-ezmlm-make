@@ -86,21 +86,11 @@ fi
 ###############################################################
   ${MKDIR} "$SINKDIR" "$SINKDIR/new" "$SINKDIR/cur" "$SINKDIR/tmp" || \
 	fatal "mkdir for sinkdir failed"
-  ${ECHO} "${SINKDIR}/" > "$DOT-$SINK"
-# link for qmail version testing 
-  ${ECHO} '|echo $DEFAULT >' "${DIR}/default" > "$DOT-$SINK-default"
-  ${ECHO} "${SINKDIR}/" >> "$DOT-$SINK-default"
-
   ${MKDIR} "$MODDIR" "$MODDIR/new" "$MODDIR/cur" "$MODDIR/tmp" || \
 	fatal "mkdir for moddir failed"
-  ${ECHO} "${MODDIR}/" > "$DOT-$MODACC"
-
   ${MKDIR} "$MANDIR" "$MANDIR/new" "$MANDIR/cur" "$MANDIR/tmp" || \
 	fatal "mkdir for mandir failed"
-  ${ECHO} "${MANDIR}/" > "$DOT-$MANAG"
-
   ${MKDIR} "$DIGDIR" "$DIGDIR/new" "$DIGDIR/cur" "$DIGDIR/tmp" || \
 	fatal "mkdir for digdir failed"
-  ${ECHO} "${DIGDIR}/" > "$DOT-$DIGGG"
 
 fi

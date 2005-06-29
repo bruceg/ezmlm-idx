@@ -27,9 +27,8 @@ elif (logname) > /dev/null 2>&1; then
 elif (who am i) > /dev/null 2>&1; then
 	USER=`who am i | cut -d' ' -f1 | cut -d'!' -f2`
 else
-	${ECHO} "Could not determine current user name."
-	${ECHO} "If you're not \"${EZTEST}\" the test will fail."
-	USER="${EZTEST}"
+	${ECHO} "Could not determine current user name, using 'nobody'"
+	USER='nobody'
 fi
 
 SQLUSER=''	# must be empty
@@ -62,7 +61,7 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 		-p)
 			PW="$2"; USESQL=1; shift; shift;;
 		-u)
-			EZTEST="$2"; SQLUSR="$2"; shift; shift;;
+			SQLUSR="$2"; shift; shift;;
 		-s)
 			SECT="$2"; shift; shift;;
 		-t)
@@ -93,10 +92,6 @@ if [ -z "$SQLUSER" ]; then
 	SQLUSER="$SQLUSR"
 fi
 
-if [ "$USER" != "${EZTEST}" ]; then 
-  ${ECHO} "Must be user ${EZTEST} to execute"; exit 99
-fi
-
 # test for the common uid=0 error; not foolproof
 # any system w/o id or UID ?
 if (id) > /dev/null 2>&1 && \
@@ -108,21 +103,13 @@ elif test "x$UID" = "x0" ; then
 	exit 1
 fi
 
-LOC="$EZTEST-$LIST"
+LOC="$USER-$LIST"
 # calculate position in LOCAL where [normally] default starts
 LOCLEN=`${ECHO} "$LOC-" | ${WC} -c | ${SED} 's/ //g'`
 REJLEN=`${ECHO} "$LOC-reject-" | ${WC} -c | ${SED} 's/ //g'`
 ACCLEN=`${ECHO} "$LOC-accept-" | ${WC} -c | ${SED} 's/ //g'`
 
-${UMASK} >/dev/null || \
-      {
-	${ECHO} "Umask failed. Usually, this is OK. Fix this if ezmlm-test"
-	${ECHO} "fails and messages remain queued with the qmail error"
-	${ECHO} "'Uh-oh: .qmail file is writable'."
-	${ECHO}
-      }
-
-DOT="$HOME/.qmail$DASH$LIST"
+DOT="$PWD/dot.qmail$DASH$LIST"
 
 if [ "$SECT" != "1" ]; then
 	${ECHO} "Starting with section $SECT ..."
@@ -154,10 +141,7 @@ MAN="$LOC-${MANAG}"
 BOUNCE='bnc'
 BNC="$LOC-bnc"
 
-if [ -z "$HOST" ]; then
-  HOST=`${HEAD} -n 1 ${QMPATH}/control/me` || \
-	{ ${ECHO} "unable to get host name. Set HOST in script" ; exit 99; }
-fi
+HOST=`hostname -f`
 
 if [ ! -x "${EZBIN}/ezmlm-make" ]; then
 	${ECHO} "can't execute ${EZBIN}/ezmlm-make. Most likely, user ``$USER''"
@@ -166,22 +150,6 @@ if [ ! -x "${EZBIN}/ezmlm-make" ]; then
 	${ECHO} "use a different test user."
 	exit 99
 fi
-
-if [ ! -x "${QMPATH}/bin/qmail-local" ]; then
-	${ECHO} "can't find qmail-local. Please correct the path in the script"
-	exit 99
-fi
-if [ ! -x "${QMPATH}/bin/qmail-inject" ]; then
-	${ECHO} "can't find qmail-inject. Please correct the path in the script"
-	exit 99
-fi
-# Check if qmail is running. Don't fail if not, as it's most likely a
-# ps issue and not a lack of qmail.
-${PS} | ${GREP} qmai\l-send >/dev/null 2>&1 || \
-	{
-	 ${ECHO} "qmail isn't running or ps doesn't work as expected. If"
-	 ${ECHO} "qmail is not running, this script will fail. Will continue..."
-	}
 
 ########################
 # remove old test list #

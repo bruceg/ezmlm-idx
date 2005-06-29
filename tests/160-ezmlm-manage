@@ -69,7 +69,7 @@ if [ "$SECT" = "1" ]; then
   SENDER="${MAN}@$HOST"; export SENDER
 
   ${ECHO} "X-num: sub1" > "${TMP}"
-  ${ECHO} "From: Mr. $EZTEST requests <${MAN}@$HOST>" >> "${TMP}"
+  ${ECHO} "From: Mr. $USER requests <${MAN}@$HOST>" >> "${TMP}"
   ${ECHO} >> "${TMP}"
   ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${TMP}" \
 		>"${ERR}" 2>&1 || \
@@ -87,7 +87,7 @@ if [ "$SECT" = "1" ]; then
   qqclean
   DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
   ${ECHO} "X-num: sub3" > "${TMP}"
-  ${ECHO} "From: Mr. $EZTEST confirms <$SENDER>" >> "${TMP}"
+  ${ECHO} "From: Mr. $USER confirms <$SENDER>" >> "${TMP}"
   ${ECHO} >> "${TMP}"
   ${EZBIN}/ezmlm-manage ${SW_FROM} "${DIR}" < "${TMP}" \
 		>"${ERR}" 2>&1 || \
