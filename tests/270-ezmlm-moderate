@@ -6,25 +6,43 @@
 
 if [ "$SECT" -le "2" ]; then
 
-prompt "ezmlm-moderate (1/2): "
+QMAILQUEUE="${QQTEST}"; export QMAILQUEUE
+
+prompt "ezmlm-moderate:       "
 
 # make sure we get the (mis)accepted message(s)
 ${EZBIN}/ezmlm-sub "${DIR}" "${SND}@$HOST"
 
+# REJ is set in 145-ezmlm-store, as the reject address for "mod1" message
 LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
 export LOCAL
 
+qqclean
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`; export DEFAULT
 ${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
 	</dev/null >"${ERR}" 2>&1 || \
 		fatal "failed on rejection"
+msgexists ||
+	fatal "failed to send rejection notice for message mod1"
+# ${SND}@$HOST means it was rejected, not send through the list
+${GREP} "To: ${SND}@$HOST" ${QQMSG} > /dev/null 2>&1 || \
+	fatal "failed to reject message mod1"
+${GREP} T"${SND}@$HOST" ${QQENV} >/dev/null 2>&1 || \
+	fatal "delivered rejection to wrong address"
 
+qqclean
+# ACC is set in 145-ezmlm-store, as the accept address for "mod3" message
 LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
 export LOCAL
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`; export DEFAULT
 ${EZBIN}/ezmlm-moderate "${DIR}" "${EZBIN}/ezmlm-send ${DIR}" \
 	 </dev/null >"${ERR}" 2>&1 || \
 		fatal "failed on acceptance"
+msgexists || \
+	fatal "failed to post message mod3"
+# ${LOC}@$HOST means it was not rejected, but sent through the list
+${GREP} "To: ${LOC}@$HOST" $QQMSG > /dev/null 2>&1 || \
+	fatal "failed to accept message mod3"
 
 ls -l "${DIR}/mod/rejected/" | ${GREP} '[0-9]' >/dev/null 2>&1 || \
 	fatal "failed to write reject stub"
@@ -63,5 +81,7 @@ ${ECHO} "OK"
 
 # cleanup
 ${EZBIN}/ezmlm-unsub "${DIR}" "${SND}@$HOST"
+
+unset QMAILQUEUE
 
 fi
