@@ -6,7 +6,9 @@
 
 if [ "$SECT" = "1" ]; then
 
-  prompt "ezmlm-split (1/2):    "
+  QMAILQUEUE="${QQTEST}"; export QMAILQUEUE
+
+  prompt "ezmlm-split:          "
 # set up split file
   ${ECHO} "edu:1:26:l1@h1" > "${DIR}/split"
   ${ECHO} "edu:27:52:l2@h2" >> "${DIR}/split"
@@ -44,6 +46,12 @@ if [ "$SECT" = "1" ]; then
   ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "${DIR}" >"${ERR}" 2>&1 || \
 	fatal "failed to exit 0 after failing to match"
 
+  ${GREP} T"${LOC}-subscribe-${SND}=${HOST}@$HOST" "${QQENV}" >/dev/null 2>&1 || \
+	fatal "failed to hand off subscribe request to correct recipient"
+  ${GREP} F"${LOC}-return-@$HOST" "${QQENV}" >/dev/null 2>&1 || \
+	fatal "subscribe request has incorrect sender"
+
   ${ECHO} "OK"
 
+  unset QMAILQUEUE
 fi
