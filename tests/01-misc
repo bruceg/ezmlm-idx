@@ -130,7 +130,7 @@ MAN="$LOC-${MANAG}"
 BOUNCE='bnc'
 BNC="$LOC-bnc"
 
-HOST=`hostname -f`
+HOST=dummy.host.does.not.exist.$$
 
 if [ ! -x "${EZBIN}/ezmlm-make" ]; then
 	${ECHO} "can't execute ${EZBIN}/ezmlm-make. Most likely, user ``$USER''"
@@ -171,7 +171,6 @@ ${ECHO} "$THIS_VER" | ${GREP} "ezmlm-idx" > /dev/null 2>&1 ||
   THIS_VER=`${ECHO} "$TMP_VER" | cut -d' ' -f4`
 
 ${ECHO} "testing ezmlm-idx:    $THIS_VER"
-${ECHO} "Using FQDN host name: $HOST"
 
 ${ECHO} "$THIS_VER" | ${GREP} "$OLD_VER" >/dev/null 2>&1
 if [ "$?" = "0"	]; then
