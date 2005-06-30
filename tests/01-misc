@@ -55,27 +55,24 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 			DB="$2"; shift; shift;;
 		-h)
 			SQLHOST="$2"; shift; shift;;
-		-l)
-			SQLUSER="$2"; shift; shift;;
 		-p)
 			PW="$2"; USESQL=1; shift; shift;;
 		-u)
-			SQLUSR="$2"; shift; shift;;
+			SQLUSER="$2"; shift; shift;;
 		-t)
 			TABLE="$2"; shift; shift;;
 		--)
 			shift; break;;
 		*)
 			${ECHO} "$i"
-			${ECHO} "Usage: ezmlm-test [-/] [-u user]" \
-				"[-p sqlpassword [-l sqluser] [-d sqldb]" \
+			${ECHO} "Usage: ezmlm-test [-/]" \
+				"[-p sqlpassword [-u sqluser] [-d sqldb]" \
 				"[-t sqltable] [-h sqlhost]]"
 			${ECHO}
 			${ECHO} "args have to be separated from switches!"
 			${ECHO}
 			${ECHO} "defaults: -d ezmlm"
 			${ECHO} "          -h [empty => RDBMS default]"
-			${ECHO} "          -l eztest or -u arg if specified"
 			${ECHO} "          -p [empty - don't use SQL support]"
 			${ECHO} "          -s 1 [run test from beginning]"
 			${ECHO} "          -t list"
@@ -84,10 +81,6 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 			exit 99;;
 	esac
 done
-
-if [ -z "$SQLUSER" ]; then
-	SQLUSER="$SQLUSR"
-fi
 
 LOC="$USER-$LIST"
 # calculate position in LOCAL where [normally] default starts

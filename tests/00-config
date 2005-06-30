@@ -46,7 +46,7 @@ QQBODY="${DIR}/__qqbody"
 TABLE='list'
 DB='ezmlm'
 SQLHOST=''
-SQLUSR='eztest'		# -u overrides, -l overrides that
+SQLUSER='eztest'	# -u overrides this
 
 #programs:
 # to report disk usage summary
