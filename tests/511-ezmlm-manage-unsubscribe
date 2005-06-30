@@ -2,7 +2,7 @@
 
 if [ "$SECT" -le "5" ]; then
 
-  prompt "ezmlm-manage (unsubscribe): "
+  prompt "unsubscribe:          "
 
   DEFAULT="unsubscribe"; export DEFAULT
   LOCAL="${LOC}-${DEFAULT}"; export LOCAL

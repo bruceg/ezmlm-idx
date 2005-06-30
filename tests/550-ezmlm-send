@@ -2,7 +2,7 @@
 
 if [ "$SECT" -le "5" ]; then
 
-  prompt "ezmlm-send: "
+  prompt "ezmlm-send:           "
 
   cat >"$TMP" <<EOF
 From: test@example.org
