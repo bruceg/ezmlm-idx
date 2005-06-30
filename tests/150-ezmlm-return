@@ -4,8 +4,6 @@
 # ezmlm-return #
 ################
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-return:         "
 
   SENDER="${BNC}@$HOST"; export SENDER
@@ -55,5 +53,3 @@ if [ "$SECT" = "1" ]; then
 
 # as we exit, the bounce address is subscribed to both list and digest-list
 # and is the SENDER
-
-fi

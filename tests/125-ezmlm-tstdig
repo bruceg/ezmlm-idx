@@ -4,8 +4,6 @@
 # ezmlm-tstdig #
 ################
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-tstdig:         "
 
   ${EZBIN}/ezmlm-tstdig -k2 -m5 -t1 "$DIR" || \
@@ -42,5 +40,3 @@ if [ "$SECT" = "1" ]; then
 	  BUG="${BUG} tstdig"
 	}
   ${ECHO} "OK"
-
-fi

@@ -4,8 +4,6 @@
 # ezmlm-make #
 ##############
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-make (2/2):     "
 
 # make sure a few ezmlm-make switches work
@@ -59,5 +57,3 @@ ${ECHO} "OK"
   # remove inlocal/inhost - shouldn't be used
   ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
     fatal "failed to remove inlocal/inhost for testlist"
-
-fi

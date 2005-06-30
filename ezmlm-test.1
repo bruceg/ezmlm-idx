@@ -16,8 +16,6 @@ ezmlm-test \- test ezmlm programs
 .B \-d\fI sqldatabase
 ][
 .B \-p\fI sqlpassword
-][
-.B \-s\fI section
 ]
 .I dir
 .SH DESCRIPTION
@@ -84,17 +82,6 @@ as the connection password. By default, local databases, rather than an
 SQL database are used for testing. To use the SQL database with an
 empty password, specify
 .BR \-p\ '' .
-.TP
-.B \-s\fI section
-Restart
-.B ezmlm-test
-from section
-.IR section .
-This can be used to resume execution if the 30 s given for mail delivery
-was not sufficient for the test message to be delivered. ``9'' can be
-used to clean up any files remaining after incomplete execution of
-.BR ezmlm-test .
-This option should not be needed.
 .TP
 .B \-t\fI sqltable
 Use

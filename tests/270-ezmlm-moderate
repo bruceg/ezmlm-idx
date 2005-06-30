@@ -4,8 +4,6 @@
 # ezmlm-moderate #
 ##################
 
-if [ "$SECT" -le "2" ]; then
-
 prompt "ezmlm-moderate:       "
 
 # make sure we get the (mis)accepted message(s)
@@ -79,5 +77,3 @@ ${ECHO} "OK"
 
 # cleanup
 ${EZBIN}/ezmlm-unsub "$DIR" "${SND}@$HOST"
-
-fi

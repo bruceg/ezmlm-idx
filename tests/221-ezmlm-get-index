@@ -4,8 +4,6 @@
 # ezmlm-get #
 #############
 
-if [ "$SECT" -le "2" ]; then
-
 prompt "ezmlm-get (index):    "
 
 # blast digest recipient account with all these excerpts.
@@ -75,5 +73,3 @@ ${GREP} "index2" "$QQMSG" >/dev/null 2>&1 || \
 	fatal "index2 failed to return"
 
 ${ECHO} "OK"
-
-fi

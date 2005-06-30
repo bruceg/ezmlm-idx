@@ -4,8 +4,6 @@
 # ezmlm-warn #
 ##############
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-warn (1/2):     "
 
 # should send a warning
@@ -20,5 +18,3 @@ if [ "$SECT" = "1" ]; then
 	fatal "script error: SENDER is not a digest subscriber"
 
   ${ECHO} "OK"
-
-fi

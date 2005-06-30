@@ -4,8 +4,6 @@
 # ezmlm-sub/unsub/list/issubn #
 ###############################
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-[un|is]sub[n]:  "
 
   SENDER="XYZZY@HOst"; export SENDER
@@ -78,5 +76,3 @@ if [ "$SECT" = "1" ]; then
   LOCAL=''; export LOCAL
 
   ${ECHO} "OK"
-
-fi

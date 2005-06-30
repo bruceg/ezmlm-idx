@@ -4,8 +4,6 @@
 # ezmlm-get #
 #############
 
-if [ "$SECT" -le "2" ]; then
-
 prompt "ezmlm-get (thread):   "
 
 qqclean
@@ -39,5 +37,3 @@ msgexists || \
 	fatal "-s failed to produce -thread message"
 
 ${ECHO} "OK"
-
-fi

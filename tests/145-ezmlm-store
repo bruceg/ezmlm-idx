@@ -4,8 +4,6 @@
 # ezmlm-store #
 ###############
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-store:          "
 
   SENDER="${SND}@$HOST"; export SENDER
@@ -85,5 +83,3 @@ if [ "$SECT" = "1" ]; then
 	fatal "ezmlm-store: -P failed to reject message from non-mod"
 
   ${ECHO} "OK"
-
-fi

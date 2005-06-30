@@ -4,8 +4,6 @@
 # ezmlm-send #
 ##############
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-send:           "
 
   SENDER="${SND}@$HOST"; export SENDER
@@ -121,5 +119,3 @@ if [ "$SECT" = "1" ]; then
 	fatal "failed to remove mimeremove part"
 
   ${ECHO} "OK"
-
-fi

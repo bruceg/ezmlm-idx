@@ -4,8 +4,6 @@
 # ezmlm-weed #
 ##############
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-weed:           "
 
   ${ECHO} "Subject: test" | ${EZBIN}/ezmlm-weed || \
@@ -14,5 +12,3 @@ if [ "$SECT" = "1" ]; then
 	fatal "failed to reject bad message"
 
   ${ECHO} "OK"
-
-fi

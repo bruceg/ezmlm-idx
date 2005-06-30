@@ -4,8 +4,6 @@
 # ezmlm-idx #
 #############
 
-if [ "$SECT" -le "2" ]; then
-
   prompt "ezmlm-idx:            "
   ${RM} -f "${DIR}/archive/0/index" "${DIR}/indexed"
   ${EZBIN}/ezmlm-idx "$DIR" >"${ERR}" 2>&1 || \
@@ -17,5 +15,3 @@ if [ "$SECT" -le "2" ]; then
 	fatal "failed to create index"
   fi 
   ${ECHO} "OK"
-
-fi

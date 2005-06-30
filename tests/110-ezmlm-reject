@@ -4,8 +4,6 @@
 # account to receive digests and archive excerpts #
 ###################################################
 
-if [ "$SECT" = "1" ]; then
-
 #####################
 # test ezmlm-reject #
 #####################
@@ -178,5 +176,3 @@ SUBJECT='test'
   CONTENT='multIpart/mIXed'
 
   ${ECHO} "OK"
-
-fi

@@ -4,8 +4,6 @@
 # ezmlm-request #
 #################
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-request:        "
 
   SENDER="${SND}@$HOST"; export SENDER
@@ -35,5 +33,3 @@ if [ "$SECT" = "1" ]; then
 	fatal "ezmlm 'remove' subject query rewriting failed"
 
   ${ECHO} "OK"
-
-fi

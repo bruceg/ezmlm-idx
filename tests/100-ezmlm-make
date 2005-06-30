@@ -4,8 +4,6 @@
 # ezmlm-make #
 ##############
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-make (1/2):     "
 
 # edit non-existant list
@@ -128,5 +126,3 @@ fi
     ${ECHO} "exit 0"
   ) > "$QQTEST"
   ${CHMOD} 755 "$QQTEST"
-
-fi

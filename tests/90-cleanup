@@ -1,8 +1,5 @@
 # $Id$
 
-########################## start of section 9 (cleanup)
-if [ "$SECT" -eq "9" -o -z "$DEBUG" ]; then
-
 #####################
 # remove test files #
 #####################
@@ -20,5 +17,3 @@ if [ "$SECT" -eq "9" -o -z "$DEBUG" ]; then
 		>/dev/null 2>&1
   fi
   ${RM} -rf "$DIR" ${DOT}* "${ERR}" >/dev/null 2>&1
-
-fi

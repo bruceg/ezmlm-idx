@@ -4,8 +4,6 @@
 # ezmlm-split #
 ###############
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-split:          "
 # set up split file
   ${ECHO} "edu:1:26:l1@h1" > "${DIR}/split"
@@ -50,5 +48,3 @@ if [ "$SECT" = "1" ]; then
 	fatal "subscribe request has incorrect sender"
 
   ${ECHO} "OK"
-
-fi

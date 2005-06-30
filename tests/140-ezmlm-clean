@@ -4,8 +4,6 @@
 # ezmlm-clean #
 ###############
 
-if [ "$SECT" = "1" ]; then
-
   prompt "ezmlm-clean:          "
 
 # clean1 should be silently removed (no -x).
@@ -56,5 +54,3 @@ EOF
 	fatal "-R failed: notified sender about entry 3 rejection"
 
   ${ECHO} "OK"
-
-fi

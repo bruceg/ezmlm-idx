@@ -1,7 +1,5 @@
 # $Id$
 
-if [ "$SECT" -le "5" ]; then
-
   prompt "unsubscribe probe:    "
 
   DEFAULT="unsubscribe"; export DEFAULT
@@ -15,5 +13,3 @@ if [ "$SECT" -le "5" ]; then
   grephdr_empty
 
   ${ECHO} OK
-
-fi

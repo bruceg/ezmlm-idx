@@ -4,8 +4,6 @@
 # ezmlm-get #
 #############
 
-if [ "$SECT" -le "2" ]; then
-
 prompt "ezmlm-get (get):      "
 
 qqclean
@@ -81,5 +79,3 @@ msgexists || \
 	fatal "get6 format 'x' failed to return"
 
 ${ECHO} "OK"
-
-fi

@@ -47,7 +47,6 @@ BUG=''
 USESQL=''
 # process arguments
 
-SECT="1"
 while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 	case "$1" in
 		-/)
@@ -62,8 +61,6 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 			PW="$2"; USESQL=1; shift; shift;;
 		-u)
 			SQLUSR="$2"; shift; shift;;
-		-s)
-			SECT="$2"; shift; shift;;
 		-t)
 			TABLE="$2"; shift; shift;;
 		--)
@@ -72,7 +69,7 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 			${ECHO} "$i"
 			${ECHO} "Usage: ezmlm-test [-/] [-u user]" \
 				"[-p sqlpassword [-l sqluser] [-d sqldb]" \
-				"[-t sqltable] [-h sqlhost]] [-s section]"
+				"[-t sqltable] [-h sqlhost]]"
 			${ECHO}
 			${ECHO} "args have to be separated from switches!"
 			${ECHO}
@@ -100,10 +97,6 @@ ACCLEN=`${ECHO} "$LOC-accept-" | ${WC} -c | ${SED} 's/ //g'`
 
 DOT="$PWD/dot.qmail$DASH$LIST"
 
-if [ "$SECT" != "1" ]; then
-	${ECHO} "Starting with section $SECT ..."
-fi
- 
 # test addresses. These are all within the list dir and all addresses
 # are subaddresses of the list address. You can change this, but it is
 # usually pointless.
@@ -143,17 +136,16 @@ fi
 ########################
 # remove old test list #
 ########################
-if [ "$SECT" = "1" ]; then
-  if [ $USESQL ]; then
+if [ $USESQL ]; then
 	${EZBIN}/ezmlm-unsub "${DIR}/digest" "${MAN}@$HOST" "${DIG}@$HOST" \
 		>"$ERR" 2>&1
 	${EZBIN}/ezmlm-unsub "${DIR}/mod" "${MOD}@$HOST" \
 		>"$ERR" 2>&1
 	${EZBIN}/ezmlm-unsub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff" \
 		>"$ERR" 2>&1
-  fi
-  ${RM} -rf "$DIR" ${DOT}* "${ERR}" >/dev/null 2>&1
 fi
+${RM} -rf "$DIR" ${DOT}* "${ERR}" >/dev/null 2>&1
+
 ${ECHO}
 
 #################

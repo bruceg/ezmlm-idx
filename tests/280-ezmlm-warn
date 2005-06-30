@@ -4,8 +4,6 @@
 # ezmlm-warn #
 ##############
 
-if [ "$SECT" -le "2" ]; then
-
 prompt "ezmlm-warn (2/2):     "
 
 ${EZBIN}/ezmlm-warn -t0 "$DIR" >"${ERR}" 2>&1 || \
@@ -22,5 +20,3 @@ ${EZBIN}/ezmlm-issubn -n "${DIR}/digest" || \
 	fatal "failed to remove bouncing digest subscriber"
 
 ${ECHO} "OK"
-
-fi
