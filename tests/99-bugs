@@ -61,11 +61,8 @@ if [ ! -z "$BUG" ]; then
   ${ECHO} "$BUG" | ${GREP} "_noself" >/dev/null 2>&1 && \
     {
 	${ECHO}
-	${ECHO} "The ezmlm-send -C switch 'not to sender' is no longer" 
-	${ECHO} "supported. For backwards compatibility the switch is"
-	${ECHO} "ignored. Instead, implement this feature in the recipients"
-	${ECHO} "mailbox by rejecting messages from the list with the"
-	${ECHO} "recipient's address in the From: header."
+	${ECHO} "The ezmlm-send -C switch 'not to sender' should be ignored" 
+	${ECHO} "for backwards compatibility, but wasn't."
     }
   ${ECHO} "$BUG" | ${GREP} "_signed" >/dev/null 2>&1 && \
     {

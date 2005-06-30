@@ -103,8 +103,8 @@ if [ "$SECT" = "1" ]; then
 	fatal "failed to accept normal message 3"
   ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
 
-  ${GREP} "$SENDER" "$QQENV" >/dev/null 2>&1 && \
-	{ ${ECHO} "-C failed to exclude sender (no longer supported)"; \
+  ${GREP} T"$SENDER" "$QQENV" >/dev/null 2>&1 || \
+	{ ${ECHO} "failed to include sender (-C is ignored)"; \
 	  BUG="${BUG}_noself"; \
 	  prompt "ezmlm-send:           "; }
 
