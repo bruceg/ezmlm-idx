@@ -9,33 +9,33 @@ if [ "$SECT" = "1" ]; then
   prompt "ezmlm-make (2/2):     "
 
 # make sure a few ezmlm-make switches work
-  ${EZBIN}/ezmlm-make -+qkgu -C${EZBIN}/ezmlmrc "${DIR}" || \
+  ${EZBIN}/ezmlm-make -+qkgu -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +qkgu"
-  ${GREP} "${DENY}" "${DIR}/editor" >/dev/null 2>&1 || \
+  ${GREP} "$DENY" "${DIR}/editor" >/dev/null 2>&1 || \
 	fatal "failed to implement -k for list"
   ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 || \
 	fatal "failed to implement -q for list"
   ${GREP} "ezmlm-get -s" "${DIR}/manager" >/dev/null 2>&1 || \
 	fatal "failed to implement -g for list"
-  ${GREP} "${ALLOW}" "${DIR}/editor" >/dev/null 2>&1 || \
+  ${GREP} "$ALLOW" "${DIR}/editor" >/dev/null 2>&1 || \
 	fatal "failed to implement -u for list"
 
-  ${EZBIN}/ezmlm-make -+QKGU -C${EZBIN}/ezmlmrc "${DIR}" || \
+  ${EZBIN}/ezmlm-make -+QKGU -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +QKGU"
-  ${GREP} "${DENY}" "${DIR}/editor" >/dev/null 2>&1 && \
+  ${GREP} "$DENY" "${DIR}/editor" >/dev/null 2>&1 && \
 	fatal "failed to implement -K for list"
   ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 && \
 	fatal "failed to implement -Q for list"
   ${GREP} "ezmlm-get -s" "${DIR}/manager" >/dev/null 2>&1 && \
 	fatal "failed to implement -G for list"
-  ${GREP} "${ALLOW}" "${DIR}/editor" >/dev/null 2>&1 && \
+  ${GREP} "$ALLOW" "${DIR}/editor" >/dev/null 2>&1 && \
 	fatal "failed to implement -U for list"
 
 # edit the list (add moderation and remove admin)
-  ${EZBIN}/ezmlm-make -+rsm -C${EZBIN}/ezmlmrc "${DIR}" || \
+  ${EZBIN}/ezmlm-make -+rsm -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +rsm"
 # edit the list (add text file editing and list/log)
-${EZBIN}/ezmlm-make -+ln -C${EZBIN}/ezmlmrc "${DIR}" || \
+${EZBIN}/ezmlm-make -+ln -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +ln"
 
 # Now to create our own manager for later tests:

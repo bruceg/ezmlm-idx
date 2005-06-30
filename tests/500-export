@@ -3,7 +3,7 @@
 if [ "$SECT" -le "5" ]; then
 
   SENDER="test@example.org"; export SENDER
-  ${ECHO} "From: Test <${SENDER}>" >"${TMP}"
+  ${ECHO} "From: Test <${SENDER}>" >"$TMP"
 
   ${ECHO} Verifying message header and body contents...
 

@@ -146,13 +146,13 @@ fi
 if [ "$SECT" = "1" ]; then
   if [ $USESQL ]; then
 	${EZBIN}/ezmlm-unsub "${DIR}/digest" "${MAN}@$HOST" "${DIG}@$HOST" \
-		>"${ERR}" 2>&1
+		>"$ERR" 2>&1
 	${EZBIN}/ezmlm-unsub "${DIR}/mod" "${MOD}@$HOST" \
-		>"${ERR}" 2>&1
+		>"$ERR" 2>&1
 	${EZBIN}/ezmlm-unsub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff" \
-		>"${ERR}" 2>&1
+		>"$ERR" 2>&1
   fi
-  ${RM} -rf "${DIR}" ${DOT}* "${ERR}" >/dev/null 2>&1
+  ${RM} -rf "$DIR" ${DOT}* "${ERR}" >/dev/null 2>&1
 fi
 ${ECHO}
 

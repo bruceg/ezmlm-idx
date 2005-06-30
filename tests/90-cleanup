@@ -19,6 +19,6 @@ if [ "$SECT" -eq "9" -o -z "$DEBUG" ]; then
 	${EZBIN}/ezmlm-unsub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff" \
 		>/dev/null 2>&1
   fi
-  ${RM} -rf "${DIR}" ${DOT}* "${ERR}" >/dev/null 2>&1
+  ${RM} -rf "$DIR" ${DOT}* "${ERR}" >/dev/null 2>&1
 
 fi

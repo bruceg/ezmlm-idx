@@ -9,27 +9,27 @@ if [ "$SECT" = "1" ]; then
   prompt "ezmlm-make (1/2):     "
 
 # edit non-existant list
-  ${EZBIN}/ezmlm-make -e -C${EZBIN}/ezmlmrc "${DIR}" "${DOT}" \
+  ${EZBIN}/ezmlm-make -e -C${EZBIN}/ezmlmrc "$DIR" "${DOT}" \
 	"$LOC" "$HOST" > /dev/null 2>&1 && \
 	fatal "ezmlm-make failed reject edit of non-existing list:"
 
 # make simple test list
-  ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "${DIR}" "${DOT}" \
+  ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "$DIR" "${DOT}" \
 	"$LOC" "$HOST" || \
 	fatal "ezmlm-make failed to create test list"
 
 # remake simple test list which should fail
-  ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "${DIR}" "${DOT}" \
+  ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "$DIR" "${DOT}" \
 	"$LOC" "$HOST" >/dev/null 2>&1 && \
 	fatal "failed to reject creation of existing list"
 
 # edit the list (add digest)
-  ${EZBIN}/ezmlm-make -+d -C${EZBIN}/ezmlmrc "${DIR}" || \
+  ${EZBIN}/ezmlm-make -+d -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "ezmlm-make failed to edit test list"
 
 # edit the list (add digest)
   ${MV} "${DIR}/config" "${DIR}/config~"
-  ${EZBIN}/ezmlm-make -ed -C${EZBIN}/ezmlmrc "${DIR}" "$DOT" "$LOC" "$HOST" \
+  ${EZBIN}/ezmlm-make -ed -C${EZBIN}/ezmlmrc "$DIR" "$DOT" "$LOC" "$HOST" \
 	>/dev/null 2>&1 || \
 	{ ${ECHO} "failed without DIR/config: 0.313 bug, fixed in 0.314."
 	  prompt "ezmlm-make ......     "
@@ -64,7 +64,7 @@ RDBMS='STD'
 prompt "Using RDBMS support:  "
 if [ $USESQL ]; then
   ${EZBIN}/ezmlm-make -+6 "$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
-	-C${EZBIN}/ezmlmrc "${DIR}"|| \
+	-C${EZBIN}/ezmlmrc "$DIR"|| \
 	fatal "ezmlm-make failed to add SQL config info"
 
   ${STRINGS} ${EZBIN}/ezmlm-sub | ${GREP} -i 'MySQL' >/dev/null 2>&1 && \
@@ -126,7 +126,7 @@ fi
     ${ECHO} "${SED} -e '1,/^$/d' <'${QQMSG}' >'${QQBODY}'"
     ${ECHO} "cp '${QQMSG}' '${QQMSG}'.\$\$"
     ${ECHO} "exit 0"
-  ) > "${QQTEST}"
-  ${CHMOD} 755 "${QQTEST}"
+  ) > "$QQTEST"
+  ${CHMOD} 755 "$QQTEST"
 
 fi

@@ -12,16 +12,16 @@ if [ "$SECT" = "1" ]; then
   ${ECHO} "edu:27:52:l2@h2" >> "${DIR}/split"
   ${ECHO} "com:::l3@h3" >> "${DIR}/split"
 # most testing with -D
-  ${ECHO} "lindberg@ezmlm.org" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
+  ${ECHO} "lindberg@ezmlm.org" | ${EZBIN}/ezmlm-split -D "$DIR" | \
 	${GREP} "$LIST@$HOST" >/dev/null || \
 	fatal "failed to split correctly on domain"
-  ${ECHO} "lindberg@id.com" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
+  ${ECHO} "lindberg@id.com" | ${EZBIN}/ezmlm-split -D "$DIR" | \
 	${GREP} 'l3' >/dev/null || \
 	fatal "failed to split correctly on domain"
-  ${ECHO} "lindberg@id.wustl.edu" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
+  ${ECHO} "lindberg@id.wustl.edu" | ${EZBIN}/ezmlm-split -D "$DIR" | \
 	${GREP} 'l1' >/dev/null || \
 	fatal "failed to split correctly on hash + domain"
-  ${ECHO} "cfl@id.wustl.edu" | ${EZBIN}/ezmlm-split -D "${DIR}" | \
+  ${ECHO} "cfl@id.wustl.edu" | ${EZBIN}/ezmlm-split -D "$DIR" | \
 	${GREP} 'l2' >/dev/null || \
 	fatal "failed to split correctly on hash + domain"
 # one test with delivery - redirect to local manager
@@ -31,7 +31,7 @@ if [ "$SECT" = "1" ]; then
   DTLINE="Delivered-To: ezmlm-split@$HOST"; export DTLINE
   LOCAL="$LOC-subscribe-${SND}=$HOST"; export LOCAL
   DEFAULT="subscribe-${SND}=$HOST"; export DEFAULT
-  ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "${DIR}" >"${ERR}" 2>&1
+  ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"${ERR}" 2>&1
 
   EC="$?"
   if [ "$EC" -eq "0" ]; then
@@ -41,12 +41,12 @@ if [ "$SECT" = "1" ]; then
   fi
 # if no match, should exit 0
   ${ECHO} "___:::${LOC}@$HOST" > "${DIR}/split"
-  ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "${DIR}" >"${ERR}" 2>&1 || \
+  ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"${ERR}" 2>&1 || \
 	fatal "failed to exit 0 after failing to match"
 
-  ${GREP} T"${LOC}-subscribe-${SND}=${HOST}@$HOST" "${QQENV}" >/dev/null 2>&1 || \
+  ${GREP} T"${LOC}-subscribe-${SND}=${HOST}@$HOST" "$QQENV" >/dev/null 2>&1 || \
 	fatal "failed to hand off subscribe request to correct recipient"
-  ${GREP} F"${LOC}-return-@$HOST" "${QQENV}" >/dev/null 2>&1 || \
+  ${GREP} F"${LOC}-return-@$HOST" "$QQENV" >/dev/null 2>&1 || \
 	fatal "subscribe request has incorrect sender"
 
   ${ECHO} "OK"

@@ -14,16 +14,16 @@ if [ "$SECT" = "1" ]; then
 # message from mod, normal use -> should queue
   qqclean
   { ${ECHO} "X-num: mod1"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store "${DIR}" >"${ERR}" 2>&1 < ${TMP} || \
+	${EZBIN}/ezmlm-store "$DIR" >"${ERR}" 2>&1 < ${TMP} || \
 	fatal "failed to process message 1"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod1" > /dev/null || \
 	fatal "failed to queue message 1"
 
-  ${GREP} "$SENDER" ${QQENV} >/dev/null 2>&1 || \
+  ${GREP} "$SENDER" "$QQENV" >/dev/null 2>&1 || \
 	fatal "ezmlm-store: failed to deliver mod request to moderator"
 
-  REJ=`${GREP} "From: $LOC-reject" ${QQMSG} | cut -d' ' -f2`
+  REJ=`${GREP} "From: $LOC-reject" "$QQMSG" | cut -d' ' -f2`
   if [ -z "$REJ" ]; then
 	fatal "No From: ...-reject header in mod request for mod1"
   fi
@@ -33,9 +33,9 @@ if [ "$SECT" = "1" ]; then
 # no modpost - should go directly to list
   qqclean
   { ${ECHO} "X-num: mod2"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store "${DIR}" >"${ERR}" 2>&1 < ${TMP} || \
+	${EZBIN}/ezmlm-store "$DIR" >"${ERR}" 2>&1 < ${TMP} || \
 	{
-	  ${GREP} -v "child" "${ERR}" > /dev/null 2>&1
+	  ${GREP} -v "child" "$ERR" > /dev/null 2>&1
 	  if [ "$?" != "0" ]; then
 	    fatal "Failed to process message mod2"
 	  else
@@ -51,7 +51,7 @@ if [ "$SECT" = "1" ]; then
 		fatal "failed to archive message 2 (non-modpost)"
   fi
 
-  test -s ${QQMSG} || \
+  test -s "$QQMSG" || \
 	fatal "ezmlm-store: didn't post directly in absence of DIR/modpost"
 
   touch "${DIR}/modpost"
@@ -59,16 +59,16 @@ if [ "$SECT" = "1" ]; then
 # from moderator. Should be queued, even with -P
   qqclean
   { ${ECHO} "X-num: mod3"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store -P "${DIR}" >"${ERR}" 2>&1 < ${TMP} || \
+	${EZBIN}/ezmlm-store -P "$DIR" >"${ERR}" 2>&1 < ${TMP} || \
 	fatal "-P failed to accept mods post 3"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod3" > /dev/null || \
 	fatal "failed to queue message 3"
 
-  test -s ${QQMSG} || \
+  test -s "$QQMSG" || \
 	fatal "ezmlm-store: -P failed to deliver mod request to moderator"
 
-  ACC=`${GREP} "Reply-To: $LOC-accept" ${QQMSG} | cut -d' ' -f2`
+  ACC=`${GREP} "Reply-To: $LOC-accept" "$QQMSG" | cut -d' ' -f2`
   if [ -z "$ACC" ]; then
 	fatal "No From: ...-accept header in mod request for mod3"
   fi
@@ -78,10 +78,10 @@ if [ "$SECT" = "1" ]; then
 # not from moderator, should be rejected directly with -P
   qqclean
   { ${ECHO} "X-num: mod4"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store -P "${DIR}" >"${ERR}" 2>&1 < ${TMP} && \
+	${EZBIN}/ezmlm-store -P "$DIR" >"${ERR}" 2>&1 < ${TMP} && \
 	fatal "-P failed to reject non-mod message 4"
 
-  test -s ${QQMSG} && \
+  test -s "$QQMSG" && \
 	fatal "ezmlm-store: -P failed to reject message from non-mod"
 
   ${ECHO} "OK"

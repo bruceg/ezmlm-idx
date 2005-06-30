@@ -12,26 +12,26 @@ if [ "$SECT" = "1" ]; then
   LOCAL="$LOC-request"; export LOCAL
   DEFAULT='request'; export DEFAULT
 
-  ${ECHO} "X-num: req1" > "${TMP}"
+  ${ECHO} "X-num: req1" > "$TMP"
 # use a non-existing command
-  ${ECHO} "Subject: qqqq ${SND}@$HOST" >> "${TMP}"
-  ${EZBIN}/ezmlm-request "${DIR}" < "${TMP}" > "${ERR}" 2>&1
+  ${ECHO} "Subject: qqqq ${SND}@$HOST" >> "$TMP"
+  ${EZBIN}/ezmlm-request "$DIR" < "${TMP}" > "${ERR}" 2>&1
   if [ "$?" != "99" ]; then
 	fatal "qqqq command in subject failed to exit 99"
   fi
 
-  ${GREP} T"$LOC-qqqq-$SND=${HOST}@$HOST" ${QQENV} >/dev/null || \
+  ${GREP} T"$LOC-qqqq-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
 	fatal "'qqqq' subject query rewriting failed"
 
-  ${ECHO} "X-num: req1" > "${TMP}"
+  ${ECHO} "X-num: req1" > "$TMP"
 # test full ezmlm cmd in subject and command substitution
-  ${ECHO} "Subject: ${LOC}-remove-${SND}=${HOST}@${HOST}" >> "${TMP}"
-  ${EZBIN}/ezmlm-request "${DIR}" < "${TMP}" > "${ERR}" 2>&1
+  ${ECHO} "Subject: ${LOC}-remove-${SND}=${HOST}@${HOST}" >> "$TMP"
+  ${EZBIN}/ezmlm-request "$DIR" < "${TMP}" > "${ERR}" 2>&1
   if [ "$?" != "99" ]; then
 	fatal "full ezmlm command in subject failed to exit 99"
   fi
 
-  ${GREP} T"$LOC-unsubscribe-$SND=${HOST}@$HOST" ${QQENV} >/dev/null || \
+  ${GREP} T"$LOC-unsubscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
 	fatal "ezmlm 'remove' subject query rewriting failed"
 
   ${ECHO} "OK"
