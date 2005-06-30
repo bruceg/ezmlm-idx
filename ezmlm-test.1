@@ -6,46 +6,45 @@ ezmlm-test \- test ezmlm programs
 .B ezmlm-test
 [
 .B \-h\fI host
-][
+] [
 .B \-u\fI user
-][
+] [
 .B \-l\fI sqluser
-][
+] [
 .B \-t\fI sqltable
-][
+] [
 .B \-d\fI sqldatabase
-][
+] [
 .B \-p\fI sqlpassword
 ]
-.I dir
 .SH DESCRIPTION
 .B ezmlm-test
-is run from the ezmlm build directory. It will test most of the functions
-of most of the programs in ezmlm-idx>=0.313. The program prints status
-and error messages to stdout. It requires that qmail runs on the host and that
-mail delivery to a local user functions. By default, it runs as the
-user ``eztest'' who should have read and execute permission to the files
-in the build directory.
+is run from the ezmlm build directory. It will test most of the
+functions of most of the programs in ezmlm-idx. The program prints
+status and error messages to stdout. It requires that qmail runs on the
+host and that mail delivery to a local user functions. The invoking user
+should have read and execute permission to the files in the build
+directory, and write permission in the current directory.
 
-For testing with an SQL database (requires ezmlm-idx>=0.32; see
+For testing with an SQL database (see
 .BR -p ),
 you need to have first created the tables in the database, e.g. using
 .BR ezmlm-mktab .
 A number of switches allow overriding the default connection information.
 
 .B ezmlm-test
-creates the list ``eztest-__tstlist@host''
-in the directory ``~/__TSTDIR''. This directory and ``~/.qmail-__tstlist*''
-will be overwritten/removed by the program. In addition,
-the file ``~/__TSTDIR_err'' is created. In cases of error, it often contains
-the error message form the failing program.
+creates a test list in the directory ``__TSTDIR'' (in the current
+directory). This directory and ``dot.qmail-__tstlist*'' will be
+overwritten/removed by the program. In addition, the file
+``__TSTDIR_err'' is created. In cases of error, it often contains the
+error message from the failing program.
 
 .B ezmlm-test
 should complete without error.
 As many invocations of the programs test several functions it is not easy
 to determine what went wrong if
 .B ezmlm-test
-fails. Usually, ``~/__TSTDIR__err'' gives some leads, but then debugging
+fails. Usually, ``__TSTDIR__err'' gives some leads, but then debugging
 of the particular program is required. Usually, this involves recreating
 the failing circumstances, including environment variables.
 .SH OPTIONS
@@ -65,16 +64,6 @@ Default is empty, which for most database managers defaults to
 localhost/unix socket. To specify a non-default port,
 add ``:port'' to the host name.
 .TP
-.B \-l\fI sqluser
-Connect as
-.I sqluser
-to the SQL server, if an SQL database is used (see
-.BR \-p ).
-By default, it is the same as the executing user as
-specified by the
-.B \-u
-switch or the default ``eztest''.
-.TP
 .B \-p\fI sqlpassword
 Test with SQL support, and use
 .I sqlpassword
@@ -91,13 +80,12 @@ is used (see
 .BR \-p ).
 Default is ``list''.
 .TP
-.B \-u\fI user
-Execute
-.B ezmlm-test
-as
-.IR user .
-Default is ``eztest''. The program refuses to run, unless the effective
-user name matches this user name.
+.B \-u\fI sqluser
+Connect as
+.I sqluser
+to the SQL server, if an SQL database is used (see
+.BR \-p ).
+Default is ``eztest''.
 .SH BUGS
 On some systems, some of the tests give a broken pipe error. This is because
 code needs to be added to the make_message function to capture error messages.
