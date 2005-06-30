@@ -4,6 +4,7 @@ add ezmlm-receipt to build system (needs to be fixed to compile)
 fix manual subscriptions to mod/allow/deny/digest when using SQL
 break down the ezmlmrc language parts into individual files
 add support for simultaneous multiple languages
+Fix ezmlm-tests to work even if conf-bin<>$PWD
 
 Move confirm-related directories in "mod" to new "confirm" directory?
 
