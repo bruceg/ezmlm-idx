@@ -6,13 +6,20 @@
 
 if [ "$SECT" -le "2" ]; then
 
-prompt "ezmlm-warn (2/3):     "
+prompt "ezmlm-warn (2/2):     "
 
 ${EZBIN}/ezmlm-warn -t0 "$DIR" >"${ERR}" 2>&1 || \
 	fatal "failed with normal bounce for warning"
 
 ${EZBIN}/ezmlm-warn -d -t0 "$DIR" >"${ERR}" 2>&1 || \
 	fatal "failed with digest bounce for warning"
+
+SENDER="${BNC}@${HOST}"
+export SENDER
+${EZBIN}/ezmlm-issubn -n "$DIR" || \
+	fatal "failed to remove bouncing subscriber"
+${EZBIN}/ezmlm-issubn -n "${DIR}/digest" || \
+	fatal "failed to remove bouncing digest subscriber"
 
 ${ECHO} "OK"
 
