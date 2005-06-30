@@ -1,0 +1,85 @@
+# $Id$
+
+#############
+# ezmlm-get #
+#############
+
+if [ "$SECT" -le "2" ]; then
+
+prompt "ezmlm-get (get):      "
+
+qqclean
+SENDER="${BNC}@$HOST"; export SENDER
+${ECHO} "X-num: get1" > "$TMP"
+LOCAL="$LOC-get.2_4"; export LOCAL
+DEFAULT='get.2_4'; export DEFAULT
+${EZBIN}/ezmlm-get -s "$DIR" < "${TMP}" >/dev/null 2>&1 && \
+	fatal "-s failed to reject -get from non-sub"
+msgexists && \
+	fatal "-s failed to reject -get from non-sub"
+
+qqclean
+${EZBIN}/ezmlm-get "$DIR" < "${TMP}" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	fatal "failed to exit 99 after -get"
+fi
+
+qqclean
+${ECHO} "X-num: get2" > "$TMP"
+SENDER="${DIG}@$HOST"; export SENDER
+${EZBIN}/ezmlm-get -s "$DIR" < "${TMP}" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	fatal "-s failed to exit 99 after -get"
+fi
+msgexists || \
+	fatal "get2 failed to return"
+
+# test formats for -get
+qqclean
+${ECHO} "X-num: get3" > "$TMP"
+LOCAL="$LOC-getr.2_4"; export LOCAL
+DEFAULT='getr.2_4'; export DEFAULT
+qqclean
+${EZBIN}/ezmlm-get "$DIR" < "${TMP}" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	fatal "failed to exit 99 after -getr"
+fi
+msgexists || \
+	fatal "get3 format 'r' failed to return"
+
+qqclean
+${ECHO} "X-num: get4" > "$TMP"
+LOCAL="$LOC-getn.2_4"; export LOCAL
+DEFAULT='getn.2_4'; export DEFAULT
+${EZBIN}/ezmlm-get "$DIR" < "${TMP}" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	fatal "failed to exit 99 after -getn"
+fi
+msgexists || \
+	fatal "get4 format 'n' failed to return"
+
+qqclean
+${ECHO} "X-num: get5" > "$TMP"
+LOCAL="$LOC-getv.2_4"; export LOCAL
+DEFAULT='getv.2_4'; export DEFAULT
+${EZBIN}/ezmlm-get "$DIR" < "${TMP}" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	fatal "failed to exit 99 after -getv"
+fi
+msgexists || \
+	fatal "get5 format 'v' failed to return"
+
+qqclean
+${ECHO} "X-num: get6" > "$TMP"
+LOCAL="$LOC-getx.2_4"; export LOCAL
+DEFAULT='getx.2_4'; export DEFAULT
+${EZBIN}/ezmlm-get "$DIR" < "${TMP}" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	fatal "failed to exit 99 after -getx"
+fi
+msgexists || \
+	fatal "get6 format 'x' failed to return"
+
+${ECHO} "OK"
+
+fi

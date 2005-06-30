@@ -1,0 +1,43 @@
+# $Id$
+
+#############
+# ezmlm-get #
+#############
+
+if [ "$SECT" -le "2" ]; then
+
+prompt "ezmlm-get (thread):   "
+
+qqclean
+SENDER="${BNC}@$HOST"; export SENDER
+LOCAL="$LOC-index"; export LOCAL
+DEFAULT='index'; export DEFAULT
+${ECHO} "X-num: thread1" > "$TMP"
+LOCAL="$LOC-thread.1"; export LOCAL
+DEFAULT='thread.1'; export DEFAULT
+${EZBIN}/ezmlm-get -s "$DIR" < "${TMP}" >/dev/null 2>&1 && \
+	fatal "-s failed to reject -thread from non-sub"
+msgexists && \
+	fatal "-s failed to reject -thread from non-sub"
+
+qqclean
+${EZBIN}/ezmlm-get "$DIR" < "${TMP}" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	fatal "failed to exit 99 after -thread"
+fi
+msgexists || \
+	fatal "failed to produce -thread message"
+
+qqclean
+${ECHO} "X-num: thread2" > "$TMP"
+SENDER="${DIG}@$HOST"; export SENDER
+${EZBIN}/ezmlm-get -s "$DIR" < "${TMP}" >/dev/null 2>&1
+if [ "$?" != "99" ]; then
+	fatal "-s failed to exit 99 after -thread"
+fi
+msgexists || \
+	fatal "-s failed to produce -thread message"
+
+${ECHO} "OK"
+
+fi
