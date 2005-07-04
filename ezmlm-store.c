@@ -330,14 +330,18 @@ void main(int argc,char **argv)
     qmail_put(&qq,outhost.s,outhost.len);
     qmail_puts(&qq,"\n");
   }
+  qmail_puts(&qq,"To: <");
   if (flagconfirm) {
-    qmail_puts(&qq,"To: <");
     if (sender)
       qmail_puts(&qq, sender);
-    qmail_puts(&qq,">\n");
   } else {
-    qmail_puts(&qq,"To: Recipient list not shown: ;\n");
+    if (!quote(&quoted,&outlocal))
+      die_nomem();
+    qmail_put(&qq,quoted.s,quoted.len);
+    qmail_puts(&qq,"-moderators@");
+    qmail_put(&qq,outhost.s,outhost.len);
   }
+  qmail_puts(&qq,">\n");
   /* FIXME: Drop the custom subject hack and use hdr_listsubject1 */
   if (!stralloc_copys(&subject,"Subject: ")) die_nomem();
   if (flagconfirm) {
