@@ -211,7 +211,7 @@ void main(int argc,char **argv)
 
   if (sender) {
       pmod = issub(moderators.s,sender,(char *) 0);
-      closesql();
+      closesub();
 				/* sender = moderator? */
   } else
     pmod = 0;

@@ -26,7 +26,7 @@ const char *logmsg(const char *dir,
   PGresult *result;
   PGresult *result2;
 
-  if ((ret = opensql(dir,&table))) {
+  if ((ret = opensub(dir,&table))) {
     if (*ret)
       return ret;
     else

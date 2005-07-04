@@ -707,7 +707,7 @@ void main(int argc,char **argv)
               code_qput(line.s,pos-1);
               code_qput("\n",1);
             }
-	    closesql();		/* likely different dbs for different lists */
+	    closesub();		/* likely different dbs for different lists */
             break;
         }
       }

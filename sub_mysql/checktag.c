@@ -35,7 +35,7 @@ const char *checktag (const char *dir,		/* the db base dir */
   const char *table = (char *) 0;
   const char *r;
 
-  if ((r = opensql(dir,&table))) {
+  if ((r = opensub(dir,&table))) {
     if (*r) return r;
     if (!seed) return (char *) 0;		/* no data - accept */
 

@@ -4,13 +4,13 @@
 #include "errtxt.h"
 #include "subscribe.h"
 
-const char *opensql(const char *dbname,	/* database directory */
+const char *opensub(const char *dbname,	/* database directory */
 		    const char **table)	/* table root_name */
 {
 	return 0;
 }
 
-void closesql(void)
+void closesub(void)
 /* close connection to SQL server, if open */
 {
 	return;

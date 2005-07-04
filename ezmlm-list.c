@@ -72,6 +72,6 @@ void main(int argc,char **argv)
   } else
     (void) putsubs(dir,0L,52L,subwrite,flagmysql);
   if (substdio_flush(subfdout) == -1) die_write();
-  closesql();
+  closesub();
   _exit(0);
 }

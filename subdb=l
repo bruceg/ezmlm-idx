@@ -2,7 +2,7 @@ checktag.o
 issub.o
 logmsg.o
 subscribe.o
-opensql.o
+opensub.o
 putsubs.o
 tagmsg.o
 searchlog.o

@@ -59,7 +59,7 @@ unsigned long putsubs(const char *dbname,	/* database base dir */
   unsigned int hashpos;
   const char *ret = (char *) 0;
 
-  if (!flagsql || (ret = opensql(dbname,&table))) {
+  if (!flagsql || (ret = opensub(dbname,&table))) {
     if (flagsql && *ret) strerr_die2x(111,FATAL,ret);
 						/* fallback to local db */
     if (!stralloc_copys(&fn,dbname)) die_nomem();

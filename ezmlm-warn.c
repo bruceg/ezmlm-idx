@@ -470,6 +470,6 @@ void main(int argc,char **argv)
 				/* See check of ld above to guard against */
 				/* it being corrupted and > when */
 
-  closesql();
+  closesub();
   _exit(0);
 }

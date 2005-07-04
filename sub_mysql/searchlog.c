@@ -81,7 +81,7 @@ void searchlog(const char *dir,		/* work directory */
     *(cps - 1) = '_';		/* will match char specified as well */
   }
 
-  if ((ret = opensql(dir,&table))) {
+  if ((ret = opensub(dir,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
 						/* fallback to local log */
   if (!stralloc_copys(&line,dir)) die_nomem();

@@ -23,7 +23,7 @@ const char *logmsg(const char *dir,
   const char *table = (char *) 0;
   const char *ret;
 
-  if ((ret = opensql(dir,&table))) {
+  if ((ret = opensub(dir,&table))) {
     if (*ret)
       return ret;
     else

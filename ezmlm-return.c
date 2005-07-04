@@ -398,14 +398,14 @@ void main(int argc,char **argv)
 	  die_trash();
       } else if (flagreceipt) {
 	if (!(ret = logmsg(dir,msgnum,listno,0L,5))) {
-	  closesql();
+	  closesub();
 	  strerr_die6x(99,INFO,"receipt:",cp," [",hashp,"]");
 	}
 	if (*ret) strerr_die2x(111,FATAL,ret);
 	else strerr_die2x(0,INFO,ERR_DONE);
       } else if (*action) {	/* post VERP master bounce */
 	if ((ret = logmsg(dir,msgnum,listno,0L,-1))) {
-	  closesql();
+	  closesub();
 	  strerr_die4x(0,INFO,"bounce [",hashp,"]");
 	}
 	if (*ret) strerr_die2x(111,FATAL,ret);
@@ -489,7 +489,7 @@ void main(int argc,char **argv)
       }
     }
   }
-  closesql();
+  closesub();
   if (flagmasterbounce)
     strerr_die3x(0,"[",hashp,"]");
   else

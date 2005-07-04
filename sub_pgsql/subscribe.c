@@ -95,7 +95,7 @@ int subscribe(const char *dbname,
 
   if (tab) ptable = &tab;
 
-  if (!flagsql || (r = opensql(dbname,ptable))) {
+  if (!flagsql || (r = opensub(dbname,ptable))) {
     if (r && *r) strerr_die2x(111,FATAL,r);
 						/* fallback to local db */
     if (!stralloc_copys(&addr,"T")) die_nomem();

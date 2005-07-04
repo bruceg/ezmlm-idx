@@ -142,7 +142,7 @@ void main(int argc,char **argv)
     pmod = (char *) 0;
     while (moddir && !pmod && sender) {
       pmod = issub(moddir,sender,(char *)0);
-      closesql();
+      closesub();
       moddir = argv[optind++];
     }
   }

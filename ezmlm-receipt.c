@@ -242,7 +242,7 @@ void main(int argc,char **argv)
 		/* feedback ok even if not sub. Will be filtered by subreceipt*/
 		/* For instance, main list feedback is ok, but !issub. */
     subreceipt(workdir,msgnum,&tagline,listaddr.s,2,INFO,FATAL);
-    closesql();
+    closesub();
     _exit(0);
   }
 				/* not receipt - maybe bounce */
@@ -285,7 +285,7 @@ void main(int argc,char **argv)
 	case -2: strerr_die2x(0,INFO,ERR_NOT_ACTIVE);
 	default: doit(listaddr.s,msgnum,when,&bounce);
     }
-    closesql();
+    closesub();
     _exit(0);
   }			/* pre-VERP bounce, in QSBMF format */
 
@@ -339,7 +339,7 @@ void main(int argc,char **argv)
       }
     }
   }
-  closesql();
+  closesub();
   _exit(0);
 }
 

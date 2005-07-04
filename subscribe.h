@@ -56,9 +56,9 @@ extern void searchlog(const char *dir,
 		      char *search,
 		      int subwrite());
 
-extern const char *opensql(const char *dir,const char **table);
+extern const char *opensub(const char *dir,const char **table);
 
-extern void closesql(void);
+extern void closesub(void);
 
 struct sqlinfo
 {

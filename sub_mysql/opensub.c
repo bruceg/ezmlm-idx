@@ -2,16 +2,16 @@
 
 #include "str.h"
 #include "slurp.h"
+#include "scan.h"
 #include "stralloc.h"
 #include "strerr.h"
 #include "errtxt.h"
 #include "subscribe.h"
-#include <unistd.h>
-#include <libpq-fe.h> 
+#include <mysql.h>
 
-PGconn *pgsql = 0;
+MYSQL *mysql = 0;
 
-const char *opensql(const char *dbname,	/* database directory */
+const char *opensub(const char *dbname,	/* database directory */
 		    const char **table)	/* table root_name */
 /* reads the file dbname/sql, and if the file exists, parses it into the    */
 /* components. The string should be host:port:user:pw:db:table.         If  */
@@ -23,26 +23,28 @@ const char *opensql(const char *dbname,	/* database directory */
 {
   struct sqlinfo info;
   const char *err;
-  
+  unsigned long portnum = 0L;
+
   if ((err = parsesql(dbname,table,&info)) != 0)
     return err;
+  if (info.port != 0)
+    scan_ulong(info.port,&portnum);
 
-  if (!pgsql) {
-    /* Make connection to database */
-    pgsql = PQsetdbLogin(info.host,info.port,NULL,NULL,
-			 info.db,info.user,info.pw);
-    /* Check  to see that the backend connection was successfully made */
-    if (PQstatus(pgsql) == CONNECTION_BAD)
-      return PQerrorMessage(pgsql);
+  if (!mysql) {
+    if (!(mysql = mysql_init((MYSQL *) 0)))
+	 return ERR_NOMEM;					/* init */
+    if (!(mysql_real_connect(mysql, info.host, info.user, info.pw, info.db,
+	(unsigned int) portnum, 0, CLIENT_COMPRESS)))		/* conn */
+		return mysql_error(mysql);
   }
   return (char *) 0;
 }
 
-void closesql(void)
+void closesub(void)
 /* close connection to SQL server, if open */
 {
-  if (pgsql)
-    PQfinish(pgsql);
-  pgsql = 0;		/* Destroy pointer */
+  if (mysql)
+    mysql_close(mysql);
+  mysql = 0;					/* destroy pointer */
   return;
 }

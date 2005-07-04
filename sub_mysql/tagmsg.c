@@ -51,7 +51,7 @@ void tagmsg(const char *dir,		/* db base dir */
     for (i = 0; i < COOKIE; i++)
       hashout[i] = hash[i];
 
-  if ((ret = opensql(dir,&table))) {
+  if ((ret = opensub(dir,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
     return;				/* no sql => success */
 

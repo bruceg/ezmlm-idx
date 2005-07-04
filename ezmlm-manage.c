@@ -1271,10 +1271,10 @@ int main(int argc,char **argv)
 
   if (*(err = qmail_close(&qq)) == '\0') {
       strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
-      closesql();
+      closesub();
       strerr_die2x(0,"ezmlm-manage: info: qp ",strnum);
   } else {
-      closesql();
+      closesub();
       strerr_die3x(111,FATAL,ERR_TMP_QMAIL_QUEUE,err + 1);
   }
 }

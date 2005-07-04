@@ -1363,7 +1363,7 @@ void main(int argc,char **argv)
       else
         (void) logmsg(workdir,mno,0L,subs,4);
     }
-    closesql();			/* close db connection */
+    closesub();			/* close db connection */
     unlock();			/* NOP if nothing locked */
     strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
     strerr_die2x(goodexit,"ezmlm-get: info: qp ",strnum);

@@ -761,7 +761,7 @@ void main(int argc,char **argv)
   if (*(err = qmail_close(&qq)) == '\0') {
       if (flaglog)				/* mysql logging */
 	(void) logmsg(dir,outnum,hash_lo,subs,flagsublist ? 3 : 4);
-      closesql();
+      closesub();
       strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
       strerr_die2x(0,"ezmlm-send: info: qp ",strnum);
   } else {

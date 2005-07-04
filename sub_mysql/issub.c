@@ -50,7 +50,7 @@ const char *issub(const char *dbname,		/* directory to basedir */
   int match;
 
   table = tab;
-  if ((ret = opensql(dbname,&table))) {
+  if ((ret = opensub(dbname,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
 						/* fallback to local db */
 

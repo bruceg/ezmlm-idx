@@ -42,11 +42,11 @@ void main(int argc,char **argv)
     if (dir[0] != '/')
       strerr_die2x(100,FATAL,ERR_SLASH);
     if (issub(dir,addr,(char *) 0)) {
-      closesql();
+      closesub();
       _exit(flagsub);		/* subscriber */
     }
   }
-  closesql();
+  closesub();
   if (flagsub)			/* not subscriber anywhere */
     _exit(0);
   else

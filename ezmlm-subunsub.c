@@ -103,6 +103,6 @@ void subunsub_main(int submode,
 		forcehash,(char *) 0);
     }
   }
-  closesql();
+  closesub();
   _exit(0);
 }

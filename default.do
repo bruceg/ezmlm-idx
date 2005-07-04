@@ -60,7 +60,7 @@ case "$1" in
     formake 'sub=`head -n 1 conf-sub` ; ln sub_$$sub/'$1 $1
     formake "touch $1"
     ;;
-  checktag.c | issub.c | logmsg.c | subscribe.c | opensql.c | putsubs.c | tagmsg.c | searchlog.c)
+  checktag.c | issub.c | logmsg.c | subscribe.c | opensub.c | putsubs.c | tagmsg.c | searchlog.c)
     dependon conf-sub
     formake "rm -f $1 ${1%.c}.o"
     formake 'sub=`head -n 1 conf-sub` ; ln sub_$$sub/'$1 $1
