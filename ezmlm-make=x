@@ -1,13 +1,1 @@
-getopt.a
-getln.a
-substdio.a
-lock.a
-open.a
-die.a
-strerr.a
-stralloc.a
-alloc.a
-error.a
-str.a
-auto_bin.o
-auto_version.o
+-lezmlm

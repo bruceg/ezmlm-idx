@@ -1,8 +1,0 @@
-concatHDR.o
-decodeHDR.o
-unfoldHDR.o
-decodeQ.o
-encodeQ.o
-decodeB.o
-encodeB.o
-author.o

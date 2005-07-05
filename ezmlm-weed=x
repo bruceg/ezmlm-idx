@@ -1,9 +1,1 @@
-getln.a
-die.a
-strerr.a
-substdio.a
-error.a
-stralloc.a
-alloc.a
-str.a
-case.a
+-lezmlm

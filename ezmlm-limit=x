@@ -1,16 +1,1 @@
-getconf.o
-slurp.a
-die.a
-strerr.a
-substdio.a
-stralloc.a
-alloc.a
-error.a
-str.a
-case.a
-lock.a
-open.a
-getopt.a
-fs.a
-sig.a
-now.o
+-lezmlm

@@ -1,9 +1,0 @@
-checktag.o
-issub.o
-logmsg.o
-subscribe.o
-opensub.o
-putsubs.o
-tagmsg.o
-searchlog.o
-sqllib.o
