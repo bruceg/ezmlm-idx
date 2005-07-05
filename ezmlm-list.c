@@ -22,7 +22,7 @@ int flagnumber = 0;	/* default list subscribers, not number of */
 
 char strnum[FMT_ULONG];
 
-void die_write(void)
+static void die_write(void)
 {
   strerr_die3sys(111,FATAL,ERR_WRITE,"stdout: ");
 }
