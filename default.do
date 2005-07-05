@@ -9,7 +9,7 @@ then
     case $line in
     *.lib)
       libs="$libs $line"
-      libscat="$libscat "'`'"cat $i"'`'
+      libscat="$libscat "'`'"cat $line"'`'
       ;;
     -l*)
       dashl="$dashl $line"
