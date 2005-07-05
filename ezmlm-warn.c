@@ -63,7 +63,7 @@ stralloc lasth = {0};
 stralloc lastd = {0};
 struct stat st;
 
-void die_read(void) { strerr_die4sys(111,FATAL,ERR_READ,fn.s,": "); }
+static void die_read(void) { strerr_die4sys(111,FATAL,ERR_READ,fn.s,": "); }
 
 void makedir(const char *s)
 {
