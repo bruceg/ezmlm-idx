@@ -1,15 +1,28 @@
 if test -r $1=x
 then
-  libs=`grep '\.lib *$' "$1=x"`
-  libscat=''
-  for i in $libs
+  libs=""
+  libscat=""
+  dashl=""
+  objs=""
+  while read line
   do
-    libscat="$libscat "'`'"cat $i"'`'
-  done
-  objs=`grep -v '\.lib *$' "$1=x"`
+    case $line in
+    *.lib)
+      libs="$libs $line"
+      libscat="$libscat "'`'"cat $i"'`'
+      ;;
+    -l*)
+      dashl="$dashl $line"
+      libs="$libs `echo $line | sed -e 's/^-l/lib/' -e 's/$/.a/'`"
+      ;;
+    *)
+      objs="$objs $line"
+      ;;
+    esac
+  done < "$1=x"
   dependon load $1.o $objs $libs
   directtarget
-  formake ./load $1 $objs "$libscat"
+  formake ./load $1 $objs "$libscat" $dashl
   exit 0
 fi
 
