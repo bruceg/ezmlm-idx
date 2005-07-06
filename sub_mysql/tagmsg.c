@@ -16,8 +16,6 @@
 extern MYSQL *mysql;
 
 static stralloc line = {0};
-static stralloc key = {0};
-static char hash[COOKIE];
 static char strnum[FMT_ULONG];	/* message number as sz */
 
 void tagmsg(const char *dir,		/* db base dir */
@@ -37,19 +35,8 @@ void tagmsg(const char *dir,		/* db base dir */
 {
   const char *table;
   const char *ret;
-  unsigned int i;
 
-  strnum[fmt_ulong(strnum,msgnum)] = '\0';	/* message nr ->string*/
-
-    switch(slurp("key",&key,32)) {
-      case -1:
-	strerr_die3sys(111,FATAL,ERR_READ,"key: ");
-      case 0:
-	strerr_die3x(100,FATAL,"key",ERR_NOEXIST);
-    }
-    cookie(hash,key.s,key.len,strnum,seed,action);
-    for (i = 0; i < COOKIE; i++)
-      hashout[i] = hash[i];
+  std_tagmsg(dir,msgnum,seed,action,hashout);
 
   if ((ret = opensub(dir,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
@@ -67,7 +54,7 @@ void tagmsg(const char *dir,		/* db base dir */
 		die_nomem();
     if (!stralloc_cats(&line,strnum)) die_nomem();
     if (!stralloc_cats(&line,",'")) die_nomem();
-    if (!stralloc_catb(&line,hash,COOKIE)) die_nomem();
+    if (!stralloc_catb(&line,hashout,COOKIE)) die_nomem();
     if (!stralloc_cats(&line,"',")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,bodysize)))
 		die_nomem();

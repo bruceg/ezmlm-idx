@@ -62,6 +62,7 @@ issub.o
 lock_ex.o
 lock_exnb.o
 lockfile.o
+log.o
 logmsg.o
 makehash.o
 now.o
@@ -82,6 +83,12 @@ sig_pipe.o
 slurp.o
 slurpclose.o
 sqllib.o
+std_checktag.o
+std_issub.o
+std_putsubs.o
+std_searchlog.o
+std_subscribe.o
+std_tagmsg.o
 str_chr.o
 str_cpy.o
 str_diff.o
@@ -123,4 +130,3 @@ wrap_exitcode.o
 wrap_fork.o
 wrap_stat.o
 wrap_waitpid.o
-log.o

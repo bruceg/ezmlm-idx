@@ -24,25 +24,6 @@ extern PGconn *pgsql;
 extern void die_write(void);
 
 static stralloc line = {0};
-static stralloc outline = {0};
-static char date[DATE822FMT];
-static datetime_sec when;
-static struct datetime dt;
-static substdio ssin;
-static char inbuf[256];
-
-static void lineout(int subwrite())
-{
-  (void) scan_ulong(line.s,&when);
-  datetime_tai(&dt,when);		/* there is always at least a '\n' */
-  if (!stralloc_copyb(&outline,date,date822fmt(date,&dt) - 1))
-	die_nomem();
-  if (!stralloc_cats(&outline,": ")) die_nomem();
-  if (!stralloc_catb(&outline,line.s,line.len - 1)) die_nomem();
-  if (subwrite(outline.s,outline.len) == -1)
-	strerr_die3x(111,FATAL,ERR_WRITE,"output");
-  return;
-}
 
 void searchlog(const char *dir,		/* work directory */
 	       char *search,		/* search string */
@@ -53,15 +34,9 @@ void searchlog(const char *dir,		/* work directory */
 /* local Log if no mysql connect info. */
 {
 
-  unsigned char x;
-  unsigned char y;
-  unsigned char *cp;
-  unsigned char *cpsearch;
   unsigned char *cps;
   unsigned char ch;
-  unsigned char *cplast, *cpline;
   unsigned int searchlen;
-  int fd,match;
   const char *ret;
 
   PGresult *result;
@@ -85,43 +60,8 @@ void searchlog(const char *dir,		/* work directory */
   if ((ret = opensub(dir,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
 						/* fallback to local log */
-  if (!stralloc_copys(&line,dir)) die_nomem();
-  if (!stralloc_cats(&line,"/Log")) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
-  fd = open_read(line.s);
-  if (fd == -1)
-    if (errno != error_noent)
-	strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
-    else
-        strerr_die3x(100,FATAL,line.s,ERR_NOEXIST);
-  substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
+    std_searchlog(dir,search,subwrite);
 
-  for (;;) {
-    if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,FATAL,ERR_READ_INPUT);
-    if (!match) break;
-    if (!searchlen) {
-      lineout(subwrite);
-    } else {
-      cpline = (unsigned char *) line.s - 1;
-      cplast = cpline + line.len - searchlen; /* line has \0 at the end */
-      while ((cp = ++cpline) <= cplast) {
-	cpsearch = (unsigned char *) search;
-	for (;;) {
-	  x = *cpsearch++;
-	  if (!x) break;
-	  y = *cp++ - 'A';
-	  if (y <= (unsigned char) ('Z' - 'A')) y += 'a'; else y += 'A';
-	  if (x != y && x != '_') break;		/* '_' = wildcard */
-	}
-	if (!x) {
-	  lineout(subwrite);
-	  break;
-	}
-      }
-    }
-  }
-  close(fd);
   } else {
 
 /* SELECT (*) FROM list_slog WHERE fromline LIKE '%search%' OR address   */

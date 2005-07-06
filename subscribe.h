@@ -17,15 +17,27 @@ extern int subscribe(const char *dir,
 		     const char *event,
 		     int flagmysql,
 		     int forcehash);
+extern int std_subscribe(const char *dir,
+			 const char *username,
+			 int flagadd,
+			 const char *from,
+			 const char *event,
+			 int forcehash);
 
 extern const char *issub(const char *dir,
 			 const char *username);
+extern const char *std_issub(const char *dir,
+			     const char *username);
 
 extern unsigned long putsubs(const char *dir,
 			     unsigned long hash_lo,
 			     unsigned long hash_hi,
 			     int subwrite(),
 			     int flagsql);
+extern unsigned long std_putsubs(const char *dir,
+				 unsigned long hash_lo,
+				 unsigned long hash_hi,
+				 int subwrite());
 
 /*		int subwrite(char *string, unsigned int length); */
 
@@ -36,6 +48,11 @@ extern void tagmsg(const char *dir,
 		   char *hashout,
 		   unsigned long bodysize,
 		   unsigned long chunk);
+extern void std_tagmsg(const char *dir,
+		       unsigned long msgnum,
+		       const char *seed,
+		       const char *action,
+		       char *hashout);
 
 extern const char *logmsg(const char *dir,
 			  unsigned long msgnum,
@@ -49,10 +66,18 @@ extern const char *checktag(const char *dir,
 			    const char *action,
 			    const char *seed,
 			    const char *hash);
+extern const char *std_checktag(const char *dir,
+				unsigned long msgnum,
+				const char *action,
+				const char *seed,
+				const char *hash);
 
 extern void searchlog(const char *dir,
 		      char *search,
 		      int subwrite());
+extern void std_searchlog(const char *dir,
+			  char *search,
+			  int subwrite());
 
 extern const char *opensub(const char *dir,const char **table);
 

@@ -20,11 +20,8 @@
 
 extern MYSQL *mysql;
 
-static substdio ssin;
-static char inbuf[512];
 static char strnum[FMT_ULONG];
 static stralloc line = {0};
-static stralloc fn = {0};
 
 static void die_write(void)
 {
@@ -52,44 +49,13 @@ unsigned long putsubs(const char *dbname,	/* database base dir */
   const char *table;
   unsigned long *lengths;
 
-  unsigned int i;
-  int fd;
   unsigned long no = 0L;
-  int match;
-  unsigned int hashpos;
   const char *ret = (char *) 0;
 
   if (!flagsql || (ret = opensub(dbname,&table))) {
     if (flagsql && *ret) strerr_die2x(111,FATAL,ret);
-						/* fallback to local db */
-    if (!stralloc_copys(&fn,dbname)) die_nomem();
-    if (!stralloc_catb(&fn,"/subscribers/?",15)) die_nomem();
-				/* NOTE: Also copies terminal '\0' */
-    hashpos = fn.len - 2;
-    if (hash_lo > 52) hash_lo = 52;
-    if (hash_hi > 52) hash_hi = 52;
-    if (hash_hi < hash_lo) hash_hi = hash_lo;
 
-    for (i = hash_lo;i <= hash_hi;++i) {
-      fn.s[hashpos] = 64 + i;	/* hash range 0-52 */
-      fd = open_read(fn.s);
-      if (fd == -1) {
-        if (errno != error_noent)
-	  strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
-      } else {
-        substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
-        for (;;) {
-          if (getln(&ssin,&line,&match,'\0') == -1)
-            strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
-          if (!match)
-            break;
-          if (subwrite(line.s + 1,line.len - 2) == -1) die_write();
-          no++;
-        }
-        close(fd);
-      }
-    }
-    return no;
+    return std_putsubs(dbname,hash_lo,hash_hi,subwrite);
 
   } else {					/* SQL Version */
 

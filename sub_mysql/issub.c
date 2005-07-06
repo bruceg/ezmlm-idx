@@ -21,12 +21,8 @@
 extern MYSQL *mysql;
 
 static stralloc addr = {0};
-static stralloc lcaddr = {0};
 static stralloc line = {0};
 static stralloc quoted = {0};
-static stralloc fn = {0};
-static substdio ss;
-static char ssbuf[512];
 
 const char *issub(const char *dbname,		/* directory to basedir */
 		  const char *userhost)
@@ -42,85 +38,13 @@ const char *issub(const char *dbname,		/* directory to basedir */
   const char *table;
   unsigned long *lengths;
 
-  int fd;
   unsigned int j;
-  uint32 h,lch;
-  char ch,lcch;
-  int match;
 
   if ((ret = opensub(dbname,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
-						/* fallback to local db */
 
-    if (!stralloc_copys(&addr,"T")) die_nomem();
-    if (!stralloc_cats(&addr,userhost)) die_nomem();
+    return std_issub(dbname,userhost);
 
-    j = byte_rchr(addr.s,addr.len,'@');
-    if (j == addr.len) return 0;
-    case_lowerb(addr.s + j + 1,addr.len - j - 1);
-    if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
-    case_lowerb(lcaddr.s + 1,j - 1);	/* totally lc version of addr */
-
-    h = 5381;
-    lch = h;			/* make hash for both for backwards comp */
-    for (j = 0;j < addr.len;++j) {	/* (lcaddr.len == addr.len) */
-      h = (h + (h << 5)) ^ (uint32) (unsigned char) addr.s[j];
-      lch = (lch + (lch << 5)) ^ (uint32) (unsigned char) lcaddr.s[j];
-    }
-    ch = 64 + (h % 53);
-    lcch = 64 + (lch % 53);
-
-    if (!stralloc_0(&addr)) die_nomem();
-    if (!stralloc_0(&lcaddr)) die_nomem();
-    if (!stralloc_copys(&fn,dbname)) die_nomem();
-    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem();
-    if (!stralloc_catb(&fn,&lcch,1)) die_nomem();
-    if (!stralloc_0(&fn)) die_nomem();
-
-    fd = open_read(fn.s);
-    if (fd == -1) {
-      if (errno != error_noent)
-        strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
-    } else {
-      substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
-
-      for (;;) {
-        if (getln(&ss,&line,&match,'\0') == -1)
-          strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
-        if (!match) break;
-        if (line.len == lcaddr.len)
-          if (!case_diffb(line.s,line.len,lcaddr.s))
-            { close(fd); return line.s+1; }
-      }
-
-      close(fd);
-    }
-	/* here if file not found or (file found && addr not there) */
-
-    if (ch == lcch) return 0;
-
-	/* try case sensitive hash for backwards compatibility */
-    fn.s[fn.len - 2] = ch;
-    fd = open_read(fn.s);
-    if (fd == -1) {
-      if (errno != error_noent)
-        strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
-      return 0;
-    }
-    substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
-
-    for (;;) {
-      if (getln(&ss,&line,&match,'\0') == -1)
-        strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
-      if (!match) break;
-      if (line.len == addr.len)
-        if (!case_diffb(line.s,line.len,addr.s))
-          { close(fd); return line.s+1; }
-    }
-
-    close(fd);
-
-    return 0;
   } else {						/* SQL version  */
 	/* SELECT address FROM list WHERE address = 'userhost' AND hash */
 	/* BETWEEN 0 AND 52. Without the hash restriction, we'd make it */
