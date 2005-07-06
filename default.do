@@ -22,7 +22,7 @@ then
   done < "$1=x"
   dependon load $1.o $objs $libs
   directtarget
-  formake ./load $1 $objs "$libscat" $dashl
+  formake ./load $1 $objs $dashl "$libscat"
   exit 0
 fi
 
