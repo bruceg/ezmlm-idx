@@ -32,7 +32,7 @@ const char *checktag (const char *dir,		/* the db base dir */
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
-  const char *table = (char *) 0;
+  const char *table;
   const char *r;
 
   if ((r = opensub(dir,&table))) {

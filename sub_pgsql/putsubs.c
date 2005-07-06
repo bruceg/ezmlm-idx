@@ -50,7 +50,7 @@ unsigned long putsubs(const char *dbname,	/* database base dir */
   int row_nr;
   int length;
   char *row;
-  const char *table = (char *) 0;
+  const char *table;
 
   unsigned int i;
   int fd;

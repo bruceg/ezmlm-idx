@@ -36,7 +36,7 @@ const char *issub(const char *dbname,		/* directory to basedir */
 {
   PGresult *result;
   const char *ret;
-  const char *table = 0;
+  const char *table;
 
   int fd;
   unsigned int j;

@@ -20,7 +20,7 @@ const char *logmsg(const char *dir,
 /* Returns NULL on success, "" if dir/sql was not found, and the error   */
 /* string on error.   NOTE: This routine does nothing for non-sql lists! */
 {
-  const char *table = (char *) 0;
+  const char *table;
   const char *ret;
 
   PGresult *result;

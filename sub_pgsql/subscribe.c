@@ -80,7 +80,7 @@ int subscribe(const char *dbname,
   char *cpat;
   char szhash[3] = "00";
   const char *r = (char *) 0;
-  const char *table = (char *) 0;
+  const char *table;
 
   unsigned int j;
   uint32 h,lch;

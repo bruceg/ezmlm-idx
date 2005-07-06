@@ -49,7 +49,7 @@ unsigned long putsubs(const char *dbname,	/* database base dir */
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
-  const char *table = (char *) 0;
+  const char *table;
   unsigned long *lengths;
 
   unsigned int i;

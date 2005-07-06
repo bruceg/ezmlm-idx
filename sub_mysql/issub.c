@@ -39,7 +39,7 @@ const char *issub(const char *dbname,		/* directory to basedir */
   MYSQL_RES *result;
   MYSQL_ROW row;
   const char *ret;
-  const char *table = 0;
+  const char *table;
   unsigned long *lengths;
 
   int fd;

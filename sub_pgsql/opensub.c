@@ -13,13 +13,6 @@ PGconn *pgsql = 0;
 
 const char *opensub(const char *dbname,	/* database directory */
 		    const char **table)	/* table root_name */
-/* reads the file dbname/sql, and if the file exists, parses it into the    */
-/* components. The string should be host:port:user:pw:db:table.         If  */
-/* the file does not exists, returns "". On success returns NULL. On error  */
-/* returns error string for temporary error. If table is NULL it is         */
-/* left alone. If *table is not null, it overrides the table in the sql     */
-/* file. If we already opended dbname the cached info is used, rather than  */
-/* rereading the file. Note that myp is static and all pointers point to it.*/
 {
   struct sqlinfo info;
   const char *err;

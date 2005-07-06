@@ -32,7 +32,7 @@ const char *checktag (const char *dir,		/* the db base dir */
 {
   PGresult *result;
   /*  int row; */
-  const char *table = (char *) 0;
+  const char *table;
   const char *r;
 
   if ((r = opensub(dir,&table))) {

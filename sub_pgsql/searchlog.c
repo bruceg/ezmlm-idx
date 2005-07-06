@@ -69,7 +69,7 @@ void searchlog(const char *dir,		/* work directory */
   int length;
   char *row;
 
-  const char *table = (char *) 0;
+  const char *table;
 
   if (!search) search = (char*)"";	/* defensive */
   searchlen = str_len(search);

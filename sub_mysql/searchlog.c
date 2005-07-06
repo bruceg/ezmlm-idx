@@ -67,7 +67,7 @@ void searchlog(const char *dir,		/* work directory */
 
   MYSQL_RES *result;
   MYSQL_ROW row;
-  const char *table = (char *) 0;
+  const char *table;
   unsigned long *lengths;
 
   if (!search) search = (char*)"";	/* defensive */

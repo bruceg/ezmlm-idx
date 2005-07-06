@@ -20,10 +20,10 @@ const char *parsesql(const char *dbname,	/* database directory */
 /* reads the file dbname/sql, and if the file exists, parses it into the    */
 /* components. The string should be host:port:user:pw:db:table.         If  */
 /* the file does not exists, returns "". On success returns NULL. On error  */
-/* returns error string for temporary error. If table is NULL it is         */
-/* left alone. If *table is not null, it overrides the table in the sql     */
-/* file. If we already opended dbname the cached info is used, rather than  */
-/* rereading the file. Note that myp is static and all pointers point to it.*/
+/* returns error string for temporary error. If *table is not null, it      */
+/* overrides the table in the sql file. If we already opended dbname the    */
+/* cached info is used, rather than rereading the file.                     */
+/* Note that myp is static and all pointers point to it.*/
 {
   unsigned int j;
 
@@ -31,10 +31,7 @@ const char *parsesql(const char *dbname,	/* database directory */
 
   if (!stralloc_copys(&fn,dbname)) return ERR_NOMEM;
   if (fn.len == ourdb.len && !str_diffn(ourdb.s,fn.s,fn.len)) {
-    if (table) {
-      if (*table) ourtable = *table;
-      else *table = ourtable;
-    }
+    *table = ourtable;
     return 0;
   }
   if (!stralloc_cats(&fn,"/sql")) return ERR_NOMEM;
@@ -84,15 +81,8 @@ const char *parsesql(const char *dbname,	/* database directory */
     info->pw = (char *) 0;
   if (info->db && !*info->db)
     info->db = (char *) 0;
-  if (ourtable && !*ourtable)
-    ourtable = (char *) 0;
-  if (table) {
-    if (*table)
-      ourtable = *table;
-    else
-      *table = ourtable;
-    if (!*table)
-      return ERR_NO_TABLE;
-  }
+  if (!ourtable || !*ourtable)
+    return ERR_NO_TABLE;
+  *table = ourtable;
   return (char *) 0;
 }

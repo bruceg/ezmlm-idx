@@ -35,7 +35,7 @@ void tagmsg(const char *dir,		/* db base dir */
 /* table_cookie where table and other data is taken from dir/sql. We log  */
 /* arrival of the message (done=0). */
 {
-  const char *table = (char *) 0;
+  const char *table;
   const char *ret;
   unsigned int i;
 

@@ -37,7 +37,7 @@ void tagmsg(const char *dir,		/* db base dir */
 {
   PGresult *result;
   PGresult *result2; /* Need for dupicate check */
-  const char *table = (char *) 0;
+  const char *table;
   const char *ret;
   unsigned int i;
 
