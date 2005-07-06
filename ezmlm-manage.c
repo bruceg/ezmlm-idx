@@ -426,7 +426,7 @@ int geton(const char *action)
   unsigned char ch;
 
   fl = get_from(target.s,action);		/* try to match up */
-  switch((r = subscribe(workdir,target.s,1,fl,"+",1,-1,(char *) 0))) {
+  switch((r = subscribe(workdir,target.s,1,fl,"+",1,-1))) {
     case 1:
 	    qmail_puts(&qq,"List-Unsubscribe: <mailto:");	/*rfc2369 */
 	    qmail_put(&qq,outlocal.s,outlocal.len);
@@ -478,7 +478,7 @@ char *action;
 {
   int r;
 
-  switch((r = subscribe(workdir,target.s,0,"","-",1,-1,(char *) 0))) {
+  switch((r = subscribe(workdir,target.s,0,"","-",1,-1))) {
 			/* no comment for unsubscribe */
     case 1:
             hdr_listsubject1(TXT_GOODBYE);
@@ -746,10 +746,10 @@ int main(int argc,char **argv)
 		/* This means that they can be triggered from a SENDER */
 		/* that is not a mod, but never send to a non-mod */
     if (act == AC_NONE || flagdig == FLD_DENY)	/* None of the above */
-      pmod = issub(moddir.s,sender,(char *) 0);
+      pmod = issub(moddir.s,sender);
 				/* sender = moderator? */
     else
-      pmod = issub(moddir.s,target.s,(char *) 0);
+      pmod = issub(moddir.s,target.s);
 				/* target = moderator? */
    } else
      pmod = 0;			/* always 0 for non-mod/remote lists */
@@ -1225,7 +1225,7 @@ int main(int argc,char **argv)
     } else {
       if (!stralloc_copy(&to,&target)) die_nomem();
     }
-    if (issub(workdir,target.s,(char *) 0))
+    if (issub(workdir,target.s))
       copy(&qq,"text/sub-nop",flagcd);
     else
       copy(&qq,"text/unsub-nop",flagcd);

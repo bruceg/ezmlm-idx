@@ -121,8 +121,7 @@ void doit(int flagw)
 
   if (getln(&ssin,&addr,&match,'\0') == -1) die_read();
   if (!match) { close(fd); return; }
-  if (!issub(workdir,addr.s,(char *) 0)) { close(fd);
-			 /*XXX*/unlink(fn.s); return; }
+  if (!issub(workdir,addr.s)) { close(fd); /*XXX*/unlink(fn.s); return; }
   cookie(hash,"",0,"",addr.s,"");
   if (!stralloc_copys(&fnhash,workdir)) die_nomem();
   if (!stralloc_cats(&fnhash,"/bounce/h/")) die_nomem();

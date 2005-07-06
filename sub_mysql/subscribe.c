@@ -58,8 +58,7 @@ int subscribe(const char *dbname,
 	      const char *comment,
 	      const char *event,
 	      int flagmysql,
-	      int forcehash,
-	      const char *tab)
+	      int forcehash)
 /* add (flagadd=1) or remove (flagadd=0) userhost from the subscr. database  */
 /* dbname. Comment is e.g. the subscriber from line or name. It is added to  */
 /* the log. Event is the action type, e.g. "probe", "manual", etc. The       */
@@ -84,7 +83,6 @@ int subscribe(const char *dbname,
   char szhash[3] = "00";
   const char *r = (char *) 0;
   const char *table = (char *) 0;
-  const char **ptable = &table;
 
   unsigned int j;
   uint32 h,lch;
@@ -95,9 +93,7 @@ int subscribe(const char *dbname,
   if (userhost[str_chr(userhost,'\n')])
     strerr_die2x(100,FATAL,ERR_ADDR_NL);
 
-  if (tab) ptable = &tab;
-
-  if (!flagmysql || (r = opensub(dbname,ptable))) {
+  if (!flagmysql || (r = opensub(dbname,&table))) {
     if (r && *r) strerr_die2x(111,FATAL,r);
 						/* fallback to local db */
     if (!stralloc_copys(&addr,"T")) die_nomem();

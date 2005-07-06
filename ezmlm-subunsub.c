@@ -69,14 +69,14 @@ void subunsub_main(int submode,
 		/* allow repeats and last addr doesn't need comment */
       while ((addr = argv[optind++])) {
         (void) subscribe(dir,addr,submode,argv[optind],manual,
-		flagmysql,forcehash,(char *) 0);
+		flagmysql,forcehash);
         if (!argv[optind++]) break;
       }
     } else {
 
       while ((addr = argv[optind++]))
         (void) subscribe(dir,addr,submode,"",manual,flagmysql,
-		forcehash,(char *) 0);
+		forcehash);
     }
   } else {		/* stdin */
     for (;;) {
@@ -99,8 +99,7 @@ void subunsub_main(int submode,
 	  comment = cp + 1;
         }
       }
-      (void) subscribe(dir,line.s,submode,comment,manual,flagmysql,
-		forcehash,(char *) 0);
+      (void) subscribe(dir,line.s,submode,comment,manual,flagmysql,forcehash);
     }
   }
   closesub();

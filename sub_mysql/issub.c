@@ -29,8 +29,7 @@ static substdio ss;
 static char ssbuf[512];
 
 const char *issub(const char *dbname,		/* directory to basedir */
-		  const char *userhost,
-		  const char *tab)		/* override table name */
+		  const char *userhost)
 /* Returns (char *) to match if userhost is in the subscriber database     */
 /* dbname, 0 otherwise. dbname is a base directory for a list and may NOT  */
 /* be NULL        */
@@ -40,7 +39,7 @@ const char *issub(const char *dbname,		/* directory to basedir */
   MYSQL_RES *result;
   MYSQL_ROW row;
   const char *ret;
-  const char *table;
+  const char *table = 0;
   unsigned long *lengths;
 
   int fd;
@@ -49,7 +48,6 @@ const char *issub(const char *dbname,		/* directory to basedir */
   char ch,lcch;
   int match;
 
-  table = tab;
   if ((ret = opensub(dbname,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
 						/* fallback to local db */

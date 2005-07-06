@@ -196,11 +196,11 @@ void zapnonsub(const char *szerr)
   if (sender && *sender) {	/* "no sender" is not a subscriber */
     if (!flagsub)
       return;
-    if (issub(dir,sender,(char *) 0))
+    if (issub(dir,sender))
       return;		/* subscriber */
-    if (issub(ddir.s,sender,(char *) 0))
+    if (issub(ddir.s,sender))
       return;		/* digest subscriber */
-    if (issub(edir.s,sender,(char *) 0))
+    if (issub(edir.s,sender))
       return;		/* allow addresses */
   }
   strerr_die4x(100,FATAL,ERR_SUBSCRIBER_CAN,szerr,ERR_571);
@@ -925,7 +925,7 @@ void main(int argc,char **argv)
         }
       }
       if (!stralloc_0(&moddir)) die_nomem();
-      pmod = issub(moddir.s,sender,(char *) 0);
+      pmod = issub(moddir.s,sender);
       if (!pmod)			/* sender = moderator? */
         strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
       else {

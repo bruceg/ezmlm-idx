@@ -16,12 +16,10 @@ extern int subscribe(const char *dir,
 		     const char *from,
 		     const char *event,
 		     int flagmysql,
-		     int forcehash,
-		     const char *table_override);
+		     int forcehash);
 
 extern const char *issub(const char *dir,
-			 const char *username,
-			 const char *table_override);
+			 const char *username);
 
 extern unsigned long putsubs(const char *dir,
 			     unsigned long hash_lo,

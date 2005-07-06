@@ -41,7 +41,7 @@ void main(int argc,char **argv)
   while ((dir = argv[optind++])) {
     if (dir[0] != '/')
       strerr_die2x(100,FATAL,ERR_SLASH);
-    if (issub(dir,addr,(char *) 0)) {
+    if (issub(dir,addr)) {
       closesub();
       _exit(flagsub);		/* subscriber */
     }

@@ -210,7 +210,7 @@ void main(int argc,char **argv)
   if (!stralloc_0(&moderators)) die_nomem();
 
   if (sender) {
-      pmod = issub(moderators.s,sender,(char *) 0);
+      pmod = issub(moderators.s,sender);
       closesub();
 				/* sender = moderator? */
   } else

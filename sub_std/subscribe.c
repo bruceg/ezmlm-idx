@@ -50,8 +50,7 @@ int subscribe(const char *dbname,
 	      const char *comment,
 	      const char *event,
 	      int flagmysql,
-	      int forcehash,
-	      const char *tab)
+	      int forcehash)
 /* add (flagadd=1) or remove (flagadd=0) userhost from the subscr. database  */
 /* dbname. Comment is e.g. the subscriber from line or name. It is added to  */
 /* the log. Event is the action type, e.g. "probe", "manual", etc. The       */

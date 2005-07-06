@@ -141,7 +141,7 @@ void main(int argc,char **argv)
   if (moddir && !ret) {			/* if exit 0 and moddir, add issub */
     pmod = (char *) 0;
     while (moddir && !pmod && sender) {
-      pmod = issub(moddir,sender,(char *)0);
+      pmod = issub(moddir,sender);
       closesub();
       moddir = argv[optind++];
     }
