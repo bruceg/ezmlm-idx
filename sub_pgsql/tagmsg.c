@@ -54,7 +54,7 @@ void tagmsg(const char *dir,		/* db base dir */
     if (!stralloc_cats(&line,table)) die_nomem();
     if (!stralloc_cats(&line,"_cookie (msgnum,cookie,bodysize,chunk) VALUES ("))
       die_nomem();
-    if (!stralloc_cats(&line,strnum)) die_nomem();
+    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgnum))) die_nomem();
     if (!stralloc_cats(&line,",'")) die_nomem();
     if (!stralloc_catb(&line,hashout,COOKIE)) die_nomem();
     if (!stralloc_cats(&line,"',")) die_nomem();
