@@ -70,9 +70,10 @@ void searchlog(const char *dir,		/* work directory */
 /* This requires reading the entire table, since search fields are not   */
 /* indexed, but this is a rare query and time is not of the essence.     */
 	
-    if (!stralloc_cats(&line,"SELECT tai::datetime||': '||tai::int8||' '"
-    "||address||' '||edir||etype||' '||fromline FROM ")) die_nomem();
-
+    if (!stralloc_cats(&line,"SELECT tai::timestamp||': '"
+		       "||extract(epoch from tai)||' '"
+		       "||address||' '||edir||etype||' '||fromline FROM "))
+      die_nomem();
     if (!stralloc_cats(&line,table)) die_nomem();
     if (!stralloc_cats(&line,"_slog ")) die_nomem();
     if (*search) {	/* We can afford to wait for LIKE '%xx%' */
