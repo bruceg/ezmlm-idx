@@ -13,6 +13,7 @@
 #include "error.h"
 #include "subscribe.h"
 #include "uint32.h"
+#include "subhash.h"
 #include "fmt.h"
 #include "errtxt.h"
 #include "log.h"
@@ -61,7 +62,6 @@ int subscribe(const char *dbname,
   const char *table;
 
   unsigned int j;
-  uint32 h;
   unsigned char ch;
 
   if (userhost[str_chr(userhost,'\n')])
@@ -98,11 +98,7 @@ int subscribe(const char *dbname,
     if (forcehash < 0) {
       if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
       case_lowerb(lcaddr.s,j);		/* make all-lc version of address */
-      h = 5381;
-      for (j = 0;j < lcaddr.len;++j) {
-        h = (h + (h << 5)) ^ (uint32) (unsigned char) lcaddr.s[j];
-      }
-      ch = (h % 53);			/* 0 - 52 */
+      ch = subhashsa(&lcaddr);
     } else
       ch = (forcehash % 100);
 

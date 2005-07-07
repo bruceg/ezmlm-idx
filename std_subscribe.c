@@ -15,6 +15,7 @@
 #include "error.h"
 #include "subscribe.h"
 #include "uint32.h"
+#include "subhash.h"
 #include "fmt.h"
 #include "errtxt.h"
 #include "log.h"
@@ -68,7 +69,6 @@ int std_subscribe(const char *dbname,
   int fdlock;
 
   unsigned int j;
-  uint32 h,lch;
   unsigned char ch,lcch;
   int match;
   int flagwasthere;
@@ -89,16 +89,10 @@ int std_subscribe(const char *dbname,
     case_lowerb(lcaddr.s + 1,j - 1);	/* make all-lc version of address */
 
     if (forcehash >= 0 && forcehash <= 52) {
-      ch = lcch = (unsigned char) forcehash;
+      ch = lcch = 64 + (unsigned char) forcehash;
     } else {
-      h = 5381;
-      lch = h;
-      for (j = 0;j < addr.len;++j) {
-        h = (h + (h << 5)) ^ (uint32) (unsigned char) addr.s[j];
-        lch = (lch + (lch << 5)) ^ (uint32) (unsigned char) lcaddr.s[j];
-      }
-      lcch = 64 + (lch % 53);
-      ch = 64 + (h % 53);
+      ch = 64 + subhashsa(&addr);
+      lcch = 64 + subhashsa(&lcaddr);
     }
 
     if (!stralloc_0(&addr)) die_nomem();

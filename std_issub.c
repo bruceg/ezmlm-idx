@@ -11,6 +11,7 @@
 #include "strerr.h"
 #include "error.h"
 #include "uint32.h"
+#include "subhash.h"
 #include "fmt.h"
 #include "subscribe.h"
 #include "errtxt.h"
@@ -34,7 +35,6 @@ const char *std_issub(const char *dbname,	/* directory to basedir */
 
   int fd;
   unsigned int j;
-  uint32 h,lch;
   char ch,lcch;
   int match;
 
@@ -47,14 +47,9 @@ const char *std_issub(const char *dbname,	/* directory to basedir */
     if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
     case_lowerb(lcaddr.s + 1,j - 1);	/* totally lc version of addr */
 
-    h = 5381;
-    lch = h;			/* make hash for both for backwards comp */
-    for (j = 0;j < addr.len;++j) {	/* (lcaddr.len == addr.len) */
-      h = (h + (h << 5)) ^ (uint32) (unsigned char) addr.s[j];
-      lch = (lch + (lch << 5)) ^ (uint32) (unsigned char) lcaddr.s[j];
-    }
-    ch = 64 + (h % 53);
-    lcch = 64 + (lch % 53);
+    /* make hash for both for backwards comp */
+    ch = 64 + subhashsa(&addr);
+    lcch = 64 + subhashsa(&lcaddr);
 
     if (!stralloc_0(&addr)) die_nomem();
     if (!stralloc_0(&lcaddr)) die_nomem();

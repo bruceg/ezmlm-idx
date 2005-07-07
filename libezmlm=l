@@ -113,6 +113,7 @@ subfderr.o
 subfdin.o
 subfdout.o
 subgetopt.o
+subhash.o
 subscribe.o
 substdi.o
 substdio.o

@@ -23,6 +23,7 @@
 #include "quote.h"
 #include "now.h"
 #include "uint32.h"
+#include "subhash.h"
 #include "fmt.h"
 #include "errtxt.h"
 #include "die.h"
@@ -72,13 +73,11 @@ int findname(void)
 /* returns 1 if a matching line was found, 0 otherwise. name will contain */
 /* the correct list address in either case */
 {
-  char *cpat,*cp,*cp1,*cp2,*cplast;
+  char *cpat,*cp1,*cp2,*cplast;
   const char *cpname;
   unsigned long u;
-  uint32 h;
   unsigned char hash,hash_hi,hash_lo;
   unsigned int pos,pos_name,pos_hi;
-  char ch;
   int fd,match;
 
   /* make case insensitive hash */
@@ -86,12 +85,7 @@ int findname(void)
   cpname = "";				/* default */
   if (!stralloc_copy(&lctarget,&target)) die_nomem();
   case_lowerb(lctarget.s,lctarget.len -1);
-  h = 5381;
-  cp = lctarget.s;
-  while ((ch = *cp++)) {
-    h = (h + (h << 5)) ^ (uint32) ch;
-  }
-  hash = (h % 53);
+  hash = subhashs(lctarget.s);
 
   /* make domain pointer */
   cpat = lctarget.s + str_chr(lctarget.s,'@');
