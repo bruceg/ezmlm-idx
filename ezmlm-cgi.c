@@ -921,7 +921,7 @@ void gtdate(struct msginfo *infop,int flagfail)
   return;
 }
 
-int indexlinks(struct msginfo *infop)
+void indexlinks(struct msginfo *infop)
 {
   unsigned long tmpmsg;
 
@@ -1398,7 +1398,7 @@ void show_part(struct msginfo *infop,int flagshowheaders,
   flaggoodfield = 1;
   match = 1;
   recursion_level++;			/* one up */
-  for (;;) {
+  for (flaghtml = whatheader = 0;;) {
     if (!match) return;
     if (getln(&ssin,&line,&match,'\n') == -1)
       strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
@@ -2106,7 +2106,7 @@ char **argv;
       }							/* rest done per list */
     }
 
-  for (;;) {
+  for (sep = pos = 0;;) {
     if (getln(&ssin,&cfline,&match,'\n') == -1)		/* read line */
       strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
     if (!match)

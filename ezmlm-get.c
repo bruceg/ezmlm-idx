@@ -778,9 +778,10 @@ void main(int argc,char **argv)
   int match;
   int goodexit = 0;			/* exit code for normal exit */
 					/* in manager this will be set to 0 */
-  unsigned long from,u,to,issue,prevmax,mno;
+  unsigned long from,u,to,issue,prevmax;
+  unsigned long mno = 0;
   unsigned long chunk;
-  unsigned long subs;
+  unsigned long subs = 0;
   unsigned int pos,pos1;
   unsigned int len;
   int opt;
@@ -1200,6 +1201,7 @@ void main(int argc,char **argv)
           if (match) {
             if (line.s[0] != '\t') {	/* subject line */
               pos = byte_chr(line.s,line.len,' ');
+	      pos1 = 0;
 	      if (pos && pos != line.len && line.s[pos - 1] == ':')
                 pos1 = pos + HASHLEN + 1;	/* after hash */
               if (pos1 >= line.len) {	/* bad! */

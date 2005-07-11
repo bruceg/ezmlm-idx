@@ -34,6 +34,8 @@ void hdr_ctype(enum ctype ctype)
     qmail_puts(&qq,"; boundary=");
     qmail_put(&qq,boundary,HASHLEN);
     break;
+  case CTYPE_MESSAGE:
+    break;
   }
   qmail_puts(&qq,"\n");
 }

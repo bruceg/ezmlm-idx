@@ -98,7 +98,7 @@ void write_threads(const msgentry *msgtable,
 
   psubtm = subtable;		/* now for new threads */
   pdatet = datetable;
-  nextmsg = 0L;
+  startmsg = nextmsg = 0L;
   nextdate = pdatet->date;
   while (psubtm->sub) {		/* these are in msgnum order */
     if (!presubt)		/* for rewind */

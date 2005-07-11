@@ -147,9 +147,10 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
   unsigned long ulmrange;	/* total # of messages in range */
   char *subject;		/* subject on line */
   unsigned int sublen;		/* length of subject */
-  char *auth;
-  unsigned int authlen;
-  unsigned int pos,posa;
+  char *auth = 0;
+  unsigned int authlen = 0;
+  unsigned int pos = 0;
+  unsigned int posa;
   unsigned long submax;		/* max subject num in subtable */
   subentry *psubnext;		/* points to next entry in subtable */
   subentry *psubt;		/* points to entry in subtable */
@@ -157,7 +158,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
   authentry *pautht;		/* points to entry in authtable */
   int fd;			/* index file handle */
   int flagmissingindex;		/* current index file is missing */
-  int flagauth;			/* read index entry has author info */
+  int flagauth = 0;		/* read index entry has author info */
   int hasauth;			/* current msg's entry has author info */
   msgentry *pmsgt;
   int res;

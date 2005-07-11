@@ -106,6 +106,7 @@ unsigned int findlocal(const stralloc *sa,unsigned int n)
         return (unsigned int) (s - first);
     }
   }
+  return n;
 }
 
 unsigned int findhost(const stralloc *sa,unsigned int n)
@@ -140,6 +141,7 @@ unsigned int findhost(const stralloc *sa,unsigned int n)
         return (unsigned int) (s - sa->s);
     }
   }
+  return n;
 }
 
 int getto(const stralloc *sa)

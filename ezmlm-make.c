@@ -187,7 +187,7 @@ void main(int argc,char **argv)
   int flagdo;
   int flagnot;
   int flagover;
-  int flagnotexist;
+  int flagnotexist = 0;
   int flagforce = 0;
   int flagforce_p = 0;
   int usecfg = 0;

@@ -229,10 +229,8 @@ void main(int argc,char **argv)
       if (!stralloc_cats(&from,"-return-@")) die_nomem();
       if (!stralloc_cat(&from,&outhost)) die_nomem();
       if (!stralloc_0(&from)) die_nomem();
-      if (name.s[i = str_rchr(name.s,'@')]) {		/* name must have '@'*/
-	nhost = name.s + i;
-	*(nhost++) = '\0';
-      }
+      nhost = name.s + str_rchr(name.s,'@');		/* name must have '@'*/
+      *(nhost++) = '\0';
       if (!stralloc_copys(&to,name.s)) die_nomem();	/* local */
       if (!stralloc_append(&to,"-")) die_nomem();	/* - */
       if (!stralloc_cats(&to,action)) die_nomem();	/* subscribe */

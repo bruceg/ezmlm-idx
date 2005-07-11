@@ -341,7 +341,8 @@ void main(int argc,char **argv)
   int flaglistid = 0;	/* no listid header added */
   int match;
   unsigned int i;
-  int r,fd;
+  int r = 0;
+  int fd;
   int flaginheader;
   int flagbadfield;
   int flagbadpart;
@@ -526,6 +527,8 @@ void main(int argc,char **argv)
   flagsubline = 0;
   flagfromline = 0;
   flagreceived = 0;
+  flagcontline = 0;
+  flagarchiveonly = 0;
   for (;;) {
     if (getln(subfdin,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
