@@ -298,8 +298,8 @@ void main(int argc,char **argv)
   flaghavesubject = 1;
 
   if (flagbody)
-    if (len > 9 && case_starts(cp,"subscribe") ||
-	len > 11 && case_starts(cp,"unsubscribe"))
+    if ((len > 9 && case_starts(cp,"subscribe"))
+	|| (len > 11 && case_starts(cp,"unsubscribe")))
       flaghavecommand = 1;
 
   switch(len) {
@@ -327,7 +327,7 @@ void main(int argc,char **argv)
   if (flagneedsubject && !flaghavesubject)
     strerr_die2x(100,FATAL,ERR_NO_SUBJECT);
 
-  if (flagrejectcommands && flaghavecommand)
+  if (flagrejectcommands && flaghavecommand) {
     if (flagforward) {			/* flagforward => forward */
       if (qmail_open(&qq,(stralloc *) 0) == -1)	/* open queue */
 	strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
@@ -349,11 +349,12 @@ void main(int argc,char **argv)
         strerr_die3x(111,FATAL,ERR_TMP_QMAIL_QUEUE,err + 1);
     } else
       strerr_die2x(100,FATAL,ERR_SUBCOMMAND);
+  }
 
   if (content.len) {			/* MIME header */
     cp = content.s;
     len = content.len;
-    while (len && *cp == ' ' || *cp == '\t') { ++cp; --len; }
+    while (len && (*cp == ' ' || *cp == '\t')) { ++cp; --len; }
     cpstart = cp;
     if (*cp == '"') {			/* might be commented */
       ++cp; cpstart = cp;
@@ -374,7 +375,7 @@ void main(int argc,char **argv)
     cpafter = content.s+content.len;
     while((cp += byte_chr(cp,cpafter-cp,';')) != cpafter) {
       ++cp;
-      while (cp < cpafter && (*cp == ' ') || (*cp == '\t')) ++cp;
+      while (cp < cpafter && (*cp == ' ' || *cp == '\t')) ++cp;
       if (case_startb(cp,cpafter - cp,"boundary=")) {
         cp += 9;			/* after boundary= */
         if (cp < cpafter && *cp == '"') {

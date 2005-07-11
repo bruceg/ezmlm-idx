@@ -299,17 +299,17 @@ void main(int argc,char **argv)
     }
   }
 
-  if (p = *argv++) {
+  if ((p = *argv++) != 0) {
     dot = p;
-    if (p = *argv++) {
+    if ((p = *argv++) != 0) {
       if (!local || str_diff(local,p))
 	flagforce = 1;		/* must rewrite if list name changed */
       local = p;
-      if (p = *argv++) {
+      if ((p = *argv++) != 0) {
 	if (!host || str_diff(host,p))
 	  flagforce = 1;	/* must rewrite if list name changed */
         host = p;
-        if (p = *argv++) {
+	if ((p = *argv++) != 0) {
           code = p;
         }
       }
@@ -390,28 +390,31 @@ void main(int argc,char **argv)
       if (!stralloc_copys(&template,cfname)) die_nomem();
     } else
       if (!stralloc_cats(&template,TXT_DOTEZMLMRC)) die_nomem();
-  if (!stralloc_0(&template)) die_nomem();
-  if ((fdin = open_read(template.s)) == -1)
-    if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_OPEN,template.s,": ");
-    else
-      strerr_die3x(100,FATAL,template.s,ERR_NOEXIST);
+    if (!stralloc_0(&template)) die_nomem();
+    if ((fdin = open_read(template.s)) == -1) {
+      if (errno != error_noent)
+	strerr_die4sys(111,FATAL,ERR_OPEN,template.s,": ");
+      else
+	strerr_die3x(100,FATAL,template.s,ERR_NOEXIST);
+    }
   } else {			/* /etc/ezmlmrc */
     if (!stralloc_copys(&template,TXT_ETC_EZMLMRC)) die_nomem();
     if (!stralloc_0(&template)) die_nomem();
-    if ((fdin = open_read(template.s)) == -1)
+    if ((fdin = open_read(template.s)) == -1) {
       if (errno != error_noent)
         strerr_die4sys(111,FATAL,ERR_OPEN,template.s,": ");
       else {			/* ezbin/ezmlmrc */
 	if (!stralloc_copys(&template,auto_bin)) die_nomem();
 	if (!stralloc_cats(&template,TXT_EZMLMRC)) die_nomem();
 	if (!stralloc_0(&template)) die_nomem();
-	if ((fdin = open_read(template.s)) == -1)
+	if ((fdin = open_read(template.s)) == -1) {
 	  if (errno != error_noent)
 	    strerr_die4sys(111,FATAL,ERR_OPEN,template.s,": ");
 	  else
 	    strerr_die3x(100,FATAL,template.s,ERR_NOEXIST);
+	}
       }
+    }
   }
 
   dcreate("");		/* This is all we do, the rest is up to ezmlmrc */
@@ -465,9 +468,9 @@ void main(int argc,char **argv)
             continue;
           }
 			/* E is ignored. For files => create unless exists */
-	  if (ch == 'E' && !flagnot ||  ch == 'e' && flagnot) {
-		if (flags['e' - 'a'] && !flagforce)
-	    flagover = 1;		/* ignore #E & #^e, but set flagover */
+	  if ((ch == 'E' && !flagnot) || (ch == 'e' && flagnot)) {
+	    if (flags['e' - 'a'] && !flagforce)
+	      flagover = 1;		/* ignore #E & #^e, but set flagover */
           } else if (ch >= 'a' && ch <= 'z')
             flagdo &= (flags[ch - 'a'] ^ flagnot);
           else if (ch >= 'A' && ch <= 'Z')

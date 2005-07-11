@@ -70,11 +70,12 @@ void std_searchlog(const char *dir,		/* work directory */
   if (!stralloc_cats(&line,"/Log")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   fd = open_read(line.s);
-  if (fd == -1)
+  if (fd == -1) {
     if (errno != error_noent)
-	strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
+      strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
     else
-        strerr_die3x(100,FATAL,line.s,ERR_NOEXIST);
+      strerr_die3x(100,FATAL,line.s,ERR_NOEXIST);
+  }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
 
   for (;;) {

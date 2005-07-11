@@ -459,11 +459,12 @@ void main(int argc,char **argv)
 
   } else if (str_start(action,ACTION_ACCEPT)) {
         fd = open_read(fnmsg.s);
-        if (fd == -1)
+        if (fd == -1) {
           if (errno !=error_noent)
             strerr_die4sys(111,FATAL,ERR_OPEN,fnmsg.s,": ");
           else	/* shouldn't happen since we've got lock */
             strerr_die3x(100,FATAL,fnmsg.s,ERR_MOD_TIMEOUT);
+	}
 
     substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
 				/* read "Return-Path:" line */

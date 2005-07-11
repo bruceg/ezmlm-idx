@@ -8,7 +8,7 @@
   char *envi;
  
   slen = str_len(s);
-  for (i = 0;envi = environ[i];++i)
+  for (i = 0;(envi = environ[i]) != 0;++i)
     if ((!str_diffn(s,envi,slen)) && (envi[slen] == '='))
       return envi + slen + 1;
   return 0;

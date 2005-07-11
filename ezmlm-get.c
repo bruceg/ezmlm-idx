@@ -744,11 +744,12 @@ void doheaders(void)
     if (line.len == 1) break;
     if ((line.s[0] != ' ') && (line.s[0] != '\t')) {
       flaggoodfield = 0;
-      if (case_startb(line.s,line.len,"mailing-list:"))
+      if (case_startb(line.s,line.len,"mailing-list:")) {
         if (flageditor)			/* we may be running from a sublist */
           flaggoodfield = 0;
         else
           strerr_die2x(100,FATAL,ERR_MAILING_LIST);
+      }
       if (line.len == mydtline.len)
 	if (byte_equal(line.s,line.len,mydtline.s))
           strerr_die2x(100,FATAL,ERR_LOOPING);

@@ -24,7 +24,7 @@ int main(int argc, char **argv)
   subputs(name);
   subputs("[] = \"\\\n");
 
-  while (ch = *value++) {
+  while ((ch = *value++) != 0) {
     subputs("\\");
     octal[3] = 0;
     octal[2] = '0' + (ch & 7); ch >>= 3;

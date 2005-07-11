@@ -221,11 +221,12 @@ const char *get_from(const char *adr, /* target address */
   }			/* need to recover it from DIR/from */
   fl = 0;
   (void) scan_ulong(act+3,&thistime);
-  if ((fd = open_read("from")) == -1)
+  if ((fd = open_read("from")) == -1) {
     if (errno == error_noent)
       return 0;
     else
       strerr_die3x(111,FATAL,ERR_READ,"from: ");
+  }
   substdio_fdbuf(&sstext,read,fd,textbuf,(int) sizeof(textbuf));
   for (;;) {
     if (getln(&sstext,&fromline,&match,'\n') == -1)

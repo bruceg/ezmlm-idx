@@ -29,13 +29,13 @@ void logaddr(const char *dir,const char *event,
   if (!stralloc_cats(&line," ")) return;
   if (!stralloc_cats(&line,event)) return;
   if (!stralloc_cats(&line," ")) return;
-  while (ch = *addr++) {
+  while ((ch = *addr++) != 0) {
     if ((ch < 33) || (ch > 126)) ch = '?';
     if (!stralloc_append(&line,&ch)) return;
   }
   if (comment && *comment) {
     if (!stralloc_cats(&line," ")) return;
-    while (ch = *comment++) {
+    while ((ch = *comment++) != 0) {
       if (ch == '\t')
         ch = ' ';
       else 

@@ -68,8 +68,10 @@ static int trimre(char **cpp,char *cpend,stralloc *prefix)
       if (i == serial) {		/* match before serial */
         j = prefix->len;
         if (serial != j) {		/* got a '#' */
-          while (cpnew <= cpend &&	/* skip number/space */
-		*cpnew == ' ' || (*cpnew <= '9' && *cpnew >= '0')) ++cpnew;
+	  /* skip number/space */
+          while (cpnew <= cpend
+		 && (*cpnew == ' ' || (*cpnew <= '9' && *cpnew >= '0')))
+	    ++cpnew;
           i = serial + 1;
           while (i < j && cpnew <= cpend) {
             if (*cpnew != ' ') {
@@ -261,8 +263,9 @@ int unfoldHDR(char *indata,
     }
 			/* get remainder of line */
     if (!stralloc_catb(&tmpdata,cpnext,cpend - cpnext + 1)) die_nomem();
-    if (state != SI)	/* need to end in ascii */
+    if (state != SI) {	/* need to end in ascii */
       if (!stralloc_cats(&tmpdata,TOSI)) die_nomem();
+    }
     else		/* ascii end; maybe "-Reply" at the end? */
       r = trimend(tmpdata.s,&(tmpdata.len));
 

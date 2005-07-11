@@ -338,11 +338,12 @@ void main(int argc,char **argv)
   if (!stralloc_cats(&line,"/bounce/d")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   bouncedir = opendir(line.s);
-  if (!bouncedir)
+  if (!bouncedir) {
     if (errno != error_noent)
       strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
     else
       _exit(0);		/* no bouncedir - no bounces! */
+  }
 
   while ((d = readdir(bouncedir))) {		/* dxxx/ */
     if (str_equal(d->d_name,".")) continue;

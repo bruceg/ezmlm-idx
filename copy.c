@@ -111,11 +111,12 @@ void copy(struct qmail *qqp,
   unsigned int pos,nextpos;
 
   qq = qqp;
-  if ((fd = open_read(fn)) == -1)
+  if ((fd = open_read(fn)) == -1) {
     if (errno != error_noent)
       strerr_die4sys(111,FATAL,ERR_OPEN,fn,": ");
     else
       strerr_die4sys(100,FATAL,ERR_OPEN,fn,": ");
+  }
   substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
   for (;;) {
     if (getln(&sstext,&line,&match,'\n') == -1)

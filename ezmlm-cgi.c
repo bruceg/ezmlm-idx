@@ -856,12 +856,12 @@ void finddate(struct msginfo *infop)
   above = MAXULONG;	/* creating a Y 0xffffff problem */
   startdate = infop->date;
   archivedir = opendir("archive/threads/");
-  if (!archivedir)
+  if (!archivedir) {
     if (errno != error_noent)
       strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/archive/threads: ");
     else
       strerr_die4sys(100,FATAL,ERR_OPEN,dir,"/archive/threads: ");
-
+  }
   while ((d = readdir(archivedir))) {		/* dxxx/ */
     if (str_equal(d->d_name,".")) continue;
     if (str_equal(d->d_name,"..")) continue;
@@ -877,7 +877,7 @@ void finddate(struct msginfo *infop)
   }
   closedir(archivedir);
 
-  if (infop->direction == DIRECT_NEXT && above != MAXULONG || !below)
+  if (infop->direction == DIRECT_NEXT && (above != MAXULONG || !below))
 	/* we always give a valid date as long as there is at least one */
     infop->date = above;
   else
@@ -954,11 +954,12 @@ int show_index(struct msginfo *infop)
   char ch;
 
   (void) makefn(&fn,ITEM_INDEX,msginfo.target,"");
-  if ((fd = open_read(fn.s)) == -1)
+  if ((fd = open_read(fn.s)) == -1) {
     if (errno == error_noent)
       return 0;
     else
       strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+  }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   if (!stralloc_copyb(&line,strnum,
 	fmt_ulong(strnum,(unsigned long) (infop->target / 100))))
@@ -1059,11 +1060,12 @@ int show_object(struct msginfo *infop,char item)
     default:
 	die_prog("Bad object type in show_object");
   }
-if ((fd = open_read(fn.s)) == -1)
+  if ((fd = open_read(fn.s)) == -1) {
     if (errno == error_noent)
       return 0;
     else
       strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+  }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   if (item != ITEM_DATE) {
     if (getln(&ssin,&line,&match,'\n') == -1)	/* read subject */
@@ -1567,11 +1569,12 @@ int show_message(struct msginfo *infop)
 	die_nomem();
 
   (void) makefn(&fn,ITEM_MESSAGE,msginfo.target,"");
-  if ((fd = open_read(fn.s)) == -1)
+  if ((fd = open_read(fn.s)) == -1) {
     if (errno == error_noent)
       return 0;
     else
       strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+  }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   toggle_flagpre(0);
   recursion_level = 0;	/* recursion level for show_part */
@@ -1974,12 +1977,12 @@ void list_list(unsigned long listno)
   flagrobot = 2;
   strnum[fmt_ulong(strnum,listno)] = '\0';
   archivedir = opendir("archive/");
-  if (!archivedir)
+  if (!archivedir) {
     if (errno != error_noent)
       strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/archive: ");
     else
       strerr_die4sys(100,FATAL,ERR_OPEN,dir,"/archive: ");
-
+  }
   cache = 1;
   html_header("Robot index for message sets in list",0,0,0,0);
 
@@ -2220,7 +2223,7 @@ char **argv;
       if (!stralloc_catb(&base,strnum,fmt_ulong(strnum,port))) die_nomem();
     }
   }
-  if (cp = env_get("SCRIPT_NAME")) {
+  if ((cp = env_get("SCRIPT_NAME")) != 0) {
     if (!stralloc_cats(&base,cp)) die_nomem();
     pos = str_rchr(cp,'/');
     if (cp[pos])
