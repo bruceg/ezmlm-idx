@@ -1,6 +1,8 @@
 #ifndef STRERR_H
 #define STRERR_H
 
+#include "hasattribute.h"
+
 struct strerr
  {
   struct strerr *who;
@@ -28,7 +30,8 @@ extern void strerr_die(int e,
 		       const char *x4,
 		       const char *x5,
 		       const char *x6,
-		       const struct strerr *se);
+		       const struct strerr *se)
+     __attribute__((noreturn));
 
 #define STRERR(r,se,a) \
 { se.who = 0; se.x = a; se.y = 0; se.z = 0; return r; }

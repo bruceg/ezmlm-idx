@@ -1,0 +1,4 @@
+/* sysdep: -attribute */
+#ifndef __attribute__
+#define __attribute__(X)
+#endif
