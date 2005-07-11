@@ -32,4 +32,25 @@
   ${GREP} T"$LOC-unsubscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
 	fatal "ezmlm 'remove' subject query rewriting failed"
 
+  ${ECHO} "X-num: req1" > "$TMP"
+  ${ECHO} "Subject: subscribe ${LOC}@${HOST} ${SND}@${HOST}" >> "$TMP"
+  ${EZBIN}/ezmlm-request "$DIR" < "${TMP}" > "${ERR}" 2>&1
+  if [ "$?" != "99" ]; then
+	fatal "other command in subject failed to exit 99"
+  fi
+
+  ${GREP} T"$LOC-subscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
+	fatal "ezmlm 'subscribe' subject query rewriting failed"
+
+  ${ECHO} "X-num: req1" > "$TMP"
+  ${ECHO} "Subject: subscribe" >> "$TMP"
+  ${ECHO} "	${LOC}@${HOST} ${SND}@${HOST}" >> "$TMP"
+  ${EZBIN}/ezmlm-request "$DIR" < "${TMP}" > "${ERR}" 2>&1
+  if [ "$?" != "99" ]; then
+	fatal "multi-line other command in subject failed to exit 99"
+  fi
+
+  ${GREP} T"$LOC-subscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
+	fatal "ezmlm multi-line 'subscribe' subject query rewriting failed"
+
   ${ECHO} "OK"

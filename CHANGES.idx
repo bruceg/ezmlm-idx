@@ -43,6 +43,8 @@ in the next version.
 
 -Fixed bug in pgsql searchlog query.
 
+-Fixed bug in ezmlm-request handling of multi-line subjects.
+
 ezmlm-idx-0.441, 20050704
 =========================
 -Fixed critical one-off bug in both *SQL configuration parsers.

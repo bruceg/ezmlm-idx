@@ -377,18 +377,18 @@ void main(int argc,char **argv)
       }
     }
   } else {
-    for (;;) {					/* Get Subject: */
+    for (flagsub = 0;;) {			/* Get Subject: */
       if (getln(&ssin,&line,&match,'\n') == -1)
         strerr_die2sys(111,FATAL,ERR_READ_INPUT);
-        if (line.len == 1)
+      if (line.len <= 1)
         break;
-        if ((line.s[0] != ' ') && (line.s[0] != '\t')) {
+      if ((line.s[0] != ' ') && (line.s[0] != '\t')) {
           flagsub = 0;
 
           if (case_startb(line.s,line.len,"mailing-list:"))
             strerr_die2x(100,FATAL,ERR_MAILING_LIST);
           else if (case_startb(line.s,line.len,"Subject:")) {
-            flaggotsub = 1;
+            flagsub = flaggotsub = 1;
             pos = 8;
             last = line.len - 2;		/* skip terminal '\n' */
             while (line.s[last] == ' ' || line.s[last] == '\t') --last;
@@ -404,7 +404,7 @@ void main(int argc,char **argv)
 	  } else if (line.len == mydtline.len)
             if (!byte_diff(line.s,line.len,mydtline.s))
                strerr_die2x(100,FATAL,ERR_LOOPING);
-        } else if (flagsub) {	/* Continuation line */
+      } else if (flagsub) {	/* Continuation line */
           pos = 1;
           len = line.len - 2;	/* skip terminal '\n' */
           while (line.s[len] == ' ' || line.s[len] == '\t') --len;
@@ -412,9 +412,9 @@ void main(int argc,char **argv)
 		(line.s[pos] == ' ' || line.s[pos] == '\t')) ++pos;
           if (!stralloc_append(&subject," ")) die_nomem();
           if (!stralloc_catb(&subject,line.s+pos,len-pos+1)) die_nomem();
-	}
-	if (!match)
-	  break;
+      }
+      if (!match)
+	break;
     }
     if (!cfname) {		 /* listserv@/majordomo@ ignore */
       char ch;
