@@ -438,6 +438,7 @@ x-world/x-vrml
 </-sql#^6e/>
 </-digest/sql#^6e/>
 </-allow/sql#^6e/>
+</-mod/sql#^6e/>
 </sql#6W/>
 <#6#>
 </sql#6w/>
@@ -448,6 +449,8 @@ x-world/x-vrml
 <#6#>_digest:<#L#>_digest@<#H#>
 </allow/sql#6/>
 <#6#>_allow
+</mod/sql#6m/>
+<#6#>_mod
 # -------------------- End sql stuff
 </prefix#fE/>
 [<#L#>]

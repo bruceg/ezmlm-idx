@@ -29,6 +29,18 @@ If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
 =========================
+
+-Added a "sql" file in the "LIST/mod" directory on creation of lists.
+ This fixes a long-standing bug where moderator addresses are not stored
+ in SQL.
+
+ NOTE: Running ezmlm-make -e or -+ on a moderated list that has SQL
+ enabled will cause moderation to fail due to the moderator subscriber
+ list now being accessed in SQL.  You will need to run the following
+ command:
+
+	ezmlm-list -M $DIR/mod | ezmlm-sub $DIR/mod
+
 -Fixed bug in pgsql searchlog query.
 
 ezmlm-idx-0.441, 20050704
