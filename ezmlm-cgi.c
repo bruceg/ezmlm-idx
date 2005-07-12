@@ -1377,8 +1377,7 @@ void start_message_page(struct msginfo *infop)
   oputs("<div class=\"message\">\n");
 }
 
-void show_part(struct msginfo *infop,int flagshowheaders,
-	int flagskip,int flagstartseen)
+void show_part(struct msginfo *infop,int flagshowheaders,int flagstartseen)
 /* if flagshowheaders we display headers, otherwise not */
 /* if flagstartseen we've already see the start boundary for this part, */
 /* if not we'll ignore what's there up to it */
@@ -1480,7 +1479,7 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 	  case MIME_MULTI_MIXED:
 	  case MIME_MULTI_ALTERNATIVE:
 	  case MIME_MULTI_DIGEST:
-		show_part(infop,0,0,0);
+		show_part(infop,0,0);
 		recursion_level--;
 		flagstartseen = 0;
 		flaginheader = 1;
@@ -1582,7 +1581,7 @@ int show_message(struct msginfo *infop)
   flagtoplevel = 1;	/* top message/rfc822 get special rx */
   new_mime();		/* initiate a MIME info storage slot */
 
-  show_part(infop,1,0,1);	/* do real work, including html header etc */
+  show_part(infop,1,1);	/* do real work, including html header etc */
   if (flagpre)
     oputs("</pre>\n");
   close(fd);
@@ -1999,7 +1998,7 @@ void list_list(unsigned long listno)
   html_footer(0);
 }
 
-void list_set(unsigned long listno,unsigned long msgset)
+void list_set(unsigned long msgset)
 {
   unsigned int msgfirst,msgmax;
   unsigned long lastset;
@@ -2047,9 +2046,7 @@ void drop_priv(int flagchroot)
 }
 /*******************************************************************/
 
-int main(argc,argv)
-int argc;
-char **argv;
+int main(int argc,char **argv)
 {
   char *cp,*cppath;
   unsigned long listno,thislistno,tmpuid,msgset;
@@ -2194,7 +2191,7 @@ char **argv;
   if (flagindex) {
     if (*(cppath++) == '/') {		/* /2/index/123 */
       cppath += scan_ulong(cppath,&msgset);
-      list_set(thislistno,msgset);
+      list_set(msgset);
     } else				/* /2/index */
       list_list(thislistno);
     _exit(0);
@@ -2301,4 +2298,5 @@ char **argv;
   }
 
  _exit(0);
+ (void)argc;
 }

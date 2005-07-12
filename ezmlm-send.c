@@ -123,12 +123,6 @@ char outbuf[1];
 char textbuf[512];
 substdio sstext;
 
-unsigned int mywrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return len;
-}
-
 int subto(const char *s,unsigned int l)
 {
   qmail_put(&qq,"T",1);

@@ -494,4 +494,5 @@ void main(int argc,char **argv)
     strerr_die3x(0,"[",hashp,"]");
   else
     _exit(99);
+  (void)argc;
 }

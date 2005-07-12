@@ -371,7 +371,7 @@ void postmsg(char format)
     }
 }
 
-void copymsg(unsigned long msg,int fd,char format)
+void copymsg(int fd,char format)
 /* Copy archive message "msg" itself from open file handle fd, in "format" */
 {
   int match;
@@ -598,7 +598,7 @@ void msgout(unsigned long msg,char format)
 	  qmail_puts(&qq,"_");
 	  qmail_put(&qq,strnum,fmt_ulong(strnum,msg));
 	  qmail_puts(&qq,".ezm\"\n\n");
-          copymsg(msg,fd,format);
+          copymsg(fd,format);
 	  close(fd);
         }
 	break;
@@ -621,7 +621,7 @@ void msgout(unsigned long msg,char format)
 	    qmail_puts(&qq," ==\n\n");
 	    copy(&qq,"text/get-bad",flagcd);
 	  } else {
-	    copymsg(msg,fd,format);
+	    copymsg(fd,format);
 	    close(fd);
           }
 	}

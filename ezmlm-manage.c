@@ -303,6 +303,7 @@ int dummy_to(const char *s,	/* ignored */
 	     unsigned int l)
 {
   return (int) l;
+  (void)s;
 }
 
 void to_owner(void)
@@ -466,8 +467,7 @@ int geton(const char *action)
   return r;
 }
 
-int getoff(action)
-char *action;
+int getoff(void)
 {
   int r;
 
@@ -860,7 +860,7 @@ int main(int argc,char **argv)
         copybottom();
         sendtomods();
     } else {
-      r = getoff(action);
+      r = getoff();
       copybottom();
       if (!r || flagnotify) qmail_to(&qq,target.s);
 		/* tell owner if problems (-Q) or anyway (-QQ) */
@@ -877,7 +877,7 @@ int main(int argc,char **argv)
         copybottom();
         sendtomods();
       } else {
-        r = getoff(action);
+        r = getoff();
         copybottom();
         if (!r || flagnotify) qmail_to(&qq,target.s);
 		/* tell owner if problems (-Q) or anyway (-QQ) */
@@ -892,7 +892,7 @@ int main(int argc,char **argv)
 
   } else if (str_start(action,ACTION_VC)) {
     if (hashok(action,ACTION_VC)) {
-      r = getoff(action);
+      r = getoff();
       if (!r && flagmod)
         strerr_die2x(0,INFO,ERR_UNSUB_NOP);
       mod_bottom();

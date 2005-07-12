@@ -36,4 +36,5 @@ int main(int argc, char **argv)
   subputs("\\\n\";\n");
   if (substdio_flush(subfdout) == -1) _exit(111);
   return 0;
+  (void)argc;
 }

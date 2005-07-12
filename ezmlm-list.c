@@ -35,6 +35,7 @@ int subwrite(const char *s,unsigned int l)
 int dummywrite(const char *s,unsigned int l)
 {
   return (int) l;
+  (void)s;
 }
 
 void main(int argc,char **argv)

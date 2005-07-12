@@ -10,5 +10,10 @@ const char *logmsg(const char *dir,
 		   unsigned long subs,
 		   int done)
 {
-      return (char *) 0;	/* no SQL => success */
+  return (char *) 0;	/* no SQL => success */
+  (void)dir;
+  (void)num;
+  (void)listno;
+  (void)subs;
+  (void)done;
 }

@@ -273,6 +273,5 @@ void main(int argc,char **argv)
       strerr_die2sys(111,ERR_FLUSH,"output: ");
     _exit(0);
   }
+  (void)argc;
 }
-
-

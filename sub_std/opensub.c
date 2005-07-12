@@ -7,12 +7,14 @@
 const char *opensub(const char *dbname,	/* database directory */
 		    const char **table)	/* table root_name */
 {
-	return 0;
+  return 0;
+  (void)dbname;
+  (void)table;
 }
 
 void closesub(void)
 /* close connection to SQL server, if open */
 {
-	return;
+  return;
 }
 
