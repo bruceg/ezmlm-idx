@@ -17,8 +17,9 @@ const char *opensub(const char *dbname,	/* database directory */
   struct sqlinfo info;
   const char *err;
   
-  if ((err = parsesql(dbname,table,&info)) != 0)
+  if ((err = parsesql(dbname,&info)) != 0)
     return err;
+  *table = info.table;
 
   if (!pgsql) {
     /* Make connection to database */

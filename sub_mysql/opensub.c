@@ -18,8 +18,9 @@ const char *opensub(const char *dbname,	/* database directory */
   const char *err;
   unsigned long portnum = 0L;
 
-  if ((err = parsesql(dbname,table,&info)) != 0)
+  if ((err = parsesql(dbname,&info)) != 0)
     return err;
+  *table = info.table;
   if (info.port != 0)
     scan_ulong(info.port,&portnum);
 

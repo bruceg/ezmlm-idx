@@ -88,10 +88,10 @@ struct sqlinfo
   const char *db;
   const char *user;
   const char *pw;
+  const char *table;
 };
 
 extern const char *parsesql(const char *dbname,
-			    const char **table,
 			    struct sqlinfo *info);
 
 #endif
