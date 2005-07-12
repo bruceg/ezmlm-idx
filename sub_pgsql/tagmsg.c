@@ -40,7 +40,7 @@ void tagmsg(const char *dir,		/* db base dir */
 
   std_tagmsg(msgnum,seed,action,hashout);
 
-  if ((ret = opensub(dir,&table))) {
+  if ((ret = opensub(dir,0,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
     return;				/* no sql => success */
 

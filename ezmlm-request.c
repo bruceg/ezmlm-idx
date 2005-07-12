@@ -694,7 +694,7 @@ void main(int argc,char **argv)
             }
             break;
           case EZREQ_WHICH:
-            if (issub(line.s+pos,to.s)) {
+            if (issub(line.s+pos,0,to.s)) {
               code_qput(line.s,pos-1);
               code_qput("\n",1);
             }

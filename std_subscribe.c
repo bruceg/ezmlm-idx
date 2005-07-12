@@ -45,7 +45,8 @@ static int fdnew;
 static substdio ssnew;
 static char ssnewbuf[256];
 
-int std_subscribe(const char *dbname,
+int std_subscribe(const char *dir,
+		  const char *subdir,
 		  const char *userhost,
 		  int flagadd,
 		  const char *comment,
@@ -97,18 +98,13 @@ int std_subscribe(const char *dbname,
 
     if (!stralloc_0(&addr)) die_nomem();
     if (!stralloc_0(&lcaddr)) die_nomem();
-    if (!stralloc_copys(&fn,dbname)) die_nomem();
-    if (!stralloc_copys(&fnlock,dbname)) die_nomem();
+    std_makepath(&fn,dir,subdir,"/subscribers/",lcch);
+    std_makepath(&fnlock,dir,subdir,"/lock",0);
 
-    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem();
-    if (!stralloc_catb(&fn,&lcch,1)) die_nomem();
-    if (!stralloc_copy(&fnnew,&fn)) die_nomem();
+    if (!stralloc_copyb(&fnnew,fn.s,fn.len-1)) die_nomem();
 	/* code later depends on fnnew = fn + 'n' */
     if (!stralloc_cats(&fnnew,"n")) die_nomem();
-    if (!stralloc_cats(&fnlock,"/lock")) die_nomem();
     if (!stralloc_0(&fnnew)) die_nomem();
-    if (!stralloc_0(&fn)) die_nomem();
-    if (!stralloc_0(&fnlock)) die_nomem();
 
     fdlock = lockfile(fnlock.s);
 
@@ -161,7 +157,7 @@ int std_subscribe(const char *dbname,
       close(fdlock);
       if (flagadd ^ flagwasthere) {
         if (!stralloc_0(&addr)) die_nomem();
-        logaddr(dbname,event,addr.s+1,comment);
+        logaddr(dir,subdir,event,addr.s+1,comment);
         return 1;
       }
       return 0;
@@ -209,7 +205,7 @@ int std_subscribe(const char *dbname,
     close(fdlock);
     if (flagadd ^ flagwasthere) {
       if (!stralloc_0(&addr)) die_nomem();
-      logaddr(dbname,event,addr.s+1,comment);
+      logaddr(dir,subdir,event,addr.s+1,comment);
       return 1;
     }
     return 0;

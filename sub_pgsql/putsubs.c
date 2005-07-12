@@ -28,14 +28,15 @@ static void die_write(void)
   strerr_die3x(111,FATAL,ERR_WRITE,"stdout");
 }
 
-unsigned long putsubs(const char *dbname,	/* database base dir */
+unsigned long putsubs(const char *dir,	/* database base dir */
+		      const char *subdir,
 		      unsigned long hash_lo,
 		      unsigned long hash_hi,
 		      int subwrite(),		/* write function. */
 		      int flagsql)
-/* Outputs all userhostesses in 'dbname' to stdout. If userhost is not null */
-/* that userhost is excluded. 'dbname' is the base directory name. For the  */
-/* mysql version, dbname is the directory where the file "sql" with mysql   */
+/* Outputs all userhostesses in 'dir' to stdout. If userhost is not null    */
+/* that userhost is excluded. 'dir' is the base directory name. For the     */
+/* mysql version, dir is the directory where the file "sql" with mysql      */
 /* access info is found. If this file is not present or if flagmysql is not */
 /* set, the routine falls back to the old database style. subwrite must be a*/
 /* function returning >=0 on success, -1 on error, and taking arguments     */
@@ -52,11 +53,11 @@ unsigned long putsubs(const char *dbname,	/* database base dir */
   unsigned long no = 0L;
   const char *ret = (char *) 0;
 
-  if (!flagsql || (ret = opensub(dbname,&table))) {
+  if (!flagsql || (ret = opensub(dir,subdir,&table))) {
     if (flagsql && *ret) strerr_die2x(111,FATAL,ret);
 
 
-    return std_putsubs(dbname,hash_lo,hash_hi,subwrite);
+    return std_putsubs(dir,subdir,hash_lo,hash_hi,subwrite);
 
   } else {					/* SQL Version */
 

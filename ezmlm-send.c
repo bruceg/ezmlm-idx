@@ -752,7 +752,7 @@ void main(int argc,char **argv)
   if (!stralloc_cats(&line,"-@[]")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   qmail_from(&qq,line.s);			/* envelope sender */
-  subs = putsubs(dir,hash_lo,hash_hi,subto,1);	/* subscribers */
+  subs = putsubs(dir,0,hash_lo,hash_hi,subto,1);	/* subscribers */
   if (flagsublist) hash_lo++;
 
   if (*(err = qmail_close(&qq)) == '\0') {

@@ -202,7 +202,7 @@ void main(int argc,char **argv)
   if (!stralloc_0(&moderators)) die_nomem();
 
   if (sender) {
-      pmod = issub(moderators.s,sender);
+      pmod = issub(moderators.s,0,sender);
       closesub();
 				/* sender = moderator? */
   } else
@@ -446,7 +446,7 @@ void main(int argc,char **argv)
       if (!stralloc_cats(&moderators,"/mod")) die_nomem();
       if (!stralloc_0(&moderators)) die_nomem();
     }
-    putsubs(moderators.s,0,52,subto,1);
+    putsubs(moderators.s,0,0,52,subto,1);
   }
 
   if (*(err = qmail_close(&qq)) == '\0') {

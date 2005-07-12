@@ -39,6 +39,7 @@ static void lineout(int subwrite())
 }
 
 void std_searchlog(const char *dir,		/* work directory */
+		   const char *subdir,
 		   char *search,		/* search string */
 		   int subwrite())		/* output fxn */
 /* opens dir/Log, and outputs via subwrite(s,len) any line that matches */
@@ -66,9 +67,7 @@ void std_searchlog(const char *dir,		/* work directory */
     *(cps - 1) = '_';			/* will [also] match char specified */
   }
 
-  if (!stralloc_copys(&line,dir)) die_nomem();
-  if (!stralloc_cats(&line,"/Log")) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  std_makepath(&line,dir,subdir,"/Log",0);
   fd = open_read(line.s);
   if (fd == -1) {
     if (errno != error_noent)

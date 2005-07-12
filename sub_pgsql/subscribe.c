@@ -32,7 +32,8 @@ static stralloc domain = {0};
 static stralloc logline = {0};
 static stralloc quoted = {0};
 
-int subscribe(const char *dbname,
+int subscribe(const char *dir,
+	      const char *subdir,
 	      const char *userhost,
 	      int flagadd,
 	      const char *comment,
@@ -40,11 +41,11 @@ int subscribe(const char *dbname,
 	      int flagsql,
 	      int forcehash)
 /* add (flagadd=1) or remove (flagadd=0) userhost from the subscr. database  */
-/* dbname. Comment is e.g. the subscriber from line or name. It is added to  */
+/* dir. Comment is e.g. the subscriber from line or name. It is added to     */
 /* the log. Event is the action type, e.g. "probe", "manual", etc. The       */
 /* direction (sub/unsub) is inferred from flagadd. Returns 1 on success, 0   */
 /* on failure. If flagmysql is set and the file "sql" is found in the        */
-/* directory dbname, it is parsed and a mysql db is assumed. if forcehash is */
+/* directory dir, it is parsed and a mysql db is assumed. if forcehash is    */
 /* >=0 it is used in place of the calculated hash. This makes it possible to */
 /* add addresses with a hash that does not exist. forcehash has to be 0..99. */
 /* for unsubscribes, the address is only removed if forcehash matches the    */
@@ -67,10 +68,10 @@ int subscribe(const char *dbname,
   if (userhost[str_chr(userhost,'\n')])
     strerr_die2x(100,FATAL,ERR_ADDR_NL);
 
-  if (!flagsql || (r = opensub(dbname,&table))) {
+  if (!flagsql || (r = opensub(dir,subdir,&table))) {
     if (r && *r) strerr_die2x(111,FATAL,r);
 
-    return std_subscribe(dbname,userhost,flagadd,comment,event,forcehash);
+    return std_subscribe(dir,subdir,userhost,flagadd,comment,event,forcehash);
 
   } else {				/* SQL version */
     domain.len = 0;			/* clear domain */
@@ -193,7 +194,7 @@ int subscribe(const char *dbname,
 
     if (!stralloc_0(&addr))
 		;				/* ignore errors */
-    logaddr(dbname,event,addr.s,comment);	/* also log to old log */
+    logaddr(dir,subdir,event,addr.s,comment);	/* also log to old log */
     return 1;					/* desired effect */
   }
 }

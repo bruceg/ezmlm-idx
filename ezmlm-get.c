@@ -188,11 +188,11 @@ void zapnonsub(const char *szerr)
   if (sender && *sender) {	/* "no sender" is not a subscriber */
     if (!flagsub)
       return;
-    if (issub(dir,sender))
+    if (issub(dir,0,sender))
       return;		/* subscriber */
-    if (issub(ddir.s,sender))
+    if (issub(ddir.s,0,sender))
       return;		/* digest subscriber */
-    if (issub(edir.s,sender))
+    if (issub(edir.s,0,sender))
       return;		/* allow addresses */
   }
   strerr_die4x(100,FATAL,ERR_SUBSCRIBER_CAN,szerr,ERR_571);
@@ -919,7 +919,7 @@ void main(int argc,char **argv)
         }
       }
       if (!stralloc_0(&moddir)) die_nomem();
-      pmod = issub(moddir.s,sender);
+      pmod = issub(moddir.s,0,sender);
       if (!pmod)			/* sender = moderator? */
         strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
       else {
@@ -1343,7 +1343,7 @@ void main(int argc,char **argv)
         qmail_put(&qq,line2.s,line2.len);
       }
     } else
-      subs = putsubs(workdir,0L,52L,&subto,1);
+      subs = putsubs(workdir,0,0L,52L,&subto,1);
   } else {			/* if local is set, sender is checked */
     if (pmod)
       qmail_to(&qq,pmod);

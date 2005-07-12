@@ -33,7 +33,7 @@ const char *checktag (const char *dir,		/* the db base dir */
   const char *table;
   const char *r;
 
-  if ((r = opensub(dir,&table))) {
+  if ((r = opensub(dir,0,&table))) {
     if (*r) return r;
     return std_checktag(num,action,seed,hash);
 

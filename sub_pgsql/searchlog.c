@@ -26,6 +26,7 @@ extern void die_write(void);
 static stralloc line = {0};
 
 void searchlog(const char *dir,		/* work directory */
+	       const char *subdir,
 	       char *search,		/* search string */
 	       int subwrite())		/* output fxn */
 /* opens dir/Log, and outputs via subwrite(s,len) any line that matches   */
@@ -57,10 +58,10 @@ void searchlog(const char *dir,		/* work directory */
     *(cps - 1) = '_';		/* will match char specified as well */
   }
 
-  if ((ret = opensub(dir,&table))) {
+  if ((ret = opensub(dir,subdir,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
 						/* fallback to local log */
-    std_searchlog(dir,search,subwrite);
+    std_searchlog(dir,subdir,search,subwrite);
 
   } else {
 

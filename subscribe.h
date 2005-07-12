@@ -11,6 +11,7 @@
 /* base for addresses, just replace these routines and rebuild ezmlm.      */
 
 extern int subscribe(const char *dir,
+		     const char *subdir,
 		     const char *username,
 		     int flagadd,
 		     const char *from,
@@ -18,6 +19,7 @@ extern int subscribe(const char *dir,
 		     int flagmysql,
 		     int forcehash);
 extern int std_subscribe(const char *dir,
+			 const char *subdir,
 			 const char *username,
 			 int flagadd,
 			 const char *from,
@@ -25,16 +27,20 @@ extern int std_subscribe(const char *dir,
 			 int forcehash);
 
 extern const char *issub(const char *dir,
+			 const char *subdir,
 			 const char *username);
 extern const char *std_issub(const char *dir,
+			     const char *subdir,
 			     const char *username);
 
 extern unsigned long putsubs(const char *dir,
+			     const char *subdir,
 			     unsigned long hash_lo,
 			     unsigned long hash_hi,
 			     int subwrite(),
 			     int flagsql);
 extern unsigned long std_putsubs(const char *dir,
+				 const char *subdir,
 				 unsigned long hash_lo,
 				 unsigned long hash_hi,
 				 int subwrite());
@@ -71,15 +77,25 @@ extern const char *std_checktag(unsigned long msgnum,
 				const char *hash);
 
 extern void searchlog(const char *dir,
+		      const char *subdir,
 		      char *search,
 		      int subwrite());
 extern void std_searchlog(const char *dir,
+			  const char *subdir,
 			  char *search,
 			  int subwrite());
 
-extern const char *opensub(const char *dir,const char **table);
+extern const char *opensub(const char *dir,
+			   const char *subdir,
+			   const char **table);
 
 extern void closesub(void);
+
+extern void std_makepath(stralloc *fn,
+			 const char *dir,
+			 const char *subdir,
+			 const char *append,
+			 char ch);
 
 struct sqlinfo
 {
@@ -91,7 +107,8 @@ struct sqlinfo
   const char *table;
 };
 
-extern const char *parsesql(const char *dbname,
+extern const char *parsesql(const char *dir,
+			    const char *subdir,
 			    struct sqlinfo *info);
 
 #endif

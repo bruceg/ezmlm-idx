@@ -25,10 +25,11 @@ static stralloc fn = {0};
 static substdio ss;
 static char ssbuf[512];
 
-const char *std_issub(const char *dbname,	/* directory to basedir */
+const char *std_issub(const char *dir,	/* directory to basedir */
+		      const char *subdir,
 		      const char *userhost)
 /* Returns (char *) to match if userhost is in the subscriber database     */
-/* dbname, 0 otherwise. dbname is a base directory for a list and may NOT  */
+/* dir, 0 otherwise. dir is a base directory for a list and may NOT  */
 /* be NULL        */
 /* NOTE: The returned pointer is NOT VALID after a subsequent call to issub!*/
 {
@@ -53,10 +54,7 @@ const char *std_issub(const char *dbname,	/* directory to basedir */
 
     if (!stralloc_0(&addr)) die_nomem();
     if (!stralloc_0(&lcaddr)) die_nomem();
-    if (!stralloc_copys(&fn,dbname)) die_nomem();
-    if (!stralloc_cats(&fn,"/subscribers/")) die_nomem();
-    if (!stralloc_catb(&fn,&lcch,1)) die_nomem();
-    if (!stralloc_0(&fn)) die_nomem();
+    std_makepath(&fn,dir,subdir,"/subscribers/",lcch);
 
     fd = open_read(fn.s);
     if (fd == -1) {

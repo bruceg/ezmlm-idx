@@ -26,7 +26,7 @@ const char *logmsg(const char *dir,
   PGresult *result;
   PGresult *result2;
 
-  if ((ret = opensub(dir,&table))) {
+  if ((ret = opensub(dir,0,&table))) {
     if (*ret)
       return ret;
     else

@@ -4,11 +4,13 @@
 #include "errtxt.h"
 #include "subscribe.h"
 
-const char *opensub(const char *dbname,	/* database directory */
+const char *opensub(const char *dir,	/* database directory */
+		    const char *subdir,
 		    const char **table)	/* table root_name */
 {
   return 0;
-  (void)dbname;
+  (void)dir;
+  (void)subdir;
   (void)table;
 }
 

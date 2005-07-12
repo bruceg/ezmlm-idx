@@ -24,10 +24,11 @@ static stralloc addr = {0};
 static stralloc line = {0};
 static stralloc quoted = {0};
 
-const char *issub(const char *dbname,		/* directory to basedir */
+const char *issub(const char *dir,
+		  const char *subdir,
 		  const char *userhost)
-/* Returns (char *) to match if userhost is in the subscriber database     */
-/* dbname, 0 otherwise. dbname is a base directory for a list and may NOT  */
+/* Returns (char *) to match if userhost is in the subscriber database      */
+/* dir, 0 otherwise. dir is a base directory for a list and may NOT         */
 /* be NULL        */
 /* NOTE: The returned pointer is NOT VALID after a subsequent call to issub!*/
 
@@ -40,10 +41,10 @@ const char *issub(const char *dbname,		/* directory to basedir */
 
   unsigned int j;
 
-  if ((ret = opensub(dbname,&table))) {
+  if ((ret = opensub(dir,subdir,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
 
-    return std_issub(dbname,userhost);
+    return std_issub(dir,subdir,userhost);
 
   } else {						/* SQL version  */
 	/* SELECT address FROM list WHERE address = 'userhost' AND hash */

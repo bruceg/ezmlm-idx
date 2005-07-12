@@ -27,7 +27,8 @@ static void die_write(void)
   strerr_die3x(111,FATAL,ERR_WRITE,"stdout");
 }
 
-unsigned long std_putsubs(const char *dbname,	/* database base dir */
+unsigned long std_putsubs(const char *dir,	/* database base dir */
+			  const char *subdir,
 			  unsigned long hash_lo,
 			  unsigned long hash_hi,
 			  int subwrite())	/* write function. */
@@ -46,9 +47,7 @@ unsigned long std_putsubs(const char *dbname,	/* database base dir */
   int match;
   unsigned int hashpos;
 
-    if (!stralloc_copys(&fn,dbname)) die_nomem();
-    if (!stralloc_catb(&fn,"/subscribers/?",15)) die_nomem();
-				/* NOTE: Also copies terminal '\0' */
+    std_makepath(&fn,dir,subdir,"/subscribers/",'?');
     hashpos = fn.len - 2;
     if (hash_lo > 52) hash_lo = 52;
     if (hash_hi > 52) hash_hi = 52;

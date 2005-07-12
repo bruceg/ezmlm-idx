@@ -11,14 +11,15 @@
 
 MYSQL *mysql = 0;
 
-const char *opensub(const char *dbname,	/* database directory */
-		    const char **table)	/* table root_name */
+const char *opensub(const char *dir,
+		    const char *subdir,
+		    const char **table)
 {
   struct sqlinfo info;
   const char *err;
   unsigned long portnum = 0L;
 
-  if ((err = parsesql(dbname,&info)) != 0)
+  if ((err = parsesql(dir,subdir,&info)) != 0)
     return err;
   *table = info.table;
   if (info.port != 0)

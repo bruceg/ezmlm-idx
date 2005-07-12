@@ -23,7 +23,7 @@ const char *logmsg(const char *dir,
   const char *table;
   const char *ret;
 
-  if ((ret = opensub(dir,&table))) {
+  if ((ret = opensub(dir,0,&table))) {
     if (*ret)
       return ret;
     else

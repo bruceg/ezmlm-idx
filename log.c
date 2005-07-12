@@ -8,6 +8,7 @@
 #include "now.h"
 #include "fmt.h"
 #include "open.h"
+#include "subscribe.h"
 
 /* appends (not crash-proof) a line to "Log". The format is: */
 /* "timestamp event address[ comment]\n". address is free of ' ' */
@@ -19,7 +20,7 @@ static char num[FMT_ULONG];
 static stralloc line = {0};
 static stralloc fn = {0};
 
-void logaddr(const char *dir,const char *event,
+void logaddr(const char *dir,const char *subdir,const char *event,
 	     const char *addr,const char *comment)
 {
   char ch;
@@ -45,9 +46,7 @@ void logaddr(const char *dir,const char *event,
   }
   if (!stralloc_cats(&line,"\n")) return;
 
-  if (!stralloc_copys(&fn,dir)) return;
-  if (!stralloc_cats(&fn,"/Log")) return;
-  if (!stralloc_0(&fn)) return;
+  std_makepath(&fn,dir,subdir,"/Log",0);
   fd = open_append(fn.s);
   if (fd == -1) return;
   substdio_fdbuf(&ss,write,fd,buf,sizeof(buf));

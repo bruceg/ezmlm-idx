@@ -12,7 +12,8 @@ static stralloc myp = {0};
 static stralloc ers = {0};
 static stralloc fn = {0};
 
-const char *parsesql(const char *dbname,	/* database directory */
+const char *parsesql(const char *dir,
+		     const char *subdir,
 		     struct sqlinfo *info)
 /* reads the file dbname/sql, and if the file exists, parses it into the    */
 /* components. The string should be host:port:user:pw:db:table.         If  */
@@ -24,11 +25,9 @@ const char *parsesql(const char *dbname,	/* database directory */
 
   info->db = "ezmlm";
 
-  if (!stralloc_copys(&fn,dbname)) return ERR_NOMEM;
-  if (!stralloc_cats(&fn,"/sql")) return ERR_NOMEM;
-  if (!stralloc_0(&fn)) return ERR_NOMEM;
-		/* host:port:db:table:user:pw:name */
+  std_makepath(&fn,dir,subdir,"/sql",0);
 
+		/* host:port:db:table:user:pw:name */
   myp.len = 0;
   switch (slurp(fn.s,&myp,128)) {
 	case -1:	if (!stralloc_copys(&ers,ERR_READ)) return ERR_NOMEM;

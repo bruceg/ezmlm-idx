@@ -420,7 +420,7 @@ int geton(const char *action)
   unsigned char ch;
 
   fl = get_from(target.s,action);		/* try to match up */
-  switch((r = subscribe(workdir,target.s,1,fl,"+",1,-1))) {
+  switch((r = subscribe(workdir,0,target.s,1,fl,"+",1,-1))) {
     case 1:
 	    qmail_puts(&qq,"List-Unsubscribe: <mailto:");	/*rfc2369 */
 	    qmail_put(&qq,outlocal.s,outlocal.len);
@@ -471,7 +471,7 @@ int getoff(void)
 {
   int r;
 
-  switch((r = subscribe(workdir,target.s,0,"","-",1,-1))) {
+  switch((r = subscribe(workdir,0,target.s,0,"","-",1,-1))) {
 			/* no comment for unsubscribe */
     case 1:
             hdr_listsubject1(TXT_GOODBYE);
@@ -528,7 +528,7 @@ void doconfirm(const char *act)
 
 void sendtomods(void)
 {
-  putsubs(moddir.s,0L,52L,subto,1);
+  putsubs(moddir.s,0,0L,52L,subto,1);
 }
 
 void copybottom(void)
@@ -739,10 +739,10 @@ int main(int argc,char **argv)
 		/* This means that they can be triggered from a SENDER */
 		/* that is not a mod, but never send to a non-mod */
     if (act == AC_NONE || flagdig == FLD_DENY)	/* None of the above */
-      pmod = issub(moddir.s,sender);
+      pmod = issub(moddir.s,0,sender);
 				/* sender = moderator? */
     else
-      pmod = issub(moddir.s,target.s);
+      pmod = issub(moddir.s,0,target.s);
 				/* target = moderator? */
    } else
      pmod = 0;			/* always 0 for non-mod/remote lists */
@@ -923,9 +923,9 @@ int main(int argc,char **argv)
 
     if (act == AC_LIST) {
       (void) code_qput(TXT_LISTMEMBERS,str_len(TXT_LISTMEMBERS));
-      i = putsubs(workdir,0L,52L,code_subto,1);
+      i = putsubs(workdir,0,0L,52L,code_subto,1);
     } else			/* listn */
-      i = putsubs(workdir,0L,52L,dummy_to,1);
+      i = putsubs(workdir,0,0L,52L,dummy_to,1);
 
     (void) code_qput("\n  ======> ",11);
     (void) code_qput(strnum,fmt_ulong(strnum,i));
@@ -942,7 +942,7 @@ int main(int argc,char **argv)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
     hdr_listsubject1((*action == 0) ? TXT_SUB_LOG : TXT_SUB_LOG_SEARCH);
     hdr_ctboundary();
-    searchlog(workdir,action,code_subto);
+    searchlog(workdir,0,action,code_subto);
     copybottom();
     qmail_to(&qq,pmod);
 
@@ -1218,7 +1218,7 @@ int main(int argc,char **argv)
     } else {
       if (!stralloc_copy(&to,&target)) die_nomem();
     }
-    if (issub(workdir,target.s))
+    if (issub(workdir,0,target.s))
       copy(&qq,"text/sub-nop",flagcd);
     else
       copy(&qq,"text/unsub-nop",flagcd);

@@ -86,6 +86,7 @@ slurpclose.o
 sqllib.o
 std_checktag.o
 std_issub.o
+std_makepath.o
 std_putsubs.o
 std_searchlog.o
 std_subscribe.o

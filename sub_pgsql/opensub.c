@@ -11,13 +11,14 @@
 
 PGconn *pgsql = 0;
 
-const char *opensub(const char *dbname,	/* database directory */
+const char *opensub(const char *dir,	/* database directory */
+		    const char *subdir,
 		    const char **table)	/* table root_name */
 {
   struct sqlinfo info;
   const char *err;
   
-  if ((err = parsesql(dbname,&info)) != 0)
+  if ((err = parsesql(dir,subdir,&info)) != 0)
     return err;
   *table = info.table;
 
