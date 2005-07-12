@@ -245,7 +245,7 @@ int idx_copy_insertsubject(void)
   substdio_fdbuf(&ssindexn,write,fdindexn,indexnbuf,sizeof(indexnbuf));
 
   concatHDR(subject.s,subject.len,&lines);	/* make 1 line */
-  decodeHDR(lines.s,lines.len,&qline,charset.s);	/* decode mime */
+  decodeHDR(lines.s,lines.len,&qline);		/* decode mime */
   r = unfoldHDR(qline.s,qline.len,&lines,charset.s,&dcprefix,1);
 						 /* trim mime */
 
@@ -297,7 +297,7 @@ int idx_copy_insertsubject(void)
   if (!stralloc_cats(&qline," ")) die_nomem();
 
   k = author_name(&cp,lines.s,lines.len);
-  decodeHDR(cp,k,&from,charset.s);
+  decodeHDR(cp,k,&from);
 
   (void) unfoldHDR(from.s,from.len,&lines,charset.s,&dcprefix,0);
   if (!stralloc_cat(&qline,&lines)) die_nomem();
@@ -404,7 +404,7 @@ void main(int argc,char **argv)
 				/* no sanity checks - you put '\n' or '\0' */
 				/* into the coded string, you pay */
 
-    decodeHDR(prefix.s,prefix.len,&line,charset.s);
+    decodeHDR(prefix.s,prefix.len,&line);
     (void) unfoldHDR(line.s,line.len,&dcprefix,charset.s,&dummy,0);
     if (!stralloc_copy(&dcprefix,&line)) die_nomem();
     serial = byte_rchr(prefix.s,prefix.len,'#');
@@ -541,7 +541,7 @@ void main(int argc,char **argv)
           qa_puts("Subject:");
           if (!flagindexed) {		/* non-indexed prefixed lists */
             concatHDR(subject.s,subject.len,&lines);
-            decodeHDR(lines.s,lines.len,&qline,charset.s);
+            decodeHDR(lines.s,lines.len,&qline);
             r = unfoldHDR(qline.s,qline.len,&lines,
 			charset.s,&dcprefix,1);
           }

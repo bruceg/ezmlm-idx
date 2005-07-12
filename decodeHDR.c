@@ -13,8 +13,7 @@
 
 void decodeHDR(const char *indata,
 	       unsigned int n,
-	       stralloc *outdata,
-	       const char *charset)
+	       stralloc *outdata)
 /* decodes indata depending on charset. May put '\n' and '\0' into out */
 /* data and can take them as indata. */
 {

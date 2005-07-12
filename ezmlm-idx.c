@@ -165,7 +165,7 @@ unsigned int pos,pos1;
 
   if (foundsubject) {
     concatHDR(subject.s,subject.len,&lines);	/* make 1 line */
-    decodeHDR(lines.s,lines.len,&line,charset.s);	/* decode mime */
+    decodeHDR(lines.s,lines.len,&line);		/* decode mime */
     r= unfoldHDR(line.s,line.len,&subject,charset.s,&prefix,1);
 						 /* trim mime */
   }
@@ -209,7 +209,7 @@ int main(int argc,char **argv)
 
   getconf_line(&prefix,"prefix",0,dir);
 					/* support rfc2047-encoded prefix */
-  decodeHDR(prefix.s,prefix.len,&line,charset.s);
+  decodeHDR(prefix.s,prefix.len,&line);
   unfoldHDR(line.s,line.len,&prefix,charset.s,&dummy,0);
 					/* need only decoded one */
 
@@ -292,7 +292,7 @@ int main(int argc,char **argv)
       if (!stralloc_catb(&line,hash,HASHLEN)) die_nomem();
 
       k = author_name(&cp,lines.s,lines.len);
-      decodeHDR(cp,k,&author,charset.s);
+      decodeHDR(cp,k,&author);
 
       (void) unfoldHDR(author.s,author.len,&lines,charset.s,&prefix,0);
 

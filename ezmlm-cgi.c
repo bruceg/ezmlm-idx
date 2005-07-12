@@ -1363,7 +1363,7 @@ void start_message_page(struct msginfo *infop)
 	die_nomem();
   if (!stralloc_cats(&decline,":")) die_nomem();
   if (!stralloc_0(&decline)) die_nomem();
-  decodeHDR(hdr[HDR_SUBJECT - 1].s,hdr[HDR_SUBJECT - 1].len,&line,"");
+  decodeHDR(hdr[HDR_SUBJECT - 1].s,hdr[HDR_SUBJECT - 1].len,&line);
   if (!mime_current)
     new_mime();			/* allocate */
   else
@@ -1440,7 +1440,7 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 	    oputs("<em>");
 	    oputs(constmap_get(&headermap,i + 1));
 	    oputs(":</em>");
-	    decodeHDR(hdr[i].s,hdr[i].len,&line,"");
+	    decodeHDR(hdr[i].s,hdr[i].len,&line);
 	    if (i == HDR_SUBJECT - 1 && flagtoplevel) {
 	      oputs("<a class=\"relk\" href=\"mailto:");
 	      oputs(local);
@@ -1454,10 +1454,10 @@ void show_part(struct msginfo *infop,int flagshowheaders,
 	      int k;
 	      oputs(" ");
 	      k = author_name(&cp,line.s,line.len);
-	      decodeHDR(cp,k,&decline,"");
+	      decodeHDR(cp,k,&decline);
 	      html_put(decline.s,decline.len);
 	    } else {
-	      decodeHDR(hdr[i].s,hdr[i].len,&decline,"");
+	      decodeHDR(hdr[i].s,hdr[i].len,&decline);
               html_put(decline.s,decline.len - 1);
 	    }
 	    if (i == HDR_SUBJECT - 1 && flagtoplevel)
