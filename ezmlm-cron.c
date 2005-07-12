@@ -202,7 +202,7 @@ void main(int argc,char **argv)
     if (!code) {		/* ignored for -l, -c, and -d */
       if (flagdelete || flaglist || flagconfig)
 				/* get away with not putting code for delete */
-        code = "a";	/* a hack - so what! */
+        code = (char*)"a";	/* a hack - so what! */
       else
         die_usage();
     } else
