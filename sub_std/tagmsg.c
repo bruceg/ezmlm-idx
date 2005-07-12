@@ -11,7 +11,8 @@ void tagmsg(const char *dir,		/* db base dir */
 	    unsigned long bodysize,
 	    unsigned long chunk)
 {
-  std_tagmsg(dir,msgnum,seed,action,hashout);
+  std_tagmsg(msgnum,seed,action,hashout);
+  (void)dir;
   (void)bodysize;
   (void)chunk;
 }

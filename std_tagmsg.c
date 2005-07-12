@@ -15,8 +15,7 @@ static stralloc key = {0};
 static char hash[COOKIE];
 static char strnum[FMT_ULONG];	/* message number as sz */
 
-void std_tagmsg(const char *dir,	/* db base dir */
-		unsigned long msgnum,	/* number of this message */
+void std_tagmsg(unsigned long msgnum,	/* number of this message */
 		const char *seed,	/* seed. NULL ok, but less entropy */
 		const char *action,	/* to make it certain the cookie */
 					/* differs from one used for a digest*/

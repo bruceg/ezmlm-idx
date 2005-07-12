@@ -48,8 +48,7 @@ extern void tagmsg(const char *dir,
 		   char *hashout,
 		   unsigned long bodysize,
 		   unsigned long chunk);
-extern void std_tagmsg(const char *dir,
-		       unsigned long msgnum,
+extern void std_tagmsg(unsigned long msgnum,
 		       const char *seed,
 		       const char *action,
 		       char *hashout);
@@ -66,8 +65,7 @@ extern const char *checktag(const char *dir,
 			    const char *action,
 			    const char *seed,
 			    const char *hash);
-extern const char *std_checktag(const char *dir,
-				unsigned long msgnum,
+extern const char *std_checktag(unsigned long msgnum,
 				const char *action,
 				const char *seed,
 				const char *hash);

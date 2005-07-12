@@ -15,8 +15,7 @@ static stralloc key = {0};
 static char strnum[FMT_ULONG];
 static char newcookie[COOKIE];
 
-const char *std_checktag(const char *dir,	/* the db base dir */
-			 unsigned long num,	/* message number */
+const char *std_checktag(unsigned long num,	/* message number */
 			 const char *action,
 			 const char *seed,	/* cookie base */
 			 const char *hash)	/* cookie */

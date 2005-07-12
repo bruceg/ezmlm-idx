@@ -9,6 +9,7 @@ const char *checktag(const char *dir,		/* the db base dir */
 		     const char *seed,		/* cookie base */
 		     const char *hash)		/* cookie */
 {
-  return std_checktag(dir,num,action,seed,hash);
+  return std_checktag(num,action,seed,hash);
+  (void)dir;
   (void)listno;
 }

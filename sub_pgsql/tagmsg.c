@@ -38,7 +38,7 @@ void tagmsg(const char *dir,		/* db base dir */
   const char *table;
   const char *ret;
 
-  std_tagmsg(dir,msgnum,seed,action,hashout);
+  std_tagmsg(msgnum,seed,action,hashout);
 
   if ((ret = opensub(dir,&table))) {
     if (*ret) strerr_die2x(111,FATAL,ret);
