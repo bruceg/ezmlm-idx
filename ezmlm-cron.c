@@ -62,7 +62,7 @@ int flagdigit = 0;
 int flagours;
 int foundlocal;
 int foundmatch = 0;
-int nolists = 0;
+unsigned int nolists = 0;
 unsigned long maxlists;
 unsigned int pos,pos2,poslocal,len;
 unsigned int lenhost,lenlocal;

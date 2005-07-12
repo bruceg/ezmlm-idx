@@ -35,7 +35,7 @@ int constmap_index(const struct constmap *cm,const char *s,int len)
 }
 
 /* returns pointer to sz of string with index "idx". 1 = first, 2 = second...*/
-const char *constmap_get(struct constmap *cm,int idx)
+const char *constmap_get(struct constmap *cm,unsigned int idx)
 {
   if (idx <= 0 || idx > cm->num)
     return 0;

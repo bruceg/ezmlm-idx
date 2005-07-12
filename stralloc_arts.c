@@ -4,7 +4,7 @@
 
 int stralloc_starts(stralloc *sa,const char *s)
 {
-  int len;
+  unsigned int len;
   len = str_len(s);
   return (sa->len >= len) && byte_equal(s,len,sa->s);
 }

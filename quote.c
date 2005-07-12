@@ -19,7 +19,7 @@ static const char ok[128] = {
 static int doit(stralloc *saout,const stralloc *sain)
 {
  char ch;
- int i;
+ unsigned int i;
  int j;
 
  if (!stralloc_ready(saout,sain->len * 2 + 2)) return 0;
@@ -40,7 +40,7 @@ static int doit(stralloc *saout,const stralloc *sain)
 int quote_need(const char *s,unsigned int n)
 {
  unsigned char uch;
- int i;
+ unsigned int i;
  if (!n) return 0;
  for (i = 0;i < n;++i)
   {

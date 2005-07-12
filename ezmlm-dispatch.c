@@ -124,9 +124,9 @@ static void execute_line(const char *line)
 
 static void execute_file(stralloc *file)
 {
-  int start;
-  int end;
-  int len;
+  unsigned int start;
+  unsigned int end;
+  unsigned int len;
   for (start = 0; start < file->len; start = end + 1) {
     len = byte_chr(file->s+start,file->len-start,'\n');
     end = start + len;

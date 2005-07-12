@@ -6,7 +6,7 @@
 
 struct qmail {
   int flagerr;
-  unsigned long pid;
+  long pid;
   unsigned long msgbytes;
   int fdm;
   int fde;

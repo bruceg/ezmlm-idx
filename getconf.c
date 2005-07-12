@@ -14,7 +14,7 @@ int getconf(stralloc *sa,const char *fn,int flagrequired,
 	    const char *dir)
 {
   int i;
-  int j;
+  unsigned int j;
   int k;
 
   if (!stralloc_copys(&data,""))

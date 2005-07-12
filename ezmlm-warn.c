@@ -50,7 +50,7 @@ char boundary[COOKIE];
 substdio ssout;
 char outbuf[16];
 
-unsigned long when;
+long when;
 char *dir;
 char *workdir;
 int flagdig = 0;
@@ -234,10 +234,10 @@ void main(int argc,char **argv)
 {
   DIR *bouncedir, *bsdir, *hdir;
   direntry *d, *ds;
-  unsigned long bouncedate;
-  unsigned long bouncetimeout = BOUNCE_TIMEOUT;
-  unsigned long lockout = 0L;
-  unsigned long ld;
+  long bouncedate;
+  long bouncetimeout = BOUNCE_TIMEOUT;
+  long lockout = 0L;
+  long ld;
   unsigned long ddir,dfile;
   int fdlock,fd;
   int opt;
