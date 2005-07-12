@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+
+./ezmlm-mktab -d -C list | psql eztest >/dev/null 2>&1
+./ezmlm-mktab list | psql eztest
+
+./ezmlm-test -d eztest -p ''
+
+./ezmlm-mktab -d -C list | psql eztest

@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+if [ $# -ne 1 ]; then
+  echo "usage: $0 [std|mysql|pgsql]"
+  exit 1
+fi
+db=$1
+
+if [ `head -n 1 conf-sub` != $db ]; then
+  echo $db >conf-sub
+fi
+
+if [ `head -n 1 conf-bin` != `pwd` ]; then
+  pwd >conf-bin
+fi
+
+`dirname $0`/makerrors
+
+exec ${0}-$db
