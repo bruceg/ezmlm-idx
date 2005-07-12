@@ -87,11 +87,6 @@ stralloc charset = {0};
 stralloc sendopt = {0};
 
 struct qmail qq;
-int qqwrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return len;
-}
 
 int subto(const char *s,unsigned int l)
 {
@@ -100,9 +95,6 @@ int subto(const char *s,unsigned int l)
   qmail_put(&qq,"",1);
   return (int) l;
 }
-
-char qqbuf[1];
-substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
 
 substdio ssin;
 char inbuf[1024];

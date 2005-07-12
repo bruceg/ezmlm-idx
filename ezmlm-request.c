@@ -113,15 +113,6 @@ char textbuf[1024];
 
 struct qmail qq;
 
-int qqwrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return len;
-}
-
-char qqbuf[1];
-substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,(int) sizeof(qqbuf));
-
 char inbuf[1024];
 substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
 substdio ssin2 = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
@@ -733,7 +724,7 @@ void main(int argc,char **argv)
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
       strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
-    if (substdio_copy(&ssqq,&ssin2) != 0)
+    if (qmail_copy(&qq,&ssin2) != 0)
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
     if (flagcd)
       hdr_boundary(1);

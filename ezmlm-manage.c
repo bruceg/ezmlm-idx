@@ -269,14 +269,6 @@ int hashok(const char *action,const char *ac)
 }
 
 struct qmail qq;
-int qqwrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return len;
-}
-
-char qqbuf[1];
-substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,(int) sizeof(qqbuf));
 
 int code_qput(const char *s,unsigned int n)
 {
@@ -559,7 +551,7 @@ void copybottom(void)
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
       strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
-    if (substdio_copy(&ssqq,&ssin2) != 0)
+    if (qmail_copy(&qq,&ssin2) != 0)
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
     if (flagcd)
       hdr_boundary(1);

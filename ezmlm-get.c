@@ -124,11 +124,6 @@ char *sender;
 char *digestcode;
 
 struct qmail qq;
-int qqwrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return len;
-}
 
 int subto(const char *s,unsigned int l)
 {
@@ -137,9 +132,6 @@ int subto(const char *s,unsigned int l)
   qmail_put(&qq,"",1);
   return (int) l;
 }
-
-char qqbuf[1];
-substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
 
 char inbuf[1024];
 substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,sizeof(inbuf));
@@ -295,7 +287,7 @@ void normal_bottom(char format)
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
       strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
-    if (substdio_copy(&ssqq,&ssin2) != 0)
+    if (qmail_copy(&qq,&ssin2) != 0)
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
   } else {
     if (flagcd == 'B' && format != RFC1153) {

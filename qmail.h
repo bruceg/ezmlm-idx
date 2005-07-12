@@ -22,5 +22,6 @@ extern void qmail_to(struct qmail *, const char *);
 extern void qmail_fail(struct qmail *);
 extern const char *qmail_close(struct qmail *);
 extern unsigned long qmail_qp(struct qmail *);
+extern int qmail_copy(struct qmail *, substdio *);
 
 #endif

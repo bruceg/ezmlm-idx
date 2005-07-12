@@ -56,14 +56,6 @@ substdio ssin = SUBSTDIO_FDBUF(read,0,buf0,(int) sizeof(buf0));
 substdio ssin2 = SUBSTDIO_FDBUF(read,0,buf0,(int) sizeof(buf0));
 
 struct qmail qq;
-int qqwrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return len;
-}
-
-char qqbuf[1];
-substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,(int) sizeof(qqbuf));
 
 stralloc line = {0};
 stralloc to = {0};
@@ -336,7 +328,7 @@ void main(int argc,char **argv)
       qmail_put(&qq,mydtline.s,mydtline.len);
       if (seek_begin(0) == -1)
 	strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
-      if (substdio_copy(&ssqq,&ssin2) != 0)
+      if (qmail_copy(&qq,&ssin2) != 0)
 	strerr_die2sys(111,FATAL,ERR_READ_INPUT);
       if (!stralloc_copy(&to,&outlocal)) die_nomem();
       if (!stralloc_cats(&to,"-request@")) die_nomem();

@@ -86,13 +86,6 @@ stralloc line = {0};
 stralloc qline = {0};
 
 struct qmail qq;
-int qqwrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return len;
-}
-char qqbuf[1];
-substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
 
 void code_qput(const char *s,unsigned int n)
 {
@@ -195,7 +188,7 @@ void doit(int flagw)
     hdr_ctype(CTYPE_MESSAGE);
     qmail_puts(&qq,"\n");
   }
-  if (substdio_copy(&ssqq,&ssin) < 0) die_read();
+  if (qmail_copy(&qq,&ssin) < 0) die_read();
   close(fd);
 
   if (flagcd)				/* end multipart/mixed */

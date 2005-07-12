@@ -134,14 +134,6 @@ int checkfile(const char *fn)
   return 0;
 }
 
-int qqwrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return len;
-}
-char qqbuf[1];
-substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
-
 substdio sstext;
 char textbuf[1024];
 
@@ -422,7 +414,7 @@ void main(int argc,char **argv)
       strerr_die4sys(111,FATAL,ERR_SEEK,fnmsg.s,": ");
 
     substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
-    if (substdio_copy(&ssqq,&sstext) != 0)
+    if (qmail_copy(&qq,&sstext) != 0)
       strerr_die4sys(111,FATAL,ERR_READ,fnmsg.s,": ");
     close(fd);
 

@@ -62,8 +62,6 @@ static const char *dir;
 
 static struct stat st;
 
-static struct qmail qq;
-
 static int checkfile(const char *fn)
 /* looks for DIR/mod/unconfirmed/fn.              */
 /* Returns:                                       */
@@ -82,14 +80,6 @@ static int checkfile(const char *fn)
     strerr_die6sys(111,FATAL,ERR_STAT,dir,"/",fnmsg.s,": ");
   return 0;
 }
-
-static int qqwrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return len;
-}
-static char qqbuf[1];
-substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
 
 static substdio sstext;
 static char textbuf[1024];

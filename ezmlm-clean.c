@@ -69,13 +69,6 @@ char textbuf[1024];
 substdio sstext;
 
 struct qmail qq;
-int qqwrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return len;
-}
-char qqbuf[1];
-substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
 
 char *dir;
 char strnum[FMT_ULONG];
@@ -184,7 +177,7 @@ void sendnotice(const char *d)
         strerr_die4sys(111,FATAL,ERR_SEEK,d,": ");
 
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
-      if (substdio_copy(&ssqq,&sstext) != 0) die_read();
+      if (qmail_copy(&qq,&sstext) != 0) die_read();
       close (fd);
 
       if (flagmime)

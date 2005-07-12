@@ -61,13 +61,6 @@ char spbuf[1024];	/* should normally hold entire file */
 substdio sssp;
 
 struct qmail qq;
-int qqwrite(int fd,const char *buf,unsigned int len)
-{
-  qmail_put(&qq,buf,len);
-  return (int) len;
-}
-char qqbuf[1];
-substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,(int) sizeof(qqbuf));
 
 int findname(void)
 /* returns 1 if a matching line was found, 0 otherwise. name will contain */
@@ -247,7 +240,7 @@ void main(int argc,char **argv)
       if (qmail_open(&qq,(stralloc *) 0) == -1)
         strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
       qmail_puts(&qq,dtline);				/* delivered-to */
-      if (substdio_copy(&ssqq,subfdin) != 0)
+      if (qmail_copy(&qq,subfdin) != 0)
         strerr_die2sys(111,FATAL,ERR_READ_INPUT);
       qmail_from(&qq,from.s);
       qmail_to(&qq,to.s);

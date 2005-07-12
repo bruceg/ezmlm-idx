@@ -72,6 +72,7 @@ open_trunc.o
 opensub.o
 putsubs.o
 qmail.o
+qmail_copy.o
 quote.o
 scan_8long.o
 scan_ulong.o
