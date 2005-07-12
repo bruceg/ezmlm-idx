@@ -153,7 +153,7 @@ void store_from(stralloc *frl,	/* from line */
 {
   int fdin;
   int fdout;
-  unsigned long linetime;
+  long linetime;
 
   if (!flagstorefrom || !frl->len) return;	/* nothing to store */
   lock();
