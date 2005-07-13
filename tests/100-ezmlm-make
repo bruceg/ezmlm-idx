@@ -79,37 +79,13 @@ else
 	${ECHO} "No."
 fi
 
-###############################################################
-# set up subscriber/moderator/sender/digest recipient account #
-###############################################################
-  ${MKDIR} "$SINKDIR" "$SINKDIR/new" "$SINKDIR/cur" "$SINKDIR/tmp" || \
-	fatal "mkdir for sinkdir failed"
-  ${MKDIR} "$MODDIR" "$MODDIR/new" "$MODDIR/cur" "$MODDIR/tmp" || \
-	fatal "mkdir for moddir failed"
-  ${MKDIR} "$MANDIR" "$MANDIR/new" "$MANDIR/cur" "$MANDIR/tmp" || \
-	fatal "mkdir for mandir failed"
-  ${MKDIR} "$DIGDIR" "$DIGDIR/new" "$DIGDIR/cur" "$DIGDIR/tmp" || \
-	fatal "mkdir for digdir failed"
-
-####################################
-# correct bouncer for our binaries #
-####################################
-# NOTE: This is duplicated (and should be) after next ezmlm-make block.
-  ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/bouncer"
-  ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/digest/bouncer"
-  ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/bouncer"
-  ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/digest/bouncer"
-
   # remove inlocal/inhost - shouldn't be used
   ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
     fatal "failed to remove inlocal/inhost for testlist"
 
-###########################
-# set up bouncing account #
-###########################
-  ${ECHO} "|${GREP} 'MAILER-DAEMON' >/dev/null && exit 99" > "$DOT-$BOUNCE"
-  ${ECHO} "|exit 100" > "$DOT-$BOUNCE"
-
+#############################
+# set up qmail-queue script #
+#############################
   (
     ${ECHO} "#!/bin/sh"
     ${ECHO} "${CAT} >'${QQMSG}'"
