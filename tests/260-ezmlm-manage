@@ -8,7 +8,7 @@ prompt "ezmlm-manage (2/2):   "
 
 # now test remote admin functions
 # add a few addresses to allow
-${EZBIN}/ezmlm-sub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff"
+${EZBIN}/ezmlm-sub "${DIR}/allow" "aaa@bbb" "ccc@ddd" "eee@fff"
 
 # test -edit
 qqclean

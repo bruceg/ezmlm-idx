@@ -19,15 +19,15 @@
   ${EZBIN}/ezmlm-list "${DIR}/digest" | ${GREP} '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
-  ${EZBIN}/ezmlm-list "${DIR}/${ALLOW}" | ${GREP} '@' >/dev/null 2>&1 && \
+  ${EZBIN}/ezmlm-list "${DIR}/allow" | ${GREP} '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
 # not subscriber. Test default
-  ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/${ALLOW}" && \
+  ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/allow" && \
 	fatal "ezmlm-issubn: failed: exit 0 on non-subscriber"
 
 # not subscriber. Test -n
-  ${EZBIN}/ezmlm-issubn -n "$DIR" "${DIR}/${ALLOW}" || \
+  ${EZBIN}/ezmlm-issubn -n "$DIR" "${DIR}/allow" || \
 	fatal "ezmlm-issubn: -n failed for non-subscriber"
 
 # add subscriber
@@ -35,16 +35,16 @@
 	fatal "ezmlm-sub: failed to add subscriber"
 
 # is subscriber. Test default
-  ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/${ALLOW}" || \
+  ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/allow" || \
 	fatal "ezmlm-issubn: failed: exit false for subscriber"
 
 # is subscriber. Test -n
-  ${EZBIN}/ezmlm-issubn -n "$DIR" "${DIR}/${ALLOW}" && \
+  ${EZBIN}/ezmlm-issubn -n "$DIR" "${DIR}/allow" && \
 	fatal "ezmlm-issubn: -n failed for subscriber"
 
 # add to allow
-  ${EZBIN}/ezmlm-sub "${DIR}/${ALLOW}" "ZZtop@hoSt" || \
-	fatal "ezmlm-sub: failed to add address to ${DIR}/${ALLOW}"
+  ${EZBIN}/ezmlm-sub "${DIR}/allow" "ZZtop@hoSt" || \
+	fatal "ezmlm-sub: failed to add address to ${DIR}/allow"
 
 # list subscribers
   ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"${ERR}" 2>&1 || \
@@ -61,15 +61,15 @@
   SENDER="zztop@HOst"; export SENDER
 
 # check for address in allow
-  ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/${ALLOW}" || \
+  ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/allow" || \
 	fatal "ezmlm-sub/issubn: failed to add/look in 2nd db"
 
 # remove (multiple) (non)existing addresses from allow
-  ${EZBIN}/ezmlm-unsub "${DIR}/${ALLOW}" "xYzZy@hOst" "zZToP@HOSt" || \
+  ${EZBIN}/ezmlm-unsub "${DIR}/allow" "xYzZy@hOst" "zZToP@HOSt" || \
 	fatal "ezmlm-unsub: failed to remove subscriber"
 
 # verify removal
-  ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/${ALLOW}" && \
+  ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/allow" && \
 	fatal "ezmlm-unsub/issubn: failed to remove address"
 
 # clean up

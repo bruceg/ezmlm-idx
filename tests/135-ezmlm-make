@@ -9,24 +9,24 @@
 # make sure a few ezmlm-make switches work
   ${EZBIN}/ezmlm-make -+qkgu -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +qkgu"
-  ${GREP} "$DENY" "${DIR}/editor" >/dev/null 2>&1 || \
+  ${GREP} deny "${DIR}/editor" >/dev/null 2>&1 || \
 	fatal "failed to implement -k for list"
   ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 || \
 	fatal "failed to implement -q for list"
   ${GREP} "ezmlm-get -s" "${DIR}/manager" >/dev/null 2>&1 || \
 	fatal "failed to implement -g for list"
-  ${GREP} "$ALLOW" "${DIR}/editor" >/dev/null 2>&1 || \
+  ${GREP} allow "${DIR}/editor" >/dev/null 2>&1 || \
 	fatal "failed to implement -u for list"
 
   ${EZBIN}/ezmlm-make -+QKGU -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +QKGU"
-  ${GREP} "$DENY" "${DIR}/editor" >/dev/null 2>&1 && \
+  ${GREP} deny "${DIR}/editor" >/dev/null 2>&1 && \
 	fatal "failed to implement -K for list"
   ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 && \
 	fatal "failed to implement -Q for list"
   ${GREP} "ezmlm-get -s" "${DIR}/manager" >/dev/null 2>&1 && \
 	fatal "failed to implement -G for list"
-  ${GREP} "$ALLOW" "${DIR}/editor" >/dev/null 2>&1 && \
+  ${GREP} allow "${DIR}/editor" >/dev/null 2>&1 && \
 	fatal "failed to implement -U for list"
 
 # edit the list (add moderation and remove admin)
@@ -39,20 +39,15 @@ ${EZBIN}/ezmlm-make -+ln -C${EZBIN}/ezmlmrc "$DIR" || \
 # Now to create our own manager for later tests:
 
 ${ECHO} "|${GREP} 'req1' >/dev/null 2>&1 && { ${ECHO} \"\$LOCAL\" >> '${REQ}'; exit 99; }; exit 0" > "${DIR}/manager"
-${ECHO} "|${EZBIN}/ezmlm-manage -le ${SW_FROM} '${DIR}'" >> "${DIR}/manager"
+${ECHO} "|${EZBIN}/ezmlm-manage -le '${DIR}'" >> "${DIR}/manager"
 ${ECHO} "OK"
 
 # correct bouncer for our binaries:
 ###################################
   ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/bouncer"
   ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/digest/bouncer"
-  if [ "$EZVER" = "31" ]; then	# autodetecting bouncer for 0.31x
-    ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/bouncer"
-    ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/digest/bouncer"
-  else				# split bouncer with args for later versions
-    ${ECHO} "|/${EZBIN}/ezmlm-return -D '${DIR}'" >> "${DIR}/bouncer"
-    ${ECHO} "|/${EZBIN}/ezmlm-return -d '${DIR}'" >> "${DIR}/digest/bouncer"
-  fi
+  ${ECHO} "|/${EZBIN}/ezmlm-return -D '${DIR}'" >> "${DIR}/bouncer"
+  ${ECHO} "|/${EZBIN}/ezmlm-return -d '${DIR}'" >> "${DIR}/digest/bouncer"
 
   # remove inlocal/inhost - shouldn't be used
   ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \

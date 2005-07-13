@@ -12,19 +12,11 @@ if [ ! -z "$BUG" ]; then
   ${ECHO} "$BUG" | ${GREP} "deny" >/dev/null 2>&1 && \
     {
 	${ECHO}
-    if [ "$EZVER" = '31' ]; then
-	${ECHO} "The DENY bug allows users to remove themselves"
-	${ECHO} "from DIR/blacklist which is not intended, but OTOH,"
-	${ECHO} "DIR/blacklist is not intended for this and as a SENDER check"
-	${ECHO} "inherently insecure anyway. If you need this feature and the"
-	${ECHO} "bug is a problem, upgrade to >=0.321."
-    else
 	${ECHO} "DENY access means that subscribers can remove";
 	${ECHO} "themselves from DIR/deny. This is a bug, but DENY"
 	${ECHO} "is easy to circumvent and not intended to keep users from"
 	${ECHO} "posting, anyway."
 	${ECHO} "The bug is fixed in >=0.321."
-    fi
     }
   ${ECHO} "$BUG" | ${GREP} "return" >/dev/null 2>&1 && \
     {

@@ -33,12 +33,7 @@ fi
 
 SQLUSER=''	# must be empty
 ARR='-------------------->'
-ALLOW='allow'
-DENY='deny'
 DASH='-'
-# switch for ezmlm-return
-DLC='-d'
-DUC='-D'
 # file for ezmlm-request testing
 REQ="${DIR}/__req"
 # Set if we've found bug from old version
@@ -142,45 +137,22 @@ if [ $USESQL ]; then
 		>"$ERR" 2>&1
 	${EZBIN}/ezmlm-unsub "${DIR}/mod" "${MOD}@$HOST" \
 		>"$ERR" 2>&1
-	${EZBIN}/ezmlm-unsub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff" \
+	${EZBIN}/ezmlm-unsub "${DIR}/allow" "aaa@bbb" "ccc@ddd" "eee@fff" \
 		>"$ERR" 2>&1
 fi
 ${RM} -rf "$DIR" ${DOT}* "${ERR}" >/dev/null 2>&1
-
-${ECHO}
 
 #################
 # check version #
 #################
 
-# assume ezmlm-idx and ezmlm-test are different versions
-SAME_VER='n'
-
-TMP_VER=`${EZBIN}/ezmlm-make -V 2>&1` || \
+THIS_VER=`${EZBIN}/ezmlm-make -V 2>&1` || \
 	fatal "This program only works with ezmlm-idx"
-# ezmlm-idx-0313 does not support DEFAULT, so no sense testing it
-THIS_VER=`${ECHO} "$TMP_VER" | cut -d'+' -f2`
-${ECHO} "$THIS_VER" | ${GREP} "ezmlm-idx" > /dev/null 2>&1 ||
-  THIS_VER=`${ECHO} "$TMP_VER" | cut -d' ' -f4`
-
-${ECHO} "testing ezmlm-idx:    $THIS_VER"
-
-${ECHO} "$THIS_VER" | ${GREP} "$OLD_VER" >/dev/null 2>&1
-if [ "$?" = "0"	]; then
-	DLC=''
-	DUC=''
-	EZVER='31'
-	ALLOW='extra'		# support old nomenclature
-	DENY='blacklist'
-else
-	${ECHO} "$THIS_VER" | ${GREP} "$VER" >/dev/null 2>&1
-	if [ "$?" != "0" ]; then
-		${ECHO} "Warning: ezmlm-make version is not $VER"
-		${ECHO} "         test info may not be reliable"
-		${ECHO}
-	fi
-########## should add testing of From line logging for non-0.31x
-	SW_FROM="-f"
+THIS_VER=`${ECHO} "$THIS_VER" | cut -d' ' -f3`
+if [ "$THIS_VER" != "$VER" ]; then
+  ${ECHO} "Warning: These tests were built for $VER but the programs being"
+  ${ECHO} "         tested are version $THIS_VER.  Some errors may result from"
+  ${ECHO} "         this version mis-match."
 fi
 
 # Set BADUNSET if unset doesn't do the job

@@ -13,7 +13,7 @@
 		>/dev/null 2>&1
 	${EZBIN}/ezmlm-unsub "${DIR}/mod" "${MOD}@$HOST" \
 		>/dev/null 2>&1
-	${EZBIN}/ezmlm-unsub "${DIR}/${ALLOW}" "aaa@bbb" "ccc@ddd" "eee@fff" \
+	${EZBIN}/ezmlm-unsub "${DIR}/allow" "aaa@bbb" "ccc@ddd" "eee@fff" \
 		>/dev/null 2>&1
   fi
   ${RM} -rf "$DIR" ${DOT}* "${ERR}" >/dev/null 2>&1

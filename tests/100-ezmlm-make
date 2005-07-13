@@ -42,8 +42,8 @@
 	  prompt "ezmlm-make ......     "
 	  BUG="${BUG} return"
 	}
-# digest/bouncer only for >=0.32
-  if [  "$EZVER" != '31' ]; then
+
+# digest/bouncer
     if [ ! -f "${DIR}/digest/bouncer" ]; then
 	fatal "failed to create digest/bouncer";
     fi
@@ -54,7 +54,7 @@
 	  prompt "ezmlm-make ......     "
 	  BUG="${BUG} return"
 	}
-  fi
+
   ${ECHO} "OK"
 
 # Add sql files for sql testing
@@ -97,14 +97,8 @@ fi
 # NOTE: This is duplicated (and should be) after next ezmlm-make block.
   ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/bouncer"
   ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/digest/bouncer"
-  if [ "$EZVER" = "31" ]; then	# autodetecting bouncer for 0.31x
-    ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/bouncer"
-    ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/digest/bouncer"
-  else				# split bouncer with args for later versions
-	# edited for ezmlm-new
-    ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/bouncer"
-    ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/digest/bouncer"
-  fi
+  ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/bouncer"
+  ${ECHO} "|/${EZBIN}/ezmlm-return '${DIR}'" >> "${DIR}/digest/bouncer"
 
   # remove inlocal/inhost - shouldn't be used
   ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \

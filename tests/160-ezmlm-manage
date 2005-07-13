@@ -69,7 +69,7 @@
   ${ECHO} "X-num: sub1" > "$TMP"
   ${ECHO} "From: Mr. $USER requests <${MAN}@$HOST>" >> "$TMP"
   ${ECHO} >> "$TMP"
-  ${EZBIN}/ezmlm-manage ${SW_FROM} "$DIR" < "${TMP}" \
+  ${EZBIN}/ezmlm-manage "$DIR" < "${TMP}" \
 		>"$ERR" 2>&1 || \
 	fatal "digest-subscribe with request failed"
 
@@ -87,7 +87,7 @@
   ${ECHO} "X-num: sub3" > "$TMP"
   ${ECHO} "From: Mr. $USER confirms <$SENDER>" >> "$TMP"
   ${ECHO} >> "$TMP"
-  ${EZBIN}/ezmlm-manage ${SW_FROM} "$DIR" < "${TMP}" \
+  ${EZBIN}/ezmlm-manage "$DIR" < "${TMP}" \
 		>"$ERR" 2>&1 || \
 	fatal "failed to send user conf for sub1"
   msgexists || \
