@@ -32,10 +32,6 @@ else
 fi
 
 SQLUSER=''	# must be empty
-ARR='-------------------->'
-DASH='-'
-# file for ezmlm-request testing
-REQ="${DIR}/__req"
 # Set if we've found bug from old version
 BUG=''
 # Use RDBMS, set if -p was specified even if PW empty, e.g. Postgres
@@ -44,8 +40,6 @@ USESQL=''
 
 while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 	case "$1" in
-		-/)
-			DASH='-/'; shift;;
 		-d)
 			DB="$2"; shift; shift;;
 		-h)
@@ -77,47 +71,28 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 	esac
 done
 
-LOC="$USER-$LIST"
+LOC="xyzzy-$LIST"
 # calculate position in LOCAL where [normally] default starts
 LOCLEN=`${ECHO} "$LOC-" | ${WC} -c | ${SED} 's/ //g'`
 REJLEN=`${ECHO} "$LOC-reject-" | ${WC} -c | ${SED} 's/ //g'`
 ACCLEN=`${ECHO} "$LOC-accept-" | ${WC} -c | ${SED} 's/ //g'`
 
-DOT="$PWD/dot.qmail$DASH$LIST"
+DOT="$PWD/dot.qmail-$LIST"
 
-# test addresses. These are all within the list dir and all addresses
-# are subaddresses of the list address. You can change this, but it is
-# usually pointless.
-SINK='sink'
-SINKDIR="${DIR}/${SINK}"
-SND="${LOC}-${SINK}"
+HOST="example.com"
 
-# moddir
-MODACC='modacc'
-MODDIR="${DIR}/${MODACC}"
-MOD="$LOC-${MODACC}"
-
-# digdir
-DIGGG='dig'
-DIGDIR="${DIR}/${DIGGG}"
-DIG="$LOC-${DIGGG}"
-
-# mandir
-MANAG="man"
-MANDIR="${DIR}/${MANAG}"
-MAN="$LOC-${MANAG}"
-
-# bouncedir
-BOUNCE='bnc'
-BNC="$LOC-bnc"
-
-HOST=dummy.host.does.not.exist.$$
+# test addresses.
+SND="sender"
+MOD="moderator"
+DIG="digest"
+MAN="manager"
+BNC="bouncer"
 
 if [ ! -x "${EZBIN}/ezmlm-make" ]; then
-	${ECHO} "can't execute ${EZBIN}/ezmlm-make. Most likely, user ``$USER''"
-	${ECHO} "doesn't have execute permission to files in directory"
-	${ECHO} "``${EZBIN}''. Adjust permissions or edit the script to"
-	${ECHO} "use a different test user."
+	${ECHO} "can't execute ${EZBIN}/ezmlm-make. Most likely, you"
+	${ECHO} "doen't have execute permission to files in directory"
+	${ECHO} "``${EZBIN}''. Adjust permissions or execute the script"
+	${ECHO} "as a user with the appropriate permissions."
 	exit 99
 fi
 

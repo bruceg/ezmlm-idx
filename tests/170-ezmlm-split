@@ -11,7 +11,7 @@
   ${ECHO} "com:::l3@h3" >> "${DIR}/split"
 # most testing with -D
   ${ECHO} "lindberg@ezmlm.org" | ${EZBIN}/ezmlm-split -D "$DIR" | \
-	${GREP} "$LIST@$HOST" >/dev/null || \
+	${GREP} "$LOC@$HOST" >/dev/null || \
 	fatal "failed to split correctly on domain"
   ${ECHO} "lindberg@id.com" | ${EZBIN}/ezmlm-split -D "$DIR" | \
 	${GREP} 'l3' >/dev/null || \
