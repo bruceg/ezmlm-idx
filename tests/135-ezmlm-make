@@ -36,12 +36,6 @@
 ${EZBIN}/ezmlm-make -+ln -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +ln"
 
-# Now to create our own manager for later tests:
-
-${ECHO} "|${GREP} 'req1' >/dev/null 2>&1 && { ${ECHO} \"\$LOCAL\" >> '${REQ}'; exit 99; }; exit 0" > "${DIR}/manager"
-${ECHO} "|${EZBIN}/ezmlm-manage -le '${DIR}'" >> "${DIR}/manager"
-${ECHO} "OK"
-
 # correct bouncer for our binaries:
 ###################################
   ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/bouncer"
@@ -52,3 +46,6 @@ ${ECHO} "OK"
   # remove inlocal/inhost - shouldn't be used
   ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
     fatal "failed to remove inlocal/inhost for testlist"
+
+  ${ECHO} "OK"
+
