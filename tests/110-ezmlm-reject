@@ -9,7 +9,7 @@
 #####################
   prompt "ezmlm-reject:         "
   FROM="$USER"
-  TO="$USER-__tstlist@$HOST"
+  TO="$LOC@$HOST"
   SUBJECT="test"
   CONTENT="multipart/mixed"
   CC="<>"
@@ -116,7 +116,7 @@ SUBJECT='test'
 	fatal "-T switch failed without dir"
 
 # restore good TO
-  TO="$USER-__tstlist@$HOST"
+  TO="$LOC@$HOST"
 
 # if part is mimereject message should be rejected
   touch "$DIR"/mimeremove
