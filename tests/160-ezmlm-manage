@@ -67,7 +67,7 @@
   SENDER="${MAN}@$HOST"; export SENDER
 
   ${ECHO} "X-num: sub1" > "$TMP"
-  ${ECHO} "From: Mr. $USER requests <${MAN}@$HOST>" >> "$TMP"
+  ${ECHO} "From: Mr. User requests <${MAN}@$HOST>" >> "$TMP"
   ${ECHO} >> "$TMP"
   ${EZBIN}/ezmlm-manage "$DIR" < "${TMP}" \
 		>"$ERR" 2>&1 || \
@@ -85,7 +85,7 @@
   qqclean
   DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
   ${ECHO} "X-num: sub3" > "$TMP"
-  ${ECHO} "From: Mr. $USER confirms <$SENDER>" >> "$TMP"
+  ${ECHO} "From: Mr. User confirms <$SENDER>" >> "$TMP"
   ${ECHO} >> "$TMP"
   ${EZBIN}/ezmlm-manage "$DIR" < "${TMP}" \
 		>"$ERR" 2>&1 || \
