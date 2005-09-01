@@ -364,7 +364,7 @@ void main(int argc,char **argv)
     flagdone = 0;
     while ((cpnext = cp + byte_chr(cp,cpafter-cp,'\n')) != cpafter) {
       i = byte_chr(cp,cpnext-cp,'%');
-      if (i <= 5 && cpnext-cp >= 8) {
+      if (i <= 5 && cpnext-cp-i >= 3) {
 				/* max 5 "quote characters" and space for %%% */
         if (cp[i+1] == '%' && cp[i+2] == '%') {
           if (!flaggoodfield) {					/* Start tag */

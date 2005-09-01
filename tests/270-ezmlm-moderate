@@ -14,8 +14,14 @@ LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
 
 qqclean
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
-${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
-	</dev/null >"$ERR" 2>&1 || \
+{
+    make_message
+    echo
+    echo '> %%%'
+    echo '> rejection test message'
+    echo '> %%%'
+} | ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
+	>"$ERR" 2>&1 || \
 		fatal "failed on rejection"
 msgexists ||
 	fatal "failed to send rejection notice for message mod1"
@@ -24,6 +30,8 @@ ${GREP} "To: ${SND}@$HOST" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to reject message mod1"
 ${GREP} T"${SND}@$HOST" "$QQENV" >/dev/null 2>&1 || \
 	fatal "delivered rejection to wrong address"
+${GREP} '^rejection test message$' "$QQMSG" >/dev/null 2>&1 || \
+	fatal "reject message did not include given text"
 
 qqclean
 # ACC is set in 145-ezmlm-store, as the accept address for "mod3" message
@@ -49,6 +57,7 @@ DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
 ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
 	</dev/null >/dev/null 2>&1 && \
 	fatal "failed to bounce accept of rejected message"
+
 LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
 ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
@@ -61,6 +70,7 @@ DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
 ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
 	</dev/null >/dev/null 2>&1 && \
 	fatal "failed to bounce reject of accepted message"
+
 LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`
 ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \

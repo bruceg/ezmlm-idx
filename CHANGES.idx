@@ -28,6 +28,11 @@ cn_GB,cs,pl,ru,da,pt
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
+=========================
+
+- Fixed the marker logic in ezmlm-moderate to allow comments between any
+  two lines containing "%%%", not just lines 8 characters or longer.
+
 ezmlm-idx-0.442, 20050712
 =========================
 
