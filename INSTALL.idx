@@ -77,30 +77,22 @@ HOW TO BUILD, TEST, AND INSTALL:
     where ``iso'' is the ISO language designation. Currently supported
     are: ch, ch_GB, cs, da, de, en_US (en, us), es, fr, hu, id, ita, ja,
     nl, pl, pt_BR, ru, sv. NOTE: A normal ``make'' sets up the en_US
-    version (as before). ezmlmrc files for your language may be
-    available via ftp://id.wustl.edu/pub/patches/ezmlmrc. If not, please
-    feel free to contribute one (translate ezmlmrc.en_US, but leave
-    comments intact for "diff").
+    version (as before).  All known language files are included with
+    ezmlm-idx.  If your language is not present, please feel free to
+    contribute one (translate lang/en_US.text but leave comments intact
+    for "diff").
 
  8. Test the programs:
-	a. Create a user ``eztest'' or edit ezmlm-test to use another user name.
-	   This user should be able to execute the new binaries and also needs
-	   to have read access to ezmlm-test (chmod 755 ezmlm-test).
-	b. Change to that user.
-	c. From the build directory, execute ezmlm-test:
+	From the build directory, execute ezmlm-test:
 		% ./ezmlm-test
 
 	ezmlm-test will set up a test list, execute the various programs, and
-	test most functions of most programs. It works only if your qmail
-	installation works and allows sending mail to the local user. If you
-	use another user name, add ``-u other_user_name''. NOTE that the
-	arguments must be separated by a space from the switches.
+	test most functions of most programs.
 
 	Occasionally, ezmlm-test fails. This is usually due to problems with
 	ezmlm-test on your particular platform/installation and not due to
 	problems in ezmlm-idx. Please report problems with ezmlm-test, and if
 	you can, patches for correcting it.
-
 
  9. To test the SQL functions, set up a mysql database ``ezmlm'' accessible
     to a user at this host (see MySQL/PostgreSQL docs; the ezmlm-mktab script
@@ -116,15 +108,14 @@ HOW TO BUILD, TEST, AND INSTALL:
     or for PostgresSQL:
 	% ./ezmlm-mktab -d list | pgsql [...] ezmlm
 
-    Now, as the ``eztest'' user, execute:
+    Now execute:
 	% ./ezmlm-test -l user -p passwd -h host
 
     This will test the SQL part of the binaries. ``host'' defaults to
-    ``localhost'' and ``user'' defaults to ``ezmlm''. There is no default
-    for passwd and indeed ezmlm-test uses this switch to know to work
-    with SQL support. To execute under a user other than ``eztest'',
-    add a ``-u testuser'' switch. Note that -p has to be specified even if
-    the database has no password. In this case, use -p ''.
+    ``localhost'' and ``user'' defaults to ``ezmlm''. There is no
+    default for passwd and indeed ezmlm-test uses this switch to know to
+    work with SQL support. Note that -p has to be specified even if the
+    database has no password. In this case, use -p ''.
 
 10. If you for some reason want to rebuild binaries without MySQL
     support, replace the first line of "conf-sub" with the word "std"
@@ -134,9 +125,7 @@ HOW TO BUILD, TEST, AND INSTALL:
 11. Copy binaries and man pages to the correct locations.
 	# make setup
 	(or copy manually).
-    If you'd like to retest the installation, change uid to the test user
-    ``eztest'' and change to the ezmlm binary directory. Now run ezmlm-test
-    as before.
+    If you'd like to retest the installation, run ezmlm-test as before.
 
 
 12. Your lists will run as before. To enable ezmlm-idx features like
@@ -267,7 +256,7 @@ HOW TO BUILD, TEST, AND INSTALL:
 23. That's it! To report success (helps to track platform-specific problems):
 
        % ( echo 'First M. Last'; cat `cat SYSDEPS` ) \
-         | mail cfl-src@id.wustl.edu
+         | mail idxtracker@ezmlm.org
 
 Replace First M. Last with your name.
 

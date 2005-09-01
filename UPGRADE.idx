@@ -102,7 +102,7 @@ For subscription-moderated lists created with ezmlm-idx<0.23:
 That's it! To report success (this helps to track platform-specific problems):
 
        % ( echo 'First M. Last'; cat `cat SYSDEPS` ) \
-         | mail cfl-src@id.wustl.edu
+         | mail idxtracker@ezmlm.org
 
 Replace First M. Last with your name.
 
