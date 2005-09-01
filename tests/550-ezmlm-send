@@ -11,7 +11,7 @@ Content-Length: zip
 message goes here
 EOF
 
-  LOCAL="$LOC"; export LOCAL
+  LOCAL="$LOC"
   ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce post"
 

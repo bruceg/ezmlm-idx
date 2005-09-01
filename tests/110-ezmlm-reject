@@ -18,11 +18,11 @@
   ${EZBIN}/ezmlm-reject "$DIR" </dev/null >/dev/null 2>&1 && \
         fatal "failed to reject missing \$SENDER"
 
-  SENDER=''; export SENDER
+  SENDER=''
   ${EZBIN}/ezmlm-reject "$DIR" </dev/null >/dev/null 2>&1 && \
         fatal "failed to reject empty sender"
 
-  SENDER="${SND}@$HOST"; export SENDER
+  SENDER="${SND}@$HOST"
 
 # with directory
   make_message | ${EZBIN}/ezmlm-reject "$DIR" || \

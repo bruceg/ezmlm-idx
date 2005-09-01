@@ -13,13 +13,13 @@ ${EZBIN}/ezmlm-sub "${DIR}/allow" "aaa@bbb" "ccc@ddd" "eee@fff"
 # test -edit
 qqclean
 ${ECHO} "#TEST_TEXT#" > "${DIR}/text/test"
-LOCAL="$LOC-edit.test-$MAN=$HOST"; export LOCAL
-DEFAULT="edit.test-$MAN=$HOST"; export DEFAULT
+LOCAL="$LOC-edit.test-$MAN=$HOST"
+DEFAULT="edit.test-$MAN=$HOST"
 ${ECHO} "X-num: edit1" > "$TMP"
 ${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject edit request from non-mod"
-LOCAL="$LOC-edit.test-$MOD=$HOST"; export LOCAL
-DEFAULT="edit.test-$MOD=$HOST"; export DEFAULT
+LOCAL="$LOC-edit.test-$MOD=$HOST"
+DEFAULT="edit.test-$MOD=$HOST"
 ${ECHO} "X-num: edit2" > "$TMP"
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \
 	fatal "-E failed for edit2"
@@ -28,15 +28,14 @@ ${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "-e failed for remote admin for edit3"
 
 # complete edit. SENDER can be any address
-SENDER="${MAN}@$HOST"; export SENDER
+SENDER="${MAN}@$HOST"
 ${GREP} 'edit3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting edit reply for edit3"
 ${GREP} "#TEST_TEXT#" "$QQMSG" >/dev/null 2>&1 || \
 	fatal "old text missing in edit3 edit reply"
 LOCAL=`${GREP} "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	fatal "no reply address in edit3 edit reply"
-export LOCAL
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
 ${ECHO} "X-num: edit4" > "$TMP"
 ${ECHO} >> "$TMP"
 ${ECHO} "%%% START OF TEXT FILE" >> "$TMP"
@@ -48,20 +47,20 @@ ${GREP} "#NEW_TEXT#" "${DIR}/text/test" >/dev/null 2>&1 || \
 	fatal "edit4 failed to update text file"
 
 # test list/log
-LOCAL="$LOC-allow-list-$MAN=$HOST"; export LOCAL
-DEFAULT="allow-list-$MAN=$HOST"; export DEFAULT
+LOCAL="$LOC-allow-list-$MAN=$HOST"
+DEFAULT="allow-list-$MAN=$HOST"
 ${ECHO} "X-num: list1" > "$TMP"
 ${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject list request from non-mod"
 
-LOCAL="$LOC-allow-log-$MAN=$HOST"; export LOCAL
-DEFAULT="allow-log-$MAN=$HOST"; export DEFAULT
+LOCAL="$LOC-allow-log-$MAN=$HOST"
+DEFAULT="allow-log-$MAN=$HOST"
 ${ECHO} "X-num: log1" > "$TMP"
 ${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject log request from non-mod"
 
-LOCAL="$LOC-allow-list-$MOD=$HOST"; export LOCAL
-DEFAULT="allow-list-$MOD=$HOST"; export DEFAULT
+LOCAL="$LOC-allow-list-$MOD=$HOST"
+DEFAULT="allow-list-$MOD=$HOST"
 ${ECHO} "X-num: list2" > "$TMP"
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "-L failed to reject list request"
@@ -76,8 +75,8 @@ ${GREP} 'list3' "$QQMSG" >/dev/null 2>&1 || \
 ${GREP} "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to get list reply to list3"
 
-LOCAL="$LOC-allow-log-$MOD=$HOST"; export LOCAL
-DEFAULT="allow-log-$MOD=$HOST"; export DEFAULT
+LOCAL="$LOC-allow-log-$MOD=$HOST"
+DEFAULT="allow-log-$MOD=$HOST"
 ${ECHO} "X-num: log2" > "$TMP"
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \
 	fatal "-L failed to reject log request"

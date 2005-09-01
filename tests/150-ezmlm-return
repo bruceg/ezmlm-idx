@@ -6,10 +6,10 @@
 
   prompt "ezmlm-return:         "
 
-  SENDER="${BNC}@$HOST"; export SENDER
-  HOST="$HOST"; export HOST
-  LOCAL="$LOC-return-1-$BNC=$HOST"; export LOCAL
-  DEFAULT="1-$BNC=$HOST"; export DEFAULT
+  SENDER="${BNC}@$HOST"
+  HOST="$HOST"
+  LOCAL="$LOC-return-1-$BNC=$HOST"
+  DEFAULT="1-$BNC=$HOST"
 # we use 'du' because bounce handling is different in 0.31x and >=0.32
   BSIZE1=`${DU} "${DIR}/bounce"` || \
 	{ ${ECHO} "du doesn't work"; exit 99; } 
@@ -28,8 +28,8 @@
   if [ "$BSIZE1" = "$BSIZE2" ]; then
 	fatal "failed to note subscriber bounce"
   fi
-  LOCAL="$LOC-digest-return-1-$BNC=$HOST"; export LOCAL
-  DEFAULT="1-$BNC=$HOST"; export DEFAULT
+  LOCAL="$LOC-digest-return-1-$BNC=$HOST"
+  DEFAULT="1-$BNC=$HOST"
   BSIZE1=`${DU} "${DIR}/digest/bounce"`
   make_message | ${EZBIN}/ezmlm-return -d "$DIR" || \
     [ "$?" -eq "99" ] || \

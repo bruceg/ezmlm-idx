@@ -6,7 +6,7 @@
 
   prompt "ezmlm-store:          "
 
-  SENDER="${SND}@$HOST"; export SENDER
+  SENDER="${SND}@$HOST"
   ${EZBIN}/ezmlm-sub "${DIR}/mod" "$SENDER"
 
 # message from mod, normal use -> should queue

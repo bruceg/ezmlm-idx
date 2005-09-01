@@ -6,9 +6,9 @@
 
   prompt "ezmlm-request:        "
 
-  SENDER="${SND}@$HOST"; export SENDER
-  LOCAL="$LOC-request"; export LOCAL
-  DEFAULT='request'; export DEFAULT
+  SENDER="${SND}@$HOST"
+  LOCAL="$LOC-request"
+  DEFAULT='request'
 
   ${ECHO} "X-num: req1" > "$TMP"
 # use a non-existing command

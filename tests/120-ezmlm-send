@@ -6,7 +6,7 @@
 
   prompt "ezmlm-send:           "
 
-  SENDER="${SND}@$HOST"; export SENDER
+  SENDER="${SND}@$HOST"
   ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
 # set up prefix
   ${ECHO} "[PFX]" > "${DIR}/prefix"

@@ -7,12 +7,12 @@
 prompt "ezmlm-get (thread):   "
 
 qqclean
-SENDER="${BNC}@$HOST"; export SENDER
-LOCAL="$LOC-index"; export LOCAL
-DEFAULT='index'; export DEFAULT
+SENDER="${BNC}@$HOST"
+LOCAL="$LOC-index"
+DEFAULT='index'
 ${ECHO} "X-num: thread1" > "$TMP"
-LOCAL="$LOC-thread.1"; export LOCAL
-DEFAULT='thread.1'; export DEFAULT
+LOCAL="$LOC-thread.1"
+DEFAULT='thread.1'
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "-s failed to reject -thread from non-sub"
 msgexists && \
@@ -28,7 +28,7 @@ msgexists || \
 
 qqclean
 ${ECHO} "X-num: thread2" > "$TMP"
-SENDER="${DIG}@$HOST"; export SENDER
+SENDER="${DIG}@$HOST"
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	fatal "-s failed to exit 99 after -thread"

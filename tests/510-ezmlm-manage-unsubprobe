@@ -2,8 +2,8 @@
 
   prompt "unsubscribe probe:    "
 
-  DEFAULT="unsubscribe"; export DEFAULT
-  LOCAL="${LOC}-${DEFAULT}"; export LOCAL
+  DEFAULT="unsubscribe"
+  LOCAL="${LOC}-${DEFAULT}"
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce unsubscribe probe"
 

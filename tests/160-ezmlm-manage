@@ -6,9 +6,9 @@
 
   prompt "ezmlm-manage (1/2):   "
 
-  LOCAL="$LOC-unsubscribe"; export LOCAL
-  DEFAULT='unsubscribe'; export DEFAULT
-  SENDER="${SND}@$HOST"; export SENDER
+  LOCAL="$LOC-unsubscribe"
+  DEFAULT='unsubscribe'
+  SENDER="${SND}@$HOST"
 
   ${EZBIN}/ezmlm-sub "$DIR" "${SND}@$HOST"
   ${EZBIN}/ezmlm-manage -U "$DIR" </dev/null >"$ERR" 2>&1 || \
@@ -16,20 +16,20 @@
   ${EZBIN}/ezmlm-issubn "$DIR" && \
 	fatal "unsubscribe with -U failed"
 
-  LOCAL="$LOC-digest-subscribe"; export LOCAL
-  DEFAULT='digest-subscribe'; export DEFAULT
+  LOCAL="$LOC-digest-subscribe"
+  DEFAULT='digest-subscribe'
   ${EZBIN}/ezmlm-unsub "${DIR}/digest" "${SND}@$HOST"
 
 # test that access to the deny db is restricted to remote admins
-  LOCAL="$LOC-deny-subscribe"; export LOCAL
-  DEFAULT='deny-subscribe'; export DEFAULT
+  LOCAL="$LOC-deny-subscribe"
+  DEFAULT='deny-subscribe'
   ${EZBIN}/ezmlm-manage "$DIR" </dev/null >/dev/null 2>&1 && \
 	{
 	 ${ECHO} "Deny open to regular subscribers: 0.31 bug, OK in 0.321."
 	 prompt "ezmlm-manage ...      "
 	 BUG="${BUG} deny"
 	}
-  SENDER="${MOD}@$HOST"; export SENDER
+  SENDER="${MOD}@$HOST"
   ${EZBIN}/ezmlm-sub "${DIR}/mod" "$SENDER" || exit 100
   ${EZBIN}/ezmlm-manage "$DIR" </dev/null > "$ERR" 2>&1 || \
 	fatal "Deny access denied to remote admin!"
@@ -50,11 +50,11 @@
 
 # restore remote/SENDER/mod/LOCAL/DEFAULT
   ${EZBIN}/ezmlm-unsub "${DIR}/mod" "$SENDER" || exit 100
-  SENDER="${SND}@$HOST"; export SENDER	# restore order
+  SENDER="${SND}@$HOST"		# restore order
   touch "${DIR}/remote" || \
 	{ ${ECHO} "Failed to remove DIR/remote"; exit 99; }
-  LOCAL="$LOC-digest-subscribe"; export LOCAL
-	DEFAULT='digest-subscribe'; export DEFAULT
+  LOCAL="$LOC-digest-subscribe"
+	DEFAULT='digest-subscribe'
 
   ${EZBIN}/ezmlm-manage -S "$DIR" </dev/null >"$ERR" 2>&1 || \
 	fatal "failed with -S"
@@ -64,7 +64,7 @@
   touch "${DIR}/modsub" || \
 	{ ${ECHO} "Failed to restore DIR/modsub"; exit 99; }
 
-  SENDER="${MAN}@$HOST"; export SENDER
+  SENDER="${MAN}@$HOST"
 
   ${ECHO} "X-num: sub1" > "$TMP"
   ${ECHO} "From: Mr. User requests <${MAN}@$HOST>" >> "$TMP"
@@ -81,9 +81,8 @@
 
   LOCAL=`${GREP} "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	fatal "failed to find confirm address in -subscribe reply"
-  export LOCAL
   qqclean
-  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
   ${ECHO} "X-num: sub3" > "$TMP"
   ${ECHO} "From: Mr. User confirms <$SENDER>" >> "$TMP"
   ${ECHO} >> "$TMP"
@@ -92,7 +91,7 @@
 	fatal "failed to send user conf for sub1"
   msgexists || \
 	fatal "failed to receive user conf for sub1"
-  SENDER="${MOD}@$HOST"; export SENDER
+  SENDER="${MOD}@$HOST"
   ${EZBIN}/ezmlm-issubn "$DIR" && \
 	fatal "unsub without mod for moderated list failed"
   ${GREP} 'sub3' "$QQMSG" >/dev/null 2>&1 || \
@@ -101,8 +100,7 @@
   # confirm subscription request
   LOCAL=`${GREP} "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	fatal "no confirm address in sub3 mod confirm request"
-  export LOCAL
-  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
   ${ECHO} "X-num: modR1" > "$TMP"
   ${ECHO} "FROM: moderator agrees <$SENDER>" >> "$TMP"
   ${ECHO} >> "$TMP"
@@ -111,8 +109,8 @@
 	fatal "failed to send digest sub mod accept for sub3"
 
   ${EZBIN}/ezmlm-sub "$DIR" "${MAN}@$HOST"
-  LOCAL="$LOC-unsubscribe"; export LOCAL
-  DEFAULT='unsubscribe'; export DEFAULT
+  LOCAL="$LOC-unsubscribe"
+  DEFAULT='unsubscribe'
   ${ECHO} "X-num: sub2" > "$TMP"
   ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "unsubscribe request failed"
@@ -123,15 +121,14 @@
 
   LOCAL=`${GREP} "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	fatal "failed to find confirm address in -unsubscribe reply"
-  export LOCAL
-  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`; export DEFAULT
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
   ${ECHO} "X-num: sub4" > "$TMP"
   ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "failed to send conf for sub2"
 
 # -get function for backwards compatibility
-  LOCAL="$LOC-get.1"; export LOCAL
-  DEFAULT='get.1'; export DEFAULT
+  LOCAL="$LOC-get.1"
+  DEFAULT='get.1'
   ${ECHO} "X-num: manget1" > "$TMP"
   ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "get failed"

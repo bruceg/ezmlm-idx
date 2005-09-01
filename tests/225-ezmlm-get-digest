@@ -23,9 +23,9 @@ ${ECHO} "X-num: not_propagated" > "$TMP"
 qqclean
 mv -f "${DIR}/headeradd" "${DIR}/headeradd.bak"
 ${ECHO} "X-num: dig1" > "${DIR}/headeradd"
-SENDER="${BNC}@$HOST"; export SENDER
-LOCAL="$LOC-dig.code"; export LOCAL
-DEFAULT='dig.code'; export DEFAULT
+SENDER="${BNC}@$HOST"
+LOCAL="$LOC-dig.code"
+DEFAULT='dig.code'
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject -dig when no digest code was on cmd-line"
 if [ -r "${DIR}/dignum" ]; then
@@ -71,7 +71,7 @@ msgexists && \
 # now in the editor position:
 qqclean
 ${RM} -f "${DIR}/dignum"
-LOCAL="$LOC"; export LOCAL
+LOCAL="$LOC"
 ${UNSET} DEFAULT
 ${ECHO} "X-num: dig2" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1 || \
@@ -98,7 +98,7 @@ msgexists || \
 # now from the command line with formats ...
 qqclean
 ${RM} -f "${DIR}/dignum"
-LOCAL=''; export LOCAL
+LOCAL=''
 ${ECHO} "X-num: dig3" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "failed to exit 0 after cmd line digest"
@@ -148,3 +148,4 @@ msgexists || \
 mv -f "${DIR}/headeradd.bak" "${DIR}/headeradd"
 
 ${ECHO} "OK"
+export DEFAULT

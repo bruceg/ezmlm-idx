@@ -25,10 +25,10 @@
 # one test with delivery - redirect to local manager
 # should exit 99 after redirecting
   ${ECHO} ":::${LOC}@$HOST" > "${DIR}/split"
-  SENDER="${MOD}@$HOST"; export SENDER
+  SENDER="${MOD}@$HOST"
   DTLINE="Delivered-To: ezmlm-split@$HOST"; export DTLINE
-  LOCAL="$LOC-subscribe-${SND}=$HOST"; export LOCAL
-  DEFAULT="subscribe-${SND}=$HOST"; export DEFAULT
+  LOCAL="$LOC-subscribe-${SND}=$HOST"
+  DEFAULT="subscribe-${SND}=$HOST"
   ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"$ERR" 2>&1
 
   EC="$?"

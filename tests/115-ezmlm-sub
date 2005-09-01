@@ -6,7 +6,7 @@
 
   prompt "ezmlm-[un|is]sub[n]:  "
 
-  SENDER="XYZZY@HOst"; export SENDER
+  SENDER="XYZZY@HOst"
 
 # With mysql testing, there may be junk left from earlier testing that
 # gives false positives in testing. Make sure it's detected
@@ -58,7 +58,7 @@
   ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"$ERR" 2>&1 && \
 	fatal "ezmlm-unsub: failed to remove address"
 
-  SENDER="zztop@HOst"; export SENDER
+  SENDER="zztop@HOst"
 
 # check for address in allow
   ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/allow" || \
@@ -73,6 +73,6 @@
 	fatal "ezmlm-unsub/issubn: failed to remove address"
 
 # clean up
-  LOCAL=''; export LOCAL
+  LOCAL=''
 
   ${ECHO} "OK"

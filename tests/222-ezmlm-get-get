@@ -7,10 +7,10 @@
 prompt "ezmlm-get (get):      "
 
 qqclean
-SENDER="${BNC}@$HOST"; export SENDER
+SENDER="${BNC}@$HOST"
 ${ECHO} "X-num: get1" > "$TMP"
-LOCAL="$LOC-get.2_4"; export LOCAL
-DEFAULT='get.2_4'; export DEFAULT
+LOCAL="$LOC-get.2_4"
+DEFAULT='get.2_4'
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "-s failed to reject -get from non-sub"
 msgexists && \
@@ -24,7 +24,7 @@ fi
 
 qqclean
 ${ECHO} "X-num: get2" > "$TMP"
-SENDER="${DIG}@$HOST"; export SENDER
+SENDER="${DIG}@$HOST"
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	fatal "-s failed to exit 99 after -get"
@@ -35,8 +35,8 @@ msgexists || \
 # test formats for -get
 qqclean
 ${ECHO} "X-num: get3" > "$TMP"
-LOCAL="$LOC-getr.2_4"; export LOCAL
-DEFAULT='getr.2_4'; export DEFAULT
+LOCAL="$LOC-getr.2_4"
+DEFAULT='getr.2_4'
 qqclean
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
@@ -47,8 +47,8 @@ msgexists || \
 
 qqclean
 ${ECHO} "X-num: get4" > "$TMP"
-LOCAL="$LOC-getn.2_4"; export LOCAL
-DEFAULT='getn.2_4'; export DEFAULT
+LOCAL="$LOC-getn.2_4"
+DEFAULT='getn.2_4'
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	fatal "failed to exit 99 after -getn"
@@ -58,8 +58,8 @@ msgexists || \
 
 qqclean
 ${ECHO} "X-num: get5" > "$TMP"
-LOCAL="$LOC-getv.2_4"; export LOCAL
-DEFAULT='getv.2_4'; export DEFAULT
+LOCAL="$LOC-getv.2_4"
+DEFAULT='getv.2_4'
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	fatal "failed to exit 99 after -getv"
@@ -69,8 +69,8 @@ msgexists || \
 
 qqclean
 ${ECHO} "X-num: get6" > "$TMP"
-LOCAL="$LOC-getx.2_4"; export LOCAL
-DEFAULT='getx.2_4'; export DEFAULT
+LOCAL="$LOC-getx.2_4"
+DEFAULT='getx.2_4'
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	fatal "failed to exit 99 after -getx"
