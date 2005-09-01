@@ -16,4 +16,4 @@
 	${EZBIN}/ezmlm-unsub "${DIR}/allow" "aaa@bbb" "ccc@ddd" "eee@fff" \
 		>/dev/null 2>&1
   fi
-  ${RM} -rf "$DIR" ${DOT}* "${ERR}" >/dev/null 2>&1
+  ${RM} -rf "$DIR" "$ERR" >/dev/null 2>&1

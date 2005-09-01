@@ -7,17 +7,17 @@
   prompt "ezmlm-make (1/2):     "
 
 # edit non-existant list
-  ${EZBIN}/ezmlm-make -e -C${EZBIN}/ezmlmrc "$DIR" "${DOT}" \
+  ${EZBIN}/ezmlm-make -e -C${EZBIN}/ezmlmrc "$DIR" "$DOT" \
 	"$LOC" "$HOST" > /dev/null 2>&1 && \
 	fatal "ezmlm-make failed reject edit of non-existing list:"
 
 # make simple test list
-  ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "$DIR" "${DOT}" \
+  ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "$DIR" "$DOT" \
 	"$LOC" "$HOST" || \
 	fatal "ezmlm-make failed to create test list"
 
 # remake simple test list which should fail
-  ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "$DIR" "${DOT}" \
+  ${EZBIN}/ezmlm-make -C${EZBIN}/ezmlmrc "$DIR" "$DOT" \
 	"$LOC" "$HOST" >/dev/null 2>&1 && \
 	fatal "failed to reject creation of existing list"
 

@@ -77,7 +77,7 @@ LOCLEN=`${ECHO} "$LOC-" | ${WC} -c | ${SED} 's/ //g'`
 REJLEN=`${ECHO} "$LOC-reject-" | ${WC} -c | ${SED} 's/ //g'`
 ACCLEN=`${ECHO} "$LOC-accept-" | ${WC} -c | ${SED} 's/ //g'`
 
-DOT="$PWD/dot.qmail-$LIST"
+DOT="$DIR/dot.qmail-$LIST"
 
 HOST="example.com"
 
@@ -115,7 +115,7 @@ if [ $USESQL ]; then
 	${EZBIN}/ezmlm-unsub "${DIR}/allow" "aaa@bbb" "ccc@ddd" "eee@fff" \
 		>"$ERR" 2>&1
 fi
-${RM} -rf "$DIR" ${DOT}* "${ERR}" >/dev/null 2>&1
+${RM} -rf "$DIR" "$ERR" >/dev/null 2>&1
 
 #################
 # check version #
