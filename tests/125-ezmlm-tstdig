@@ -33,7 +33,7 @@
   ${EZBIN}/ezmlm-tstdig -k1 -m5 -t0 "$DIR" || \
 	fatal "-k failed"
   LOCAL="$LOC"; export LOCAL
-  ${EZBIN}/ezmlm-tstdig -k1 -m5 -t0 "$DIR" > "${ERR}" 2>&1 || \
+  ${EZBIN}/ezmlm-tstdig -k1 -m5 -t0 "$DIR" > "$ERR" 2>&1 || \
 	{
 	 ${ECHO} "problem with DEFAULT unset: 0.32 bug, OK in 0.321."
 	 prompt "ezmlm-tstdig.......   "

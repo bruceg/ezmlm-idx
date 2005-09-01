@@ -7,12 +7,12 @@
   prompt "ezmlm-warn (1/2):     "
 
 # should send a warning
-  ${EZBIN}/ezmlm-warn -t0 "$DIR" >"${ERR}" 2>&1 || \
+  ${EZBIN}/ezmlm-warn -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with normal bounce for warning"
   ${EZBIN}/ezmlm-issubn "$DIR" || \
 	fatal "script error: SENDER is not a subscriber"
 
-  ${EZBIN}/ezmlm-warn -d -t0 "$DIR" >"${ERR}" 2>&1 || \
+  ${EZBIN}/ezmlm-warn -d -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with digest bounce for warning"
   ${EZBIN}/ezmlm-issubn "${DIR}/digest" || \
 	fatal "script error: SENDER is not a digest subscriber"

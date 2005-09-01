@@ -23,7 +23,7 @@ SENDER="${BNC}@$HOST"; export SENDER
 LOCAL="$LOC-xxxx"; export LOCAL
 DEFAULT='xxxx'; export DEFAULT
 ${ECHO} "X-num: index1" > "$TMP"
-${EZBIN}/ezmlm-get "$DIR" < "${TMP}" >/dev/null 2>&1 || \
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal " failed to exit 0 for non-recognized commands"
 msgexists && \
 	fatal " failed to abort on non-recognized commands"
@@ -32,7 +32,7 @@ msgexists && \
 qqclean
 LOCAL="$LOC-"; export LOCAL
 DEFAULT=''; export DEFAULT
-${EZBIN}/ezmlm-get "$DIR" < "${TMP}" >/dev/null 2>&1 || \
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal " failed to exit 0 for list-@host"
 msgexists && \
 	fatal " failed to exit on list-@host"
@@ -45,13 +45,13 @@ ${EZBIN}/ezmlm-unsub "$DIR"/digest "${SENDER}" >/dev/null 2>&1
 qqclean
 LOCAL="$LOC-index"; export LOCAL
 DEFAULT='index'; export DEFAULT
-${EZBIN}/ezmlm-get -s "$DIR" < "${TMP}" >/dev/null 2>&1 && \
+${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "-s failed to reject -index from non-sub"
 msgexists && \
 	fatal "-s delivered response to non-subscriber"
 
 qqclean
-${EZBIN}/ezmlm-get "$DIR" < "${TMP}" >/dev/null 2>&1
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" -ne "99" ]; then
 	fatal "failed to exit 99 after -index"
 fi
@@ -63,7 +63,7 @@ ${GREP} T"$SENDER" "$QQENV" >/dev/null 2>&1 || \
 qqclean
 ${ECHO} "X-num: index2" > "$TMP"
 SENDER="${DIG}@$HOST"; export SENDER
-${EZBIN}/ezmlm-get -s "$DIR" < "${TMP}" >/dev/null 2>&1
+${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" -ne "99" ]; then
 	fatal "-s failed to exit 99 after -index"
 fi

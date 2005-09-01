@@ -47,7 +47,7 @@
 	fatal "ezmlm-sub: failed to add address to ${DIR}/allow"
 
 # list subscribers
-  ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"${ERR}" 2>&1 || \
+  ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"$ERR" 2>&1 || \
 	fatal "ezmlm-list: failed to list subscribers"
 
 # remove subscriber
@@ -55,7 +55,7 @@
 	fatal "ezmlm-unsub: failed to remove subscriber"
 
 # see that it was removed
-  ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"${ERR}" 2>&1 && \
+  ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"$ERR" 2>&1 && \
 	fatal "ezmlm-unsub: failed to remove address"
 
   SENDER="zztop@HOst"; export SENDER

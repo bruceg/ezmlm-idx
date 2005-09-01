@@ -29,7 +29,7 @@
   DTLINE="Delivered-To: ezmlm-split@$HOST"; export DTLINE
   LOCAL="$LOC-subscribe-${SND}=$HOST"; export LOCAL
   DEFAULT="subscribe-${SND}=$HOST"; export DEFAULT
-  ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"${ERR}" 2>&1
+  ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"$ERR" 2>&1
 
   EC="$?"
   if [ "$EC" -eq "0" ]; then
@@ -39,7 +39,7 @@
   fi
 # if no match, should exit 0
   ${ECHO} "___:::${LOC}@$HOST" > "${DIR}/split"
-  ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"${ERR}" 2>&1 || \
+  ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to exit 0 after failing to match"
 
   ${GREP} T"${LOC}-subscribe-${SND}=${HOST}@$HOST" "$QQENV" >/dev/null 2>&1 || \

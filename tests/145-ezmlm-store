@@ -12,7 +12,7 @@
 # message from mod, normal use -> should queue
   qqclean
   { ${ECHO} "X-num: mod1"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store "$DIR" >"${ERR}" 2>&1 < ${TMP} || \
+	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	fatal "failed to process message 1"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod1" > /dev/null || \
@@ -31,7 +31,7 @@
 # no modpost - should go directly to list
   qqclean
   { ${ECHO} "X-num: mod2"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store "$DIR" >"${ERR}" 2>&1 < ${TMP} || \
+	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	{
 	  ${GREP} -v "child" "$ERR" > /dev/null 2>&1
 	  if [ "$?" != "0" ]; then
@@ -57,7 +57,7 @@
 # from moderator. Should be queued, even with -P
   qqclean
   { ${ECHO} "X-num: mod3"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store -P "$DIR" >"${ERR}" 2>&1 < ${TMP} || \
+	${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	fatal "-P failed to accept mods post 3"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod3" > /dev/null || \
@@ -76,7 +76,7 @@
 # not from moderator, should be rejected directly with -P
   qqclean
   { ${ECHO} "X-num: mod4"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store -P "$DIR" >"${ERR}" 2>&1 < ${TMP} && \
+	${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < ${TMP} && \
 	fatal "-P failed to reject non-mod message 4"
 
   test -s "$QQMSG" && \
