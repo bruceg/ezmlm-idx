@@ -7,7 +7,7 @@
   prompt "ezmlm-store:          "
 
   SENDER="${SND}@$HOST"
-  ${EZBIN}/ezmlm-sub "${DIR}/mod" "$SENDER"
+  ${EZBIN}/ezmlm-sub "$DIR" mod "$SENDER"
 
 # message from mod, normal use -> should queue
   qqclean
@@ -71,7 +71,7 @@
 	fatal "No From: ...-accept header in mod request for mod3"
   fi
 
-  ${EZBIN}/ezmlm-unsub "${DIR}/mod" "$SENDER"
+  ${EZBIN}/ezmlm-unsub "$DIR" mod "$SENDER"
 
 # not from moderator, should be rejected directly with -P
   qqclean

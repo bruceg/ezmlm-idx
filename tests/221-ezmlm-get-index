@@ -7,7 +7,7 @@
 prompt "ezmlm-get (index):    "
 
 # blast digest recipient account with all these excerpts.
-${EZBIN}/ezmlm-sub "${DIR}/digest" "${DIG}@$HOST"
+${EZBIN}/ezmlm-sub "$DIR" digest "${DIG}@$HOST"
 
 # first ezmlm-get in the manager position:
 
@@ -39,8 +39,8 @@ msgexists && \
 
 # Make sure this address is not a subscriber
 ${EZBIN}/ezmlm-unsub "$DIR" "${SENDER}" >/dev/null 2>&1
-${EZBIN}/ezmlm-unsub "$DIR"/allow "${SENDER}" >/dev/null 2>&1
-${EZBIN}/ezmlm-unsub "$DIR"/digest "${SENDER}" >/dev/null 2>&1
+${EZBIN}/ezmlm-unsub "$DIR" allow "${SENDER}" >/dev/null 2>&1
+${EZBIN}/ezmlm-unsub "$DIR" digest "${SENDER}" >/dev/null 2>&1
 
 qqclean
 LOCAL="$LOC-index"

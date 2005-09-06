@@ -7,6 +7,7 @@
 #include "subscribe.h"
 #include "sgetopt.h"
 #include "stralloc.h"
+#include "str.h"
 #include "substdio.h"
 #include "subfd.h"
 #include "readwrite.h"
@@ -23,7 +24,8 @@ void subunsub_main(int submode,
 		   const char *version,
 		   int argc,char **argv)
 {
-  char *dir;
+  const char *dir;
+  const char *subdir = 0;
   char *addr;
   char *comment;
   char *cp;
@@ -64,18 +66,22 @@ void subunsub_main(int submode,
 
   if (forcehash == 0) forcehash = (int) u;
 
+  while (argv[optind] != 0
+	 && argv[optind][str_chr(argv[optind],'@')] == 0)
+    subdir = argv[optind++];
+
   if (argv[optind]) {
     if (flagname) {
 		/* allow repeats and last addr doesn't need comment */
       while ((addr = argv[optind++])) {
-        (void) subscribe(dir,0,addr,submode,argv[optind],manual,
+        (void) subscribe(dir,subdir,addr,submode,argv[optind],manual,
 		flagmysql,forcehash);
         if (!argv[optind++]) break;
       }
     } else {
 
       while ((addr = argv[optind++]))
-        (void) subscribe(dir,0,addr,submode,"",manual,flagmysql,
+        (void) subscribe(dir,subdir,addr,submode,"",manual,flagmysql,
 		forcehash);
     }
   } else {		/* stdin */
@@ -99,7 +105,8 @@ void subunsub_main(int submode,
 	  comment = cp + 1;
         }
       }
-      (void)subscribe(dir,0,line.s,submode,comment,manual,flagmysql,forcehash);
+      (void)subscribe(dir,subdir,line.s,submode,comment,manual,
+		      flagmysql,forcehash);
     }
   }
   closesub();
