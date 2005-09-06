@@ -10,11 +10,18 @@ ezmlm-list \- show the addresses on a mailing list
 .B \-aAmMnNvV
 ]
 .I dir
+[
+.I subdir
+]
 .SH DESCRIPTION
 .B ezmlm-list
 prints the subscriber list for the mailing list stored in
-.IR dir ,
-one address per line.
+.I dir
+(or
+.I dir/subdir
+if
+.I subdir
+is present), one address per line.
 
 .B WARNING:
 Unless you have disabled automatic subscriptions,

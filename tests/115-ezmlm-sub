@@ -16,10 +16,10 @@
   ${EZBIN}/ezmlm-list "$DIR" | ${GREP} '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
-  ${EZBIN}/ezmlm-list "${DIR}/digest" | ${GREP} '@' >/dev/null 2>&1 && \
+  ${EZBIN}/ezmlm-list "$DIR" digest | ${GREP} '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
-  ${EZBIN}/ezmlm-list "${DIR}/allow" | ${GREP} '@' >/dev/null 2>&1 && \
+  ${EZBIN}/ezmlm-list "$DIR" allow | ${GREP} '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
 # not subscriber. Test default
