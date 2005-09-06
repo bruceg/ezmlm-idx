@@ -58,7 +58,7 @@
 
   ${EZBIN}/ezmlm-manage -S "$DIR" </dev/null >"$ERR" 2>&1 || \
 	fatal "failed with -S"
-  ${EZBIN}/ezmlm-issubn "${DIR}/digest" || \
+  ${EZBIN}/ezmlm-issubn "$DIR" digest || \
 	fatal "digest-subscribe with -S failed"
   ${EZBIN}/ezmlm-unsub "${DIR}/digest" "${SND}@$HOST"
   touch "${DIR}/modsub" || \
