@@ -44,8 +44,8 @@ program exits 111, delivery is deferred. If it exits 99, the message is
 sent to the list. If it exits 0, the next line is executed. If it exits
 with any other exit code, the message is sent for moderation. Subscriber
 status per
-.IR moddir1 ,
-.IR moddir2 ,
+.IR modsubdir1 ,
+.IR modsubdir2 ,
 etc, is tested only if all the programs have been executed and the final
 exit code is 0. Thus, programs can cause moderation (100), posting (99), or
 defer the decision to the next program and ultimately to subscriber status.
