@@ -4,13 +4,13 @@
 ezmlm-gate \- Gate posts depending on message SENDER
 .SH SYNOPSIS
 .B ezmlm-gate [-0cCmMpPrRsSvVyY] [-q file]
-.I dir [moddir1] [moddir2 ...]
+.I dir [modsubdir1] [modsubdir2 ...]
 .SH DESCRIPTION
 .B ezmlm-gate
 checks if SENDER is in it least one of the subscriber lists
-with base directory
-.IR moddir1 ,
-.IR moddir2 ,
+with subdirectory
+.IR modsubdir1 ,
+.IR modsubdir2 ,
 etc.
 If it is, the message is posted via
 .B ezmlm-send 
