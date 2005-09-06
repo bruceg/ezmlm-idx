@@ -11,7 +11,9 @@ void std_makepath(stralloc *fn,
 		  char ch)
 {
   if (!stralloc_copys(fn,dir)) die_nomem();
-  if (subdir != 0 && *subdir != 0) {
+  if (subdir != 0
+      && subdir[0] != 0
+      && (subdir[0] != '.' || subdir[1] != 0)) {
     if (!stralloc_append(fn,"/")) die_nomem();
     if (!stralloc_cats(fn,subdir)) die_nomem();
   }
