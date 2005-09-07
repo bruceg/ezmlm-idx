@@ -66,8 +66,8 @@ void subunsub_main(int submode,
 
   if (forcehash == 0) forcehash = (int) u;
 
-  while (argv[optind] != 0
-	 && argv[optind][str_chr(argv[optind],'@')] == 0)
+  if (argv[optind] != 0
+      && argv[optind][str_chr(argv[optind],'@')] == 0)
     subdir = argv[optind++];
 
   if (argv[optind]) {
