@@ -4,6 +4,6 @@ set -e
 ./ezmlm-mktab -d -C list | mysql --force eztest >/dev/null 2>&1
 ./ezmlm-mktab list | mysql eztest
 
-./ezmlm-test -d eztest -p '' -h mysql
+./ezmlm-test -d eztest -p ''
 
 ./ezmlm-mktab -d -C list | mysql eztest

@@ -11,7 +11,6 @@
 static stralloc myp = {0};
 static stralloc ers = {0};
 static stralloc fn = {0};
-static stralloc table = {0};
 
 const char *parsesql(const char *dir,
 		     const char *subdir,
@@ -26,7 +25,7 @@ const char *parsesql(const char *dir,
 
   info->db = "ezmlm";
 
-  std_makepath(&fn,dir,0,"/sql",0);
+  std_makepath(&fn,dir,subdir,"/sql",0);
 
 		/* host:port:db:table:user:pw:name */
   myp.len = 0;
@@ -73,14 +72,5 @@ const char *parsesql(const char *dir,
     info->db = (char *) 0;
   if (!info->table || !*info->table)
     return ERR_NO_TABLE;
-  if (subdir != 0
-      && subdir[0] != 0
-      && (subdir[0] != '.' || subdir[1] != 0)) {
-    if (!stralloc_copys(&table,info->table)) return ERR_NOMEM;
-    if (!stralloc_append(&table,"_")) return ERR_NOMEM;
-    if (!stralloc_cats(&table,subdir)) return ERR_NOMEM;
-    if (!stralloc_0(&table)) return ERR_NOMEM;
-    info->table = table.s;
-  }
   return (char *) 0;
 }

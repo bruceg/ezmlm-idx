@@ -9,11 +9,11 @@
 # the Log test will pass due to old data once we access the mysql log,
 # rather than the file, but what the ...
   if [ $USESQL ]; then
-	${EZBIN}/ezmlm-unsub "$DIR" digest "${MAN}@$HOST" "${DIG}@$HOST" \
+	${EZBIN}/ezmlm-unsub "${DIR}/digest" "${MAN}@$HOST" "${DIG}@$HOST" \
 		>/dev/null 2>&1
-	${EZBIN}/ezmlm-unsub "$DIR" mod "${MOD}@$HOST" \
+	${EZBIN}/ezmlm-unsub "${DIR}/mod" "${MOD}@$HOST" \
 		>/dev/null 2>&1
-	${EZBIN}/ezmlm-unsub "$DIR" allow "aaa@bbb" "ccc@ddd" "eee@fff" \
+	${EZBIN}/ezmlm-unsub "${DIR}/allow" "aaa@bbb" "ccc@ddd" "eee@fff" \
 		>/dev/null 2>&1
   fi
   ${RM} -rf "$DIR" "$ERR" >/dev/null 2>&1

@@ -14,7 +14,7 @@
 
   ${EZBIN}/ezmlm-warn -d -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with digest bounce for warning"
-  ${EZBIN}/ezmlm-issubn "$DIR" digest || \
+  ${EZBIN}/ezmlm-issubn "${DIR}/digest" || \
 	fatal "script error: SENDER is not a digest subscriber"
 
   ${ECHO} "OK"

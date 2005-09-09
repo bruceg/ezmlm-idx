@@ -6,7 +6,7 @@
 
   prompt "ezmlm-make (2/2):     "
 
-  # make sure a few ezmlm-make switches work
+# make sure a few ezmlm-make switches work
   ${EZBIN}/ezmlm-make -+qkgu -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +qkgu"
   ${GREP} deny "${DIR}/editor" >/dev/null 2>&1 || \
@@ -29,17 +29,23 @@
   ${GREP} allow "${DIR}/editor" >/dev/null 2>&1 && \
 	fatal "failed to implement -U for list"
 
-  # edit the list (add moderation and remove admin)
+# edit the list (add moderation and remove admin)
   ${EZBIN}/ezmlm-make -+rsm -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +rsm"
-  # edit the list (add text file editing and list/log)
-  ${EZBIN}/ezmlm-make -+ln -C${EZBIN}/ezmlmrc "$DIR" || \
+# edit the list (add text file editing and list/log)
+${EZBIN}/ezmlm-make -+ln -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +ln"
 
-  ${TEST} -e "${DIR}/inlocal" && \
-	fatal "ezmlm-make created inlocal"
-  ${TEST} -e "${DIR}/inhost" && \
-	fatal "ezmlm-make created inhost"
+# correct bouncer for our binaries:
+###################################
+  ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/bouncer"
+  ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/digest/bouncer"
+  ${ECHO} "|/${EZBIN}/ezmlm-return -D '${DIR}'" >> "${DIR}/bouncer"
+  ${ECHO} "|/${EZBIN}/ezmlm-return -d '${DIR}'" >> "${DIR}/digest/bouncer"
+
+  # remove inlocal/inhost - shouldn't be used
+  ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
+    fatal "failed to remove inlocal/inhost for testlist"
 
   ${ECHO} "OK"
 

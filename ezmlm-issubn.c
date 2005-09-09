@@ -12,13 +12,12 @@
 
 const char FATAL[] = "ezmlm-issubn: fatal: ";
 const char USAGE[] =
-"ezmlm-issubn: usage: ezmlm-issubn [-nN] dir [subdir ...]";
+"ezmlm-issubn: usage: ezmlm-issubn [-nN] dir [dir1 ...]";
 
 void main(int argc,char **argv)
 {
-  const char *dir;
-  const char *subdir;
-  const char *addr;
+  char *dir;
+  char *addr;
   int flagsub = 0;
   int opt;
 
@@ -35,22 +34,16 @@ void main(int argc,char **argv)
 	die_usage();
     }
 
-  dir = argv[optind++];
+  dir = argv[optind];
   if (chdir(dir) == -1)
     strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
 
-  if (optind >= argc) {
+  while ((dir = argv[optind++])) {
+    if (dir[0] != '/')
+      strerr_die2x(100,FATAL,ERR_SLASH);
     if (issub(dir,0,addr)) {
       closesub();
-      _exit(flagsub);
-    }
-  }
-  else {
-    while ((subdir = argv[optind++])) {
-      if (issub(dir,subdir,addr)) {
-	closesub();
-	_exit(flagsub);
-      }
+      _exit(flagsub);		/* subscriber */
     }
   }
   closesub();

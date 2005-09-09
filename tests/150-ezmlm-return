@@ -39,7 +39,7 @@
 	fatal "failed to ignore non-digest-subscriber bounce"
   fi
   ${EZBIN}/ezmlm-unsub "$DIR" "${BNC}@$HOST"
-  ${EZBIN}/ezmlm-sub "$DIR" digest "${BNC}@$HOST"
+  ${EZBIN}/ezmlm-sub "${DIR}/digest" "${BNC}@$HOST"
   make_message | ${EZBIN}/ezmlm-return -d "$DIR" || \
     [ "$?" -eq "99" ] || \
 	fatal "failed to proc. nl digest-subscriber bounce"
