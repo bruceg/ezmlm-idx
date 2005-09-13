@@ -1,0 +1,22 @@
+#!/bin/bash
+# $Id$
+set -e
+cd `dirname $0`/../lang
+noupdates=true
+for en in en_US/*; do
+  base=${en#en_US/}
+  baserev=`sed -e '/$Id:/!d;s/^.*$Id: [^ ]* //;s/ .*$//' $en`
+  for other in */$base; do
+    if [ $other != $en ]; then
+      otherrev=`sed -e '/$Id:/!d;s/^.*$Id: [^ ]* //;s/ .*$//' $other`
+      if [ $baserev -gt $otherrev ]; then
+        echo "$other needs updating."
+	noupdates=false
+      fi
+    fi
+  done
+done
+
+if $noupdates; then
+  echo "No language files appear out of date."
+fi
