@@ -1,0 +1,33 @@
+# $Id$
+Para confirmar que você deseja que
+
+!A
+
+seja removido da lista <#l#>, por favor envie uma resposta vazia
+para este endereço:
+
+!R
+
+Na prática, você estará enviado para este endereço quando pressionar o
+botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
+o endereço e cole-o para o campo "To:" de uma nova mensagem.
+</#x/>
+
+ou clique aqui:
+	mailto:<#R#>
+</#/>
+
+Eu não verifiquei se o seu endereço está atualmente na lista.
+Para ver qual endereço você usou ao se subscrever, olhe as mensagens
+que você está recebendo da lista. Cada mensagem tem seu endereço 
+oculto dentro do caminho de retorno; por exemplo, mary@example.com 
+recebe mensagens com caminho de retorno:
+<<#l#>-return-<number>-mary=example.com@<#H#>.
+
+</#q/>
+Alguns programas de correio eletrônico não conseguem manipular endereços
+muito longos. Se você não está conseguindo responder esta requisição por
+causa disto, envie uma mensagem para <<#L#>-request@<#H#>> 
+e coloque o endereço inteiro listado abaixo na linha "Subject:" ou
+"Assunto:".
+

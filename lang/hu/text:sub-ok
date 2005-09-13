@@ -1,0 +1,17 @@
+# $Id$
+Elismerve: a(z)
+
+!A
+
+cimet hozzaadtam a(z) <#l#> lista tagjai koze.
+
+Udvozollek a(z) <#l#>@<#H#> listan!
+
+Kerlek, mentsd el ezt a levelet, hogy tudd, melyik cimrol iratkoztal
+fel, ha kesobb le szeretnel iratkozni, vagy a cimedet szeretned
+megvaltoztatni.
+
+Leiratkozashoz irj egy levelet az alabbi cimre:
+
+    <<#l#>-unsubscribe-<#t#>@<#H#>>
+

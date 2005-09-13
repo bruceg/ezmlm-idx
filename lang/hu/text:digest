@@ -1,0 +1,11 @@
+# $Id$
+</#d/>
+A digest-re feliratkozashoz e-mailezz a kovetkezo cimre:
+	<<#L#>-digest-subscribe@<#H#>>
+
+Leiratkozni a digest-re szinten ures levellel lehet a kovetkezo cimen:
+	<<#L#>-digest-unsubscribe@<#H#>>
+
+A listara irni ezen az email cimen lehet:
+	<<#L#>@<#H#>>
+

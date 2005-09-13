@@ -1,0 +1,175 @@
+# $Id$
+Dziêkujê za zgodê na zostanie moderatorem listy o adresie:
+<#L#>@<#H#>.
+
+Moje komendy s± nieco inne, ni¿ bywaj± w programach obs³uguj±cych
+pocztowe listy dyskusyjne. Mo¿esz nawet na pocz±tku stwierdziæ, ¿e s±
+niezwyk³e, ale jak tylko zaczniesz ich u¿ywaæ, docenisz prostotê systemu
+oraz szybko¶æ, z jak± obs³ugujê twoje ¿yczenia.
+
+Poni¿ej kilka s³ów o tym, jak dzia³a moderowanie: 
+
+Zdalne wpisanie na listê prenumeratorów
+---------------------------------------
+Bêd±c moderatorem, mo¿esz zapisaæ lub wypisaæ internautê
+o adresie janek@example.com poprzez wys³anie listu na adres:
+
+<#L#>-subscribe-janek=example.com@<#H#>
+<#L#>-unsubscribe-janek=example.com@<#H#>
+
+</#g/>
+Odpowiednio dla przegl±du listy:
+
+<#L#>-digest-subscribe-janek=example.com@<#H#>
+<#L#>-digest-unsubscribe-janek=example.com@<#H#>
+
+</#/>
+To wszystko. Nie musisz nadawaæ listowi tytu³u, nie musisz
+równie¿ pisaæ nic w jego tre¶ci!
+
+</#r/>
+Wy¶lê Ci pro¶bê o potwierdzenie 
+Co zrobiæ z moim listem?
+Po prostu odpowiedz na niego i gotowe.
+</#R/>
+Wy¶lê pro¶bê o potwierdzenie chêci uczestnictwa na adres
+autora listu.
+Wystarczy, ze na te pro¶be odpowie, a bedzie zapisany.
+</#/>
+
+Zawiadomiê subskrybenta, je¿eli jego/jej dane dotyczace
+jego subskrybcji zostan± zmienione.
+
+Prenumerata
+-----------
+
+Ka¿dy mo¿e zapisaæ siê na listê, albo z niej wypisaæ, poprzez
+wys³anie listu na adres:
+
+<#L#>-subscribe@<#H#>
+<#L#>-unsubscribe@<#H#>
+
+</#g/>
+Obs³uga przegl±du listy:
+
+<#L#>-digest-subscribe@<#H#>
+<#L#>-digest-unsubscribe@<#H#>
+
+Chêtny otrzyma pro¶be o potwierdzenie ¿yczenia wypisania siê z listy,
+aby siê upewniæ czy ¿yczenie to zosta³o rzeczywiscie przez niego
+wys³ane. Je¿eli zostanie to potwierdzone, zostanie usuniêty 
+z listy prenumeratorów.
+Podobna procedura obowi±zuje podczas zapisywania siê na listê.
+
+</#s/>
+Podczas procedury zapisywania siê na listê, pro¶ba
+o potwierdzenie zapisu jest wysy³ana równie¿ do moderatora listy.
+Pozytywna odpowied¼ moderatora dope³ni zapisu na listê.
+</#S/>
+Zapisy funkcjonuj± w ten sam sposób.
+</#/>
+
+U¿ytkownik mo¿e równie¿ u¿ywaæ adresów:
+
+<#L#>-subscribe-janek=example.com@<#H#>
+<#L#>-unsubscribe-janek=example.com@<#H#>
+
+aby poczta z listy wêdrowa³a na inny adres bed±cy jego w³asno¶ci±.
+Tylko wówczas, kiedy u¿ytkownik dostaje listy na adres
+janek@example.com, bêdzie w stanie odpowiedzieæ
+na ¿yczenie potwierdzenia skierowanego od menad¿era listy.
+
+Wszystkie powy¿sze kroki s± przedsiêbrane po to, by unikaæ
+z³o¶liwo¶ci typu zapisanie kogo¶ wbrew jego woli na listê
+oraz aby moderator móg³ byæ pewnym, ¿e adres prenumeratora
+rzeczywi¶cie istnieje.
+
+Twój rzeczywisty adres pocztowy nie bêdzie ujawniony prenumaratorowi.
+Pozwoli to zachowaæ Ci anonimowo¶æ.
+
+</#rl/>
+Aby uzyskaæ listê prenumeratorów <#L#>@<#H#>, 
+wy¶lij list na adres:
+   <<#L#>-list@<#H#>>
+
+Chc±c uzyskaæ dziennik pok³adowy listy <#L#>@<#H#>,
+wy¶lij list na adres:
+   <<#L#>-list@<#H#>>
+
+</#rld/>
+Adresy w³a¶ciwe dla przegl±du listy:
+   <<#L#>-digest-list@<#H#>>
+i:
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+Mo¿esz zdalnie zmieniaæ pliki tekstowe, którymi pos³uguje siê automat
+podczas obs³ugi listy dyskusyjnej. Aby uzyskaæ zbiór plików oraz
+instrukcje, jak je zmieniaæ, napisz pod adres:
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Przesy³ki moderowane
+--------------------
+Je¿eli przesy³ki podlegaj± moderowaniu, umieszczam wys³ane listy
+w kolejce pocztowej i wysy³am ¿yczenie przyjrzenia sie listowi do
+moderatora.
+
+Wystarczy, aby¶ odpowiedzia³ na adres zwrotny tego listu, u¿ywaj±c
+funkcji "odpowiedz (reply)", aby zaakceptowaæ tre¶æ listu. 
+
+Je¿eli natomiast chcesz odmówiæ zgody na wys³anie listu, wy¶lij
+pocztê na adres wziêty z nag³ówka "From:" (mo¿na zwykle tego
+dokonaæ poprzez u¿ycie opcji "reply-to-all/odpowiedz-na-wszystkie-
+-adresy" i skasowanie z tej listy w³asnego adresu oraz adresu 
+akceptuj±cego). Mo¿esz równie¿ dodaæ jak±¶ notkê do wysy³aj±cego
+odrzucony przez Ciebie list, aby wyt³umaczyæ mu, dlaczego to
+uczyni³e¶. Notkê dodajesz umieszczaj±c j± w tre¶ci powy¿szego listu
+odrzucaj±cego, wstawiaj±c j± pomiêdzy dwie linie, zawieraj±ce
+trzy znaki '%'.
+
+Wezmê pod uwagê pierwszy list, który od Ciebie dostanê.
+Je¿eli wy¶lesz najpierw potwierdzenie akceptacji listu, który
+wcze¶niej odrzuci³e¶, lub odwrotnie, oczywi¶cie Ci o tym powiem.
+
+Je¿eli nie dostanê odpowiedzi od moderatora przez okre¶lony czas,
+zwykle jest to piêæ dni, zwrócê list nadawcy z opisem zaistnia³ej
+sytuacji.
+</#/>
+
+Wakacje
+-------
+Je¿eli korzystasz tymczasowo z innego adresu, po prostu przekieruj
+wszystkie listy z nag³ówkiem 'Mailing-List:',
+albo te, których tematy zaczynaj± siê s³owami
+"MODERATE for <#L#>@<#H#>",
+lub
+"CONFIRM subscribe to <#L#>@<#H#>",
+na nowy adres.
+Mo¿esz wtedy moderowaæ z nowego adresu. Innym sposobem jest
+przekierowanie tych listów do przyjaciela, który mo¿e Ciê zast±piæ.
+Musisz oczywi¶cie uzgodniæ przedtem wszystko z opiekunem listy.
+
+Je¿eli chcesz automatycznie aprobowaæ wszelkie przesy³ki kierowane
+na listê, skonfiguruj swój program pocztowy tak, aby automatycznie
+odpowiada³ na listy maj±ce tematy zgodne z powy¿szymi kryteriami.
+
+</#r/>
+Uwa¿aj, je¿eli bêdziesz próbowa³ zdalnie zarz±dzaæ list± z adresu,
+który nie jest wpisany jako adres administratora, prenumerator,
+a nie Ty, zostanie poproszony o potwierdzenie, które zostanie
+potem przekazane do moderatorów.
+Robiê tak, gdy¿ nie ma sposobu upewniæ siê czy to rzeczywi¶cie Ty
+kryjesz siê za poczt± przychodz±c± z nieznanego adresu.
+
+Pamiêtaj, ¿e w powy¿szym wypadku Twoje ¿ycznie skierowane do serwera
+i równie¿ Twój adres s± przesy³ane do prenumeratora! Przestajesz byæ
+wówczas anonimowy.
+</#/>
+
+Powodzenia!
+
+PS: Skontaktuj siê, proszê, z opiekunem listy pod adresem
+<#L#>-owner@<#H#>
+je¿eli masz jakie¶ pytania, lub napotkasz na problemy.
+

@@ -1,0 +1,41 @@
+# $Id$
+Ez egy altalanos segitseg. A level, amit megkaptam, nem a parancs
+cimeim egyikere erkezett.
+
+A tamogatott parancscimek:
+
+Az informacio es FAQ (gyakran ismetelt kerdesek):
+   <<#L#>-info@<#H#>>
+   <<#L#>-faq@<#H#>>
+
+</#d/>
+Hasonlo cimek leteznek a digest listahoz:
+   <<#L#>-digest-subscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+</#a/>
+A 123-tol 145-ig szamozott levelek letoltesehez (maximum 100 level
+keresenkent) ide irj:
+   <<#L#>-get.123_145@<#H#>>
+
+A 123-tol 145-ig szamozott levelek indexehez (targy es szerzo) ide irj:
+   <<#L#>-index.123_456@<#H#>>
+
+A 12345-os level targyaval megegyezo, osszes level letoltesehez
+az ures levelet ide ird:
+   <<#L#>-thread.12345@<#H#>>
+
+</#/>
+A leveleknek valojaban nem szukseges uresnek lenniuk, de a tartalmuk
+kozombos. Csak a cim fontos, ahonnan irsz.
+
+Ha mas cimrol szeretnel feliratkozni (pl. "john.doe@nagyon.messzi,hu"),
+akkor ird hozza az eredeti cimhez egy kotojellel ugy, hogy a cimedben
+levo "@" jelet csereld "=" jelre!  Ezutan a feliratkozas cime ez lesz:
+    <<#L#>-subscribe-john.doe=nagyon.messzi.hu@<#H#>>
+
+Errol a cimrol leiratkozni pedig igy lehet:
+
+To stop subscription for this address, mail:
+    <<#L#>-unsubscribe-john.doe=nagyon.messzi.hu@<#H#>>
+

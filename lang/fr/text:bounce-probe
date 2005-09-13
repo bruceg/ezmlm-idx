@@ -1,0 +1,16 @@
+# $Id$
+
+Des messages vous etant adresses en tant qu'abonne a la liste de diffusion
+<#l#> n'ont pas pu atteindre votre compte E-Mail. J'ai tente de vous en
+informer, mais ce message d'information n'a lui aussi pas pu atteindre sa
+cible.
+Voici une copie du message de retour a l'expediteur.
+
+Ceci est en realite un test pour determiner s'il est possible de vous
+contacter a l'adresse de votre inscription. Si ce dernier essai ne s'avere
+pas concluant, je serais contraint de retirer votre adresse de la liste
+<#l#>@<#H#> sans autre avertissement.
+
+Il vous sera toujours possible de vous re-inscrire a l'adresse :
+   <<#l#>-subscribe@<#H#>>
+

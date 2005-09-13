@@ -1,0 +1,39 @@
+# $Id$
+Mi dispiace, ma non sono in grado di soddisfare la tua richiesta,
+visto che l'indirizzo
+
+!A
+
+non è nella mailing list <#l#> quando ho ricevuto la tua
+richiesta e non è iscritto a questa mailing list.
+
+Se ti sei cancellato, ma continui a ricevere i messaggi, allora ti sei
+iscritto con un altro indirizzo diverso da quello che usi al momento. per
+favore cerca nell'intestazione:
+
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+
+Ciò indica che l'indirizzo usato per l'iscrizione è``user@example.com''.
+L'indirizzo per cancellarsi per questo utente sarà:
+'<#l#>-unsubscribe-utente=example.cominnio@<#H#>'.
+Basta scrivere a questo indirizzo, sostituendo ai valori utente=example.cominio
+quelli corretti.
+
+Se il messaggio ha un'intestazione con ``List-Unsubscribe:'' puoi
+spedire un messaggio all'indirizzo in quell'intestazione. Esso
+contiene l'indirizzo di iscrizione già codificato al suo interno.
+
+Per alcuni programmi di posta devi rendere le intestazioni visibili per
+leggere il percorso di ritorno:
+
+Con Eudora 4.0, clicca sul bottone "Blah blah ..." .
+Con PMMail, clicca su "Finestra->Mostra l'intero messaggio/intestazione". 
+
+Se tutto ciò ancora non funziona, mi dispiace dirti che non posso aiutarti.
+Per favore INOLTRA un messaggio della lista con una nota nella quale spieghi
+cosa stai cercando di ottenere insieme a un elenco di indirizzi dai quali ti
+potresti essere iscritto al mio responsabile: 
+    <#l#>-owner@<#H#>
+
+che se ne occuperà lui. Il mio responsabile è un po' più lento di quello che
+sono io, così per favore sii paziente.

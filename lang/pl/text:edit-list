@@ -1,0 +1,40 @@
+# $Id$
+</#n/>
+Pliki <#L#>-edit.nazwa_pliku mog± byæ stosowane przez zdalnego
+administratora do edycji tekstów zarz±dczych listy dyskusyjnej.
+
+Tabela pod spodem jest list± plików wraz z krótkim opisem
+ich dzia³ania. Aby zamieniæ okre¶lony plik, po prostu wy¶lij
+pusty list na adres <#L#>-edit.nazwa_pliku@<#H#> ,
+zamieniaj±c wyra¿enie 'nazwa_pliku' nazw± zamienianego pliku.
+Instrukcja sposobu zamiany pliku zostanie dostarczona wraz ze
+starym plikiem poczt± zwrotn±.
+
+File                Use
+
+bottom              spód ka¿dej odpowiedzi administracyjnej. G³ówne komendy.
+digest              administracyjna czê¶æ przegl±du listy.
+faq                 najczê¶ciej zadawane pytania na naszej li¶cie.
+get_bad             tekst w miejsce listu nie znalezionego w archiwum.
+help                g³ówna tre¶æ pomocy.
+info                informacje o naszej li¶cie.
+mod_help            pomoc dla moderatorów list.
+mod_reject          list przesy³any nadawcy przesy³ki nie zaakceptowanej.
+mod_request         tekst przesy³any razem z pro¶b± moderowania.
+mod_sub             tekst przesy³any prenumeratorowi po zaakceptowaniu.
+mod_sub_confirm     tekst do moderatora z pro¶b± o wpisanie na listê.
+mod_timeout         do nadawcy przterminowanego listu.
+mod_unsub_confirm   do zdalnego opiekuna z pro¶b± o potwierdzenie wypisu.
+sub_bad             do prenumaratora, je¿eli potwierdzenie by³o z³e.
+sub_confirm         do prenumeratora z pro¶b± dokonania potwierdzenia.
+sub_nop             tre¶æ listu powitalnego dla ponownie subskrybuj±cego.
+sub_ok              tre¶æ listu powitalnego dla nowozapisanego.
+top                 pocz±tek ka¿dego listu, ostro¿nie!
+</#tn/>
+trailer             tekst dodawany do ka¿dego listu, ostro¿nie!
+</#n/>
+unsub_bad           do prenumeratora, je¶li jego potwierdzenie jest z³e.
+unsub_confirm       tre¶æ potwierdzenia po ¿yczeniu wypisania siê z listy.
+unsub_nop           do osoby nie bêd±cej prenumeratorem, wypisuj±cej siê.
+unsub_ok            list po¿egnalny do rezygnuj±cego z prenumeraty.
+

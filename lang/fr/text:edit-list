@@ -1,0 +1,42 @@
+# $Id$
+</#n/>
+
+La commande <#L#>-edit.file peut etre utilisee par un administrateur
+distant pour editer les fichiers de textes a la base des reponses de la
+liste <#L#>@<#H#>.
+
+Ci-dessous, une liste des fichiers contenant les textes de reponses
+et une breve description de l'utilisation de leur contenu. Pour editer un
+fichier, envoyez simplement un message a <#L#>-edit.fichier@<#H#>,
+en substituant le nom du fichier a 'fichier'. Les instructions d'edition
+seront envoyees avec le fichier de texte.
+
+Fichier             Utilisation
+
+bottom              pied de page de toutes les reponses: infos generales.
+digest              section 'administrative' des bulletins periodiques.
+faq                 reponses aux questions frequentes au sujet de cette liste.
+get_bad             dans le cas de messages absents des archives.
+help                aide generale (entre 'top' et 'bottom').
+info                informations sur la liste. La premiere ligne en est un resume.
+mod_help            aide specifique aux moderateurs de liste.
+mod_reject          a l'expediteur d'envois refuses.
+mod_request         aux moderateurs avec un envoi.
+mod_sub             a l'abonne apres confirmation d'inscription du moderateur.
+mod_sub_confirm     aux moderateurs pour valider une inscription.
+mod_timeout         a l'expediteur d'un message non valide depuis longtemps.
+mod_unsub_confirm   a un administrateur pour demander une desinscription.
+post-confirm        a l'expediteur pour valider l'envois.
+sub_bad             a l'abonne si la confirmation etait mauvaise.
+sub_confirm         a l'abonne pour confirmer sa requete.
+sub_nop             a l'abonne apres une nouvelle inscription.
+sub_ok              a l'abonne apres un abonnement reussi.
+top                 en-tete de chaque reponse.
+</#tn/>
+trailer             ajoute a la fin de chaque contribution a la liste.
+</#n/>
+unsub_bad           a l'abonne si la confirmation de desinscription est fausse.
+unsub_confirm       a l'abonne pour demander confirmation de desinscription.
+unsub_nop           a un non-abonne apres une demande de desabonnement.
+unsub_ok            a un ex-abonne apres une desinscription reussie.
+

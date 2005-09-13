@@ -1,0 +1,25 @@
+# $Id$
+
+Ich habe mir gemerkt, welche Nachrichten der Mailingliste
+   <<#L#>@<#H#>>
+nicht an Sie zugestellt werden konnten.
+</#a/>
+Eventuell befinden sich noch Kopien dieser Nachrichten
+im Archiv.
+
+Um beispielsweise eine Kopie der Nachricht 123
+anzufordern, schicken Sie eine Nachricht an
+   <#L#>-get.123@<#H#>
+
+Um die Nachrichten 123 bis 145 (maximal einhundert Nachrichten pro
+Anforderung) zu bekommen, benutzen Sie die folgende Adresse:
+   <#L#>-get.123_145@<#H#>
+
+Um eine Liste (Verfasser und Betreff) der letzen einhundert
+Nachrichten zu bekommen, schicken Sie eine leere Mail an die
+folgende Adresse:
+   <#L#>-index@<#H#>
+
+</#/>
+Hier die Nummern der Nachrichten:
+

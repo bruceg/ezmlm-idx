@@ -1,0 +1,204 @@
+# $Id$
+Gracias por acceder a moderar la lista <#L#>@<#H#>.
+
+Mis comandos son algo distintos a los de otras listas de correo,
+pero creo que los encontrará intuitivos y fáciles de utilizar.
+
+Estas son algunas instrucciones para las tareas que debe realizar
+como propietario y/o moderador de una lista de correo.
+
+Al final del mensaje se incluyen algunas instrucciones generales
+para la lista.
+
+Suscripción remota
+-------------------
+
+Como moderador, puede añadir o quitar cualquier dirección de la
+lista. Para suscribir "david@example.com", basta con poner
+un guión después del comando, y después su dirección con '=' en
+lugar de '@'. Por ejemplo, para suscribir esa dirección, mande
+correo a:
+
+   <<#L#>-subscribe-john=example.com@<#H#>>
+
+De la misma manera puede eliminar la dirección de la lista
+mandando un mensaje a:
+
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
+
+</#d/>
+Para suscribirse o darse de baja de la lista de resúmenes:
+
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+
+</#/>
+
+Eso es todo. No es necesario poner "Asunto" o cuerpo principal en
+el mensaje.
+
+</#r/>
+
+Le mandaré una petición de confirmación, para asegurarme que
+usted me envió la petición. Simplemente responda al mensaje, y se
+cursará su petición. </#RE/> Mandaré una petición de confirmación
+a la dirección del usuario, en este caso a
+<david@example.com>. El usuario simplemente debe responder
+a este mensaje de confirmación. </#E/>
+
+Las confirmaciones son necesarias para impedir, en la medida de
+lo posible, que un tercero añada o quite una dirección de la
+lista.
+
+Notificaré al usuario cualquier cambio en el estado de su
+suscripción.
+
+Suscripción
+------------
+
+Cualquier usuario puede suscribirse o darse de baja mandando un
+correo a:
+
+   <#L#>-subscribe@<#H#>
+   <#L#>-unsubscribe@<#H#>
+
+</#d/>
+Para la lista de resúmenes:
+
+   <#L#>-digest-subscribe@<#H#>
+   <#L#>-digest-unsubscribe@<#H#>
+
+</#/>
+
+El usuario recibirá una petición de confirmación para asegurarse
+que él/ella posee la dirección de suscripción. Una vez
+verificada, se procederá a dar de baja al usuario.
+
+</#s/>
+
+Como esta lista está moderada para suscripciones, mandaré una
+segunda petición de confirmación al moderador. Como el usuario ya
+ha confirmado su deseo de estar en la lista, usted, como
+moderador, puede estar seguro de que la dirección del suscriptor
+es real. Si quiere aprobar la petición del usuario, simplemente
+responda a mi mensaje de confirmación. En caso contrario, puede
+simplemente borrar mi mensaje o contactar con el suscriptor para
+pedir más información.
+
+</#S/>
+Las suscripciones funcionan del mismo modo.
+</#/>
+
+El usuario también puede utilizar:
+
+   <<#L#>-subscribe-maria=example.com@<#H#>>
+   <<#L#>-unsubscribe-maria=example.com@<#H#>>
+
+para que le manden correo a: "maria@example.com". Solo si
+ella recibe correo en esta dirección, podrá recibir la petición
+de confirmación y mandar una contestación.
+
+Su dirección e identidad no serán reveladas al suscriptor, a no
+ser que le mande correo directamente al usuario.
+
+</#rl/>
+
+Para conseguir una lista de suscriptores para <#L#>@<#H#> envíe
+un mensaje a:
+
+   <<#L#>-list@<#H#>>
+
+Para conseguir un log de la lista de transacciones para
+<#L#>@<#H#> mande un mensaje a:
+
+   <<#L#>-log@<#H#>>
+
+</#rld/>
+Para suscriptores al resumen:
+
+   <<#L#>-digest-list@<#H#>>
+
+y:
+
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+
+Usted puede modificar remotamente los ficheros de texto que
+componen las respuestas mandadas por la lista. Para conseguir una
+lista de ficheros e instrucciones de edición, escriba a:
+
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Mensajes moderados.
+-------------------
+
+Cuando los mensajes están moderados, guardaré el mensaje enviado
+y le mandaré una copia junto con instrucciones. El mensaje para
+usted llevará "MODERATE for ..." como "Asunto".
+
+Para aceptar el mensaje, simplemente responda a la dirección que
+figura en el campo 'Responder a:' , que ya he configurado con la
+dirección correcta de aceptación. No necesita incluir el mensaje
+en sí. De hecho, ignoraré el contenido siempre y cuando la
+dirección a la que escriba sea correcta.
+
+Si quiere rechazar el mensaje, mande un correo a la dirección
+'De:', que ya he configurado con la dirección correcta de
+"rechazo". Eso normalmente se hace con 'Responder a todos', y
+borrando después todas las direcciones salvo la dirección
+"rechazada". Puede añadir un comentario al remitente insertando
+dicho comentario entre dos líneas que empiecen con tres '%'. Solo
+mandaré este comentario al remitente con el mensaje rechazado.
+Una vez más, no revelaré su identidad.
+
+Procesaré el mensaje en función de la primera respuesta que
+recibo. Le avisaré si me manda una petición para aceptar un
+mensaje que, Previamente, había sido rechazado o viceversa.
+
+Si no recibo respuestas del moderador dentro de un cierto periodo
+de tiempo (normalmente 5 días), devolveré el mensaje al remitente
+con una explicación de lo que ha pasado. Su administrador también
+puede configurar la lista para que estos mensajes "ignorados"
+simplemente sean borrados sin notificación, en lugar de ser
+devueltos al remitente.
+
+</#/>
+
+Vacaciones
+----------
+
+Si está temporalmente en otra dirección, simplemente reenvíe
+todos los mensajes que tienen el encabezamiento 'Mailing-List:'
+(o todos los que tienen "Asunto" empezando con 'MODERATE for
+<#L#>@<#H#>' o con 'CONFIRM subscribe to <#L#>@<#H#>') a la nueva
+dirección. Así podrá leer la lista desde la nueva dirección. Como
+alternativa, puede reenviar los mensajes a un amigo para que él o
+ella los lea en su lugar. Por favor, antes de hacerlo consiga el
+permiso del propietario de la lista.
+
+Si desea aprobar automáticamente todas las peticiones mientras
+esté fuera, configure su programa de correo para responder
+automáticamente a mensajes que tienen un "Asunto" que reúna los
+criterios anteriormente expuestos.
+
+</#r/>
+
+Si intenta administrar la lista remotamente, desde una dirección
+que no es la suya, el suscriptor cuya dirección está utilizando,
+y no usted, recibirá la petición de confirmación. Entonces, se
+mandará una petición de confirmación a todos los moderadores.
+Hago esto porque no tengo manera de saber que usted realmente ha
+mandado la petición original.
+
+En este caso, ¡Recuerde que se manda su petición original (y su
+dirección) al suscriptor!
+
+</#/>
+
+¡Buena suerte!
+
+PD: Por favor, póngase en contacto con el propietario de la lista
+(<#L#>-owner@<#H#>) si tiene preguntas o problemas.
+

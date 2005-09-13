@@ -1,0 +1,23 @@
+# $Id$
+</#d/>
+digest の購読を希望する場合は、空の message を
+
+        <<#L#>-digest-subscribe@<#H#>>
+        (To subscribe to the digest)
+
+宛に送って下さい。
+
+digest の購読をやめる場合は、空の message を
+
+        <<#L#>-digest-unsubscribe@<#H#>>
+        (To unsubscribe from the digest)
+
+宛に送って下さい。
+
+mailing list <#L#> への post は
+
+        <<#L#>@<#H#>>
+        (To post to the list)
+
+宛にお願いします。
+

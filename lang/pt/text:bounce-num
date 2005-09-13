@@ -1,0 +1,22 @@
+# $Id$
+
+Eu mantenho um controle das mensagens da lista <#L> que não
+foram entregues para o seu endereço.
+</#a/>
+Cópias destas mensagens podem estar no arquivo.
+</#aI/>
+Para pegar a mensagem 12345 do arquivo, envie uma mensagem vazia para
+  <<#L#>-get.12345@<#H#>>
+
+</#ia/>
+Para recuperar uma lista de assuntos e autores das últimas 100
+mensagens, envie uma mensagem vazia para:
+   <<#L#>-index@<#H#>>
+
+Para recuperar as mensagens 123 a 145 (no máximo 100 por requisição),
+envie uma mensagem vazia para:
+   <<#L#>-get.123_145@<#H#>>
+
+</#/>
+Aqui estão os números das mensagens:
+

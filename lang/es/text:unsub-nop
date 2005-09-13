@@ -1,0 +1,40 @@
+# $Id$
+Lo siento, no he podido cursar su petición porque la dirección
+
+!A
+
+no estaba en la lista de correo <#l#> cuando recibí su petición y
+no es suscriptor de esta lista.
+
+Si se da de baja, pero sigue recibiendo correo, es que está
+suscrito con una dirección distinta a la que usa actualmente. Por
+favor, busque en las cabeceras el texto:
+
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+
+La dirección para dar de baja a este usuario sería:
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
+
+Simplemente escriba a esa dirección, tras modificarla con la
+verdadera dirección de suscripción.
+
+Si el mensaje tiene una cabecera ``List-Unsubscribe:'' puede
+usted mandar un mensaje a la dirección de esa cabecera. La
+cabecera ya contiene la petición de suscripción.
+
+En algunos programas de correo, necesitará hacer visibles los
+encabezamientos para ver el campo de retorno:
+
+Con Eudora 4.0, haga clic en el botón "Blah blah ...". Con
+PMMail, haga clic en "Window->Show entire message/header".
+
+Si esto tampoco da resultado, siento decirle que no le puedo
+ayudar. Por favor, reenvíe el mensaje junto con una nota sobre lo
+que está intentando hacer y una lista de direcciones bajo las
+cuales puede estar suscrito, a mi propietario:
+
+    <#l#>-owner@<#H#>
+
+que se ocupará de todo. Mi propietario es un poco más lento que
+yo; por favor, tenga paciencia.
+

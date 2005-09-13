@@ -1,0 +1,40 @@
+# $Id$
+
+--- Comandi di gestione per la mailing list <#l#>  ---
+
+Posso elaborare comandi di gestione autonomamente. Per 
+favore non inviarli direttamente all'indirizzo della lista!
+Invece spedisci il tuo messaggio al giusto indirizzo per i comandi:
+
+Per ricevere aiuto e una descrizione dei comandi, scrivi a:
+   <<#L#>-help@<#H#>>
+
+Per iscriversi alla lista, spedisci un messaggio a:
+   <<#L#>-subscribe@<#H#>>
+
+Per cancellare il tuo indirizzo dalla lista, ti basta scrivere 
+all'indirizzo presente nell'intestazione ``List-Unsubscribe'' di
+qualsiasi messaggio della lista. Se non hai cambiato indirizzo da
+quando ti sei iscritto, puoi anche mandare un messaggio a:
+    <<#L#>-unsubscribe@<#H#>>
+
+</#d/>
+o per le raccolte a:
+   <<#L#>-unsubscribe@<#H#>>
+
+</#/>
+
+Per l'aggiunta o la rimozione degli indirizzi di email, ti spedirò
+una conferma. Quando la riceverai, ti basta semplicemente rispondere
+per completare l'operazione.
+
+Se desideri contattare il responsabile in carne ed ossa di questa
+lista perfavore spedisci un messaggio a:
+
+    <<#L#>-owner@<#H#>>
+
+Perfavore inccludi un messaggio della lista con tutte le intestazioni
+complete per farti aiutare più facilmente.
+
+--- Allego una copia della richiesta che ho ricevuto.
+

@@ -1,0 +1,10 @@
+# $Id$
+
+<#L#> listen har haft svigtende held med at aflevere breve til dig.
+Jeg har sendt dig en advarsel, men den kom retur. Fejlmeddelse vedlagt.
+
+Dette er en test for at se om post kan afleveres til dig. Hvis
+det ikke lykkes, bliver du automatisk fjernet fra <#L#>listen.
+Du kan melde dig til igen ved at sende et tomt brev til:
+   <<#l#>-subscribe@<#H#>>
+

@@ -1,0 +1,12 @@
+# $Id$
+</#d/>
+Du kan abonnere på listeudtræk ved at sende et tomt brev til:
+	<#L#>-digest-subscribe@<#H#>
+
+Du kan ophæve listeudtræk abonnementet ved at sende et tomt
+brev til:
+	<#L#>-digest-unsubscribe@<#H#>
+
+Du kan sende et brev ud til alle liste modtagerne ved at skrive til:
+	<#L#>@<#H#>
+

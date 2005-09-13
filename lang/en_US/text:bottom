@@ -1,0 +1,40 @@
+# $Id$
+
+--- Administrative commands for the <#l#> list ---
+
+I can handle administrative requests automatically. Please
+do not send them to the list address! Instead, send
+your message to the correct command address:
+
+For help and a description of available commands, send a message to:
+   <<#L#>-help@<#H#>>
+
+To subscribe to the list, send a message to:
+   <<#L#>-subscribe@<#H#>>
+
+To remove your address from the list, just send a message to
+the address in the ``List-Unsubscribe'' header of any list
+message. If you haven't changed addresses since subscribing,
+you can also send a message to:
+   <<#L#>-unsubscribe@<#H#>>
+
+</#d/>
+or for the digest to:
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+</#HJ/>
+For addition or removal of addresses, I'll send a confirmation
+message to that address. When you receive it, simply reply to it
+to complete the transaction.
+
+</#/>
+If you need to get in touch with the human owner of this list,
+please send a message to:
+
+    <<#L#>-owner@<#H#>>
+
+Please include a FORWARDED list message with ALL HEADERS intact
+to make it easier to help you.
+
+--- Enclosed is a copy of the request I received.
+

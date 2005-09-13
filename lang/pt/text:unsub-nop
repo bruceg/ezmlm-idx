@@ -1,0 +1,35 @@
+# $Id$
+Confirmação: o endereço
+
+!A
+
+não está na lista <#l#>. Ele não foi encontrado quando
+o seu pedido foi recebido.
+
+Se você cancelou a subscrição, mas continua recebendo mensagens,
+você está incluído com um endereço diferente do que está usando 
+agora. Por favor, olhe o cabeçalho da mensagem, procurando por:
+
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+
+O endereço de cancelamento para este endereço deve ser:
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
+Basta enviar uma mensagem para este endereço, substituindo
+user=example.com pelos valores corretos, responda ao pedido de confirmação
+e você deverá receber um aviso que está fora da lista.
+
+Para alguns programas de correio, você precisará tornar os cabeçalhos
+visíveis para ver o caminho de retorno (return-path):
+
+Para o Eudora 4.0, clique no botão "Blah blah ...".
+Para o PMMail, clique em "Window->Show entire message/header". 
+
+Se isto ainda não funcionar, eu sinto muito em dizer que eu não posso
+ajudar você. Por favor, REPASSE uma mensagem da lista junto com uma
+observação sobre o que você está tentando fazer para o meu dono:
+
+    <#l#>-owner@<#H#>
+
+que cuidará disto. Meu dono é um pouco mais lento do que eu,
+por favor tenha paciência.
+

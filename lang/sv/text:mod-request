@@ -1,0 +1,42 @@
+# $Id$
+Det bifogade meddelandet skickades till <#L#>@<#H#> listan.
+Ifall du vill godkänna den för vidare distribution skicka e-mail till:
+
+!A
+
+Vanligtvis händer detta automatiskt om du trycker på "svara" (reply)
+knappen. Du kan kontrollera adressen att den börjar med:
+"<#L#>-accept". Ifall det inte fungerar, kopiera adressen och
+klistra in den i "Till" ("To:") fältet i ett nytt brev.
+</#x/>
+
+Alternativt, tryck här:
+	<mailto:<#A#>>
+</#/>
+
+Föra att skicka tillbaka brevet till avsändaren, skicka ett
+meddelande till:
+
+!R
+
+Vanligtvis är det enklare att trycka på "svara alla" ("reply-to-all")
+knappen och ta bort alla adresser som inte börjar med:
+"<#L#>-reject".
+</#x/>
+
+Alternativt, tryck här:
+	<mailto:<#R#>>
+</#/>
+
+Du behöver inte kopiera brevet i ditt svar. Ifall du vill skicka
+med en kommentar till författaren till ett brev du inte accepterat,
+inkludera kommentaren, i svarsbrevet, mellan två rader som börjar
+med tre procenttecken ('%').
+
+%%% Start kommenter
+%%% Slut kommentar.
+
+Tack för din hjälp!
+
+--- Nedan finner du utskicket.
+

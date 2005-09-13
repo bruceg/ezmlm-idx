@@ -1,0 +1,17 @@
+# $Id$
+</#n/>
+Przerób, proszê, za³±czony tekst i wy¶lij go na adres:
+
+!R
+
+Twój program powienien uczyniæ to automatycznie, je¿eli u¿yjesz
+funkcji "reply/odpowiedz".
+
+Mogê bez k³opotu usun±æ dodatki jakie mo¿e dodawaæ do tekstów
+Twój program pocztowy, je¿eli zachowasz linie znaczników.
+
+Linie znaczników s± to linie rozpoczynaj±ce siê "%%%".
+Nie mog± one byæ zmienione, dodatkowe znaki dodane przez program
+pocztowy na pocz±tku linii s± dozwolone.
+
+

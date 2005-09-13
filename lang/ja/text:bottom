@@ -1,0 +1,46 @@
+# $Id$
+
+--- mailing list <#l#> で利用可能な command 一覧です ---
+
+ezmlm は以下の command を自動で実行します。
+
+[[[ 絶対に mailing list 本体に command を送らないで下さい ]]]
+
+command は以下の address 宛に空の message を送ることで実行されます。
+
+   * 利用可能な command 一覧を取り出す
+     <<#L#>-help@<#H#>>
+     (Get help and commands)
+
+   * 購読を開始する
+     <<#L#>-subscribe@<#H#>>
+     (Start subscription) 
+
+購読を中止するには mailing list <#L#> からの message の header に
+含まれている ``List-Unsubscribe'' 行が示す address に空 message
+を送ってください。または以下の address 宛てに空 message を送って
+下さい。
+     <<#L#>-unsubscribe@<#H#>>
+     (Stop subscription)
+
+</#d/>
+digest の購読を中止するには以下の address 宛てに空の message を
+送って下さい。
+     <<#L#>-digest-unsubscribe@<#H#>>
+     (Stop digest subscription)
+
+</#/>
+購読の開始および中止の際には ezmlm は確認の為の message を
+指定された address 宛てに送信します。その確認の為の message
+に対して、reply を返すことで確認の手続きは終了します。
+
+以上の指示に従っても、望んだ結果にならない場合等は、
+mailing list <#L#> の主宰者の
+<#L#>-owner@<#H#> 迄連絡して下さい。
+（返事が遅れるかもしれません。ご了承下さい）
+
+問題の解析を進めやすくする為に ezmlm から送られてきた message を
+『全ての header を含めて』添付してください。
+
+--- 以下に送られてきた message を添付しておきます ---
+

@@ -1,0 +1,11 @@
+# $Id$
+</#d/>
+Per iscriversi alla lista delle raccolte scrivi a:
+	<#L#>-digest-subscribe@<#H#>
+
+Per rimuoverti dalla lista delle raccolte scrivi a:
+	<#L#>-digest-unsubscribe@<#H#>
+
+Per spedire un messaggio alla lista scrivi a:
+	<#L#>@<#H#>
+

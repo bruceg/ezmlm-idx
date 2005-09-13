@@ -1,0 +1,22 @@
+# $Id$
+
+Ho tenuto una copia dei messaggi della lista <#L#> che sono tornati
+indietro dal tuo indirizzo.
+
+</#a/>
+Le copie di questi messaggi potrebbero essere nell'archivio.
+
+
+Per ricevere l'insieme dei messaggi 123-145 (al massimo
+100 per richiesta) dall'archivio, scrivi un messaggio vuoto a:   
+   <<#L#>-get.123_145@<#H#>>
+
+
+Per ricevere l'elenco dei soggetti e degli autori degli ultimi 100
+messaggi scrivi a:
+
+   <<#L#>-index@<#H#>>
+
+</#/>
+Ecco i numeri dei messaggi:
+

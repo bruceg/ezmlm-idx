@@ -1,0 +1,47 @@
+# $Id$
+A vous de decider si, en tant que moderateur, vous approuvez
+le message ci-joint pour la liste <#L#>@<#H#>.
+
+Pour accepter le message et l'envoyer immediatement a tous les
+abonnes de la liste, envoyez un message a: 
+
+!A
+
+En regle generale, il suffit de repondre a ce message (Reply) .
+Verifiez simplement que l'adresse debute bien par
+"<#L#>-accept".
+Si cela ne fonctionne pas, copiez simplement l'adresse et
+collez la dans le champs representant le destinataire.
+</#x/>
+
+Si votre brouteur le permet, vous pouvez aussi cliquer ici :
+	mailto:<#A#>
+</#/>
+
+Pour rejeter la contribution et le retourner a l'expediteur,
+veuillez envoyer un message a :
+
+!R
+
+En pratique, il est souvent plus simple d'effectuer une reponse
+a tous et de retirer tous les adresses, en dehors de celle qui
+debute par "<#L#>-reject".
+</#x/>
+
+Si votre brouteur prend en compte les liens hypertexte, vous
+pouvez aussi cliquer ici :
+	mailto:<#R#>
+</#/>
+
+Vous n'avez pas besoin de recopier le message dans vos reponses pour
+l'accepter ou le rejeter. Si vous souhaitez y ajouter un commentaire
+en cas de rejet, ajoutez-le entre les deux lignes debutant pas '%%%'
+(sans les guillemets).
+
+%%% Debut du commentaire
+%%% Fin du commentaire
+
+Merci de votre aide !
+
+--- Ci-joint, le message envoye:
+

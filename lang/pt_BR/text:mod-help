@@ -1,0 +1,176 @@
+# $Id$
+Obrigado por concordar em moderar a lista
+<#L#>@<#H#>.
+
+Meus comandos são um pouco diferentes de outros gerenciadores de
+listas. À primeira vista, eles parecem estranhos, mas à medida que
+você os for usando, vai apreciar a simplicidade do sistema e
+a rapidez com que eu trato seus comandos.
+
+Aqui estão algumas observações sobre como atuar como dono da
+lista e/ou moderador:
+
+Assinatura remota
+-----------------
+Como um moderador, você pode subscrever e cancelar a assinatura
+de qualquer endereço da lista. Para cadastrar john@johnhost.johndomain,
+simplesmente coloque um traço depois do comando, e depois o endereço
+com '=' no lugar de '@'. Por exemplo, para cadastrar este endereço,
+envie uma mensagem para:
+   <<#L#>-subscribe-john=host.domain@<#H#>>
+
+Semelhantemente, você pode remover esse endereço, enviando mensagem para:
+   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+
+</#d/>
+Para a lista "digest":
+   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+
+</#/>
+Isto é tudo. Nenhum texto no assunto nem no corpo de mensagem é necessário!
+
+</#r/>
+Enviarei para você um pedido de confirmação, para ter certeza
+que é realmente você quem enviou o comando. Simplesmente
+retorne a mensagem, e o comando será executado.
+</#R/>
+Enviarei um pedido de confirmação para o endereço do usuário,
+neste caso <john@host.domain>. Tudo que o usuário tem que fazer é
+retornar este pedido de confirmação.
+</#/>
+
+As confirmações são necessárias para evitar que pessoas
+não autorizadas cadastrem ou removam endereços da lista.
+
+Notificarei o usuário quando a situação de sua assinatura
+for alterada.
+
+Assinatura
+----------
+
+Qualquer usuário pode assinar ou cancelar a assinatura
+enviando mensagem para:
+
+<#L#>-subscribe@<#H#>
+<#L#>-unsubscribe@<#H#>
+
+</#d/>
+Para a lista "digest":
+
+<#L#>-digest-subscribe@<#H#>
+<#L#>-digest-unsubscribe@<#H#>
+
+</#/>
+O usuário receberá um pedido de confirmação para eu ter
+certeza de que ele controle o endereço de assinatura. Quando este
+endereço for verificado, ele será descadastrado.
+
+</#s/>
+Sendo esta lista moderada para assinatura, enviarei um segundo
+pedido de confirmação para o(s) moderador(es). Se o usuário
+já tiver confirmado o desejo de ficar na lista, você como
+moderador pode confiar que o endereço do assinante é verdadeiro.
+Se você deseja aprovar os pedidos do usuário, simplesmente
+retorne a mensagem de CONFIRMAÇÃO. Caso contrário, simplesmente
+ignore a minha mensagem ou possivelmente escreva o potencial
+assinante para obter mais informações.
+</#S/>
+Assinaturas funcionam da mesma forma.
+</#/>
+
+O usuário também pode usar estas formas:
+
+   <<#L#>-subscribe-mary=host.domain@<#H#>>
+   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+
+para que as mensagens sejam enviadas para "mary@host.domain".
+Somente se ela receber mensagens neste endereço, será
+capaz de responder à confirmação.
+
+Seu endereço e identidade não serão revelados para o assinante,
+a não ser que você envie mensagens diretamente para o usuário.
+
+</#rl/>
+Para obter o cadastro de assinantes da lista <#L#>@<#H#>,
+envie uma mensagem para:
+   <<#L#>-list@<#H#>>
+
+Para um registro de transações da lista,
+envie uma mensagem para:
+   <<#L#>-log@<#H#>>
+
+</#rld/>
+Para o cadastro de assinantes da lista digest:
+   <<#L#>-digest-list@<#H#>>
+e:
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+Você pode editar remotamente os arquivos-texto de resposta que a lista
+envia. Para obter uma lista dos arquivos e instruções de edição, envie
+mensagem para:
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Postagens moderadas
+-------------------
+Quando as postagens são moderadas, eu colocarei as mensagens em
+uma fila, e enviarei a você uma cópia junto com instruções. A
+mensagem terá "MODERATE for ..." como assunto.
+
+Se você aceita a mensagem, basta responder para o endereço 'Reply-To:',
+o qual já deixei configurado como o endereço de "aceitação".
+Não é necessário incluir a mensagem; na verdade, eu ignorarei qualquer
+coisa que você envie, desde que o endereço para o qual você enviou
+esteja correto.
+
+Se você quiser rejeitá-la, envie a mensagem para o endereço 'From:',
+que por sua vez, está configurado com o endereço de "rejeição".
+Você pode usualmente fazer um 'reply-to-all' - resposta para todos,
+e então remover o seu endereço e o endereço de "aceitação").
+Você pode adicionar um comentário opcional para o remetente entre
+duas linhas começando com três '%'. Eu enviarei este comentário somente
+para o remetente, sem revelar sua identidade.
+
+Eu irei processar a mensagem de acordo com o primeiro retorno que eu
+receber. Se você me enviar um comando para aceitar uma mensagem
+que já foi rejeitada ou vice-versa, eu o avisarei.
+
+Se eu não receber nenhuma resposta do moderador dentro de um certo
+período de tempo (normalmente 5 dias), eu retornarei uma mensagem
+para o remetente com uma explicação do ocorrido. O administrador
+também pode configurar a lista para que as mensagens "ignoradas"
+sejam simplesmente removidas, ao invés de retornar para o remetente.
+</#/>
+
+Férias
+------
+Se você está temporariamente em um endereço diferente, basta repassar
+todas as mensagens que têm o cabeçalho correto 'Mailing-List:' (ou todas
+as mensagens que têm assuntos começando com 'MODERATE for <#L#>@<#H#>'
+ou 'CONFIRM subscribe to <#L#>@<#H#>') para o novo endereço.
+Você pode então moderar a partir do novo endereço. Alternativamente,
+você pode repassar as mensagens para um amigo, assim ele pode moderar
+para você. Por favor, avise e confirme este procedimento com o dono da lista.
+
+Se você quiser aprovar automaticamente todas as mensagens enquanto
+está fora, configure o seu programa de correio eletrônico para responder
+automaticamente as mensagens que têm os assuntos com os critérios acima.
+
+</#r/>
+Se você tentar administrar remotamente a partir de um endereço que
+não é seu, o assinante, não você, será questionado para confirmar.
+Depois disto, um pedido de confirmação é enviado para todos os
+moderadores. Estou fazendo isto, porque eu não tenho como saber que
+foi você quem enviou o pedido original.
+
+Por favor note que o seu pedido original (e seu endereço) é enviado
+para o assinante neste caso!
+</#/>
+
+Boa sorte!
+
+PS: Por favor, escreva o dono da lista (<#L#>-owner@<#H#>) se você
+tiver qualquer dúvida ou problema.
+

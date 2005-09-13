@@ -1,0 +1,41 @@
+# $Id$
+Permohonan anda tidak dapat kami penuhi, disebabkan
+alamat berikut
+
+!A
+
+tidak terdaftar dalam milis <#l#> ketika kami menerima permohonan anda
+dan bukan pelanggan dari list ini.
+
+Jika anda berhenti, tapi masih menerima mail, anda terdaftar dengan
+alamat lain dari yang anda pakai sekarang.  Tolong lihat header surat
+untuk:
+
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+
+Ini menunjukkan bahwa alamat pelanggan adalah ``user@example.com''.
+Alamat berhenti untuk pelanggan ini adalah:
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
+
+Kirim mail ke alamat tersebut, disesuaikan dengan alamat sebenarnya.
+
+Kalau mail dari milis punya header ``List-Unsubscribe:'', anda dapat
+mengirim mail ke alamat yang ada di dalam header tersebut. Header
+tersebut berisi alamat khusus untuk anda gunakan untuk berhenti.
+
+Untuk beberapa program mail, anda perlu untuk membuat headersnya
+terlihat untuk dapat melihat return path:
+
+Untuk Eudora 4.0, klik pada tombol "Blah blah ...".
+Untuk PMMail, klik pada "Window->Show entire message/header".
+
+Jika itu masih belum berhasil, kami mohon maaf kami tidak dapat membantu
+anda. Tolong FORWARD mail dari list tersebut bersama-sama dengan sedikit
+catatan tentang apa yang ingin anda lakukan dan daftar kemungkinan
+alamat-alamat e-mail yang anda daftarkan pada milis, ke pemilik list:
+
+    <#l#>-owner@<#H#>
+
+yang kemudian akan menanganinya.  Pemilik list ini agak sedikit lambat
+dari kami, harap sabar.
+

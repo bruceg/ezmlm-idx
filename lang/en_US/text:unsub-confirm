@@ -1,0 +1,32 @@
+# $Id$
+To confirm that you would like
+
+!A
+
+removed from the <#l#> mailing list, please send an empty reply 
+to this address:
+
+!R
+
+Usually, this happens when you just hit the "reply" button.
+If this does not work, simply copy the address and paste it into
+the "To:" field of a new message.
+</#x/>
+
+or click here:
+	mailto:<#R#>
+</#/>
+
+I haven't checked whether your address is currently on the mailing list.
+To see what address you used to subscribe, look at the messages you are
+receiving from the mailing list. Each message has your address hidden
+inside its return path; for example, mary@example.com receives
+messages with return path:
+<<#l#>-return-<number>-mary=example.com@<#H#>.
+
+</#q/>
+Some mail programs are broken and cannot handle long addresses. If you
+cannot reply to this request, instead send a message to
+<<#L#>-request@<#H#>> and put the entire address listed above
+into the "Subject:" line.
+

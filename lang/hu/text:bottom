@@ -1,0 +1,39 @@
+# $Id$
+
+--- A(z) <#l#> lista adminisztrativ parancsai ---
+
+Az adminisztrativ keresek automatikusan hajtodnak vegre, ezert
+azokat ne a lista cimere kuldd!  A pontos cimek:
+
+Segitseg es az elerheto parancsok leirasaa:
+   <<#L#>-help@<#H#>>
+
+Feliratkozas:
+   <<#L#>-subscribe@<#H#>>
+
+Minden listas level fejleceben a ,,List-Unsubscribe'' sorban
+talalhato a pontos email cim, ahonnan le kell iratkozni.  Ha nem
+valtoztattad meg az email cimedet a feliratkozas ota, az alabbi
+cimre is kuldheted a leiratkozasi parancsot:
+   <<#L#>-unsubscribe@<#H#>>
+
+</#d/>
+illetve digestrol leiratkozaskor:
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+</#HJ/>
+Cimek hozzaadasa es torlese eseten megerositesi kerelmet kapsz
+a megadott cimre. Ha megkaptad, egyszeruen valaszolj ra, hogy
+a keres teljesulhessen.
+
+</#/>
+Ha a lista kezelojevel (tulajdonosaval) szeretnel levelezni, az
+emailt ide kuldd:
+
+    <<#L#>-owner@<#H#>>
+
+Ha egy levellel van problemad, akkor tovabbitsd az egesz levelet
+az OSSZES FEJLECCEL, hogy konnyebben tudjunk segiteni Neked.
+
+--- Itt kezdodik a keresed masolata, amit megkaptam.
+

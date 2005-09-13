@@ -1,0 +1,40 @@
+# $Id$
+</#n/>
+<#L#>-edit.file kommandoen kan bruges af en fjernadministrator,
+til at rette teksterne i de fleste af svarteksterne i
+svar-tekst filerne .
+
+Her følger en list en liste over svar-tekst filer samt en
+kort beskrivelse af hvornår deres indhold bliver brugt.
+For at rette en fil, skriv til <#L#>-edit.file@<#H#>,
+erstat "file" delen med filnavnet. Editeringsinstruktioner
+følger med tekst filen.
+
+filnavn             Anvendelse
+
+bottom              Afslutning på alle breve. Generel kommando information.
+digest              'administrationsdelen' af et udtræk.
+faq                 De mest spurgte spørgsmål om denne postliste.
+get_bad             Istedetfor breve som ikke kan findes i arkivet.
+help                generel hjælp (mellem 'top' og 'bottom').
+info                liste information. Første linje skal give mening i sig selv
+mod_help            specifik hjælp til liste moderatorer.
+mod_reject          til afsender af afvist post.
+mod_request         til post moderatorer sammen med brevet.
+mod_sub             til abonnent når moderator har bekræftet tilmelding.
+mod_sub_confirm     til tilmeldingsmoderator for at bekræfte tilmelding.
+mod_timeout         til afsender af brev som moderator ikke har reageret på.
+mod_unsub_confirm   til fjernadministrator om at framelde.
+sub_bad             til afsender hvis manglende bekræftelse.
+sub_confirm         til afsender for at bekræfte tilmelding.
+sub_nop             til afsender efter gentilmelding.
+sub_ok              til afsender efter vellykket tilmelding.
+top                 Begynnelse på alle breve.
+</#tn/>
+trailer             tilføjes til alle breve som udsendes fra listen.
+</#n/>
+unsub_bad           til afsender hvis frameldingsbekræftelse ikke var korrekt.
+unsub_confirm       til afsender for at bekræfte frameldingsbekræftelse.
+unsub_nop           til ikke-tilmeldte efter framelding.
+unsub_ok            til ex-tilmeldte efter vellykket framelding.
+

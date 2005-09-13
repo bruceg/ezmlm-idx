@@ -1,0 +1,34 @@
+# $Id$
+Pour confirmer que vous souhaitez voir
+
+!A
+
+supprime de la liste de diffusion <#l#> , veuillez envoyer un message
+quelconque a l'adresse suivante:
+
+!R
+
+En fait, inutile de la recopier: la fonction "Reply" (repondre a
+l'expediteur) de votre logiciel de messagerie doit s'en charger
+automatiquement. Un copier/coller vers le champs "To:" est aussi
+une possible.
+</#x/>
+
+Vous pouvez aussi tout aussi bien suivre ce lien :
+	mailto:<#R#>
+</#/>
+
+Je n'ai pas verifie que votre adresse fait actuellement partie de la
+liste. Pour verifier a quelle adresse vous vous etes abonnes, regardez
+les messages que vous recevez de cette liste. Chaque message a votre
+adresse cachee dans son chemin de retour; par exemple
+dieu@ciel.paradis.com recoit ses messages avec dans le champ
+"return-path": <<#l#>-return-<nombre>-dieu=ciel.paradis.com@<#H#>.
+
+</#q/>
+Certains logiciels de messagerie mal concus ne peuvent traiter les
+adresses au dela d'une certaine taille. S'il vous est impossible de
+repondre a ce message, envoyez a la place un message a l'adresse
+<<#L#>-request@<#H#>> et mettez l'adresse complete dans le champs
+"Sujet".
+

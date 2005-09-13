@@ -1,0 +1,40 @@
+# $Id$
+</#n/>
+Het <#L#>-edit.file commando kan gebruikt worden om een administrator
+de teksten te laten wijzigen van de mailing list manager van de
+<#L#>@<#H#> mailing list.
+
+Hier volgt een overzicht van de teksten en wanneer ze gebruikt worden.
+Om een tekst te wijzigen stuurt u een email naar
+<#L#>-edit.file@<#H#>
+waarbij u 'file' verandert in de naam van de tekst die u wilt
+wijzigen. Instructies worden met de file meegestuurd.
+
+File                Gebruik
+
+bottom              Staat onder ieder bericht. Bevat algemene commando's
+digest              Administratief gedeelte van digests
+faq                 Veel gestelde vragen (FAQ's) van deze list
+get_bad             In plaats van berichten die niet in het archief staan
+help                Algemene help (tussen 'top' en 'bottom').
+info                List info. De eerste regel zou betekenis moeten hebben
+mod_help            help voor list moderators
+mod_reject          bericht aan afzender van geweigerde mail
+mod_request         bericht aan moderators met oorspronkelijk bericht
+mod_sub             bericht aan gebruiker als deze toegelaten is
+mod_sub_confirm     bericht aan moderator met verzoek om toelating
+mod_timeout         aan afzender als gemodereerd bericht verlopen is
+mod_unsub_confirm   aan remote admin voor bevestiging van uitschrijven
+sub_bad             aan gebruiker als inschrijving is afgewezen
+sub_confirm         aan gebruiker als inschrijving is goedgekeurd
+sub_nop             aan gebruiker na hernieuwde inschrijving
+sub_ok              aan gebruiker na succesvolle inschrijving
+top                 staat boven ieder bericht
+</#tn/>
+trailer             staat onder aan elk uitgezonden bericht
+</#n/>
+unsub_bad           aan gebruiker als uitschrijving mislukt is
+unsub_confirm       aan gebruiker om uitschrijving te bevestigen
+unsub_nop           aan niet-gebruiker na uitschrijf verzoek
+unsub_ok            aan ex-gebruiker na succesvolle uitschrijving
+

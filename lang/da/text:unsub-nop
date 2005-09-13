@@ -1,0 +1,37 @@
+# $Id$
+Anerkendelse: Adressen
+
+!A
+
+var ikke tilmeldt <#l#> listen da jeg fik din tilmelding, og
+er det stadig ikke.
+
+Hvis du afmelder, men stadig får post, er du tilmeldt med en
+andren adresse end den du bruger i øjeblikket. Kig i brevhoved
+efter noget der ser sådan ud:
+
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+
+Afmeldingsadressen for denne bruger ville blive:
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
+
+Send nu post til denne adresse, erstat user=example.com med rigtige
+værdier, og du burde modtage et brev om at du er frameldt listen.
+
+I nogle post programmer, skal man gøre brevhovedet synligt for
+at se retur stien:
+
+I Eudora 4.0, klik på (øh, hvem kender Eudora?) knappen.
+I PMMail, klik på "Window->Show entire message/header"
+   hvis du har en engelsk udgave ;-)
+
+Hvis dette stadig ikke virker, kan jeg nok ikke hjælpe dig mere.
+Så videresend din liste kommando til liste ejeren sammen med en
+besked om hvad det er du prøver at opnå, samt en liste over de
+andresser du evt. kan være tilmeldt under. Ejeren,
+
+    <#l#>-owner@<#H#>
+
+Vil tage sig af det. Min ejer er ikke så hurtig som mig, så hav
+venligst lidt tålmodighed.
+

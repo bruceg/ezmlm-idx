@@ -1,0 +1,164 @@
+# $Id$
+Grazie per aver accettato di moderare la mailing list <#L#>@<#H#>.
+
+I miei comandi sono leggermente differenti da quelli delle altre
+mailing list, ma credo che li troverai intuitivi e facili da usare.
+
+Ecco alcune istruzioni per i compiti che dovrai assolvere come 
+amministratore della lista e/o moderatore.
+
+Sottoscrizione remota
+-------------------
+Come moderatore, puoi iscrivere e cancellare qualsiasi indirizzo alla
+mailing list. Per iscrivere "john@example.com" , basta solo
+aggiungere un trattino  dopo il comando, quindi il suo indirizzo con
+'=' invece di '@'. Per esempio, per iscrivere questo indirizzo scrivi
+a:    <<#L#>-subscribe-john=example.com@<#H#>>
+
+Analogamente puoi rimuovere l'indirizzo scrivendo a:
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
+
+</#d/>
+Per la lista delle raccolte:
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+
+</#/>
+Questo è tutto. Non sono necessari comandi nell' oggetto o nel corpo del 
+messaggio!
+
+</#r/>
+Ti spedirò una richiesta di conferma, per essere sicuro che tu abbia
+realmente spedito la richiesta. Rispondi semplicemente al messaggio e i 
+tuoi desideri saranno eseguiti.
+</#R/>
+Spedirò una richiesta di conferma all'indirizzo dell'utente, in questo caso
+a <john@example.com>. Tutto ciò che l'utente dovrà fare sarà quello di 
+rispondere alla richiesta di conferma.
+</#/>
+
+I messaggi di conferma sono necessari per rendere estremamente difficile a
+qualcun altro di aggiungere o togliere un indirizzo dalla lista.
+
+Avvertirò l'utente quando cambia la sua iscrizione.
+
+Iscrizione
+-----------
+
+Qualsiasi utente può iscriversi o rimuoversi scrivendo a:
+
+    <<#L#>-subscribe@<#H#>>
+    <<#L#>-unsubscribe@<#H#>>
+
+</#d/>
+Per la lista delle raccolte:
+
+    <<#L#>-digest-subscribe@<#H#>>
+    <<#L#>-digest-unsubscribe@<#H#>>
+
+</#/>
+L'utente riceverà una richiesta di conferma per essere sicuri che
+controlli veramente l'indirizzo di iscrizione. Una volta fatta la
+verifica l'utente viene rimosso.
+
+</#s/>
+Visto che questa lista è moderata per le iscrizioni, spedirò una seconda
+richiesta di conferma al moderatore. Dato che l'utente ha già confermato 
+il desiderio di essere nella lista, come moderatore puoi essere certo che 
+l'indirizzo sia esistente. Se vuoi approvare la richiesta dell'utente,
+rispondi semplicemente al mio messaggio di CONFERMA. In caso contrario puoi
+cancellare il mio messaggio o il potenziale iscrivente per maggiori 
+informazioni.
+</#S/>
+Le iscrizioni funzionano allo stesso modo.
+</#/>
+
+L'utente può anche utilizzare:
+
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+
+per ricevere le e-mail a: "mary@example.com". Solo se riceve effettivamente
+le e-mail a questo indirizzo potrà ricevere il messaggio di conferma ed essere 
+in grado di rispondergli.
+
+Il tuo indirizzo e la tua identità non saranno resi noti agli iscritti, a meno
+che tu non decida di scrivergli direttamente.
+
+</#rl/>
+Per ricevere l'elenco degli iscritti a: <#L#>@<#H#> invia un messaggio a:
+   <<#L#>-list@<#H#>>
+
+Per ricevere il log delle transazioni per <#L#>@<#H#> scrivi a:
+   <<#L#>-log@<#H#>>
+</#rld/>
+Per gli iscritti alle raccolte:
+   <<#L#>-digest-list@<#H#>>
+e:
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+Puoi modificare a distanza i file di testo che compongono le risposte che 
+la lista spedisce. Per ricevere un elenco dei file e delle istruzioni per
+modificarli, scrivi a:
+   <<#L#>-edit@<#H#>>
+
+
+</#m/>
+Moderazione dei messaggi
+------------------------
+Quando i messaggi sono moderati, archivierò il messaggio spedito e te ne
+invierò una copia con le istruzioni. Il messaggio che riceverai avrà
+"MODERATE for ..." come oggetto.
+
+Per accettare il messaggio, basta solo rispondere all'indirizzo 'Rispondi a:' 
+che ho già configurato con il corretto indirizzo di accettazione. Non è 
+necessario allegare il messaggio stesso. Difatti ignorerò tutto ciò che mi
+invierai se l'indirizzo dal quale scrivi è corretto.
+.
+Se vuoi rifutarlo, scrivi una e-mail allindirizzo 'Da:', che avrò già 
+configurato con il corretto indirizzo di "rifuto". Questo di solito può essere
+fatto con il 'Rispondi a tutti:' e cancellando tutti i destinatari escluso 
+quello di "rifiuto". Puoi aggiungere un commento al mittente tra due linee che 
+iniziano con tre '%'. Io spedirò solo questo commento con il messaggio 
+rifiutato. E ancora, non rivelerò la tua identità.
+
+Processerò il messaggio secondo la prima risposta che mi arriverà.
+Se mi spedisci una richiesta di accettare un messaggio che è stato già
+rifiutato o vice versa, te lo farò sapere.
+
+Se non ricevo risposte dal moderatore entro un certo numero di giorni
+(di solito 5), spedirò un messaggio al mittente con la spiegazione di ciò
+che è successo. Il tuo amministratore può anche configurare la lista in modo
+tale che questi messaggi "ignorati" vengano cancellati senza avviso, invece
+che rispediti al mittente. 
+</#/>
+
+Assenze
+---------
+Se hai momentaneamente un indirizzo diverso, ti basta forwardare tutti i
+messaggi che hanno l'intestazione 'Mailing-List:' (o tutti i messaggi che
+iniziano con 'MODERATE for <#L#>@<#H#>' o con 'CONFIRM subscribe to
+<#L#>@<#H#>') al nuovo indirizzo.
+Puoi perciò moderare la mailing-list dal nuovo indirizzo. In alternativa, puoi
+forwardare i messaggi a un amico in modo tale che li possa moderare lui per te.
+Però assicurati di essere d'accordo con il proprietario della mailing list.
+
+Se vuoi approvare in automatico tutte le richieste mentre sei via, allora
+configura il tuo programma di posta in modo tale da risondere in automatico ai
+messaggi che hanno gli oggetti conformi ai criteri sopracitati.
+
+</#r/>
+Se vuoi amministrare la lista da un indirizzo che non è il tuo ti verrà
+chiesta una conferma. Fatto ciò, verrà inviata una richiesta di conferma a
+tutti i moderatori. Faccio così perchè non c'è modo di conoscere che sia stato
+davvero tu a mandarmi la richiesta originale. 
+
+Ricorda che la tua richiesta originale ( e il tuo indirizzo) sono spediti a
+tutti gli iscritti in questo caso! 
+</#/>
+
+Buona fortuna!
+
+PS: Per favore contatta l'amministratore della lista (<#L#>-owner@<#H#>) se
+hai domande o problemi.

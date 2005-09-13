@@ -1,0 +1,30 @@
+# $Id$
+Potvrzujete-li, ¾e chcete adresu
+
+!A
+
+zru¹it z listu <#l#>, po¹lete prázdnou odpovìï na adresu
+
+!R
+
+Toho obvykle dosáhnete pomocí tlaèítka "Odpovìï/Reply". Mù¾ete zkontrolovat
+adresu, zaèíná-li øetìzcem "<#L#>-sc". Pokud toto nefunguje, staèí
+zkopírovat adresu a ulo¾it ji do políèka "To:" nové zprávy.
+</#x/>
+
+Mù¾ete také zkusit kliknout zde:
+	mailto:<#R#>
+</#/>
+
+Nekontroloval jsem, je-li va¹e adresa v souèasné dobì na listu.
+Chcete-li zjistit, ze které adresy bylo provedeno pøihlá¹ení,
+podívejte se do zpráv, které dostáváte z listu. Ka¾dá zpráva
+má adresu v návratové cestì:
+<<#l#>-return-<number>-jana=example.com@<#H#>.
+
+</#q/>
+Nìkteré po¹tovní programy jsou chybné a nemohou zpracovávat dlouhé
+adresy. Pokud nemù¾ete odpovìdìt na tuto adresu, po¹lete
+zprávu na adresu <<#L#>-request@<#H#>>
+a vlo¾te celou vý¹e uvedenou adresu do subjectu.
+

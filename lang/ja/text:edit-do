@@ -1,0 +1,15 @@
+# $Id$
+</#n/>
+添付された message text を編集して、以下の address
+
+!R
+
+宛に返送して下さい。
+
+『%%%』で始まる行が message text 開始の marker line に
+なっています。
+
+（この行に貴方の使っている Mail User Agent (MUA) での
+  引用の印 (ex. foo>%%%) が付加されている場合は、message text
+  本体の部分に付いた引用の印は自動除去されます）
+

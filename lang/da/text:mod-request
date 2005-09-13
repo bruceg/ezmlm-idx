@@ -1,0 +1,43 @@
+# $Id$
+Det vedlagte brev er blevet postet til <#L#>@<#H#> listen.
+Hvis du vil godkende at det kommer ud til alle abonnenterne,
+skriver du til:
+
+!A
+
+Bekræftelse sker normalt blot ved at svare på dette brev. Svar adressen
+skulle gerne starte med "<#L#>-accept". Hvis det ikke er tilfældet, må
+den korrekte svar adresse overføres manuelt til modtagerfeltet, evt.
+med klippe/klistre.
+Mulighederne afhænger af at du har et fornuftigt postprogram.
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#A#>
+</#/>
+
+Hvis du istedet vil afvise at brevet postes til listen, svar til:
+
+!R
+
+Normalt er det nemmest at lave et "svar-til-alle", og fjerne alle
+adresserne undtagen den der starter med
+"<#L#>-reject".
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#R#>
+</#/>
+
+Du behøver ikke inkludere brevet i dit svar for at acceptere eller
+afvise det. Hvis du vil sende en besked til afsenderen af et
+afvist brev, kan du skrive beskeden mellem de to linjer der
+begynder med %%%.
+
+%%% Kommentar start
+%%% Kommentar slut
+
+Tak for hjælpen!
+
+--- Her er det indsendte brev.
+

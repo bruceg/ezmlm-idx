@@ -1,0 +1,43 @@
+# $Id$
+Ceci est un message d'aide generique. Le message que j'ai recu n'etait pas
+adresse a l'une de mes adresses correspondant aux commandes valides.
+
+Voici donc une liste des commandes supportees, representees par des adresses
+auxquelles ecrire.
+
+Envoyez un message a l'adresse suivant pour obtenir des informations et des
+reponses aux questions courantes sur cette liste de diffusion :
+   <<#L#>-info@<#H#>>
+   <<#L#>-faq@<#H#>>
+
+</#d/>
+Des adresses similaires existent pour la liste sous forme de bulletins :
+   <<#L#>-digest-subscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+</#a/>
+Pour obtenir tous les messages situes entre le numero 123 et le numero 145
+(avec un maximum de 100 par requete), envoyez un message a :
+   <<#L#>-get.123_145@<#H#>>
+
+Pour obtenir un resume des messages 123 a 456 avec uniquement les sujets et
+le nom des auteurs, envoyez un message a :
+   <<#L#>-index.123_456@<#H#>>
+
+Pour recevoir tous les messages comportant le meme sujet que le message 12345,
+envoyez un message a :
+   <<#L#>-thread.12345@<#H#>>
+
+</#/>
+En realite, les messages n'ont pas besoin d'etre vides, leur contenu sera
+totalement ignore. Seul l'ADRESSE a laquelle vous ecrivez est determinante.
+
+Il est possible de demander un abonnement a une autre adresse que la votre.
+Par exemple pour abonner "john@example.com", il suffit d'ajouter un tiret
+et l'adresse (avec le signe "=" a la place de "@") apres le nom de la
+commande :
+<<#L#>-subscribe-john=example.com@<#H#>>
+
+Pour desabonner cette derniere adresse :
+<<#L#>-unsubscribe-john=example.com@<#H#>>
+

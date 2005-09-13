@@ -1,0 +1,184 @@
+# $Id$
+Merci beaucoup d'accepter le role de moderateur pour la liste de diffusion
+<#L#>@<#H#> .
+
+Mes commandes sont legerement differentes des autres listes.
+Elles peuvent d'abord sembler inhabituelles, mais une fois que
+vous les aurez utilisees, vous apprecierez la simplicite du
+systeme, et la vitesse a laquelle je repond a vos souhaits.
+
+Voici quelques informations au sujet du fonctionnement de la
+moderation:
+
+Inscription a distance
+----------------------
+En tant que moderateur, vous pouvez inscrire et desinscrire n'importe quelle
+adresse a la liste de diffusion.
+Ainsi, pour abonner "john@example.com", mettez simplement un tiret apres
+le nom de la commande, puis l'adresse du futur abonne en remplacant le signe
+"@" par "=".
+Par exemple, pour inscrire l'utilisateur ci-dessus, envoyez un message a :
+   <<#L#>-subscribe-john=example.com@<#H#>>
+
+De facon similaire, il est possible de retirer son adresse de la liste en
+ecrivant a :
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
+
+</#d/>
+Idem pour les listes presentees sous la forme de bulletins :
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+
+</#/>
+C'est tout ! Aucun sujet special ni corps de message n'est requis.
+
+</#r/>
+Je vous enverrai une demande de confirmation, pour etre
+sur que vous etes bien a l'origine de la requete. Repondez
+simplement au message et la transaction sera achevee.
+</#R/>
+J'enverrai une demande de confirmation a l'adresse de
+l'utilisateur (ici john@example.com).
+Tout ce qu'il aura a faire sera de repondre au message.
+</#/>
+
+Ces etapes de confirmation sont necessaires pour rendre beaucoup plus ardu
+le fait qu'un tiers puisse ajouter ou retirer une adresse de la liste.
+
+Je previendrai bien entendu l'utilisateur quand son etat d'abonne changera.
+
+Inscription
+-----------
+
+N'importe quel utilisateur peut s'abonner ou se desabonner en envoyant un
+message a :
+
+<#L#>-subscribe@<#H#> pour l'inscription
+<#L#>-unsubscribe@<#H#> pour la desinscription
+
+</#d/>
+Et pour les listes presentees sous forme de bulletins :
+
+<#L#>-digest-subscribe@<#H#>
+<#L#>-digest-unsubscribe@<#H#>
+
+</#/>
+L'utilisateur recevra une demande de confirmation pour etre
+sur qu'il/elle controle l'adresse d'inscription. Une fois
+ceci verifie, l'utilisateur sera desinscrit.
+
+</#s/>
+Etant donne que cette liste est moderee pour les abonnements,
+j'enverrai une seconde demande de confirmation aux moderateurs.
+Etant donne que l'utilisateur a deja confirme son desir
+d'appartenir a la liste, vous, en tant que moderateur, pouvez
+etre surs que l'adresse de l'abonne est reelle. Si vous desirez
+approuver la requete d'un utilisateur, repondez simplement a mon
+message de confirmation. Dans le cas contraire, vous pouvez
+simplement effacer mon message ou eventuellement contacter l'abonne
+potentiel pour davantage de renseignements.
+
+</#S/>
+Les inscriptions fonctionnent de facon analogue.
+</#/>
+
+Il est aussi possible d'utiliser :
+
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+
+pour que les messages soient envoyes a "mary@example.com". Elle
+recevra la demande de confirmation uniquement si elle recoit son
+courrier a cette adresse et si elle est alors en mesure d'y repondre.
+
+Votre adresse et votre identite ne seront pas revelees a l'abonne,
+a moins que vous ne lui ecriviez directement.
+
+</#rl/>
+Pour obtenir la liste des abonnees a <#L#>@<#H#>, envoyez un
+message a : 
+   <<#L#>-list@<#H#>>
+
+Pour obtenir un historique des transactions de la liste
+<#L#>@<#H#>, envoyez un message a :
+   <<#L#>-log@<#H#>>
+
+</#rld/>
+Pour les abonnes aux bulletins :
+   <<#L#>-digest-list@<#H#>>
+et :
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+Vous pouvez a distance editer les fichiers de texte contenant les
+messages du robot. Pour obtenir la liste des fichiers et les
+instructions pour les editer, ecrivez a :
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Envoi de messages moderes
+-------------------------
+Lorsque l'envoi de messages est modere, je conserverai chaque
+message en attente et vous en enverrai une copie avec les
+instructions. Ces messages auront pour sujet "MODERATE for ..." .
+
+Pour accepter la contribution, repondez simplement a l'adresse
+specifiee dans le champs "Reply-To:" (ceci doit etre de toutes
+facons pris en charge automatiquement par votre logiciel de
+messagerie) si vous souhaitez accepter le message. Inutile de
+renvoyer le message en question. En fait, le corps du message
+sera ignore du moment que l'adresse est correcte.
+
+Si vous desirez le rejeter, envoyez un message a l'adresse
+precisee de le champ "From" (peut etre habituellement fait a
+l'aide d'un "reply-to-all" suivi d'un effacement de l'adresse
+d'acceptation). Vous pouvez ajouter un commentaire optionnel a
+l'envoyeur entre les deux lignes debutant par '%%%' sans les
+guillemets.
+La encore, votre anonymat sera conserve.
+
+Je traiterai chaque message d'apres la premiere reponse recue.
+Si vous m'envoyez un message pour accepter un message qui a deja
+ete rejete ou l'inverse, je vous tiendrai au courant.
+
+Si je ne recois aucune reponse d'un moderateur apres un certain
+delai (normallement 5 jours), je renverrai le message a
+l'expediteur avec une explication de ce qu'il est arrive.
+L'adminsitrateur peut aussi parametrer la liste de facon a ce que
+ces messages "ignores" soient purement et simplement effaces sans
+avertissement prealable, plutot que retournes a l'envoyeur.
+</#/>
+
+Absences
+--------
+Si vous etes temporairement a une adresse differente, faites simplement
+suivre tous les messages qui ont un entete "Mailing-List:" correct (ou
+tous les messages qui ont un sujet debutant par
+'MODERATE for <#L#>@<#H#>' ou 'CONFIRM subscribe to <#L#>@<#H#>') a la
+nouvelle addresse. Vous pouvez alors moderer a partir de la nouvelle
+adresse. Alternativement, vous pouvez faire suivre les messages a un
+ami qui moderera pour vous. Pensez a vous mettre d'accord avec le
+proprietaire de la liste avant tout.
+
+Si vous souhaitez que toutes les requetes soient approuvees lorsque
+vous etes absents, configurez votre client de messagerie pour
+repondre automatiquement a tous les messages qui correspondent aux
+criteres ci-dessus.
+
+</#r/>
+Si vous essayez de faire de l'administration a distance a partir
+d'une adresse qui n'est pas la votre, l'abonne, et non vous, devra
+confirmer. Apres cela, une demande de validation sera envoyee a
+tous les moderateurs.
+Je suis oblige de faire cela car je n'ai aucun moyen de verifier
+que c'est bien vous qui avez emis la requete originale.
+
+A noter que votre requete (et votre adresse) sont transmises a
+l'abonne dans ce cas.
+</#/>
+
+Bonne chance !
+
+PS: Contactez le proprietaire (<#L#>-owner@<#H#>) si vous avez
+une question ou des difficultes.
+

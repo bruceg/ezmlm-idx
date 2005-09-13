@@ -1,0 +1,16 @@
+# $Id$
+</#n/>
+Kerlek, szerkeszd a kovetkezo fajlt, es kuldd el az alabbi cimre:
+
+!R
+
+Ha a levelezoprogramodnak van Valasz uzemmodja, akkor automatikusan ezt
+a cimet fogja hasznalni.
+
+El tudom tavolitani a valaszjeleket, amiket a levelezod ir a sorok
+elejere, ha nem valtoztatod meg magukat a jelzosorokat.
+
+A jelzosorok '%%%' jellel kezdodnek.  Nem szabad oket modositani (a
+levelezod altal az elejere szurt karakterek rendben vannak).
+
+

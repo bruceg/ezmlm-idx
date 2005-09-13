@@ -1,0 +1,30 @@
+# $Id$
+Oops, det bekräftelsenummret verkar vara felaktigt.
+
+Den vanligaste orsaken till felaktiga bekräftelsenummer är
+att de blivit för gamla. De gäller i max 10 dagar. Var också
+säker på att du använde hela bekräftelsenummret i ditt svar,
+vissa program kan i vissa fel ta bort slutet på adresser när
+de är långa.
+
+Ett nytt bekräftelsenummer har skapats, för att bekräfta att
+du vill ta bort
+
+!A
+
+från <#l#> listan, skicka ett brev till denna adress:
+
+!R
+</#x/>
+
+eller klicka här:
+	<mailto:<#R#>>
+</#/>
+
+Var vänligt att kontrollera svarsadressen noggrant så att den är
+riktig innan du svarar på detta brev.
+
+Ursäkta allt besvär.
+
+	<#l#>-Owner <<#l#>-owner@<#H#>>
+

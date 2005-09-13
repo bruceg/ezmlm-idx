@@ -1,0 +1,11 @@
+# $Id$
+</#d/>
+Para subscrever-se à lista "digest", envie mensagem para:
+	<#L#>-digest-subscribe@<#H#>
+
+Para cancelar a subscrição da lista "digest", envie mensagem para:
+	<#L#>-digest-unsubscribe@<#H#>
+
+Para enviar mensagens para a lista, use o endereço:
+	<#L#>@<#H#>
+

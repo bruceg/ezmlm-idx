@@ -1,0 +1,40 @@
+# $Id$
+</#n/>
+<#L#>-edit.fil kommandot kan användas av en fjärradministratör
+för att editera de textfiler som skapar de svaren jag skickar för
+<#L#>@<#H#> listan.
+
+Här följer en lista på de filer som kan ändras samt en
+kort beskrivning om hur dess innehåll används. För att
+ändra en fil, skicka ett brev till <#L#>-edit.filnamn@<#H#>
+där du byter ut filnamn mot filens namn. Editeringsinstruktioner
+skickas till dig ihop med textfilen.
+
+Fil                 Användninsområde.
+
+bottom              slutet på alla svar. Generell kommando information.
+digest              'administrationsbiten' av en 'digest'.
+faq                 Vanligt förekommande frågor på denna lista.
+get_bad             i stället för medelanden som inte hittas i arkivet.
+help                generell hjälp (mellan top och bottom).
+info                list info. Första raden skall kunna visas separat.
+mod_help            specifik hjälp för listmoderatorer.
+mod_reject          sänds till avsändaren av avvisade medelanden.
+mod_request         till medelandemoderatorerna tillsammans med medelandet.
+mod_sub             till prenumeranter efter att en moderator bekräftat prenumerationen.
+mod_sub_confirm     till prenumerationsmoderatorn för att bekräfta prenumerationer.
+mod_timeout         till sändaren av ett medelande som ingen accepterat/avvisat.
+mod_unsub_confirm   till en administratör för att bekräfta avprenumerationer.
+sub_bad             till prenumeranten ifall bekräftelsen var felaktig.
+sub_confirm         till prenumeranten för att bekräfta prenumerationer.
+sub_nop             till prenumeranten efter en dubbel prenumeration.
+sub_ok              till prenumeranten efter en lyckad prenumeration.
+</#tn/>
+trailer             adderas till alla utskick innan de kommer till listan.
+</#n/>
+top                 starten på alla svar. Generell kommando information.
+unsub_bad           till prenumeranten ifall avprenumerationen misslyckades.
+unsub_confirm       till prenumeranten för att bekräfta avprenumeration.
+unsub_nop           till icke-prenumerant efter avprenumeration.
+unsub_ok            till tidigare prenumeration efter avslutad prenumeration.
+

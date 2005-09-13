@@ -1,0 +1,39 @@
+# $Id$
+Questo è un messaggio di aiuto generico. Il messaggio che ho ricevuto
+non è stato spedito ad alcuno dei miei indirizzi per i comandi.
+
+Ecco un elenco degli indirizzi per i comandi consentiti:
+
+Scrivi una email ai seguenti indirizzi per le informazioni o le FAQ
+della lista:
+   <<#L#>-info@<#H#>>
+   <<#L#>-faq@<#H#>>
+
+</#d/>
+Indirizzi analoghi esistono per la lista delle raccolte:
+   <<#L#>-digest-subscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+</#a/>
+Per ricevere i messaggi dal numero 123 al numero 145 (massimo 100 per ogni
+richiesta), scrivi a:
+   <<#L#>-get.123_145@<#H#>>
+
+Per ricevere l'indice dei messaggi 123-456 con l'oggetto e l'autore, scrivi a:
+   <<#L#>-index.123_456@<#H#>>
+
+Per ricevere tutti i messaggi con lo stesso oggetto del messaggio
+12345, spedisci un messaggio vuoto a:
+   <<#L#>-thread.12345@<#H#>>
+
+</#/>
+I messaggi in realtà non é necessario che siano vuoti, ma ignorerò
+il loro contenuto. E' importante solo l'INDIRIZZO dal quale li spedisci.
+
+Puoi iscriverti anche da un altro indirizzo,per esempio se vuoi iscrivere
+"john@example.com", basta solo aggiungere un trattino e il tuo indirizzo (con
+'=' al posto di '@') dopo i comandi: <<#L#>-subscribe-john=example.com@<#H#>>
+
+Per cancellare l'iscrizione da questo indirizzo, scrivi a:
+<<#L#>-unsubscribe-john=example.com@<#H#>>
+

@@ -1,0 +1,35 @@
+# $Id$
+Para confirmar que você deseja que
+
+!A
+
+seja incluído na lista <#l#>, por favor envie uma resposta vazia
+para o endereço:
+
+!R
+
+Na prática, você estará enviado para este endereço quando clicar no
+botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
+o endereço e cole-o para o campo "To:" de uma nova mensagem.
+</#x/>
+
+ou clique aqui:
+	mailto:<#R#>
+</#/>
+
+Esta confirmação tem dois propósitos. Primeiro, ela verifica que eu
+consigo receber mensagens de você. Segundo, ela protege você no caso
+de alguém tentar forjar um pedido de assinatura em seu nome.
+
+</#q/>
+Alguns programas de correio eletrônico não conseguem manipular endereços
+muito compridos. Se, por causa disto, você não está conseguindo resposta
+a este comando, envie uma mensagem para <<#L#>-request@<#H#>>
+e coloque o endereço inteiro abaixo na linha "Subject:" ou
+"Assunto:".
+
+</#s/>
+Esta lista é moderada. Depois que você enviar esta confirmação,
+o pedido será enviado para o(s) moderador(es) desta lista. Eu notificarei
+você quando sua assinatura for ativada.
+

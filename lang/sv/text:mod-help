@@ -1,0 +1,173 @@
+# $Id$
+Tack för att du vill moderera <#L#>@<#H#> listan.
+
+Kommandona är lite anorlunda mot andra listor,
+men de är lätta att lära och använda.
+
+Här är lite instruktioner angående de saker du kan behöva
+göra som listägare/moderator.
+
+Allmäna kommandon följer efter detta meddelande.
+
+Fjärr prenumeration.
+--------------------
+Som moderator kan du prenumerera och avprenumerera vilken adress
+som helst på listan. För att prenumerera "john@example.com",
+skriv bara ett bindesträck efter "kommando ordet", därefter
+adressen med ett '=' tecken istället för '@'. I detta fallet skulle
+du skickat ett brev till:
+   <<#L#>-subscribe-john=example.com@<#H#>>
+
+Du kan på samma sätt ta bort en adress med ett meddelande till:
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
+
+</#d/>
+För "digest" versionen av listan:
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+
+</#/>
+Det är allt. Titel och innehåll spelar ingen roll!
+
+</#r/>
+Ett bekräftelse brev kommer skickas för att vara säker
+på att det verkligen var du som skickade brevet.
+Svara bara på det brevet och det hela är klart.
+</#R/>
+Jag kommer skicka ett bekräftelsebrev till prenumerantens adress,
+i detta fallet <john@example.com>. Allt prenumeranten behöver
+göra är att svara på brevet.
+</#/>
+
+Bekräftelserna är nödvändiga för att göra det svårt för
+en tredje part till att lägga till/ta bort adresser till
+listan.
+
+Jag kommer underrätta prenumeranten när dennes status
+har ändrats.
+
+Prenumeration
+--------------
+
+Alla kan prenumerera/sluta prenumerera på listan genom
+att skicka ett brev till:
+
+<#L#>-subscribe@<#H#>
+<#L#>-unsubscribe@<#H#>
+
+</#d/>
+För "digest" versionen av listan:
+
+<#L#>-digest-subscribe@<#H#>
+<#L#>-digest-unsubscribe@<#H#>
+
+</#/>
+Prenumeranten kommer få ett bekräftelse brev för
+att vara säker på att personen har den adressen.
+När det är klart blir personen borttagen ur listan.
+
+</#s/>
+Eftersom denna listan är sluten, kommer jag skicka en andra
+förfrågan till moderatorerna. Eftersom prenumeranten redan har
+bekräftat att den vill vara med på listan, kan du som
+moderator vara säker på att det är rätt adress. Ifall du vill
+ha med personen på listan, svara på bekräftelse (CONFIRM)
+meddelandet. Ifall du inte vill ha med personen, radera bara
+meddelandet istället (eller kontakta personen för ytterligare
+information).
+</#S/>
+Prenumeration fungerar på samma sätt.
+</#/>
+
+Användaren kan också:
+
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+
+för att få brev skickad till "mary@example.com". Bara om hon kan
+ta emot brev på den adressen, får hon bekräftelse meddelandet
+och kan svara på det.
+
+Din adress och identitet kommer att vara hemlig för prenumeranten
+om du inte skickar brev direkt till denne.
+
+</#rl/>
+För att få en lista på prenumeranter på <#L#>@<#H#>,
+skicka ett brev till:
+   <<#L#>-list@<#H#>>
+
+För att få en "transaktionslog" för <#L#>@<#H#>,
+skicka ett brev till:
+   <<#L#>-log@<#H#>>
+
+</#rld/>
+För "digest" prenumeranter:
+   <<#L#>-digest-list@<#H#>>
+och:
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+Du kan ändra textfilerna, som listan använder, på distans. För att
+få en lista på filerna och instruktioner om hur du ändrar dem,
+skicka ett e-mail till:
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Modererade utskick
+------------------
+När utskick är modererade, kommer ett brev att skickas till dig
+med en kopia på utskick och instruktioner som berättar hur
+utskicket skall godkännas för att komma med på listan. Det
+brevet kommer att ha "MODERATE for ..." som titel.
+
+För att acceptera ett utskick, skicka bara ett svar till 'Reply-To:'
+adressen (sker vanligtvis med "svara" knappen). Du behöver inte
+skicka med brevet du fick skickat till dig, det är bara adressen
+som är viktig.
+
+Ifall du vill avvisa utskicket, skicka ett brev till avsändar-
+adressen ("From:" fältet), där rätt avvisningsadress är inskrivning.
+"Svara alla" brukar använda den adressen. Om du vill skriva ett
+meddelande till författaren, skriv den mellan två rader som börjar
+med tre '%' tecken. Detta kommer att ske anonymt och bara skickas
+till författaren.
+
+Utskicket kommer att behandlas beroende på vilket svar som kommer
+in först. Om en moderator redan har avvisat ett brev som du godkänner
+så kommer brevet ändå att vara avvisat och vice versa.
+
+Ifall ingen moderator svarar inom en viss tid (vanligtvis 5 dagar),
+kommer brevet att returneras till författaren med en förklaring
+om vad som hände.
+</#/>
+
+Semestrar
+---------
+Ifall du temporärt har en annan adress, vidareskicka alla brev som
+har korrekt "Mailing-List:" fält i brevhuvudet (eller alla brev som
+har titeln "MODERATE for <#L#>@<#H#>"
+eller "CONFIRM subscribe to <#L#>@<#H#>")
+till den nya adressen. Du kan därefter moderera listan från den
+adressen. Alternativt kan du vidareskicka brevet till någon annan
+som modererar listan åt dig. Fråga listägaren först om det är OK.
+
+Ifall du vill att allt skall godkännas automatiskt medan du är
+borta, ställ iordning ditt e-mail system så den gör ett autosvar
+på brev med ovan nämnda titlar.
+
+</#r/>
+Ifall du försöker administrera listan från en adress som inte är din
+egen, prenumeranten, inte du, kommer frågas efter en bekräftelse.
+Därefter kommer en bekräftelseförfrågan skickas till moderatorerna.
+Detta görs eftersom det är omöjligt att veta ifall det var du som
+skickade originalfrågan.
+
+Observera att originalförfrågan, inklusive din adress, skickas till
+prenumeranten i detta fallet.
+</#/>
+
+Lycka till!
+
+PS. Kontakta listägaren (<#L#>-owner@<#H#>) ifall du
+har några frågor eller stöter på några problem.
+

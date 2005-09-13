@@ -1,0 +1,11 @@
+# $Id$
+</#d/>
+Pro pøihlá¹ení do digestu po¹lete mail na adresu
+	<#L#>-digest-subscribe@<#H#>
+
+Pro odhlá¹ení z digestu pou¾ijte adresu
+	<#L#>-digest-unsubscribe@<#H#>
+
+Chcete-li poslat zprávu do listu, pi¹te na adresu
+	<#L#>@<#H#>
+

@@ -1,0 +1,22 @@
+# $Id$
+
+Ho un elenco delle raccolte dalla mailing list <#L#>-digest che sono
+tornate indietro dal tuo indirizzo. Per ogni raccolta che ti sei
+perso ho annotato il numero del primo messaggio della raccolta. 
+
+</#a/>
+Io non archivio le raccolte stesse, ma sei in grado di prendere i
+messaggi dall'archivio  principale della mailing list.
+
+Per ricevere i messaggi dal numero 123 al numero 145 (massimo 100 per ogni
+richiesta),  scrivi un messaggio vuoto a:
+
+   <<#L#>-get.123_145@<#H#>>
+
+Per ricevere l'elenco dei soggetti e degli autori degli ultimi 100 messaggi
+scrivi a:
+   <<#L#>-index@<#H#>>
+
+</#/>
+Ecco i numeri delle raccolte:
+

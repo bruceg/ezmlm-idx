@@ -1,0 +1,22 @@
+# $Id$
+
+Megoriztem azoknak a digestek listajat a(z) <#L#>-digest listarol,
+amik visszapattantak a cimedrol. Minden kihagyott digest-nel csak az elso
+level szamat irom.
+
+</#a/>
+Magukat a digest-eket nem archivalom, de a leveleket le lehet tolteni
+a fo lista archivumabol.
+
+A 123-145 kozotti levelek letoltesehez (maximum 100 levelel keresenkent)
+kuldj egy ures levelet a(z)
+   <<#L#>-get.123_145@<#H#>>
+cimre.
+
+Az utolso 100 koruli levelek targyanak es irojanak listajat pedig az
+alabbi email cimre irt ures levellel teheted meg:
+   <<#L#>-index@<#H#>>
+
+</#/>
+A digest levelek szamai:
+

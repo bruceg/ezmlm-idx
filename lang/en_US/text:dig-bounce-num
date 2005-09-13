@@ -1,0 +1,21 @@
+# $Id$
+
+I've kept a list of which digests from the <#L#>-digest mailing list
+have bounced from your address. For each digest you missed, I have
+noted the number of the first message in the digest.
+
+</#a/>
+I do not archive the digests themselves, but you may be able to
+get the messages from the main list archive.
+
+To retrieve a set of messages 123-145 (a maximum of 100 per request),
+send an empty message to:
+   <<#L#>-get.123_145@<#H#>>
+
+To receive a subject and author list for the last 100 or so messages,
+send an empty message to:
+   <<#L#>-index@<#H#>>
+
+</#/>
+Here are the digest message numbers:
+

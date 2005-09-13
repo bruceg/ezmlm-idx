@@ -1,0 +1,45 @@
+# $Id$
+Esta mensagem foi submetida à lista <#L#>@<#H#>.
+Se você aprova a mensagem para distribuição a todos
+os assinantes, por favor envie mensagem para:
+
+!A
+
+Na prática, você estará enviado para este endereço quando pressionar o
+botão "reply" ou "responder". Você pode confirmar se o endereço começa com
+"<#L#>-accept". Se isto não funcionar, simplesmente copie
+o endereço e cole-o para o campo "To:" de uma nova mensagem.
+</#x/>
+
+Alternativamente, clique aqui:
+	mailto:<#A#>
+
+</#/>
+
+Para rejeitar esta mensagem, retornando-a para o remetente,
+por favor envie uma mensagem para:
+
+!R
+
+Na prática, é fácil usar o botão "reply-to-all" ou "responder
+para todos", e então remover todos os endereços, exceto o que
+começar com
+"<#L#>-reject".
+</#x/>
+
+Alternativamente, clique aqui:
+	mailto:<#R#>
+</#/>
+
+Você não precisa copiar esta mensagem na sua resposta para
+aceitá-la ou rejeitá-la. Se você quiser enviar um comentário para
+o remetente de uma mensagem rejeitada, por favor inclua o comentário
+entre duas linhas começando com três sinais de porcentagem ('%').
+
+%%% Início do comentário
+%%% Fim do comentário
+
+Obrigado pela sua ajuda!
+
+--- Inclusão, por favor encontre a mensagem postada.
+

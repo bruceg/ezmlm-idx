@@ -1,0 +1,35 @@
+# $Id$
+¡Vaya!, parece que el número de confirmación no es válido. 
+
+La principal causa por la que los números se invalidan es su
+expiración. Yo tengo que recibir confirmación de cada petición en
+un plazo de diez días. Además, asegúrese de que el número de
+confirmación completo estaba incluido en la respuesta que me
+mandó. Algunos programas de correo tienen la (mala) costumbre de
+cortar parte de la dirección de respuesta, que puede ser muy
+larga.
+
+He configurado un nuevo número de confirmación. Para confirmar
+que le gustaría que
+
+!A
+
+fuese añadida a la lista de correo <#l#>, por favor, mande un
+mensaje en blanco a esta dirección:
+
+!R
+</#x/>
+
+o haga clic aquí:
+
+	mailto:<#R#>
+</#/>
+
+De nuevo, compruebe cuidadosamente la dirección de la respuesta
+para asegurarse que esté todo incluido antes de confirmar su
+suscripción.
+
+Perdone las molestias.
+
+	<#L#>-Propietario <<#l#>-owner@<#H#>>
+

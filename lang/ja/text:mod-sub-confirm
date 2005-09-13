@@ -1,0 +1,33 @@
+# $Id$
+以下の address
+
+!A
+
+を mailing list <#L#> の
+購読者として加えて欲しい旨の request が届きました。
+（この request が購読希望者本人からの request の場合は、
+  必要な確認は済んでいます）
+
+購読を認める場合は、空の message を以下の address
+
+!R
+
+に reply して下さい。
+
+通常は Mail User Agent (MUA) の reply の機能だけで十分な筈です。
+それがうまく行かない場合は、
+
+        To: <#R#>
+
+を手動で設定して message を送って下さい。
+</#x/>
+
+MUA によっては
+
+        mailto:<#R#>
+
+を click するだけで準備が出来るでしょう。
+</#/>
+
+購読を認めない場合は、この message を無視してください。
+

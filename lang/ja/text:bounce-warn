@@ -1,0 +1,12 @@
+# $Id$
+
+貴方宛に mailing list <#L#> が送った message の幾つかで
+配送に失敗しました。
+
+配送に失敗した message の最初の一通を添付しておきます。
+
+もしもこの message 自体も配送に失敗した場合には
+ezmlm は確認の message を送ります。その message も配送に失敗した場合
+貴方の address は mailing list <#L#> から
+無条件に削除されます。
+

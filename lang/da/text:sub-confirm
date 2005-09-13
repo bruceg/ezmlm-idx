@@ -1,0 +1,32 @@
+# $Id$
+Hvis du vil bekræfte at du vil have
+
+!A
+
+tilføjet til <#l#> listen, send et tomt svar til denne adresse:
+
+!R
+
+Normalt kan det simpelthen gøres ved at besvare dette brev.
+Der behøver ikke være noget indhold i brevet.
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#R#>
+</#/>
+
+Denne bekræftelse tjener to formål. For det firste konstateres om
+jeg er i stand til at sende post til dig. For det andet sikrer det
+dig imod at andre melder sig til med din adresse.
+
+</#q/>
+Nogle post programmer er for dårlige og kan ikke håndtere lange
+adresser. Hvis du er ramt af et sådant, kan du istedet skrive
+til <<#L#>-request@<#H#>> og indsætte
+hele adressen ovenfor i emne linjen.
+
+</#s/>
+Denne liste er modereret. Når du har sendt denne bekræftelse,
+vil moderator få besked om af godkende. Du får besked når
+din tilmelding er blevet aktiv.
+

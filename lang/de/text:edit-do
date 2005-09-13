@@ -1,0 +1,18 @@
+# $Id$
+</#n/>
+Bitte bearbeiten Sie den folgenden Text und senden Sie ihn an:
+
+!R
+
+Die Funktion "Beantworten" in Ihrem Mailprogramm sollte diese Adresse
+automatisch benutzen.
+
+Solange Sie die Markierungszeilen nicht verändern, kann ich
+Quote-Zeichen (Zitat-Markierungen, in der Regel '> '), die Ihr
+Mail-Programm vor dem Text einfügt, selbständig wieder entfernen.
+
+Markierungszeilen sind Zeilen, die mit '%%%' beginnen. Sie dürfen
+nicht geändert werden (vom Mailprogramm eingefügte Zitat-Markierungen
+sind akzeptabel).
+
+

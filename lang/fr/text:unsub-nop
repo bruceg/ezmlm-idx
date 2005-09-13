@@ -1,0 +1,42 @@
+# $Id$
+Desole, mais il est impossible de satisfaire votre requete, etant
+donne que l'adresse
+
+!A
+
+ne figurait pas sur la liste de diffusion <#l#> lorsque
+j'ai recu votre requete, et n'est toujours pas abonnee.
+
+Si vous annulez votre abonnement, mais continuez pourtant a recevoir
+des messages de la liste, vous avez probablement effectue votre
+inscription sous une adresse differente de celle que vous utilisez
+actuellement.
+Verifiez dans l'en-tete une ligne de la forme :
+
+'Return-Path: <<#l#>-return-1234-utilisateur=example.com@<#H#>>'
+
+Cela reflete une inscription de l'adresse
+"utilisateur@example.com". Dans ce cas, il est possible de
+se desabonner en ecrivant a :
+'<#l#>-unsubscribe-utilisateur=example.com@<#H#>'.
+
+Reprenez cet exemple apres y avoir mis votre adresse d'inscription.
+
+Si vous avez recu des messages disposant dans leur en-tete d'une
+ligne "List-Unsubscribe:", vous pouvez directement ecrire a cette
+adresse. Inutile de preciser quoi que ce soit d'autre : il est
+deja personnalise.
+
+Dans certains programmes, il est necessaires d'activer des options
+pour faire figurer toutes les lignes de l'en-tete des messages.
+
+Si malgre tout cela ne fonctionne toujours pas, je suis au regret
+de vous informer que je ne peut guere vous aider davantage.
+Il vous reste donc a faire suivre (Forward) un message au
+proprietaire de la liste accompagne d'un petit mot doux.
+Voici son adresse :
+
+    <#l#>-owner@<#H#>
+
+N'etant pas un robot, sa reponse ne sera pas immediate.
+

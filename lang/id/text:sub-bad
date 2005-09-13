@@ -1,0 +1,30 @@
+# $Id$
+Oops, nomor konfirmasi tersebut kelihatannya tidak valid.
+
+Sebab yang paling umum untuk nomor yang invalid adalah kadaluarsa. Kami
+harus menerima konfirmasi dari setiap permohonan dalam jangka waktu 10 hari.
+Juga, pastikan bahwa seluruh nomor konfirmasi masuk dalam reply yang anda
+kirimkan ke kami. Beberapa program e-mail mempunyai kebiasaan untuk
+memotong sebagian dari alamat reply, yang kadang sangat panjang.
+
+Kami telah membuat sebuah nomor konfirmasi baru. Kalau anda ingin
+
+!A
+
+masuk ke dalam milis <#l#>,
+kirim mail kosong ke alamat:
+
+!R
+</#x/>
+
+atau klik di sini:
+	mailto:<#R#>
+</#/>
+
+Sekali lagi, cek alamat replynya secara cermat untuk memastikan bahwa
+semuanya telah masuk sebelum anda mengirim konfirmasi anda.
+
+Maaf atas ketidaknyamanan ini.
+
+	<#L#>-Owner <<#l#>-owner@<#H#>>
+

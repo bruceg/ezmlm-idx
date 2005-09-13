@@ -1,0 +1,34 @@
+# $Id$
+Proszê o decyzjê czy b±d±c moderatorem zgadzasz siê na wys³anie
+za³±czonej przesy³ki na listê o nazwie <#L#>.
+
+Aby zgodziæ siê na natychmiastowe wys³anie listu do wszystkich
+prenumeratorów, wy¶lij, proszê, list na adres:
+
+!A
+</#x/>
+
+mailto:<#A#>
+</#/>
+
+Aby odmówiæ wys³ania listu, i zwróciæ go nadawcy, proszê
+przes³aæ wiadomosæ na adres: 
+
+!R
+</#x/>
+
+mailto:<#R#>
+</#/>
+
+Nie musisz za³±czaæ kopii listu, który akceptujesz (lub nie) do
+wys³ania na listê. Je¿eli chcesz przes³aæ jak±¶ notkê do nadawcy
+odrzuconego listu, zawrzyj j± pomiêdzy dwie linie zaczynaj±ce siê
+trzema znakami procentu ("%").
+
+%%% Pocz±tek notki
+%%% Koniec notki
+
+Dziêkujê za pomoc!
+
+--- W za³±czniu mo¿esz znale¼æ wys³any list.
+

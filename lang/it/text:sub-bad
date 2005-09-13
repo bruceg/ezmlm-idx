@@ -1,0 +1,32 @@
+# $Id$
+Spiacente, il tuo numero di conferma sembra essere non valido.
+
+La ragione più comune per i numeri non validi è la scadenza. Devo 
+ricevere conferma di ogni richiesta entro 10 giorni. Oppure
+assicurati che era incluso tutto il numero di conferma nella
+risposta che mi hai inviato.  Alcuni programmi di posta elettronica
+hanno l'abitudine di eliminare  qualcosa nell'indirizzo di risposta
+che può essere abbastanza lungo.
+
+Ho predisposto un altro numero di conferma. Per confermare che vuoi
+che
+
+!A
+
+venga aggiunto alla mailing list <#l#>, per favore spedisci una
+risposta vuota a questo indirizzo:
+
+!R
+</#x/>
+
+oppure clicca qui:
+	mailto:<#R#>
+</#/>
+
+Di nuovo, controlla l'indirizzo di risposta per assicurarti che sia tutto
+incluso prima di confermare la tua iscrizione.
+
+Spiacente per l'inconveniente.
+
+	<#L#>-Owner <<#l#>-owner@<#H#>>
+

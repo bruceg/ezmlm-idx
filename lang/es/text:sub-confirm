@@ -1,0 +1,38 @@
+# $Id$
+Para confirmar que le gustaría que
+
+!A
+
+fuese añadido a la lista de correo <#l#>, por favor, envíe un
+mensaje en blanco a esta dirección:
+
+!R
+
+Normalmente esto ocurre al pulsar el botón "Responder". Si eso no
+funciona, es suficiente copiar la dirección y pegarla en el campo
+"Para:" de un nuevo mensaje. 
+</#x/>
+
+o haga clic aquí:
+
+	mailto:<#R#>
+</#/>
+
+Esta confirmación cumple dos propósitos. Primero, verifica que
+puedo mandarle correo. Segundo, le protege en el caso de que
+alguien intente falsificar una petición de suscripción en su
+nombre.
+
+</#q/>
+
+Algunos programas de correo no pueden manejar direcciones largas.
+Si no puede responder a esta petición, envíe un mensaje a
+<<#L#>-request@<#H#>> y ponga la dirección entera escrita arriba
+en la línea de "Asunto:".
+
+</#s/>
+
+Esta lista está moderada. Una vez que haya enviado esta
+confirmación, se mandará la petición al moderador de la lista.
+Cuando su suscripción haya sido activada, se lo notificaré.
+

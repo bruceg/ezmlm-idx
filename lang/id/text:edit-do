@@ -1,0 +1,16 @@
+# $Id$
+</#n/>
+Silakan edit file teks berikut dan kirimkan ke alamat ini:
+
+!R
+
+Program mail anda punya Reply yang menggunakan alamat ini secara otomatis.
+
+Kami dapat menghapus tanda-tanda kutip yang ditambahkan pada teks oleh
+program mail anda, jika anda tidak mengedit baris-baris penanda tersebut.
+
+Baris-baris penanda tersebut dimulai dengan '%%%'.  Jangan merubahnya
+(karakter-karakter ekstra yang ditambahkan oleh program mail anda pada
+baris pertama dapat diterima).
+
+

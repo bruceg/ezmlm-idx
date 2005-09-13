@@ -1,0 +1,24 @@
+# $Id$
+Sembra che tu abbia spedito il messaggio allegato alla mailing
+list <#L#>@<#H#> .
+Per impedire abusi della lista, tutti i mittenti devono confermare
+i loro messaggi. Se tu intendi confermare la distribuzione del tuo
+messaggio a tutti gli iscritti, scrivi all'indirizzo:
+
+!A
+
+Di solito, è sufficiente premere il bottone "rispondi a" e poi
+eventualmente controllare che l'indirizzo a cui va la risposta
+cominci con "<#L#>-confirm".
+Se non funziona, copia nel campo "A:" di un nuovo messaggio
+l'indirizzo.
+</#x/>
+
+Oppure, clicca qui:
+      mailto:<#A#>
+</#/>
+Se non intendi confermare la pubblicazione del messaggio,
+non occorre che tu faccia nulla.
+
+--- In allegato, per favore verifica il messaggio inviato.
+

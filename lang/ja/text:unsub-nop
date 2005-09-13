@@ -1,0 +1,50 @@
+# $Id$
+以下の address
+
+!A
+
+は mailing list <#L#> の
+購読者ではありません。
+
+        -       -       -       -       -       -       -       -
+
+購読を止めたにも関わらず、mailing list <#L#>
+からの mail が届く場合は、貴方が現在使っている e-mail address とは
+違う address で mailing list <#L#> を
+購読しているのかもしれません。
+
+hearder の以下の部分に
+
+'Return-Path: <<#L#>-return-1234-user=example.com@<#H#>>'
+
+貴方がどの address で購読をしているのかが現れています。
+（この場合、user@example.com で購読をしていることになります）
+
+address を明示して購読中止の request を出す場合は、以下の様に
+
+        <<#L#>-unsubscribe-user=example.com@<#H#>>
+
+'<#L#>-unsubscribe-' の後ろに、user@example.com を user=example.com に
+書き換えた物を繋いで下さい。
+
+幾つかの Mail User Agent (MUA) は、Return-Path を見るためには
+特別な操作を必要になります。
+
+        * Eudora 4.0 だと『Blah blah ...』ボタンを click する
+        * PMMail だと Window menu の『Show entire message/header』
+          ボタンを click する
+
+        -       -       -       -       -       -       -       -
+
+address を明示した購読中止もうまくいかない場合は、申し訳ありませんが
+
+        * 貴方が何をしようとして失敗したのか
+        * ezmlm からの message
+        * 購読中止を希望する address
+
+を添付して、mailing list <#L#> の owner の
+
+    <#L#>-owner@<#H#>
+
+迄送って下さい。（返事に時間がかかるかもしれませんがご了承下さい）
+

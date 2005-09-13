@@ -1,0 +1,168 @@
+# $Id$
+Terima kasih atas kesediaan anda untuk memoderatori
+milis <#L#>@<#H#>.
+
+Perintah-perintah yang kami punya agak sedikit berbeda dari milis-milis 
+yang lain, tapi kami harap anda dapat menggunakannya dengan mudah.
+
+Berikut adalah beberapa perintah untuk tugas-tugas yang mungkin harus
+anda lakukan sebagai list-owner dan/atau moderator.
+
+Perintah-perintah umum akan ada di bagian akhir mail ini.
+
+Pendaftaran jarak jauh
+----------------------
+Sebagai moderator, anda dapat mendaftarkan dan menghapuskan siapa saja ke
+dalam milis. Untuk mendaftarkan "john@example.com", taruh '-' setelah kata
+perintahnya, kemudian alamat emailnya dengan menggunakan tanda '=' sebagai
+ganti dari '@'. Contoh, untuk mendaftarkan alamat tersebut, kirim mail ke:
+   <<#L#>-subscribe-john=example.com@<#H#>>
+
+Dengan cara yang sama, untuk menghapus alamat tersebut, kirim mail ke:
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
+
+</#d/>
+Untuk list digest:
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+
+</#/>
+Itu saja. Tidak perlu subjek dan isi dari postingnya!
+
+</#r/>
+Kami akan mengirimkan sebuah permohonan konfirmasi, untuk memastikan
+bahwa anda benar-benar mengirimkan permohonan tersebut. Yang perlu anda
+lakukan adalah mereply ke mail konfirmasi tersebut.
+</#R/>
+Kami akan mengirimkan sebuah permohonan konfirmasi ke alamat tersebut,
+dalam hal ini <john@example.com>. Yang bersangkutan tinggal menjawab
+mail konfirmasi tersebut.
+</#/>
+
+Konfirmasi-konfirmasi tersebut sangat penting untuk menghindari pihak
+ketiga untuk menambah atau menghapus sebuah alamat e-mail ke dalam list.
+
+Kami akan memberitahu pelanggan tersebut ketika status berlangganannya
+telah berubah.
+
+Berlangganan
+------------
+
+Setiap pemakai dapat berlangganan atau berhenti dengan mengirim e-mail ke:
+
+<#L#>-subscribe@<#H#>
+<#L#>-unsubscribe@<#H#>
+
+</#d/>
+Untuk list digest:
+
+<#L#>-digest-subscribe@<#H#>
+<#L#>-digest-unsubscribe@<#H#>
+
+</#/>
+Si fulan akan menerima sebuah permohonan konfirmasi untuk memastikan
+bahwa dialah pemilik alamat e-mail yang sebenarnya.  Setelah ini telah dapat
+dikonfirmasikan, yang bersangkutan akan dihapus dari list.
+
+</#s/>
+Karena milis ini telah dimoderatori untuk dapat berlangganan, kami akan
+mengirimkan permohonan konfirmasi kedua kepada moderator. Karena si
+fulan telah berkeinginan untuk masuk ke dalam list, anda sebagai
+moderator dapat percaya bahwa alamat pemakai tersebut adalah benar. Jika
+anda ingin menyetujui permohonan tersebut, reply ke mail CONFIRM kami.
+Jika tidak, anda dapat menghapus mail dari kami ini atau mungkin
+mengkontak calon pelanggan list untuk keterangan lebih lanjut.
+</#S/>
+Untuk berlangganan adalah sama caranya.
+</#/>
+
+Si fulan dapat juga mengirim mail ke:
+
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+
+untuk mendapatkan mailnya terkirim ke "mary@example.com".  Hanya jika 
+yang bersangkutan menerima mail pada alamat tersebut, dia akan menerima
+permohonan konfirmasi tersebut dan dapat mereplynya.
+
+Alamat dan identitas anda tidak akan tampak pada mail ke si pelanggan,
+kecuali kalau anda mengirim mail secara langsung ke yang bersangkutan.
+
+</#rl/>
+Untuk mendapatkan daftar pelanggan <#L#>@<#H#>, kirim mail ke:
+   <<#L#>-list@<#H#>>
+
+Untuk mendapatkan daftar log transaksi <#L#>@<#H#>, kirim mail ke:
+   <<#L#>-log@<#H#>>
+
+</#rld/>
+Untuk pelanggan-pelanggan digest:
+   <<#L#>-digest-list@<#H#>>
+dan:
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+Anda dapat dari jarak jauh mengedit file-file yang dikirim oleh list.
+Untuk mendapatkan daftar file dan petunjuk untuk mengeditnya, e-mail ke:
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Posting-posting termoderatori
+-----------------------------
+Ketika posting-posting dimoderatori, kami akan menyimpan posting yang
+terkirim dan mengirimkan kopinya ke anda berikut petunjuk-petunjuk.
+Posting ke anda akan mempunyai subjek "MODERATE for ..."
+
+Untuk menyetujui posting tersebut, reply ke 'Reply-To:' yang telah kami
+persiapkan dengan alamat "accept" yang benar.  Anda tidak perlu untuk
+memasukkan postingnya sendiri.  Bahkan, kami tidak akan menghiraukan
+apapun yang anda kirim ke kami asalkan alamat yang anda kirim sudah benar.
+
+Jika anda ingin menolak, mail ke alamat 'From:' yang telah kami persiapkan
+dengan alamat "reject" yang benar. Ini dapat dilakukan dengan cara
+'reply-to-all', kemudian menghapus alamat selain alamat 'reject' tersebut.
+Anda dapat memberi komentar ke si pengirim diantara dua baris yang dimulai
+dengan tiga buah '%'. Komentar ini hanya akan dikirim ke si fulan yang
+yang postingnya ditolak. Sekali lagi, identitas anda akan dirahasiakan.
+
+Kami akan memproses posting sesuai dengan reply pertama yang kami terima.
+Jika anda mengirim mail untuk menyetujui posting yang sebelumnya sudah
+ditolak, atau sebaliknya, kami akan memberitahu anda.
+
+Jika kami tidak menerima reply dari moderator dalam waktu tertentu
+(biasanya 5 hari), kami akan mengembalikan posting tersebut ke si pengirim
+dengan penjelasan tentang apa yang telah terjadi. Anda sebagai administrator
+dapat juga mengatur listnya untuk menghapus posting-posting tersebut tanpa
+pemberitahuan, juga tanpa perlu dikembalikan ke si pengirim.
+</#/>
+
+Vakansi
+-------
+Jika sedang berada pada alamat yang berbeda, forward semua posting yang
+mempunyai header 'Mailing-List:' yang benar (atau semuanya yang mempunyai
+subjek dengan awalan 'MODERATE for <#L#>@<#H#>' atau
+'CONFIRM subscribe to <#L#>@<#H#>') ke alamat yang baru. Anda kemudian dapat
+memoderatorinya dari alamat yang baru. Atau anda dapat memforwardkan
+posting-posting tersebut ke teman anda sehingga dia dapat memoderatorinya
+untuk anda. Mohon untuk meminta persetujuan dari pemilik list terlebih dahulu.
+
+Jika anda ingin secara otomatis menyetujui semua permohonan-permohonan
+ketika anda sedang pergi, atur program mail anda untuk mereply otomatis ke
+semua posting yang mempunyai subjek sesuai keterangan di atas.
+
+</#r/>
+Jika anda mencoba untuk melakukan administrasi jarak jauh dari sebuah
+alamat yang bukan milik anda, si pemohon, bukan anda, akan dimintakan
+konfirmasinya.  Setelah itu, sebuah permohonan konfirmasi akan
+dikirimkan ke semua moderator.  Kami lakukan itu karena kami tidak dapat
+mengetahui apakah permohonan tersebut benar berasal dari anda.
+
+Tolong perhatikan bahwa permohonan asli anda (dan alamat anda) akan
+dikirimkan ke si pemohon dalam hal ini!
+</#/>
+
+Semoga sukses!
+
+PS: Silakan kontak si pemilik list (<#L#>-owner@<#H#>) jika anda
+mempunyai pertanyaan-pertanyaan atau masalah-masalah.
+

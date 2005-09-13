@@ -1,0 +1,168 @@
+# $Id$
+Thank you for agreeing to moderate the <#L#>@<#H#>
+mailing list.
+
+My commands are a little different from other mailing lists,
+but I think you will find them intuitive and easy to use.
+
+Here are some instructions for the tasks you may have to perform
+as a list-owner and/or moderator.
+
+General list instructions follow at the end of this message.
+
+Remote subscription
+-------------------
+As a moderator, you can subscribe and unsubscribe any address to
+the mailing list. To subscribe "john@example.com", simply put
+a hyphen after the command word, then his address with '=' instead
+of the '@'. For instance, to subscribe that address, send mail to:
+   <<#L#>-subscribe-john=example.com@<#H#>>
+
+You can similarly remove the address by sending a message to:
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
+
+</#d/>
+For the digest list:
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+
+</#/>
+That's all. No subject and no message body needed!
+
+</#r/>
+I will send you a confirmation request, to make sure
+that you really sent the request. Simply reply to the
+message, and your wish has been granted.
+</#R/>
+I will send a confirmation request to the user address, in this
+case <john@example.com>. All the user has to do is to reply to 
+this confirmation request message.
+</#/>
+
+The confirmations are necessary to make it extremely hard
+for a third party to add or remove an address to the list.
+
+I will notify the user when his/her subscriber status
+has changed.
+
+Subscription
+------------
+
+Any user can subscribe or unsubscribe by sending mail to:
+
+    <<#L#>-subscribe@<#H#>>
+    <<#L#>-unsubscribe@<#H#>>
+
+</#d/>
+For the digest list:
+
+    <<#L#>-digest-subscribe@<#H#>>
+    <<#L#>-digest-unsubscribe@<#H#>>
+
+</#/>
+The user will receive a confirmation request to make
+sure s/he controls the subscription address. Once this
+is verified the user is unsubscribed.
+
+</#s/>
+Since this list is moderated for subscriptions, I will send a
+second confirmation request to the moderator(s). Since the user
+has already confirmed the desire to be on the list, you as the
+moderator can be highly confident that the subscriber address is
+real. If you want to approve the users request, simply reply to
+my CONFIRM message. If not, you can simply delete my message or
+possibly contact the potential subscriber for more information.
+</#S/>
+Subscriptions work the same way.
+</#/>
+
+The user can also use:
+
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+
+to have mail sent to "mary@example.com". Only if she receives mail
+at this address will she receive the confirmation request and be
+able to reply to it.
+
+Your address and identity will not be revealed to the subscriber,
+unless you send mail directly to the user.
+
+</#rl/>
+To get a subscriber list for <#L#>@<#H#>, send a message to:
+   <<#L#>-list@<#H#>>
+
+To get a list transaction log <#L#>@<#H#>, send a message to:
+   <<#L#>-log@<#H#>>
+
+</#rld/>
+For digest subscribers:
+   <<#L#>-digest-list@<#H#>>
+and:
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+You can remotely edit the text files that make up the responses the
+list sends out. To get a list of files and editing instructions, mail:
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Moderated posts
+---------------
+When posts are moderated, I will save the posted message and send
+you a copy together with instructions. The message to you will
+have "MODERATE for ..." as the subject.
+
+To accept the post, just reply to the 'Reply-To:', which I have
+configured with the correct "accept" address address. You do not need
+to include the post itself. In fact, I will ignore anything you send
+me as long as the address you send to is correct.
+
+If you want to reject it, send mail to the 'From:' address, which
+I have configured with the correct "reject" address. This can
+usually be done by 'reply-to-all', then deleting any address other
+than the "reject" address. You may add a comment to the sender between
+two lines starting with three '%'. I will send only this comment to the
+sender with the rejected post. Again, I will not reveal your identity.
+
+I will process the message according to the first reply I receive.
+If you send me a request to accept a message that has already been
+rejected or vice versa, I will let you know.
+
+If I receive no moderator replies within a certain period of
+time (normally 5 days), I will return the message to the sender
+with an explanation of what happened. Your administrator can also
+set up the list so that such "ignored" messages are simply deleted
+without notification, rather than returned to sender.
+</#/>
+
+Vacations
+---------
+If you are temporarily at a different address, just forward all messages
+that have the correct 'Mailing-List:' header (or all that have subjects
+starting with 'MODERATE for <#L#>@<#H#>'
+or 'CONFIRM subscribe to <#L#>@<#H#>') to the
+new address. You can then moderate from the new address. Alternatively,
+you can forward the messages to a friend so that s/he can moderate
+for you. Please OK this with the list owner first.
+
+If you would like to automatically approve all requests while you
+are gone, set up you mail client to auto-reply to messages that
+have subjects meeting the above criteria.
+
+</#r/>
+If you try to do remote administration from an address that is not
+your own, the subscriber, not you, will be asked to confirm. After
+that, a moderator confirm request is sent to all moderators.
+I'm doing this because I have no way of knowing that it is you that
+sent the original request.
+
+Please note that your original request (and your address) are sent to
+the subscriber in this case!
+</#/>
+
+Good luck!
+
+PS: Please contact the list owner (<#L#>-owner@<#H#>) if you
+have any questions or problems.
+

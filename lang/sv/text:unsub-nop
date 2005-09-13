@@ -1,0 +1,40 @@
+# $Id$
+Tyvärr kan inte din förfrågan utföras eftersom adressen:
+
+!A
+
+var inte med på <#l#> listan.
+
+Ifall du har avslutat din prenumeration, men fortfarande får brev,
+är du prenumererad under en annan adress än den du för närvarande
+använder. Titta i brevhuvudet (header) efter:
+
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+
+Det visar din prenumerationsadress som "user@example.com".
+För att avsluta din prenumeration med den adressen, skicka
+ett brev till:
+<#l#>-unsubscribe-user=example.com@<#H#>
+
+Glöm inte att anpassa user=example.com till din egen adress.
+
+Ifall meddelandet har en "List-Unsubscribe:" fält i brevhuvudet,
+kan du skicka ett meddelande till adressen i det fältet.
+Det är redan anpassat för din adress.
+
+I vissa email program måste du göra vissa inställningar för att
+se "return path" fältet i brevhuvudet:
+
+I Eudora 4.0, klicka på "Blah blah ..." knappen.
+I PMMail, klicka på "Window->Show entire message/header". 
+
+Ifall det inte fungerar kan vi tyvärr inte göra mer.
+Vidaresänd ett brev från listan, tillsammans med ett meddelande
+om vad du vill ha gjort och en lista som du tror att du kan ha
+prenumererat under till listägaren:
+
+    <<#l#>-owner@<#H#>>
+
+som kan ta hand om det. Det kan dock dröja en liten stund innan du får
+ett svar.
+

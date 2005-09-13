@@ -1,0 +1,46 @@
+# $Id$
+
+--- Comandos administrativos para la lista <#l#> ---
+
+Puedo gestionar automáticamente peticiones administrativas. Por
+favor, no envíe este tipo de peticiones a la lista. Envíelas a la
+dirección-comando adecuada:
+
+Para obtener ayuda y una descripción de los comandos disponibles,
+mande un mensaje a:
+
+   <<#L#>-help@<#H#>>
+
+Para suscribirse a la lista, mande un mensaje a:
+
+   <<#L#>-subscribe@<#H#>>
+
+Para eliminar su dirección de la lista, simplemente mande un
+mensaje a la dirección que hay en la cabecera
+``List-Unsubscribe'' de cualquier mensaje de la lista. Si usted
+no ha cambiado su dirección desde que se suscribió, también puede
+enviar un mensaje a:
+
+   <<#L#>-unsubscribe@<#H#>>
+
+</#d/>
+o, para los resúmenes, a:
+
+   <<#L#>-unsubscribe@<#H#>>
+
+</#/>
+
+Para añadir o eliminar direcciones, le enviaré un mensaje de
+confirmación a esa dirección. Cuando lo reciba, pulse el botón
+'Responder' para completar la transacción.
+
+Si necesita contactar con el propietario de la lista, por favor,
+mande un mensaje a:
+
+    <<#L#>-owner@<#H#>>
+
+Por favor, incluya una lista de mensajes REENVIADOS con TODAS LAS
+CABECERAS intactas para que sea más fácil ayudarle.
+
+--- Le adjunto una copia de la petición que he recibido.
+

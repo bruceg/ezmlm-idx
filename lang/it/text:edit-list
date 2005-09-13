@@ -1,0 +1,41 @@
+# $Id$
+</#n/>
+Il comando <#L#>-edit.file può essere usato da un amministratore remoto per
+modificare il file di testo che costituiscono il corpo delle risposte dalla
+mailing list <#L#>@<#H#> .
+
+Quello che segue è una lista dei nomi dei file delle risposte e una breve
+descrizione di quando è utilizzato il loro contenuto. Per modificare un file,
+spedisci semplicemente una e-mail a <#L#>-edit.file@<#H#>,
+sostituendo 'file' con il nome del file. Le istruzioni di modifica sono
+inviate con il file.
+
+File                Utilizzo
+
+bottom        la fine di tutte le risposte. informazioni generali sui comandi
+digest        sezione "amministrativa" per le raccolte. 
+faq           domande più frequenti relative alla lista.
+get_bad       al posto dei messaggi non trovati nell'archivio.
+help          aiuto generico (tra l'inizio e la fine).
+info          informazioni sulla lista.
+mod_help      aiuto specifico per i moderatori.
+mod_reject    al mittente dei messaggi rifiutati.
+mod_request   ai moderatori insieme con il messaggio.
+mod_sub       agli iscritti dopo che il moderatore ha confermato l'iscrizione.
+mod_sub_confirm  ai moderatori per avere conferma delle iscrizioni.
+mod_timeout   al mittente del messaggio scaduto. 
+mod_unsub_confirm  all'amministratore remoto per chiedere conferma di cancellazione
+post-confirm  al mittente di un messaggio da confermare.
+sub_bad        all'iscritto se la richiesta di iscrizione è sbagliata.
+sub_confirm   all'iscritto per chiedere conferma dell'iscrizione.
+sub_nop       all'iscritto dopo una re-iscrizione.
+sub_ok        all'iscritto dopo che è stata accettata l'iscrizione.
+top           l'inizio di tutte le risposte.
+</#tn/>
+trailer       aggiunto ai messaggi spediti fuori dalla lista
+</#n/>
+unsub_bad     all'iscritto se la conferma di cancellazione è sbagliata.
+unsub_confirm all'iscritto per chiedere conferma di cancellazione.
+unsub_nop     al non-iscritto dopo la cancellazione.
+unsub_ok      all'ex iscritto dopo l'avvenuta cancellazione.
+

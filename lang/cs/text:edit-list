@@ -1,0 +1,39 @@
+# $Id$
+</#n/>
+Pøíkaz <#L#>-edit.soubor mù¾e být pou¾it vzdáleným správcem k editaci
+textových souborù, ze kterých se skládají odpovìdi pro list <#L#>@<#H#>.
+
+Následuje seznam pøíslu¹ných souborù a krátký popis toho, kdy je
+jejich obsah vyu¾íván. Chcete-li editovat soubor, staèí poslat
+mail na adresu <#L#>-edit.soubor<#H#>, pøièem¾ je nutno "soubor"
+nahradit skuteèným jménem souboru. Obdr¾íte soubor spolu s instrukcemi,
+jak tento soubor editovat.
+
+Soubor              Pou¾ití
+
+bottom              pøidává se za ka¾dou odpovìï. V¹eobecné informace.
+digest              "administrativní" èást digestù.
+faq                 èasto kladené dotazy, specifické pro tento list.
+get_bad             neni-li zpráva nalezena v archívu.
+help                v¹eobecná nápovìda (mezi "top" a "bottom").
+info                informace o listu. První øádek by mìl dávat smysl sám o sobì.
+mod_help            nápovìda pro moderátory.
+mod_reject          odesílateli odmítnuté zprávy.
+mod_request         moderátorovi spolu s pøíspìvkem.
+mod_sub             pøihla¹ovanému, jakmile jeho pøihlá¹ení potvrdí moderátor.
+mod_sub_confirm     moderátorovi s ¾ádostí o potvrzení pøihlá¹ení.
+mod_timeout         odesílateli, nestihne-li moderátor potvrdit zprávu.
+mod_unsub_confirm   administrátorovi s ¾ádostí o potvrzení odhlá¹ení.
+sub_bad             odesílateli, bylo-li pøihlá¹ení neplatné.
+sub_confirm         odesílateli - ¾ádost potvrzení pøihlá¹ení.
+sub_nop             odesílateli - pøi pokusu o opìtovné pøihlá¹ení
+sub_ok              odesílateli - oznamuje pøihlá¹ení.
+top                 zaèátek v¹ech odpovìdí.
+</#tn/>
+trailer             pøidá se za ka¾dý pøíspìvek do listu.
+</#n/>
+unsub_bad           odesílateli, byla li ¾ádost o odhlá¹ení neplatná.
+unsub_confirm       odesílateli - ¾ádost o potvrzení odhlá¹ení.
+unsub_nop           odesílateli - nebyl-li pøihlá¹en a sna¾il-li se odhlásit.
+unsub_ok            odesílateli po úspì¹ném odhlá¹ení.
+

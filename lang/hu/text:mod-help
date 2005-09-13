@@ -1,0 +1,169 @@
+# $Id$
+Koszonjuk, hogy moderalod a(z) <#L#>@<#H#> listat.
+
+A parancsok kicsit kulonboznek a tobbi levelezos listatol, de
+azt hiszem, intuitivnak es konnyen hasznalhatonak fogod erezni.
+
+Kezdjuk talan nehany teendo instrukcioival, amit listatulajdonoskent,
+es/vagy moderatorkent vegezned kell.
+
+Az altalanos lista instrukciokat a level vegen talalod.
+
+Tavoli feliratkozas
+-------------------
+Mint moderator, fel es le tudsz iratni barmilyen cimet a listara.
+Feliratni "john@example.com"-t abbol all, hogy kotojelet irsz a
+parancs utan, majd hozzairod az email cimet, a "@" jelet kicserelve
+"=" jelre.  A peldanal maradva a feliratashoz ez a cim jarul:
+   <<#L#>-subscribe-john=example.com@<#H#>>
+
+Ugyanilyen egyszeruen tudsz leirattatni egy cimet:
+   <<#L#>-unsubscribe-john=example.com@<#H#>>
+
+</#d/>
+Ugyanez digest-re:
+   <<#L#>-digest-subscribe-john=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+
+</#/>
+Ennyi az egesz. Se targy, se szovegtorzs nem szukseges.
+
+</#r/>
+Ezutan egy megerositesi kerelmet kuldok Neked, hogy
+meggyozodjunk a keres valodisagarol.  Arra egyszeruen csak
+valaszolnod kell, ami utan a kivansagod teljesul.
+</#R/>
+Ezutan kuldeni fogok egy megerositesi kerelmet a felhasznalonak,
+jelen esetben <john@example.com>-nek.  Neki is csak valaszolnia
+kell a levelre.
+</#/>
+
+A megerositesek azert szuksegesek, hogy megnehezitsuk a dolgat
+olyan "mokas" embereknek, akik fel- vagy leiratkoztatnak masokat
+listakra/rol.
+
+A felhasznalot ertesiteni fogom, ha a feliratkozasi statusza
+megvaltozott.
+
+Feliratkozas
+------------
+
+Barki fel- vagy leiratkozhat, ha levelet kuld az alabbi cimekre:
+
+    <<#L#>-subscribe@<#H#>>
+    <<#L#>-unsubscribe@<#H#>>
+
+</#d/>
+Vagy a digest cimekre:
+
+    <<#L#>-digest-subscribe@<#H#>>
+    <<#L#>-digest-unsubscribe@<#H#>>
+
+</#/>
+A felhasznalo megerositesi kerelmet kap, hogy biztosak legyunk
+benne, hogy az o akarata ervenyesul. Ha ez megtortent, az
+ellenorzott felhasznalo fel- vagy leiratkozasa megtortenik.
+
+</#s/>
+Mivel ez egy feliratkozas-moderalt lista, egy masik megerositest
+is elkuldok, a moderator(ok)nak. Mivel a felhasznalo mar
+megerositette feliratkozasi igenyet, a moderator biztos lehet a
+cim valodisagaban. Ha engedelyezni akarod a felhasznalo kereset,
+egyszeruen csak valaszolj a CONFIRM levelre.  Ha nem, csak torold
+a levelet, es/vagy lepj kapcsolatba a potencialis listataggal
+tovabbi informaciokert.
+</#S/>
+Az feliratkozasok hasonlokeppen mennek.
+</#/>
+
+A felhasznalo hasznalhatja ezt a format is:
+
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+
+ekkor a "mary@example.com" cimre kapja a megerosites kerest. Igy
+csak akkor tud arra valaszolni, ha meg is kapta a levelet, es kepes
+valaszolni.
+
+A cimed es szemelyazonossagod nem fog kiderulni a listatag szamara,
+hacsak nem direkt irsz levelet a felhasznalonak.
+
+</#rl/>
+A(z) <#L#>@<#H#> lista tagjainak nevsora itt kaphato meg:
+   <<#L#>-list@<#H#>>
+
+A tranzakcio naplo a(z) <#L#>@<#H#> listahoz pedig itt:
+   <<#L#>-log@<#H#>>
+
+</#rld/>
+A digestre feliratkozottaknak pedig:
+   <<#L#>-digest-list@<#H#>>
+es:
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+Tavolrol szerkesztheted is a szovegfajlokat, amik meghatarozzak a
+lista altal kikuldott valaszokat. A fajlok listaja es a szerkesztesi
+instrukciok itt szerezhetoek meg:
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Moderalt levelezes
+------------------
+Ha a levelezes moderalt, az elkuldott leveleket elraktarozom, es
+egy masolatot kuldok rola Neked, instrukciokkal. A level temaja
+"MODERATE for ..." lesz.
+
+A level elfogadasahoz csak valaszolj a "Reply-To:" mezo alapjan,
+ami a korrekt "elfogadom" cimre van beallitva.  Magat a levelet
+nem szukseges visszakuldeni. Valojaban a leveled tartalma kozombos,
+ha a sajat cimedrol irsz.
+
+Ha elutasitani szeretned, valaszolj a "From:" alapjan, ami a korrekt
+"elutasitom" cimre van beallitva. Ezt a "Valasz mindenkinek" kuldesi
+modszerrel erheted el.  Esetleg megjegyzeseket tehetsz ket, osszesen
+harom "%" jellel kezdodo sor koze.  Csak ezt a megjegyzest
+fogom elkuldeni a visszautasitott level kuldojenek.  Megegyszer,
+nem arulom el, hogy ki vagy.
+
+A levelet az elso valasztol fuggoen fogom feldolgozni. Ha egy olyan
+engedelyezo vagy elutasito levelet kuldesz, ami mar egyszer el lett
+utasitva vagy engedelyezve lett, ezt tudatom Veled.
+
+Ha nem kapok egy bizonyos idoszakon belul valaszt egy moderatortol
+sem (eredetileg 5 nap), akkor visszakuldom a levelet a kuldojenek,
+elmagyarazva, mi tortent.  Az adminisztrator beallithatja a listat
+ugy is, hogy az ilyen mellozott levelek egyszeruen torlodjenek
+barmifele ertesites nelkul, es ne kuldodjenek vissza a feladonak.
+</#/>
+
+Szabadsag
+---------
+Ha ideiglenesen egy masik cimen vagy elerheto, csak kuldd tovabb
+a leveleidet, amiknek korrekt "Mailing-List:" fejlece van (vagy az
+osszes, "MODERATE for <#L#>@<#H#>"-al kezdodo,
+vagy "CONFIRM subscribe to <#L#>@<#H#>" targyu
+levelet az uj cimre.  Igy moderalhatsz az uj cimedrol.  Esetleg
+atiranyithatod egy baratodnak, aki moderal helyetted.  Mindenekelott
+ezt beszeld meg a listatulajdonossal.
+
+Ha automatikusan engedelyezni akarsz minden kerest, amig tavol vagy,
+allitsd be a levelezesi kliensedet, hogy automatikusan valaszoljon
+azokra a levelekre, amik a fenti kriteriumoknak megfelelnek.
+
+</#r/>
+Ha nem sajat cimrol akarsz tavolrol adminisztralni, akkor nem teged,
+hanem a listatagot keri meg a rendszer engedelyezni. Ezutan a
+moderator megerositesi kerelem kimegy az osszes moderatornak.  Ezt
+azert csinalom igy, mert nem lehet megtudni, hogy valoban Te voltal
+az, aki az eredeti kerest kuldte.
+
+Vigyazz, mert ebben az esetben az eredeti keresed (es cimed) eljut
+a felhasznalohoz!
+</#/>
+
+Sok szerencset!
+
+UI: ha barmi problemad van, lepj kapcsolatba a listatulajdonossal
+(<#L#>-owner@<#H#>).
+

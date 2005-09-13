@@ -1,0 +1,25 @@
+# $Id$
+
+He guardado una lista de los resúmenes de la lista de correo
+<#L#> que han sido devueltos desde su dirección. Por cada uno de
+los resúmenes perdidos, he anotado el número del primer mensaje
+en el resumén.
+
+</#a/>
+
+No archivo los resúmenes propiamente dichos, pero puede conseguir
+los mensajes del archivo principal de la lista.
+
+Para recuperar el grupo de mensajes del 123 al 145 (máximo 100
+por petición), envíe un mensaje en blanco a:
+
+   <<#L#>-get.123_145@<#H#>>
+
+Para recibir una lista por "Asunto" y "Autor" de los últimos 100
+mensajes, envíe un mensaje en blanco a:
+
+   <<#L#>-index@<#H#>>
+
+</#/>
+Estos son los números de mensaje de los resúmenes:
+

@@ -1,0 +1,30 @@
+# $Id$
+Oups, ce numero de confirmation semble invalide.
+
+La raison la plus courante des nombres invalides est leur expiration.
+Je dois recevoir la confirmation de chaque requete dans les dix jours.
+De plus, soyez certains que l'integrite du nombre de confirmation
+figurait dans la reponse que vous m'avez envoyee. Certains logiciels de
+messagerie ont la facheuse habitude de tronquer les adresses un peu
+longues.
+
+J'ai mis en place un nouveau nombre de confirmation. Pour confirmer que
+vous souhaitez voir
+
+!A
+
+desabonne de la liste <#l#> , envoyez une reponse quelconque a :
+
+!R
+</#x/>
+
+ou suivez ce lien :
+	mailto:<#R#>
+</#/>
+
+A nouveau, verifiez que l'adresse a laquelle vous ecrivez est complete.
+
+Toutes mes excuses pour le derangement.
+
+	Le proprietaire de <#l#> <<#l#>-owner@<#H#>>
+

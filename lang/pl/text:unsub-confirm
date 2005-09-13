@@ -1,0 +1,24 @@
+# $Id$
+Aby potwierdziæ, ¿e chcesz usunac adres
+
+!A
+
+z listy prenumaratorów <#L#>, prze¶lij, proszê, pust±
+odpowied¼ na ten list pod adres:
+
+!R
+</#x/>
+
+mailto:<#R#>
+</#/>
+
+Twój program pocztowy powienien automatycznie zaadresowaæ przesy³kê,
+je¿eli u¿yjesz opcji "odpowiedz/reply".
+
+Nie sprawdzi³em jednak czy twój adres znajduje siê na li¶cie
+prenumeratorów. Aby sprawdziæ, którego adresu u¿ywasz jako koresponde-
+cyjnego, spojrzyj na jak±kolwiek wiadomosæ z listy dyskusyjnej.
+Ka¿dy list ma schowany Twój adres w scie¿ce zwrotnej; np.
+Bóg@example.com dostaje listy ze scie¿k± zwrotn±:
+<<#l#>-return-<number>-Bóg=example.com@<#H#>.
+

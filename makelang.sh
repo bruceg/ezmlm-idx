@@ -12,5 +12,10 @@ test -f lang/"$1".text -a -f lang/"$1".sed || {
 (
   echo `sed -e 's/^.*-//' -e q VERSION` - This version identifier must be on line 1 and start in pos 1.
   sed -f lang/"$1".sed ezmlmrc.template
-  cat lang/"$1".text
+  ls -1 lang/"$1" \
+  | while read file; do
+    sfile=`echo $file | tr : /`
+    echo "</$sfile#E/>"
+    cat lang/"$1"/$file
+  done
 ) > ezmlmrc."$1"

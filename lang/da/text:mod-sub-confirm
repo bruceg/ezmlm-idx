@@ -1,0 +1,25 @@
+# $Id$
+Jeg beder hermed om din tilladelse til at tilføje
+
+!A
+
+som abonnent på <#l#> listen. Denne forespørgsel kom enten fra
+dig, eller den er allerede blevet godkendt af den potentielle
+abonnent.
+
+Bekræft ved at sende et tomt svar til denne adresse:
+
+!R
+
+Dit post program burde have en svarfunktion som automatisk bruger
+den adresse. (Ellers må man klippe/klistre).
+</#x/>
+
+Måske virker det at klikke med musen på næste linje:
+        mailto:<#R#>
+</#/>
+
+Hvis du ikke vil godkende, kan du bare glemme dette brev.
+
+Tak for hjælpen!
+

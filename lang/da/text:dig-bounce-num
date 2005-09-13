@@ -1,0 +1,22 @@
+# $Id$
+
+Jeg har gemt en liste over hvilke udtræk fra <#L#> listen som er
+kommet retur fordi de ikke kunne afleveres. Kopier af disse breve
+kan hentes i arkivet. For hvert udtræk du mangler, kender jeg
+nummeret på det første brev i udtrækket.
+Jeg gemmer ikke selve udtrækkene, men hvis brevene er der endnu,
+kan du f.eks. få brev 12345 ved at sende et tomt brev til:
+<#L#>-get.12345@<#H#>.
+
+</#ia/>
+Du kan hente en oversigt over brevene 123-145 (max. 100 ad gangen)
+ved at sende et tomt brev til:
+   <<#L#>-get.123_145@<#H#>>
+
+Du kan hente en oversigt over emne og afsender i de nyeste 100
+breve ved at sende et tomt brev til:
+   <<#L#>-index@<#H#>>
+
+</#/>
+Her er en liste over brevnumre i udtrækket:
+

@@ -1,0 +1,34 @@
+# $Id$
+¡Vaya!, parece que ese número de confirmación es inválido. 
+
+La principal razón por la que los números de confirmación se
+invalidan es la expiración. Debo recibir confirmación de cada
+petición en un plazo de diez días. Además, asegúrese que el
+número completo de confirmación estaba incluido en la respuesta
+que me mandó. Tenga en cuenta que algunos programas de correo
+tienen la (mala) costumbre de cortar parte de la dirección de
+respuesta, que puede ser muy larga.
+
+He configurado un nuevo número de confirmación. Para confirmar
+que le gustaría que
+
+!A
+
+fuese dado de baja en la lista de correo <#l#>, por favor, mande
+un mensaje en blanco a esta dirección:
+
+!R
+</#x/>
+
+o haga clic aquí:
+
+	mailto:<#R#>
+</#/>
+
+De nuevo, compruebe la dirección de respuesta cuidadosamente para
+asegurarse que esté todo incluido antes de confirmar esta acción.
+
+Perdone las molestias.
+
+	<#l#>-Owner <<#l#>-owner@<#H#>>
+

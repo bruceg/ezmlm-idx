@@ -1,0 +1,36 @@
+# $Id$
+Sorry, het bevestigingsnummer lijkt ongeldig.
+
+Dit gebeurt meestal doordat ik het antwoord te laat heb gekregen. Ik moet
+binnen 10 dagen antwoord krijgen op ieder verzoek.
+Let ook op dat het bevestigingsnummer goed is overgenomen in het antwoord
+wat ik krijg.
+
+Ik heb een nieuw bevestigingsnummer voor u. Als u wilt dat
+
+!A
+
+wordt verwijderd van de <#l#> mailinglist, stuur dan
+een reply naar dit adres:
+
+!R
+</#x/>
+
+U kunt ook hier klikken:
+	mailto:<#R#>
+</#/>
+
+Ik heb niet gecontroleerd of uw adres op dit moment op de mailing list
+staat. Om te zien onder welk adres u op dit moment bent ingeschreven,
+kijkt u naar een bericht dat u van de mailing list hebt ontvangen.
+Ieder bericht bevat uw email adres in het "return path";
+Bijvoorbeeld,  mary@example.com ontvangt berichten met het "return-path":
+<<#l#>-return-<number>-mary=example.com@<#H#>.
+
+</#q/>
+Sommige emailprogramma's bevatten fouten en kunnen niet overweg met lange
+adressen. Als u geen reply kunt sturen op dit verzoek, kunt u een bericht
+sturen naar:
+<<#L#>-request@<#H#>>
+en plak het volledige adres wat hierboven staat in de "Subject:" regel.
+

@@ -1,0 +1,42 @@
+# $Id$
+Sorry, ik kan uw verzoek niet uitvoeren.
+Het adres
+
+!A
+
+stond niet op de <#l#> mailing list toen ik uw verzoek
+kreeg, en is geen lid van deze lijst.
+
+Als u zich hebt uitgeschreven, maar nog steeds mail ontvangt, dan
+bent u onder een ander adres ingeschreven dan wat u nu gebruikt.
+Kijk in de HEADER van uw email en zoek naar een regel met:
+
+'Return-Path: <<#l#>-return-1234-joe=example.com@<#H#>>'
+
+Hier ziet u dat het ingeschreven adres ``joe@example.com'' is.
+Om dit adres uit te schrijven zou u een bericht sturen naar:
+'<#l#>-unsubscribe-joe=example.com@<#H#>'.
+
+Stuur een email naar dat adres, natuurlijk aangepast met uw adres.
+
+Als het bericht een header bevat met ``List-Unsubscribe:'', dan kunt u
+een e-mail sturen naar het adres in die header; Het uitschrijf commando
+zit dan al in het adres verwerkt.
+
+In veel emailprogramma's moet u de headers zichtbaar maken om het
+"return-path" te kunnen zien:
+
+Onder Eudora 4.0, klikt u op de "Blah blah ..." knop.
+In PMMail, klikt u "Window->Show entire message/header".
+Met Outlook Express kunt u Ctrl-F3 toetsen.
+Onder KMail gebruikt u "View->Headers->All Headers".
+
+Als dit niet werkt, kan ik u helaas niet helpen.
+Stuurt u in dat geval een bericht van de mailing list door (forward) naar
+mijn eigenaar:
+
+	<<#l#>-owner@<#H#>>
+
+en voeg er een notitie aan toe met uw wensen.
+Mijn eigenaar is minder snel dan ik, dus heb dan even geduld s.v.p.
+

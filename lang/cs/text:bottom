@@ -1,0 +1,64 @@
+# $Id$
+
+--- Administrativní pøíkazy pro list <#l#> ---
+
+Umím automaticky obsluhovat administrativní pøíkazy. Neposílejte
+je prosím do listu! Po¹lete zprávu na adresu pøíslu¹ného pøíkazu:
+
+Pro pøihlá¹ení do listu, po¹lete e-mail na adresu:
+   <<#L#>-subscribe@<#H#>>
+
+Pro odhlá¹ení se z listu pou¾ijte adresu
+   <<#L#>-unsubscribe@<#H#>>
+
+Informace o listu a FAQ (èasto kladené dotazy) získáte zasláním dopisu
+na následující adresy:
+   <<#L#>-info@<#H#>>
+   <<#L#>-faq@<#H#>>
+
+</#d/>
+Podobné adresy existují i pro list digestù:
+   <<#L#>-digest-subscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+</#ai/>
+Zprávy èíslo 123 a¾ 145 z archívu (maximálnì 100 zpráv na jeden mail)
+získáte zasláním zprávy na následující adresu:
+   <<#L#>-get.123_145@<#H#>>
+
+</#aI/>
+Zprávu èíslo 12 získáte pomocí následující adresy:
+   <<#L#>-get.12@<#H#>>
+
+</#i/>
+Seznam zpráv se subjectem a autorem zpráv 123-456 - e-mail:
+   <<#L#>-index.123_456@<#H#>>
+
+Tyto adresy v¾dy vrací seznam 100 zpráv, maximálnì 2000 na jeden po¾adavek.
+Tak¾e ve vý¹e uvedeném pøíkladì ve skuteènosti dostanete seznam zpráv 100-499.
+
+</#ai/>
+Pro získání zpráv se stejným subjectem jako zpráva 12345 po¹lete
+prázdný mail na adresu:
+   <<#L#>-thread.12345@<#H#>>
+
+Zprávy ve skuteènosti nemusí být prázdné - budu jejich obsah ignorovat.
+Jediná dùle¾itá vìc je ADRESA na kterou mail posíláte.
+
+Mù¾ete se také do listu pøihlásit pod jinou adresou - napøíklad
+"pepa@example.com". Staèí pøidat pomlèku a novou adresu s rovnítkem (=)
+namísto zavináèe:
+<<#L#>-subscribe-pepa=example.com@<#H#>>
+
+Odhlásit tuto adresu lze pomocí mailu na adresu
+<<#L#>-unsubscribe-pepa=example.com@<#H#>>
+
+V obou pøípadech po¹lu ¾ádost o souhlas na tuto adresu. Kdy¾ ji dostanete,
+jednodu¹e na ni odpovìzte a va¹e pøihlá¹ení/odhlá¹ení se dokonèí.
+
+Pokud nedosáhnete po¾adovaných výsledkù, kontaktujte mého správce
+na adrese <#L#>-owner@<#H#>. Prosím o trpìlivost, mùj správce je
+podstatnì pomalej¹í ne¾ já ;-)
+
+--- Pøipojuji kopii po¾adavku, který jsem dostal.
+

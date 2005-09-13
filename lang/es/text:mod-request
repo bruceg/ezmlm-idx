@@ -1,0 +1,46 @@
+# $Id$
+
+El mensaje adjunto fue mandado a la lista de correo <#L#>@<#H#>.
+
+Si desea aprobar su distribucisn a todos los suscriptores, por
+favor, escriba a:
+
+!A
+
+Normalmente esto ocurre al pulsar el botón "responder". Usted
+puede comprobar la dirección para asegurarse de que empieza por
+"<#L#>-accept" . Si esto no funciona, simplemente copie la
+dirección y péguela en el campo "Para:" de un nuevo mensaje.
+</#x/>
+
+Como alternativa haga clic aquí:
+
+	mailto:<#A#>
+</#/>
+
+Para rechazar el mensaje y hacer que sea devuelto al remitente,
+por favor, mande un mensaje a:
+
+!R
+
+Normalmente, lo más fácil es hacer clic en el botón "Responder a
+todos" y luego quitar todas las direcciones menos la que empieza
+con "<#L#>-reject".
+</#x/>
+
+Como alternativa, haga clic aquí:
+	mailto:<#R#>
+</#/>
+
+No es necesario copiar el mensaje en su respuesta para aceptarlo
+o rechazarlo. Si desea mandar un comentario al remitente de un
+mensaje rechazado, por favor, inclúyalo entre dos líneas que
+empiezan con tres signos de porcentaje ('%'):
+
+%%% Inicio del comentario
+%%% Fin del comentario
+
+¡Gracias por su ayuda!
+
+--- Se adjunta el mensaje enviado.
+

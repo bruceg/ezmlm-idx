@@ -1,0 +1,30 @@
+# $Id$
+Oops, that confirmation number appears to be invalid.
+
+The most common reason for invalid numbers is expiration. I have to
+receive confirmation of each request within ten days. Also, make sure
+the entire confirmation number was in the reply you sent me. Some 
+e-mail programs have a habit of cutting off some of the reply address,
+which can be quite long.
+
+I've set up a new confirmation number. To confirm that you would like
+
+!A
+
+removed from the <#l#> mailing list, please send an empty reply 
+to this address:
+
+!R
+</#x/>
+
+or click here:
+	mailto:<#R#>
+</#/>
+
+Again, check the reply address carefully to make sure it is all included 
+before you confirm this action.
+
+Sorry for the trouble.
+
+	<#l#>-Owner <<#l#>-owner@<#H#>>
+

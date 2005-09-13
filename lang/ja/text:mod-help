@@ -1,0 +1,202 @@
+# $Id$
+--- 管理者の皆様へ ---
+
+mailing list <#L#>@<#H#> の管理に
+協力していただき感謝します。
+
+ezmlm の command は、他の mailing list program とは若干異なって
+見えるかもしれまんが、command が直感的であり、使用が簡単だと
+思えるでしょう。
+
+以下は mailing list の管理者としての作業のための手引きです。
+
+Remote subscription
+-------------------
+管理者は任意の address を購読者に加えたり外したりする事が出来ます。
+例えば "john@example.com" を購読者に加える場合は、
+
+                john@example.com
+                        ↓
+                john=example.com
+                        ↓
+        <<#L#>-subscribe-john=example.com@<#H#>>
+
+の様にして command address を生成し、その address へ
+空の message を送って下さい。
+
+また、john@example.com を購読者から外す場合は
+
+        <<#L#>-unsubscribe-john=example.com@<#H#>>
+
+へ空の message を送って下さい。
+
+</#d/>
+digest list に加えたり・外したりする場合も同様にして
+
+        <<#L#>-digest-subscribe-john=example.com@<#H#>>
+        <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+
+の様になります。
+
+</#/>
+message の中身は必要ありません。address だけが重要です。
+
+</#r/>
+ezmlm は貴方に確認の message を送ります。これは request が
+本当に貴方からのものかを確認するためです。送られた message に
+reply する事で手続きは完了します。
+
+</#R/>
+ezmlm は user に対して確認の message を送ります。
+上記の場合は <john@example.com> 宛に確認の message が送られる
+ことになります。確認の message を受け取った user は reply を
+することで確認が終了します。
+</#/>
+
+この確認によって、第三者による攻撃を困難なものにしています。
+
+また、ezmlm は購読の状態が変化したことを user に通知します。
+
+
+Subscription
+------------
+管理者に限らず、誰でも以下の address 宛に空の message を
+送る事で購読を開始したり・終了させたり出来ます。
+
+        <<#L#>-subscribe@<#H#>>
+	(Start subscription)
+
+	<<#L#>-unsubscribe@<#H#>>
+	(Stop subscription)
+
+</#d/>
+digest list の購読開始・終了は以下の command address です。
+
+        <<#L#>-digest-subscribe@<#H#>>
+	(Start digest subscription)
+
+	<<#L#>-digest-unsubscribe@<#H#>>
+	(Stop digest subscription)
+
+</#/>
+発信者には確認の message が ezmlm から送られます。
+
+</#s/>
+この mailing list の購読開始・脱退は管理者の監督下で行われる様
+設定されています。管理者宛に確認を出す前に ezmlm は request を
+出した発信者へ確認の message を送り、request が本物か否かを確認
+しているので、その request が本物であると考えても大丈夫です。
+
+request が正当なものと思うのであれば、ezmlm から届いた確認の
+message に対して reply して下さい。正当でないと思うのであれば
+ezmlm からの message を単純に無視して下さい。そして、必要なら
+request の発信者に連絡してみて下さい。
+</#S/>
+購読開始・脱退は自動で処理されます。
+</#/>
+
+また、
+
+        <<#L#>-subscribe-mary=example.com@<#H#>>
+	(Start subscription as mary@example.com)
+
+	<<#L#>-unsubscribe-mary=example.com@<#H#>>
+	(Stop subscription as mary@example.com)
+
+の様にする事で、発信元とは異なる address（この場合は mary@example.com）
+で mailing list からの message を受け取る様にする事も出来ます。
+確認は mary@example.com 宛に発行され、その message に対して
+正しい reply が帰ってきた場合のみ購読・脱退は有効になります。
+
+管理者の address その他の情報は購読者には一切連絡されません。
+（勿論、貴方が直接 mail を送った場合は別です）
+
+</#rl/>
+mailing list <#L#>@<#H#> の講読者一覧は
+以下の address から得られます。
+        <<#L#>-list@<#H#>>
+ezmlm の log は以下の address から得られます。
+        <<#L#>-log@<#H#>>
+
+</#rld/>
+mailing list <#L#>@<#H#> の digest 版の講読者一覧は
+以下の address から得られます。
+        <<#L#>-digest-list@<#H#>>
+digest 版に関する log は以下の address です。
+        <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+ezmlm が送り出す message text を編集するには、以下の command address:
+
+        <<#L#>-edit@<#H#>>
+
+宛に空の e-mail を送って下さい。
+（編集可能な message 一覧及び、編集方法は返信に含まれています）
+
+</#m/>
+Moderated posts
+---------------
+message を審査する様に設定されている場合は、ezmlm は post された
+message を一旦保存し、審査手続きの説明を付けたものを管理者宛に
+送ります。その message は "Subject: MODERATE for ..." となって
+います。
+
+post を認める場合は、ezmlm が "Reply-To:" に設定した address
+宛に reply をして下さい。本文の copy は必要ありません。
+（ezmlm は reply の中身は一切見ていません）
+
+post を拒否する場合は、ezmlm が "From:" に設定した address 宛に
+reply をして下さい。通常 Mail User Agent (MUA) の 'reply-to-all'
+の機能を使って message の準備をした後に、不要な address を削る
+だけだと思います。拒否する理由等を３個の'%'で始まる行の後に付け
+３個の'%' で閉じることで同梱する事が出来ます。
+
+繰り返しますが、管理者の address その他の情報は ezmlm 経由では
+明らかにされません。
+
+複数の管理者がいる場合、ezmlm は最初に管理者から届いた message
+のみに反応します。貴方が post を認める reply をした時に、既に
+他の管理者が拒否をしていた場合、及びその逆の場合は ezmlm は
+貴方宛に message を送ります。
+
+ezmlm は定められた期限（通常は 5日）以内に審査の結果を受け
+取れない場合には、発信者宛に理由を同梱して message を返送します。
+（必要とあれば、期限切れの message を単純に削除する様にも
+  設定出来ます）
+</#/>
+
+Vacations
+---------
+一時的に異なる address で管理の作業をしたい場合は、
+"Mailing-List: contact <#L#>-help@<#H#>; run by ezmlm" や
+"Subject: MODERATE for <#L#>@<#H#>" や
+"Subject: CONFIRM subscribe to <#L#>@<#H#>" 等の
+管理の為の message が望んだ address 宛に届く様に設定すれば
+可能です。
+
+または知人宛に送り直す様にするという手もあります。
+（この場合は事前に主宰者に確認をとって下さい）
+
+貴方が管理の作業を実行出来ない間は、自動で承認を行うというので
+あれば、上記の管理用 message に対して適切な応答を自動生成する
+様に設定して下さい。
+
+</#r/>
+購読開始・終了の作業を管理者である貴方のものでない address から
+行った場合、購読開始・終了の対象になった address 宛に確認の message
+が届きます。その後に全管理者宛に確認の message が届きます。これは
+request を発行したのが貴方自身か否かを ezmlm が判断する手段を持って
+いない為です。
+
+この場合は、貴方の送信した message や address が対象となった user
+宛に送られる事を覚えておいて下さい。
+
+</#/>
+お手数をおかけします。
+
+PS: 何か不明な点等がありましたら、主宰者の
+
+        <#L#>-owner@<#H#>
+
+    に連絡して下さい。
+

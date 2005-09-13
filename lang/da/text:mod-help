@@ -1,0 +1,155 @@
+# $Id$
+Tak fordi du vil moderere <#L#>@<#H#> listen.
+
+Mine kommandoer er lidt anderledes end i andre postlister,
+men jeg tror du bliver glad for mig når du lærer mig at kende.
+
+Her er en oversigt over hvordan du gør:
+
+Fjernadministration
+--------------------
+Som moderator kan du til- og framelde hvem som helst,
+f.eks. jens@example.com, ved at sende et tomt brev til:
+   <<#L#>-subscribe-jens=example.com@<#H#>> eller
+   <<#L#>-unsubscribe-jens=example.com@<#H#>>
+Bemærk at det ene @ er lavet om til =.
+
+</#d/>
+For udtrækslisterne (digest):
+   <<#L#>-digest-subscribe-jens=example.com@<#H#>>
+   <<#L#>-digest-unsubscribe-jens=example.com@<#H#>>
+
+</#/>
+Så simpelt er det. Der behøver hverken være emne eller
+indhold i dine kommandobreve.
+
+</#r/>
+Jeg sender dig så et brev som du skal kvittere for ved at
+sende et tomt svar på tilbage.
+</#R/>
+Jeg sender et brev til brugeren som vedkommende skal bekræfte,
+for at abonnementet kan træde i kraft.
+</#/>
+
+Disse dialoger er nødvendige for at sikre at den person jeg har
+kontakt med er den han/hun giver sig ud for at være. Ellers
+kunne en fremmed tilmelde et uvidende offer til en masse
+postlister.
+
+Jeg sender en bekræftelse til brugeren når abonnementsstatus
+er ændret.
+
+Tilmelding
+----------
+
+Enhver kan til- eller framelde sig ved at sende et tomt
+brev til:
+
+<#L#>-subscribe@<#H#>
+<#L#>-unsubscribe@<#H#>
+
+</#d/>
+For udtrækslisterne:
+
+<#L#>-digest-subscribe@<#H#>
+<#L#>-digest-unsubscribe@<#H#>
+
+Brugeren vil modtage et brev som skal bekræftes med et tomt
+svar for at sikre at vedkommende råder over den pågældende
+postadresse.
+
+</#s/>
+Eftersom denne liste er tilmeldingsmodereret, skal en moderator
+godkende tilmeldingen. Du kan godkende tilmeldingen ved at
+leve et tomt svar på CONFIRM brevet. (Eller du kan lade være).
+ 
+</#S/>
+Tilmelding sker på samme måde.
+</#/>
+
+Brugeren kan også skrive til:
+
+   <<#L#>-subscribe-mary=example.com@<#H#>>
+   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+
+for at tilmelde "mary@example.com". Kun hvis hun modtager post
+på den adresse, vil hun modtage bekræftelses forespørgslen og
+være i stand til at svare på den.
+
+Din adresse og identitet er skjult for abonnenten medmindre
+du skriver direkte til vedkommende.
+
+</#rl/>
+En liste over tilmeldte fås ved at sende et tomt brev til:
+  <<#L#>-list@<#H#>>
+
+En transaksjonslog fås ved at sende et tomt brev til:
+  <<#L#>-list@<#H#>>
+
+</#rld/>
+Over digest tilmeldte:
+   <<#L#>-digest-list@<#H#>>
+og:
+   <<#L#>-digest-log@<#H#>>
+
+</#rn/>
+Du kan fjernrette de tekstsvar som listen udsender. En liste
+over filer samt instruktioner fås ved at sende et tomt brev til:
+   <<#L#>-edit@<#H#>>
+
+</#m/>
+Modererede lister
+-----------------
+Når listen er modereret, gemmer jeg det indsendte brev og sender
+dig en kopi sammen med en instruktion. Brevet du modtager vil
+have teksten "MODERATE for ..." i emne linjen.
+
+Du godkender at brevet bliver sendt til listen ved blot at
+svare på "MODERATE for ..." brevet. Du behøver ikke inkludere
+selve brevets indhold i dit svar.
+
+Hvis du vil afvise det indsendte brev, svarer du til brevets
+'From:' adresse istedetfor som normalt, dets 'Reply-To:" adresse.
+Du kan skrive en kommentar til indsenderen, om hvorfor du afviser
+brevet, imellem de to linjer som begynder med %%%. Din identitet
+forbliver anonym.
+
+Det første svar jeg får fra en moderator afgør det videre
+forløb. Hvis en anden moderator har svaret før dig, får du
+besked.
+
+Hvis jeg ikke får svar fra en moderator inden for en bestemt
+tid (normalt 5 dage), returnerer jeg brevet til afsender med
+en forklaring. Din administrator kan evt. konfigurere listen
+så ignorerede "MODERATE for ..." breve bliver slettet uden
+at brevskriveren informeres.
+</#/>
+
+Ferie
+-----
+Hvis du midlertidigt har en anden adresse, kan du videresende alle
+breve som har en korrekt 'Mailing-List:' linje i brevhovedet, eller
+med andre ord, har titlen 'MODERATE for <#L#>@<#H#>'
+eller 'CONFIRM subscribe to <#L#>@<#H#>' til din nye adresse eller en
+anden som passer moderator hvervet mens du er væk. Sørg for at listens
+ejer er indforstået med dette.
+
+Hvis du hellere vil lave automatisk godkendelse af alle breve
+mens du er væk, kan du bede dit post program om at lave auto-svar
+på alle breve som har et emne der svarer til de ovennævnte kriterier.
+
+</#r/>
+Hvis du forsøger at fjernadministrere fra en adresse som ikke er
+din, bliver abonnenten spurgt om bekræftelse, derefter moderator(erne).
+Jeg er nødt til at gøre det på den måde når jeg ikke kan verificere
+din identitet.
+
+Bemærk at din originale forespørgsel (og din adresse) bliver sendt
+til abonnenten i dette filfælde!
+</#/>
+
+Held og lykke!
+
+PS: Kontakt venligst liste ejeren (<#L#>-owner@<#H#>)
+hvis du har spørgsmål eller problemer.
+

@@ -1,0 +1,24 @@
+# $Id$
+
+Jeg har hold øje med hvilke breve fra <#L> listen der er
+kommet retur fordi de ikke kunne afleveres til dig.
+
+</#a/>
+Kopier af disse brev er muligvis i arkivet.
+</#aI/>
+Du kan f.eks. hente brev 123 fra arkivet ved at send et tomt
+brev til:
+   <<#L#>-get.123@<#H#>>
+
+</#ia/>
+Du kan f.eks. hente brev 123-145 (max. 100 ad gangen), ved at
+sende et tomt brev til:
+   <<#L#>-get.123_145@<#H#>>
+
+Du kan få en oversigt over emne og afsender for de sidste 100
+breve ved at sende et tomt brev til:
+   <<#L#>-index@<#H#>>
+
+</#/>
+Her er brevnumrene:
+

@@ -1,0 +1,39 @@
+# $Id$
+De bijgesloten e-mail is aangeboden aan de <#L#>@<#H#>
+mailing list. Als u dit bericht wilt accepteren voor distributie,
+stuur dan een e-mail naar:
+
+!A
+
+Dit gebeurt gewoonlijk als u een "reply" geeft op dit bericht.
+Het juiste adres moet beginnen met "<#L#>-accept". Als dit niet zou werken,
+kunt u het adres kopieeren en plakken naar de "To:" regel van een nieuw
+bericht.
+
+U kunt ook hier klikken:
+	mailto:<#A#>
+
+Om dit bericht te weigeren stuurt u een e-mail naar:
+
+!R
+
+Gewoonlijk kunt u "reply-to-all" aanklikken en dan alle adressen verwijderen,
+behalve het adres wat begint met
+"<#L#>-reject".
+</#x/>
+
+Om te weigeren, kunt u ook hier klikken:
+	mailto:<#R#>
+</#/>
+
+U hoeft het hele bericht niet bij te sluiten in uw antwoord.
+Als u opmerkingen naar de afzender van het geweigerde bericht wilt sturen,
+kunt u dit hieronder tussen de twee regels met drie % plaatsen.
+
+%%% Begin commentaar
+%%% Einde commentaar
+
+Bedankt voor uw hulp!
+
+--- Hieronder staat het bijgesloten bericht.
+

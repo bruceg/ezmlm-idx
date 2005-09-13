@@ -1,0 +1,51 @@
+# $Id$
+</#n/>
+
+El comando <#L#>-edit.file puede ser utilizado por un
+administrador remoto para modificar los ficheros de texto que
+componen la mayoría de las respuestas de la lista de correo
+<#L#>@<#H#>.
+
+Lo que sigue es un listado de los ficheros de respuesta y una
+corta indicación de cuando se utilizan sus contenidos. Para
+modificar un fichero, simplemente envíe un correo a
+<#L#>-edit.fichero@<#H#>, sustituyendo 'fichero' por el nombre
+del fichero. Las instrucciones para las modificaciones se envían
+con el fichero.
+
+File                Use
+
+bottom        final de todas las respuestas. Información general
+              sobre comandos.	      
+digest        sección administrativa de resúmenes. 
+faq           preguntas frecuentes propias de esta lista.
+get_bad       en lugar de mensajes no encontrados en el archivo.
+help          ayuda general (entre 'top' y 'bottom').
+info          información sobre la lista. La primera línea debe
+              tener significado por sí misma. 
+mod_help      ayuda específica para moderadores.
+mod_reject    al remitente del mensaje rechazado.
+mod_request   a los moderadores de mensajes junto a los mensajes.
+mod_sub       al suscriptor después de que el moderador confirme
+              la suscripción.
+mod_sub_confirm  al moderador para pedir confirmación de 
+                 suscripción.
+mod_timeout   al remitente de correo caducado.  
+mod_unsub_confirm  al administrador remoto para pedir confirmación
+                   de baja.
+sub_bad       al suscriptor si la confirmación no fue correcta.
+sub_confirm   al suscriptor para pedir confirmación de 
+              suscripción.
+sub_nop       al suscriptor después de re-suscribirse.
+sub_ok        al suscriptor después de la suscripción. 
+top           el principio de todas las respuestas.
+</#tn/>
+trailer       añadido a todos los mensajes enviados de la lista.
+</#n/>
+unsub_bad     al suscriptor si la confirmación de baja fue 
+              incorrecta.
+unsub_confirm al suscriptor para pedir confirmación de 
+              cancelación.
+unsub_nop     al no suscriptor después de darse de baja.
+unsub_ok      al ex suscriptor después de darse de baja.
+

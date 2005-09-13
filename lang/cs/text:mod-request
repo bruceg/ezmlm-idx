@@ -1,0 +1,40 @@
+# $Id$
+Ní¾e citovaná zpráva byla zaslána na adresu listu <#L#>@<#H#>.
+Pokud souhlasíte s distribucí této zprávy v¹em pøihlá¹eným, po¹lete
+mail na adresu
+
+!A
+
+Toho obvykle dosáhnete pomocí tlaèítka "Odpovìï/Reply". Mù¾ete zkontrolovat
+adresu, zaèíná-li øetìzcem "<#L#>-accept". Pokud toto nefunguje, staèí
+zkopírovat adresu a ulo¾it ji do políèka "To:" nové zprávy.
+</#x/>
+
+Mù¾ete také zkusit kliknout zde:
+	mailto:<#A#>
+</#/>
+
+Chcete-li zprávu odmítnout a zpùsobit její vrácení odesílateli,
+po¹lete zprávu na adresu
+
+!R
+
+Toto se bvykle nejsnáze udìlá pomocí tlaèítka "Odpovìz v¹em/Reply to all"
+a následného vymazání v¹ech adres kromì té, která zaèíná "<#L#>-reject".
+</#x/>
+
+Mù¾ete také zkusit kliknout zde:
+	mailto:<#R#>
+</#/>
+
+Není tøeba kopírovat zprávu ve svém potvrzení nebo odmítnutí této zprávy.
+Chcete-li poslat komentáø odesílateli odmítnuté zprávy, doplòte jej
+mezi následující øádky zaèínající tøemi znaky "%":
+
+%%% Zaèátek komentáøe
+%%% Konec komentáøe
+
+Dìkuji za spolupráci.
+
+--- Dále uvádím zaslanou zprávu.
+

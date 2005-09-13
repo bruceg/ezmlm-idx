@@ -1,0 +1,55 @@
+# $Id$
+mailing list <#L#> に
+以下に添付された message が post されました。
+post を認める場合は、以下の address
+
+!A
+
+へ reply して下さい。
+
+通常は Mail User Agent (MUA) の reply の機能だけで十分な筈です。
+
+うまくいかない場合は、手動で
+
+        To: <#A#>
+
+を付けて reply message を作成して下さい。
+
+</#x/>
+
+MUA によっては
+
+        mailto:<#A#>
+
+を click するだけで準備が出来る場合もあるでしょう。
+</#/>
+
+post を認めない場合は、以下の address
+
+!R
+
+宛に message を送って下さい。
+
+MUA に "reply-to-all" の機能があるのなら <#L#>-reject 以外で
+始まる他の address を削除するのが簡単でしょう。
+</#x/>
+
+MUA によっては
+
+        mailto:<#R#>
+
+を click するだけで準備が出来る場合もあるでしょう。
+</#/>
+
+*** post された message 本体は copy する必要はありません ***
+
+post を認めない場合に、何か comment を付けたいのであれば
+以下の様な marker line
+
+%%% Start comment
+%%% End comment
+
+の間に comment を書いて下さい。
+
+--- 以下に送らてきた message を添付しておきます
+

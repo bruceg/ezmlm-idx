@@ -1,0 +1,43 @@
+# $Id$
+Posting terlampir telah dikirim ke milis <#L#>@<#H#>.  Jika anda
+ingin menyetujuinya untuk disebarluaskan ke semua pelanggan, kirim
+e-mail ke:
+
+!A
+
+Biasanya, yang perlu anda lakukan adalah dengan menekan tombol "reply".
+Anda dapat mencek untuk memastikan bahwa alamatnya dimulai dengan
+"<#L#>-accept".  Jika ini tidak berhasil, kopi alamatnya dan letakkan
+kembali ke dalam kolom "To:" di posting yang baru.
+</#x/>
+
+Alternatif lainnya, klik di sini:
+	mailto:<#A#>
+</#/>
+
+Untuk menolak posting dan mengembalikannya ke si pengirim, kirim sebuah
+posting ke:
+
+!R
+
+Biasanya, cara termudah adalah dengan menekan tombol "reply-to-all", dan
+kemudian menghapus semua alamat kecuali yang dimulai dengan
+"<#L#>-reject".
+</#x/>
+
+Alternatif lainnya, klik di sini:
+	mailto:<#R#>
+</#/>
+
+Anda tidak perlu untuk mengkopi isi dari posting ke dalam respon
+persetujuan atau penolakan anda.  Jika anda ingin membuat komentar
+kepada si pengirim yang tertolak postingnya, masukkan komentarnya di 
+antara dua garis penanda yang dimulai dengan tiga tanda persen ('%'):
+
+%%% Start comment
+%%% End comment
+
+Terima kasih atas bantuan anda!
+
+--- Berikut adalah posting yang terkirim.
+

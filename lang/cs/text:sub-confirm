@@ -1,0 +1,34 @@
+# $Id$
+Chcete-li opravdu pøidat adresu
+
+!A
+
+do listu <#l#>, po¹lete prázdnou zprávu na adresu
+
+!R
+
+Toho obvykle dosáhnete pomocí tlaèítka "Odpovìï/Reply". Mù¾ete zkontrolovat
+adresu, zaèíná-li øetìzcem "<#L#>-sc". Pokud toto nefunguje, staèí
+zkopírovat adresu a ulo¾it ji do políèka "To:" nové zprávy.
+
+</#x/>
+
+Mù¾ete také zkusit kliknout zde:
+	mailto:<#R#>
+</#/>
+
+Vy¾adování tohoto potvrzení má dva dùvody. Za prvé ovìuje, ¾e jsem
+schopen zasílat mail na va¹i adresu. A za druhé, chrání vás v pøípadì,
+¾e nìkdo zfal¹uje ¾ádost o pøihlá¹ení s va¹ím jménem.
+
+</#q/>
+Nìkteré po¹tovní programy jsou chybné a nemohou zpracovávat dlouhé
+adresy. Pokud nemù¾ete odpovìdìt na tuto adresu, po¹lete
+zprávu na adresu <<#L#>-request@<#H#>>
+a vlo¾te celou vý¹e uvedenou adresu do subjectu.
+
+</#s/>
+Tento list je moderovaný. Jakmile po¹lete potvrzení, po¾adavek
+bude poslán moderátorovi tohoto listu. Uvìdomím vás, jakmile
+bude pøihlá¹ení hotovo.
+

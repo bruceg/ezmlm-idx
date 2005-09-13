@@ -1,0 +1,19 @@
+# $Id$
+
+Accuse de reception: j'ai ajoute l'adresse
+
+!A
+
+a la liste de diffusion <#l#>.
+
+Bienvenue dans la liste <#l#>@<#H#> !
+
+Pensez a sauvegarder ce message pour que vous puissiez connaitre
+l'adresse sous laquelle vous vous etes abonnes, au cas ou vous
+souhaiteriez ulterieurement vous desinscrire ou changer votre
+adresse d'abonnement.
+
+Pour vous desinscrire, envoyez un message a :
+
+    <<#l#>-unsubscribe-<#t#>@<#H#>>
+

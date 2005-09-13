@@ -1,0 +1,12 @@
+# $Id$
+
+Mensagens da lista <#l#> para você estão sendo devolvidas.
+Eu enviei um aviso para você, que também foi devolvido.
+Eu anexei uma cópia da mensagem devolvida.
+
+Esta é uma verificação para o seu endereço. Se esta verificação
+for devolvida, eu removerei o seu endereço da lista
+<#l#>@<#H#>, sem mais avisos. Você pode assinar novamente a
+lista enviando uma mensagem vazia para o endereço:
+   <<#l#>-subscribe@<#H#>>
+

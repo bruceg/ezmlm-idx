@@ -1,0 +1,9 @@
+# $Id$
+
+A(z) <#l#> lista Neked jaro levelei visszapattantak.
+Mellekelve kuldom az elso visszapattant levelet, amit megkaptam.
+
+Ha ez a level is visszapattan, proba levelet kuldok.  Ha a proba is
+visszapattan, torlom a cimedet a(z) <#l#> listarol,
+tovabbi ertesites nelkul.
+

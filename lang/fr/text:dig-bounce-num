@@ -1,0 +1,23 @@
+# $Id$
+
+J'ai conserve une liste des bulletins de la liste de diffusion <#L#>
+qui n'ont temporairement pas pu etre delivres a votre adresse. Pour chaque
+bulletin que vous n'avez pas pu consulter, j'ai note les numeros du premier
+message qui s'y trouvait.
+
+</#a/>
+Aucune archive des bulletins eux-memes n'est conservee, mais vous pouvez
+toujours recuperer les messages a partir de la liste principale.
+
+Ainsi, pour obtenir les messages situes entre le numero 123 et le numero 145
+(avec un maximum de 100 par requete), il suffit d'envoyer un message 
+a l'adresse :
+   <<#L#>-get.123_145@<#H#>>
+
+Et pour recevoir un resume des 100 derniers messages (auteur/sujet), envoyez
+un message a :
+   <<#L#>-index@<#H#>>
+
+</#/>
+Voici le numero du premier message de chaque bulletin :
+

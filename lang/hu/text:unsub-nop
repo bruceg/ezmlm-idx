@@ -1,0 +1,40 @@
+# $Id$
+Sajnalom, de nem tudom vegrehajtani a kerest, mivel a(z)
+
+!A
+
+cim nem volt a(z) <#l#> listan, mikor megkaptam a kerest.
+
+Ha leiratkoztal, de meg mindig kapsz leveleket, bizonyara mas cimen
+iratkoztal fel, mint amit jelenleg hasznalsz.  Kerlek, nezd meg a
+level fejleceben a kovetkezo sort (ez csak egy pelda):
+
+'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+
+Ez a sor azt mutatja, hogy a feliratkozasi cim "user@example.com".  Ezen
+felhasznalo leiratkozasi kerelmet az alabbi cimre kell irnia:
+
+'<#l#>-unsubscribe-user=example.com@<#H#>'.
+
+Helyettesitsd be a valodi feliratkozasi cimedet, es arra kuldd a leveled.
+
+Ha a levelnek van "List-Unsubscribe:" fejlece, kuldheted a levelet
+arra a cimre is, amit az a sor mutat, ami ugyanazt a cimet
+eredmenyezi, mint amit az elobb verrel, verejtekkel osszeallitottunk.
+
+Nehany levelezoprogramnak meg kell mondani, hogy mutassak a teljes
+fejlecet:
+
+Eudora 4.0-ban klikkelj a "Blah blah ..." gombra.
+PMail-ben klikkelj a "Window->Show entire message/header" menupontra.
+
+Ha meg mindig nem megy, sajnalom, de nem segithetek. Kerlek, tovabbits
+egy listas levelet azzal a megjegyzessel, hogy mit szeretnel elerni,
+es egy listat a cimekrol, ahonnan valoszinuleg feliratkozhattal, es
+kuldd el ezt a gazdamnak:
+
+    <<#l#>-owner@<#H#>>
+
+aki bizonyara segiteni tud. A gazdam kicsit lassabb mint en, szoval
+legy turelmes.
+

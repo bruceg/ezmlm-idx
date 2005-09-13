@@ -1,0 +1,55 @@
+# $Id$
+Hm. Die Adresse
+
+!A
+
+ist kein Abonnent der Mailingliste
+   <#l#>@<#H#>
+und konnte deshalb auch nicht von ihr abgemeldet werden.
+
+Wenn Sie die Liste abbestellen aber trotzdem weiterhin Nachrichten
+aus der Mailingliste empfangen, sind sie wahrscheinlich mit einer
+anderen Adresse eingetragen, als diejenige die sie momentan
+benutzen.
+
+Um festzustellen, unter welcher Adresse Sie die Mailingliste
+empfangen, sehen Sie sich die Header der empfangenen Nachrichten an.
+Jede Nachricht hat Ihre Empfängeradresse in ihrem Return-Path: kodiert.
+Zum Beispiel empfängt die Adresse ich@example.com alle Listennachrichten
+mit folgendem Return-Path:
+Return-Path: <<#l#>-return-<nummer>-ich=example.com@<#H#>
+Die Nummer wechselt natürlich, also sieht das zum Beispiel so aus:
+'Return-Path: <<#l#>-return-1234-ich=example.com@<#H#>>'
+
+Das zeigt, daß die Adresse, über die die Nachrichten bezogen werden,
+ich@example.com ist. Die Adresse zum Abbestellen der Liste wäre in
+diesem Fall 
+   <#l#>-unsubscribe-ich=example.com@<#H#>
+Benutzen Sie einfach die so ermittelte Adresse.
+
+Wenn Ihre Listen-Nachrichten einen Header "List-Unsubscribe"
+enthalten, dann können sie die dort angegebene Adresse benutzen. Diese
+hat Ihre Bezugsadresse schon mit in die Abmeldeadresse einbezogen.
+
+Wie Sie die Anzeige aller Header in Ihrem Mailprogramm einschalten,
+ist leider bei jedem Programm anders. Einige Beispiele:
+- Pegasus-Mail: Strg-P (deutsche Version) oder Strg-H (engl. Version)
+- Elm und Mutt: Anzeige der Nachricht nicht mit <Enter> sondern mit 'h'
+- Microsoft Outlook 98: sehen Sie unter Ansicht/Optionen nach. Dort
+                        finden Sie die Internet-Header Ihrer Mail
+- Eudora Pro (Mac): klicken Sie auf die mit "Blah" markierte Stelle
+- ...
+
+Falls all das nicht funktioniert, ist es wahrscheinlich, daß jemand
+die Nachrichten der Mailingliste an sie kopiert. Bitte fragen Sie
+ihren lokalen Mailadministrator um Hilfe. Kann auch dieser Ihnen nicht
+helfen, schicken Sie eine Listen-Nachricht inklusive ALLER HEADER
+zusammen mit einer Erklärung, was sie versucht haben an den Eigentümer
+dieser Liste:
+
+  <#l#>-owner@<#H#>
+
+Dieser wird sich dann mit Ihnen in Verbindung setzen und sich um das
+Problem kümmern. Aber haben Sie bitte Geduld - es handelt sich um
+ein menschliches Wesen, das eventuell vielbeschäftigt ist :)
+

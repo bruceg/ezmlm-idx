@@ -1,0 +1,33 @@
+# $Id$
+Es scheint, daß diese Bestätigungsnummer nicht gültig ist.
+
+Der Grund dafür ist in den meisten Fällen eine Zeitüberschreitung.
+Bestätigungen muß ich innerhalb von zehn Tagen bekommen, sonst gelten
+Anforderungen als abgelehnt.
+Stellen Sie auch sicher, daß Sie die Antwortadresse komplett
+übernommen haben - da diese Kontrolladressen recht lang sind, haben
+einige Mailprogramme die Eigenschaft, sie kommentarlos zu kürzen.
+
+Ich habe eine neue Bestätigungsnummer generiert. Um zuzustimmen, daß
+Ihre Adresse
+
+!A
+
+von der Mailingliste <#l#>@<#H#>
+gestrichen werden soll, senden Sie bitte eine leere Mail an
+folgende Adresse:
+
+!R
+</#x/>
+
+oder klicken Sie hier, wenn Ihr Programm Hyperlinks unterstützt:
+   mailto:<#R#>
+</#/>
+
+Bitte prüfen Sie noch einmal genau, daß Sie an die richtige Adresse
+schreiben und diese nicht von Ihrem Mailprogramm verstümmelt wurde.
+
+Bitte entschuldigen Sie den Aufwand.
+
+	<#l#>-Owner <<#l#>-owner@<#H#>>
+

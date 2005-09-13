@@ -1,0 +1,41 @@
+# $Id$
+</#n/>
+A(z) <#L#>-edit.fajlnev paranccsal tudja egy tavoli adminisztrator
+szerkeszteni a szovegfajlokat, amik a(z) <#L#>@<#H#> lista
+valaszainak legtobbjet befolyasolja.
+
+Alant kovetkezik egy lista a valaszfajlokrol nevuk es rovid leirasuk
+(mikor hasznaljak a tartalmukat) formajaban.  Egy fajl
+szerkesztesehez csak kuldj egy levelet a(z) <#L#>-edit.fajlnev@<#H#>
+cimre, ahol helyettesitsd be a "fajlnev" szot a valodi fajlnevvel.  A
+szerkesztesi utasitasokat a szovegfajlban fogod megkapni.
+
+Fajl                Hasznalat
+
+bottom              Minden valasz lablece.  Altalanos parancs info.
+digest              A digest-ek "administrivia" resze.
+faq                 Gyakran ismetelt kerdesek a listaval kapcsolatban.
+get_bad             Azon levelek helyett, amik nincsenek az archivumban.
+help                Altalanos segitseg (a "top" es "bottom" kozott)
+info                List info.  Az elso sor onnmagaban is szukseges.
+mod_help            Listamoderatorok segitsege
+mod_reject          Az elutasitott level kuldojenek.
+mod_request         Az uzenetmoderatornak a levellel egyutt.
+mod_sub             A listatagnak, miutan a moderator engedelyezte a
+                    feliratkozast.
+mod_sub_confirm     A feliratkozasmoderatornak, engedelyezesre.
+mod_timeout         A feladonak, a nem moderalt levelere.
+mod_unsub_confirm   A tavoli adminnak, a leiratkozas megerositesere.
+sub_bad             A potencialis listatagnak, ha a megerosites hibas volt.
+sub_confirm         A leendo listatagnak, a feliratkozas megerositesere.
+sub_nop             A listatagnak, az ujrairatkozas utan.
+sub_ok              A listatagnak, sikeres feliratkozas utan.
+top                 Minden valasz fejlece.
+</#tn/>
+trailer             Minden listas level vegere (altalanos info)
+</#n/>
+unsub_bad           A listatagnak, ha a leiratkozas megerosites hibas volt.
+unsub_confirm       A listatagnak, a leiratkozas megerositesere.
+unsub_nop           Nem listatagnak, leiratkozas keresekor.
+unsub_ok            A volt listatagnak, sikeres leiratkozas utan.
+

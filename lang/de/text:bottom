@@ -1,0 +1,52 @@
+# $Id$
+
+Wenn Sie weiterführende Informationen zu Mailinglisten haben möchten,
+schauen Sie sich doch im World Wide Web einmal das Dokument
+"Mailinglisten und ihre Benutzung"  unter folgender Adresse an:
+http://www.pobox.com/~fte/ml.html
+
+--- Hier eine Aufstellung der wichtigsten Kommandos zur Steuerung des
+    Mailinglistenmanagers ezmlm für diese Liste:
+
+Ich kann alle Ihre Anforderungen bezüglich der Liste
+automatisch bearbeiten. Schicken Sie einfach eine leere Mail
+an die jeweilige Adresse.
+SENDEN SIE KEINE KOMMANDOS AN DIE MAILINGLISTE SELBST.
+In dem Fall kann ich nicht darauf reagieren und viele Empfänger
+der Mailingliste werden sich bei Ihnen oder über Sie beschweren.
+
+   <<#L#>-help@<#H#>>
+   Beschreibung der Steuerungsmöglichkeiten für diese
+   Mailingliste
+
+   <<#L#>-subscribe@<#H#>>
+   wenn Sie die Mailingliste in Zukunft beziehen möchten
+
+   Wenn Sie keine Nachrichten der Mailingliste <#L#>
+   mehr empfangen möchten, benutzen Sie bitte die Adresse, die
+   im Header "List-Unsubscribe:" angegeben ist. Wenn Sie Ihre
+   Email-Adresse nach der Listenbestellung nicht geändert haben,
+   geht auch:
+   <<#L#>-unsubscribe@<#H#>>
+
+</#d/>
+   Für die Digest-Liste existieren die entsprechenden Adressen:
+   <<#L#>-digest-subscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#H#>>
+
+</#HJ/>
+Beim Löschen oder Eintragen von Abonnenten verschicke ich eine
+zusätzliche Kontrollnachricht. Diese muß zur Bestätigung einfach
+nur beantwortet werden.
+
+</#/>
+Falls Sie menschliche Hilfe brauchen, wenden Sie sich bitte an
+den Listeneigentümer:
+
+   <<#L#>-owner@<#H#>>
+
+Bitte schicken Sie eine Listenmail inklusive ALLER Header mit -
+dadurch wird es sehr viel leichter, Ihnen schnell zu helfen.
+
+--- Anbei eine Kopie der Anforderung die ich erhalten habe:
+
