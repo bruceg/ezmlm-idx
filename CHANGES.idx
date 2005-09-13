@@ -28,20 +28,20 @@ cn_GB,cs,pl,ru,da,pt
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
-=========================
+===========================
 
 - Broke the ezmlmrc text files into separate files internally.
 
-ezmlm-idx-0.443, 20050901
-=========================
+ezmlm-idx-0.443, 2005-09-01
+===========================
 
 - Fixed the marker logic in ezmlm-moderate to allow comments between any
   two lines containing "%%%", not just lines 8 characters or longer.
 
 - Some internal changes in ezmlm-test and the subdb API.
 
-ezmlm-idx-0.442, 20050712
-=========================
+ezmlm-idx-0.442, 2005-07-12
+===========================
 
 -Added a "sql" file in the "LIST/mod" directory on creation of lists.
  This fixes a long-standing bug where moderator addresses are not stored
@@ -58,8 +58,8 @@ ezmlm-idx-0.442, 20050712
 
 -Fixed bug in ezmlm-request handling of multi-line subjects.
 
-ezmlm-idx-0.441, 20050704
-=========================
+ezmlm-idx-0.441, 2005-07-04
+===========================
 -Fixed critical one-off bug in both *SQL configuration parsers.
  Thanks Jim Winstead.
 -Fixed lack of quoting in PgSQL subscribe code.  Thanks Dan O'Neill.
@@ -70,8 +70,8 @@ ezmlm-idx-0.441, 20050704
 -ezmlm-test can now be run by any user, in any writeable directory.
 -Put a valid recipient into the To: header in moderation messages.
 
-ezmlm-idx-0.440, 20050415
-=========================
+ezmlm-idx-0.440, 2005-04-15
+===========================
 -Wrote a script to automatically generate the Makefile and TARGETS.
 -Fixed a problem with handling text files with no final newline.
 -Added a new program, ezmlm-dispatch, to be run from a global
@@ -80,14 +80,14 @@ ezmlm-idx-0.440, 20050415
 -Removed all references to "inhost" and "inlocal" which were completely
  unused but still referenced in documentation and tests.
 
-ezmlm-idx-0.435, 20050308
-=========================
+ezmlm-idx-0.435, 2005-03-08
+===========================
 -Fixed string realocation bug in ezmlm-manage.  Thanks Tom Moertel.
 -Tweaked the subscriber log search subject to differentiate it from the
  complete subscriber log.
 
-ezmlm-idx-0.434, 20050207
-=========================
+ezmlm-idx-0.434, 2005-02-07
+===========================
 -Replaced the generic "ezmlm response" subject with unique subjects.
 -Fixed failure to build/link ezmlm-mktab in the Makefile.
 -Fixed a typo in the ezmlm-manage man page.  Thanks Charles Cazabon.
@@ -97,19 +97,19 @@ ezmlm-idx-0.434, 20050207
 -Fixed ezmlmrc template problem with moderated lists.
 -Fixed a deadlock between ezmlm-confirm and ezmlm-store.
 
-ezmlm-idx-0.433, 20050109
-=========================
+ezmlm-idx-0.433, 2005-01-09
+===========================
 -Fixed a problem in passing options to ezmlm-send in ezmlm-confirm,
  ezmlm-moderate, and ezmlm-store.  Thanks Ueli Heuer.
 -Fixed the Japanese language code from "jp" to "ja" as per ISO 639.
 
-ezmlm-idx-0.432, 20050101
-=========================
+ezmlm-idx-0.432, 2005-01-01
+===========================
 -Un-fixed the Swedish and Danish translation names, as they should match
  ISO 639 language codes, not ISO 3166 country codes.
 
-ezmlm-idx-0.431, 20041229
-=========================
+ezmlm-idx-0.431, 2004-12-29
+===========================
 -Make ezmlm-idx obey $QMAILQUEUE.
 -Added missing ezmlm-confirm.0 target.
 -Auto-generate all version strings from the VERSION file.
@@ -119,8 +119,8 @@ ezmlm-idx-0.431, 20041229
 -Internal reorganization of ezmlm-test
 -Internal reorganization of email header generation.
 
-ezmlm-idx-0.43, 20041125
-========================
+ezmlm-idx-0.43, 2004-11-25
+==========================
 -Added per-post sender confirmation patch from Tullio Andreatta.
  See the documentation for ezmlm-make -y for details.
 -Changed all example domain names in text files to the RFC 2606 mandated
@@ -134,8 +134,8 @@ ezmlm-idx-0.43, 20041125
 -Substitute <#r#> in (un)subscribe confirm messages with just the local
 part of the reply address (for web-based confirmation).
 
-ezmlm-idx-0.421, 20040602
-=========================
+ezmlm-idx-0.421, 2004-06-02
+===========================
 -Updated ezmlmrc.fr.  Thanks Jean-Marc Lasgouttes.
 -Fixed bug in ezmlm-request when dealing with continuation lines.
  Thanks Sami Farin.
@@ -145,8 +145,8 @@ ezmlm-idx-0.421, 20040602
 -Fixed typo bug in ezmlm-cron.
 -Fixed uses of "head -#" and "tail -#" to "head -n #" and "tail -n #".
 
-ezmlm-idx-0.42, 20040114 (New maintainer: Bruce Guenter <bruceg@em.ca>)
-=======================================================================
+ezmlm-idx-0.42, 2004-01-14 (New maintainer: Bruce Guenter <bruceg@em.ca>)
+=========================================================================
 -The ezmlmrc.* files were broken into two parts, to make them easier to
  write and maintain.  The language specific parts are stored in the
  "lang" subdirectory.
@@ -169,8 +169,8 @@ moderators.  Thanks Mate Wierdl.
 -Fixed ezmlm-cgi's output of non-standard port numbers.
 -Fixed message archiving in subscribe-only moderated lists.
 
-ezmlm-idx-0.40, 19991220
-========================
+ezmlm-idx-0.40, 1999-12-20
+==========================
 -Fixed bug in sub_mysql/issub.c that caused return of undef pointer for
  non-subs. Security problem for sender checks, but not for moderation. Of
  course only mysql version affected.
@@ -228,16 +228,16 @@ ezmlm-idx-0.40, 19991220
  mysql includes to not assume they're in a "mysql" subdir.
  
 
-ezmlm-idx-0.324, 19990905 (PostgresSQL)
-=======================================
+ezmlm-idx-0.324, 1999-09-05 (PostgresSQL)
+=========================================
 -Minor typo in ezmlmrc.fr fixed.
 -Added [partial] PostgresSQL interface by Magnus Stalaker. See INSTALL.idx.
 -Added ezmlm-store Cc: docs mistakenly missed in 0.323.
 -Fixed problem with "it/itall" target (Thanks MW).
 
 
-ezmlm-idx-0.323, 19990815 (bug fix)
-===================================
+ezmlm-idx-0.323, 1999-08-15 (bug fix)
+=====================================
 -ezmlm-store: Cc: list-accept-subscribe remote admin conf added to mod
  requests. For lists using ezmlm-gate, this allows adding poster as allowed
  alias. Thanks RVI for suggesting.
@@ -266,8 +266,8 @@ ezmlm-idx-0.323, 19990815 (bug fix)
  Looks bad, but was of no consequence.
 
 
-ezmlm-idx-0.322, 19990505 (bug fix)
-===================================
+ezmlm-idx-0.322, 1999-05-05 (bug fix)
+=====================================
 -ezmlmrc.*: Added x-confirm-reading-to and x-pmrqc. Thanks JK.
 -ezmlmrc.ru: Added Russian version contributed by RVI. Thanks.
 -ezmlmrc: Czech version of ezmlmrc is ezmlmrc.cz. Should be ezmlmrc.cs. Fixed.
@@ -287,8 +287,8 @@ ezmlm-idx-0.322, 19990505 (bug fix)
  New error text added to errtxt.h.
 
 
-ezmlm-idx-0.321, 19990322 (bug fix)
-===================================
+ezmlm-idx-0.321, 1999-03-22 (bug fix)
+=====================================
 -added ezmlm-limit to limit list traffic. As this is a bug fix release,
  ezmlm-limit should be considered experimental and is not built/installed
  by default. (Thanks, TM for suggesting.)
@@ -321,8 +321,8 @@ ezmlm-idx-0.321, 19990322 (bug fix)
  the problem than that qmail is not running. (Thanks, SOH.)
 
 
-ezmlm-idx-0.32, 19990222
-========================
+ezmlm-idx-0.32, 1999-02-22
+==========================
 -updated ezmlm-test. It tests most functions, and for important new features
  or bugs discovered we'll add new tests in future. Thanks ME for patient
  testing, suggestions, and "de-bashing".
@@ -394,8 +394,8 @@ ezmlm-idx-0.32, 19990222
  subscription address of a user.
 
 
-ezmlm-idx-0.316, 19990815 (bug fixes only)
-==========================================
+ezmlm-idx-0.316, 1999-08-15 (bug fixes only)
+============================================
 -Migrated back fixes for 0.322 -> 0.323 that are applicable to 0.31x:
 -ezmlm-get: Made filename extension constant for digest parts to work around
  Outlook bug.
@@ -408,8 +408,8 @@ ezmlm-idx-0.316, 19990815 (bug fixes only)
 -ezmlm-reject.1: Typo.
 
 
-ezmlm-idx-0.315, 19990505 (bug fixes only)
-==========================================
+ezmlm-idx-0.315, 1999-05-05 (bug fixes only)
+============================================
 -Bug fixes fed back from up to 0.322.
 -ezmlm-send/reject: "boundary" in Content-type can be delimited by ';'.
  Without, some messages could be erroneously rejected when using mimeremove.
@@ -419,8 +419,8 @@ ezmlm-idx-0.315, 19990505 (bug fixes only)
 -ezmlm-manage bug: deny access control fixed.
 
 
-ezmlm-idx-0.314, 19990216 (bug fixes only)
-==========================================
+ezmlm-idx-0.314, 1999-02-16 (bug fixes only)
+============================================
 -Added ezmlm-test, a script that tests [most] ezmlm + idx program functions.
 -added ezmlmrc.cz (Thanks, Jan Kasprzak).
 -ezmlm-make -e failed if DIR/config didn't exist. Fixed. (Thanks, SOH.)
@@ -428,8 +428,8 @@ ezmlm-idx-0.314, 19990216 (bug fixes only)
 -ezmlm-get segfaulted when run from the command line with LOCAL undefined.
  Fixed. (Thanks, ME.)
 
-ezmlm-idx-0.313, 19981121 (bug fixes almost only)
-=================================================
+ezmlm-idx-0.313, 1998-11-21 (bug fixes almost only)
+===================================================
 -ezmlm-get returns 0 for success in editor and command line use, rather than
  99. No impact on current lists, but makes more sense.
 -ezmlm-warn tests >= for timeout rather than >. No impact other than easier
@@ -479,8 +479,8 @@ ezmlm-idx-0.313, 19981121 (bug fixes almost only)
  <#F#> is all letter switches, not only the ones set. (Thanks, SOH). Also,
  added virtual domain info to ezmlm-make.1.
 
-ezmlm-idx-0.312, 19980805 (bug fixes only and support scripts added)
-====================================================================
+ezmlm-idx-0.312, 1998-08-05 (bug fixes only and support scripts added)
+======================================================================
 -Fixed declaration of char16table[] in decodeQ.c to get clean mips64 compile
  (Thanks, MF).
 -Fixed ezmlm-request so that <#l#> and <#h#> are substituted correctly.
@@ -499,13 +499,13 @@ ezmlm-idx-0.312, 19980805 (bug fixes only and support scripts added)
 -Fixed bug in unfoldHDR.c affecting handling of subject prefixes without
  message number (Thanks, LL).
 
-ezmlm-idx-0.311, 19980701 (bug fix only)
-========================================
+ezmlm-idx-0.311, 1998-07-01 (bug fix only)
+==========================================
 -Restored the mistakenly amputated ezmlmrc (English only, others were ok).
 -Fixed ezmlm-gate to tolerate unset $SENDER (Thanks, AP).
 
-ezmlm-idx-0.31, 19980630
-========================
+ezmlm-idx-0.31, 1998-06-30
+==========================
 -Added ezmlm-manage -m switch for moderated unsubscription, pre request.
  (Thanks, FT).
 -made cookie for accept/reject the same: ezmlm-moderate/ezmlm-store.
@@ -574,15 +574,15 @@ for faq/info added to ezmlmrc and to edit-list via ezmlmrc.
 -ezmlm-check fixes for grep not understanding '-q' and a ezmlm-check -S switch
  to avoid subscriber listing (Thanks, TEE).
 
-ezmlm-idx-0.302, 19980617 (bug fixes only)
-==========================================
+ezmlm-idx-0.302, 1998-06-17 (bug fixes only)
+============================================
 -Removed args from copy_insertsubject() call in ezmlm-send.c
 -made ezmlm-make enforce absolute "dot".
 -Fixed MIME newline bug in ezmlm-moderate/store/clean. (Thanks, JS).
 -Fixed missing arg in postmsg() call from previous fix (Thanks, MF).
 
-ezmlm-idx-0.301, 19980508 (bug fixes only)
-==========================================
+ezmlm-idx-0.301, 1998-05-08 (bug fixes only)
+============================================
 -Digest format is multipart/digest again. The new format MIXED/'x' is
  identical, except that it is multipart/mixed. The former works well for
  most MUA. The latter is better for Pine when ezmlm texts are content-
@@ -621,8 +621,8 @@ ezmlm-idx-0.301, 19980508 (bug fixes only)
 -Corrected ezmlm-make man page to show that "digestcode" is optional.
 
 
-ezmlm-idx-0.30, 19980325
-========================
+ezmlm-idx-0.30, 1998-03-25
+==========================
 -Fixed bug in continuation line handling for digest. In some circumstances,
  continuations ended up with the wrong header. (Thanks SA).
 -Changed digest format to multipart/mixed as pine has trouble with an
@@ -687,8 +687,8 @@ ezmlm-idx-0.30, 19980325
  xx >= 70 19xx and others 20xx.
 
 
-ezmlm-idx-0.231, 19980302
-=========================
+ezmlm-idx-0.231, 1998-03-02
+===========================
 -ezmlm-check.sh elsif -> elif.
 -Allowed ezmlm-make -a switch (was missing; Thanks MF).
 -Removed subject truncation for index: for prefixed lists it is used and
@@ -697,8 +697,8 @@ rfc2047-encoded subjects are often longer.
  'Subject:' is after 'From:'). (Thanks, SOH.)
 
 
-ezmlm-idx-0.23, 19980120
-========================
+ezmlm-idx-0.23, 1998-01-20
+==========================
 -ezmlm-check fixed to remove bash-specific pattern matching. (Thanks, VV).
 -ezmlm-both now makes completely functional list & digest list with digest
  creation from dir/editor. If address is given, it becomes the owner, remote
@@ -756,20 +756,20 @@ ezmlm-idx-0.23, 19980120
 -Fixed ezmlm-manage to make all output MIME using dir/charset (Thanks, SK).
 
 
-ezmlm-idx-0.221, 19980101
-=========================
+ezmlm-idx-0.221, 1998-01-01
+===========================
 -Fixed ezmlm-send bug causing problems with undefined SENDER.
  (Thanks, Sadhu, TR).
 -Fixed ezmlm-make lock file name bug (Thanks, SOH).
 
 
-ezmlm-idx-0.22, 19971210
-========================
+ezmlm-idx-0.22, 1997-12-10
+==========================
 -Added 'make clean' and TARGETS. (Thanks, TF).
 -man page and FAQ updates. Some of FAQ info moved into a 'USAGE' section
  of the man pages.
 -Bug fixed: caused ezmlm-make to ignore the -c switch.
--Added -34567890 switches to ezmlm-make. They take a command line argument
+-Added -3456-78-90 switches to ezmlm-make. They take a command line argument
  and substitute it for <#3#>, <#4#>, etc, in ezmlmrc.
 -Added code to ezmlm-gate to enable it to pass switches to both ezmlm-send
  and ezmlm-store (which have and need to keep non-overlapping switches).
@@ -800,8 +800,8 @@ ezmlm-idx-0.22, 19971210
  Zalteca (ximenes@mythic.net) for reporting this.
 
 
-ezmlm-idx-0.21, 19971115
-========================
+ezmlm-idx-0.21, 1997-11-15
+==========================
 -Slightly improved ezmlm-both (now works even for non-remote admin setups).
  It's still very pedestrian.
 -Added a few rfc1893 error codes.
@@ -834,8 +834,8 @@ ezmlm-idx-0.21, 19971115
 -Bug: Added <#D#> to ezmlm-warn line under </owner/> in ezmlmrc.
 
 
-ezmlm-idx-0.20, 19971030
-========================
+ezmlm-idx-0.20, 1997-10-30
+==========================
 -Requests to ezmlm-moderate to accept/reject already processed messages
  returns an error ONLY if the requested action is different from the actual
  fate of the message. Keeps moderators happier in multi-moderator lists,
@@ -894,12 +894,12 @@ ezmlm-idx-0.20, 19971030
  two functions, all to compile on BSDI 2.1 and Sun. Thanks, ARB and TE.
 -Combined ezmlm-mod with ezmlm-idx and fused mod.h into idx.h.
 
-ezmlm-idx-0.12, 19970910
-========================
+ezmlm-idx-0.12, 1997-09-10
+==========================
 -Cleanups to allow compile on SGI.  Thanks MF.
 
-ezmlm-idx-0.11, 19970907
-========================
+ezmlm-idx-0.11, 1997-09-07
+==========================
 -Fixed bug: ezmlm-idx failed to check for error return from issub.c.
 -Fixed bug: ezmlm-idx would crash on empty subjects.
 -Moved out command names and lengths to idx.h making changing to other
@@ -930,8 +930,8 @@ ezmlm-idx-0.11, 19970907
 -Fixed ezmlm-get.1 to correctly reflect effect of -s/-S switches.
 -Fixed FAQ and added more info.
 
-ezmlm-idx-0.10, 19970801
-========================
+ezmlm-idx-0.10, 1997-08-01
+==========================
 -Added several items to FAQ.
 -Made digestcode case-insensitive.
 -Fixed format bugs causing trouble with PINE (Thanks Fred B. Ringel).
@@ -974,9 +974,9 @@ ezmlm-idx-0.10, 19970801
  the archive.
 -Fixed bug: A few stralloc* were incorrectly stdio* in sindex.c.
 
-ezmlm-idx-0.02, 19970702
-========================
+ezmlm-idx-0.02, 1997-07-02
+==========================
 -Adapted to changes in ezmlm-0.52 => ezmlm-0.53.
 
-ezmlm-idx-0.01, 19970615
-========================
+ezmlm-idx-0.01, 1997-06-15
+==========================

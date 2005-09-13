@@ -1,44 +1,44 @@
-20050901 ezmlm-idx-0.443, bug fix
-20050712 ezmlm-idx-0.442, bug fixes
-20050704 ezmlm-idx-0.441, bug fixes
-20050415 ezmlm-idx-0.440, added ezmlm-dispatch program, internal reorgs
-20050308 ezmlm-idx-0.435, bug fixes only
-20050207 ezmlm-idx-0.434, bug fix, minor enhancements
-20050109 ezmlm-idx-0.433, bug fix
-20050101 ezmlm-idx-0.432, fixed bogus language code changes
-20041229 ezmlm-idx-0.431, bug fixes, minor internal header reorganization
-20041125 ezmlm-idx-0.43, per-sender confirmation, other smaller additions
-20040602 ezmlm-idx-0.421, bug fix
-20040114 ezmlm-idx-0.42, (New maintainer: Bruce Guenter <bruceg@em.ca>)
-19991220 ezmlm-idx-0.40
-19990905 ezmlm-idx-0.324, PostgresSQL
-19990815 ezmlm-idx-0.323, bug fix
-19990505 ezmlm-idx-0.322, bug fix
-19990322 ezmlm-idx-0.321, bug fix
-19990222 ezmlm-idx-0.32
-19990815 ezmlm-idx-0.316, (bug fixes only)
-19990505 ezmlm-idx-0.315, (bug fixes only)
-19990216 ezmlm-idx-0.314, (bug fixes only)
-19981121 ezmlm-idx-0.313, (bug fixes almost only)
-19980805 ezmlm-idx-0.312, (bug fixes only and support scripts added)
-19980701 ezmlm-idx-0.311, (bug fix only)
-19980630 ezmlm-idx-0.31
-19980617 ezmlm-idx-0.302, (bug fixes only)
-19980508 ezmlm-idx-0.301, (bug fixes only)
-19980325 ezmlm-idx-0.30 
-19980302 ezmlm-idx-0.231
-19980120 ezmlm-idx-0.23
-19980101 ezmlm-idx-0.221
-19971210 ezmlm-idx-0.22
-19971115 ezmlm-idx-0.21
-19971030 ezmlm-idx-0.20
-19970910 ezmlm-idx-0.12
-19970907 ezmlm-idx-0.11
-19970801 ezmlm-idx-0.10
-19970702 ezmlm-idx-0.02
-19970615 ezmlm-idx-0.01
+2005-09-01 ezmlm-idx-0.443, bug fix
+2005-07-12 ezmlm-idx-0.442, bug fixes
+2005-07-04 ezmlm-idx-0.441, bug fixes
+2005-04-15 ezmlm-idx-0.440, added ezmlm-dispatch program, internal reorgs
+2005-03-08 ezmlm-idx-0.435, bug fixes only
+2005-02-07 ezmlm-idx-0.434, bug fix, minor enhancements
+2005-01-09 ezmlm-idx-0.433, bug fix
+2005-01-01 ezmlm-idx-0.432, fixed bogus language code changes
+2004-12-29 ezmlm-idx-0.431, bug fixes, minor internal header reorganization
+2004-11-25 ezmlm-idx-0.43, per-sender confirmation, other smaller additions
+2004-06-02 ezmlm-idx-0.421, bug fix
+2004-01-14 ezmlm-idx-0.42, (New maintainer: Bruce Guenter <bruceg@em.ca>)
+1999-12-20 ezmlm-idx-0.40
+1999-09-05 ezmlm-idx-0.324, PostgresSQL
+1999-08-15 ezmlm-idx-0.323, bug fix
+1999-05-05 ezmlm-idx-0.322, bug fix
+1999-03-22 ezmlm-idx-0.321, bug fix
+1999-02-22 ezmlm-idx-0.32
+1999-08-15 ezmlm-idx-0.316, (bug fixes only)
+1999-05-05 ezmlm-idx-0.315, (bug fixes only)
+1999-02-16 ezmlm-idx-0.314, (bug fixes only)
+1998-11-21 ezmlm-idx-0.313, (bug fixes almost only)
+1998-08-05 ezmlm-idx-0.312, (bug fixes only and support scripts added)
+1998-07-01 ezmlm-idx-0.311, (bug fix only)
+1998-06-30 ezmlm-idx-0.31
+1998-06-17 ezmlm-idx-0.302, (bug fixes only)
+1998-05-08 ezmlm-idx-0.301, (bug fixes only)
+1998-03-25 ezmlm-idx-0.30 
+1998-03-02 ezmlm-idx-0.231
+1998-01-20 ezmlm-idx-0.23
+1998-01-01 ezmlm-idx-0.221
+1997-12-10 ezmlm-idx-0.22
+1997-11-15 ezmlm-idx-0.21
+1997-10-30 ezmlm-idx-0.20
+1997-09-10 ezmlm-idx-0.12
+1997-09-07 ezmlm-idx-0.11
+1997-08-01 ezmlm-idx-0.10
+1997-07-02 ezmlm-idx-0.02
+1997-06-15 ezmlm-idx-0.01
 
-19970629 ezmlm 0.53, alpha.
-19970406 ezmlm 0.52, alpha.
-19970222 ezmlm 0.51, alpha.
-19970203 ezmlm 0.50, alpha.
+1997-06-29 ezmlm 0.53, alpha.
+1997-04-06 ezmlm 0.52, alpha.
+1997-02-22 ezmlm 0.51, alpha.
+1997-02-03 ezmlm 0.50, alpha.
