@@ -9,7 +9,6 @@
 #include "str.h"
 #include "env.h"
 #include "sig.h"
-#include "slurp.h"
 #include "getconf.h"
 #include "strerr.h"
 #include "byte.h"
@@ -242,8 +241,6 @@ int flagmasterbounce = 0;
 int flaghaveheader;
 int flaghaveintro;
 
-stralloc key = {0};
-
 char msginbuf[1024];
 substdio ssmsgin;
 
@@ -287,13 +284,7 @@ void main(int argc,char **argv)
   if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
   startup(dir);
-
-  switch(slurp("key",&key,32)) {
-    case -1:
-      strerr_die4sys(111,FATAL,ERR_READ,dir,"/key: ");
-    case 0:
-      strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
-  }
+  load_config();
   workdir = dir;
 
     if (str_start(action,"receipt-")) {

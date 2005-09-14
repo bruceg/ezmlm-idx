@@ -9,7 +9,6 @@
 #include "str.h"
 #include "env.h"
 #include "sig.h"
-#include "slurp.h"
 #include "getconf.h"
 #include "strerr.h"
 #include "byte.h"
@@ -812,6 +811,7 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
+  load_config();
 
   digestcode = argv[optind];	/* code to activate digest (-digest-code)*/
 				/* ignore any extra args */

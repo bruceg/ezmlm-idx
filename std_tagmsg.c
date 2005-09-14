@@ -10,8 +10,8 @@
 #include "makehash.h"
 #include "die.h"
 #include "idx.h"
+#include "config.h"
 
-static stralloc key = {0};
 static char hash[COOKIE];
 static char strnum[FMT_ULONG];	/* message number as sz */
 
@@ -29,12 +29,6 @@ void std_tagmsg(unsigned long msgnum,	/* number of this message */
 
   strnum[fmt_ulong(strnum,msgnum)] = '\0';	/* message nr ->string*/
 
-    switch(slurp("key",&key,32)) {
-      case -1:
-	strerr_die3sys(111,FATAL,ERR_READ,"key: ");
-      case 0:
-	strerr_die3x(100,FATAL,"key",ERR_NOEXIST);
-    }
     cookie(hash,key.s,key.len,strnum,seed,action);
     for (i = 0; i < COOKIE; i++)
       hashout[i] = hash[i];

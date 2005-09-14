@@ -40,7 +40,6 @@ const char FATAL[] = "ezmlm-warn: fatal: ";
 const char USAGE[] =
 "ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir";
 
-stralloc key = {0};
 stralloc outhost = {0};
 stralloc outlocal = {0};
 stralloc mailinglist = {0};
@@ -268,6 +267,7 @@ void main(int argc,char **argv)
 	die_usage();
     }
   startup(dir = argv[optind]);
+  load_config();
   if (flagdig) {
     if (!stralloc_copys(&digdir,dir)) die_nomem();
     if (!stralloc_cats(&digdir,"/digest")) die_nomem();
@@ -292,12 +292,6 @@ void main(int argc,char **argv)
   if (!stralloc_copy(&fnlasth,&fnlastd)) die_nomem();
   fnlasth.s[fnlasth.len - 2] = 'h';		/* bad, but feels good ... */
 
-  switch(slurp("key",&key,32)) {
-    case -1:
-      strerr_die4sys(111,FATAL,ERR_READ,dir,"/key: ");
-    case 0:
-      strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
-  }
   getconf_line(&outhost,"outhost",1,dir);
   getconf_line(&outlocal,"outlocal",1,dir);
   if (flagdig)

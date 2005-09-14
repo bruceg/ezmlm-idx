@@ -27,7 +27,6 @@
 #include "errtxt.h"
 #include "byte.h"
 #include "case.h"
-#include "slurp.h"
 #include "quote.h"
 #include "hdr.h"
 #include "die.h"
@@ -80,7 +79,6 @@ stralloc accept = {0};
 stralloc action = {0};
 stralloc reject = {0};
 stralloc quoted = {0};
-stralloc key = {0};
 stralloc subject = {0};
 stralloc moderators = {0};
 stralloc confirmpost = {0};
@@ -177,6 +175,7 @@ void main(int argc,char **argv)
   }
 
   startup(dir = argv[optind]);
+  load_config();
 
   if (flagconfirm == -1)
     flagconfirm = getconf_line(&confirmpost,"confirmpost",0,dir);
@@ -207,13 +206,6 @@ void main(int argc,char **argv)
 
   if (!pmod && !flagpublic)
     strerr_die2x(100,FATAL,ERR_NO_POST);
-
-  switch(slurp("key",&key,32)) {
-    case -1:
-      strerr_die4sys(111,FATAL,ERR_READ,dir,"/key: ");
-    case 0:
-      strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
-  }
 
   getconf_line(&outhost,"outhost",1,dir);
   getconf_line(&outlocal,"outlocal",1,dir);

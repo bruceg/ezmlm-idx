@@ -12,7 +12,6 @@
 #include "sig.h"
 #include "fork.h"
 #include "wait.h"
-#include "slurp.h"
 #include "getconf.h"
 #include "strerr.h"
 #include "byte.h"
@@ -48,7 +47,6 @@ const char USAGE[] =
 
 static stralloc outhost = {0};
 static stralloc outlocal = {0};
-static stralloc key = {0};
 static stralloc mailinglist = {0};
 static stralloc to = {0};
 static stralloc sendopt = {0};
@@ -144,6 +142,7 @@ void main(int argc, char **argv)
     }
 
   startup(dir = argv[optind++]);
+  load_config();
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
@@ -159,12 +158,6 @@ void main(int argc, char **argv)
   if (str_equal(sender,"#@[]"))
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
-  switch(slurp("key",&key,32)) {
-    case -1:
-      strerr_die4sys(111,FATAL,ERR_READ,dir,"/key: ");
-    case 0:
-      strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
-  }
   getconf_line(&mailinglist,"mailinglist",1,dir);
   getconf_line(&outhost,"outhost",1,dir);
   getconf_line(&outlocal,"outlocal",1,dir);

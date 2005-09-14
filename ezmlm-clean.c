@@ -7,7 +7,6 @@
 #include "str.h"
 #include "env.h"
 #include "sig.h"
-#include "slurp.h"
 #include "getconf.h"
 #include "strerr.h"
 #include "byte.h"
