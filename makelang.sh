@@ -4,7 +4,7 @@ test x"$1" = x && {
   exit 1
 }
 
-test -f lang/"$1".text -a -f lang/"$1".sed || {
+test -d lang/"$1" -a -f lang/"$1".sed || {
   echo "$0: language \"$1\" does not appear to exist."
   exit 1
 }
