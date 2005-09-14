@@ -21,6 +21,7 @@
 #include "open.h"
 #include "die.h"
 #include "idx.h"
+#include "config.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-tstdig: fatal: ";
@@ -76,11 +77,7 @@ void main(int argc,char **argv)
     }
 
 
-  dir = argv[optind++];
-  if (!dir) die_usage();
-
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir = argv[optind++]);
 
   if (argv[optind])
     die_usage();	/* avoid common error of putting options after dir */

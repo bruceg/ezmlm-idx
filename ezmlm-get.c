@@ -39,6 +39,7 @@
 #include "idx.h"
 #include "mime.h"
 #include "errtxt.h"
+#include "config.h"
 #include "auto_version.h"
 
 int flagdo = 1;			/* React to commands (doesn't affect -dig)*/
@@ -810,10 +811,7 @@ void main(int argc,char **argv)
         die_usage();
     }
 
-  dir = argv[optind++];
-  if (!dir) die_usage();
-  if (chdir(dir) == -1)
-    strerr_die4x(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir = argv[optind++]);
 
   digestcode = argv[optind];	/* code to activate digest (-digest-code)*/
 				/* ignore any extra args */

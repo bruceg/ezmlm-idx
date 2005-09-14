@@ -29,6 +29,7 @@
 #include "subscribe.h"
 #include "errtxt.h"
 #include "die.h"
+#include "config.h"
 #include "idx.h"
 
 const char FATAL[] = "ezmlm-return: fatal: ";
@@ -285,8 +286,7 @@ void main(int argc,char **argv)
   action = env_get("DEFAULT");
   if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir);
 
   switch(slurp("key",&key,32)) {
     case -1:

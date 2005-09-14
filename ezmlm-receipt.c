@@ -25,6 +25,7 @@
 #include "seek.h"
 #include "die.h"
 #include "idx.h"
+#include "config.h"
 #include "errtxt.h"
 
 const char FATAL[] = "ezmlm-receipt: fatal: ";
@@ -177,8 +178,7 @@ void main(int argc,char **argv)
     dir = argv[2];
     if (!dir) die_usage();
   }
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir);
 
   sender = env_get("SENDER");
   action = env_get("DEFAULT");

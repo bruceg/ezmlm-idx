@@ -8,6 +8,7 @@
 #include "errtxt.h"
 #include "die.h"
 #include "idx.h"
+#include "config.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-issubn: fatal: ";
@@ -34,9 +35,7 @@ void main(int argc,char **argv)
 	die_usage();
     }
 
-  dir = argv[optind];
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(argv[optind]);
 
   while ((dir = argv[optind++])) {
     if (dir[0] != '/')

@@ -33,6 +33,7 @@
 #include "die.h"
 #include "idx.h"
 #include "mime.h"
+#include "config.h"
 #include "auto_version.h"
 
 int flagmime = MOD_MIME;	/* default is message as attachment */
@@ -271,11 +272,7 @@ void main(int argc,char **argv)
 	die_usage();
     }
 
-  dir = argv[optind];
-  if (!dir) die_usage();
-
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir = argv[optind]);
 
   getconf_line(&modtime,"modtime",0,dir);
   if (!stralloc_0(&modtime)) die_nomem();

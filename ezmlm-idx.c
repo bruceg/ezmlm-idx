@@ -28,6 +28,7 @@
 #include "errtxt.h"
 #include "getconf.h"
 #include "makehash.h"
+#include "config.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-idx: fatal: ";
@@ -193,11 +194,7 @@ int main(int argc,char **argv)
       case 'V': strerr_die2x(0,"ezmlm-archive version: ",auto_version);
       default: die_usage();
   }
-  dir = argv[optind];
-  if (!dir) die_usage();
-
-  if (chdir(dir) == -1)
-    strerr_die4sys(100,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir = argv[optind]);
 
   (void) umask(022);
   sig_pipeignore();

@@ -20,6 +20,7 @@
 #include "errtxt.h"
 #include "die.h"
 #include "idx.h"
+#include "config.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-reject: fatal: ";
@@ -196,8 +197,7 @@ void main(int argc,char **argv)
     }
   dir = argv[optind];
   if (dir) {
-    if (chdir(dir) == -1)
-      strerr_die4x(111,FATAL,ERR_SWITCH,dir,": ");
+    startup(dir);
     flagparsemime = 1;		/* only if dir do we have mimeremove/reject */
     if (getconf_line(&line,"msgsize",0,dir)) {
       if (!stralloc_0(&line)) die_nomem();

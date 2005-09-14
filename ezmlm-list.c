@@ -12,6 +12,7 @@
 #include "errtxt.h"
 #include "die.h"
 #include "idx.h"
+#include "config.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-list: fatal: ";
@@ -57,14 +58,7 @@ void main(int argc,char **argv)
 	die_usage();
     }
 
-  dir = argv[optind++];
-  if (!dir) die_usage();
-
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
-
-  if (dir[0] != '/')
-    strerr_die2x(100,FATAL,ERR_SLASH);
+  startup(dir = argv[optind++]);
 
   if (flagnumber) {
     n = putsubs(dir,0,0L,52L,dummywrite,flagmysql);

@@ -27,6 +27,7 @@
 #include "fmt.h"
 #include "errtxt.h"
 #include "die.h"
+#include "config.h"
 #include "idx.h"
 
 const char FATAL[] = "ezmlm-split: fatal: ";
@@ -179,8 +180,7 @@ void main(int argc,char **argv)
   if (!(split = argv[optind]))
     split = "split";
 
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir);
 
   getconf_line(&outhost,"outhost",1,dir);
   getconf_line(&outlocal,"outlocal",1,dir);

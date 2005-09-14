@@ -33,6 +33,7 @@
 #include "hdr.h"
 #include "die.h"
 #include "idx.h"
+#include "config.h"
 #include "subscribe.h"
 
 const char FATAL[] = "ezmlm-warn: fatal: ";
@@ -266,10 +267,7 @@ void main(int argc,char **argv)
       default:
 	die_usage();
     }
-  dir = argv[optind];
-  if (!dir) die_usage();
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir = argv[optind]);
   if (flagdig) {
     if (!stralloc_copys(&digdir,dir)) die_nomem();
     if (!stralloc_cats(&digdir,"/digest")) die_nomem();

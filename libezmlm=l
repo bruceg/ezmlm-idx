@@ -18,6 +18,7 @@ case_startb.o
 case_starts.o
 checktag.o
 concatHDR.o
+config.o
 constmap.o
 cookie.o
 copy.o

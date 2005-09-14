@@ -36,6 +36,7 @@
 #include "subscribe.h"
 #include "mime.h"
 #include "wrap.h"
+#include "config.h"
 #include "auto_version.h"
 
 int flagmime = MOD_MIME;	/* default is message as attachment */
@@ -175,11 +176,7 @@ void main(int argc,char **argv)
       strerr_die2x(100,FATAL,ERR_BOUNCE);
   }
 
-  dir = argv[optind];
-  if (!dir) die_usage();
-
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir = argv[optind]);
 
   if (flagconfirm == -1)
     flagconfirm = getconf_line(&confirmpost,"confirmpost",0,dir);

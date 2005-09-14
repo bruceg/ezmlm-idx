@@ -35,6 +35,7 @@
 #include "die.h"
 #include "idx.h"
 #include "copy.h"
+#include "config.h"
 #include "auto_version.h"
 
 int flagnoreceived = 1;		/* suppress received headers by default. They*/
@@ -380,13 +381,9 @@ void main(int argc,char **argv)
     }
 
 
-  dir = argv[optind++];
-  if (!dir) die_usage();
+  startup(dir = argv[optind++]);
 
   sender = env_get("SENDER");
-
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
 
   fdlock = lockfile("lock");
 

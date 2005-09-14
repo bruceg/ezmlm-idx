@@ -36,6 +36,7 @@
 #include "die.h"
 #include "idx.h"
 #include "mime.h"
+#include "config.h"
 #include "auto_version.h"
 
 static int flagmime = MOD_MIME;	/* default is message as attachment */
@@ -142,8 +143,7 @@ void main(int argc, char **argv)
 	die_usage();
     }
 
-  dir = argv[optind++];
-  if (!dir) die_usage();
+  startup(dir = argv[optind++]);
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
@@ -158,9 +158,6 @@ void main(int argc, char **argv)
     strerr_die2x(100,FATAL,ERR_ANONYMOUS);
   if (str_equal(sender,"#@[]"))
     strerr_die2x(100,FATAL,ERR_BOUNCE);
-
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
 
   switch(slurp("key",&key,32)) {
     case -1:

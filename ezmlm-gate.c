@@ -22,6 +22,7 @@
 #include "idx.h"
 #include "subscribe.h"
 #include "wrap.h"
+#include "config.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-gate: fatal: ";
@@ -109,10 +110,7 @@ void main(int argc,char **argv)
         die_usage();
     }
 
-  dir = argv[optind++];
-  if (!dir) die_usage();
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir = argv[optind++]);
 
   sender = env_get("SENDER");
 

@@ -23,6 +23,7 @@
 #include "die.h"
 #include "idx.h"
 #include "errtxt.h"
+#include "config.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-archive: fatal: ";
@@ -393,10 +394,7 @@ int main(int argc,char **argv)
     }
 
   if (flagsyncall) flagsync = 1;	/* overrides */
-  dir = argv[optind++];
-  if (!dir) die_usage();
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  startup(dir = argv[optind++]);
 
   if (mkdir("archive/threads",0755) == -1)
     if (errno != error_exist)
