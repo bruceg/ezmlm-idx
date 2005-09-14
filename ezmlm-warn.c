@@ -40,9 +40,6 @@ const char FATAL[] = "ezmlm-warn: fatal: ";
 const char USAGE[] =
 "ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir";
 
-stralloc outhost = {0};
-stralloc outlocal = {0};
-stralloc mailinglist = {0};
 stralloc digdir = {0};
 stralloc charset = {0};
 char boundary[COOKIE];
@@ -127,8 +124,8 @@ void doit(int flagw)
     strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
 
   hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
-  if (getconf_line(&line,"listid",0,dir))
-    hdr_add2("\nList-ID: ",line.s,line.len);
+  if (listid.len > 0)
+    hdr_add2("\nList-ID: ",listid.s,listid.len);
   hdr_datemsgid(now());
   if (flagcd) {
     if (!stralloc_0(&line)) die_nomem();
@@ -267,7 +264,7 @@ void main(int argc,char **argv)
 	die_usage();
     }
   startup(dir = argv[optind]);
-  load_config();
+  load_config(dir);
   if (flagdig) {
     if (!stralloc_copys(&digdir,dir)) die_nomem();
     if (!stralloc_cats(&digdir,"/digest")) die_nomem();
@@ -292,11 +289,8 @@ void main(int argc,char **argv)
   if (!stralloc_copy(&fnlasth,&fnlastd)) die_nomem();
   fnlasth.s[fnlasth.len - 2] = 'h';		/* bad, but feels good ... */
 
-  getconf_line(&outhost,"outhost",1,dir);
-  getconf_line(&outlocal,"outlocal",1,dir);
   if (flagdig)
     if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
-  getconf_line(&mailinglist,"mailinglist",1,dir);
   if (getconf_line(&charset,"charset",0,dir)) {
     if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
       if (charset.s[charset.len - 1] == 'B' ||

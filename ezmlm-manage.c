@@ -75,9 +75,6 @@ void die_cookie(void)
   strerr_die2x(100,FATAL,ERR_MOD_COOKIE);
 }
 
-stralloc outhost = {0};
-stralloc outlocal = {0};
-stralloc mailinglist = {0};
 stralloc mydtline = {0};
 stralloc target = {0};
 stralloc verptarget = {0};
@@ -338,8 +335,8 @@ void msg_headers(void)
   unsigned int pos;
 
   hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
-  if(getconf_line(&line,"listid",0,dir))
-    hdr_add2("List-ID: ",line.s,line.len);
+  if (listid.len > 0)
+    hdr_add2("List-ID: ",listid.s,listid.len);
   if (!quote(&quoted,&outlocal)) die_nomem();	/* quoted has outlocal */
   qmail_puts(&qq,"List-Help: <mailto:");	/* General rfc2369 headers */
   qmail_put(&qq,quoted.s,quoted.len);
@@ -618,7 +615,7 @@ int main(int argc,char **argv)
     }
 
   startup(dir = argv[optind]);
-  load_config();
+  load_config(dir);
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
@@ -632,9 +629,6 @@ int main(int argc,char **argv)
   if (str_equal(sender,"#@[]"))
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
-  getconf_line(&mailinglist,"mailinglist",1,dir);
-  getconf_line(&outhost,"outhost",1,dir);
-  getconf_line(&outlocal,"outlocal",1,dir);
   set_cpouthost(&outhost);
   if (getconf_line(&charset,"charset",0,dir)) {
     if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {

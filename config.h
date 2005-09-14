@@ -4,8 +4,12 @@
 #include "stralloc.h"
 
 extern stralloc key;
+extern stralloc listid;
+extern stralloc mailinglist;
+extern stralloc outhost;
+extern stralloc outlocal;
 
 extern void startup(const char *dir);
-extern void load_config(void);
+extern void load_config(const char *dir);
 
 #endif

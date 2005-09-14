@@ -54,12 +54,9 @@ stralloc qline = {0};
 stralloc usr = {0};
 stralloc lhost = {0};
 stralloc subject = {0};
-stralloc outlocal = {0};
 stralloc listname = {0};
 stralloc hostname = {0};
-stralloc outhost = {0};
 stralloc headerremove = {0};
-stralloc mailinglist = {0};
 stralloc cmds = {0};
 stralloc from = {0};
 stralloc to = {0};
@@ -321,8 +318,7 @@ void main(int argc,char **argv)
     else
       _exit(0);					/* not for us */
   }
-  getconf_line(&outlocal,"outlocal",1,dir);
-  getconf_line(&outhost,"outhost",1,dir);
+  load_config(dir);
 
   if (!stralloc_copy(&listname,&outlocal)) die_nomem();
   if (!stralloc_copy(&hostname,&outhost)) die_nomem();
@@ -631,8 +627,8 @@ void main(int argc,char **argv)
     set_cpouthost(&hostname);		/* necessary in case there are <#h#> */
 					/* we don't want to be send to a list*/
     hdr_adds("Mailing-List: ezmlm-request");
-    if (getconf_line(&line,"listid",0,dir))
-      hdr_add2("List-ID: ",line.s,line.len);
+    if (listid.len > 0)
+      hdr_add2("List-ID: ",listid.s,listid.len);
     hdr_datemsgid(now());
     hdr_from((cmdidx == EZREQ_HELP) ? "-return-" : "-help");
     qmail_put(&qq,mydtline.s,mydtline.len);

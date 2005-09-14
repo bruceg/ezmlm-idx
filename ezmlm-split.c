@@ -38,8 +38,6 @@ int flagdo = 1;		/* default is manager function */
 
 const char *sender;
 const char *split;
-stralloc outhost = {0};
-stralloc outlocal = {0};
 stralloc target = {0};
 stralloc lctarget = {0};
 stralloc line = {0};
@@ -180,9 +178,7 @@ void main(int argc,char **argv)
     split = "split";
 
   startup(dir);
-
-  getconf_line(&outhost,"outhost",1,dir);
-  getconf_line(&outlocal,"outlocal",1,dir);
+  load_config(dir);
 
   if (flagdo) {
     sender = env_get("SENDER");

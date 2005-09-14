@@ -46,8 +46,6 @@ stralloc header = {0};
 stralloc failure = {0};
 stralloc paragraph = {0};
 stralloc ddir = {0};
-stralloc outhost = {0};
-stralloc outlocal = {0};
 stralloc tagline = {0};
 stralloc listaddr = {0};
 stralloc fndate = {0};
@@ -185,8 +183,6 @@ void main(int argc,char **argv)
   local = env_get("LOCAL");
   if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
-  getconf_line(&outhost,"outhost",1,dir);
-  getconf_line(&outlocal,"outlocal",1,dir);
   workdir = dir;
   /* now see if -digest-return- */
   if (flagdig == 1) {

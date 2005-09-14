@@ -55,10 +55,7 @@ const char FATAL[] = "ezmlm-get: fatal: ";
 const char USAGE[] =
 "ezmlm-get: usage: ezmlm-get [-bBcClLpPsSvV] [-f fmt] [digestcode]";
 
-stralloc outhost = {0};
-stralloc outlocal = {0};
 stralloc listname = {0};
-stralloc mailinglist = {0};
 stralloc qmqpservers = {0};
 stralloc fn = {0};
 stralloc moddir = {0};
@@ -715,8 +712,8 @@ void doheaders(void)
     copy(&qq,"headeradd",'H');
 
   hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
-  if (getconf_line(&line,"listid",0,dir))
-    hdr_add2("List-ID: ",line.s,line.len);
+  if (listid.len > 0)
+    hdr_add2("List-ID: ",listid.s,listid.len);
   hdr_datemsgid(when);
   hdr_from("-help");
   if (!stralloc_copys(&mydtline,"Delivered-To: responder for ")) die_nomem();
@@ -811,12 +808,11 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
-  load_config();
+  load_config(dir);
 
   digestcode = argv[optind];	/* code to activate digest (-digest-code)*/
 				/* ignore any extra args */
 
-  getconf_line(&outlocal,"outlocal",1,dir);
   if (!stralloc_copy(&subject,&outlocal)) die_nomem();	/* for subjects */
   if (!stralloc_copy(&listname,&outlocal)) die_nomem();	/* for content disp */
 
@@ -942,8 +938,6 @@ void main(int argc,char **argv)
   } else
     if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
   if (!stralloc_0(&charset)) die_nomem();
-  getconf_line(&mailinglist,"mailinglist",1,dir);
-  getconf_line(&outhost,"outhost",1,dir);
   set_cpouthost(&outhost);
 
     if (!stralloc_copys(&ddir,dir)) die_nomem();

@@ -45,9 +45,6 @@ const char INFO[] = "ezmlm-confirm: info: ";
 const char USAGE[] =
 "ezmlm-confirm: usage: ezmlm-confirm [-cCmMrRvV] dir [/path/ezmlm-send]";
 
-static stralloc outhost = {0};
-static stralloc outlocal = {0};
-static stralloc mailinglist = {0};
 static stralloc to = {0};
 static stralloc sendopt = {0};
 static datetime_sec when;
@@ -142,7 +139,7 @@ void main(int argc, char **argv)
     }
 
   startup(dir = argv[optind++]);
-  load_config();
+  load_config(dir);
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
@@ -158,9 +155,6 @@ void main(int argc, char **argv)
   if (str_equal(sender,"#@[]"))
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
-  getconf_line(&mailinglist,"mailinglist",1,dir);
-  getconf_line(&outhost,"outhost",1,dir);
-  getconf_line(&outlocal,"outlocal",1,dir);
   set_cpoutlocal(&outlocal);	/* for copy() */
   set_cpouthost(&outhost);	/* for copy() */
 

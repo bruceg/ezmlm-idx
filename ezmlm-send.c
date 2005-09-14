@@ -106,9 +106,6 @@ char archivebuf[1024];
 
 int flagsublist;
 stralloc sublist = {0};
-stralloc mailinglist = {0};
-stralloc outlocal = {0};
-stralloc outhost = {0};
 stralloc headerremove = {0};
 struct constmap headerremovemap;
 stralloc mimeremove = {0};
@@ -382,7 +379,7 @@ void main(int argc,char **argv)
 
 
   startup(dir = argv[optind++]);
-  load_config();
+  load_config(dir);
 
   sender = env_get("SENDER");
 
@@ -420,8 +417,6 @@ void main(int argc,char **argv)
   } else
     msgnum = 1L;			/* if num not there */
 
-  getconf_line(&outhost,"outhost",1,dir);
-  getconf_line(&outlocal,"outlocal",1,dir);
   set_cpoutlocal(&outlocal);
   set_cpouthost(&outhost);
   flagsublist = getconf_line(&sublist,"sublist",0,dir);
@@ -497,10 +492,9 @@ void main(int argc,char **argv)
       strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
 
   if (!flagsublist) {
-    getconf_line(&mailinglist,"mailinglist",1,dir);
     qa_puts("Mailing-List: ");
     qa_put(mailinglist.s,mailinglist.len);
-    if (getconf_line(&line,"listid",0,dir)) {
+    if (listid.len > 0) {
       flaglistid = 1;
       qmail_puts(&qq,"\nList-ID: ");
       qmail_put(&qq,line.s,line.len);

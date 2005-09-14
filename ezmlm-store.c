@@ -70,9 +70,6 @@ struct stat st;
 
 stralloc fnbase = {0};
 stralloc line = {0};
-stralloc mailinglist = {0};
-stralloc outlocal = {0};
-stralloc outhost = {0};
 stralloc mydtline = {0};
 stralloc returnpath = {0};
 stralloc accept = {0};
@@ -175,7 +172,7 @@ void main(int argc,char **argv)
   }
 
   startup(dir = argv[optind]);
-  load_config();
+  load_config(dir);
 
   if (flagconfirm == -1)
     flagconfirm = getconf_line(&confirmpost,"confirmpost",0,dir);
@@ -206,10 +203,6 @@ void main(int argc,char **argv)
 
   if (!pmod && !flagpublic)
     strerr_die2x(100,FATAL,ERR_NO_POST);
-
-  getconf_line(&outhost,"outhost",1,dir);
-  getconf_line(&outlocal,"outlocal",1,dir);
-  getconf_line(&mailinglist,"mailinglist",1,dir);
 
   fdlock = lockfile("mod/lock");
 
@@ -282,8 +275,8 @@ void main(int argc,char **argv)
     strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
 
   hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
-  if (getconf_line(&line,"listid",0,dir))
-    hdr_add2("List-ID: ",line.s,line.len);
+  if (listid.len > 0)
+    hdr_add2("List-ID: ",listid.s,listid.len);
   hdr_datemsgid(when);
   if (flagconfirm)
     hdr_from("-owner");

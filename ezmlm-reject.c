@@ -60,8 +60,6 @@ struct qmail qq;
 
 stralloc line = {0};
 stralloc to = {0};
-stralloc outhost = {0};
-stralloc outlocal = {0};
 stralloc content = {0};
 stralloc subject = {0};
 stralloc boundary = {0};
@@ -198,16 +196,13 @@ void main(int argc,char **argv)
   dir = argv[optind];
   if (dir) {
     startup(dir);
+    load_config(dir);
     flagparsemime = 1;		/* only if dir do we have mimeremove/reject */
     if (getconf_line(&line,"msgsize",0,dir)) {
       if (!stralloc_0(&line)) die_nomem();
       len = scan_ulong(line.s,&maxmsgsize);
       if (line.s[len] == ':')
         scan_ulong(line.s+len+1,&minmsgsize);
-    }
-    if (!flagtook || flagforward) {
-      getconf_line(&outlocal,"outlocal",1,dir);
-      getconf_line(&outhost,"outhost",1,dir);
     }
     if (flagforward) {
       if (!stralloc_copys(&mydtline,"Delivered-To: command forwarder for "))

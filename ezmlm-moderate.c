@@ -46,10 +46,7 @@ const char INFO[] = "ezmlm-moderate: info: ";
 const char USAGE[] =
 "ezmlm-moderate: usage: ezmlm-moderate [-cCmMrRvV] [-t replyto] dir [/path/ezmlm-send]";
 
-stralloc outhost = {0};
-stralloc outlocal = {0};
 stralloc mydtline = {0};
-stralloc mailinglist = {0};
 stralloc accept = {0};
 stralloc reject = {0};
 stralloc to = {0};
@@ -202,7 +199,7 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
-  load_config();
+  load_config(dir);
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
@@ -218,9 +215,6 @@ void main(int argc,char **argv)
   if (str_equal(sender,"#@[]"))
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
-  getconf_line(&mailinglist,"mailinglist",1,dir);
-  getconf_line(&outhost,"outhost",1,dir);
-  getconf_line(&outlocal,"outlocal",1,dir);
   set_cpoutlocal(&outlocal);	/* for copy() */
   set_cpouthost(&outhost);	/* for copy() */
 
@@ -288,8 +282,8 @@ void main(int argc,char **argv)
     maketo();			/* extract SENDER from return-path */
 						/* Build message */
     hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
-    if(getconf_line(&line,"listid",0,dir))
-      hdr_add2("List-ID: ",line.s,line.len);
+    if (listid.len > 0)
+      hdr_add2("List-ID: ",listid.s,listid.len);
     hdr_datemsgid(when);
     hdr_from("-owner");
     if (replyto)
