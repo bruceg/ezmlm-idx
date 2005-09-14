@@ -6,15 +6,31 @@ noupdates=true
 for en in en_US/*; do
   base=${en#en_US/}
   baserev=`sed -e '/$Id:/!d;s/^.*$Id: [^ ]* //;s/ .*$//' $en`
-  for other in */$base; do
-    if [ $other != $en ]; then
-      otherrev=`sed -e '/$Id:/!d;s/^.*$Id: [^ ]* //;s/ .*$//' $other`
-      if [ $baserev -gt $otherrev ]; then
-        echo "$other needs updating."
-	noupdates=false
+  missing=""
+  old=""
+  for lang in ?? ??_??; do
+    if [ $lang != en_US ]; then
+      other=$lang/$base
+      if ! [ -e $other ]; then
+	missing="$missing $lang"
+      else
+        otherrev=`sed -e '/$Id:/!d;s/^.*$Id: [^ ]* //;s/ .*$//' $other`
+        if [ $baserev -gt $otherrev ]; then
+	  old="$old $lang"
+        fi
       fi
     fi
   done
+  if [ -n "$missing" ]; then
+    echo "Translation for $base is missing for the following languages:"
+    echo "  $missing"
+    noupdates=false
+  fi
+  if [ -n "$old" ]; then
+    echo "Translation for $base is out of date for the following languages:"
+    echo "  $old"
+    noupdates=false
+  fi
 done
 
 if $noupdates; then
