@@ -25,11 +25,13 @@
 #include "fmt.h"
 #include "now.h"
 #include "cookie.h"
+#include "sgetopt.h"
 #include "subscribe.h"
 #include "errtxt.h"
 #include "die.h"
 #include "config.h"
 #include "idx.h"
+#include "auto_version.h"
 
 const char FATAL[] = "ezmlm-return: fatal: ";
 const char INFO[] = "ezmlm-return: info: ";
@@ -260,22 +262,23 @@ void main(int argc,char **argv)
   int flagreceipt = 0;
   int fdlock;
   char ch;
+  int opt;
+
 
   umask(022);
   sig_pipeignore();
   when = (unsigned long) now();
 
-  dir = argv[1];
-  if (!dir) die_usage();
-  if (*dir == '-') {			/* for normal use */
-    if (dir[1] == 'd') {
-      flagdig = 1;
-    } else if (dir[1] == 'D') {
-      flagdig = 0;
-    } else
+  while ((opt = getopt(argc,argv,"dDvV")) != opteof) {
+    switch (opt) {
+    case 'd': flagdig = 1; break;
+    case 'D': flagdig = 0; break;
+    case 'v':
+    case 'V':
+      strerr_die2x(0, "ezmlm-return version: ",auto_version);
+    default:
       die_usage();
-    dir = argv[2];
-    if (!dir) die_usage();
+    }
   }
 
   sender = env_get("SENDER");
@@ -283,7 +286,7 @@ void main(int argc,char **argv)
   action = env_get("DEFAULT");
   if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
-  startup(dir);
+  startup(dir = argv[optind]);
   load_config(dir);
   workdir = dir;
 

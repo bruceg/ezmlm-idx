@@ -16,6 +16,7 @@
 #include "getln.h"
 #include "case.h"
 #include "qmail.h"
+#include "sgetopt.h"
 #include "subfd.h"
 #include "substdio.h"
 #include "readwrite.h"
@@ -28,6 +29,7 @@
 #include "die.h"
 #include "config.h"
 #include "idx.h"
+#include "auto_version.h"
 
 const char FATAL[] = "ezmlm-split: fatal: ";
 const char INFO[] = "ezmlm-split: info: ";
@@ -162,23 +164,26 @@ void main(int argc,char **argv)
   const char *err;
   unsigned int i;
   int match;
-  int optind = 1;
+  int opt;
 
   sig_pipeignore();
 
-  dir = argv[optind++];
-  if (!dir) die_usage();
-  if (dir[0] == '-') {
-    if (dir[1] == 'd') flagdo = 1;
-    else if (dir[1] == 'D') flagdo = 0;
-    else die_usage();
-    if (!(dir = argv[optind++])) die_usage();
+  while ((opt = getopt(argc,argv,"dDvV")) != opteof) {
+    switch (opt) {
+    case 'd': flagdo = 1; break;
+    case 'D': flagdo = 0; break;
+    case 'v':
+    case 'V':
+      strerr_die2x(0, "ezmlm-split version: ",auto_version);
+    default:
+      die_usage();
+    }
   }
+
+  startup(dir = argv[optind++]);
+  load_config(dir);
   if (!(split = argv[optind]))
     split = "split";
-
-  startup(dir);
-  load_config(dir);
 
   if (flagdo) {
     sender = env_get("SENDER");

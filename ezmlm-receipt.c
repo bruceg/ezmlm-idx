@@ -17,6 +17,7 @@
 #include "case.h"
 #include "quote.h"
 #include "getln.h"
+#include "sgetopt.h"
 #include "substdio.h"
 #include "error.h"
 #include "readwrite.h"
@@ -27,6 +28,7 @@
 #include "idx.h"
 #include "config.h"
 #include "errtxt.h"
+#include "auto_version.h"
 
 const char FATAL[] = "ezmlm-receipt: fatal: ";
 const char INFO[] = "ezmlm-receipt: info: ";
@@ -158,25 +160,26 @@ void main(int argc,char **argv)
   unsigned int i;
   unsigned int len;
   char *cp;
+  int opt;
 
   umask(022);
   sig_pipeignore();
 
   when = (unsigned long) now();
 
-  dir = argv[1];
-  if (!dir) die_usage();
-  if (*dir == '-') {
-    if (dir[1] == 'd') {
-      flagdig = 2;
-    } else if (dir[1] == 'D') {
-      flagdig = 0;
-    } else
+  while ((opt = getopt(argc,argv,"dDvV")) != opteof) {
+    switch (opt) {
+    case 'd': flagdig = 2; break;
+    case 'D': flagdig = 0; break;
+    case 'v':
+    case 'V':
+      strerr_die2x(0, "ezmlm-receipt version: ",auto_version);
+    default:
       die_usage();
-    dir = argv[2];
-    if (!dir) die_usage();
+    }
   }
-  startup(dir);
+
+  startup(dir = argv[optind]);
 
   sender = env_get("SENDER");
   action = env_get("DEFAULT");
