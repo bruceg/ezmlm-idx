@@ -45,7 +45,6 @@ int flagdo = 1;			/* React to commands (doesn't affect -dig)*/
 int flagbottom = 1;		/* copy text/bottom + request */
 int flagpublic = 2;		/* 0 = non-public, 1 = public, 2 = respect*/
 				/* dir/public. */
-char flagcd = '\0';		/* default: don't use quoted-printable */
 int flagsub = 0;		/* =1 subscribers only for get/index/thread */
 const char *digsz =
 		"from\\to\\subject\\reply-to\\date\\message-id\\cc\\"
@@ -59,7 +58,6 @@ stralloc listname = {0};
 stralloc qmqpservers = {0};
 stralloc fn = {0};
 stralloc moddir = {0};
-stralloc charset = {0};
 stralloc mydtline = {0};
 stralloc digheaders = {0};
 stralloc seed = {0};
@@ -927,17 +925,6 @@ void main(int argc,char **argv)
   flagindexed = getconf_line(&line,"indexed",0,dir);
   flagarchived = getconf_line(&line,"archived",0,dir);
 
-  if (getconf_line(&charset,"charset",0,dir)) {
-    if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
-      if (charset.s[charset.len - 1] == 'B' ||
-		 charset.s[charset.len - 1] == 'Q') {
-        flagcd = charset.s[charset.len - 1];
-        charset.s[charset.len - 2] = '\0';
-      }
-    }
-  } else
-    if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
-  if (!stralloc_0(&charset)) die_nomem();
   set_cpouthost(&outhost);
 
     if (!stralloc_copys(&ddir,dir)) die_nomem();

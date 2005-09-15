@@ -41,7 +41,6 @@ const char USAGE[] =
 "ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir";
 
 stralloc digdir = {0};
-stralloc charset = {0};
 char boundary[COOKIE];
 
 substdio ssout;
@@ -51,7 +50,6 @@ long when;
 char *dir;
 char *workdir;
 int flagdig = 0;
-char flagcd = '\0';		/* default: don't use transfer encoding */
 stralloc fn = {0};
 stralloc bdname = {0};
 stralloc fnlasth = {0};
@@ -291,17 +289,6 @@ void main(int argc,char **argv)
 
   if (flagdig)
     if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
-  if (getconf_line(&charset,"charset",0,dir)) {
-    if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
-      if (charset.s[charset.len - 1] == 'B' ||
-		charset.s[charset.len - 1] == 'Q') {
-        flagcd = charset.s[charset.len - 1];
-        charset.s[charset.len - 2] = '\0';
-      }
-    }
-  } else
-    if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
-  if (!stralloc_0(&charset)) die_nomem();
 
   set_cpoutlocal(&outlocal);	/* for copy */
   set_cpouthost(&outhost);	/* for copy */

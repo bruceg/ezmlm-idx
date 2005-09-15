@@ -37,7 +37,6 @@
 
 int flagmime = MOD_MIME;	/* default is message as attachment */
 int flagreturn = 1;		/* default return timed-out messages */
-char flagcd = '\0';		/* default: no transferencoding */
 stralloc fnmsg = {0};
 
 /* When ezmlm-clean is run, messages and message stubs in pending/      */
@@ -79,7 +78,6 @@ stralloc quoted = {0};
 stralloc line = {0};
 stralloc modtime = {0};
 stralloc to = {0};
-stralloc charset = {0};
 
 int fd;
 int match;
@@ -122,17 +120,6 @@ void sendnotice(const char *d)
       hdr_listsubject1(TXT_RETURNED_POST);
       hdr_add2s("To: ",to.s);
       if (flagmime) {
-        if (getconf_line(&charset,"charset",0,dir)) {
-          if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
-            if (charset.s[charset.len - 1] == 'B' ||
-		charset.s[charset.len - 1] == 'Q') {
-              flagcd = charset.s[charset.len - 1];
-              charset.s[charset.len - 2] = '\0';
-            }
-          }
-        } else
-          if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
-        if (!stralloc_0(&charset)) die_nomem();
 	hdr_mime(CTYPE_MULTIPART);
 	hdr_boundary(0);
 	hdr_ctype(CTYPE_TEXT);

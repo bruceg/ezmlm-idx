@@ -45,7 +45,6 @@ int flagself = 0;		/* `modpost` mods approve own posts */
 				/* but mod/ is used for moderators */
 				/* of other posts. Def=no=0 */
 int flagconfirm = -1;           /* if true, sender must approve its own posts */
-char flagcd = '\0';		/* default: don't use quoted-printable */
 int flagbody = 1;		/* body of message enclosed with mod request */
 				/* 0 => headers only */
 
@@ -79,7 +78,6 @@ stralloc quoted = {0};
 stralloc subject = {0};
 stralloc moderators = {0};
 stralloc confirmpost = {0};
-stralloc charset = {0};
 stralloc sendopt = {0};
 
 struct qmail qq;
@@ -333,17 +331,6 @@ void main(int argc,char **argv)
   if (!stralloc_append(&subject,"@")) die_nomem();
   if (!stralloc_cat(&subject,&outhost)) die_nomem();
   if (flagmime) {
-    if (getconf_line(&charset,"charset",0,dir)) {
-      if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
-        if (charset.s[charset.len - 1] == 'B' ||
-		charset.s[charset.len - 1] == 'Q') {
-          flagcd = charset.s[charset.len - 1];
-          charset.s[charset.len - 2] = '\0';
-        }
-      }
-    } else
-      if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
-    if (!stralloc_0(&charset)) die_nomem();
     hdr_mime(CTYPE_MULTIPART);
     qmail_put(&qq,subject.s,subject.len);
     hdr_boundary(0);

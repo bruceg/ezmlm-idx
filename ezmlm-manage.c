@@ -57,7 +57,6 @@ int flagunsubismod = 0;	/* default: do not require moderator approval to */
 			/* unsubscribe from moderated list */
 int flagedit = 0;	/* default: text file edit not allowed */
 int flagstorefrom = 1;	/* default: store from: line for subscribes */
-char flagcd = '\0';	/* default: do not use _Q_uoted printable or _B_ase64 */
 char encin = '\0';	/* encoding of incoming message */
 int flagdig = 0;	/* request is not for digest list */
 
@@ -93,7 +92,6 @@ stralloc fromline = {0};
 stralloc text = {0};
 stralloc fnedit = {0};
 stralloc fneditn = {0};
-stralloc charset = {0};
 
 datetime_sec when;
 int match;
@@ -630,17 +628,6 @@ int main(int argc,char **argv)
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
   set_cpouthost(&outhost);
-  if (getconf_line(&charset,"charset",0,dir)) {
-    if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
-      if (charset.s[charset.len - 1] == 'B' ||
-		charset.s[charset.len - 1] == 'Q') {
-        flagcd = charset.s[charset.len - 1];
-        charset.s[charset.len - 2] = '\0';
-      }
-    }
-  } else
-    if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
-  if (!stralloc_0(&charset)) die_nomem();
 
   if (!stralloc_copys(&ddir,dir)) die_nomem();
 

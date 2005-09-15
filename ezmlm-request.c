@@ -60,10 +60,8 @@ stralloc headerremove = {0};
 stralloc cmds = {0};
 stralloc from = {0};
 stralloc to = {0};
-stralloc charset = {0};
 stralloc quoted = {0};
 char boundary[COOKIE] = "zxcaeedrqcrtrvthbdty";	/* cheap "rnd" MIME boundary */
-int flagcd = '\0';				/* no encoding by default */
 
 struct constmap headerremovemap;
 struct constmap commandmap;
@@ -610,19 +608,6 @@ void main(int argc,char **argv)
       if (!stralloc_copys(&to,sender)) die_nomem();
     if (!stralloc_0(&to)) die_nomem();
 
-	/* now we need to look for charset and set flagcd appropriately */
-
-    if (getconf_line(&charset,"charset",0,dir)) {
-      if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
-        if (charset.s[charset.len - 1] == 'B' ||
-		charset.s[charset.len - 1] == 'Q') {
-          flagcd = charset.s[charset.len - 1];
-          charset.s[charset.len - 2] = '\0';
-        }
-      }
-    } else
-      if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
-    if (!stralloc_0(&charset)) die_nomem();
     set_cpoutlocal(&listname);		/* necessary in case there are <#l#> */
     set_cpouthost(&hostname);		/* necessary in case there are <#h#> */
 					/* we don't want to be send to a list*/

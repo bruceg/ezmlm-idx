@@ -69,7 +69,6 @@ stralloc received = {0};
 stralloc prefix = {0};
 stralloc content = {0};
 stralloc boundary = {0};
-stralloc charset = {0};
 stralloc dcprefix = {0};
 stralloc dummy = {0};
 stralloc qmqpservers = {0};
@@ -86,7 +85,6 @@ unsigned long hash_lo = 0L;
 unsigned long hash_hi = 52L;
 unsigned long msgsize = 0L;
 unsigned long cumsize = 0L;	/* cumulative archive size bytes / 256 */
-char flagcd = '\0';		/* no transfer-encoding for trailer */
 char encin = '\0';
 int flagindexed;
 int flagfoundokpart;		/* Found something to pass on. If multipart */
@@ -305,22 +303,6 @@ int idx_copy_insertsubject(void)
   return r;
 }
 
-void getcharset(void)
-{
-    if (getconf_line(&charset,"charset",0,dir)) {
-      if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
-        if (charset.s[charset.len - 1] == 'B' ||
-			charset.s[charset.len - 1] == 'Q') {
-          flagcd = charset.s[charset.len - 1];
-          charset.s[charset.len - 2] = '\0';
-        }
-      }
-    } else
-      if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
-
-    if (!stralloc_0(&charset)) die_nomem();
-}
-
 void main(int argc,char **argv)
 {
   unsigned long subs;
@@ -387,7 +369,6 @@ void main(int argc,char **argv)
 
   flagarchived = getconf_line(&line,"archived",0,dir);
   flagindexed = getconf_line(&line,"indexed",0,dir);
-  getcharset();
   flagprefixed = getconf_line(&prefix,"prefix",0,dir);
   if (prefix.len) {		/* encoding and serial # support */
 				/* no sanity checks - you put '\n' or '\0' */

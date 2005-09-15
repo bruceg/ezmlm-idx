@@ -66,7 +66,6 @@ stralloc author = {0};
 stralloc authmail = {0};
 stralloc received = {0};
 stralloc prefix = {0};
-stralloc charset = {0};
 
 struct strerr index_err;
 
@@ -195,14 +194,12 @@ int main(int argc,char **argv)
       default: die_usage();
   }
   startup(dir = argv[optind]);
+  load_config(dir);
 
   (void) umask(022);
   sig_pipeignore();
 			/* obtain lock to write index files */
   fdlock = lockfile("lock");
-
-  getconf_line(&charset,"charset",0,dir);
-  if (!stralloc_0(&charset)) die_nomem();
 
   getconf_line(&prefix,"prefix",0,dir);
 					/* support rfc2047-encoded prefix */
