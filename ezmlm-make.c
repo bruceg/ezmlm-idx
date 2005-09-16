@@ -98,10 +98,16 @@ void keyaddtime(void)
   keyadd(tv.tv_usec);
 }
 
-char *dir;
-char *dot;
-char *local = (char *) 0;
-char *host = (char *) 0;
+static const char *dir;
+static const char *dot;
+static const char *local = (char *) 0;
+static const char *host = (char *) 0;
+
+static unsigned long euid;
+static const char *cfname = (char *) 0;	/* config file if spec as -C cf_file */
+static const char *code = (char *) 0;
+static const char *oldflags = (char *) 0;
+static int usecfg = 0;
 
 void dirplusmake(const char *slash)
 {
@@ -179,10 +185,60 @@ void frm(const char *slash)
     strerr_die4sys(111,FATAL,ERR_DELETE,dirplus.s,": ");
 }
 
+void read_config(void)
+{
+  unsigned char ch;
+  int fdin;
+  int match;
+  unsigned int pos;
+
+  /* for edit, try to get args from dir/config */
+  dirplusmake("/config");
+  if ((fdin = open_read(dirplus.s)) == -1) {
+    if (errno != error_noent) die_read();
+  } else {
+    substdio_fdbuf(&sstext,read,fdin,textbuf,sizeof(textbuf));
+    for (;;) {
+      if (getln(&sstext,&line,&match,'\n') == -1) die_read();
+      if (!match) break;
+      if (line.s[0] == '#') continue;
+      if (line.len == 1) break;
+      if (line.s[1] != ':') break;
+      line.s[line.len - 1] = '\0';
+      if (!stralloc_cat(&cmdline,&line)) die_nomem();
+    }
+    close(fdin);
+    pos = 0;
+    while (pos < cmdline.len) {
+      ch = cmdline.s[pos];
+      pos += 2;
+      switch (ch) {
+      case 'X':
+	if (euid > 0 && !flags['c' - 'a'] && (cfname != 0))
+	  cfname = cmdline.s + pos;	/* cmdline overrides */
+	break;	/* for safety: ignore if root */
+      case 'T': dot = cmdline.s + pos; break;
+      case 'L': local = cmdline.s + pos; break;
+      case 'H': host = cmdline.s + pos; break;
+      case 'C': code = cmdline.s + pos; break;
+      case 'D': break;	/* no reason to check */
+      case 'F': oldflags = cmdline.s + pos; break;
+      default:
+	if (ch == '0' || (ch >= '3' && ch <= '9')) {
+	  if (usecfg && !popt[ch - '0'])
+	    popt[ch - '0'] = cmdline.s + pos;
+	} else
+	  strerr_die4x(111,FATAL,dirplus.s,ERR_SYNTAX,cmdline.s+pos);
+	break;
+      }
+      pos += str_len(cmdline.s + pos) + 1;
+    }
+    close(fdin);
+  }
+}
 
 void main(int argc,char **argv)
 {
-  unsigned long euid;
   int opt;
   int flagdo;
   int flagnot;
@@ -190,16 +246,12 @@ void main(int argc,char **argv)
   int flagnotexist = 0;
   int flagforce = 0;
   int flagforce_p = 0;
-  int usecfg = 0;
   int match;
   unsigned int next,i,j;
   int last;
   unsigned int slpos,hashpos,pos;
   int fdin,fdlock,fdtmp;
   char *p;
-  char *oldflags = (char *) 0;
-  char *code = (char *) 0;
-  const char *cfname = (char *) 0;	/* config file if spec as -C cf_file */
   unsigned char ch;
 
   keyadd((unsigned long) getpid());
@@ -251,52 +303,11 @@ void main(int argc,char **argv)
   if (dir[str_chr(dir,'\'')]) die_quote();
   if (dir[str_chr(dir,'\n')]) die_newline();
 
-  if (flags['e' - 'a'] & 1) {	/* lock for edit */
+  if (flags['e' - 'a'] & 1) {
+    /* lock for edit */
     dirplusmake("/lock");
     fdlock = lockfile(dirplus.s);
-
-				/* for edit, try to get args from dir/config */
-    dirplusmake("/config");
-    if ((fdin = open_read(dirplus.s)) == -1) {
-      if (errno != error_noent) die_read();
-    } else {
-      substdio_fdbuf(&sstext,read,fdin,textbuf,sizeof(textbuf));
-      for (;;) {
-	if (getln(&sstext,&line,&match,'\n') == -1) die_read();
-	if (!match) break;
-	if (line.s[0] == '#') continue;
-	if (line.len == 1) break;
-	if (line.s[1] != ':') break;
-	line.s[line.len - 1] = '\0';
-	      if (!stralloc_cat(&cmdline,&line)) die_nomem();
-      }
-      close(fdin);
-      pos = 0;
-      while (pos < cmdline.len) {
-	ch = cmdline.s[pos];
-	pos += 2;
-	switch (ch) {
-	  case 'X': if (euid && !flags['c' - 'a'] && (!cfname))
-			cfname = cmdline.s + pos;	/* cmdline overrides */
-		    break;	/* for safety: ignore if root */
-          case 'T': dot = cmdline.s + pos; break;
-          case 'L': local = cmdline.s + pos; break;
-          case 'H': host = cmdline.s + pos; break;
-          case 'C': code = cmdline.s + pos; break;
-          case 'D': break;	/* no reason to check */
-          case 'F': oldflags = cmdline.s + pos; break;
-          default:
-                 if (ch == '0' || (ch >= '3' && ch <= '9')) {
-                   if (usecfg && !popt[ch - '0'])
-                     popt[ch - '0'] = cmdline.s + pos;
-                 } else
-                   strerr_die4x(111,FATAL,dirplus.s,ERR_SYNTAX,
-                        cmdline.s+pos);
-                 break;
-        }
-        pos += str_len(cmdline.s + pos) + 1;
-      }
-    }
+    read_config();
   }
 
   if ((p = *argv++) != 0) {
