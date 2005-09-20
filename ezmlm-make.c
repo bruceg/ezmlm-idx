@@ -9,6 +9,7 @@
 #include "strerr.h"
 #include "exit.h"
 #include "readwrite.h"
+#include "byte.h"
 #include "open.h"
 #include "substdio.h"
 #include "str.h"
@@ -290,8 +291,8 @@ void main(int argc,char **argv)
   if (*argv == 0) die_usage();
   if (!stralloc_copys(&dir,*argv++)) die_nomem();
   if (dir.s[0] != '/') die_relative();
-  if (dir.s[str_chr(dir.s,'\'')]) die_quote();
-  if (dir.s[str_chr(dir.s,'\n')]) die_newline();
+  if (byte_chr(dir.s,dir.len,'\'') < dir.len) die_quote();
+  if (byte_chr(dir.s,dir.len,'\n') < dir.len) die_newline();
 
   if (flags['e' - 'a'] & 1) {
     /* lock for edit */
@@ -348,8 +349,8 @@ void main(int argc,char **argv)
       flags[pos] = flags[pos] & 1;		/* 3 = "dominant" 1 */
   }
 
-  if (local.s[str_chr(local.s,'\n')]) die_newline();
-  if (host.s[str_chr(host.s,'\n')]) die_newline();
+  if (byte_chr(local.s,local.len,'\n') < local.len) die_newline();
+  if (byte_chr(host.s,host.len,'\n') < host.len) die_newline();
 
 	/* build 'f' for <#F#> */
   if (!stralloc_ready(&f,28)) die_nomem();
@@ -367,21 +368,19 @@ void main(int argc,char **argv)
   while ((--slpos > 0) && dot.s[slpos] != '/');
   if (dot.s[slpos] == '/') {
     if (!stralloc_copyb(&template,dot.s,slpos+1)) die_nomem();	/* dot dir */
-    slpos += str_chr(dot.s+slpos,'-');
+    slpos += byte_chr(dot.s+slpos,dot.len-slpos,'-');
     if (dot.s[slpos]) {
       slpos++;
-      pos = slpos + str_chr(dot.s+slpos,'-');
-      if (dot.s[pos]) {
+      if (slpos < dot.len
+	  && (pos = slpos+byte_chr(dot.s+slpos,dot.len-slpos,'-')) < dot.len) {
         if (!stralloc_copyb(&popt[1],dot.s+slpos,pos-slpos)) die_nomem();
         pos++;
-        slpos = pos + str_chr(dot.s+pos,'-');
-        if (dot.s[slpos])
+	if (pos < dot.len
+	    && (slpos = pos+byte_chr(dot.s+pos,dot.len-pos,'-')) < dot.len)
           if (!stralloc_copyb(&popt[2],dot.s+pos,slpos-pos)) die_nomem();
       }
     }
   }
-  if (!stralloc_0(&popt[1])) die_nomem();
-  if (!stralloc_0(&popt[2])) die_nomem();
 	/* if 'c', template already has the dot directory. If 'C', cfname */
 	/* (if exists and != '') points to the file name to use instead. */
   if (flags['c'-'a'] || (cfname.len > 0)) {
@@ -449,18 +448,18 @@ void main(int argc,char **argv)
       continue;
     if (!stralloc_0(&line)) die_nomem();
     if (line.s[0] == '<' && line.s[1] == '/') {		/* tag */
-    if (line.s[str_chr(line.s,'.')])
-      strerr_die3x(100,FATAL,ERR_PERIOD,line.s);
+      if (byte_chr(line.s,line.len,'.') < line.len)
+	strerr_die3x(100,FATAL,ERR_PERIOD,line.s);
       flagdo = 1;
       flagover = 0;
       hashpos = 0;
-      pos = str_chr(line.s+2,'#')+2;
-      if (line.s[pos]) {
+      pos = byte_chr(line.s+2,line.len-2,'#')+2;
+      if (pos < line.len-2) {
         hashpos = pos;
         pos++;
         flagnot = 0;
-        while ((ch = line.s[pos]) &&
-              (line.s[pos] != '/' && line.s[pos+1] != '>')) {
+        while (pos < line.len
+	       && ((ch = line.s[pos]) != '/' && line.s[pos+1] != '>')) {
           if (ch == '^') {
             flagnot = 1;
             pos++;
@@ -479,17 +478,18 @@ void main(int argc,char **argv)
           flagnot = 0;
           pos++;
         }
-        if (line.s[pos] != '/' || line.s[pos+1] != '>')
+        if (pos < line.len
+	    && (line.s[pos] != '/' || line.s[pos+1] != '>'))
           strerr_die3x(100,FATAL,ERR_ENDTAG,line.s);
       } else {
         flagdo = 1;
         pos = 2;	/* name needs to be >= 1 char */
-        while (line.s[pos = str_chr(line.s+pos,'/')+pos]) {
+        while ((pos = byte_chr(line.s+pos,line.len-pos,'/')+pos) < line.len) {
           if (line.s[pos+1] == '>')
             break;
           pos++;
         }
-        if (!line.s[pos])
+        if (pos >= line.len)
           strerr_die3x(100,FATAL,ERR_ENDTAG,line.s);
       }
       if (hashpos)
@@ -507,7 +507,7 @@ void main(int argc,char **argv)
       } else if (line.s[2] == ':') {		/* ln -s */
         if (!flagdo)
           continue;
-        slpos = str_chr(line.s + 3,'/') + 3;
+        slpos = byte_chr(line.s+3,line.len-3,'/') + 3;
         if (slpos >= pos)
           strerr_die3x(100,FATAL,ERR_LINKDIR,line.s);
         if (!stralloc_copyb(&dname,line.s+slpos,pos-slpos)) die_nomem();
@@ -570,8 +570,8 @@ void main(int argc,char **argv)
     next = 0;
     outline.len = 0;
     for (;;) {
-      pos = next + str_chr(line.s+next,'<');
-      if (line.s[pos] &&
+      if (next < line.len &&
+	  (pos = next + byte_chr(line.s+next,line.len-next,'<')) < line.len &&
           line.s[pos+1] == '#' &&
           line.s[pos+2] &&
           line.s[pos+3] == '#' &&
@@ -614,7 +614,7 @@ void main(int argc,char **argv)
             last = pos + 4; next = pos + 5; break;
         }
       } else {			/* not tag */
-        if (line.s[pos]) {
+	if (pos < line.len) {
           next++;
         } else {
           if (!stralloc_catb(&outline,line.s+last+1,line.len-last-1))
