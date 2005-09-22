@@ -37,12 +37,12 @@ const char *defflags="ap";	/* archived list -a */
 				/* no trailer -T */
 
 #define NO_FLAGS ('z' - 'a' + 1)
-int flags[NO_FLAGS];		/* holds flags */
+static int flags[NO_FLAGS];	/* holds flags */
 
-stralloc popt[10] = {{0}};
-stralloc dotplus = {0};
-stralloc dirplus = {0};
-stralloc line = {0};
+static stralloc popt[10] = {{0}};
+static stralloc dotplus = {0};
+static stralloc dirplus = {0};
+static stralloc line = {0};
 
 const char FATAL[] = "ezmlm-make: fatal: ";
 const char WARNING[] = "ezmlm-make: warning: ";
@@ -67,19 +67,19 @@ void die_read(void)
   strerr_die4sys(111,FATAL,ERR_READ,dirplus.s,": ");
 }
 
-stralloc outline = {0};
-substdio sstext;
-char textbuf[1024];
+static stralloc outline = {0};
+static substdio sstext;
+static char textbuf[1024];
 
-stralloc fname = {0};		/* file name */
-stralloc oldfname = {0};	/* file name from prevoius tag */
-stralloc dname = {0};		/* directory name */
-stralloc lname = {0};		/* link name */
-stralloc template = {0};	/* template file name */
-stralloc f = {0};
-stralloc key = {0};
-struct timeval tv;
-char sz[2] = "?";
+static stralloc fname = {0};	/* file name */
+static stralloc oldfname = {0};	/* file name from prevoius tag */
+static stralloc dname = {0};	/* directory name */
+static stralloc lname = {0};	/* link name */
+static stralloc template = {0};	/* template file name */
+static stralloc f = {0};
+static stralloc key = {0};
+static struct timeval tv;
+static char sz[2] = "?";
 
 void keyadd(unsigned long u)
 {
