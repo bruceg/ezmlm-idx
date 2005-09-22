@@ -1,6 +1,7 @@
 /*$Id$*/
 
 #include <unistd.h>
+#include "byte.h"
 #include "config.h"
 #include "die.h"
 #include "errtxt.h"
@@ -16,6 +17,7 @@ stralloc mailinglist = {0};
 stralloc outhost = {0};
 stralloc outlocal = {0};
 char flagcd = '\0';		/* No transfer encoding by default */
+int flags[NO_FLAGS] = {0};
 
 void startup(const char *dir)
 {
@@ -29,8 +31,30 @@ void startup(const char *dir)
     strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
 }
 
+static void load_flags(const char *dir)
+{
+  unsigned int i;
+
+  byte_zero((char*)flags,sizeof flags);
+  flags['a' - 'a'] = 1;		/* By default, list is archived (-a) */
+  flags['p' - 'a'] = 1;		/* By default, list is public (-p) */
+  
+  /* Use "key" for temporary storage */
+  if (getconf_line(&key,"flags",0,dir)) {
+    for (i = 0; i < key.len; ++i) {
+      const char ch = key.s[i++];
+      if (ch >= 'A' && ch <= 'Z')
+	flags[ch - 'A'] = 0;
+      else if (ch >= 'a' && ch <= 'z')
+	flags[ch - 'a'] = 1;
+    }
+  }
+}
+
 void load_config(const char *dir)
 {
+  load_flags(dir);
+
   switch(slurp("key",&key,512)) {
     case -1:
       strerr_die4sys(111,FATAL,ERR_READ,dir,"/key: ");

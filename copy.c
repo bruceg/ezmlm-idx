@@ -33,6 +33,7 @@
 #include "byte.h"
 #include "die.h"
 #include "idx.h"
+#include "config.h"
 
 static stralloc line = {0};
 static stralloc outline = {0};
@@ -107,6 +108,7 @@ void copy(struct qmail *qqp,
 				/* 'Q' for quoted printable,'H' for header  */
 {
   int fd;
+  int flagsmatched = 1;
   int match, done;
   unsigned int pos,nextpos;
 
@@ -138,6 +140,25 @@ void copy(struct qmail *qqp,
 	  continue;
 	}
       }
+      /* Find <=flags=> tags */
+      if (q != 'H'
+	  && line.len >= 5
+	  && line.s[0] == '<'
+	  && line.s[1] == '='
+	  && line.s[line.len-3] == '='
+	  && line.s[line.len-2] == '>') {
+	for (flagsmatched = 1, pos = 2; pos < line.len - 3; ++pos) {
+	  const char ch = line.s[pos];
+	  if ((ch >= 'A' && ch <= 'Z' && flags[ch - 'A'])
+	      || (ch >= 'a' && ch <= 'z' && !flags[ch - 'a'])) {
+	    flagsmatched = 0;
+	    break;
+	  }
+	}
+	continue;
+      }
+      if (!flagsmatched) continue;
+
 		/* Find tags <#x#>. Replace with for x=R confirm, for x=A */
 		/* target, x=l outlocal, x=h outhost. For others, just    */
 		/* skip tag. If outlocal/outhost are not set, the tags are*/
