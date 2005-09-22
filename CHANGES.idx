@@ -31,6 +31,11 @@ in the next version.
 ezmlm-idx-0.450, ????-??-??
 ===========================
 
+- Replaced the use of the "config" file in ezmlm-make with individual
+  files containing one setting each.  ezmlm-make will still read the
+  config file for now, but it is considered depricated.  Running
+  "ezmlm-make -+" on an existing list will upgrade it.
+
 - Broke the ezmlmrc text files into separate files internally.
 
 ezmlm-idx-0.443, 2005-09-01

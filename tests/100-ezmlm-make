@@ -26,14 +26,13 @@
 	fatal "ezmlm-make failed to edit test list"
 
 # edit the list (add digest)
-  ${MV} "${DIR}/config" "${DIR}/config~"
+  ${MV} "${DIR}/flags" "${DIR}/flags~"
   ${EZBIN}/ezmlm-make -ed -C${EZBIN}/ezmlmrc "$DIR" "$DOT" "$LOC" "$HOST" \
 	>/dev/null 2>&1 || \
-	{ ${ECHO} "failed without DIR/config: 0.313 bug, fixed in 0.314."
+	{ ${ECHO} "failed without DIR/flags"
 	  prompt "ezmlm-make ......     "
-	  BUG="${BUG} config"
 	}
-  ${MV} "${DIR}/config~" "${DIR}/config"
+  ${MV} "${DIR}/flags~" "${DIR}/flags"
 
   ${GREP} "ezmlm-weed" "${DIR}/bouncer" >/dev/null 2>&1 || \
 	fatal "no ezmlm-weed in bouncer"

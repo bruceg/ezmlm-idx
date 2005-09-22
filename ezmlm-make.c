@@ -183,7 +183,44 @@ void frm(const char *slash)
     strerr_die4sys(111,FATAL,ERR_DELETE,dirplus.s,": ");
 }
 
-void read_config(void)
+int read_line(const char *dpm,stralloc *sa)
+{
+  int fdin;
+  int match;
+  dirplusmake(dpm);
+  if ((fdin = open_read(dirplus.s)) == -1) {
+    if (errno != error_noent) die_read();
+    return -1;
+  } else {
+    substdio_fdbuf(&sstext,read,fdin,textbuf,sizeof(textbuf));
+    if (getln(&sstext,sa,&match,'\n') == -1) die_read();
+    sa->len -= match;
+    close(fdin);
+    return 0;
+  }
+}
+  
+int read_new_config(void)
+{
+  if (read_line("/flags",&oldflags) != 0) return 0;
+  if (euid > 0 && !flags['c' - 'a'] && (cfname.len != 0))
+    read_line("/ezmlmrc",&cfname);
+  read_line("/dot",&dot);
+  read_line("/outlocal",&local);
+  read_line("/outhost",&host);
+  read_line("/digestcode",&code);
+  read_line("/sublist",&popt[0]);
+  read_line("/fromheader",&popt[3]);
+  read_line("/tstdigopts",&popt[4]);
+  read_line("/owner",&popt[5]);
+  read_line("/sql",&popt[6]);
+  read_line("/modpost",&popt[7]);
+  read_line("/modsub",&popt[8]);
+  read_line("/remote",&popt[9]);
+  return 1;
+}
+
+int read_old_config(void)
 {
   unsigned char ch;
   int fdin;
@@ -193,6 +230,7 @@ void read_config(void)
   dirplusmake("/config");
   if ((fdin = open_read(dirplus.s)) == -1) {
     if (errno != error_noent) die_read();
+    return 0;
   } else {
     substdio_fdbuf(&sstext,read,fdin,textbuf,sizeof(textbuf));
     for (;;) {
@@ -224,6 +262,7 @@ void read_config(void)
     }
     close(fdin);
   }
+  return 1;
 }
 
 void main(int argc,char **argv)
@@ -298,7 +337,7 @@ void main(int argc,char **argv)
     /* lock for edit */
     dirplusmake("/lock");
     fdlock = lockfile(dirplus.s);
-    read_config();
+    read_new_config() || read_old_config();
   }
 
   if ((p = *argv++) != 0) {
