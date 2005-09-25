@@ -40,6 +40,8 @@ ezmlm-idx-0.450, ????-??-??
   output emails, to also select sections at run time based on the list's
   configured flags.
 
+- Added a "language" configuration file.
+
 - Broke the ezmlmrc text files into separate files internally.
 
 ezmlm-idx-0.443, 2005-09-01

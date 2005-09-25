@@ -18,4 +18,6 @@ test -d lang/"$1" -a -f lang/"$1".sed || {
     echo "</$sfile#E/>"
     cat lang/"$1"/$file
   done
+  echo "</language#E/>"
+  echo "$1"
 ) > ezmlmrc."$1"

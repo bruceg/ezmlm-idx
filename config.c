@@ -12,6 +12,7 @@
 
 stralloc charset = {0};
 stralloc key = {0};
+stralloc language = {0};
 stralloc listid = {0};
 stralloc mailinglist = {0};
 stralloc outhost = {0};
@@ -66,6 +67,7 @@ void load_config(const char *dir)
   getconf_line(&outhost,"outhost",1,dir);
   getconf_line(&outlocal,"outlocal",1,dir);
 
+  getconf_line(&language,"language",0,dir);
   getconf_line(&listid,"listid",0,dir);
   if (getconf_line(&charset,"charset",0,dir)) {
     if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
