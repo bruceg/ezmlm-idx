@@ -11,22 +11,22 @@ az alabbi cimre:
 Altalaban ugyanez tortenik, ha egyszeruen a "valasz" gombot
 megnyomod. Ha ez nem megy, csak masold a fenti cimet a Cimzett:
 mezobe.
-</#x/>
+<=x=>
 
 vagy kattints ide:
 	mailto:<#R#>
-</#/>
+<==>
 
 Ez az ellenorzes ket celt szolgal: eloszoris ellenorzi, hogy tudok-e
 levelet kuldeni Neked.  Masodszoris ved Teged, nehogy mas hamisitson
 feliratkozasi kerelmet Neked.
 
-</#q/>
+<=q=>
 Nehany levelezoszoftver hibas, es nem tudja a hosszu cimeket kezelni.
 Ha nem tudsz valaszolni erre a megerositesre, kuldd a levelet a(z)
 <<#L#>-request@<#H#>> cimre, es a Targy mezobe ird be a teljes cimet.
 
-</#s/>
+<=s=>
 Ez a lista moderalt.  Ha elkuldod a megerositest, a keres a
 moderatorokhoz kerul.  Ertesitest fogsz kapni, ha a feliratkozasod
 sikeres lett.

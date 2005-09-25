@@ -30,7 +30,7 @@ Remote subscription
 
 へ空の message を送って下さい。
 
-</#d/>
+<=d=>
 digest list に加えたり・外したりする場合も同様にして
 
         <<#L#>-digest-subscribe-john=example.com@<#H#>>
@@ -38,20 +38,20 @@ digest list に加えたり・外したりする場合も同様にして
 
 の様になります。
 
-</#/>
+<==>
 message の中身は必要ありません。address だけが重要です。
 
-</#r/>
+<=r=>
 ezmlm は貴方に確認の message を送ります。これは request が
 本当に貴方からのものかを確認するためです。送られた message に
 reply する事で手続きは完了します。
 
-</#R/>
+<=R=>
 ezmlm は user に対して確認の message を送ります。
 上記の場合は <john@example.com> 宛に確認の message が送られる
 ことになります。確認の message を受け取った user は reply を
 することで確認が終了します。
-</#/>
+<==>
 
 この確認によって、第三者による攻撃を困難なものにしています。
 
@@ -69,7 +69,7 @@ Subscription
 	<<#L#>-unsubscribe@<#H#>>
 	(Stop subscription)
 
-</#d/>
+<=d=>
 digest list の購読開始・終了は以下の command address です。
 
         <<#L#>-digest-subscribe@<#H#>>
@@ -78,10 +78,10 @@ digest list の購読開始・終了は以下の command address です。
 	<<#L#>-digest-unsubscribe@<#H#>>
 	(Stop digest subscription)
 
-</#/>
+<==>
 発信者には確認の message が ezmlm から送られます。
 
-</#s/>
+<=s=>
 この mailing list の購読開始・脱退は管理者の監督下で行われる様
 設定されています。管理者宛に確認を出す前に ezmlm は request を
 出した発信者へ確認の message を送り、request が本物か否かを確認
@@ -91,9 +91,9 @@ request が正当なものと思うのであれば、ezmlm から届いた確認の
 message に対して reply して下さい。正当でないと思うのであれば
 ezmlm からの message を単純に無視して下さい。そして、必要なら
 request の発信者に連絡してみて下さい。
-</#S/>
+<=S=>
 購読開始・脱退は自動で処理されます。
-</#/>
+<==>
 
 また、
 
@@ -111,21 +111,21 @@ request の発信者に連絡してみて下さい。
 管理者の address その他の情報は購読者には一切連絡されません。
 （勿論、貴方が直接 mail を送った場合は別です）
 
-</#rl/>
+<=rl=>
 mailing list <#L#>@<#H#> の講読者一覧は
 以下の address から得られます。
         <<#L#>-list@<#H#>>
 ezmlm の log は以下の address から得られます。
         <<#L#>-log@<#H#>>
 
-</#rld/>
+<=rld=>
 mailing list <#L#>@<#H#> の digest 版の講読者一覧は
 以下の address から得られます。
         <<#L#>-digest-list@<#H#>>
 digest 版に関する log は以下の address です。
         <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 ezmlm が送り出す message text を編集するには、以下の command address:
 
         <<#L#>-edit@<#H#>>
@@ -133,7 +133,7 @@ ezmlm が送り出す message text を編集するには、以下の command address
 宛に空の e-mail を送って下さい。
 （編集可能な message 一覧及び、編集方法は返信に含まれています）
 
-</#m/>
+<=m=>
 Moderated posts
 ---------------
 message を審査する様に設定されている場合は、ezmlm は post された
@@ -163,7 +163,7 @@ ezmlm は定められた期限（通常は 5日）以内に審査の結果を受け
 取れない場合には、発信者宛に理由を同梱して message を返送します。
 （必要とあれば、期限切れの message を単純に削除する様にも
   設定出来ます）
-</#/>
+<==>
 
 Vacations
 ---------
@@ -181,7 +181,7 @@ Vacations
 あれば、上記の管理用 message に対して適切な応答を自動生成する
 様に設定して下さい。
 
-</#r/>
+<=r=>
 購読開始・終了の作業を管理者である貴方のものでない address から
 行った場合、購読開始・終了の対象になった address 宛に確認の message
 が届きます。その後に全管理者宛に確認の message が届きます。これは
@@ -191,7 +191,7 @@ request を発行したのが貴方自身か否かを ezmlm が判断する手段を持って
 この場合は、貴方の送信した message や address が対象となった user
 宛に送られる事を覚えておいて下さい。
 
-</#/>
+<==>
 お手数をおかけします。
 
 PS: 何か不明な点等がありましたら、主宰者の

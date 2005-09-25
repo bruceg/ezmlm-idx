@@ -11,23 +11,23 @@ an empty reply to this address:
 Usually, this happens when you just hit the "reply" button.
 If this does not work, simply copy the address and paste it into
 the "To:" field of a new message.
-</#x/>
+<=x=>
 
 or click here:
 	mailto:<#R#>
-</#/>
+<==>
 
 This confirmation serves two purposes. First, it verifies that I am able
 to get mail through to you. Second, it protects you in case someone
 forges a subscription request in your name.
 
-</#q/>
+<=q=>
 Some mail programs are broken and cannot handle long addresses. If you
 cannot reply to this request, instead send a message to
 <<#L#>-request@<#H#>> and put the
 entire address listed above into the "Subject:" line.
 
-</#s/>
+<=s=>
 This list is moderated. Once you have sent this confirmation, the
 request will be sent to the moderator(s) of this list. I will notify
 you when your subscription has been activated.

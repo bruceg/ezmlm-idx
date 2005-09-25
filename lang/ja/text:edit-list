@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 $B4IM}<T$O(B <#L#>-edit.FILE command $B$r;H$&$3$H$G(B ezmlm $B$,=PNO$9$k(B
 mailing list <#L#> $B$N0Y$N(B message text $B$rJT=8$9$k$3$H$,=PMh$^$9!#(B
 
@@ -31,10 +31,10 @@ sub_nop             $B4{$K9XFI<T$K$J$C$F$$$k?M$,:F$S9XFI(B request $B$r=P$7$?
                     $BAw$i$l$^$9!#(B
 sub_ok              $B9XFI$N<jB3$-$,=*N;$7$?8e$KAw$i$l$^$9!#(B
 top                 ezmlm $B$,Aw?.$9$kA4$F$N1~Ez$NF,$KIU$-$^$9!#(B
-</#tn/>
+<=tn=>
 trailer             $B$3$N(B mailing list $B$KBP$9$kA4$F$N(B post $B$NKvHx$K(B
                     $BIU$1B-$5$l$FAw$i$l$^$9!#(B
-</#n/>
+<=n=>
 unsub_bad           $B9XFI<T$+$i$N9XFICf;_3NG'$,IT@5$J>l9g$KAw$i$l$^$9!#(B
 unsub_confirm       $B9XFI<T$+$i$N9XFICf;_$N(B request $B$N3NG'$N$?$a$KAw$i$l$^$9!#(B
 unsub_nop           $B9XFI<T0J30$,9XFI$rCf;_$7$h$&$H$7$?;~$KAw$i$l$^$9!#(B

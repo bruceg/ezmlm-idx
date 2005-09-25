@@ -17,14 +17,14 @@ address を切り詰めてしまう事があるので、全ての address が
 !R
 
 に送って下さい。
-</#x/>
+<=x=>
 
 Mail User Agent (MUA) によっては
 
         mailto:<#R#>
 
 を click するだけで確認の message を送る準備も出来るでしょう。
-</#/>
+<==>
 
 繰り返す様ですが、reply の address 全てが正しく取り込まれて
 いるか、送信前に確認して下さい。

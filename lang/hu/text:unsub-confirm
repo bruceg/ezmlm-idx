@@ -11,11 +11,11 @@ az alabbi cimre:
 Altalaban ugyanez tortenik, ha egyszeruen a "valasz" gombot
 megnyomod. Ha ez nem megy, csak masold a fenti cimet a Cimzett:
 mezobe.
-</#x/>
+<=x=>
 
 vagy kattints ide:
 	mailto:<#R#>
-</#/>
+<==>
 
 Nem ellenoriztem, hogy a cimed pillanatnyilag fent van-e a listan.
 Hogy megnezd, melyik cimmel vagy feliratkozva a listara, nezd meg a
@@ -23,7 +23,7 @@ listarol jott leveleidet.  Mindegyik tartalmazza elrejtve a
 return-path-ben.  Peldaul mary@example.com leveleinek return-path-je:
 <<#l#>-return-<szam>-mary=example.com@<#l#>>.
 
-</#q/>
+<=q=>
 Nehany levelezoprogram hibas es nem tudja kezelni a hosszu cimeket.
 Ha nem tudsz valaszolni erre a keresre, valaszolj inkabb a(z)
 <<#L#>-request@<#H#>> cimre, es a teljes cimet ird be a Targy: mezobe.

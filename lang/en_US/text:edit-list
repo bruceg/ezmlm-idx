@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 The <#L#>-edit.file command can be used by a remote
 administrator to edit the text files that make up the bulk
 of the responses from the <#L#>@<#H#> list.
@@ -31,9 +31,9 @@ sub_confirm         to subscriber to request subscribe confirm.
 sub_nop             to subscriber after re-subscription.
 sub_ok              to subscriber after successful subscription.
 top                 top of all responses.
-</#tn/>
+<=tn=>
 trailer             added to all posts sent out from the list.
-</#n/>
+<=n=>
 unsub_bad           to subscriber if unsubscribe confirm was bad.
 unsub_confirm       to subscriber to request unsubscribe confirm.
 unsub_nop           to non-subscriber after unsubscribe.

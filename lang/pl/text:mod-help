@@ -17,25 +17,25 @@ o adresie janek@example.com poprzez wys³anie listu na adres:
 <#L#>-subscribe-janek=example.com@<#H#>
 <#L#>-unsubscribe-janek=example.com@<#H#>
 
-</#g/>
+<=g=>
 Odpowiednio dla przegl±du listy:
 
 <#L#>-digest-subscribe-janek=example.com@<#H#>
 <#L#>-digest-unsubscribe-janek=example.com@<#H#>
 
-</#/>
+<==>
 To wszystko. Nie musisz nadawaæ listowi tytu³u, nie musisz
 równie¿ pisaæ nic w jego tre¶ci!
 
-</#r/>
+<=r=>
 Wy¶lê Ci pro¶bê o potwierdzenie 
 Co zrobiæ z moim listem?
 Po prostu odpowiedz na niego i gotowe.
-</#R/>
+<=R=>
 Wy¶lê pro¶bê o potwierdzenie chêci uczestnictwa na adres
 autora listu.
 Wystarczy, ze na te pro¶be odpowie, a bedzie zapisany.
-</#/>
+<==>
 
 Zawiadomiê subskrybenta, je¿eli jego/jej dane dotyczace
 jego subskrybcji zostan± zmienione.
@@ -49,7 +49,7 @@ wys³anie listu na adres:
 <#L#>-subscribe@<#H#>
 <#L#>-unsubscribe@<#H#>
 
-</#g/>
+<=g=>
 Obs³uga przegl±du listy:
 
 <#L#>-digest-subscribe@<#H#>
@@ -61,13 +61,13 @@ wys³ane. Je¿eli zostanie to potwierdzone, zostanie usuniêty
 z listy prenumeratorów.
 Podobna procedura obowi±zuje podczas zapisywania siê na listê.
 
-</#s/>
+<=s=>
 Podczas procedury zapisywania siê na listê, pro¶ba
 o potwierdzenie zapisu jest wysy³ana równie¿ do moderatora listy.
 Pozytywna odpowied¼ moderatora dope³ni zapisu na listê.
-</#S/>
+<=S=>
 Zapisy funkcjonuj± w ten sam sposób.
-</#/>
+<==>
 
 U¿ytkownik mo¿e równie¿ u¿ywaæ adresów:
 
@@ -87,7 +87,7 @@ rzeczywi¶cie istnieje.
 Twój rzeczywisty adres pocztowy nie bêdzie ujawniony prenumaratorowi.
 Pozwoli to zachowaæ Ci anonimowo¶æ.
 
-</#rl/>
+<=rl=>
 Aby uzyskaæ listê prenumeratorów <#L#>@<#H#>, 
 wy¶lij list na adres:
    <<#L#>-list@<#H#>>
@@ -96,19 +96,19 @@ Chc±c uzyskaæ dziennik pok³adowy listy <#L#>@<#H#>,
 wy¶lij list na adres:
    <<#L#>-list@<#H#>>
 
-</#rld/>
+<=rld=>
 Adresy w³a¶ciwe dla przegl±du listy:
    <<#L#>-digest-list@<#H#>>
 i:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 Mo¿esz zdalnie zmieniaæ pliki tekstowe, którymi pos³uguje siê automat
 podczas obs³ugi listy dyskusyjnej. Aby uzyskaæ zbiór plików oraz
 instrukcje, jak je zmieniaæ, napisz pod adres:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 Przesy³ki moderowane
 --------------------
 Je¿eli przesy³ki podlegaj± moderowaniu, umieszczam wys³ane listy
@@ -135,7 +135,7 @@ wcze¶niej odrzuci³e¶, lub odwrotnie, oczywi¶cie Ci o tym powiem.
 Je¿eli nie dostanê odpowiedzi od moderatora przez okre¶lony czas,
 zwykle jest to piêæ dni, zwrócê list nadawcy z opisem zaistnia³ej
 sytuacji.
-</#/>
+<==>
 
 Wakacje
 -------
@@ -154,7 +154,7 @@ Je¿eli chcesz automatycznie aprobowaæ wszelkie przesy³ki kierowane
 na listê, skonfiguruj swój program pocztowy tak, aby automatycznie
 odpowiada³ na listy maj±ce tematy zgodne z powy¿szymi kryteriami.
 
-</#r/>
+<=r=>
 Uwa¿aj, je¿eli bêdziesz próbowa³ zdalnie zarz±dzaæ list± z adresu,
 który nie jest wpisany jako adres administratora, prenumerator,
 a nie Ty, zostanie poproszony o potwierdzenie, które zostanie
@@ -165,7 +165,7 @@ kryjesz siê za poczt± przychodz±c± z nieznanego adresu.
 Pamiêtaj, ¿e w powy¿szym wypadku Twoje ¿ycznie skierowane do serwera
 i równie¿ Twój adres s± przesy³ane do prenumeratora! Przestajesz byæ
 wówczas anonimowy.
-</#/>
+<==>
 
 Powodzenia!
 

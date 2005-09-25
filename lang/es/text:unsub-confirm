@@ -11,12 +11,12 @@ mensaje en blanco a esta dirección:
 Normalmente esto ocurre al pulsar el botón "Responder". Si no
 funciona, simplemente copie la dirección y péguela en el campo
 "Para:" de un nuevo mensaje. 
-</#x/>
+<=x=>
 
 o haga clic aquí:
 
 	mailto:<#R#>
-</#/>
+<==>
 
 No he comprobado si su dirección está actualmente en la lista de
 correo. Para ver que dirección utilizó para suscribirse, mire los
@@ -25,7 +25,7 @@ tiene su dirección oculta dentro de la ruta de retorno; por
 ejemplo, maria@example.com recibe mensajes con la ruta de retorno:
 <<#l#>-return-<número>-maria=example.com@<#H#>>.
 
-</#q/>
+<=q=>
 
 Algunos programas de correo no pueden manejar direcciones largas.
 Si no puede responder a esta petición, envíe un mensaje a

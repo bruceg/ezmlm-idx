@@ -17,21 +17,21 @@
         To:<#R#>
 
 として message を作成して下さい。
-</#x/>
+<=x=>
 
 MUA によっては
 
         mailto:<#R#>
 
 を click するだけ準備が出来るものもあるでしょう。
-</#/>
+<==>
 
 この確認には以下の二つの意味があります。
 
         * 指定された address で message が送信出来るか否か
         * 貴方の address を偽った request を排除する
 
-</#q/>
+<=q=>
 e-mail を扱う環境によっては、ezmlm が使う長い address を
 うまく扱えない事があります。その様な場合は以下の address
 
@@ -40,7 +40,7 @@ e-mail を扱う環境によっては、ezmlm が使う長い address を
 に "Subject: <#R#>" として
 message を送って下さい。
 
-</#s/>
+<=s=>
 mailing list <#L#> は moderated な mailing list です。
 貴方がこの確認を送信すると、全ての管理者宛てに貴方の購読を認めるか否か
 の確認が届きます。管理者が購読を承認した後、貴方宛てにその旨の通知が

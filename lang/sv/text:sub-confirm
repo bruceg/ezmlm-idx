@@ -10,23 +10,23 @@ adderad till <#l#> listan, skicka ett brev till denna adress:
 Enklast görs det genom att trycka på "svara" ("reply") knappen.
 Ifall det inte fungerar, kopiera adressen och klistra in den i
 "Till" ("To:") fältet i ett nytt brev.
-</#x/>
+<=x=>
 
 eller tryck här:
 	<mailto:<#R#>>
-</#/>
+<==>
 
 Denna bekräftelse tjänar två syften. Dels säkerställer den att det går
 att skicka brev till dig och dels skyddar den dig mot att andra försöker
 prenumerera någon mot dess vilja.
 
-</#q/>
+<=q=>
 Det är fel på vissa e-mail program vilket gör att de inte kan hantera
 långa adresser. Ifall du inte kan svara på denna förfrågan, skicka
 istället ett meddelande till <<#L#>-request@<#H#>>
 och skriva hela ovan nämnda adress i titel ("Subject:") raden.
 
-</#s/>
+<=s=>
 Denna lista är modererad. Så fort du har svarat på denna bekräftelse
 kommer din förfrågan att skickas till moderatorerna för listan.
 Du kommer att underrättas när din prenumeration är aktiverad.

@@ -3,7 +3,7 @@
 He guardado una lista de todos los mensajes de la lista de correo
 <#L#> que han sido devueltos procedentes de su dirección.
 
-</#a/>
+<=a=>
 
 Una copia de estos mensajes puede estar en el archivo.
 
@@ -17,6 +17,6 @@ mensajes, envíe un mensaje en blanco a:
 
    <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 Aquí están los números de los mensajes:
 

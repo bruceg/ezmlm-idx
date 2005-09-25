@@ -3,7 +3,7 @@
 Jag har skapat en lista på de meddelanden från <#L#> listan som
 har "studsat" på väg till dig.
 
-</#a/>
+<=a=>
 Kopior av dessa meddelanden kan du finna i arkivet.
 
 För att hämta meddelande 123-145 (max 100 per förfrågan), skicka
@@ -14,6 +14,6 @@ För att få en lista på titlar och författare för de senaste 100
 meddelandena, skicka ett brev till:
    <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 Detta är meddelande nummren:
 

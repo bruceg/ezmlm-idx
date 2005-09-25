@@ -3,7 +3,7 @@
 mailing list <#L#> が貴方宛に送った message の内
 配送に失敗したものの番号を添付しておきます。
 
-</#a/>
+<=a=>
 message は archive 中に保存されています。
 
 空の message を以下の command address に送ることで、貴方が受け取れ
@@ -17,6 +17,6 @@ message は archive 中に保存されています。
    * 最新 100通の投稿者と Subject: 行を取り出す
      <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 配送に失敗した message の番号は以下の通りです:
 

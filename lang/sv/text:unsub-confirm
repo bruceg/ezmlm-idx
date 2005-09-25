@@ -10,11 +10,11 @@ från <#l#> listan, skicka ett brev till denna adress:
 Vanligtvis gör man det med "Svara" ("Reply") knappen.
 Ifall det inte fungerar, kopiera adressen nedan och klistra
 in den i "Till" ("To:") fältet i ett nytt brev.
-</#x/>
+<=x=>
 
 eller tryck här:
 	<mailto:<#R#>>
-</#/>
+<==>
 
 För att se vilken adress din prenumeration går till, undersök ett
 meddelande från listan. Varje meddelande har din adress dold i
@@ -22,7 +22,7 @@ dess "return path", t ex mary@example.com har får meddelanden
 med "return-path" satt till:
 <<#l#>-return-<nummer>-mary=example.com@<#H#>>.
 
-</#q/>
+<=q=>
 Vissa email program är felaktiga och kan inte hantera långa adresser.
 Ifall du inte kan svara på detta meddelande, skicka istället ett
 meddelande till <<#L#>-request@<#H#>> och skriv hela ovan nämnda

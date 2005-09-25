@@ -3,7 +3,7 @@
 Ho tenuto una copia dei messaggi della lista <#L#> che sono tornati
 indietro dal tuo indirizzo.
 
-</#a/>
+<=a=>
 Le copie di questi messaggi potrebbero essere nell'archivio.
 
 
@@ -17,6 +17,6 @@ messaggi scrivi a:
 
    <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 Ecco i numeri dei messaggi:
 

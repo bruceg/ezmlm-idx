@@ -11,11 +11,11 @@ questo indirizzo:
 In genere ciò accade non appena schiacci il bottone "Rispondi". 
 Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
 "A:" di un nuovo messaggio.
-</#x/>
+<=x=>
 
 oppure clicca qui:
 	mailto:<#R#>
-</#/>
+<==>
 
 Non ho controllato che il tuo indirizzo sia al momento nella mailing list.
 Per vedere quale indirizzo hai usato per iscriverti, guarda ai messaggi che
@@ -23,7 +23,7 @@ stai ricevendo dalla mailing list. Ciascun messaggio ha il tuo indirizzo
 nascosto nel campo di ritorno; per esempio, mary@example.com riceve i messaggi
 con il campo di ritorno:<<#l#>-return-<numero>-mary=example.com@<#H#>.
 
-</#q/>
+<=q=>
 Alcuni programmi di posta sono difettosi e non sono in grado di gestire
 indirizzi molto lunghi. Se non riesci a rispondere a questa richiesta
 spedisci un messaggio a <<#L#>-request@<#H#>> e metti l'indirizzo

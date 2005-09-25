@@ -3,7 +3,7 @@
 I've kept a list of which messages from the <#L#> mailing list have 
 bounced from your address.
 
-</#a/>
+<=a=>
 Copies of these messages may be in the archive.
 
 To retrieve a set of messages 123-145 (a maximum of 100 per request),
@@ -14,6 +14,6 @@ To receive a subject and author list for the last 100 or so messages,
 send an empty message to:
    <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 Here are the message numbers:
 

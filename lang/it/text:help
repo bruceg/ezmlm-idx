@@ -9,12 +9,12 @@ della lista:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+<=d=>
 Indirizzi analoghi esistono per la lista delle raccolte:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#a/>
+<=a=>
 Per ricevere i messaggi dal numero 123 al numero 145 (massimo 100 per ogni
 richiesta), scrivi a:
    <<#L#>-get.123_145@<#H#>>
@@ -26,7 +26,7 @@ Per ricevere tutti i messaggi con lo stesso oggetto del messaggio
 12345, spedisci un messaggio vuoto a:
    <<#L#>-thread.12345@<#H#>>
 
-</#/>
+<==>
 I messaggi in realtà non é necessario che siano vuoti, ma ignorerò
 il loro contenuto. E' importante solo l'INDIRIZZO dal quale li spedisci.
 

@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 
 La commande <#L#>-edit.file peut etre utilisee par un administrateur
 distant pour editer les fichiers de textes a la base des reponses de la
@@ -32,9 +32,9 @@ sub_confirm         a l'abonne pour confirmer sa requete.
 sub_nop             a l'abonne apres une nouvelle inscription.
 sub_ok              a l'abonne apres un abonnement reussi.
 top                 en-tete de chaque reponse.
-</#tn/>
+<=tn=>
 trailer             ajoute a la fin de chaque contribution a la liste.
-</#n/>
+<=n=>
 unsub_bad           a l'abonne si la confirmation de desinscription est fausse.
 unsub_confirm       a l'abonne pour demander confirmation de desinscription.
 unsub_nop           a un non-abonne apres une demande de desabonnement.

@@ -12,23 +12,23 @@ quelconque a l'adresse suivante:
 En fait, inutile de la recopier: la fonction "Reply" (repondre a
 l'expediteur) de votre logiciel de messagerie doit s'en charger
 automatiquement. Sinon, il reste le copier/coller.
-</#x/>
+<=x=>
 
 ou suivez ce lien :
 	mailto:<#R#>
-</#/>
+<==>
 
 Cette confirmation a deux buts. Tout d'abord, elle verifie que je suis
 capable d'obtenir des messages de vous. Ensuite, elle vous protege au
 cas ou quelqu'un ferait une inscription frauduleuse sous votre nom.
 
-</#q/>
+<=q=>
 Certains logiciels de messageries sont boggues et ne peuvent prendre
 en compte de longues adresses. Si vous ne pouvez pas repondre a cette
 requete, envoyez a la place un message a <<#L#>-request@<#H#>> et
 mettez l'adresse complete presentee ci-dessus dans le champs "Sujet".
 
-</#s/>
+<=s=>
 Cette liste est moderee. Apres avoir recu cette confirmation, la
 requete sera envoyee au(x) moderateur(s) de la liste. Je vous
 previendrai lorsque votre inscription sera effective.

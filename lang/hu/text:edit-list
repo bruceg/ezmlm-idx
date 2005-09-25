@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 A(z) <#L#>-edit.fajlnev paranccsal tudja egy tavoli adminisztrator
 szerkeszteni a szovegfajlokat, amik a(z) <#L#>@<#H#> lista
 valaszainak legtobbjet befolyasolja.
@@ -31,9 +31,9 @@ sub_confirm         A leendo listatagnak, a feliratkozas megerositesere.
 sub_nop             A listatagnak, az ujrairatkozas utan.
 sub_ok              A listatagnak, sikeres feliratkozas utan.
 top                 Minden valasz fejlece.
-</#tn/>
+<=tn=>
 trailer             Minden listas level vegere (altalanos info)
-</#n/>
+<=n=>
 unsub_bad           A listatagnak, ha a leiratkozas megerosites hibas volt.
 unsub_confirm       A listatagnak, a leiratkozas megerositesere.
 unsub_nop           Nem listatagnak, leiratkozas keresekor.

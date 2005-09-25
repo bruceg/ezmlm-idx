@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 <#L#>-edit.fil kommandot kan användas av en fjärradministratör
 för att editera de textfiler som skapar de svaren jag skickar för
 <#L#>@<#H#> listan.
@@ -29,9 +29,9 @@ sub_bad             till prenumeranten ifall bekräftelsen var felaktig.
 sub_confirm         till prenumeranten för att bekräfta prenumerationer.
 sub_nop             till prenumeranten efter en dubbel prenumeration.
 sub_ok              till prenumeranten efter en lyckad prenumeration.
-</#tn/>
+<=tn=>
 trailer             adderas till alla utskick innan de kommer till listan.
-</#n/>
+<=n=>
 top                 starten på alla svar. Generell kommando information.
 unsub_bad           till prenumeranten ifall avprenumerationen misslyckades.
 unsub_confirm       till prenumeranten för att bekräfta avprenumeration.

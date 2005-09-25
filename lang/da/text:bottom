@@ -19,21 +19,21 @@ Send email til følgende for at få info eller FAQ for denne liste:
    <<#L#>-faq@<#H#>>
   
 
-</#d/>
+<=d=>
 Lignende adresser findes for udtræks listen:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#ai/>
+<=ai=>
 Hent alle brevene i intervallet 123 til 145 (max. 100 ad gangen),
 send et tomt brev til:
    <<#L#>-get.123_145@<#H#>>
 
-</#aI/>
+<=aI=>
 Hent brev nummer 12, send et tomt brev til:
    <<#L#>-get.12@<#H#>>
 
-</#i/>
+<=i=>
 Hent en oversigt over breve i intervallet 123 til 456, send et
 tomt brev til:
    <<#L#>-index.123_456@<#H#>>
@@ -41,7 +41,7 @@ tomt brev til:
 Resultatet kommer i breve med hundrede titler pr. brev,
 max. 2000 i alt, så eksemplet vil vise dig brev 100 til 499.
 
-</#ai/>
+<=ai=>
 Hent alle breve med samme emne som brev 123:
    <<#L#>-thread.123@<#H#>>
 

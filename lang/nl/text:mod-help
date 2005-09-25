@@ -21,23 +21,23 @@ Op gelijke wijze kunt u een adres verwijderen door een e-mail
 te sturen naar:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+<=d=>
 Voor de digest list is dat:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#/>
+<==>
 Dat is alles. Subject en tekst hoeft u niet in te voeren.
 
-</#r/>
+<=r=>
 Ik zal u een verzoek om bevestiging sturen, om zeker te maken
 dat u het verzoek heeft ingediend. U kunt reply-en en
 uw wens wordt uitgevoerd.
-</#R/>
+<=R=>
 Ik zal een verzoek naar dat adres sturen, in dit geval
 <john@example.com>. De gebruiker hoeft alleen maar een reply
 te sturen om te bevestigen.
-</#/>
+<==>
 
 De bevestigingen zijn bedoeld om het voor derden moeilijk te
 maken om anderman's adressen aan de lijst toe te voegen.
@@ -54,18 +54,18 @@ een e-mail te sturen naar:
     <<#L#>-subscribe@<#H#>>
     <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+<=d=>
 Voor de digest list:
 
     <<#L#>-digest-subscribe@<#H#>>
     <<#L#>-digest-unsubscribe@<#H#>>
 
-</#/>
+<==>
 De gebruiker zal een verzoek om bevestiging ontvangen
 om zeker te maken dat hij of zij eigenaar is van dat adres.
 Zodra dit bevestigd is, wordt de gebruiker uitgeschreven.
 
-</#s/>
+<=s=>
 Omdat deze list "moderated" is, stuur ik een tweede verzoek naar
 de moderators. Omdat de gebruiker al aan heeft gegeven zich in
 te willen schrijven, kunt u als moderator zeker zijn dat het
@@ -74,9 +74,9 @@ Als u uw goedkeuring wilt geven aan het verzoek van deze gebruiker
 stuurt u een reply op mijn "CONFIRM" bericht.
 Als u geen goedkeuring geeft, kunt u mijn bericht verwijderen of
 kunt u contact opnemen met de gebruiker voor meer informatie.
-</#S/>
+<=S=>
 Inschrijvingen werken op dezelfde manier.
-</#/>
+<==>
 
 De gebruiker kan ook het volgende manier gebruiken:
 
@@ -91,7 +91,7 @@ Uw adres in identiteit worden niet zichtbaar gemaakt aan de
 gebruiker die zich in wil schrijven, tenzij u rechtstreeks e-mail
 aan hem of haar stuurt.
 
-</#rl/>
+<=rl=>
 Om een lijst met leden te ontvangen van <#L#>@<#H#>, stuurt u
 een e-mail naar:
    <<#L#>-list@<#H#>>
@@ -100,19 +100,19 @@ Om een log te ontvangen van <#L#>@<#H#>, stuurt u
 een e-mail naar:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+<=rld=>
 Voor digest subscribers:
    <<#L#>-digest-list@<#H#>>
 en:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 U kunt de teksten zelf aanpassen van de berichten die de mailing list
 verstuurt. Om de lijst met teksten en instructies te ontvangen
 stuurt u een e-mail naar:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 Moderated
 ---------
 Als berichten "moderated" zijn, zal ik het bericht bewaren en u
@@ -140,7 +140,7 @@ Als ik (normaliter binnen 5 dagen) geen moderate reply heb ontvangen,
 zal ik het bericht aan de afzender terugsturen met een verklaring.
 Uw administrator kan de list dusdanig opzetten dat dergelijke berichten
 gewist worden, zonder kennisgeving.
-</#/>
+<==>
 
 Vakantie
 --------
@@ -154,7 +154,7 @@ eigenaar van de list.
 Als u automatisch alle verzoeken wilt accepteren als u weg bent, kunt
 u uw mailprogramma instellen om een auto-reply te geven.
 
-</#r/>
+<=r=>
 Als u vanaf een ander adres administratieve handelingen uit wilt voeren,
 wordt de gebruiker gevraagd om bevestiging, niet aan u.
 Daarna wordt er een bevestigingsverzoek aan alle moderatoren gestuurd.
@@ -162,7 +162,7 @@ Dat doe ik omdat ik niet kan weten of u het originele verzoek hebt gestuurd.
 
 Onthoud dat uw originele verzoek (en adres) in dit geval wel naar de
 gebruiker worden gestuurd.
-</#/>
+<==>
 
 Veel succes gewenst!
 

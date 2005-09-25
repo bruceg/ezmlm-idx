@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 O comando <#L#>-edit.file pode ser usado por um administrador
 remoto para editar os arquivos texto que são usados para as
 respostas da lista <#L#>@<#H#>.
@@ -32,9 +32,9 @@ sub_confirm         para o assinante solicitando confirmação de subscrição.
 sub_nop             para o assinante depois de re-subscrição.
 sub_ok              para o assinante depois de subscrição com sucesso.
 top                 topo de todas as respostas.
-</#tn/>
+<=tn=>
 trailer             incluído em todas as mensagens enviadas pela lista.
-</#n/>
+<=n=>
 unsub_bad           para o assinante, se a confirmação de cancelamento
                     é inválida.
 unsub_confirm       para assinante pedindo confirmação para o cancelamento.

@@ -9,11 +9,11 @@ In genere ciò accade non appena schiacci il bottone "Rispondi". Puoi
 controllare l'indirizzo per assicurarti che inizi con "<#L#>-accept".
 Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
 "A:" di un nuovo messaggio.
-</#x/>
+<=x=>
 
 Oppure clicca qui:
 	mailto:<#A#>
-</#/>
+<==>
 
 Per rifiutare il messaggio e fare in modo che esso venga rispedito al
 mittente, per favore spedisci un messaggio a:
@@ -22,11 +22,11 @@ mittente, per favore spedisci un messaggio a:
 
 Di solito è più facile cliccare sul bottone "Rispondi a tutti:", e poi
 togliere tutti gli indirizzi tranne quello che inizia con "<#L#>-reject".
-</#x/>
+<=x=>
 
 Oppure clicca qui:
 	mailto:<#R#>
-</#/>
+<==>
 
 Non è necessario copiare il messaggio nella risposta per accettarlo o
 rifiutarlo. Se desideri spedire un commento al mittente del messaggio

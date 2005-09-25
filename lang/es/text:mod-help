@@ -26,18 +26,18 @@ mandando un mensaje a:
 
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+<=d=>
 Para suscribirse o darse de baja de la lista de resúmenes:
 
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#/>
+<==>
 
 Eso es todo. No es necesario poner "Asunto" o cuerpo principal en
 el mensaje.
 
-</#r/>
+<=r=>
 
 Le mandaré una petición de confirmación, para asegurarme que
 usted me envió la petición. Simplemente responda al mensaje, y se
@@ -62,19 +62,19 @@ correo a:
    <#L#>-subscribe@<#H#>
    <#L#>-unsubscribe@<#H#>
 
-</#d/>
+<=d=>
 Para la lista de resúmenes:
 
    <#L#>-digest-subscribe@<#H#>
    <#L#>-digest-unsubscribe@<#H#>
 
-</#/>
+<==>
 
 El usuario recibirá una petición de confirmación para asegurarse
 que él/ella posee la dirección de suscripción. Una vez
 verificada, se procederá a dar de baja al usuario.
 
-</#s/>
+<=s=>
 
 Como esta lista está moderada para suscripciones, mandaré una
 segunda petición de confirmación al moderador. Como el usuario ya
@@ -85,9 +85,9 @@ responda a mi mensaje de confirmación. En caso contrario, puede
 simplemente borrar mi mensaje o contactar con el suscriptor para
 pedir más información.
 
-</#S/>
+<=S=>
 Las suscripciones funcionan del mismo modo.
-</#/>
+<==>
 
 El usuario también puede utilizar:
 
@@ -101,7 +101,7 @@ de confirmación y mandar una contestación.
 Su dirección e identidad no serán reveladas al suscriptor, a no
 ser que le mande correo directamente al usuario.
 
-</#rl/>
+<=rl=>
 
 Para conseguir una lista de suscriptores para <#L#>@<#H#> envíe
 un mensaje a:
@@ -113,7 +113,7 @@ Para conseguir un log de la lista de transacciones para
 
    <<#L#>-log@<#H#>>
 
-</#rld/>
+<=rld=>
 Para suscriptores al resumen:
 
    <<#L#>-digest-list@<#H#>>
@@ -122,7 +122,7 @@ y:
 
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 
 Usted puede modificar remotamente los ficheros de texto que
 componen las respuestas mandadas por la lista. Para conseguir una
@@ -130,7 +130,7 @@ lista de ficheros e instrucciones de edición, escriba a:
 
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 Mensajes moderados.
 -------------------
 
@@ -164,7 +164,7 @@ puede configurar la lista para que estos mensajes "ignorados"
 simplemente sean borrados sin notificación, en lugar de ser
 devueltos al remitente.
 
-</#/>
+<==>
 
 Vacaciones
 ----------
@@ -183,7 +183,7 @@ esté fuera, configure su programa de correo para responder
 automáticamente a mensajes que tienen un "Asunto" que reúna los
 criterios anteriormente expuestos.
 
-</#r/>
+<=r=>
 
 Si intenta administrar la lista remotamente, desde una dirección
 que no es la suya, el suscriptor cuya dirección está utilizando,
@@ -195,7 +195,7 @@ mandado la petición original.
 En este caso, ¡Recuerde que se manda su petición original (y su
 dirección) al suscriptor!
 
-</#/>
+<==>
 
 ¡Buena suerte!
 

@@ -22,28 +22,28 @@ uma mensagem vazia para qualquer destes endereços:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+<=d=>
 Existem também estes endereços similares para a lista "digest":
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#ai/>
+<=ai=>
    <<#L#>-get.12_45@<#H#>>:
    Recupera uma cópia das mensagens 12 a 45 do arquivo.
    No máximo 100 mensagens serão retornadas por requisição.
 
-</#aI/>
+<=aI=>
    <<#L#>-get.12@<#H#>>:
    Recupera uma cópia da mensagem 12 do arquivo.
 
-</#i/>
+<=i=>
    <<#L#>-index.123_456@<#H#>>:
    Recupera os assuntos das mensagens número 123 a 456.
    Assuntos são retornados em grupos de 100, ou seja você receberá
    os assuntos das mensagens 100 a 499.
    Um máximo de 2000 assuntos são retornados por requisição.
 
-</#ai/>
+<=ai=>
    <<#L#>-thread.12345@<#H#>>:
    Recupera uma cópia de todas as mensagens com o mesmo assunto
    da mensagem 12345.

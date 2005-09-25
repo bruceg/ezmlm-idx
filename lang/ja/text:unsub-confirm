@@ -17,14 +17,14 @@
         To: <#R#>
 
 として message を作成して下さい。
-</#x/>
+<=x=>
 
 また、Mail User Agent (MUA) によっては
 
         mailto:<#R#>
 
 を click して message を作成する事も出来るでしょう。
-</#/>
+<==>
 
 貴方の address が購読者か否かは check していません。
 どの address で購読をしているのかは、mailing list から
@@ -35,7 +35,7 @@
 
 という具合いです。
 
-</#q/>
+<=q=>
 環境によっては、長い address をうまく扱えない場合が有ります。
 この message に reply をうまく返せない様なら、以下の address
 

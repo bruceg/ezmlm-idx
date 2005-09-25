@@ -11,11 +11,11 @@ kirim mail kosong ke alamat:
 Biasanya, yang perlu anda lakukan adalah dengan menekan tombol "reply".
 Jika ini tidak berhasil, kopi alamatnya dan letakkan kembali ke dalam
 kolom "To:" di posting yang baru.
-</#x/>
+<=x=>
 
 atau klik di sini:
 	mailto:<#R#>
-</#/>
+<==>
 
 Kami belum mencek apakah alamat anda sudah ada di dalam milis. Untuk
 melihat alamat apa yang anda pakai untuk mendaftar, lihat mail yang anda
@@ -23,7 +23,7 @@ terima dari milis. Setiap mail mempunyai alamat anda yang tersembunyi di
 dalam return-pathnya; sebagai contoh, mary@example.com menerima mail
 dengan return-path: <<#l#>-return-<number>-mary=example.com@<#H#>.
 
-</#q/>
+<=q=>
 Beberapa program mail tidak berfungsi sempurna dan tidak dapat menangani
 alamat-alamat panjang. Jika anda tidak dapat mereply ke permohonan ini,
 kirimkan sebuah mail ke <<#L#>-request@<#H#>> dan taruh alamat-alamat

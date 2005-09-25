@@ -11,13 +11,13 @@ información y FAQ de esta lista:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+<=d=>
 Para la lista de resúmenes existen direcciones-comando análogas:
 
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#a/>
+<=a=>
 
 Para recibir los mensajes desde el número 123 al 145 (con un
 máximo de 100 por petición), escriba a:
@@ -34,7 +34,7 @@ mensaje 12345, mande un mensaje en blanco a:
 
    <<#L#>-thread.12345@<#H#>>
 
-</#/>
+<==>
 
 En realidad no es necesario que los mensajes estén en blanco,
 pero si no lo están ignoraré su contenido. Sólo es importante la

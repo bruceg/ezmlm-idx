@@ -3,7 +3,7 @@
 Ich habe mir gemerkt, welche Nachrichten der Mailingliste
    <<#L#>@<#H#>>
 nicht an Sie zugestellt werden konnten.
-</#a/>
+<=a=>
 Eventuell befinden sich noch Kopien dieser Nachrichten
 im Archiv.
 
@@ -20,6 +20,6 @@ Nachrichten zu bekommen, schicken Sie eine leere Mail an die
 folgende Adresse:
    <#L#>-index@<#H#>
 
-</#/>
+<==>
 Hier die Nummern der Nachrichten:
 

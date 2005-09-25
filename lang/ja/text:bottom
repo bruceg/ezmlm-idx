@@ -23,13 +23,13 @@ command $B$O0J2<$N(B address $B08$K6u$N(B message $B$rAw$k$3$H$G<B9T$5$l$^$
      <<#L#>-unsubscribe@<#H#>>
      (Stop subscription)
 
-</#d/>
+<=d=>
 digest $B$N9XFI$rCf;_$9$k$K$O0J2<$N(B address $B08$F$K6u$N(B message $B$r(B
 $BAw$C$F2<$5$$!#(B
      <<#L#>-digest-unsubscribe@<#H#>>
      (Stop digest subscription)
 
-</#/>
+<==>
 $B9XFI$N3+;O$*$h$SCf;_$N:]$K$O(B ezmlm $B$O3NG'$N0Y$N(B message $B$r(B
 $B;XDj$5$l$?(B address $B08$F$KAw?.$7$^$9!#$=$N3NG'$N0Y$N(B message
 $B$KBP$7$F!"(Breply $B$rJV$9$3$H$G3NG'$N<jB3$-$O=*N;$7$^$9!#(B

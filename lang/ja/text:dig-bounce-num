@@ -3,7 +3,7 @@
 配送に失敗した mailing list <#L#> の digest 版に
 含まれていた最初の message 番号を添付しておきます。
 
-</#a/>
+<=a=>
 ezmlm は digest 自体は保存していません。
 ですが、以下の command address に空の message を送る事で
 mailing list <#L#> 本体の
@@ -18,6 +18,6 @@ archive から、貴方が受け取れなかった message 群を取り出す
    * 最新 100通の投稿者と Subject: 行を取り出す
      <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 --- 以下は digest 版の開始 message 番号一覧です ---
 

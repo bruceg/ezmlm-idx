@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 Pøíkaz <#L#>-edit.soubor mù¾e být pou¾it vzdáleným správcem k editaci
 textových souborù, ze kterých se skládají odpovìdi pro list <#L#>@<#H#>.
 
@@ -29,9 +29,9 @@ sub_confirm         odesílateli - ¾ádost potvrzení pøihlá¹ení.
 sub_nop             odesílateli - pøi pokusu o opìtovné pøihlá¹ení
 sub_ok              odesílateli - oznamuje pøihlá¹ení.
 top                 zaèátek v¹ech odpovìdí.
-</#tn/>
+<=tn=>
 trailer             pøidá se za ka¾dý pøíspìvek do listu.
-</#n/>
+<=n=>
 unsub_bad           odesílateli, byla li ¾ádost o odhlá¹ení neplatná.
 unsub_confirm       odesílateli - ¾ádost o potvrzení odhlá¹ení.
 unsub_nop           odesílateli - nebyl-li pøihlá¹en a sna¾il-li se odhlásit.

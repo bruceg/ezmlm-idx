@@ -10,12 +10,12 @@ reponses aux questions courantes sur cette liste de diffusion :
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+<=d=>
 Des adresses similaires existent pour la liste sous forme de bulletins :
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#a/>
+<=a=>
 Pour obtenir tous les messages situes entre le numero 123 et le numero 145
 (avec un maximum de 100 par requete), envoyez un message a :
    <<#L#>-get.123_145@<#H#>>
@@ -28,7 +28,7 @@ Pour recevoir tous les messages comportant le meme sujet que le message 12345,
 envoyez un message a :
    <<#L#>-thread.12345@<#H#>>
 
-</#/>
+<==>
 En realite, les messages n'ont pas besoin d'etre vides, leur contenu sera
 totalement ignore. Seul l'ADRESSE a laquelle vous ecrivez est determinante.
 

@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 Var vänlig och editera följande textfil och skicka den till
 denna address:
 
@@ -9,11 +9,11 @@ Ditt mailprogram borde ha en svarsfunktiuon som använder
 denna address automatiskt. Ifall det inte fungerar, kan du
 kopiera addressen och klistra in den i "To:"/"Till:" fältet
 på ett nytt medelande.
-</#x/>
+<=x=>
 
 eller klicka här:
         mailto:<#R#>
-</#/>
+<==>
 
 Jag kan ta bort citeringsmarkeringar (t ex "> ") som din
 mailprogramvara lägger till texten så länge som du inte

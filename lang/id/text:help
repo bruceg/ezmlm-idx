@@ -8,12 +8,12 @@ Kirim e-mail ke alamat berikut untuk info dan FAQ list:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+<=d=>
 Alamat berikut bisa digunakan untuk list digest:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#a/>
+<=a=>
 Untuk mendapatkan posting 123-145 (maksimum 100), kirim e-mail ke:
    <<#L#>-get.123_145@<#H#>>
 
@@ -24,7 +24,7 @@ Untuk menerima semua posting dengan subjek yang sama dengan posting 12345,
 kirim e-mail ke:
    <<#L#>-thread.12345@<#H#>>
 
-</#/>
+<==>
 E-mail tidak perlu kosong, tapi program ini tidak akan membaca isi mail. 
 Hanya alamat tujuan e-mail yang penting.
 

@@ -18,24 +18,24 @@ a:    <<#L#>-subscribe-john=example.com@<#H#>>
 Analogamente puoi rimuovere l'indirizzo scrivendo a:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+<=d=>
 Per la lista delle raccolte:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#/>
+<==>
 Questo è tutto. Non sono necessari comandi nell' oggetto o nel corpo del 
 messaggio!
 
-</#r/>
+<=r=>
 Ti spedirò una richiesta di conferma, per essere sicuro che tu abbia
 realmente spedito la richiesta. Rispondi semplicemente al messaggio e i 
 tuoi desideri saranno eseguiti.
-</#R/>
+<=R=>
 Spedirò una richiesta di conferma all'indirizzo dell'utente, in questo caso
 a <john@example.com>. Tutto ciò che l'utente dovrà fare sarà quello di 
 rispondere alla richiesta di conferma.
-</#/>
+<==>
 
 I messaggi di conferma sono necessari per rendere estremamente difficile a
 qualcun altro di aggiungere o togliere un indirizzo dalla lista.
@@ -50,18 +50,18 @@ Qualsiasi utente può iscriversi o rimuoversi scrivendo a:
     <<#L#>-subscribe@<#H#>>
     <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+<=d=>
 Per la lista delle raccolte:
 
     <<#L#>-digest-subscribe@<#H#>>
     <<#L#>-digest-unsubscribe@<#H#>>
 
-</#/>
+<==>
 L'utente riceverà una richiesta di conferma per essere sicuri che
 controlli veramente l'indirizzo di iscrizione. Una volta fatta la
 verifica l'utente viene rimosso.
 
-</#s/>
+<=s=>
 Visto che questa lista è moderata per le iscrizioni, spedirò una seconda
 richiesta di conferma al moderatore. Dato che l'utente ha già confermato 
 il desiderio di essere nella lista, come moderatore puoi essere certo che 
@@ -69,9 +69,9 @@ l'indirizzo sia esistente. Se vuoi approvare la richiesta dell'utente,
 rispondi semplicemente al mio messaggio di CONFERMA. In caso contrario puoi
 cancellare il mio messaggio o il potenziale iscrivente per maggiori 
 informazioni.
-</#S/>
+<=S=>
 Le iscrizioni funzionano allo stesso modo.
-</#/>
+<==>
 
 L'utente può anche utilizzare:
 
@@ -85,26 +85,26 @@ in grado di rispondergli.
 Il tuo indirizzo e la tua identità non saranno resi noti agli iscritti, a meno
 che tu non decida di scrivergli direttamente.
 
-</#rl/>
+<=rl=>
 Per ricevere l'elenco degli iscritti a: <#L#>@<#H#> invia un messaggio a:
    <<#L#>-list@<#H#>>
 
 Per ricevere il log delle transazioni per <#L#>@<#H#> scrivi a:
    <<#L#>-log@<#H#>>
-</#rld/>
+<=rld=>
 Per gli iscritti alle raccolte:
    <<#L#>-digest-list@<#H#>>
 e:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 Puoi modificare a distanza i file di testo che compongono le risposte che 
 la lista spedisce. Per ricevere un elenco dei file e delle istruzioni per
 modificarli, scrivi a:
    <<#L#>-edit@<#H#>>
 
 
-</#m/>
+<=m=>
 Moderazione dei messaggi
 ------------------------
 Quando i messaggi sono moderati, archivierò il messaggio spedito e te ne
@@ -132,7 +132,7 @@ Se non ricevo risposte dal moderatore entro un certo numero di giorni
 che è successo. Il tuo amministratore può anche configurare la lista in modo
 tale che questi messaggi "ignorati" vengano cancellati senza avviso, invece
 che rispediti al mittente. 
-</#/>
+<==>
 
 Assenze
 ---------
@@ -148,7 +148,7 @@ Se vuoi approvare in automatico tutte le richieste mentre sei via, allora
 configura il tuo programma di posta in modo tale da risondere in automatico ai
 messaggi che hanno gli oggetti conformi ai criteri sopracitati.
 
-</#r/>
+<=r=>
 Se vuoi amministrare la lista da un indirizzo che non è il tuo ti verrà
 chiesta una conferma. Fatto ciò, verrà inviata una richiesta di conferma a
 tutti i moderatori. Faccio così perchè non c'è modo di conoscere che sia stato
@@ -156,7 +156,7 @@ davvero tu a mandarmi la richiesta originale.
 
 Ricorda che la tua richiesta originale ( e il tuo indirizzo) sono spediti a
 tutti gli iscritti in questo caso! 
-</#/>
+<==>
 
 Buona fortuna!
 

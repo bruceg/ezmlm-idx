@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 
 El comando <#L#>-edit.file puede ser utilizado por un
 administrador remoto para modificar los ficheros de texto que
@@ -39,9 +39,9 @@ sub_confirm   al suscriptor para pedir confirmación de
 sub_nop       al suscriptor después de re-suscribirse.
 sub_ok        al suscriptor después de la suscripción. 
 top           el principio de todas las respuestas.
-</#tn/>
+<=tn=>
 trailer       añadido a todos los mensajes enviados de la lista.
-</#n/>
+<=n=>
 unsub_bad     al suscriptor si la confirmación de baja fue 
               incorrecta.
 unsub_confirm al suscriptor para pedir confirmación de 

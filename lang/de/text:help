@@ -13,7 +13,7 @@ Informationstextes zur Mailingliste bzw. zur Anforderung der
 FAQ (Frequently Asked Questions - oft gestellte Fragen und
 die Antworten darauf) vorgesehen.
 
-</#a/>
+<=a=>
 <<#L#>-get.12@<#H#>>
 Auf diese Weise fordern Sie eine Kopie der Nachricht 12
 vom Archiv an.
@@ -37,7 +37,7 @@ Zusätzlich zu den Betreffzeilen wird der jeweilige Autor
 Anforderung aller Nachrichten, die den gleichen Betreff wie
 die Nachricht 123 haben.
 
-</#/>
+<==>
 Der Inhalt der Nachrichten muß nicht unbedingt leer sein, Sie
 können auch etwas in die Betreff-Zeilen schreiben. Ich werde
 jedoch beide Angaben ignorieren - nur die angeschriebene Adresse

@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 Het <#L#>-edit.file commando kan gebruikt worden om een administrator
 de teksten te laten wijzigen van de mailing list manager van de
 <#L#>@<#H#> mailing list.
@@ -30,9 +30,9 @@ sub_confirm         aan gebruiker als inschrijving is goedgekeurd
 sub_nop             aan gebruiker na hernieuwde inschrijving
 sub_ok              aan gebruiker na succesvolle inschrijving
 top                 staat boven ieder bericht
-</#tn/>
+<=tn=>
 trailer             staat onder aan elk uitgezonden bericht
-</#n/>
+<=n=>
 unsub_bad           aan gebruiker als uitschrijving mislukt is
 unsub_confirm       aan gebruiker om uitschrijving te bevestigen
 unsub_nop           aan niet-gebruiker na uitschrijf verzoek

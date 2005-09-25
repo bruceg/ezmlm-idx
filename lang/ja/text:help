@@ -12,7 +12,7 @@
      <<#L#>-faq@<#H#>>
      (Get FAQ) 
 
-</#d/>
+<=d=>
    * digest list <#L#>-digest の購読を開始する
      <<#L#>-digest-subscribe@<#H#>>
      (Start digest subscription) 
@@ -21,7 +21,7 @@
      <<#L#>-digest-unsubscribe@<#H#>>
      (Stop digest subscription) 
 
-</#a/>
+<=a=>
    * 123 番から 145 番迄の message を取り出す
      <<#L#>-get.123_145@<#H#>>
      （一度に取り出せるのは最大で 100通です）
@@ -33,7 +33,7 @@
      取り出す
      <<#L#>-thread.12345@<#H#>>
 
-</#/>
+<==>
 command address 宛ての message は address のみが必要です。中身は
 何があっても無視されます。
 

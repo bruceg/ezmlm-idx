@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 <#L#>-edit.file kommandoen kan bruges af en fjernadministrator,
 til at rette teksterne i de fleste af svarteksterne i
 svar-tekst filerne .
@@ -30,9 +30,9 @@ sub_confirm         til afsender for at bekræfte tilmelding.
 sub_nop             til afsender efter gentilmelding.
 sub_ok              til afsender efter vellykket tilmelding.
 top                 Begynnelse på alle breve.
-</#tn/>
+<=tn=>
 trailer             tilføjes til alle breve som udsendes fra listen.
-</#n/>
+<=n=>
 unsub_bad           til afsender hvis frameldingsbekræftelse ikke var korrekt.
 unsub_confirm       til afsender for at bekræfte frameldingsbekræftelse.
 unsub_nop           til ikke-tilmeldte efter framelding.

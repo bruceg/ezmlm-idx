@@ -5,7 +5,7 @@ qui n'ont temporairement pas pu etre delivres a votre adresse. Pour chaque
 bulletin que vous n'avez pas pu consulter, j'ai note les numeros du premier
 message qui s'y trouvait.
 
-</#a/>
+<=a=>
 Aucune archive des bulletins eux-memes n'est conservee, mais vous pouvez
 toujours recuperer les messages a partir de la liste principale.
 
@@ -18,6 +18,6 @@ Et pour recevoir un resume des 100 derniers messages (auteur/sujet), envoyez
 un message a :
    <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 Voici le numero du premier message de chaque bulletin :
 

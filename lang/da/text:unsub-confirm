@@ -9,11 +9,11 @@ fjernet fra <#l#> listen, send et tomt svar til denne adresse:
 
 Normalt kan det simpelthen gøres ved at besvare dette brev.
 Der behøver ikke være noget indhold i brevet.
-</#x/>
+<=x=>
 
 Måske virker det at klikke med musen på næste linje:
         mailto:<#R#>
-</#/>
+<==>
 
 Jeg har ikke undersøgt om din adresse er tilmeldt i øjeblikket.
 Du kan se hvilken adresse du har brugt i din tilmelding ved
@@ -22,7 +22,7 @@ din abonnementsadresse gemt i sin retur sti, f.eks. modtager
 mary@example.com breve med retur stien
 <<#l#>-return-<number>-mary=example.com@<#H#>.
 
-</#q/>
+<=q=>
 Nogle post programmer er meget syge og kan ikke håndtere lange
 adresser. Hvis du er ramt af et sådant, kan du istedet skrive
 til <<#L#>-request@<#H#>> og putte hele adressen ovenfor i emne

@@ -7,11 +7,11 @@ Ha engedelyezni akarod, hogy kijusson a listatagoknak, irj az alabbi cimre:
 Altalaban ugyanez tortenik, ha egyszeruen valaszolsz.  Ezt ugy
 ellenorizheted, hogy a cim "<#L#>-accept"-tel kezdodik.  Ha ez
 nem megy, csak masold ki a cimet a Cimzett: mezobe.
-</#x/>
+<=x=>
 
 Esetleg kattints ide:
 	mailto:<#A#>
-</#/>
+<==>
 
 Elutasitani a levelet (ami visszakuldi a feladonak) ezen a cimen lehet:
 
@@ -19,11 +19,11 @@ Elutasitani a levelet (ami visszakuldi a feladonak) ezen a cimen lehet:
 
 Altalaban egyszerubb, ha a "Valasz mindenkinek" gombot nyomod meg,
 majd minden mas cimet kitorolsz, ami nem "<#L#>-reject"-tel kezdodik.
-</#x/>
+<=x=>
 
 Esetleg kattints ide:
 	mailto:<#R#>
-</#/>
+<==>
 
 Nem kell a teljes levelet visszakuldened, de ha megjegyzest kivansz
 az elutasitashoz fuzni, azt a ket jelzo sor koze (ami harom % jellel

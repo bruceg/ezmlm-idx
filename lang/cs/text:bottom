@@ -16,28 +16,28 @@ na následující adresy:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+<=d=>
 Podobné adresy existují i pro list digestù:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#ai/>
+<=ai=>
 Zprávy èíslo 123 a¾ 145 z archívu (maximálnì 100 zpráv na jeden mail)
 získáte zasláním zprávy na následující adresu:
    <<#L#>-get.123_145@<#H#>>
 
-</#aI/>
+<=aI=>
 Zprávu èíslo 12 získáte pomocí následující adresy:
    <<#L#>-get.12@<#H#>>
 
-</#i/>
+<=i=>
 Seznam zpráv se subjectem a autorem zpráv 123-456 - e-mail:
    <<#L#>-index.123_456@<#H#>>
 
 Tyto adresy v¾dy vrací seznam 100 zpráv, maximálnì 2000 na jeden po¾adavek.
 Tak¾e ve vý¹e uvedeném pøíkladì ve skuteènosti dostanete seznam zpráv 100-499.
 
-</#ai/>
+<=ai=>
 Pro získání zpráv se stejným subjectem jako zpráva 12345 po¹lete
 prázdný mail na adresu:
    <<#L#>-thread.12345@<#H#>>

@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 Il comando <#L#>-edit.file può essere usato da un amministratore remoto per
 modificare il file di testo che costituiscono il corpo delle risposte dalla
 mailing list <#L#>@<#H#> .
@@ -31,9 +31,9 @@ sub_confirm   all'iscritto per chiedere conferma dell'iscrizione.
 sub_nop       all'iscritto dopo una re-iscrizione.
 sub_ok        all'iscritto dopo che è stata accettata l'iscrizione.
 top           l'inizio di tutte le risposte.
-</#tn/>
+<=tn=>
 trailer       aggiunto ai messaggi spediti fuori dalla lista
-</#n/>
+<=n=>
 unsub_bad     all'iscritto se la conferma di cancellazione è sbagliata.
 unsub_confirm all'iscritto per chiedere conferma di cancellazione.
 unsub_nop     al non-iscritto dopo la cancellazione.

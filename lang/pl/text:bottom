@@ -17,26 +17,26 @@ zadawana pytania na temat listy wraz z odpowiedziami'):
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+<=d=>
 I odpowiadaj±ce powy¿szemu adresy, je¶li chodzi ci o przegl±d listy:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#ai/>
+<=ai=>
    <<#L#>-get.12_45@<#H#>>:
    Chêæ otrzymania kopii listów od nr 12 do 45 z archiwum.
    Jednym listem mo¿esz otrzymaæ maksymalnie 100 listów.
 
-</#aI/>
+<=aI=>
    <<#L#>-get.12@<#H#>>:
    Chêæ otrzymania kopii listu nr 12 z archiwum.
-</#i/>
+<=i=>
    <<#L#>-index.123_456@<#H#>>:
    Chêæ otrzymania tytu³ów listów od nr 123 do 456 z archiwum.
    Tytu³y s± wysy³ane do Ciebie w paczkach po sto na jeden list.
    Mo¿esz maksymalnie zamówiæ 2000 tytu³ów na jeden raz.
 
-</#ai/>
+<=ai=>
    <<#L#>-thread.12345@<#H#>>:
    Chêæ otrzymania wszystkich kopii listów z tym samym tytu³em
    jaki posiada list o numerze 12345.
@@ -53,7 +53,7 @@ wy¶lij list na adres:
 Wy¶lê Ci wtedy potwierdzenie na ten w³asnie adres; kiedy je otrzymasz,
 po prostu odpowiedz na nie, aby staæ siê prenumeratorem.
 
-</#x/>
+<=x=>
 Je¿eli instrukcje, których Ci udzieli³em, s± zbyt trudne, albo
 nie jeste¶ zadowolony z ich efektów, skontaktuj siê z opiekunem listy
 pod adresem <#L#>-owner@<#H#>. 

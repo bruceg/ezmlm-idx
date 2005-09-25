@@ -15,14 +15,14 @@ post を認める場合は、以下の address
 
 を付けて reply message を作成して下さい。
 
-</#x/>
+<=x=>
 
 MUA によっては
 
         mailto:<#A#>
 
 を click するだけで準備が出来る場合もあるでしょう。
-</#/>
+<==>
 
 post を認めない場合は、以下の address
 
@@ -32,14 +32,14 @@ post を認めない場合は、以下の address
 
 MUA に "reply-to-all" の機能があるのなら <#L#>-reject 以外で
 始まる他の address を削除するのが簡単でしょう。
-</#x/>
+<=x=>
 
 MUA によっては
 
         mailto:<#R#>
 
 を click するだけで準備が出来る場合もあるでしょう。
-</#/>
+<==>
 
 *** post された message 本体は copy する必要はありません ***
 

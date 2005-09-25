@@ -8,11 +8,11 @@ Vanligtvis händer detta automatiskt om du trycker på "svara" (reply)
 knappen. Du kan kontrollera adressen att den börjar med:
 "<#L#>-accept". Ifall det inte fungerar, kopiera adressen och
 klistra in den i "Till" ("To:") fältet i ett nytt brev.
-</#x/>
+<=x=>
 
 Alternativt, tryck här:
 	<mailto:<#A#>>
-</#/>
+<==>
 
 Föra att skicka tillbaka brevet till avsändaren, skicka ett
 meddelande till:
@@ -22,11 +22,11 @@ meddelande till:
 Vanligtvis är det enklare att trycka på "svara alla" ("reply-to-all")
 knappen och ta bort alla adresser som inte börjar med:
 "<#L#>-reject".
-</#x/>
+<=x=>
 
 Alternativt, tryck här:
 	<mailto:<#R#>>
-</#/>
+<==>
 
 Du behöver inte kopiera brevet i ditt svar. Ifall du vill skicka
 med en kommentar till författaren till ett brev du inte accepterat,

@@ -4,7 +4,7 @@
 J'ai conserve une liste des messages de la liste de diffusion <#L#> qui
 n'ont temporairement pas pu etre delivres a votre adresse.
 
-</#a/>
+<=a=>
 Une copie de ces messages doit se trouver dans l'archive.
 
 Pour obtenir l'ensemble des messages depuis le numero 123 jusqu'au numero 145
@@ -16,6 +16,6 @@ Pour recevoir un resume des 100 derniers messages, avec uniquement le nom des
 auteurs et les sujets traites, envoyez un message a :
    <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 Voici les numeros des messages en question :
 

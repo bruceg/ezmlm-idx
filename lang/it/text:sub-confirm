@@ -11,23 +11,23 @@ questo indirizzo:
 In genere ciò accade non appena schiacci il bottone "Rispondi". 
 Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
 "A:" di un nuovo messaggio.
-</#x/>
+<=x=>
 
 oppure clicca qui:
 	mailto:<#R#>
-</#/>
+<==>
 
 Questa conferma è necessaria per due motivi. Il primo è che verifica che io
 sia in grado  di ricevere la posta da te. Il secondo motivo è che ti protegge 
 nel caso qualcuno stia tentando di fare un'iscrizione a nome tuo.
 
-</#q/>
+<=q=>
 Alcuni programmi di posta sono difettosi e non sono in grado di gestire
 indirizzi molto lunghi. Se non riesci a rispondere a questa richiesta
 spedisci un messaggio a <<#L#>-request@<#H#>> e metti l'indirizzo
 intero indicato sopra nel campo "Oggetto:".
 
-</#s/>
+<=s=>
 Questa mailing list è moderata. Una volta spedita questa conferma la richiesta
 verrà spedita al/i moderatore/i della lista. Ti farò sapere quando la tua
 iscrizione sarà accettata.

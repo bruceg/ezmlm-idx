@@ -9,12 +9,12 @@ och "FAQn" för listan:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+<=d=>
 Liknande adresser finns för "digest" versionen av listan:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#a/>
+<=a=>
 För att få meddelande 123 till 145 (max 100 per förfrågan),
 skicka ett brev till:
    <<#L#>-get.123_145@<#H#>>
@@ -27,7 +27,7 @@ För att få alla meddelanden med samma titel som meddelande 12345,
 skicka ett brev till:
    <<#L#>-thread.12345@<#H#>>
 
-</#/>
+<==>
 Meddelandena behöver inte innehålla något särskilt, det är
 bara adressen som är viktig.
 

@@ -10,11 +10,11 @@ skulle gerne starte med "<#L#>-accept". Hvis det ikke er tilfældet, må
 den korrekte svar adresse overføres manuelt til modtagerfeltet, evt.
 med klippe/klistre.
 Mulighederne afhænger af at du har et fornuftigt postprogram.
-</#x/>
+<=x=>
 
 Måske virker det at klikke med musen på næste linje:
         mailto:<#A#>
-</#/>
+<==>
 
 Hvis du istedet vil afvise at brevet postes til listen, svar til:
 
@@ -23,11 +23,11 @@ Hvis du istedet vil afvise at brevet postes til listen, svar til:
 Normalt er det nemmest at lave et "svar-til-alle", og fjerne alle
 adresserne undtagen den der starter med
 "<#L#>-reject".
-</#x/>
+<=x=>
 
 Måske virker det at klikke med musen på næste linje:
         mailto:<#R#>
-</#/>
+<==>
 
 Du behøver ikke inkludere brevet i dit svar for at acceptere eller
 afvise det. Hvis du vil sende en besked til afsenderen af et

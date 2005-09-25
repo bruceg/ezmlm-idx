@@ -5,12 +5,12 @@ z va¹í adresy. Pro ka¾dý takový digest jsem si zapamatoval èíslo
 první zprávy v digestu. Nearchivuji si digesty samotné, ale
 mù¾ete si vy¾ádat jednotlivé zprávy z archívu hlavního listu.
 
-</#aI/>
+<=aI=>
 
 Pro získání zprávy 12345 z archívu, po¹lete prázdný mail na adresu
    <<#L#>-get.12345@<#H#>>
 
-</#ia/>
+<=ia=>
 Zprávy èíslo 123 a¾ 145 získáte z archívu (maximálnì 100 zpráv na jeden mail)
 získáte zasláním zprávy na následující adresu:
    <<#L#>-get.123_145@<#H#>>
@@ -18,6 +18,6 @@ získáte zasláním zprávy na následující adresu:
 Seznam zpráv se subjectem a autorem zpráv 123-456 - e-mail:
    <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 Následují èísla prvních zpráv v digestech:
 

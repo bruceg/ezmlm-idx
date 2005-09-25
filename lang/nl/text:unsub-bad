@@ -14,11 +14,11 @@ wordt verwijderd van de <#l#> mailinglist, stuur dan
 een reply naar dit adres:
 
 !R
-</#x/>
+<=x=>
 
 U kunt ook hier klikken:
 	mailto:<#R#>
-</#/>
+<==>
 
 Ik heb niet gecontroleerd of uw adres op dit moment op de mailing list
 staat. Om te zien onder welk adres u op dit moment bent ingeschreven,
@@ -27,7 +27,7 @@ Ieder bericht bevat uw email adres in het "return path";
 Bijvoorbeeld,  mary@example.com ontvangt berichten met het "return-path":
 <<#l#>-return-<number>-mary=example.com@<#H#>.
 
-</#q/>
+<=q=>
 Sommige emailprogramma's bevatten fouten en kunnen niet overweg met lange
 adressen. Als u geen reply kunt sturen op dit verzoek, kunt u een bericht
 sturen naar:

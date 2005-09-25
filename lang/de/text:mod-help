@@ -28,25 +28,25 @@ Eintragen:
 Löschen:
    <#L#>-unsubscribe-ich=example.com@<#H#>
 
-</#d/>
+<=d=>
 Entsprechend für die Digest-Liste:
    <#L#>-digest-subscribe-ich=example.com@<#H#>
    <#L#>-digest-unsubscribe-ich=example.com@<#H#>
 
-</#/>
+<==>
 So einfach ist das :) Sie brauchen nicht einmal einen
 Betreff oder irgendeinen Nachrichtentext schreiben.
 
-</#r/>
+<=r=>
 Ich werde Ihnen eine Rückfrage schicken, um sicherzugehen daß
 wirklich Sie das Kommando geschickt haben.
 Sie brauchen dann einfach nur noch antworten und der Vorgang
 ist damit abgeschlossen.
-</#R/>
+<=R=>
 Ich werde zur Sicherheit an die angegebene Adresse (in diesem
 Fall ich@example.com) eine Rückfrage schicken.
 Alles was der Nutzer tun muß, ist auf diese Anfrage zu antworten.
-</#/>
+<==>
 
 Die Bestätigungsnachrichten sind erforderlich um es Dritten
 schwerer zu machen, beliebige Mailadressen in die Liste
@@ -68,18 +68,18 @@ Bestellen der Liste:
 Abbestellen der Liste:
    <#L#>-unsubscribe@<#H#>
 
-</#d/>
+<=d=>
 Entsprechend für die Digest-Liste:
 
    <#L#>-digest-subscribe@<#H#>
    <#L#>-digest-unsubscribe@<#H#>
 
-</#/>
+<==>
 In beiden Fällen bekommt der Nutzer eine Rückfrage, um
 Fälschungen vorzubeugen. Nach Bestätigung wird der Nutzer
 Abonnent der Liste oder aus ihr gelöscht.
 
-</#s/>
+<=s=>
 Da diese Liste mit moderierten Abonnements arbeitet, wird
 bei einem Abonnement eine zweite Rückfrage an den oder die
 Moderatoren geschickt.
@@ -92,18 +92,18 @@ Eventuell können Sie auch mehr Informationen vom Nutzer einholen
 oder ihm Ihre Gründe für die Nicht-Bestätigung mitteilen.
 Beachten Sie, daß dadurch Ihre Email-Adresse bekannt wird.
 
-</#/>
+<==>
 Die Nutzer können auch die folgende Adressen benutzen:
 
    <#L#>-subscribe-ich=example.com@<#H#>
    <#L#>-unsubscribe-ich=example.com@<#H#>
 
-</#d/>
+<=d=>
 Für Digests:
    <#L#>-digest-subscribe-ich=example.com@<#H#>
    <#L#>-digest-unsubscribe-ich=example.com@<#H#>
 
-</#/>
+<==>
 Damit können sie eine andere als die aktuell benutzte
 Email-Adresse in die Mailingliste einzutragen bzw. sie daraus
 löschen (in diesem Beispiel die Adresse ich@example.com).
@@ -118,7 +118,7 @@ diese Adresse empfängt.
 Ihre Adresse und Identität wird keiner weiteren Person
 offengelegt, es sei denn Sie nehmen direkt Kontakt auf.
 
-</#rl/>
+<=rl=>
 Information über den Listenzustand
 ----------------------------------
 
@@ -131,14 +131,14 @@ Abgaenge) für <#L#>@<#H#>
 zu bekommen, senden Sie eine Mail an:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+<=rld=>
 Die Liste der Digest-Abonnenten erhalten Sie über:
    <<#L#>-digest-list@<#H#>>
 
 Das Logfile für die <#L#>-digest@<#H#> Liste über:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 
 Textänderungen
 --------------
@@ -148,7 +148,7 @@ verändern. Um eine Datei- und Kommandoliste dafür zu erhalten schreiben
 Sie an:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 
 Moderierte Nachrichten
 ----------------------
@@ -190,7 +190,7 @@ Die Liste kann auch so konfiguriert werden, daß solche
 Nachrichten nicht an den Nutzer zurückgeschickt, sondern
 kommentarlos gelöscht werden.
 
-</#/>
+<==>
 
 Urlaub und andere Abwesenheit
 -----------------------------
@@ -210,7 +210,7 @@ Wenn Sie für eine Weile alle Anforderungsmails automatisch
 bestätigen wollen, lassen Sie einfach Ihr Mailsystem die Nachrichten
 automatisch beantworten, die die obengenannten Bedingungen erfüllen.
 
-</#r/>
+<=r=>
 Wenn Sie die Liste von einer Fremdadresse aus administrieren wollen,
 werden nicht Sie, sondern der Nutzer nach einer Bestätigung gefragt.
 Danach wird die Bestätigungsanforderung an alle Moderatoren verschickt.
@@ -220,7 +220,7 @@ ob Sie zur Administration berechtigt sind.
 Bitte beachten Sie, daß in diesem Fall auch Ihre Administrationsmail
 (und Ihre Mailadresse) an den Nutzer übermittelt werden.
 
-</#/>
+<==>
 Viel Erfolg!
 
 PS: Bitte wenden Sie sich an den Listeneigentümer

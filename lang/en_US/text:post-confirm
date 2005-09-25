@@ -11,11 +11,11 @@ Usually, this happens when you just hit the "reply" button. You can
 check the address to make sure that it starts with
 "<#L#>-confirm". If this does not work, simply
 copy the address and paste it into the "To:" field of a new message.
-</#x/>
+<=x=>
 
 Alternatively, click here:
        mailto:<#A#>
-</#/>
+<==>
 
 If you don't confirm post, simply ignore this message.
 

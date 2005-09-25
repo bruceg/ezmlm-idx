@@ -21,23 +21,23 @@ ganti dari '@'. Contoh, untuk mendaftarkan alamat tersebut, kirim mail ke:
 Dengan cara yang sama, untuk menghapus alamat tersebut, kirim mail ke:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+<=d=>
 Untuk list digest:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#/>
+<==>
 Itu saja. Tidak perlu subjek dan isi dari postingnya!
 
-</#r/>
+<=r=>
 Kami akan mengirimkan sebuah permohonan konfirmasi, untuk memastikan
 bahwa anda benar-benar mengirimkan permohonan tersebut. Yang perlu anda
 lakukan adalah mereply ke mail konfirmasi tersebut.
-</#R/>
+<=R=>
 Kami akan mengirimkan sebuah permohonan konfirmasi ke alamat tersebut,
 dalam hal ini <john@example.com>. Yang bersangkutan tinggal menjawab
 mail konfirmasi tersebut.
-</#/>
+<==>
 
 Konfirmasi-konfirmasi tersebut sangat penting untuk menghindari pihak
 ketiga untuk menambah atau menghapus sebuah alamat e-mail ke dalam list.
@@ -53,18 +53,18 @@ Setiap pemakai dapat berlangganan atau berhenti dengan mengirim e-mail ke:
 <#L#>-subscribe@<#H#>
 <#L#>-unsubscribe@<#H#>
 
-</#d/>
+<=d=>
 Untuk list digest:
 
 <#L#>-digest-subscribe@<#H#>
 <#L#>-digest-unsubscribe@<#H#>
 
-</#/>
+<==>
 Si fulan akan menerima sebuah permohonan konfirmasi untuk memastikan
 bahwa dialah pemilik alamat e-mail yang sebenarnya.  Setelah ini telah dapat
 dikonfirmasikan, yang bersangkutan akan dihapus dari list.
 
-</#s/>
+<=s=>
 Karena milis ini telah dimoderatori untuk dapat berlangganan, kami akan
 mengirimkan permohonan konfirmasi kedua kepada moderator. Karena si
 fulan telah berkeinginan untuk masuk ke dalam list, anda sebagai
@@ -72,9 +72,9 @@ moderator dapat percaya bahwa alamat pemakai tersebut adalah benar. Jika
 anda ingin menyetujui permohonan tersebut, reply ke mail CONFIRM kami.
 Jika tidak, anda dapat menghapus mail dari kami ini atau mungkin
 mengkontak calon pelanggan list untuk keterangan lebih lanjut.
-</#S/>
+<=S=>
 Untuk berlangganan adalah sama caranya.
-</#/>
+<==>
 
 Si fulan dapat juga mengirim mail ke:
 
@@ -88,25 +88,25 @@ permohonan konfirmasi tersebut dan dapat mereplynya.
 Alamat dan identitas anda tidak akan tampak pada mail ke si pelanggan,
 kecuali kalau anda mengirim mail secara langsung ke yang bersangkutan.
 
-</#rl/>
+<=rl=>
 Untuk mendapatkan daftar pelanggan <#L#>@<#H#>, kirim mail ke:
    <<#L#>-list@<#H#>>
 
 Untuk mendapatkan daftar log transaksi <#L#>@<#H#>, kirim mail ke:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+<=rld=>
 Untuk pelanggan-pelanggan digest:
    <<#L#>-digest-list@<#H#>>
 dan:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 Anda dapat dari jarak jauh mengedit file-file yang dikirim oleh list.
 Untuk mendapatkan daftar file dan petunjuk untuk mengeditnya, e-mail ke:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 Posting-posting termoderatori
 -----------------------------
 Ketika posting-posting dimoderatori, kami akan menyimpan posting yang
@@ -134,7 +134,7 @@ Jika kami tidak menerima reply dari moderator dalam waktu tertentu
 dengan penjelasan tentang apa yang telah terjadi. Anda sebagai administrator
 dapat juga mengatur listnya untuk menghapus posting-posting tersebut tanpa
 pemberitahuan, juga tanpa perlu dikembalikan ke si pengirim.
-</#/>
+<==>
 
 Vakansi
 -------
@@ -150,7 +150,7 @@ Jika anda ingin secara otomatis menyetujui semua permohonan-permohonan
 ketika anda sedang pergi, atur program mail anda untuk mereply otomatis ke
 semua posting yang mempunyai subjek sesuai keterangan di atas.
 
-</#r/>
+<=r=>
 Jika anda mencoba untuk melakukan administrasi jarak jauh dari sebuah
 alamat yang bukan milik anda, si pemohon, bukan anda, akan dimintakan
 konfirmasinya.  Setelah itu, sebuah permohonan konfirmasi akan
@@ -159,7 +159,7 @@ mengetahui apakah permohonan tersebut benar berasal dari anda.
 
 Tolong perhatikan bahwa permohonan asli anda (dan alamat anda) akan
 dikirimkan ke si pemohon dalam hal ini!
-</#/>
+<==>
 
 Semoga sukses!
 

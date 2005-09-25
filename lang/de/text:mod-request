@@ -18,12 +18,12 @@ die oben genannte Adresse einfach in die Zieladresse einer neuen
 Nachricht. Beachten Sie dabei aber einen eventuell von Ihrem
 Mailprogramm vorgenommenen Zeilenumbruch, falls die Adresse nicht
 in eine Zeile paßt.
-</#x/>
+<=x=>
 Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
    mailto:<#A#>
 Kontrollieren Sie aber bitte auch in diesem Fall, daß die Adresse
 nicht durch Zeilenumbruch verstümmelt wurde!
-</#/>
+<==>
 
 
 Um die Nachricht abzuweisen und an den Absender zurückzuschicken,
@@ -35,12 +35,12 @@ Falls Ihr Programm das unterstützt, können Sie auch an die im
 From: Header angegebene Adresse antworten (das sollte die oben
 angegebene sein).
 
-</#x/>
+<=x=>
 Wenn Ihr Programm Hyperlinks unterstützt, können Sie auch
 hier klicken:
    mailto:<#R#>
 
-</#/>
+<==>
 
 Sie müssen keine Kopie der Originalnachricht mitschicken.
 Wenn Sie dem Absender bei einer Ablehnung einen Kommentar zukommen

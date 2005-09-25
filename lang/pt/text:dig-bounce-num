@@ -5,11 +5,11 @@ não foram entregues para o seu endereço. Para cada "digest" que você
 não recebeu, eu tenho anotado o número da primeira mensagem do "digest".
 Então você pode pegar as mensagens do arquivo da lista principal.
 
-</#aI/>
+<=aI=>
 Para recuperar a mensagem 12345 do arquivo, envie uma mensagem vazia para:
    <<#L#>-get.12345@<#H#>>
 
-</#ia/>
+<=ia=>
 Para recuperar as mensagens 123 a 145 (no máximo 100 por requisição),
 envie uma mensagem vazia para:
    <<#L#>-get.123_145@<#H#>>
@@ -18,6 +18,6 @@ Para recuperar uma lista de assuntos e autores das últimas 100
 mensagens, envie uma mensagem vazia para:
    <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 Aqui estão os números dos "digests":
 

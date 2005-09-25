@@ -14,22 +14,22 @@ f.eks. jens@example.com, ved at sende et tomt brev til:
    <<#L#>-unsubscribe-jens=example.com@<#H#>>
 Bemærk at det ene @ er lavet om til =.
 
-</#d/>
+<=d=>
 For udtrækslisterne (digest):
    <<#L#>-digest-subscribe-jens=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-jens=example.com@<#H#>>
 
-</#/>
+<==>
 Så simpelt er det. Der behøver hverken være emne eller
 indhold i dine kommandobreve.
 
-</#r/>
+<=r=>
 Jeg sender dig så et brev som du skal kvittere for ved at
 sende et tomt svar på tilbage.
-</#R/>
+<=R=>
 Jeg sender et brev til brugeren som vedkommende skal bekræfte,
 for at abonnementet kan træde i kraft.
-</#/>
+<==>
 
 Disse dialoger er nødvendige for at sikre at den person jeg har
 kontakt med er den han/hun giver sig ud for at være. Ellers
@@ -48,7 +48,7 @@ brev til:
 <#L#>-subscribe@<#H#>
 <#L#>-unsubscribe@<#H#>
 
-</#d/>
+<=d=>
 For udtrækslisterne:
 
 <#L#>-digest-subscribe@<#H#>
@@ -58,14 +58,14 @@ Brugeren vil modtage et brev som skal bekræftes med et tomt
 svar for at sikre at vedkommende råder over den pågældende
 postadresse.
 
-</#s/>
+<=s=>
 Eftersom denne liste er tilmeldingsmodereret, skal en moderator
 godkende tilmeldingen. Du kan godkende tilmeldingen ved at
 leve et tomt svar på CONFIRM brevet. (Eller du kan lade være).
  
-</#S/>
+<=S=>
 Tilmelding sker på samme måde.
-</#/>
+<==>
 
 Brugeren kan også skrive til:
 
@@ -79,25 +79,25 @@ være i stand til at svare på den.
 Din adresse og identitet er skjult for abonnenten medmindre
 du skriver direkte til vedkommende.
 
-</#rl/>
+<=rl=>
 En liste over tilmeldte fås ved at sende et tomt brev til:
   <<#L#>-list@<#H#>>
 
 En transaksjonslog fås ved at sende et tomt brev til:
   <<#L#>-list@<#H#>>
 
-</#rld/>
+<=rld=>
 Over digest tilmeldte:
    <<#L#>-digest-list@<#H#>>
 og:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 Du kan fjernrette de tekstsvar som listen udsender. En liste
 over filer samt instruktioner fås ved at sende et tomt brev til:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 Modererede lister
 -----------------
 Når listen er modereret, gemmer jeg det indsendte brev og sender
@@ -123,7 +123,7 @@ tid (normalt 5 dage), returnerer jeg brevet til afsender med
 en forklaring. Din administrator kan evt. konfigurere listen
 så ignorerede "MODERATE for ..." breve bliver slettet uden
 at brevskriveren informeres.
-</#/>
+<==>
 
 Ferie
 -----
@@ -138,7 +138,7 @@ Hvis du hellere vil lave automatisk godkendelse af alle breve
 mens du er væk, kan du bede dit post program om at lave auto-svar
 på alle breve som har et emne der svarer til de ovennævnte kriterier.
 
-</#r/>
+<=r=>
 Hvis du forsøger at fjernadministrere fra en adresse som ikke er
 din, bliver abonnenten spurgt om bekræftelse, derefter moderator(erne).
 Jeg er nødt til at gøre det på den måde når jeg ikke kan verificere
@@ -146,7 +146,7 @@ din identitet.
 
 Bemærk at din originale forespørgsel (og din adresse) bliver sendt
 til abonnenten i dette filfælde!
-</#/>
+<==>
 
 Held og lykke!
 

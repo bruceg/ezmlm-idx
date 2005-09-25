@@ -9,12 +9,12 @@ Na prática, você estará enviado para este endereço quando pressionar o
 botão "reply" ou "responder". Você pode confirmar se o endereço começa com
 "<#L#>-accept". Se isto não funcionar, simplesmente copie
 o endereço e cole-o para o campo "To:" de uma nova mensagem.
-</#x/>
+<=x=>
 
 Alternativamente, clique aqui:
 	mailto:<#A#>
 
-</#/>
+<==>
 
 Para rejeitar esta mensagem, retornando-a para o remetente,
 por favor envie uma mensagem para:
@@ -25,11 +25,11 @@ Na prática, é fácil usar o botão "reply-to-all" ou "responder
 para todos", e então remover todos os endereços, exceto o que
 começar com
 "<#L#>-reject".
-</#x/>
+<=x=>
 
 Alternativamente, clique aqui:
 	mailto:<#R#>
-</#/>
+<==>
 
 Você não precisa copiar esta mensagem na sua resposta para
 aceitá-la ou rejeitá-la. Se você quiser enviar um comentário para

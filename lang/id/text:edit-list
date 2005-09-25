@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 Perintah <#L#>-edit.file dapat digunakan oleh administrator dari jarak
 jauh untuk mengedit file-file teks untuk kemudian membuat kumpulan dari
 tanggapan-tanggapan dari milis <#L#>@<#H#>.
@@ -30,9 +30,9 @@ sub_confirm         untuk pelanggan untuk permohonan berlangganan.
 sub_nop             untuk pelanggan setelah mendaftar ulang.
 sub_ok              untuk pelanggan setelah permohonannya sukses.
 top                 bagian atas dari semua tanggapan.
-</#tn/>
+<=tn=>
 trailer             ditambahkan ke semua posting yang terkirim.
-</#n/>
+<=n=>
 unsub_bad           untuk pelanggan jika konfirmasi berhenti tidak sukses.
 unsub_confirm       untuk pelanggan untuk permohonan berhenti.
 unsub_nop           untuk bukan-pelanggan setelah berhenti.

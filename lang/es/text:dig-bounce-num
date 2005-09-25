@@ -5,7 +5,7 @@ He guardado una lista de los resúmenes de la lista de correo
 los resúmenes perdidos, he anotado el número del primer mensaje
 en el resumén.
 
-</#a/>
+<=a=>
 
 No archivo los resúmenes propiamente dichos, pero puede conseguir
 los mensajes del archivo principal de la lista.
@@ -20,6 +20,6 @@ mensajes, envíe un mensaje en blanco a:
 
    <<#L#>-index@<#H#>>
 
-</#/>
+<==>
 Estos son los números de mensaje de los resúmenes:
 

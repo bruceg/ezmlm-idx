@@ -21,23 +21,23 @@ du skickat ett brev till:
 Du kan på samma sätt ta bort en adress med ett meddelande till:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+<=d=>
 För "digest" versionen av listan:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#/>
+<==>
 Det är allt. Titel och innehåll spelar ingen roll!
 
-</#r/>
+<=r=>
 Ett bekräftelse brev kommer skickas för att vara säker
 på att det verkligen var du som skickade brevet.
 Svara bara på det brevet och det hela är klart.
-</#R/>
+<=R=>
 Jag kommer skicka ett bekräftelsebrev till prenumerantens adress,
 i detta fallet <john@example.com>. Allt prenumeranten behöver
 göra är att svara på brevet.
-</#/>
+<==>
 
 Bekräftelserna är nödvändiga för att göra det svårt för
 en tredje part till att lägga till/ta bort adresser till
@@ -55,18 +55,18 @@ att skicka ett brev till:
 <#L#>-subscribe@<#H#>
 <#L#>-unsubscribe@<#H#>
 
-</#d/>
+<=d=>
 För "digest" versionen av listan:
 
 <#L#>-digest-subscribe@<#H#>
 <#L#>-digest-unsubscribe@<#H#>
 
-</#/>
+<==>
 Prenumeranten kommer få ett bekräftelse brev för
 att vara säker på att personen har den adressen.
 När det är klart blir personen borttagen ur listan.
 
-</#s/>
+<=s=>
 Eftersom denna listan är sluten, kommer jag skicka en andra
 förfrågan till moderatorerna. Eftersom prenumeranten redan har
 bekräftat att den vill vara med på listan, kan du som
@@ -75,9 +75,9 @@ ha med personen på listan, svara på bekräftelse (CONFIRM)
 meddelandet. Ifall du inte vill ha med personen, radera bara
 meddelandet istället (eller kontakta personen för ytterligare
 information).
-</#S/>
+<=S=>
 Prenumeration fungerar på samma sätt.
-</#/>
+<==>
 
 Användaren kan också:
 
@@ -91,7 +91,7 @@ och kan svara på det.
 Din adress och identitet kommer att vara hemlig för prenumeranten
 om du inte skickar brev direkt till denne.
 
-</#rl/>
+<=rl=>
 För att få en lista på prenumeranter på <#L#>@<#H#>,
 skicka ett brev till:
    <<#L#>-list@<#H#>>
@@ -100,19 +100,19 @@ För att få en "transaktionslog" för <#L#>@<#H#>,
 skicka ett brev till:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+<=rld=>
 För "digest" prenumeranter:
    <<#L#>-digest-list@<#H#>>
 och:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 Du kan ändra textfilerna, som listan använder, på distans. För att
 få en lista på filerna och instruktioner om hur du ändrar dem,
 skicka ett e-mail till:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 Modererade utskick
 ------------------
 När utskick är modererade, kommer ett brev att skickas till dig
@@ -139,7 +139,7 @@ så kommer brevet ändå att vara avvisat och vice versa.
 Ifall ingen moderator svarar inom en viss tid (vanligtvis 5 dagar),
 kommer brevet att returneras till författaren med en förklaring
 om vad som hände.
-</#/>
+<==>
 
 Semestrar
 ---------
@@ -155,7 +155,7 @@ Ifall du vill att allt skall godkännas automatiskt medan du är
 borta, ställ iordning ditt e-mail system så den gör ett autosvar
 på brev med ovan nämnda titlar.
 
-</#r/>
+<=r=>
 Ifall du försöker administrera listan från en adress som inte är din
 egen, prenumeranten, inte du, kommer frågas efter en bekräftelse.
 Därefter kommer en bekräftelseförfrågan skickas till moderatorerna.
@@ -164,7 +164,7 @@ skickade originalfrågan.
 
 Observera att originalförfrågan, inklusive din adress, skickas till
 prenumeranten i detta fallet.
-</#/>
+<==>
 
 Lycka till!
 

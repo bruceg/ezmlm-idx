@@ -24,23 +24,23 @@ De facon similaire, il est possible de retirer son adresse de la liste en
 ecrivant a :
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+<=d=>
 Idem pour les listes presentees sous la forme de bulletins :
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#/>
+<==>
 C'est tout ! Aucun sujet special ni corps de message n'est requis.
 
-</#r/>
+<=r=>
 Je vous enverrai une demande de confirmation, pour etre
 sur que vous etes bien a l'origine de la requete. Repondez
 simplement au message et la transaction sera achevee.
-</#R/>
+<=R=>
 J'enverrai une demande de confirmation a l'adresse de
 l'utilisateur (ici john@example.com).
 Tout ce qu'il aura a faire sera de repondre au message.
-</#/>
+<==>
 
 Ces etapes de confirmation sont necessaires pour rendre beaucoup plus ardu
 le fait qu'un tiers puisse ajouter ou retirer une adresse de la liste.
@@ -56,18 +56,18 @@ message a :
 <#L#>-subscribe@<#H#> pour l'inscription
 <#L#>-unsubscribe@<#H#> pour la desinscription
 
-</#d/>
+<=d=>
 Et pour les listes presentees sous forme de bulletins :
 
 <#L#>-digest-subscribe@<#H#>
 <#L#>-digest-unsubscribe@<#H#>
 
-</#/>
+<==>
 L'utilisateur recevra une demande de confirmation pour etre
 sur qu'il/elle controle l'adresse d'inscription. Une fois
 ceci verifie, l'utilisateur sera desinscrit.
 
-</#s/>
+<=s=>
 Etant donne que cette liste est moderee pour les abonnements,
 j'enverrai une seconde demande de confirmation aux moderateurs.
 Etant donne que l'utilisateur a deja confirme son desir
@@ -78,9 +78,9 @@ message de confirmation. Dans le cas contraire, vous pouvez
 simplement effacer mon message ou eventuellement contacter l'abonne
 potentiel pour davantage de renseignements.
 
-</#S/>
+<=S=>
 Les inscriptions fonctionnent de facon analogue.
-</#/>
+<==>
 
 Il est aussi possible d'utiliser :
 
@@ -94,7 +94,7 @@ courrier a cette adresse et si elle est alors en mesure d'y repondre.
 Votre adresse et votre identite ne seront pas revelees a l'abonne,
 a moins que vous ne lui ecriviez directement.
 
-</#rl/>
+<=rl=>
 Pour obtenir la liste des abonnees a <#L#>@<#H#>, envoyez un
 message a : 
    <<#L#>-list@<#H#>>
@@ -103,19 +103,19 @@ Pour obtenir un historique des transactions de la liste
 <#L#>@<#H#>, envoyez un message a :
    <<#L#>-log@<#H#>>
 
-</#rld/>
+<=rld=>
 Pour les abonnes aux bulletins :
    <<#L#>-digest-list@<#H#>>
 et :
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 Vous pouvez a distance editer les fichiers de texte contenant les
 messages du robot. Pour obtenir la liste des fichiers et les
 instructions pour les editer, ecrivez a :
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 Envoi de messages moderes
 -------------------------
 Lorsque l'envoi de messages est modere, je conserverai chaque
@@ -147,7 +147,7 @@ l'expediteur avec une explication de ce qu'il est arrive.
 L'adminsitrateur peut aussi parametrer la liste de facon a ce que
 ces messages "ignores" soient purement et simplement effaces sans
 avertissement prealable, plutot que retournes a l'envoyeur.
-</#/>
+<==>
 
 Absences
 --------
@@ -165,7 +165,7 @@ vous etes absents, configurez votre client de messagerie pour
 repondre automatiquement a tous les messages qui correspondent aux
 criteres ci-dessus.
 
-</#r/>
+<=r=>
 Si vous essayez de faire de l'administration a distance a partir
 d'une adresse qui n'est pas la votre, l'abonne, et non vous, devra
 confirmer. Apres cela, une demande de validation sera envoyee a
@@ -175,7 +175,7 @@ que c'est bien vous qui avez emis la requete originale.
 
 A noter que votre requete (et votre adresse) sont transmises a
 l'abonne dans ce cas.
-</#/>
+<==>
 
 Bonne chance !
 

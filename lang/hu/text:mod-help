@@ -20,23 +20,23 @@ parancs utan, majd hozzairod az email cimet, a "@" jelet kicserelve
 Ugyanilyen egyszeruen tudsz leirattatni egy cimet:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+<=d=>
 Ugyanez digest-re:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#/>
+<==>
 Ennyi az egesz. Se targy, se szovegtorzs nem szukseges.
 
-</#r/>
+<=r=>
 Ezutan egy megerositesi kerelmet kuldok Neked, hogy
 meggyozodjunk a keres valodisagarol.  Arra egyszeruen csak
 valaszolnod kell, ami utan a kivansagod teljesul.
-</#R/>
+<=R=>
 Ezutan kuldeni fogok egy megerositesi kerelmet a felhasznalonak,
 jelen esetben <john@example.com>-nek.  Neki is csak valaszolnia
 kell a levelre.
-</#/>
+<==>
 
 A megerositesek azert szuksegesek, hogy megnehezitsuk a dolgat
 olyan "mokas" embereknek, akik fel- vagy leiratkoztatnak masokat
@@ -53,18 +53,18 @@ Barki fel- vagy leiratkozhat, ha levelet kuld az alabbi cimekre:
     <<#L#>-subscribe@<#H#>>
     <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+<=d=>
 Vagy a digest cimekre:
 
     <<#L#>-digest-subscribe@<#H#>>
     <<#L#>-digest-unsubscribe@<#H#>>
 
-</#/>
+<==>
 A felhasznalo megerositesi kerelmet kap, hogy biztosak legyunk
 benne, hogy az o akarata ervenyesul. Ha ez megtortent, az
 ellenorzott felhasznalo fel- vagy leiratkozasa megtortenik.
 
-</#s/>
+<=s=>
 Mivel ez egy feliratkozas-moderalt lista, egy masik megerositest
 is elkuldok, a moderator(ok)nak. Mivel a felhasznalo mar
 megerositette feliratkozasi igenyet, a moderator biztos lehet a
@@ -72,9 +72,9 @@ cim valodisagaban. Ha engedelyezni akarod a felhasznalo kereset,
 egyszeruen csak valaszolj a CONFIRM levelre.  Ha nem, csak torold
 a levelet, es/vagy lepj kapcsolatba a potencialis listataggal
 tovabbi informaciokert.
-</#S/>
+<=S=>
 Az feliratkozasok hasonlokeppen mennek.
-</#/>
+<==>
 
 A felhasznalo hasznalhatja ezt a format is:
 
@@ -88,26 +88,26 @@ valaszolni.
 A cimed es szemelyazonossagod nem fog kiderulni a listatag szamara,
 hacsak nem direkt irsz levelet a felhasznalonak.
 
-</#rl/>
+<=rl=>
 A(z) <#L#>@<#H#> lista tagjainak nevsora itt kaphato meg:
    <<#L#>-list@<#H#>>
 
 A tranzakcio naplo a(z) <#L#>@<#H#> listahoz pedig itt:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+<=rld=>
 A digestre feliratkozottaknak pedig:
    <<#L#>-digest-list@<#H#>>
 es:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 Tavolrol szerkesztheted is a szovegfajlokat, amik meghatarozzak a
 lista altal kikuldott valaszokat. A fajlok listaja es a szerkesztesi
 instrukciok itt szerezhetoek meg:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 Moderalt levelezes
 ------------------
 Ha a levelezes moderalt, az elkuldott leveleket elraktarozom, es
@@ -135,7 +135,7 @@ sem (eredetileg 5 nap), akkor visszakuldom a levelet a kuldojenek,
 elmagyarazva, mi tortent.  Az adminisztrator beallithatja a listat
 ugy is, hogy az ilyen mellozott levelek egyszeruen torlodjenek
 barmifele ertesites nelkul, es ne kuldodjenek vissza a feladonak.
-</#/>
+<==>
 
 Szabadsag
 ---------
@@ -151,7 +151,7 @@ Ha automatikusan engedelyezni akarsz minden kerest, amig tavol vagy,
 allitsd be a levelezesi kliensedet, hogy automatikusan valaszoljon
 azokra a levelekre, amik a fenti kriteriumoknak megfelelnek.
 
-</#r/>
+<=r=>
 Ha nem sajat cimrol akarsz tavolrol adminisztralni, akkor nem teged,
 hanem a listatagot keri meg a rendszer engedelyezni. Ezutan a
 moderator megerositesi kerelem kimegy az osszes moderatornak.  Ezt
@@ -160,7 +160,7 @@ az, aki az eredeti kerest kuldte.
 
 Vigyazz, mert ebben az esetben az eredeti keresed (es cimed) eljut
 a felhasznalohoz!
-</#/>
+<==>
 
 Sok szerencset!
 

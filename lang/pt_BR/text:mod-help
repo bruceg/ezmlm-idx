@@ -22,23 +22,23 @@ envie uma mensagem para:
 Semelhantemente, você pode remover esse endereço, enviando mensagem para:
    <<#L#>-unsubscribe-john=host.domain@<#H#>>
 
-</#d/>
+<=d=>
 Para a lista "digest":
    <<#L#>-digest-subscribe-john=host.domain@<#H#>>
    <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
 
-</#/>
+<==>
 Isto é tudo. Nenhum texto no assunto nem no corpo de mensagem é necessário!
 
-</#r/>
+<=r=>
 Enviarei para você um pedido de confirmação, para ter certeza
 que é realmente você quem enviou o comando. Simplesmente
 retorne a mensagem, e o comando será executado.
-</#R/>
+<=R=>
 Enviarei um pedido de confirmação para o endereço do usuário,
 neste caso <john@host.domain>. Tudo que o usuário tem que fazer é
 retornar este pedido de confirmação.
-</#/>
+<==>
 
 As confirmações são necessárias para evitar que pessoas
 não autorizadas cadastrem ou removam endereços da lista.
@@ -55,18 +55,18 @@ enviando mensagem para:
 <#L#>-subscribe@<#H#>
 <#L#>-unsubscribe@<#H#>
 
-</#d/>
+<=d=>
 Para a lista "digest":
 
 <#L#>-digest-subscribe@<#H#>
 <#L#>-digest-unsubscribe@<#H#>
 
-</#/>
+<==>
 O usuário receberá um pedido de confirmação para eu ter
 certeza de que ele controle o endereço de assinatura. Quando este
 endereço for verificado, ele será descadastrado.
 
-</#s/>
+<=s=>
 Sendo esta lista moderada para assinatura, enviarei um segundo
 pedido de confirmação para o(s) moderador(es). Se o usuário
 já tiver confirmado o desejo de ficar na lista, você como
@@ -75,9 +75,9 @@ Se você deseja aprovar os pedidos do usuário, simplesmente
 retorne a mensagem de CONFIRMAÇÃO. Caso contrário, simplesmente
 ignore a minha mensagem ou possivelmente escreva o potencial
 assinante para obter mais informações.
-</#S/>
+<=S=>
 Assinaturas funcionam da mesma forma.
-</#/>
+<==>
 
 O usuário também pode usar estas formas:
 
@@ -91,7 +91,7 @@ capaz de responder à confirmação.
 Seu endereço e identidade não serão revelados para o assinante,
 a não ser que você envie mensagens diretamente para o usuário.
 
-</#rl/>
+<=rl=>
 Para obter o cadastro de assinantes da lista <#L#>@<#H#>,
 envie uma mensagem para:
    <<#L#>-list@<#H#>>
@@ -100,19 +100,19 @@ Para um registro de transações da lista,
 envie uma mensagem para:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+<=rld=>
 Para o cadastro de assinantes da lista digest:
    <<#L#>-digest-list@<#H#>>
 e:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 Você pode editar remotamente os arquivos-texto de resposta que a lista
 envia. Para obter uma lista dos arquivos e instruções de edição, envie
 mensagem para:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 Postagens moderadas
 -------------------
 Quando as postagens são moderadas, eu colocarei as mensagens em
@@ -142,7 +142,7 @@ período de tempo (normalmente 5 dias), eu retornarei uma mensagem
 para o remetente com uma explicação do ocorrido. O administrador
 também pode configurar a lista para que as mensagens "ignoradas"
 sejam simplesmente removidas, ao invés de retornar para o remetente.
-</#/>
+<==>
 
 Férias
 ------
@@ -158,7 +158,7 @@ Se você quiser aprovar automaticamente todas as mensagens enquanto
 está fora, configure o seu programa de correio eletrônico para responder
 automaticamente as mensagens que têm os assuntos com os critérios acima.
 
-</#r/>
+<=r=>
 Se você tentar administrar remotamente a partir de um endereço que
 não é seu, o assinante, não você, será questionado para confirmar.
 Depois disto, um pedido de confirmação é enviado para todos os
@@ -167,7 +167,7 @@ foi você quem enviou o pedido original.
 
 Por favor note que o seu pedido original (e seu endereço) é enviado
 para o assinante neste caso!
-</#/>
+<==>
 
 Boa sorte!
 

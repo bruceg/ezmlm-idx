@@ -8,12 +8,12 @@ Az informacio es FAQ (gyakran ismetelt kerdesek):
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+<=d=>
 Hasonlo cimek leteznek a digest listahoz:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#a/>
+<=a=>
 A 123-tol 145-ig szamozott levelek letoltesehez (maximum 100 level
 keresenkent) ide irj:
    <<#L#>-get.123_145@<#H#>>
@@ -25,7 +25,7 @@ A 12345-os level targyaval megegyezo, osszes level letoltesehez
 az ures levelet ide ird:
    <<#L#>-thread.12345@<#H#>>
 
-</#/>
+<==>
 A leveleknek valojaban nem szukseges uresnek lenniuk, de a tartalmuk
 kozombos. Csak a cim fontos, ahonnan irsz.
 

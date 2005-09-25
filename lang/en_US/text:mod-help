@@ -21,23 +21,23 @@ of the '@'. For instance, to subscribe that address, send mail to:
 You can similarly remove the address by sending a message to:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+<=d=>
 For the digest list:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#/>
+<==>
 That's all. No subject and no message body needed!
 
-</#r/>
+<=r=>
 I will send you a confirmation request, to make sure
 that you really sent the request. Simply reply to the
 message, and your wish has been granted.
-</#R/>
+<=R=>
 I will send a confirmation request to the user address, in this
 case <john@example.com>. All the user has to do is to reply to 
 this confirmation request message.
-</#/>
+<==>
 
 The confirmations are necessary to make it extremely hard
 for a third party to add or remove an address to the list.
@@ -53,18 +53,18 @@ Any user can subscribe or unsubscribe by sending mail to:
     <<#L#>-subscribe@<#H#>>
     <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+<=d=>
 For the digest list:
 
     <<#L#>-digest-subscribe@<#H#>>
     <<#L#>-digest-unsubscribe@<#H#>>
 
-</#/>
+<==>
 The user will receive a confirmation request to make
 sure s/he controls the subscription address. Once this
 is verified the user is unsubscribed.
 
-</#s/>
+<=s=>
 Since this list is moderated for subscriptions, I will send a
 second confirmation request to the moderator(s). Since the user
 has already confirmed the desire to be on the list, you as the
@@ -72,9 +72,9 @@ moderator can be highly confident that the subscriber address is
 real. If you want to approve the users request, simply reply to
 my CONFIRM message. If not, you can simply delete my message or
 possibly contact the potential subscriber for more information.
-</#S/>
+<=S=>
 Subscriptions work the same way.
-</#/>
+<==>
 
 The user can also use:
 
@@ -88,25 +88,25 @@ able to reply to it.
 Your address and identity will not be revealed to the subscriber,
 unless you send mail directly to the user.
 
-</#rl/>
+<=rl=>
 To get a subscriber list for <#L#>@<#H#>, send a message to:
    <<#L#>-list@<#H#>>
 
 To get a list transaction log <#L#>@<#H#>, send a message to:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+<=rld=>
 For digest subscribers:
    <<#L#>-digest-list@<#H#>>
 and:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+<=rn=>
 You can remotely edit the text files that make up the responses the
 list sends out. To get a list of files and editing instructions, mail:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+<=m=>
 Moderated posts
 ---------------
 When posts are moderated, I will save the posted message and send
@@ -134,7 +134,7 @@ time (normally 5 days), I will return the message to the sender
 with an explanation of what happened. Your administrator can also
 set up the list so that such "ignored" messages are simply deleted
 without notification, rather than returned to sender.
-</#/>
+<==>
 
 Vacations
 ---------
@@ -150,7 +150,7 @@ If you would like to automatically approve all requests while you
 are gone, set up you mail client to auto-reply to messages that
 have subjects meeting the above criteria.
 
-</#r/>
+<=r=>
 If you try to do remote administration from an address that is not
 your own, the subscriber, not you, will be asked to confirm. After
 that, a moderator confirm request is sent to all moderators.
@@ -159,7 +159,7 @@ sent the original request.
 
 Please note that your original request (and your address) are sent to
 the subscriber in this case!
-</#/>
+<==>
 
 Good luck!
 

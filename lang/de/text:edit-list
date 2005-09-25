@@ -1,5 +1,5 @@
 # $Id$
-</#n/>
+<=n=>
 Durch Remote-Administratoren kann das <#L#>-edit.file
 Kommando benutzt werden, um die Textdateien zu verändern, die die
 Hauptmenge der Antworten von der Liste
@@ -36,9 +36,9 @@ sub_confirm         an Neu-Abonnenten, zur Bestätigung des Abonnements
 sub_nop             an Abonnenten, falls er schon Abonnent ist
 sub_ok              an Abonnenten, wenn Abonnement erfolgreich
 top                 Anfang von allen Antworten
-</#tn/>
+<=tn=>
 trailer             an alle Listennachrichten angehängt
-</#n/>
+<=n=>
 unsub_bad           an Abonnenten, wenn Abmeldung abgelehnt
 unsub_confirm       an Abonnenten, Anforderung Abmeldebestätigung
 unsub_nop           an Nicht-Abonnenten, wenn Abmeldung angefordert

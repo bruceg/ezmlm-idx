@@ -13,11 +13,11 @@ Bekræft ved at sende et tomt svar til denne adresse:
 
 Dit post program burde have en svarfunktion som automatisk bruger
 den adresse. (Ellers må man klippe/klistre).
-</#x/>
+<=x=>
 
 Måske virker det at klikke med musen på næste linje:
         mailto:<#R#>
-</#/>
+<==>
 
 Hvis du ikke vil godkende, kan du bare glemme dette brev.
 
