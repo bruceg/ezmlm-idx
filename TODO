@@ -17,3 +17,7 @@ Missing text files:
 unsub-confirm nl
 post-confirm ch_GB cs da de es hu id ja nl pl pt pt_BR ru sv
 sub-confirm#s de en_US es fr hu id it ja nl sv
+
+Implement pre/post (un)subscribe hooks (and possibly others):
+-Set up "hooks" directory
+-If hooks/NAME exists, execute it at appropriate time
