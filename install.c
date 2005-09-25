@@ -67,6 +67,7 @@ stralloc *line;
   if (!stralloc_cats(&target,mid)) nomem();
   if (!stralloc_cats(&target,name)) nomem();
   if (!stralloc_0(&target)) nomem();
+  if (xlen > 0) name = x;
 
   uid = -1; if (*uidstr) scan_ulong(uidstr,&uid);
   gid = -1; if (*gidstr) scan_ulong(gidstr,&gid);
@@ -133,6 +134,8 @@ char **argv;
   for (;;) {
     if (getln(&in,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,"unable to read input: ");
+    if (line.len > 0)
+      line.s[--line.len] = 0;
     doit(&line);
     if (!match)
       _exit(0);
