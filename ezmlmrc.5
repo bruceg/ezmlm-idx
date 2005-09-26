@@ -138,48 +138,102 @@ and not
 If no flags are specified, the ``#'' can be
 omitted.
 .PP
-In addition,
-.I local
-is substituted for
-.BR <#L#> ,
-the part of
-.I dot
-between the first 2 hyphens (if any) for
-.BR <#1#> ,
-the part of
-.I dot
-between the second and third hyphen (if any) for
-.BR <#2#> ,
-.I host
-for
-.BR <#H#> ,
-.I dir
-for
-.BR <#D#> ,
-.I dot
-for
-.BR <#T#> ,
+.I ezmlm-make
+substitutes the following tags anywhere within files when they are
+(re)created.  Other tags of this format are copied to the files as is.
+.TP
+.B <#B#>
+The path to the
+.B ezmlm-idx
+binaries.
+.TP
+.B <#C#>
 .I digestcode
-for
-.BR <#C#> ,
-and the path to the
-.B ezmlm
-binaries for
-.BR <#B#>
-anywhere in the text. Other tags of this format are copied to the files as is.
-
-.BR <#l#> ,
-.BR <#h#> ,
-.BR <#A#> ,
-.BR <#R#> ,
-will be substituted on-the-fly where appropriate for the
-.IR local
+.TP
+.B <#D#>
+.I dir
+.TP
+.B <#F#>
+The alphanumeric flags given to
+.I ezmlm-make
+concatenated together.
+.TP
+.B <#H#>
+.I host
+.TP
+.B <#L#>
+.I local
+.TP
+.B <#T#>
+.I dot
+.TP
+.B <#0#>
+The argument for
+.IR \-0 .
+.TP
+.B <#1#>
+The part of
+.I dot
+between the first two hyphens (if any).
+.TP
+.B <#2#>
+The part of
+.I dot
+between the second and third hyphen (if any).
+.TP
+.BR <#3#> .. <#9#>
+The argument to
+.IR \-3 .. \-9 .
+.PP
+Several tags are substituted on-the-fly where appropriate.  They are:
+.TP
+.B <#A#>
+The subscriber address (in
+.IR ezmlm-manage )
+or the moderation accept address (in
+.IR ezmlm-store ).
+.TP
+.B <#R#>
+The subscription reply address (in
+.IR ezmlm-manage )
+or moderation reject address (in
+.IR ezmlm-store ).
+.TP
+.B <#h#>
+The
+.I host
+part of the list address.
+.TP
+.B <#l#>
+The
+.I local
+(or
+.I local\fB-digest
+as appropriate for the current action) part of the list address.
+.TP
+.B <#n#>
+The message number (in
+.I ezmlm-get
 or
-.IR local\fB\-digest
-local part of the list address, the
-.IR host ,
-the subscriber address or the moderation accept address,
-and the subscription reply address or moderation reject address, respectively.
+.IR ezmlm-send ).
+.TP
+.B <#r#>
+The
+.I local
+part of the
+.B <#R#>
+tag.
+.B <#R#> is effectively equivalent to
+.BR <#r#>@<#h#> .
+.TP
+.B <#t#>
+The target address
+.B <#A#>
+with the last
+.B @
+replaced by
+.BR = .
+.PP
 The use of
 .BR <#l#>
 is to allow the same text file to be used for requests pertaining to both

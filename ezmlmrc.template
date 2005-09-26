@@ -42,12 +42,29 @@
 # dynamically by the list name for programs handling both 'list' and
 # 'list-digest'.
 #
-# Substitutions are:
-# <#B#> ezmlm binaries path   <#C#> digest code         <#D#> dir
-# <#H#> host                  <#L#> local               <#F#> flags
-# <#T#> dot                   <#0#> arg for -0. <#3#>...<#9#> arg for -3..9
-# <#1#> ext1                  <#2#> ext2 [if dot is /path/.qmail-ext1-ext2-name]
-# The latter useful when a single user is controlling several virtual domains.
+# Substitutions made by ezmlm-make (at list creation or edit time) are:
+# <#B#> ezmlm binaries path
+# <#C#> digest code
+# <#D#> dir
+# <#F#> flags
+# <#H#> host
+# <#L#> local
+# <#T#> dot
+# <#0#> arg for -0.
+# <#1#> ext1 [if dot is /path/.qmail-ext1-ext2-name]
+# <#2#> ext2 [if dot is /path/.qmail-ext1-ext2-name]
+# <#3#>...<#9#> arg for -3..9
+# ext1 and ext2 are useful when a single user is controlling several
+# virtual domains.
+#
+# Substitutions made at runtime are:
+# <#A#> target email address
+# <#R#> confirm address (equivalent to <#r#>@<#h#>)
+# <#h#> host
+# <#l#> outlocal (may contain "-digest")
+# <#n#> message number
+# <#r#> local part of the confirm address
+# <#t#> target address, with '@' substituted by '='
 #
 # -0 is used for the main list address when setting up sublists
 # -3 is for the new from header if we want that header replaced
