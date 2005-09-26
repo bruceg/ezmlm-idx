@@ -10,10 +10,10 @@ Hvis du afmelder, men stadig får post, er du tilmeldt med en
 andren adresse end den du bruger i øjeblikket. Kig i brevhoved
 efter noget der ser sådan ud:
 
-'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
 
 Afmeldingsadressen for denne bruger ville blive:
-'<#l#>-unsubscribe-user=example.com@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#h#>'.
 
 Send nu post til denne adresse, erstat user=example.com med rigtige
 værdier, og du burde modtage et brev om at du er frameldt listen.
@@ -30,7 +30,7 @@ Så videresend din liste kommando til liste ejeren sammen med en
 besked om hvad det er du prøver at opnå, samt en liste over de
 andresser du evt. kan være tilmeldt under. Ejeren,
 
-    <#l#>-owner@<#H#>
+    <#l#>-owner@<#h#>
 
 Vil tage sig af det. Min ejer er ikke så hurtig som mig, så hav
 venligst lidt tålmodighed.

@@ -1,5 +1,5 @@
 # $Id$
-Grazie per aver accettato di moderare la mailing list <#L#>@<#H#>.
+Grazie per aver accettato di moderare la mailing list <#L#>@<#h#>.
 
 I miei comandi sono leggermente differenti da quelli delle altre
 mailing list, ma credo che li troverai intuitivi e facili da usare.
@@ -13,15 +13,15 @@ Come moderatore, puoi iscrivere e cancellare qualsiasi indirizzo alla
 mailing list. Per iscrivere "john@example.com" , basta solo
 aggiungere un trattino  dopo il comando, quindi il suo indirizzo con
 '=' invece di '@'. Per esempio, per iscrivere questo indirizzo scrivi
-a:    <<#L#>-subscribe-john=example.com@<#H#>>
+a:    <<#L#>-subscribe-john=example.com@<#h#>>
 
 Analogamente puoi rimuovere l'indirizzo scrivendo a:
-   <<#L#>-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#h#>>
 
 <=d=>
 Per la lista delle raccolte:
-   <<#L#>-digest-subscribe-john=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#h#>>
 
 <==>
 Questo è tutto. Non sono necessari comandi nell' oggetto o nel corpo del 
@@ -47,14 +47,14 @@ Iscrizione
 
 Qualsiasi utente può iscriversi o rimuoversi scrivendo a:
 
-    <<#L#>-subscribe@<#H#>>
-    <<#L#>-unsubscribe@<#H#>>
+    <<#L#>-subscribe@<#h#>>
+    <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
 Per la lista delle raccolte:
 
-    <<#L#>-digest-subscribe@<#H#>>
-    <<#L#>-digest-unsubscribe@<#H#>>
+    <<#L#>-digest-subscribe@<#h#>>
+    <<#L#>-digest-unsubscribe@<#h#>>
 
 <==>
 L'utente riceverà una richiesta di conferma per essere sicuri che
@@ -75,8 +75,8 @@ Le iscrizioni funzionano allo stesso modo.
 
 L'utente può anche utilizzare:
 
-   <<#L#>-subscribe-mary=example.com@<#H#>>
-   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#h#>>
+   <<#L#>-unsubscribe-mary=example.com@<#h#>>
 
 per ricevere le e-mail a: "mary@example.com". Solo se riceve effettivamente
 le e-mail a questo indirizzo potrà ricevere il messaggio di conferma ed essere 
@@ -86,22 +86,22 @@ Il tuo indirizzo e la tua identità non saranno resi noti agli iscritti, a meno
 che tu non decida di scrivergli direttamente.
 
 <=rl=>
-Per ricevere l'elenco degli iscritti a: <#L#>@<#H#> invia un messaggio a:
-   <<#L#>-list@<#H#>>
+Per ricevere l'elenco degli iscritti a: <#L#>@<#h#> invia un messaggio a:
+   <<#L#>-list@<#h#>>
 
-Per ricevere il log delle transazioni per <#L#>@<#H#> scrivi a:
-   <<#L#>-log@<#H#>>
+Per ricevere il log delle transazioni per <#L#>@<#h#> scrivi a:
+   <<#L#>-log@<#h#>>
 <=rld=>
 Per gli iscritti alle raccolte:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 e:
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 Puoi modificare a distanza i file di testo che compongono le risposte che 
 la lista spedisce. Per ricevere un elenco dei file e delle istruzioni per
 modificarli, scrivi a:
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 
 <=m=>
@@ -138,8 +138,8 @@ Assenze
 ---------
 Se hai momentaneamente un indirizzo diverso, ti basta forwardare tutti i
 messaggi che hanno l'intestazione 'Mailing-List:' (o tutti i messaggi che
-iniziano con 'MODERATE for <#L#>@<#H#>' o con 'CONFIRM subscribe to
-<#L#>@<#H#>') al nuovo indirizzo.
+iniziano con 'MODERATE for <#L#>@<#h#>' o con 'CONFIRM subscribe to
+<#L#>@<#h#>') al nuovo indirizzo.
 Puoi perciò moderare la mailing-list dal nuovo indirizzo. In alternativa, puoi
 forwardare i messaggi a un amico in modo tale che li possa moderare lui per te.
 Però assicurati di essere d'accordo con il proprietario della mailing list.
@@ -160,5 +160,5 @@ tutti gli iscritti in questo caso!
 
 Buona fortuna!
 
-PS: Per favore contatta l'amministratore della lista (<#L#>-owner@<#H#>) se
+PS: Per favore contatta l'amministratore della lista (<#L#>-owner@<#h#>) se
 hai domande o problemi.

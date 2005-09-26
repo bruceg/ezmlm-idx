@@ -5,7 +5,7 @@ Conferma: ho aggiunto l'indirizzo
 
 alla mailing list <#l#> .
 
-Benvenuto su <#l#>@<#H#>!
+Benvenuto su <#l#>@<#h#>!
 
 Per favore salva questo messaggio in modo tale da sapere con quale
 indirizzo ti sei iscritto nel caso tu voglia successivamente cancellarti o
@@ -13,5 +13,5 @@ modificare il tuo indirizzo di iscrizione.
 
 Per cancellare l'scrizione scrivi a:
 
-    <<#l#>-unsubscribe-<#t#>@<#H#>>
+    <<#l#>-unsubscribe-<#t#>@<#h#>>
 

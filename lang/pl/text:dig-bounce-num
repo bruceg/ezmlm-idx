@@ -6,14 +6,14 @@ listu ka¿dego przegl±du, z którym mia³e¶ k³opoty. Mo¿esz wiêc
 spróbowaæ dostaæ listy z archiwum g³ównego.
 
 Aby dostaæ list nr 12345 z archiwum, wy¶lij pusty list na
-adres: <#L#>-get.12345@<#H#>.
+adres: <#L#>-get.12345@<#h#>.
 
 <=ia=>
 Aby dostaæ listê tytu³ów i autorów ostatnich stu listów, wy¶lij
-pust± wiadomosc na adres: <#L#>-index@<#H#>.
+pust± wiadomosc na adres: <#L#>-index@<#h#>.
 
 Aby dostaæ pêczek listów od numeru 123 do 145 (maksymalnie sto naraz)
-wy¶lij pust± wiadomosæ pod adres: <#L#>-get.123_145@<#H#>.
+wy¶lij pust± wiadomosæ pod adres: <#L#>-get.123_145@<#h#>.
 
 <==>
 Poni¿ej znajdziesz numery przegl±dów listy:

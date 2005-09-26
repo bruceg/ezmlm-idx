@@ -3,14 +3,14 @@
 Durch Remote-Administratoren kann das <#L#>-edit.file
 Kommando benutzt werden, um die Textdateien zu verändern, die die
 Hauptmenge der Antworten von der Liste
-    <#L#>@<#H#>
+    <#L#>@<#h#>
 ausmachen.
 
 Hier finden Sie eine Aufstellung der Dateinamen und eine kurze
 Beschreibung ihres Inhalts bzw. ihrer Funktion.
 Um den Inhalt einer Datei zu ändern, senden Sie einfach eine
 Mail an
-   <#L#>-edit.file@<#H#>
+   <#L#>-edit.file@<#h#>
 wobei Sie 'file' durch den konkreten Dateinamen ersetzen.
 Die Instruktionen zur Bearbeitung erhalten Sie zusammen mit dem
 Text.

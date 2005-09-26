@@ -1,6 +1,6 @@
 # $Id$
 Dziêkujê za zgodê na zostanie moderatorem listy o adresie:
-<#L#>@<#H#>.
+<#L#>@<#h#>.
 
 Moje komendy s± nieco inne, ni¿ bywaj± w programach obs³uguj±cych
 pocztowe listy dyskusyjne. Mo¿esz nawet na pocz±tku stwierdziæ, ¿e s±
@@ -14,14 +14,14 @@ Zdalne wpisanie na listê prenumeratorów
 Bêd±c moderatorem, mo¿esz zapisaæ lub wypisaæ internautê
 o adresie janek@example.com poprzez wys³anie listu na adres:
 
-<#L#>-subscribe-janek=example.com@<#H#>
-<#L#>-unsubscribe-janek=example.com@<#H#>
+<#L#>-subscribe-janek=example.com@<#h#>
+<#L#>-unsubscribe-janek=example.com@<#h#>
 
 <=g=>
 Odpowiednio dla przegl±du listy:
 
-<#L#>-digest-subscribe-janek=example.com@<#H#>
-<#L#>-digest-unsubscribe-janek=example.com@<#H#>
+<#L#>-digest-subscribe-janek=example.com@<#h#>
+<#L#>-digest-unsubscribe-janek=example.com@<#h#>
 
 <==>
 To wszystko. Nie musisz nadawaæ listowi tytu³u, nie musisz
@@ -46,14 +46,14 @@ Prenumerata
 Ka¿dy mo¿e zapisaæ siê na listê, albo z niej wypisaæ, poprzez
 wys³anie listu na adres:
 
-<#L#>-subscribe@<#H#>
-<#L#>-unsubscribe@<#H#>
+<#L#>-subscribe@<#h#>
+<#L#>-unsubscribe@<#h#>
 
 <=g=>
 Obs³uga przegl±du listy:
 
-<#L#>-digest-subscribe@<#H#>
-<#L#>-digest-unsubscribe@<#H#>
+<#L#>-digest-subscribe@<#h#>
+<#L#>-digest-unsubscribe@<#h#>
 
 Chêtny otrzyma pro¶be o potwierdzenie ¿yczenia wypisania siê z listy,
 aby siê upewniæ czy ¿yczenie to zosta³o rzeczywiscie przez niego
@@ -71,8 +71,8 @@ Zapisy funkcjonuj± w ten sam sposób.
 
 U¿ytkownik mo¿e równie¿ u¿ywaæ adresów:
 
-<#L#>-subscribe-janek=example.com@<#H#>
-<#L#>-unsubscribe-janek=example.com@<#H#>
+<#L#>-subscribe-janek=example.com@<#h#>
+<#L#>-unsubscribe-janek=example.com@<#h#>
 
 aby poczta z listy wêdrowa³a na inny adres bed±cy jego w³asno¶ci±.
 Tylko wówczas, kiedy u¿ytkownik dostaje listy na adres
@@ -88,25 +88,25 @@ Twój rzeczywisty adres pocztowy nie bêdzie ujawniony prenumaratorowi.
 Pozwoli to zachowaæ Ci anonimowo¶æ.
 
 <=rl=>
-Aby uzyskaæ listê prenumeratorów <#L#>@<#H#>, 
+Aby uzyskaæ listê prenumeratorów <#L#>@<#h#>, 
 wy¶lij list na adres:
-   <<#L#>-list@<#H#>>
+   <<#L#>-list@<#h#>>
 
-Chc±c uzyskaæ dziennik pok³adowy listy <#L#>@<#H#>,
+Chc±c uzyskaæ dziennik pok³adowy listy <#L#>@<#h#>,
 wy¶lij list na adres:
-   <<#L#>-list@<#H#>>
+   <<#L#>-list@<#h#>>
 
 <=rld=>
 Adresy w³a¶ciwe dla przegl±du listy:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 i:
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 Mo¿esz zdalnie zmieniaæ pliki tekstowe, którymi pos³uguje siê automat
 podczas obs³ugi listy dyskusyjnej. Aby uzyskaæ zbiór plików oraz
 instrukcje, jak je zmieniaæ, napisz pod adres:
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Przesy³ki moderowane
@@ -142,9 +142,9 @@ Wakacje
 Je¿eli korzystasz tymczasowo z innego adresu, po prostu przekieruj
 wszystkie listy z nag³ówkiem 'Mailing-List:',
 albo te, których tematy zaczynaj± siê s³owami
-"MODERATE for <#L#>@<#H#>",
+"MODERATE for <#L#>@<#h#>",
 lub
-"CONFIRM subscribe to <#L#>@<#H#>",
+"CONFIRM subscribe to <#L#>@<#h#>",
 na nowy adres.
 Mo¿esz wtedy moderowaæ z nowego adresu. Innym sposobem jest
 przekierowanie tych listów do przyjaciela, który mo¿e Ciê zast±piæ.
@@ -170,6 +170,6 @@ wówczas anonimowy.
 Powodzenia!
 
 PS: Skontaktuj siê, proszê, z opiekunem listy pod adresem
-<#L#>-owner@<#H#>
+<#L#>-owner@<#h#>
 je¿eli masz jakie¶ pytania, lub napotkasz na problemy.
 

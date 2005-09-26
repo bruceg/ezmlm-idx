@@ -11,11 +11,11 @@ i akrivet för huvudlistan.
 
 För att ta emot brev 123-145 (max 100 per förfrågan),
 skicka ett brev till:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 För en lista över författare och titlar på de senaste 100
 meddelandena, skicka ett brev till:
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 <==>
 Här är "digest" meddelande nummren:

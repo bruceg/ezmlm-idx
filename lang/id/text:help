@@ -5,24 +5,24 @@ terkirim ke salah satu dari alamat-alamat perintah kami.
 Berikut ini adalah daftar perintah yang tersedia:
 
 Kirim e-mail ke alamat berikut untuk info dan FAQ list:
-   <<#L#>-info@<#H#>>
-   <<#L#>-faq@<#H#>>
+   <<#L#>-info@<#h#>>
+   <<#L#>-faq@<#h#>>
 
 <=d=>
 Alamat berikut bisa digunakan untuk list digest:
-   <<#L#>-digest-subscribe@<#H#>>
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-subscribe@<#h#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=a=>
 Untuk mendapatkan posting 123-145 (maksimum 100), kirim e-mail ke:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 Untuk mendapatkan indeks subjek dan penulis posting 123-456, kirim e-mail ke:
-   <<#L#>-index.123_456@<#H#>>
+   <<#L#>-index.123_456@<#h#>>
 
 Untuk menerima semua posting dengan subjek yang sama dengan posting 12345,
 kirim e-mail ke:
-   <<#L#>-thread.12345@<#H#>>
+   <<#L#>-thread.12345@<#h#>>
 
 <==>
 E-mail tidak perlu kosong, tapi program ini tidak akan membaca isi mail. 
@@ -31,8 +31,8 @@ Hanya alamat tujuan e-mail yang penting.
 Anda dapat berlangganan menggunakan alamat e-mail anda yang lain,
 misalnya "john@example.com", dengan menambahkan '-' dan alamat e-mail
 anda (gunakan '=' sebagai pengganti '@') setelah kata perintah:
-<<#L#>-subscribe-john=example.com@<#H#>>
+<<#L#>-subscribe-john=example.com@<#h#>>
 
 Untuk berhenti menerima email di alamat ini, kirim e-mail ke:
-<<#L#>-unsubscribe-john=example.com@<#H#>>
+<<#L#>-unsubscribe-john=example.com@<#h#>>
 

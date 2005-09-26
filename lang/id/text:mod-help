@@ -1,6 +1,6 @@
 # $Id$
 Terima kasih atas kesediaan anda untuk memoderatori
-milis <#L#>@<#H#>.
+milis <#L#>@<#h#>.
 
 Perintah-perintah yang kami punya agak sedikit berbeda dari milis-milis 
 yang lain, tapi kami harap anda dapat menggunakannya dengan mudah.
@@ -16,15 +16,15 @@ Sebagai moderator, anda dapat mendaftarkan dan menghapuskan siapa saja ke
 dalam milis. Untuk mendaftarkan "john@example.com", taruh '-' setelah kata
 perintahnya, kemudian alamat emailnya dengan menggunakan tanda '=' sebagai
 ganti dari '@'. Contoh, untuk mendaftarkan alamat tersebut, kirim mail ke:
-   <<#L#>-subscribe-john=example.com@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#h#>>
 
 Dengan cara yang sama, untuk menghapus alamat tersebut, kirim mail ke:
-   <<#L#>-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#h#>>
 
 <=d=>
 Untuk list digest:
-   <<#L#>-digest-subscribe-john=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#h#>>
 
 <==>
 Itu saja. Tidak perlu subjek dan isi dari postingnya!
@@ -50,14 +50,14 @@ Berlangganan
 
 Setiap pemakai dapat berlangganan atau berhenti dengan mengirim e-mail ke:
 
-<#L#>-subscribe@<#H#>
-<#L#>-unsubscribe@<#H#>
+<#L#>-subscribe@<#h#>
+<#L#>-unsubscribe@<#h#>
 
 <=d=>
 Untuk list digest:
 
-<#L#>-digest-subscribe@<#H#>
-<#L#>-digest-unsubscribe@<#H#>
+<#L#>-digest-subscribe@<#h#>
+<#L#>-digest-unsubscribe@<#h#>
 
 <==>
 Si fulan akan menerima sebuah permohonan konfirmasi untuk memastikan
@@ -78,8 +78,8 @@ Untuk berlangganan adalah sama caranya.
 
 Si fulan dapat juga mengirim mail ke:
 
-   <<#L#>-subscribe-mary=example.com@<#H#>>
-   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#h#>>
+   <<#L#>-unsubscribe-mary=example.com@<#h#>>
 
 untuk mendapatkan mailnya terkirim ke "mary@example.com".  Hanya jika 
 yang bersangkutan menerima mail pada alamat tersebut, dia akan menerima
@@ -89,22 +89,22 @@ Alamat dan identitas anda tidak akan tampak pada mail ke si pelanggan,
 kecuali kalau anda mengirim mail secara langsung ke yang bersangkutan.
 
 <=rl=>
-Untuk mendapatkan daftar pelanggan <#L#>@<#H#>, kirim mail ke:
-   <<#L#>-list@<#H#>>
+Untuk mendapatkan daftar pelanggan <#L#>@<#h#>, kirim mail ke:
+   <<#L#>-list@<#h#>>
 
-Untuk mendapatkan daftar log transaksi <#L#>@<#H#>, kirim mail ke:
-   <<#L#>-log@<#H#>>
+Untuk mendapatkan daftar log transaksi <#L#>@<#h#>, kirim mail ke:
+   <<#L#>-log@<#h#>>
 
 <=rld=>
 Untuk pelanggan-pelanggan digest:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 dan:
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 Anda dapat dari jarak jauh mengedit file-file yang dikirim oleh list.
 Untuk mendapatkan daftar file dan petunjuk untuk mengeditnya, e-mail ke:
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Posting-posting termoderatori
@@ -140,8 +140,8 @@ Vakansi
 -------
 Jika sedang berada pada alamat yang berbeda, forward semua posting yang
 mempunyai header 'Mailing-List:' yang benar (atau semuanya yang mempunyai
-subjek dengan awalan 'MODERATE for <#L#>@<#H#>' atau
-'CONFIRM subscribe to <#L#>@<#H#>') ke alamat yang baru. Anda kemudian dapat
+subjek dengan awalan 'MODERATE for <#L#>@<#h#>' atau
+'CONFIRM subscribe to <#L#>@<#h#>') ke alamat yang baru. Anda kemudian dapat
 memoderatorinya dari alamat yang baru. Atau anda dapat memforwardkan
 posting-posting tersebut ke teman anda sehingga dia dapat memoderatorinya
 untuk anda. Mohon untuk meminta persetujuan dari pemilik list terlebih dahulu.
@@ -163,6 +163,6 @@ dikirimkan ke si pemohon dalam hal ini!
 
 Semoga sukses!
 
-PS: Silakan kontak si pemilik list (<#L#>-owner@<#H#>) jika anda
+PS: Silakan kontak si pemilik list (<#L#>-owner@<#h#>) jika anda
 mempunyai pertanyaan-pertanyaan atau masalah-masalah.
 

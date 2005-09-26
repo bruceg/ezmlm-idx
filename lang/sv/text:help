@@ -6,26 +6,26 @@ Detta är en lista på de kommando adresser som stöds:
 
 Skicka brev till något av följande adresser för information
 och "FAQn" för listan:
-   <<#L#>-info@<#H#>>
-   <<#L#>-faq@<#H#>>
+   <<#L#>-info@<#h#>>
+   <<#L#>-faq@<#h#>>
 
 <=d=>
 Liknande adresser finns för "digest" versionen av listan:
-   <<#L#>-digest-subscribe@<#H#>>
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-subscribe@<#h#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=a=>
 För att få meddelande 123 till 145 (max 100 per förfrågan),
 skicka ett brev till:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 För att få ett index med författare och titel för meddelande
 123-456, skicka ett brev till:
-   <<#L#>-index.123_456@<#H#>>
+   <<#L#>-index.123_456@<#h#>>
 
 För att få alla meddelanden med samma titel som meddelande 12345,
 skicka ett brev till:
-   <<#L#>-thread.12345@<#H#>>
+   <<#L#>-thread.12345@<#h#>>
 
 <==>
 Meddelandena behöver inte innehålla något särskilt, det är
@@ -35,9 +35,9 @@ Du kan starta en prenumeration till en alternativ adress,
 t ex "john@example.com", addera bara ett bindesträck
 och din adress (med '=', istället för '@') efter kommando
 ordet. Dvs:
-<<#L#>-subscribe-john=example.com@<#H#>>
+<<#L#>-subscribe-john=example.com@<#h#>>
 
 För att avsluta prenumerationen till denna adressen,
 skicka ett brev till:
-<<#L#>-unsubscribe-john=example.com@<#H#>>
+<<#L#>-unsubscribe-john=example.com@<#h#>>
 

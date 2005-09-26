@@ -10,10 +10,10 @@ Se você cancelou a assinatura, mas continua recebendo mensagens,
 você está assinado com um endereço diferente do que está usando
 agora. Por favor, olhe o cabeçalho da mensagem, procurando por:
 
-'Return-Path: <<#l#>-return-1234-user=host.dom@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=host.dom@<#h#>>'
 
 O endereço de cancelamento para este endereço deve ser:
-'<#l#>-unsubscribe-user=host.dom@<#H#>'.
+'<#l#>-unsubscribe-user=host.dom@<#h#>'.
 Basta enviar uma mensagem para este endereço, substituindo
 user=host.dom pelos valores corretos; depois, responda ao pedido de
 confirmação e você deverá receber um aviso que está fora da lista.
@@ -28,7 +28,7 @@ Se isto ainda não funcionar, eu sinto muito em dizer que não posso
 ajudá-lo. Por favor, REPASSE uma mensagem da lista junto com uma
 observação sobre o que você está tentando fazer para o meu dono:
 
-    <#l#>-owner@<#H#>
+    <#l#>-owner@<#h#>
 
 que cuidará disto. Meu dono é um pouco mais lento do que eu,
 por favor tenha paciência.

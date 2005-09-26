@@ -6,25 +6,25 @@ Ecco un elenco degli indirizzi per i comandi consentiti:
 
 Scrivi una email ai seguenti indirizzi per le informazioni o le FAQ
 della lista:
-   <<#L#>-info@<#H#>>
-   <<#L#>-faq@<#H#>>
+   <<#L#>-info@<#h#>>
+   <<#L#>-faq@<#h#>>
 
 <=d=>
 Indirizzi analoghi esistono per la lista delle raccolte:
-   <<#L#>-digest-subscribe@<#H#>>
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-subscribe@<#h#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=a=>
 Per ricevere i messaggi dal numero 123 al numero 145 (massimo 100 per ogni
 richiesta), scrivi a:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 Per ricevere l'indice dei messaggi 123-456 con l'oggetto e l'autore, scrivi a:
-   <<#L#>-index.123_456@<#H#>>
+   <<#L#>-index.123_456@<#h#>>
 
 Per ricevere tutti i messaggi con lo stesso oggetto del messaggio
 12345, spedisci un messaggio vuoto a:
-   <<#L#>-thread.12345@<#H#>>
+   <<#L#>-thread.12345@<#h#>>
 
 <==>
 I messaggi in realtà non é necessario che siano vuoti, ma ignorerò
@@ -32,8 +32,8 @@ il loro contenuto. E' importante solo l'INDIRIZZO dal quale li spedisci.
 
 Puoi iscriverti anche da un altro indirizzo,per esempio se vuoi iscrivere
 "john@example.com", basta solo aggiungere un trattino e il tuo indirizzo (con
-'=' al posto di '@') dopo i comandi: <<#L#>-subscribe-john=example.com@<#H#>>
+'=' al posto di '@') dopo i comandi: <<#L#>-subscribe-john=example.com@<#h#>>
 
 Per cancellare l'iscrizione da questo indirizzo, scrivi a:
-<<#L#>-unsubscribe-john=example.com@<#H#>>
+<<#L#>-unsubscribe-john=example.com@<#h#>>
 

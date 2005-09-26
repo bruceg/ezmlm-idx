@@ -3,15 +3,15 @@
 Na wszelki wypadek przechowujê odrzucone listy z twojego adresu,
 wys³ane na listê o nazwie <#L#>. Aby dostaæ kopiê tych listów
 z archiuwm, np. listu o numerze 12345, wyslij pust± wiadomosæ
-na adres: <#L#>-get.12345@<#H#>.
+na adres: <#L#>-get.12345@<#h#>.
 
 <=ia=>
 Aby zamówiæ listê tytu³ów i autorów stu ostatnich wiadomo¶ci,
-wy¶lij pusty list na adres: <#L#>-index@<#H#>.
+wy¶lij pusty list na adres: <#L#>-index@<#h#>.
 
 Aby dostaæ pêczek listów od 123 do 131 (maksymalnie 100 na jeden raz),
 wy¶lij pust± wiadomosæ na adres:
-<#L#>-get.123_145@<#H#>.
+<#L#>-get.123_145@<#h#>.
 
 <==>
 Poni¿ej znajduj± sie numery listów:

@@ -7,20 +7,20 @@ do not send them to the list address! Instead, send
 your message to the correct command address:
 
 For help and a description of available commands, send a message to:
-   <<#L#>-help@<#H#>>
+   <<#L#>-help@<#h#>>
 
 To subscribe to the list, send a message to:
-   <<#L#>-subscribe@<#H#>>
+   <<#L#>-subscribe@<#h#>>
 
 To remove your address from the list, just send a message to
 the address in the ``List-Unsubscribe'' header of any list
 message. If you haven't changed addresses since subscribing,
 you can also send a message to:
-   <<#L#>-unsubscribe@<#H#>>
+   <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
 or for the digest to:
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=HJ=>
 For addition or removal of addresses, I'll send a confirmation
@@ -31,7 +31,7 @@ to complete the transaction.
 If you need to get in touch with the human owner of this list,
 please send a message to:
 
-    <<#L#>-owner@<#H#>>
+    <<#L#>-owner@<#h#>>
 
 Please include a FORWARDED list message with ALL HEADERS intact
 to make it easier to help you.

@@ -6,16 +6,16 @@ foram entregues para o seu endereço.
 Cópias destas mensagens podem estar no arquivo.
 <=aI=>
 Para pegar a mensagem 12345 do arquivo, envie uma mensagem vazia para
-  <<#L#>-get.12345@<#H#>>
+  <<#L#>-get.12345@<#h#>>
 
 <=ia=>
 Para recuperar uma lista de assuntos e autores das últimas 100
 mensagens, envie uma mensagem vazia para:
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 Para recuperar as mensagens 123 a 145 (no máximo 100 por comando),
 envie uma mensagem vazia para:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 <==>
 Aqui estão os números das mensagens:

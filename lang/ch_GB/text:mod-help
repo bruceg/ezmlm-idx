@@ -1,5 +1,5 @@
 # $Id$
-你现在已经成为<#L#>@<#H#>邮件列表的管理者（moderator），下面将介绍作为一个邮件列表
+你现在已经成为<#L#>@<#h#>邮件列表的管理者（moderator），下面将介绍作为一个邮件列表
 的所有者或管理者（moderator）你可以通过下面的方式对邮件列表的各个方面进行管理。
 
 
@@ -8,15 +8,15 @@
 作为邮件列表的管理者，你能够注册和取消注册邮件列表的任何用户。你希望通过电子邮件的方
 式注册“john@example.com”，只要在命令后（subscribe）添加“-”并且用“=”代替“@”，举
 例来讲，注册上面所讲的地址，将电子邮件发送到：
-   <<#L#>-subscribe-john=example.com@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#h#>>
 
 同样，取消注册上面的电子邮件地址，将电子邮件发送到：
-   <<#L#>-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#h#>>
 
 <=d=>
 同样对于注册和取消注册邮件列表的摘要：
-   <<#L#>-digest-subscribe-john=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#h#>>
 
 <==>
 所有的注册和取消注册都不需要有邮件主题和邮件内容!
@@ -37,14 +37,14 @@
 
 任何用户可以通过向下面的地址发送电子邮件进行注册或取消注册：
 
-<#L#>-subscribe@<#H#>
-<#L#>-unsubscribe@<#H#>
+<#L#>-subscribe@<#h#>
+<#L#>-unsubscribe@<#h#>
 
 <=d=>
 同样对于注册和取消注册邮件列表的摘要：
 
-<#L#>-digest-subscribe@<#H#>
-<#L#>-digest-unsubscribe@<#H#>
+<#L#>-digest-subscribe@<#h#>
+<#L#>-digest-unsubscribe@<#h#>
 
 <==>
 用户将从系统收到确认信他/她电子邮件地址的确认信。一旦电子邮件地址被确认，注册或取消注册将完成。
@@ -60,29 +60,29 @@
 
 同样用户也可以使用下面的方法取消注册：
 
-   <<#L#>-subscribe-mary=example.com@<#H#>>
-   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#h#>>
+   <<#L#>-unsubscribe-mary=example.com@<#h#>>
 
 "mary@example.com"将收到系统发送的确认取消注册的电子邮件.在验证完成后就能取消注册。
 
 <=rl=>
-通过电子邮件的方式获得<#L#>@<#H#>邮件列表的注册用户，将电子邮件发送到下面的地址:
-   <<#L#>-list@<#H#>>
+通过电子邮件的方式获得<#L#>@<#h#>邮件列表的注册用户，将电子邮件发送到下面的地址:
+   <<#L#>-list@<#h#>>
 
-通过电子邮件的方式获得<#L#>@<#H#>邮件列表的日志（Log）文件, 将电子邮件发送到下
+通过电子邮件的方式获得<#L#>@<#h#>邮件列表的日志（Log）文件, 将电子邮件发送到下
 面的地址:
-   <<#L#>-log@<#H#>>
+   <<#L#>-log@<#h#>>
 
 <=rld=>
 同样，通过电子邮件获得邮件列表摘要的注册用户：
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 同样，通过电子邮件获得邮件列表摘要的日志文件：
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 你可以通过对一些文件的编辑来定制邮件列表的回应邮件。得到需要编辑的文件及如何编辑，将电子邮件发送
 到下面的地址：
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 有管理的投递
@@ -107,7 +107,7 @@
 外出
 ----
 如果你只是临时的更换电子邮件地址，只要将有正确的邮件列表头(或者邮件的主题是以
-'MODERATE for <#L#>@<#H#>'或'CONFIRM subscribe to <#L#>@<#H#>'开头的电子邮件) 转发到新的
+'MODERATE for <#L#>@<#h#>'或'CONFIRM subscribe to <#L#>@<#H#>'开头的电子邮件) 转发到新的
 电子邮件地址就可以了。你可以通过新的地址对邮件列表进行管理。同样，你也可以将电子邮件转发到你
 的朋友的电子邮件信箱，委托他/她替你临时管理邮件列表。
 
@@ -121,5 +121,5 @@
 
 <==>
 
-注意：如果你在使用的过程中有任何的问题，请你与邮件列表的所有者(<#L#>-owner@<#H#>)联系。
+注意：如果你在使用的过程中有任何的问题，请你与邮件列表的所有者(<#L#>-owner@<#h#>)联系。
 

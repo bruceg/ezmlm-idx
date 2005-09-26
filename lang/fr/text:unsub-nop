@@ -13,12 +13,12 @@ inscription sous une adresse differente de celle que vous utilisez
 actuellement.
 Verifiez dans l'en-tete une ligne de la forme :
 
-'Return-Path: <<#l#>-return-1234-utilisateur=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-utilisateur=example.com@<#h#>>'
 
 Cela reflete une inscription de l'adresse
 "utilisateur@example.com". Dans ce cas, il est possible de
 se desabonner en ecrivant a :
-'<#l#>-unsubscribe-utilisateur=example.com@<#H#>'.
+'<#l#>-unsubscribe-utilisateur=example.com@<#h#>'.
 
 Reprenez cet exemple apres y avoir mis votre adresse d'inscription.
 
@@ -36,7 +36,7 @@ Il vous reste donc a faire suivre (Forward) un message au
 proprietaire de la liste accompagne d'un petit mot doux.
 Voici son adresse :
 
-    <#l#>-owner@<#H#>
+    <#l#>-owner@<#h#>
 
 N'etant pas un robot, sa reponse ne sera pas immediate.
 

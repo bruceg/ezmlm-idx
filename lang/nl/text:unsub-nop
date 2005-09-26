@@ -11,11 +11,11 @@ Als u zich hebt uitgeschreven, maar nog steeds mail ontvangt, dan
 bent u onder een ander adres ingeschreven dan wat u nu gebruikt.
 Kijk in de HEADER van uw email en zoek naar een regel met:
 
-'Return-Path: <<#l#>-return-1234-joe=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-joe=example.com@<#h#>>'
 
 Hier ziet u dat het ingeschreven adres ``joe@example.com'' is.
 Om dit adres uit te schrijven zou u een bericht sturen naar:
-'<#l#>-unsubscribe-joe=example.com@<#H#>'.
+'<#l#>-unsubscribe-joe=example.com@<#h#>'.
 
 Stuur een email naar dat adres, natuurlijk aangepast met uw adres.
 
@@ -35,7 +35,7 @@ Als dit niet werkt, kan ik u helaas niet helpen.
 Stuurt u in dat geval een bericht van de mailing list door (forward) naar
 mijn eigenaar:
 
-	<<#l#>-owner@<#H#>>
+	<<#l#>-owner@<#h#>>
 
 en voeg er een notitie aan toe met uw wensen.
 Mijn eigenaar is minder snel dan ik, dus heb dan even geduld s.v.p.

@@ -35,7 +35,7 @@ MUA によっては
 e-mail を扱う環境によっては、ezmlm が使う長い address を
 うまく扱えない事があります。その様な場合は以下の address
 
-        <<#L#>-request@<#H#>>
+        <<#L#>-request@<#h#>>
 
 に "Subject: <#R#>" として
 message を送って下さい。

@@ -9,13 +9,13 @@ Le copie di questi messaggi potrebbero essere nell'archivio.
 
 Per ricevere l'insieme dei messaggi 123-145 (al massimo
 100 per richiesta) dall'archivio, scrivi un messaggio vuoto a:   
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 
 Per ricevere l'elenco dei soggetti e degli autori degli ultimi 100
 messaggi scrivi a:
 
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 <==>
 Ecco i numeri dei messaggi:

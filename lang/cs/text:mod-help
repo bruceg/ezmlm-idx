@@ -1,5 +1,5 @@
 # $Id$
-Dìkuji, ¾e jste se uvoli moderovat nebo spravovat list <#L#>@<#H#>.
+Dìkuji, ¾e jste se uvoli moderovat nebo spravovat list <#L#>@<#h#>.
 
 Moje pøíkazy jsou ponìkud odli¹nìj¹í od jiných listù, ale myslím,
 ¾e je seznáte intuitivními a pøíjemnými k pou¾ití.
@@ -15,15 +15,15 @@ do svého listu. Pro pøihlá¹ení u¾ivatele "pepa@example.com" jednodu¹e
 doplòte pomlèku za název pøíkazu a pak tuto adres s rovnítkem
 místo zavináèe. Napøíklad pro pøihlá¹ení vý¹e uvedené adresy
 po¹lete mail na adresu
-   <<#L#>-subscribe-pepa=example.com@<#H#>>
+   <<#L#>-subscribe-pepa=example.com@<#h#>>
 
 Podobnì mù¾ete odhla¹ovat u¾ivatele pomocí mailu na adresu
-   <<#L#>-unsubscribe-pepa=example.com@<#H#>>
+   <<#L#>-unsubscribe-pepa=example.com@<#h#>>
 
 <=d=>
 Pro digestový list:
-   <<#L#>-digest-subscribe-pepa=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-pepa=example.com@<#H#>>
+   <<#L#>-digest-subscribe-pepa=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-pepa=example.com@<#h#>>
 
 <==>
 To je v¹echno. ®ádný speciální subject ani obsah zprávy není potøeba!
@@ -49,14 +49,14 @@ Pøihlá¹ení
 Libovolný u¾ivatel se smí pøihla¹ovat a odhla¹ovat do/z listu
 zasláním zprávy na adresu
 
-<#L#>-subscribe@<#H#>
-<#L#>-unsubscribe@<#H#>
+<#L#>-subscribe@<#h#>
+<#L#>-unsubscribe@<#h#>
 
 <=d=>
 Pro digestový list:
 
-<#L#>-digest-subscribe@<#H#>
-<#L#>-digest-unsubscribe@<#H#>
+<#L#>-digest-subscribe@<#h#>
+<#L#>-digest-unsubscribe@<#h#>
 
 U¾ivatel obdr¾í ¾ádost o potvrzení, abych se ujistil,
 ¾e mu skuteènì daná adresa patøí. Jakmile se toto ovìøí,
@@ -76,8 +76,8 @@ Pøihlíá¹ení funguje stejnì.
 
 U¾ivatel také mù¾e pou¾ít adresu
 
-   <<#L#>-subscribe-jana=example.com@<#H#>>
-   <<#L#>-unsubscribe-jana=example.com@<#H#>>
+   <<#L#>-subscribe-jana=example.com@<#h#>>
+   <<#L#>-unsubscribe-jana=example.com@<#h#>>
 
 pro zaslání mailu pro "jana@example.com". Pokud tato skuteènì má
 vý¹e uvedenou adresu, obdr¾í ¾ádost o potvrzení a mù¾e ji
@@ -87,24 +87,24 @@ Va¹e adresa a identita není otevøena pøihlá¹enému, pokud mu sám
 nepo¹lete mail.
 
 <=rl=>
-Pro získání seznamu pøihlá¹ených pro list <#L#>@<#H#>, po¹lete
+Pro získání seznamu pøihlá¹ených pro list <#L#>@<#h#>, po¹lete
 zprávu na adresu
-   <<#L#>-list@<#H#>>
+   <<#L#>-list@<#h#>>
 
-Seznam provedených transakcí listu <#L#>@<#H#> získáte z adresy
-   <<#L#>-list@<#H#>>
+Seznam provedených transakcí listu <#L#>@<#h#> získáte z adresy
+   <<#L#>-list@<#h#>>
 
 <=rld=>
 Pro pøihlá¹ené do digestu:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 a
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 Mù¾ete vzdálenì editovat textové soubory, ze kterých se sestavují
 odpovìdi, které posílám. Chcete-li získat seznam editovatelných souborù
 a pokyny pro editaci, napi¹te na adresu
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Moderované pøíspìvky
@@ -140,7 +140,7 @@ Dovolená
 --------
 Pokud jste doèasnì na jiné adrese, staèí si pøeposlat v¹echny zprávy,
 které mají správnou hlavièku "Mailing-List:" (nebo v¹echny se subjectem
-"MODERATE for <#L#>@<#H#>" (nebo "CONFIRM subscribe to <#L#>@<#H#>")
+"MODERATE for <#L#>@<#h#>" (nebo "CONFIRM subscribe to <#L#>@<#H#>")
 na novou adresu. Mù¾ete také pøeposílat tyto zprávy pøíteli, který
 bude moderovat za vás. Prosím uvìdomte o tomto také správce listserveru.
 
@@ -161,6 +161,6 @@ Berte také na vìdomí, ¾e v tomto pøípadì je vá¹ pùvodní po¾adavek
 
 Mnoho ¹tìstí!
 
-PS: Prosím kontaktujte správce listu (<#L#>-owner@<#H#>),
+PS: Prosím kontaktujte správce listu (<#L#>-owner@<#h#>),
 budete-li mít dotazy nebo problémy.
 

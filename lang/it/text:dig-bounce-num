@@ -11,11 +11,11 @@ messaggi dall'archivio  principale della mailing list.
 Per ricevere i messaggi dal numero 123 al numero 145 (massimo 100 per ogni
 richiesta),  scrivi un messaggio vuoto a:
 
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 Per ricevere l'elenco dei soggetti e degli autori degli ultimi 100 messaggi
 scrivi a:
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 <==>
 Ecco i numeri delle raccolte:

@@ -6,32 +6,32 @@
 （空 message を指定された command address に送信することで実行されます）
 
    * mailing list <#l#> の説明を取り出します。
-     <<#L#>-info@<#H#>>
+     <<#L#>-info@<#h#>>
      (Get information) 
    * mailing list <#l#> の『よく尋ねられる質問とその答え』を取り出します。
-     <<#L#>-faq@<#H#>>
+     <<#L#>-faq@<#h#>>
      (Get FAQ) 
 
 <=d=>
    * digest list <#L#>-digest の購読を開始する
-     <<#L#>-digest-subscribe@<#H#>>
+     <<#L#>-digest-subscribe@<#h#>>
      (Start digest subscription) 
 
    * digest list <#L#>-digest の購読を中止する
-     <<#L#>-digest-unsubscribe@<#H#>>
+     <<#L#>-digest-unsubscribe@<#h#>>
      (Stop digest subscription) 
 
 <=a=>
    * 123 番から 145 番迄の message を取り出す
-     <<#L#>-get.123_145@<#H#>>
+     <<#L#>-get.123_145@<#h#>>
      （一度に取り出せるのは最大で 100通です）
 
    * 123 番から 145 番迄の message の送信者と Subject: を取り出す
-     <<#L#>-index.123_456@<#H#>>
+     <<#L#>-index.123_456@<#h#>>
 
    * message 12345 番の Subject: と同じ Subject: を持つ message を
      取り出す
-     <<#L#>-thread.12345@<#H#>>
+     <<#L#>-thread.12345@<#h#>>
 
 <==>
 command address 宛ての message は address のみが必要です。中身は
@@ -48,11 +48,11 @@ message を受け取るように出来ます。
                 ↓      （'@' --> '='）
         john=example.com
                 ↓
-        <<#L#>-subscribe-john=example.com@<#H#>>
+        <<#L#>-subscribe-john=example.com@<#h#>>
 
-<#L#>-subscribe-john=example.com@<#H#> 宛てに空 message を送ることで
+<#L#>-subscribe-john=example.com@<#h#> 宛てに空 message を送ることで
 john@example.com での購読を開始できます。
 
-この場合、購読を中止するには <#L#>-unsubscribe-john=example.com@<#H#>
+この場合、購読を中止するには <#L#>-unsubscribe-john=example.com@<#h#>
 宛てに空 message を送ってください。
 

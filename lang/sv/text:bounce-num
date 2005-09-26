@@ -8,11 +8,11 @@ Kopior av dessa meddelanden kan du finna i arkivet.
 
 För att hämta meddelande 123-145 (max 100 per förfrågan), skicka
 ett brev till:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 För att få en lista på titlar och författare för de senaste 100
 meddelandena, skicka ett brev till:
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 <==>
 Detta är meddelande nummren:

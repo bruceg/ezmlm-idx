@@ -1,6 +1,6 @@
 # $Id$
 Vielen Dank, daß Sie bereit sind, die Moderation der Liste
-   <#L#>@<#H#>
+   <#L#>@<#h#>
 zu übernehmen.
 
 Die Kommandos, die ich benutze, sind sehr verschieden von denen
@@ -24,14 +24,14 @@ Für die Adresse ich@example.com geht das zum Beispiel
 über die folgenden Steueradressen:
 
 Eintragen:
-   <#L#>-subscribe-ich=example.com@<#H#>
+   <#L#>-subscribe-ich=example.com@<#h#>
 Löschen:
-   <#L#>-unsubscribe-ich=example.com@<#H#>
+   <#L#>-unsubscribe-ich=example.com@<#h#>
 
 <=d=>
 Entsprechend für die Digest-Liste:
-   <#L#>-digest-subscribe-ich=example.com@<#H#>
-   <#L#>-digest-unsubscribe-ich=example.com@<#H#>
+   <#L#>-digest-subscribe-ich=example.com@<#h#>
+   <#L#>-digest-unsubscribe-ich=example.com@<#h#>
 
 <==>
 So einfach ist das :) Sie brauchen nicht einmal einen
@@ -63,16 +63,16 @@ Jeder kann die Liste abonnieren oder abbestellen indem eine
 Mail an die entsprechende Adresse geschickt wird:
 
 Bestellen der Liste:
-   <#L#>-subscribe@<#H#>
+   <#L#>-subscribe@<#h#>
 
 Abbestellen der Liste:
-   <#L#>-unsubscribe@<#H#>
+   <#L#>-unsubscribe@<#h#>
 
 <=d=>
 Entsprechend für die Digest-Liste:
 
-   <#L#>-digest-subscribe@<#H#>
-   <#L#>-digest-unsubscribe@<#H#>
+   <#L#>-digest-subscribe@<#h#>
+   <#L#>-digest-unsubscribe@<#h#>
 
 <==>
 In beiden Fällen bekommt der Nutzer eine Rückfrage, um
@@ -95,13 +95,13 @@ Beachten Sie, daß dadurch Ihre Email-Adresse bekannt wird.
 <==>
 Die Nutzer können auch die folgende Adressen benutzen:
 
-   <#L#>-subscribe-ich=example.com@<#H#>
-   <#L#>-unsubscribe-ich=example.com@<#H#>
+   <#L#>-subscribe-ich=example.com@<#h#>
+   <#L#>-unsubscribe-ich=example.com@<#h#>
 
 <=d=>
 Für Digests:
-   <#L#>-digest-subscribe-ich=example.com@<#H#>
-   <#L#>-digest-unsubscribe-ich=example.com@<#H#>
+   <#L#>-digest-subscribe-ich=example.com@<#h#>
+   <#L#>-digest-unsubscribe-ich=example.com@<#h#>
 
 <==>
 Damit können sie eine andere als die aktuell benutzte
@@ -122,21 +122,21 @@ offengelegt, es sei denn Sie nehmen direkt Kontakt auf.
 Information über den Listenzustand
 ----------------------------------
 
-Um eine Liste der Abonnenten von <#L#>@<#H#>
+Um eine Liste der Abonnenten von <#L#>@<#h#>
 zu bekommen, senden Sie eine Mail an:
-   <<#L#>-list@<#H#>>
+   <<#L#>-list@<#h#>>
 
 Um ein Transaktionslog (Liste der Abonnenten-Zu- und
-Abgaenge) für <#L#>@<#H#>
+Abgaenge) für <#L#>@<#h#>
 zu bekommen, senden Sie eine Mail an:
-   <<#L#>-log@<#H#>>
+   <<#L#>-log@<#h#>>
 
 <=rld=>
 Die Liste der Digest-Abonnenten erhalten Sie über:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 
-Das Logfile für die <#L#>-digest@<#H#> Liste über:
-   <<#L#>-digest-log@<#H#>>
+Das Logfile für die <#L#>-digest@<#h#> Liste über:
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 
@@ -146,7 +146,7 @@ Textänderungen
 Sie können die erläuternden Texte, die ich verschicke auch per Mail
 verändern. Um eine Datei- und Kommandoliste dafür zu erhalten schreiben
 Sie an:
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 
@@ -198,8 +198,8 @@ Urlaub und andere Abwesenheit
 Wenn Sie zeitweilig über eine andere Adresse erreichbar sind, schicken
 Sie alle Mails, die den richtigen 'Mailing-List:' Header haben an diese
 Adresse weiter. Behandeln Sie alle Mails, die einen Betreff der Form:
-'MODERATE for <#L#>@<#H#>' oder
-'CONFIRM subscribe to <#L#>@<#H#>'
+'MODERATE for <#L#>@<#h#>' oder
+'CONFIRM subscribe to <#L#>@<#h#>'
 haben auf die gleiche Weise.
 Ihre Moderationstätigkeit können Sie dann auch von der neuen Adresse
 aus fortsetzen.
@@ -224,7 +224,7 @@ Bitte beachten Sie, daß in diesem Fall auch Ihre Administrationsmail
 Viel Erfolg!
 
 PS: Bitte wenden Sie sich an den Listeneigentümer
-   <#L#>-owner@<#H#>
+   <#L#>-owner@<#h#>
 wenn Sie Probleme irgendwelcher Art mit der Listenadministration
 haben.
 

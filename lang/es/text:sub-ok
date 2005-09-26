@@ -5,7 +5,7 @@ Acuse de recibo: He añadido la dirección
 
 A la lista de correo <#l#>.
 
-¡Bienvenido a <#l#>@<#H#>!
+¡Bienvenido a <#l#>@<#h#>!
 
 Por favor guarde este mensaje para que sepa bajo que dirección
 está suscrito, por si luego quiere cancelar su suscripción o
@@ -13,5 +13,5 @@ cambiar la dirección de la misma.
 
 Para cancelar su suscripción mande un mensaje a:
 
-    <<#l#>-unsubscribe-<#t#>@<#H#>>
+    <<#l#>-unsubscribe-<#t#>@<#h#>>
 

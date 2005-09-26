@@ -2,11 +2,11 @@
 <=n=>
 The <#L#>-edit.file command can be used by a remote
 administrator to edit the text files that make up the bulk
-of the responses from the <#L#>@<#H#> list.
+of the responses from the <#L#>@<#h#> list.
 
 What follows is a list of the response file name and a short
 description of when their contents are used.  To edit a file,
-simply send mail to <#L#>-edit.file@<#H#>, substituting the
+simply send mail to <#L#>-edit.file@<#h#>, substituting the
 file name for 'file'. Editing instructions are mailed with
 the text file.
 

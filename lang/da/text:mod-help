@@ -1,5 +1,5 @@
 # $Id$
-Tak fordi du vil moderere <#L#>@<#H#> listen.
+Tak fordi du vil moderere <#L#>@<#h#> listen.
 
 Mine kommandoer er lidt anderledes end i andre postlister,
 men jeg tror du bliver glad for mig når du lærer mig at kende.
@@ -10,14 +10,14 @@ Fjernadministration
 --------------------
 Som moderator kan du til- og framelde hvem som helst,
 f.eks. jens@example.com, ved at sende et tomt brev til:
-   <<#L#>-subscribe-jens=example.com@<#H#>> eller
-   <<#L#>-unsubscribe-jens=example.com@<#H#>>
+   <<#L#>-subscribe-jens=example.com@<#h#>> eller
+   <<#L#>-unsubscribe-jens=example.com@<#h#>>
 Bemærk at det ene @ er lavet om til =.
 
 <=d=>
 For udtrækslisterne (digest):
-   <<#L#>-digest-subscribe-jens=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-jens=example.com@<#H#>>
+   <<#L#>-digest-subscribe-jens=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-jens=example.com@<#h#>>
 
 <==>
 Så simpelt er det. Der behøver hverken være emne eller
@@ -45,14 +45,14 @@ Tilmelding
 Enhver kan til- eller framelde sig ved at sende et tomt
 brev til:
 
-<#L#>-subscribe@<#H#>
-<#L#>-unsubscribe@<#H#>
+<#L#>-subscribe@<#h#>
+<#L#>-unsubscribe@<#h#>
 
 <=d=>
 For udtrækslisterne:
 
-<#L#>-digest-subscribe@<#H#>
-<#L#>-digest-unsubscribe@<#H#>
+<#L#>-digest-subscribe@<#h#>
+<#L#>-digest-unsubscribe@<#h#>
 
 Brugeren vil modtage et brev som skal bekræftes med et tomt
 svar for at sikre at vedkommende råder over den pågældende
@@ -69,8 +69,8 @@ Tilmelding sker på samme måde.
 
 Brugeren kan også skrive til:
 
-   <<#L#>-subscribe-mary=example.com@<#H#>>
-   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#h#>>
+   <<#L#>-unsubscribe-mary=example.com@<#h#>>
 
 for at tilmelde "mary@example.com". Kun hvis hun modtager post
 på den adresse, vil hun modtage bekræftelses forespørgslen og
@@ -81,21 +81,21 @@ du skriver direkte til vedkommende.
 
 <=rl=>
 En liste over tilmeldte fås ved at sende et tomt brev til:
-  <<#L#>-list@<#H#>>
+  <<#L#>-list@<#h#>>
 
 En transaksjonslog fås ved at sende et tomt brev til:
-  <<#L#>-list@<#H#>>
+  <<#L#>-list@<#h#>>
 
 <=rld=>
 Over digest tilmeldte:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 og:
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 Du kan fjernrette de tekstsvar som listen udsender. En liste
 over filer samt instruktioner fås ved at sende et tomt brev til:
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Modererede lister
@@ -129,8 +129,8 @@ Ferie
 -----
 Hvis du midlertidigt har en anden adresse, kan du videresende alle
 breve som har en korrekt 'Mailing-List:' linje i brevhovedet, eller
-med andre ord, har titlen 'MODERATE for <#L#>@<#H#>'
-eller 'CONFIRM subscribe to <#L#>@<#H#>' til din nye adresse eller en
+med andre ord, har titlen 'MODERATE for <#L#>@<#h#>'
+eller 'CONFIRM subscribe to <#L#>@<#h#>' til din nye adresse eller en
 anden som passer moderator hvervet mens du er væk. Sørg for at listens
 ejer er indforstået med dette.
 
@@ -150,6 +150,6 @@ til abonnenten i dette filfælde!
 
 Held og lykke!
 
-PS: Kontakt venligst liste ejeren (<#L#>-owner@<#H#>)
+PS: Kontakt venligst liste ejeren (<#L#>-owner@<#h#>)
 hvis du har spørgsmål eller problemer.
 

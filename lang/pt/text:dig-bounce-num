@@ -7,16 +7,16 @@ Então você pode pegar as mensagens do arquivo da lista principal.
 
 <=aI=>
 Para recuperar a mensagem 12345 do arquivo, envie uma mensagem vazia para:
-   <<#L#>-get.12345@<#H#>>
+   <<#L#>-get.12345@<#h#>>
 
 <=ia=>
 Para recuperar as mensagens 123 a 145 (no máximo 100 por requisição),
 envie uma mensagem vazia para:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 Para recuperar uma lista de assuntos e autores das últimas 100
 mensagens, envie uma mensagem vazia para:
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 <==>
 Aqui estão os números dos "digests":

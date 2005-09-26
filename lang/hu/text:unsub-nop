@@ -9,12 +9,12 @@ Ha leiratkoztal, de meg mindig kapsz leveleket, bizonyara mas cimen
 iratkoztal fel, mint amit jelenleg hasznalsz.  Kerlek, nezd meg a
 level fejleceben a kovetkezo sort (ez csak egy pelda):
 
-'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
 
 Ez a sor azt mutatja, hogy a feliratkozasi cim "user@example.com".  Ezen
 felhasznalo leiratkozasi kerelmet az alabbi cimre kell irnia:
 
-'<#l#>-unsubscribe-user=example.com@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#h#>'.
 
 Helyettesitsd be a valodi feliratkozasi cimedet, es arra kuldd a leveled.
 
@@ -33,7 +33,7 @@ egy listas levelet azzal a megjegyzessel, hogy mit szeretnel elerni,
 es egy listat a cimekrol, ahonnan valoszinuleg feliratkozhattal, es
 kuldd el ezt a gazdamnak:
 
-    <<#l#>-owner@<#H#>>
+    <<#l#>-owner@<#h#>>
 
 aki bizonyara segiteni tud. A gazdam kicsit lassabb mint en, szoval
 legy turelmes.

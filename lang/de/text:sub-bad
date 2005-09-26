@@ -14,7 +14,7 @@ die Adresse
 !A
 
 in die Mailingliste
-   <#l#>@<#H#>
+   <#l#>@<#h#>
 aufgenommen wird, senden Sie eine leere Mail an die Adresse
 
 !R
@@ -29,5 +29,5 @@ schreiben und diese nicht von Ihrem Mailprogramm verstümmelt wurde.
 
 Bitte entschuldigen Sie den Aufwand.
 
-   <#L#>-Owner <<#l#>-owner@<#H#>>
+   <#L#>-Owner <<#l#>-owner@<#h#>>
 

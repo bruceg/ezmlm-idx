@@ -25,12 +25,12 @@ staat. Om te zien onder welk adres u op dit moment bent ingeschreven,
 kijkt u naar een bericht dat u van de mailing list hebt ontvangen.
 Ieder bericht bevat uw email adres in het "return path";
 Bijvoorbeeld,  mary@example.com ontvangt berichten met het "return-path":
-<<#l#>-return-<number>-mary=example.com@<#H#>.
+<<#l#>-return-<number>-mary=example.com@<#h#>.
 
 <=q=>
 Sommige emailprogramma's bevatten fouten en kunnen niet overweg met lange
 adressen. Als u geen reply kunt sturen op dit verzoek, kunt u een bericht
 sturen naar:
-<<#L#>-request@<#H#>>
+<<#L#>-request@<#h#>>
 en plak het volledige adres wat hierboven staat in de "Subject:" regel.
 

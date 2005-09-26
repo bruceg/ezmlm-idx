@@ -14,16 +14,16 @@ selber ist nicht möglich, da diese nicht archiviert werden.
 
 Um beispielsweise eine Kopie der Nachricht 123
 anzufordern, schicken Sie eine Nachricht an
-   <#L#>-get.123@<#H#>
+   <#L#>-get.123@<#h#>
 
 Um die Nachrichten 123 bis 145 (maximal einhundert Nachrichten pro
 Anforderung) zu bekommen, benutzen Sie die folgende Adresse:
-   <#L#>-get.123_145@<#H#>
+   <#L#>-get.123_145@<#h#>
 
 Um eine Liste (Verfasser und Betreff) der letzen einhundert
 Nachrichten zu bekommen, schicken Sie eine leere Mail an die
 folgende Adresse:
-   <#L#>-index@<#H#>
+   <#L#>-index@<#h#>
 
 <==>
 Hier die Nummern der ersten Nachricht pro Digest:

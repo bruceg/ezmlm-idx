@@ -7,17 +7,17 @@
 
 如果你已经取消注册，但是你还是收到从邮件列表发送来得的电子邮件，请你核对这封邮件的：
 
-'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
 
 你只要将电子邮件发送到：
-'<#l#>-unsubscribe-user=example.com@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#h#>'.
 就能够取消注册，‘user=example.com’是你的电子邮件地址，在这封邮件发出后，你将收到系统发
 送的有关取消注册的确认信，你只要回复电子邮件就能完成取消注册，最后系统将向你发送取消
 注册成功的电子邮件。
 
 如果你在使用的过程中有任何问题，请将电子邮件发送到：
 
-    <#l#>-owner@<#H#>
+    <#l#>-owner@<#h#>
 
 他负责管理这个邮件列表。
 

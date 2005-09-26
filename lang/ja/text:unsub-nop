@@ -15,14 +15,14 @@
 
 hearder の以下の部分に
 
-'Return-Path: <<#L#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#L#>-return-1234-user=example.com@<#h#>>'
 
 貴方がどの address で購読をしているのかが現れています。
 （この場合、user@example.com で購読をしていることになります）
 
 address を明示して購読中止の request を出す場合は、以下の様に
 
-        <<#L#>-unsubscribe-user=example.com@<#H#>>
+        <<#L#>-unsubscribe-user=example.com@<#h#>>
 
 '<#L#>-unsubscribe-' の後ろに、user@example.com を user=example.com に
 書き換えた物を繋いで下さい。
@@ -44,7 +44,7 @@ address を明示した購読中止もうまくいかない場合は、申し訳ありませんが
 
 を添付して、mailing list <#L#> の owner の
 
-    <#L#>-owner@<#H#>
+    <#L#>-owner@<#h#>
 
 迄送って下さい。（返事に時間がかかるかもしれませんがご了承下さい）
 

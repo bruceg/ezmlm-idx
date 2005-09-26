@@ -11,11 +11,11 @@ Se ti sei cancellato, ma continui a ricevere i messaggi, allora ti sei
 iscritto con un altro indirizzo diverso da quello che usi al momento. per
 favore cerca nell'intestazione:
 
-'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
 
 Ciò indica che l'indirizzo usato per l'iscrizione è``user@example.com''.
 L'indirizzo per cancellarsi per questo utente sarà:
-'<#l#>-unsubscribe-utente=example.cominnio@<#H#>'.
+'<#l#>-unsubscribe-utente=example.cominnio@<#h#>'.
 Basta scrivere a questo indirizzo, sostituendo ai valori utente=example.cominio
 quelli corretti.
 
@@ -33,7 +33,7 @@ Se tutto ciò ancora non funziona, mi dispiace dirti che non posso aiutarti.
 Per favore INOLTRA un messaggio della lista con una nota nella quale spieghi
 cosa stai cercando di ottenere insieme a un elenco di indirizzi dai quali ti
 potresti essere iscritto al mio responsabile: 
-    <#l#>-owner@<#H#>
+    <#l#>-owner@<#h#>
 
 che se ne occuperà lui. Il mio responsabile è un po' più lento di quello che
 sono io, così per favore sii paziente.

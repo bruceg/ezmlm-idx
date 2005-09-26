@@ -1,15 +1,15 @@
 # $Id$
 <=d=>
 Aby zaprenumerowaæ przegl±d listy, napisz pod adres:
-	<#L#>-digest-subscribe@<#H#>
+	<#L#>-digest-subscribe@<#h#>
 
 Aby wykre¶liæ swoój adres pocztowy z listy subskrybentów, napisz pod adres:
-	<#L#>-digest-unsubscribe@<#H#>
+	<#L#>-digest-unsubscribe@<#h#>
 
 Aby wys³aæ cokolwiek na listê, pisz pod adres:
-	<#L#>@<#H#>
+	<#L#>@<#h#>
 
 <=iax=>
 	Opiekun listy pocztowej - 
-        - <<#L#>-owner@<#H#>>
+        - <<#L#>-owner@<#h#>>
 

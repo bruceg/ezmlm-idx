@@ -2,11 +2,11 @@
 <=n=>
 <#L#>-edit.fil kommandot kan användas av en fjärradministratör
 för att editera de textfiler som skapar de svaren jag skickar för
-<#L#>@<#H#> listan.
+<#L#>@<#h#> listan.
 
 Här följer en lista på de filer som kan ändras samt en
 kort beskrivning om hur dess innehåll används. För att
-ändra en fil, skicka ett brev till <#L#>-edit.filnamn@<#H#>
+ändra en fil, skicka ett brev till <#L#>-edit.filnamn@<#h#>
 där du byter ut filnamn mot filens namn. Editeringsinstruktioner
 skickas till dig ihop med textfilen.
 

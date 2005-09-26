@@ -20,11 +20,11 @@ För att se vilken adress din prenumeration går till, undersök ett
 meddelande från listan. Varje meddelande har din adress dold i
 dess "return path", t ex mary@example.com har får meddelanden
 med "return-path" satt till:
-<<#l#>-return-<nummer>-mary=example.com@<#H#>>.
+<<#l#>-return-<nummer>-mary=example.com@<#h#>>.
 
 <=q=>
 Vissa email program är felaktiga och kan inte hantera långa adresser.
 Ifall du inte kan svara på detta meddelande, skicka istället ett
-meddelande till <<#L#>-request@<#H#>> och skriv hela ovan nämnda
+meddelande till <<#L#>-request@<#h#>> och skriv hela ovan nämnda
 adress i titel ("Subject:") raden.
 

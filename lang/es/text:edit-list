@@ -4,12 +4,12 @@
 El comando <#L#>-edit.file puede ser utilizado por un
 administrador remoto para modificar los ficheros de texto que
 componen la mayoría de las respuestas de la lista de correo
-<#L#>@<#H#>.
+<#L#>@<#h#>.
 
 Lo que sigue es un listado de los ficheros de respuesta y una
 corta indicación de cuando se utilizan sus contenidos. Para
 modificar un fichero, simplemente envíe un correo a
-<#L#>-edit.fichero@<#H#>, sustituyendo 'fichero' por el nombre
+<#L#>-edit.fichero@<#h#>, sustituyendo 'fichero' por el nombre
 del fichero. Las instrucciones para las modificaciones se envían
 con el fichero.
 

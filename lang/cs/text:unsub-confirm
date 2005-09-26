@@ -20,11 +20,11 @@ Nekontroloval jsem, je-li va¹e adresa v souèasné dobì na listu.
 Chcete-li zjistit, ze které adresy bylo provedeno pøihlá¹ení,
 podívejte se do zpráv, které dostáváte z listu. Ka¾dá zpráva
 má adresu v návratové cestì:
-<<#l#>-return-<number>-jana=example.com@<#H#>.
+<<#l#>-return-<number>-jana=example.com@<#h#>.
 
 <=q=>
 Nìkteré po¹tovní programy jsou chybné a nemohou zpracovávat dlouhé
 adresy. Pokud nemù¾ete odpovìdìt na tuto adresu, po¹lete
-zprávu na adresu <<#L#>-request@<#H#>>
+zprávu na adresu <<#L#>-request@<#h#>>
 a vlo¾te celou vý¹e uvedenou adresu do subjectu.
 

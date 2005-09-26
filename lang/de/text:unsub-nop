@@ -4,7 +4,7 @@ Hm. Die Adresse
 !A
 
 ist kein Abonnent der Mailingliste
-   <#l#>@<#H#>
+   <#l#>@<#h#>
 und konnte deshalb auch nicht von ihr abgemeldet werden.
 
 Wenn Sie die Liste abbestellen aber trotzdem weiterhin Nachrichten
@@ -17,14 +17,14 @@ empfangen, sehen Sie sich die Header der empfangenen Nachrichten an.
 Jede Nachricht hat Ihre Empfängeradresse in ihrem Return-Path: kodiert.
 Zum Beispiel empfängt die Adresse ich@example.com alle Listennachrichten
 mit folgendem Return-Path:
-Return-Path: <<#l#>-return-<nummer>-ich=example.com@<#H#>
+Return-Path: <<#l#>-return-<nummer>-ich=example.com@<#h#>
 Die Nummer wechselt natürlich, also sieht das zum Beispiel so aus:
-'Return-Path: <<#l#>-return-1234-ich=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-ich=example.com@<#h#>>'
 
 Das zeigt, daß die Adresse, über die die Nachrichten bezogen werden,
 ich@example.com ist. Die Adresse zum Abbestellen der Liste wäre in
 diesem Fall 
-   <#l#>-unsubscribe-ich=example.com@<#H#>
+   <#l#>-unsubscribe-ich=example.com@<#h#>
 Benutzen Sie einfach die so ermittelte Adresse.
 
 Wenn Ihre Listen-Nachrichten einen Header "List-Unsubscribe"
@@ -47,7 +47,7 @@ helfen, schicken Sie eine Listen-Nachricht inklusive ALLER HEADER
 zusammen mit einer Erklärung, was sie versucht haben an den Eigentümer
 dieser Liste:
 
-  <#l#>-owner@<#H#>
+  <#l#>-owner@<#h#>
 
 Dieser wird sich dann mit Ihnen in Verbindung setzen und sich um das
 Problem kümmern. Aber haben Sie bitte Geduld - es handelt sich um

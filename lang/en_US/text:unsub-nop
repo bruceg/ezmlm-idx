@@ -11,11 +11,11 @@ If you unsubscribe, but continue to receive mail, you're subscribed
 under a different address than the one you currently use.
 Please look at the header for:
 
-'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
 
 This shows that the subscription address is ``user@example.com''.
 The unsubscribe address for this user would be:
-'<#l#>-unsubscribe-user=example.com@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#h#>'.
 
 Just mail to that address, adjusted for the real subscription address.
 
@@ -34,7 +34,7 @@ Please FORWARD a list message together with a note about what you're
 trying to achieve and a list of addresses that you might be subscribed
 under to my owner:
 
-    <<#l#>-owner@<#H#>>
+    <<#l#>-owner@<#h#>>
 
 who will take care of it. My owner is a little bit slower than I am, 
 so please be patient.

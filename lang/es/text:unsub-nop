@@ -10,10 +10,10 @@ Si se da de baja, pero sigue recibiendo correo, es que está
 suscrito con una dirección distinta a la que usa actualmente. Por
 favor, busque en las cabeceras el texto:
 
-'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
 
 La dirección para dar de baja a este usuario sería:
-'<#l#>-unsubscribe-user=example.com@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#h#>'.
 
 Simplemente escriba a esa dirección, tras modificarla con la
 verdadera dirección de suscripción.
@@ -33,7 +33,7 @@ ayudar. Por favor, reenvíe el mensaje junto con una nota sobre lo
 que está intentando hacer y una lista de direcciones bajo las
 cuales puede estar suscrito, a mi propietario:
 
-    <#l#>-owner@<#H#>
+    <#l#>-owner@<#h#>
 
 que se ocupará de todo. Mi propietario es un poco más lento que
 yo; por favor, tenga paciencia.

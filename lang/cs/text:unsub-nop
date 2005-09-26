@@ -10,10 +10,10 @@ Pokud se odhlásíte, ale stále vám budou chodit dopisy, je pøihlá¹ení
 provedeno pod jinou adresou, ne¾ kterou v souèasné dobì pou¾íváte.
 Podívejte se prosím do hlavièek zpráv na text
 
-"Return-Path: <<#l#>-return-1234-pepa=example.com@<#H#>>'
+"Return-Path: <<#l#>-return-1234-pepa=example.com@<#h#>>'
 
 Odhla¹ovací adresa pro tohoto u¾ivatele pak bude
-"<#l#>-unsubscribe-pepa=example.com@<#H#>".
+"<#l#>-unsubscribe-pepa=example.com@<#h#>".
 Staèí poslat mail na tuto adresu s tím, ¾e pepa=example.com nahradíte
 skuteènými hodnotami. Pak odpovíte na ¾ádost o potvrzení a mìla
 by vám dojít zpráva o odhlá¹ení z listu.
@@ -26,7 +26,7 @@ Prosím PREPO©LETE (forward) zprávu z listu spolu s poznámkou o tom,
 èeho se sna¾íte dosáhnout a seznamem adres, ze kterých potenciálnì
 mù¾ete být pøihlá¹en[a] mému správci:
 
-    <#l#>-owner@<#H#>
+    <#l#>-owner@<#h#>
 
 Tento se bude sna¾it vá¹ problém øe¹it. Mùj správce je tro¹ku pomalej¹í
 ne¾ já, tak¾e prosím o trochu trpìlivosti.

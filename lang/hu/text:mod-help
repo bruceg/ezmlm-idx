@@ -1,5 +1,5 @@
 # $Id$
-Koszonjuk, hogy moderalod a(z) <#L#>@<#H#> listat.
+Koszonjuk, hogy moderalod a(z) <#L#>@<#h#> listat.
 
 A parancsok kicsit kulonboznek a tobbi levelezos listatol, de
 azt hiszem, intuitivnak es konnyen hasznalhatonak fogod erezni.
@@ -15,15 +15,15 @@ Mint moderator, fel es le tudsz iratni barmilyen cimet a listara.
 Feliratni "john@example.com"-t abbol all, hogy kotojelet irsz a
 parancs utan, majd hozzairod az email cimet, a "@" jelet kicserelve
 "=" jelre.  A peldanal maradva a feliratashoz ez a cim jarul:
-   <<#L#>-subscribe-john=example.com@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#h#>>
 
 Ugyanilyen egyszeruen tudsz leirattatni egy cimet:
-   <<#L#>-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#h#>>
 
 <=d=>
 Ugyanez digest-re:
-   <<#L#>-digest-subscribe-john=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#h#>>
 
 <==>
 Ennyi az egesz. Se targy, se szovegtorzs nem szukseges.
@@ -50,14 +50,14 @@ Feliratkozas
 
 Barki fel- vagy leiratkozhat, ha levelet kuld az alabbi cimekre:
 
-    <<#L#>-subscribe@<#H#>>
-    <<#L#>-unsubscribe@<#H#>>
+    <<#L#>-subscribe@<#h#>>
+    <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
 Vagy a digest cimekre:
 
-    <<#L#>-digest-subscribe@<#H#>>
-    <<#L#>-digest-unsubscribe@<#H#>>
+    <<#L#>-digest-subscribe@<#h#>>
+    <<#L#>-digest-unsubscribe@<#h#>>
 
 <==>
 A felhasznalo megerositesi kerelmet kap, hogy biztosak legyunk
@@ -78,8 +78,8 @@ Az feliratkozasok hasonlokeppen mennek.
 
 A felhasznalo hasznalhatja ezt a format is:
 
-   <<#L#>-subscribe-mary=example.com@<#H#>>
-   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#h#>>
+   <<#L#>-unsubscribe-mary=example.com@<#h#>>
 
 ekkor a "mary@example.com" cimre kapja a megerosites kerest. Igy
 csak akkor tud arra valaszolni, ha meg is kapta a levelet, es kepes
@@ -89,23 +89,23 @@ A cimed es szemelyazonossagod nem fog kiderulni a listatag szamara,
 hacsak nem direkt irsz levelet a felhasznalonak.
 
 <=rl=>
-A(z) <#L#>@<#H#> lista tagjainak nevsora itt kaphato meg:
-   <<#L#>-list@<#H#>>
+A(z) <#L#>@<#h#> lista tagjainak nevsora itt kaphato meg:
+   <<#L#>-list@<#h#>>
 
-A tranzakcio naplo a(z) <#L#>@<#H#> listahoz pedig itt:
-   <<#L#>-log@<#H#>>
+A tranzakcio naplo a(z) <#L#>@<#h#> listahoz pedig itt:
+   <<#L#>-log@<#h#>>
 
 <=rld=>
 A digestre feliratkozottaknak pedig:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 es:
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 Tavolrol szerkesztheted is a szovegfajlokat, amik meghatarozzak a
 lista altal kikuldott valaszokat. A fajlok listaja es a szerkesztesi
 instrukciok itt szerezhetoek meg:
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Moderalt levelezes
@@ -141,8 +141,8 @@ Szabadsag
 ---------
 Ha ideiglenesen egy masik cimen vagy elerheto, csak kuldd tovabb
 a leveleidet, amiknek korrekt "Mailing-List:" fejlece van (vagy az
-osszes, "MODERATE for <#L#>@<#H#>"-al kezdodo,
-vagy "CONFIRM subscribe to <#L#>@<#H#>" targyu
+osszes, "MODERATE for <#L#>@<#h#>"-al kezdodo,
+vagy "CONFIRM subscribe to <#L#>@<#h#>" targyu
 levelet az uj cimre.  Igy moderalhatsz az uj cimedrol.  Esetleg
 atiranyithatod egy baratodnak, aki moderal helyetted.  Mindenekelott
 ezt beszeld meg a listatulajdonossal.
@@ -165,5 +165,5 @@ a felhasznalohoz!
 Sok szerencset!
 
 UI: ha barmi problemad van, lepj kapcsolatba a listatulajdonossal
-(<#L#>-owner@<#H#>).
+(<#L#>-owner@<#h#>).
 

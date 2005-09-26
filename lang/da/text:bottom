@@ -9,41 +9,41 @@ Send blot et brev uden indhold til en af adresserne som eksemplerne
 viser:
 
 Tilmelding: send et tomt brev til:
-   <<#L#>-subscribe@<#H#>>
+   <<#L#>-subscribe@<#h#>>
 
 Framelding: send et tomt brev til:
-   <<#L#>-unsubscribe@<#H#>>
+   <<#L#>-unsubscribe@<#h#>>
 
 Send email til følgende for at få info eller FAQ for denne liste:
-   <<#L#>-info@<#H#>>
-   <<#L#>-faq@<#H#>>
+   <<#L#>-info@<#h#>>
+   <<#L#>-faq@<#h#>>
   
 
 <=d=>
 Lignende adresser findes for udtræks listen:
-   <<#L#>-digest-subscribe@<#H#>>
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-subscribe@<#h#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=ai=>
 Hent alle brevene i intervallet 123 til 145 (max. 100 ad gangen),
 send et tomt brev til:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 <=aI=>
 Hent brev nummer 12, send et tomt brev til:
-   <<#L#>-get.12@<#H#>>
+   <<#L#>-get.12@<#h#>>
 
 <=i=>
 Hent en oversigt over breve i intervallet 123 til 456, send et
 tomt brev til:
-   <<#L#>-index.123_456@<#H#>>
+   <<#L#>-index.123_456@<#h#>>
 
 Resultatet kommer i breve med hundrede titler pr. brev,
 max. 2000 i alt, så eksemplet vil vise dig brev 100 til 499.
 
 <=ai=>
 Hent alle breve med samme emne som brev 123:
-   <<#L#>-thread.123@<#H#>>
+   <<#L#>-thread.123@<#h#>>
 
 Dine administrative breve behøver ikke at være tomme, men deres
 indhold vil blive ignoreret. Kommandoen ligger alene i
@@ -51,18 +51,18 @@ modtageradressen
 
 Hvis du vil tilmelde dig med en anden adresse end den du skriver
 fra, f.eks. jens@example.com, skal du skrive til:
-<<#L#>-subscribe-jens=example.com@<#H#>>
+<<#L#>-subscribe-jens=example.com@<#h#>>
 Bemærk -jens og at @ i adressen er lavet om til et =.
 
 Du kan framelde din alternative adresse ved at skrive til:
-<<#L#>-unsubscribe-jens=example.com@<#H#>>
+<<#L#>-unsubscribe-jens=example.com@<#h#>>
 
 jens@example.com vil i begge tilfælde få et brev som skal
 bekræftes for at få udført til/fra meldingen.
 
 Hvis disse instruktioner ikke er tilstrækkelige, og du ikke
 har held med dine kommandoer, kan du skrive til min ejer
-<#L#>-owner@<#H#>, som er et menneske
+<#L#>-owner@<#h#>, som er et menneske
 (og som derfor ikke svarer så hurtigt som jeg gør).
 
 Uanset hvor håbløst det ser ud, så forsøg IKKE at skrive

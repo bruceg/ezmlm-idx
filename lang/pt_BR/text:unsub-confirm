@@ -22,11 +22,11 @@ Para ver qual endereço você usou ao assinar, olhe as mensagens
 que você está recebendo da lista. Cada mensagem tem seu endereço
 oculto dentro do caminho de retorno; por exemplo, maria@xdd.ff.com
 recebe mensagens com caminho de retorno:
-<<#l#>-return-<number>-mary=xdd.ff.com@<#H#>.
+<<#l#>-return-<number>-mary=xdd.ff.com@<#h#>.
 
 <=q=>
 Alguns programas de correio eletrônico não conseguem manipular endereços
 muito compridos. Se, por causa disto, você não está conseguindo uma resposta 
-a este comando, envie uma mensagem para <<#L#>-request@<#H#>>
+a este comando, envie uma mensagem para <<#L#>-request@<#h#>>
 e coloque o endereço inteiro abaixo na linha "Subject:" ou "Assunto:".
 

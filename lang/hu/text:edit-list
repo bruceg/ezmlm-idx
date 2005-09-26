@@ -1,12 +1,12 @@
 # $Id$
 <=n=>
 A(z) <#L#>-edit.fajlnev paranccsal tudja egy tavoli adminisztrator
-szerkeszteni a szovegfajlokat, amik a(z) <#L#>@<#H#> lista
+szerkeszteni a szovegfajlokat, amik a(z) <#L#>@<#h#> lista
 valaszainak legtobbjet befolyasolja.
 
 Alant kovetkezik egy lista a valaszfajlokrol nevuk es rovid leirasuk
 (mikor hasznaljak a tartalmukat) formajaban.  Egy fajl
-szerkesztesehez csak kuldj egy levelet a(z) <#L#>-edit.fajlnev@<#H#>
+szerkesztesehez csak kuldj egy levelet a(z) <#L#>-edit.fajlnev@<#h#>
 cimre, ahol helyettesitsd be a "fajlnev" szot a valodi fajlnevvel.  A
 szerkesztesi utasitasokat a szovegfajlban fogod megkapni.
 

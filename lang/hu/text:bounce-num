@@ -8,12 +8,12 @@ Ezen levelek listaja feltehetoleg megtalalhato az archivumban.
 
 A 123-145 kozotti levelek letoltesehez (maximum 100 level keresenkent)
 kuldj egy ures levelet a(z)
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 cimre.
 
 Az utolso 100 koruli levelek targyanak es irojanak listajat pedig az
 alabbi email cimre irt ures levellel kaphatod meg:
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 <==>
 A levelek sorszamai:

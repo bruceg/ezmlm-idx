@@ -8,31 +8,31 @@ Aquí hay una lista de las direcciones comando disponibles:
 Mande un correo a las siguientes direcciones-comando para obtener
 información y FAQ de esta lista:
 
-   <<#L#>-info@<#H#>>
-   <<#L#>-faq@<#H#>>
+   <<#L#>-info@<#h#>>
+   <<#L#>-faq@<#h#>>
 
 <=d=>
 Para la lista de resúmenes existen direcciones-comando análogas:
 
-   <<#L#>-digest-subscribe@<#H#>>
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-subscribe@<#h#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=a=>
 
 Para recibir los mensajes desde el número 123 al 145 (con un
 máximo de 100 por petición), escriba a:
 
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 Para obtener un índice con los campos "Asunto" y "Autor" para los
 mensajes del 123 al 456, debe escribir a:
 
-   <<#L#>-index.123_456@<#H#>>
+   <<#L#>-index.123_456@<#h#>>
 
 Para recibir todos los mensajes con el mismo "Asunto" que el
 mensaje 12345, mande un mensaje en blanco a:
 
-   <<#L#>-thread.12345@<#H#>>
+   <<#L#>-thread.12345@<#h#>>
 
 <==>
 
@@ -44,9 +44,9 @@ Usted puede suscribir una dirección alternativa, por ejemplo,
 para "david@example.com", simplemente añada un guión y su
 dirección (con '=' en lugar de '@') después del comando:
 
-   <<#L#>-subscribe-david=example.com@<#H#>>
+   <<#L#>-subscribe-david=example.com@<#h#>>
 
 Para cancelar la suscripción de esta dirección, escriba a:
 
-<<#L#>-unsubscribe-david=example.com@<#H#>>
+<<#L#>-unsubscribe-david=example.com@<#h#>>
 

@@ -5,39 +5,39 @@
 Spe³niam komendy administracyjne automatycznie.
 Wy¶lij jedynie pusty list pod którykolwiek z tych adresów:
 
-   <<#L#>-subscribe@<#H#>>:
+   <<#L#>-subscribe@<#h#>>:
    Zapisanie siê na listê o nazwie <#L#>.
 
-   <<#L#>-unsubscribe@<#H#>>:
+   <<#L#>-unsubscribe@<#h#>>:
    Wypisanie siê z listy o nazwie <#L#>.
 
 Wy¶lij list pod nastêpuj±ce adresy, je¶li chcesz uzykaæ krótk± notkê
 informacyjn± o li¶cie dyskusyjnej lub jej FAQ (czyli 'najczê¶ciej
 zadawana pytania na temat listy wraz z odpowiedziami'):
-   <<#L#>-info@<#H#>>
-   <<#L#>-faq@<#H#>>
+   <<#L#>-info@<#h#>>
+   <<#L#>-faq@<#h#>>
 
 <=d=>
 I odpowiadaj±ce powy¿szemu adresy, je¶li chodzi ci o przegl±d listy:
-   <<#L#>-digest-subscribe@<#H#>>
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-subscribe@<#h#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=ai=>
-   <<#L#>-get.12_45@<#H#>>:
+   <<#L#>-get.12_45@<#h#>>:
    Chêæ otrzymania kopii listów od nr 12 do 45 z archiwum.
    Jednym listem mo¿esz otrzymaæ maksymalnie 100 listów.
 
 <=aI=>
-   <<#L#>-get.12@<#H#>>:
+   <<#L#>-get.12@<#h#>>:
    Chêæ otrzymania kopii listu nr 12 z archiwum.
 <=i=>
-   <<#L#>-index.123_456@<#H#>>:
+   <<#L#>-index.123_456@<#h#>>:
    Chêæ otrzymania tytu³ów listów od nr 123 do 456 z archiwum.
    Tytu³y s± wysy³ane do Ciebie w paczkach po sto na jeden list.
    Mo¿esz maksymalnie zamówiæ 2000 tytu³ów na jeden raz.
 
 <=ai=>
-   <<#L#>-thread.12345@<#H#>>:
+   <<#L#>-thread.12345@<#h#>>:
    Chêæ otrzymania wszystkich kopii listów z tym samym tytu³em
    jaki posiada list o numerze 12345.
 
@@ -49,14 +49,14 @@ uznany(a) za internetowego ¿ó³todzioba, z którym nie warto gadaæ.
 
 Aby okresliæ adres Bóg@example.com jako swój adres subskrybcyjny,
 wy¶lij list na adres:
-<<#L#>-subscribe-Bóg=example.com@<#H#>>.
+<<#L#>-subscribe-Bóg=example.com@<#h#>>.
 Wy¶lê Ci wtedy potwierdzenie na ten w³asnie adres; kiedy je otrzymasz,
 po prostu odpowiedz na nie, aby staæ siê prenumeratorem.
 
 <=x=>
 Je¿eli instrukcje, których Ci udzieli³em, s± zbyt trudne, albo
 nie jeste¶ zadowolony z ich efektów, skontaktuj siê z opiekunem listy
-pod adresem <#L#>-owner@<#H#>. 
+pod adresem <#L#>-owner@<#h#>. 
 Proszê byæ cierpliwym, opiekun listy jest o wiele wolniejszy
 od komputera, którym ja jestem ;-)
 

@@ -12,11 +12,11 @@ toujours recuperer les messages a partir de la liste principale.
 Ainsi, pour obtenir les messages situes entre le numero 123 et le numero 145
 (avec un maximum de 100 par requete), il suffit d'envoyer un message 
 a l'adresse :
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 Et pour recevoir un resume des 100 derniers messages (auteur/sujet), envoyez
 un message a :
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 <==>
 Voici le numero du premier message de chaque bulletin :

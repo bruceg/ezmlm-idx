@@ -2,11 +2,11 @@
 <=n=>
 Het <#L#>-edit.file commando kan gebruikt worden om een administrator
 de teksten te laten wijzigen van de mailing list manager van de
-<#L#>@<#H#> mailing list.
+<#L#>@<#h#> mailing list.
 
 Hier volgt een overzicht van de teksten en wanneer ze gebruikt worden.
 Om een tekst te wijzigen stuurt u een email naar
-<#L#>-edit.file@<#H#>
+<#L#>-edit.file@<#h#>
 waarbij u 'file' verandert in de naam van de tekst die u wilt
 wijzigen. Instructies worden met de file meegestuurd.
 

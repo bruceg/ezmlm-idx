@@ -2,11 +2,11 @@
 <=n=>
 Il comando <#L#>-edit.file può essere usato da un amministratore remoto per
 modificare il file di testo che costituiscono il corpo delle risposte dalla
-mailing list <#L#>@<#H#> .
+mailing list <#L#>@<#h#> .
 
 Quello che segue è una lista dei nomi dei file delle risposte e una breve
 descrizione di quando è utilizzato il loro contenuto. Per modificare un file,
-spedisci semplicemente una e-mail a <#L#>-edit.file@<#H#>,
+spedisci semplicemente una e-mail a <#L#>-edit.file@<#h#>,
 sostituendo 'file' con il nome del file. Le istruzioni di modifica sono
 inviate con il file.
 

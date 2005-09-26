@@ -23,12 +23,12 @@ liste. Pour verifier a quelle adresse vous vous etes abonnes, regardez
 les messages que vous recevez de cette liste. Chaque message a votre
 adresse cachee dans son chemin de retour; par exemple
 dieu@ciel.paradis.com recoit ses messages avec dans le champ
-"return-path": <<#l#>-return-<nombre>-dieu=ciel.paradis.com@<#H#>.
+"return-path": <<#l#>-return-<nombre>-dieu=ciel.paradis.com@<#h#>.
 
 <=q=>
 Certains logiciels de messagerie mal concus ne peuvent traiter les
 adresses au dela d'une certaine taille. S'il vous est impossible de
 repondre a ce message, envoyez a la place un message a l'adresse
-<<#L#>-request@<#H#>> et mettez l'adresse complete dans le champs
+<<#L#>-request@<#h#>> et mettez l'adresse complete dans le champs
 "Sujet".
 

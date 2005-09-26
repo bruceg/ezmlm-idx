@@ -6,24 +6,24 @@ eine meiner korrekten Steuerungsadressen geschickt worden.
 Hier eine Aufstellung der Kommandos zur Steuerung des
 Mailinglistenmanagers ezmlm für diese Liste:
 
-<<#L#>-info@<#H#>>
-<<#L#>-faq@<#H#>>
+<<#L#>-info@<#h#>>
+<<#L#>-faq@<#h#>>
 Die beiden Adressen sind zur Anforderung eines
 Informationstextes zur Mailingliste bzw. zur Anforderung der
 FAQ (Frequently Asked Questions - oft gestellte Fragen und
 die Antworten darauf) vorgesehen.
 
 <=a=>
-<<#L#>-get.12@<#H#>>
+<<#L#>-get.12@<#h#>>
 Auf diese Weise fordern Sie eine Kopie der Nachricht 12
 vom Archiv an.
 
-<<#L#>-get.123_145@<#H#>>
+<<#L#>-get.123_145@<#h#>>
 Fordern Sie auf diese Weise eine Kopie der Nachrichten
 123 bis 145 vom Archiv an. Sie können mit einer Anforderung
 maximal einhundert Nachrichten bekommen.
 
-<<#L#>-index.123_456@<#H#>>
+<<#L#>-index.123_456@<#h#>>
 Fordern Sie auf diese Weise die Betreff-Zeilen (Subjects)
 der Nachrichten von 123 bis 456 (inklusive) vom Archiv an.
 Pro Anforderung werden maximal 2000 Betreff-Zeilen zugestellt. 
@@ -33,7 +33,7 @@ der Nachrichten 100 bis 499 erhalten.
 Zusätzlich zu den Betreffzeilen wird der jeweilige Autor
 übermittelt.
 
-<<#L#>-thread.123@<#H#>>
+<<#L#>-thread.123@<#h#>>
 Anforderung aller Nachrichten, die den gleichen Betreff wie
 die Nachricht 123 haben.
 
@@ -56,9 +56,9 @@ die gewünschte Adresse in meine Steuerungsadresse ein, indem Sie
 das at-Zeichen (@) durch ein Gleichheitszeichen (=) ersetzen.
 Um zum Beispiel als Adresse ich@example.com anzugeben, senden
 Sie eine Mail an die Adresse
-   <<#L#>-subscribe-ich=example.com@<#H#>>.
+   <<#L#>-subscribe-ich=example.com@<#h#>>.
 Die entsprechende Adresse zum abmelden des Abonnements ist
-   <<#L#>-unsubscribe-ich=example.com@<#H#>>.
+   <<#L#>-unsubscribe-ich=example.com@<#h#>>.
 In beiden Fällen werde ich eine Bestätigung an ich@example.com
 schicken, die Sie nach Empfang einfach nur beantworten müssen,
 um den An- oder Abmeldevorgang abzuschließen.
@@ -67,7 +67,7 @@ Auch wenn diese Erklärungen zu kompliziert für Sie sein sollten
 oder Sie Probleme mit der Steuerung der Liste haben, schreiben
 Sie bitte keine Hilfemails an die Liste selbst. Wenden Sie sich
 stattdessen an den Listeneigentümer:
-   <#L#>-owner@<#H#>
+   <#L#>-owner@<#h#>
 Bitte haben Sie Geduld, da es sich dabei um ein eventuell
 überlastetes menschliches Wesen handelt, das nie so schnell
 reagieren kann wie ich :)

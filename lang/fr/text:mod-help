@@ -1,6 +1,6 @@
 # $Id$
 Merci beaucoup d'accepter le role de moderateur pour la liste de diffusion
-<#L#>@<#H#> .
+<#L#>@<#h#> .
 
 Mes commandes sont legerement differentes des autres listes.
 Elles peuvent d'abord sembler inhabituelles, mais une fois que
@@ -18,16 +18,16 @@ Ainsi, pour abonner "john@example.com", mettez simplement un tiret apres
 le nom de la commande, puis l'adresse du futur abonne en remplacant le signe
 "@" par "=".
 Par exemple, pour inscrire l'utilisateur ci-dessus, envoyez un message a :
-   <<#L#>-subscribe-john=example.com@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#h#>>
 
 De facon similaire, il est possible de retirer son adresse de la liste en
 ecrivant a :
-   <<#L#>-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#h#>>
 
 <=d=>
 Idem pour les listes presentees sous la forme de bulletins :
-   <<#L#>-digest-subscribe-john=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#h#>>
 
 <==>
 C'est tout ! Aucun sujet special ni corps de message n'est requis.
@@ -53,14 +53,14 @@ Inscription
 N'importe quel utilisateur peut s'abonner ou se desabonner en envoyant un
 message a :
 
-<#L#>-subscribe@<#H#> pour l'inscription
-<#L#>-unsubscribe@<#H#> pour la desinscription
+<#L#>-subscribe@<#h#> pour l'inscription
+<#L#>-unsubscribe@<#h#> pour la desinscription
 
 <=d=>
 Et pour les listes presentees sous forme de bulletins :
 
-<#L#>-digest-subscribe@<#H#>
-<#L#>-digest-unsubscribe@<#H#>
+<#L#>-digest-subscribe@<#h#>
+<#L#>-digest-unsubscribe@<#h#>
 
 <==>
 L'utilisateur recevra une demande de confirmation pour etre
@@ -84,8 +84,8 @@ Les inscriptions fonctionnent de facon analogue.
 
 Il est aussi possible d'utiliser :
 
-   <<#L#>-subscribe-mary=example.com@<#H#>>
-   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#h#>>
+   <<#L#>-unsubscribe-mary=example.com@<#h#>>
 
 pour que les messages soient envoyes a "mary@example.com". Elle
 recevra la demande de confirmation uniquement si elle recoit son
@@ -95,25 +95,25 @@ Votre adresse et votre identite ne seront pas revelees a l'abonne,
 a moins que vous ne lui ecriviez directement.
 
 <=rl=>
-Pour obtenir la liste des abonnees a <#L#>@<#H#>, envoyez un
+Pour obtenir la liste des abonnees a <#L#>@<#h#>, envoyez un
 message a : 
-   <<#L#>-list@<#H#>>
+   <<#L#>-list@<#h#>>
 
 Pour obtenir un historique des transactions de la liste
-<#L#>@<#H#>, envoyez un message a :
-   <<#L#>-log@<#H#>>
+<#L#>@<#h#>, envoyez un message a :
+   <<#L#>-log@<#h#>>
 
 <=rld=>
 Pour les abonnes aux bulletins :
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 et :
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 Vous pouvez a distance editer les fichiers de texte contenant les
 messages du robot. Pour obtenir la liste des fichiers et les
 instructions pour les editer, ecrivez a :
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Envoi de messages moderes
@@ -154,7 +154,7 @@ Absences
 Si vous etes temporairement a une adresse differente, faites simplement
 suivre tous les messages qui ont un entete "Mailing-List:" correct (ou
 tous les messages qui ont un sujet debutant par
-'MODERATE for <#L#>@<#H#>' ou 'CONFIRM subscribe to <#L#>@<#H#>') a la
+'MODERATE for <#L#>@<#h#>' ou 'CONFIRM subscribe to <#L#>@<#H#>') a la
 nouvelle addresse. Vous pouvez alors moderer a partir de la nouvelle
 adresse. Alternativement, vous pouvez faire suivre les messages a un
 ami qui moderera pour vous. Pensez a vous mettre d'accord avec le
@@ -179,6 +179,6 @@ l'abonne dans ce cas.
 
 Bonne chance !
 
-PS: Contactez le proprietaire (<#L#>-owner@<#H#>) si vous avez
+PS: Contactez le proprietaire (<#L#>-owner@<#h#>) si vous avez
 une question ou des difficultes.
 

@@ -5,7 +5,7 @@ Elismerve: a(z)
 
 cimet hozzaadtam a(z) <#l#> lista tagjai koze.
 
-Udvozollek a(z) <#l#>@<#H#> listan!
+Udvozollek a(z) <#l#>@<#h#> listan!
 
 Kerlek, mentsd el ezt a levelet, hogy tudd, melyik cimrol iratkoztal
 fel, ha kesobb le szeretnel iratkozni, vagy a cimedet szeretned
@@ -13,5 +13,5 @@ megvaltoztatni.
 
 Leiratkozashoz irj egy levelet az alabbi cimre:
 
-    <<#l#>-unsubscribe-<#t#>@<#H#>>
+    <<#l#>-unsubscribe-<#t#>@<#h#>>
 

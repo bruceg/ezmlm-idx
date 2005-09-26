@@ -11,11 +11,11 @@ Jika anda berhenti, tapi masih menerima mail, anda terdaftar dengan
 alamat lain dari yang anda pakai sekarang.  Tolong lihat header surat
 untuk:
 
-'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
 
 Ini menunjukkan bahwa alamat pelanggan adalah ``user@example.com''.
 Alamat berhenti untuk pelanggan ini adalah:
-'<#l#>-unsubscribe-user=example.com@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#h#>'.
 
 Kirim mail ke alamat tersebut, disesuaikan dengan alamat sebenarnya.
 
@@ -34,7 +34,7 @@ anda. Tolong FORWARD mail dari list tersebut bersama-sama dengan sedikit
 catatan tentang apa yang ingin anda lakukan dan daftar kemungkinan
 alamat-alamat e-mail yang anda daftarkan pada milis, ke pemilik list:
 
-    <#l#>-owner@<#H#>
+    <#l#>-owner@<#h#>
 
 yang kemudian akan menanganinya.  Pemilik list ini agak sedikit lambat
 dari kami, harap sabar.

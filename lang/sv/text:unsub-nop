@@ -9,12 +9,12 @@ Ifall du har avslutat din prenumeration, men fortfarande får brev,
 är du prenumererad under en annan adress än den du för närvarande
 använder. Titta i brevhuvudet (header) efter:
 
-'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
 
 Det visar din prenumerationsadress som "user@example.com".
 För att avsluta din prenumeration med den adressen, skicka
 ett brev till:
-<#l#>-unsubscribe-user=example.com@<#H#>
+<#l#>-unsubscribe-user=example.com@<#h#>
 
 Glöm inte att anpassa user=example.com till din egen adress.
 
@@ -33,7 +33,7 @@ Vidaresänd ett brev från listan, tillsammans med ett meddelande
 om vad du vill ha gjort och en lista som du tror att du kan ha
 prenumererat under till listägaren:
 
-    <<#l#>-owner@<#H#>>
+    <<#l#>-owner@<#h#>>
 
 som kan ta hand om det. Det kan dock dröja en liten stund innan du får
 ett svar.

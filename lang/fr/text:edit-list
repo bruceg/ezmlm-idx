@@ -3,11 +3,11 @@
 
 La commande <#L#>-edit.file peut etre utilisee par un administrateur
 distant pour editer les fichiers de textes a la base des reponses de la
-liste <#L#>@<#H#>.
+liste <#L#>@<#h#>.
 
 Ci-dessous, une liste des fichiers contenant les textes de reponses
 et une breve description de l'utilisation de leur contenu. Pour editer un
-fichier, envoyez simplement un message a <#L#>-edit.fichier@<#H#>,
+fichier, envoyez simplement un message a <#L#>-edit.fichier@<#h#>,
 en substituant le nom du fichier a 'fichier'. Les instructions d'edition
 seront envoyees avec le fichier de texte.
 

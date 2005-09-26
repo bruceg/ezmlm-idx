@@ -8,20 +8,20 @@ goede commando adres sturen:
 
 Voor help en uitleg voor de verschillende verzoeken dient u
 een bericht te sturen naar:
-   <<#L#>-help@<#H#>>
+   <<#L#>-help@<#h#>>
 
 Om u in te schrijven, stuurt u een bericht aan:
-   <<#L#>-subscribe@<#H#>>
+   <<#L#>-subscribe@<#h#>>
 
 Om u uit te schrijven stuurt u een bericht naar het adres wat in
 de ``List-Unsubscribe'' HEADER staat van alle list berichten.
 Als uw adres ongewijzigd is gebleven sinds uw inschrijving, kunt u
 ook een bericht sturen naar:
-   <<#L#>-unsubscribe@<#H#>>
+   <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
 of voor de digest naar:
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=HJ=>
 Om adressen toe te voegen of te verwijderen, zal ik een verzoek
@@ -32,7 +32,7 @@ kunt u door middel van een reply uw wens bevestigen.
 Indien u contact wilt opnemen met de eigenaar van deze lijst, stuurt
 u een bericht naar:
 
-    <<#L#>-owner@<#H#>>
+    <<#L#>-owner@<#h#>>
 
 Sluit s.v.p. een ge-forward bericht mee, waarin alle HEADERS intact
 zijn gelaten. Dan is het makkelijker om u te helpen.

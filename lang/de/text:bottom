@@ -15,11 +15,11 @@ SENDEN SIE KEINE KOMMANDOS AN DIE MAILINGLISTE SELBST.
 In dem Fall kann ich nicht darauf reagieren und viele Empfänger
 der Mailingliste werden sich bei Ihnen oder über Sie beschweren.
 
-   <<#L#>-help@<#H#>>
+   <<#L#>-help@<#h#>>
    Beschreibung der Steuerungsmöglichkeiten für diese
    Mailingliste
 
-   <<#L#>-subscribe@<#H#>>
+   <<#L#>-subscribe@<#h#>>
    wenn Sie die Mailingliste in Zukunft beziehen möchten
 
    Wenn Sie keine Nachrichten der Mailingliste <#L#>
@@ -27,12 +27,12 @@ der Mailingliste werden sich bei Ihnen oder über Sie beschweren.
    im Header "List-Unsubscribe:" angegeben ist. Wenn Sie Ihre
    Email-Adresse nach der Listenbestellung nicht geändert haben,
    geht auch:
-   <<#L#>-unsubscribe@<#H#>>
+   <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
    Für die Digest-Liste existieren die entsprechenden Adressen:
-   <<#L#>-digest-subscribe@<#H#>>
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-subscribe@<#h#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=HJ=>
 Beim Löschen oder Eintragen von Abonnenten verschicke ich eine
@@ -43,7 +43,7 @@ nur beantwortet werden.
 Falls Sie menschliche Hilfe brauchen, wenden Sie sich bitte an
 den Listeneigentümer:
 
-   <<#L#>-owner@<#H#>>
+   <<#L#>-owner@<#h#>>
 
 Bitte schicken Sie eine Listenmail inklusive ALLER Header mit -
 dadurch wird es sehr viel leichter, Ihnen schnell zu helfen.

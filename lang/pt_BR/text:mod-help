@@ -1,6 +1,6 @@
 # $Id$
 Obrigado por concordar em moderar a lista
-<#L#>@<#H#>.
+<#L#>@<#h#>.
 
 Meus comandos são um pouco diferentes de outros gerenciadores de
 listas. À primeira vista, eles parecem estranhos, mas à medida que
@@ -17,15 +17,15 @@ de qualquer endereço da lista. Para cadastrar john@johnhost.johndomain,
 simplesmente coloque um traço depois do comando, e depois o endereço
 com '=' no lugar de '@'. Por exemplo, para cadastrar este endereço,
 envie uma mensagem para:
-   <<#L#>-subscribe-john=host.domain@<#H#>>
+   <<#L#>-subscribe-john=host.domain@<#h#>>
 
 Semelhantemente, você pode remover esse endereço, enviando mensagem para:
-   <<#L#>-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-unsubscribe-john=host.domain@<#h#>>
 
 <=d=>
 Para a lista "digest":
-   <<#L#>-digest-subscribe-john=host.domain@<#H#>>
-   <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
+   <<#L#>-digest-subscribe-john=host.domain@<#h#>>
+   <<#L#>-digest-unsubscribe-john=host.domain@<#h#>>
 
 <==>
 Isto é tudo. Nenhum texto no assunto nem no corpo de mensagem é necessário!
@@ -52,14 +52,14 @@ Assinatura
 Qualquer usuário pode assinar ou cancelar a assinatura
 enviando mensagem para:
 
-<#L#>-subscribe@<#H#>
-<#L#>-unsubscribe@<#H#>
+<#L#>-subscribe@<#h#>
+<#L#>-unsubscribe@<#h#>
 
 <=d=>
 Para a lista "digest":
 
-<#L#>-digest-subscribe@<#H#>
-<#L#>-digest-unsubscribe@<#H#>
+<#L#>-digest-subscribe@<#h#>
+<#L#>-digest-unsubscribe@<#h#>
 
 <==>
 O usuário receberá um pedido de confirmação para eu ter
@@ -81,8 +81,8 @@ Assinaturas funcionam da mesma forma.
 
 O usuário também pode usar estas formas:
 
-   <<#L#>-subscribe-mary=host.domain@<#H#>>
-   <<#L#>-unsubscribe-mary=host.domain@<#H#>>
+   <<#L#>-subscribe-mary=host.domain@<#h#>>
+   <<#L#>-unsubscribe-mary=host.domain@<#h#>>
 
 para que as mensagens sejam enviadas para "mary@host.domain".
 Somente se ela receber mensagens neste endereço, será
@@ -92,25 +92,25 @@ Seu endereço e identidade não serão revelados para o assinante,
 a não ser que você envie mensagens diretamente para o usuário.
 
 <=rl=>
-Para obter o cadastro de assinantes da lista <#L#>@<#H#>,
+Para obter o cadastro de assinantes da lista <#L#>@<#h#>,
 envie uma mensagem para:
-   <<#L#>-list@<#H#>>
+   <<#L#>-list@<#h#>>
 
 Para um registro de transações da lista,
 envie uma mensagem para:
-   <<#L#>-log@<#H#>>
+   <<#L#>-log@<#h#>>
 
 <=rld=>
 Para o cadastro de assinantes da lista digest:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 e:
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 Você pode editar remotamente os arquivos-texto de resposta que a lista
 envia. Para obter uma lista dos arquivos e instruções de edição, envie
 mensagem para:
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Postagens moderadas
@@ -148,8 +148,8 @@ Férias
 ------
 Se você está temporariamente em um endereço diferente, basta repassar
 todas as mensagens que têm o cabeçalho correto 'Mailing-List:' (ou todas
-as mensagens que têm assuntos começando com 'MODERATE for <#L#>@<#H#>'
-ou 'CONFIRM subscribe to <#L#>@<#H#>') para o novo endereço.
+as mensagens que têm assuntos começando com 'MODERATE for <#L#>@<#h#>'
+ou 'CONFIRM subscribe to <#L#>@<#h#>') para o novo endereço.
 Você pode então moderar a partir do novo endereço. Alternativamente,
 você pode repassar as mensagens para um amigo, assim ele pode moderar
 para você. Por favor, avise e confirme este procedimento com o dono da lista.
@@ -171,6 +171,6 @@ para o assinante neste caso!
 
 Boa sorte!
 
-PS: Por favor, escreva o dono da lista (<#L#>-owner@<#H#>) se você
+PS: Por favor, escreva o dono da lista (<#L#>-owner@<#h#>) se você
 tiver qualquer dúvida ou problema.
 

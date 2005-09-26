@@ -6,7 +6,7 @@ Accuse de reception: j'ai ajoute l'adresse
 
 a la liste de diffusion <#l#>.
 
-Bienvenue dans la liste <#l#>@<#H#> !
+Bienvenue dans la liste <#l#>@<#h#> !
 
 Pensez a sauvegarder ce message pour que vous puissiez connaitre
 l'adresse sous laquelle vous vous etes abonnes, au cas ou vous
@@ -15,5 +15,5 @@ adresse d'abonnement.
 
 Pour vous desinscrire, envoyez un message a :
 
-    <<#l#>-unsubscribe-<#t#>@<#H#>>
+    <<#l#>-unsubscribe-<#t#>@<#h#>>
 

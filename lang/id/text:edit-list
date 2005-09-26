@@ -2,11 +2,11 @@
 <=n=>
 Perintah <#L#>-edit.file dapat digunakan oleh administrator dari jarak
 jauh untuk mengedit file-file teks untuk kemudian membuat kumpulan dari
-tanggapan-tanggapan dari milis <#L#>@<#H#>.
+tanggapan-tanggapan dari milis <#L#>@<#h#>.
 
 Berikut adalah daftar dari nama-nama file tanggapan beserta keterangan
 singkat tentang kapan mereka digunakan. Untuk mengedit suatu file,
-kirim mail ke <#L#>-edit.file@<#H#>, dengan menggantikan nama
+kirim mail ke <#L#>-edit.file@<#h#>, dengan menggantikan nama
 file untuk 'file'.  Instruksi-instruksi pengeditan juga dikirimkan
 beserta file teksnya.
 

@@ -1,7 +1,7 @@
 # $Id$
 --- 管理者の皆様へ ---
 
-mailing list <#L#>@<#H#> の管理に
+mailing list <#L#>@<#h#> の管理に
 協力していただき感謝します。
 
 ezmlm の command は、他の mailing list program とは若干異なって
@@ -19,22 +19,22 @@ Remote subscription
                         ↓
                 john=example.com
                         ↓
-        <<#L#>-subscribe-john=example.com@<#H#>>
+        <<#L#>-subscribe-john=example.com@<#h#>>
 
 の様にして command address を生成し、その address へ
 空の message を送って下さい。
 
 また、john@example.com を購読者から外す場合は
 
-        <<#L#>-unsubscribe-john=example.com@<#H#>>
+        <<#L#>-unsubscribe-john=example.com@<#h#>>
 
 へ空の message を送って下さい。
 
 <=d=>
 digest list に加えたり・外したりする場合も同様にして
 
-        <<#L#>-digest-subscribe-john=example.com@<#H#>>
-        <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+        <<#L#>-digest-subscribe-john=example.com@<#h#>>
+        <<#L#>-digest-unsubscribe-john=example.com@<#h#>>
 
 の様になります。
 
@@ -63,19 +63,19 @@ Subscription
 管理者に限らず、誰でも以下の address 宛に空の message を
 送る事で購読を開始したり・終了させたり出来ます。
 
-        <<#L#>-subscribe@<#H#>>
+        <<#L#>-subscribe@<#h#>>
 	(Start subscription)
 
-	<<#L#>-unsubscribe@<#H#>>
+	<<#L#>-unsubscribe@<#h#>>
 	(Stop subscription)
 
 <=d=>
 digest list の購読開始・終了は以下の command address です。
 
-        <<#L#>-digest-subscribe@<#H#>>
+        <<#L#>-digest-subscribe@<#h#>>
 	(Start digest subscription)
 
-	<<#L#>-digest-unsubscribe@<#H#>>
+	<<#L#>-digest-unsubscribe@<#h#>>
 	(Stop digest subscription)
 
 <==>
@@ -97,10 +97,10 @@ request の発信者に連絡してみて下さい。
 
 また、
 
-        <<#L#>-subscribe-mary=example.com@<#H#>>
+        <<#L#>-subscribe-mary=example.com@<#h#>>
 	(Start subscription as mary@example.com)
 
-	<<#L#>-unsubscribe-mary=example.com@<#H#>>
+	<<#L#>-unsubscribe-mary=example.com@<#h#>>
 	(Stop subscription as mary@example.com)
 
 の様にする事で、発信元とは異なる address（この場合は mary@example.com）
@@ -112,23 +112,23 @@ request の発信者に連絡してみて下さい。
 （勿論、貴方が直接 mail を送った場合は別です）
 
 <=rl=>
-mailing list <#L#>@<#H#> の講読者一覧は
+mailing list <#L#>@<#h#> の講読者一覧は
 以下の address から得られます。
-        <<#L#>-list@<#H#>>
+        <<#L#>-list@<#h#>>
 ezmlm の log は以下の address から得られます。
-        <<#L#>-log@<#H#>>
+        <<#L#>-log@<#h#>>
 
 <=rld=>
-mailing list <#L#>@<#H#> の digest 版の講読者一覧は
+mailing list <#L#>@<#h#> の digest 版の講読者一覧は
 以下の address から得られます。
-        <<#L#>-digest-list@<#H#>>
+        <<#L#>-digest-list@<#h#>>
 digest 版に関する log は以下の address です。
-        <<#L#>-digest-log@<#H#>>
+        <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 ezmlm が送り出す message text を編集するには、以下の command address:
 
-        <<#L#>-edit@<#H#>>
+        <<#L#>-edit@<#h#>>
 
 宛に空の e-mail を送って下さい。
 （編集可能な message 一覧及び、編集方法は返信に含まれています）
@@ -168,9 +168,9 @@ ezmlm は定められた期限（通常は 5日）以内に審査の結果を受け
 Vacations
 ---------
 一時的に異なる address で管理の作業をしたい場合は、
-"Mailing-List: contact <#L#>-help@<#H#>; run by ezmlm" や
-"Subject: MODERATE for <#L#>@<#H#>" や
-"Subject: CONFIRM subscribe to <#L#>@<#H#>" 等の
+"Mailing-List: contact <#L#>-help@<#h#>; run by ezmlm" や
+"Subject: MODERATE for <#L#>@<#h#>" や
+"Subject: CONFIRM subscribe to <#L#>@<#h#>" 等の
 管理の為の message が望んだ address 宛に届く様に設定すれば
 可能です。
 
@@ -196,7 +196,7 @@ request を発行したのが貴方自身か否かを ezmlm が判断する手段を持って
 
 PS: 何か不明な点等がありましたら、主宰者の
 
-        <#L#>-owner@<#H#>
+        <#L#>-owner@<#h#>
 
     に連絡して下さい。
 

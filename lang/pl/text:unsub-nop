@@ -11,10 +11,10 @@ zapisany(a) z innego adresu, ni¿ ten, którego w³a¶nie u¿ywasz.
 Spojrzyj, proszê, ma nag³ówki któregokolwiek listu z prenumeraty,
 znajdziesz tam frazê:
 
-'Return-Path: <<#l#>-return-1234-user=example.com@<#H#>>'
+'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
 
 W³a¶ciwy adres, na który powinno wiêc trafiæ twoje ¿yczenie wypisania to:
-'<#l#>-unsubscribe-user=example.com@<#H#>'.
+'<#l#>-unsubscribe-user=example.com@<#h#>'.
 Po prostu napisz na powy¿szy adres, zamieniaj±c user=example.com na twoje
 prawdziwe dane, odpowiedz po¼niej na pro¶bê potwierdzenia, 
 powieniene¶(a¶) wówczas dostaæ list, ¿e jeste¶ wykre¶lony(a)
@@ -25,9 +25,9 @@ Prze¶lij, proszê, jak±kolwiek przesy³kê z listy wraz z krótk± informacj±,
 co chcesz osi±gn±æ, do opiekuna listy, pod adres:
 
 <=x=>
-mailto:<#L#>-owner@<#H#>
+mailto:<#L#>-owner@<#h#>
 <=X=>
-    <#l#>-owner@<#H#>
+    <#l#>-owner@<#h#>
 <==>
 
 który to opiekun siê tym zajmie. We¼ pod uwagê, ¿e cz³owiek jest nieco

@@ -5,24 +5,24 @@ any of my command addresses.
 Here is a list of the command addresses supported:
 
 Send mail to the following for info and FAQ for this list:
-   <<#L#>-info@<#H#>>
-   <<#L#>-faq@<#H#>>
+   <<#L#>-info@<#h#>>
+   <<#L#>-faq@<#h#>>
 
 <=d=>
 Similar addresses exist for the digest list:
-   <<#L#>-digest-subscribe@<#H#>>
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-subscribe@<#h#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=a=>
 To get messages 123 through 145 (a maximum of 100 per request), mail:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 To get an index with subject and author for messages 123-456, mail:
-   <<#L#>-index.123_456@<#H#>>
+   <<#L#>-index.123_456@<#h#>>
 
 To receive all messages with the same subject as message 12345,
 send an empty message to:
-   <<#L#>-thread.12345@<#H#>>
+   <<#L#>-thread.12345@<#h#>>
 
 <==>
 The messages do not really need to be empty, but I will ignore
@@ -31,8 +31,8 @@ their content. Only the ADDRESS you send to is important.
 You can start a subscription for an alternate address,
 for example "john@example.com", just add a hyphen and your
 address (with '=' instead of '@') after the command word:
-    <<#L#>-subscribe-john=example.com@<#H#>>
+    <<#L#>-subscribe-john=example.com@<#h#>>
 
 To stop subscription for this address, mail:
-    <<#L#>-unsubscribe-john=example.com@<#H#>>
+    <<#L#>-unsubscribe-john=example.com@<#h#>>
 

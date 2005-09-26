@@ -31,7 +31,7 @@
 送られてくる message の "Return-Path:" の所に埋め込まれて
 います。例えば、mary@example.com が購読の address なら
 
-        Return-Path: <<#L#>-return-<number>-mary=example.com@<#H#>>
+        Return-Path: <<#L#>-return-<number>-mary=example.com@<#h#>>
 
 という具合いです。
 
@@ -39,7 +39,7 @@
 環境によっては、長い address をうまく扱えない場合が有ります。
 この message に reply をうまく返せない様なら、以下の address
 
-        <<#L#>-request@<#H#>>
+        <<#L#>-request@<#h#>>
 
 に "Subject: <#R#>" を付けて送って下さい。
 

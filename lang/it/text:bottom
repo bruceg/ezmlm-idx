@@ -7,20 +7,20 @@ favore non inviarli direttamente all'indirizzo della lista!
 Invece spedisci il tuo messaggio al giusto indirizzo per i comandi:
 
 Per ricevere aiuto e una descrizione dei comandi, scrivi a:
-   <<#L#>-help@<#H#>>
+   <<#L#>-help@<#h#>>
 
 Per iscriversi alla lista, spedisci un messaggio a:
-   <<#L#>-subscribe@<#H#>>
+   <<#L#>-subscribe@<#h#>>
 
 Per cancellare il tuo indirizzo dalla lista, ti basta scrivere 
 all'indirizzo presente nell'intestazione ``List-Unsubscribe'' di
 qualsiasi messaggio della lista. Se non hai cambiato indirizzo da
 quando ti sei iscritto, puoi anche mandare un messaggio a:
-    <<#L#>-unsubscribe@<#H#>>
+    <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
 o per le raccolte a:
-   <<#L#>-unsubscribe@<#H#>>
+   <<#L#>-unsubscribe@<#h#>>
 
 <==>
 
@@ -31,7 +31,7 @@ per completare l'operazione.
 Se desideri contattare il responsabile in carne ed ossa di questa
 lista perfavore spedisci un messaggio a:
 
-    <<#L#>-owner@<#H#>>
+    <<#L#>-owner@<#h#>>
 
 Perfavore inccludi un messaggio della lista con tutte le intestazioni
 complete per farti aiutare più facilmente.

@@ -6,20 +6,20 @@ Az adminisztrativ keresek automatikusan hajtodnak vegre, ezert
 azokat ne a lista cimere kuldd!  A pontos cimek:
 
 Segitseg es az elerheto parancsok leirasaa:
-   <<#L#>-help@<#H#>>
+   <<#L#>-help@<#h#>>
 
 Feliratkozas:
-   <<#L#>-subscribe@<#H#>>
+   <<#L#>-subscribe@<#h#>>
 
 Minden listas level fejleceben a ,,List-Unsubscribe'' sorban
 talalhato a pontos email cim, ahonnan le kell iratkozni.  Ha nem
 valtoztattad meg az email cimedet a feliratkozas ota, az alabbi
 cimre is kuldheted a leiratkozasi parancsot:
-   <<#L#>-unsubscribe@<#H#>>
+   <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
 illetve digestrol leiratkozaskor:
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=HJ=>
 Cimek hozzaadasa es torlese eseten megerositesi kerelmet kapsz
@@ -30,7 +30,7 @@ a keres teljesulhessen.
 Ha a lista kezelojevel (tulajdonosaval) szeretnel levelezni, az
 emailt ide kuldd:
 
-    <<#L#>-owner@<#H#>>
+    <<#L#>-owner@<#h#>>
 
 Ha egy levellel van problemad, akkor tovabbitsd az egesz levelet
 az OSSZES FEJLECCEL, hogy konnyebben tudjunk segiteni Neked.

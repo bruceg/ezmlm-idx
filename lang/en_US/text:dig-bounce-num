@@ -10,11 +10,11 @@ get the messages from the main list archive.
 
 To retrieve a set of messages 123-145 (a maximum of 100 per request),
 send an empty message to:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 To receive a subject and author list for the last 100 or so messages,
 send an empty message to:
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 <==>
 Here are the digest message numbers:

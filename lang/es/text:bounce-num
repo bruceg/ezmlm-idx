@@ -10,12 +10,12 @@ Una copia de estos mensajes puede estar en el archivo.
 Para recibir los mensajes desde el número 123 al 145 (con un
 máximo de 100 por petición), escriba a:
 
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 Para recibir una lista por "Asunto" y "Autor" de los últimos 100
 mensajes, envíe un mensaje en blanco a:
 
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 <==>
 Aquí están los números de los mensajes:

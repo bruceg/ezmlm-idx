@@ -13,12 +13,12 @@ los mensajes del archivo principal de la lista.
 Para recuperar el grupo de mensajes del 123 al 145 (máximo 100
 por petición), envíe un mensaje en blanco a:
 
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 Para recibir una lista por "Asunto" y "Autor" de los últimos 100
 mensajes, envíe un mensaje en blanco a:
 
-   <<#L#>-index@<#H#>>
+   <<#L#>-index@<#h#>>
 
 <==>
 Estos son los números de mensaje de los resúmenes:

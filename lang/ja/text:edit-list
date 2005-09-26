@@ -4,7 +4,7 @@
 mailing list <#L#> の為の message text を編集することが出来ます。
 
 以下は編集可能な FILE と、その目的です。file FOO を編集したい
-場合は <#L#>-edit.FOO@<#H#> 宛に空の message を送って下さい。
+場合は <#L#>-edit.FOO@<#h#> 宛に空の message を送って下さい。
 編集の仕方は送信される message に含まれています。
 
 File                Use

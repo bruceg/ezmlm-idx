@@ -9,11 +9,11 @@ dirección-comando adecuada:
 Para obtener ayuda y una descripción de los comandos disponibles,
 mande un mensaje a:
 
-   <<#L#>-help@<#H#>>
+   <<#L#>-help@<#h#>>
 
 Para suscribirse a la lista, mande un mensaje a:
 
-   <<#L#>-subscribe@<#H#>>
+   <<#L#>-subscribe@<#h#>>
 
 Para eliminar su dirección de la lista, simplemente mande un
 mensaje a la dirección que hay en la cabecera
@@ -21,12 +21,12 @@ mensaje a la dirección que hay en la cabecera
 no ha cambiado su dirección desde que se suscribió, también puede
 enviar un mensaje a:
 
-   <<#L#>-unsubscribe@<#H#>>
+   <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
 o, para los resúmenes, a:
 
-   <<#L#>-unsubscribe@<#H#>>
+   <<#L#>-unsubscribe@<#h#>>
 
 <==>
 
@@ -37,7 +37,7 @@ confirmación a esa dirección. Cuando lo reciba, pulse el botón
 Si necesita contactar con el propietario de la lista, por favor,
 mande un mensaje a:
 
-    <<#L#>-owner@<#H#>>
+    <<#L#>-owner@<#h#>>
 
 Por favor, incluya una lista de mensajes REENVIADOS con TODAS LAS
 CABECERAS intactas para que sea más fácil ayudarle.

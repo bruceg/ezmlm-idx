@@ -23,12 +23,12 @@ correo. Para ver que dirección utilizó para suscribirse, mire los
 mensajes que está recibiendo de la lista de correo. Cada mensaje
 tiene su dirección oculta dentro de la ruta de retorno; por
 ejemplo, maria@example.com recibe mensajes con la ruta de retorno:
-<<#l#>-return-<número>-maria=example.com@<#H#>>.
+<<#l#>-return-<número>-maria=example.com@<#h#>>.
 
 <=q=>
 
 Algunos programas de correo no pueden manejar direcciones largas.
 Si no puede responder a esta petición, envíe un mensaje a
-<<#L#>-request@<#H#>> y escriba la dirección completa en la línea
+<<#L#>-request@<#h#>> y escriba la dirección completa en la línea
 de "Asunto:".
 

@@ -1,5 +1,5 @@
 # $Id$
-Gracias por acceder a moderar la lista <#L#>@<#H#>.
+Gracias por acceder a moderar la lista <#L#>@<#h#>.
 
 Mis comandos son algo distintos a los de otras listas de correo,
 pero creo que los encontrará intuitivos y fáciles de utilizar.
@@ -19,18 +19,18 @@ un guión después del comando, y después su dirección con '=' en
 lugar de '@'. Por ejemplo, para suscribir esa dirección, mande
 correo a:
 
-   <<#L#>-subscribe-john=example.com@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#h#>>
 
 De la misma manera puede eliminar la dirección de la lista
 mandando un mensaje a:
 
-   <<#L#>-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#h#>>
 
 <=d=>
 Para suscribirse o darse de baja de la lista de resúmenes:
 
-   <<#L#>-digest-subscribe-john=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#h#>>
 
 <==>
 
@@ -59,14 +59,14 @@ Suscripción
 Cualquier usuario puede suscribirse o darse de baja mandando un
 correo a:
 
-   <#L#>-subscribe@<#H#>
-   <#L#>-unsubscribe@<#H#>
+   <#L#>-subscribe@<#h#>
+   <#L#>-unsubscribe@<#h#>
 
 <=d=>
 Para la lista de resúmenes:
 
-   <#L#>-digest-subscribe@<#H#>
-   <#L#>-digest-unsubscribe@<#H#>
+   <#L#>-digest-subscribe@<#h#>
+   <#L#>-digest-unsubscribe@<#h#>
 
 <==>
 
@@ -91,8 +91,8 @@ Las suscripciones funcionan del mismo modo.
 
 El usuario también puede utilizar:
 
-   <<#L#>-subscribe-maria=example.com@<#H#>>
-   <<#L#>-unsubscribe-maria=example.com@<#H#>>
+   <<#L#>-subscribe-maria=example.com@<#h#>>
+   <<#L#>-unsubscribe-maria=example.com@<#h#>>
 
 para que le manden correo a: "maria@example.com". Solo si
 ella recibe correo en esta dirección, podrá recibir la petición
@@ -103,24 +103,24 @@ ser que le mande correo directamente al usuario.
 
 <=rl=>
 
-Para conseguir una lista de suscriptores para <#L#>@<#H#> envíe
+Para conseguir una lista de suscriptores para <#L#>@<#h#> envíe
 un mensaje a:
 
-   <<#L#>-list@<#H#>>
+   <<#L#>-list@<#h#>>
 
 Para conseguir un log de la lista de transacciones para
-<#L#>@<#H#> mande un mensaje a:
+<#L#>@<#h#> mande un mensaje a:
 
-   <<#L#>-log@<#H#>>
+   <<#L#>-log@<#h#>>
 
 <=rld=>
 Para suscriptores al resumen:
 
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 
 y:
 
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 
@@ -128,7 +128,7 @@ Usted puede modificar remotamente los ficheros de texto que
 componen las respuestas mandadas por la lista. Para conseguir una
 lista de ficheros e instrucciones de edición, escriba a:
 
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Mensajes moderados.
@@ -172,7 +172,7 @@ Vacaciones
 Si está temporalmente en otra dirección, simplemente reenvíe
 todos los mensajes que tienen el encabezamiento 'Mailing-List:'
 (o todos los que tienen "Asunto" empezando con 'MODERATE for
-<#L#>@<#H#>' o con 'CONFIRM subscribe to <#L#>@<#H#>') a la nueva
+<#L#>@<#h#>' o con 'CONFIRM subscribe to <#L#>@<#H#>') a la nueva
 dirección. Así podrá leer la lista desde la nueva dirección. Como
 alternativa, puede reenviar los mensajes a un amigo para que él o
 ella los lea en su lugar. Por favor, antes de hacerlo consiga el
@@ -200,5 +200,5 @@ dirección) al suscriptor!
 ¡Buena suerte!
 
 PD: Por favor, póngase en contacto con el propietario de la lista
-(<#L#>-owner@<#H#>) si tiene preguntas o problemas.
+(<#L#>-owner@<#h#>) si tiene preguntas o problemas.
 

@@ -6,7 +6,7 @@ Bestätigung: Ich habe Ihre Adresse
 als Abonnenten in die Mailingliste <#l#>
 aufgenommen.
 
-Willkommen bei <#l#>@<#H#>!
+Willkommen bei <#l#>@<#h#>!
 
 Bitte heben Sie diese Nachricht gut auf, damit Sie auch später
 noch wissen, unter welcher Adresse Sie die Mailingliste empfangen.
@@ -16,5 +16,5 @@ oder die Mailingliste wieder abbestellen wollen.
 Um die Liste wieder abzubestellen, senden Sie eine leere Mail an
 die Adresse
 
-    <<#l#>-unsubscribe-<#t#>@<#H#>>
+    <<#l#>-unsubscribe-<#t#>@<#h#>>
 

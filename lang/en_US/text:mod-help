@@ -1,5 +1,5 @@
 # $Id$
-Thank you for agreeing to moderate the <#L#>@<#H#>
+Thank you for agreeing to moderate the <#L#>@<#h#>
 mailing list.
 
 My commands are a little different from other mailing lists,
@@ -16,15 +16,15 @@ As a moderator, you can subscribe and unsubscribe any address to
 the mailing list. To subscribe "john@example.com", simply put
 a hyphen after the command word, then his address with '=' instead
 of the '@'. For instance, to subscribe that address, send mail to:
-   <<#L#>-subscribe-john=example.com@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#h#>>
 
 You can similarly remove the address by sending a message to:
-   <<#L#>-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#h#>>
 
 <=d=>
 For the digest list:
-   <<#L#>-digest-subscribe-john=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#h#>>
 
 <==>
 That's all. No subject and no message body needed!
@@ -50,14 +50,14 @@ Subscription
 
 Any user can subscribe or unsubscribe by sending mail to:
 
-    <<#L#>-subscribe@<#H#>>
-    <<#L#>-unsubscribe@<#H#>>
+    <<#L#>-subscribe@<#h#>>
+    <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
 For the digest list:
 
-    <<#L#>-digest-subscribe@<#H#>>
-    <<#L#>-digest-unsubscribe@<#H#>>
+    <<#L#>-digest-subscribe@<#h#>>
+    <<#L#>-digest-unsubscribe@<#h#>>
 
 <==>
 The user will receive a confirmation request to make
@@ -78,8 +78,8 @@ Subscriptions work the same way.
 
 The user can also use:
 
-   <<#L#>-subscribe-mary=example.com@<#H#>>
-   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#h#>>
+   <<#L#>-unsubscribe-mary=example.com@<#h#>>
 
 to have mail sent to "mary@example.com". Only if she receives mail
 at this address will she receive the confirmation request and be
@@ -89,22 +89,22 @@ Your address and identity will not be revealed to the subscriber,
 unless you send mail directly to the user.
 
 <=rl=>
-To get a subscriber list for <#L#>@<#H#>, send a message to:
-   <<#L#>-list@<#H#>>
+To get a subscriber list for <#L#>@<#h#>, send a message to:
+   <<#L#>-list@<#h#>>
 
-To get a list transaction log <#L#>@<#H#>, send a message to:
-   <<#L#>-log@<#H#>>
+To get a list transaction log <#L#>@<#h#>, send a message to:
+   <<#L#>-log@<#h#>>
 
 <=rld=>
 For digest subscribers:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 and:
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 You can remotely edit the text files that make up the responses the
 list sends out. To get a list of files and editing instructions, mail:
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Moderated posts
@@ -140,8 +140,8 @@ Vacations
 ---------
 If you are temporarily at a different address, just forward all messages
 that have the correct 'Mailing-List:' header (or all that have subjects
-starting with 'MODERATE for <#L#>@<#H#>'
-or 'CONFIRM subscribe to <#L#>@<#H#>') to the
+starting with 'MODERATE for <#L#>@<#h#>'
+or 'CONFIRM subscribe to <#L#>@<#h#>') to the
 new address. You can then moderate from the new address. Alternatively,
 you can forward the messages to a friend so that s/he can moderate
 for you. Please OK this with the list owner first.
@@ -163,6 +163,6 @@ the subscriber in this case!
 
 Good luck!
 
-PS: Please contact the list owner (<#L#>-owner@<#H#>) if you
+PS: Please contact the list owner (<#L#>-owner@<#h#>) if you
 have any questions or problems.
 

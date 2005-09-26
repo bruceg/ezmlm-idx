@@ -5,26 +5,26 @@ niet naar mijn commando adressen gestuurd.
 Hier is een lijst van gebruikte commando adressen:
 
 Stuur een e-mail voor info en veel gestelde vragen (FAQ) naar:
-   <<#L#>-info@<#H#>>
-   <<#L#>-faq@<#H#>>
+   <<#L#>-info@<#h#>>
+   <<#L#>-faq@<#h#>>
 
 <=d=>
 Gelijksoortige adressen bestaan voor deze list:
-   <<#L#>-digest-subscribe@<#H#>>
-   <<#L#>-digest-unsubscribe@<#H#>>
+   <<#L#>-digest-subscribe@<#h#>>
+   <<#L#>-digest-unsubscribe@<#h#>>
 
 <=a=>
 Om berichten 123-145 te ontvangen (maximaal 100 per verzoek),
 stuurt u een e-mail naar:
-   <<#L#>-get.123_145@<#H#>>
+   <<#L#>-get.123_145@<#h#>>
 
 Om een overzicht van onderwerpen en schrijvers van berichten 123-456
 te ontvangen, stuurt u een e-mail naar:
-   <<#L#>-index.123_456@<#H#>>
+   <<#L#>-index.123_456@<#h#>>
 
 Om alle berichten te ontvangen met hetzelfde onderwerp als bericht 12345
 stuurt u een e-mail naar:
-   <<#L#>-thread.12345@<#H#>>
+   <<#L#>-thread.12345@<#h#>>
 
 <==>
 De e-mail die u stuurt hoeft niet leeg te zijn, maar ik zal
@@ -35,8 +35,8 @@ U kunt zich onder een ander adres inschrijven, bijvoorbeeld
 "john@example.com".
 Voeg een minteken toe en het adres waarin u het @ teken vervangt
 door een =, achter het commando:
-    <<#L#>-subscribe-john=example.com@<#H#>>
+    <<#L#>-subscribe-john=example.com@<#h#>>
 
 Om uw andere adres uit te schrijven stuurt u een e-mail naar:
-    <<#L#>-unsubscribe-john=example.com@<#H#>>
+    <<#L#>-unsubscribe-john=example.com@<#h#>>
 

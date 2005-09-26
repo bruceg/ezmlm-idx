@@ -9,24 +9,24 @@ ezmlm $B$O0J2<$N(B command $B$r<+F0$G<B9T$7$^$9!#(B
 command $B$O0J2<$N(B address $B08$K6u$N(B message $B$rAw$k$3$H$G<B9T$5$l$^$9!#(B
 
    * $BMxMQ2DG=$J(B command $B0lMw$r<h$j=P$9(B
-     <<#L#>-help@<#H#>>
+     <<#L#>-help@<#h#>>
      (Get help and commands)
 
    * $B9XFI$r3+;O$9$k(B
-     <<#L#>-subscribe@<#H#>>
+     <<#L#>-subscribe@<#h#>>
      (Start subscription) 
 
 $B9XFI$rCf;_$9$k$K$O(B mailing list <#L#> $B$+$i$N(B message $B$N(B header $B$K(B
 $B4^$^$l$F$$$k(B ``List-Unsubscribe'' $B9T$,<($9(B address $B$K6u(B message
 $B$rAw$C$F$/$@$5$$!#$^$?$O0J2<$N(B address $B08$F$K6u(B message $B$rAw$C$F(B
 $B2<$5$$!#(B
-     <<#L#>-unsubscribe@<#H#>>
+     <<#L#>-unsubscribe@<#h#>>
      (Stop subscription)
 
 <=d=>
 digest $B$N9XFI$rCf;_$9$k$K$O0J2<$N(B address $B08$F$K6u$N(B message $B$r(B
 $BAw$C$F2<$5$$!#(B
-     <<#L#>-digest-unsubscribe@<#H#>>
+     <<#L#>-digest-unsubscribe@<#h#>>
      (Stop digest subscription)
 
 <==>
@@ -36,7 +36,7 @@ digest $B$N9XFI$rCf;_$9$k$K$O0J2<$N(B address $B08$F$K6u$N(B message $B$r(
 
 $B0J>e$N;X<($K=>$C$F$b!"K>$s$@7k2L$K$J$i$J$$>l9gEy$O!"(B
 mailing list <#L#> $B$N<g:K<T$N(B
-<#L#>-owner@<#H#> $BKxO"Mm$7$F2<$5$$!#(B
+<#L#>-owner@<#h#> $BKxO"Mm$7$F2<$5$$!#(B
 $B!JJV;v$,CY$l$k$+$b$7$l$^$;$s!#$4N;>52<$5$$!K(B
 
 $BLdBj$N2r@O$r?J$a$d$9$/$9$k0Y$K(B ezmlm $B$+$iAw$i$l$F$-$?(B message $B$r(B

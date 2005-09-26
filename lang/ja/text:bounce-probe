@@ -8,12 +8,12 @@ message も配送に失敗してしまいました。
 
 この message は、貴方宛に配送が可能か否かを調べるためのものです。
 この message も配送に失敗した場合は、ezmlm は貴方の address を
-mailing list <#L#>@<#H#> から
+mailing list <#L#>@<#h#> から
 自動的に削除します。
 
 もう一度購読をしたい場合は、以下の address
 
-        <<#L#>-subscribe@<#H#>>
+        <<#L#>-subscribe@<#h#>>
 
 宛に空の message を送って、新規に購読をしなおして下さい。
 

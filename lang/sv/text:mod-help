@@ -1,5 +1,5 @@
 # $Id$
-Tack för att du vill moderera <#L#>@<#H#> listan.
+Tack för att du vill moderera <#L#>@<#h#> listan.
 
 Kommandona är lite anorlunda mot andra listor,
 men de är lätta att lära och använda.
@@ -16,15 +16,15 @@ som helst på listan. För att prenumerera "john@example.com",
 skriv bara ett bindesträck efter "kommando ordet", därefter
 adressen med ett '=' tecken istället för '@'. I detta fallet skulle
 du skickat ett brev till:
-   <<#L#>-subscribe-john=example.com@<#H#>>
+   <<#L#>-subscribe-john=example.com@<#h#>>
 
 Du kan på samma sätt ta bort en adress med ett meddelande till:
-   <<#L#>-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#h#>>
 
 <=d=>
 För "digest" versionen av listan:
-   <<#L#>-digest-subscribe-john=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#h#>>
 
 <==>
 Det är allt. Titel och innehåll spelar ingen roll!
@@ -52,14 +52,14 @@ Prenumeration
 Alla kan prenumerera/sluta prenumerera på listan genom
 att skicka ett brev till:
 
-<#L#>-subscribe@<#H#>
-<#L#>-unsubscribe@<#H#>
+<#L#>-subscribe@<#h#>
+<#L#>-unsubscribe@<#h#>
 
 <=d=>
 För "digest" versionen av listan:
 
-<#L#>-digest-subscribe@<#H#>
-<#L#>-digest-unsubscribe@<#H#>
+<#L#>-digest-subscribe@<#h#>
+<#L#>-digest-unsubscribe@<#h#>
 
 <==>
 Prenumeranten kommer få ett bekräftelse brev för
@@ -81,8 +81,8 @@ Prenumeration fungerar på samma sätt.
 
 Användaren kan också:
 
-   <<#L#>-subscribe-mary=example.com@<#H#>>
-   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#h#>>
+   <<#L#>-unsubscribe-mary=example.com@<#h#>>
 
 för att få brev skickad till "mary@example.com". Bara om hon kan
 ta emot brev på den adressen, får hon bekräftelse meddelandet
@@ -92,25 +92,25 @@ Din adress och identitet kommer att vara hemlig för prenumeranten
 om du inte skickar brev direkt till denne.
 
 <=rl=>
-För att få en lista på prenumeranter på <#L#>@<#H#>,
+För att få en lista på prenumeranter på <#L#>@<#h#>,
 skicka ett brev till:
-   <<#L#>-list@<#H#>>
+   <<#L#>-list@<#h#>>
 
-För att få en "transaktionslog" för <#L#>@<#H#>,
+För att få en "transaktionslog" för <#L#>@<#h#>,
 skicka ett brev till:
-   <<#L#>-log@<#H#>>
+   <<#L#>-log@<#h#>>
 
 <=rld=>
 För "digest" prenumeranter:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 och:
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 Du kan ändra textfilerna, som listan använder, på distans. För att
 få en lista på filerna och instruktioner om hur du ändrar dem,
 skicka ett e-mail till:
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Modererade utskick
@@ -145,8 +145,8 @@ Semestrar
 ---------
 Ifall du temporärt har en annan adress, vidareskicka alla brev som
 har korrekt "Mailing-List:" fält i brevhuvudet (eller alla brev som
-har titeln "MODERATE for <#L#>@<#H#>"
-eller "CONFIRM subscribe to <#L#>@<#H#>")
+har titeln "MODERATE for <#L#>@<#h#>"
+eller "CONFIRM subscribe to <#L#>@<#h#>")
 till den nya adressen. Du kan därefter moderera listan från den
 adressen. Alternativt kan du vidareskicka brevet till någon annan
 som modererar listan åt dig. Fråga listägaren först om det är OK.
@@ -168,6 +168,6 @@ prenumeranten i detta fallet.
 
 Lycka till!
 
-PS. Kontakta listägaren (<#L#>-owner@<#H#>) ifall du
+PS. Kontakta listägaren (<#L#>-owner@<#h#>) ifall du
 har några frågor eller stöter på några problem.
 

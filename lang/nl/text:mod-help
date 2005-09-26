@@ -1,5 +1,5 @@
 # $Id$
-Dank u dat u de <#L#>@<#H#> mailing list wilt moderaten.
+Dank u dat u de <#L#>@<#h#> mailing list wilt moderaten.
 
 Mijn commando's zijn anders dan die van andere mailing lists,
 maar ik denk dat u ze intuitief en gemakkelijk zult vinden.
@@ -13,18 +13,18 @@ Remote inschrijven:
 -------------------
 Als moderator kunt u ieder adres in- of uitschrijven van de list.
 Om bijvoorbeeld "john@example.com" in te schrijven, stuurt u een
-e-mail naar <<#L#>-subscribe-john=example.com@<#H#>>.
+e-mail naar <<#L#>-subscribe-john=example.com@<#h#>>.
 Achter het subscribe commando geeft u een minteken in en het adres
 wat u in wilt schrijven. In dat adres vervangt u het @ teken voor een =.
 
 Op gelijke wijze kunt u een adres verwijderen door een e-mail
 te sturen naar:
-   <<#L#>-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-unsubscribe-john=example.com@<#h#>>
 
 <=d=>
 Voor de digest list is dat:
-   <<#L#>-digest-subscribe-john=example.com@<#H#>>
-   <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
+   <<#L#>-digest-subscribe-john=example.com@<#h#>>
+   <<#L#>-digest-unsubscribe-john=example.com@<#h#>>
 
 <==>
 Dat is alles. Subject en tekst hoeft u niet in te voeren.
@@ -51,14 +51,14 @@ Inschrijven
 Iedere gebruiker kan zich in- of uitschrijven door
 een e-mail te sturen naar:
 
-    <<#L#>-subscribe@<#H#>>
-    <<#L#>-unsubscribe@<#H#>>
+    <<#L#>-subscribe@<#h#>>
+    <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
 Voor de digest list:
 
-    <<#L#>-digest-subscribe@<#H#>>
-    <<#L#>-digest-unsubscribe@<#H#>>
+    <<#L#>-digest-subscribe@<#h#>>
+    <<#L#>-digest-unsubscribe@<#h#>>
 
 <==>
 De gebruiker zal een verzoek om bevestiging ontvangen
@@ -80,8 +80,8 @@ Inschrijvingen werken op dezelfde manier.
 
 De gebruiker kan ook het volgende manier gebruiken:
 
-   <<#L#>-subscribe-mary=example.com@<#H#>>
-   <<#L#>-unsubscribe-mary=example.com@<#H#>>
+   <<#L#>-subscribe-mary=example.com@<#h#>>
+   <<#L#>-unsubscribe-mary=example.com@<#h#>>
 
 om zich in te schrijven als "mary@example.com". Alleen als zij
 mail ontvangt op dat adres kan zij mijn verzoek om bevestiging
@@ -92,25 +92,25 @@ gebruiker die zich in wil schrijven, tenzij u rechtstreeks e-mail
 aan hem of haar stuurt.
 
 <=rl=>
-Om een lijst met leden te ontvangen van <#L#>@<#H#>, stuurt u
+Om een lijst met leden te ontvangen van <#L#>@<#h#>, stuurt u
 een e-mail naar:
-   <<#L#>-list@<#H#>>
+   <<#L#>-list@<#h#>>
 
-Om een log te ontvangen van <#L#>@<#H#>, stuurt u
+Om een log te ontvangen van <#L#>@<#h#>, stuurt u
 een e-mail naar:
-   <<#L#>-log@<#H#>>
+   <<#L#>-log@<#h#>>
 
 <=rld=>
 Voor digest subscribers:
-   <<#L#>-digest-list@<#H#>>
+   <<#L#>-digest-list@<#h#>>
 en:
-   <<#L#>-digest-log@<#H#>>
+   <<#L#>-digest-log@<#h#>>
 
 <=rn=>
 U kunt de teksten zelf aanpassen van de berichten die de mailing list
 verstuurt. Om de lijst met teksten en instructies te ontvangen
 stuurt u een e-mail naar:
-   <<#L#>-edit@<#H#>>
+   <<#L#>-edit@<#h#>>
 
 <=m=>
 Moderated
@@ -166,6 +166,6 @@ gebruiker worden gestuurd.
 
 Veel succes gewenst!
 
-PS: U kunt contact opnemen met de eigenaar (<#L#>-owner@<#H#>) als u vragen
+PS: U kunt contact opnemen met de eigenaar (<#L#>-owner@<#h#>) als u vragen
 hebt of problemen ondervind.
 
