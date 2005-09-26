@@ -154,7 +154,7 @@ Absences
 Si vous etes temporairement a une adresse differente, faites simplement
 suivre tous les messages qui ont un entete "Mailing-List:" correct (ou
 tous les messages qui ont un sujet debutant par
-'MODERATE for <#L#>@<#h#>' ou 'CONFIRM subscribe to <#L#>@<#H#>') a la
+'MODERATE for <#L#>@<#h#>' ou 'CONFIRM subscribe to <#L#>@<#h#>') a la
 nouvelle addresse. Vous pouvez alors moderer a partir de la nouvelle
 adresse. Alternativement, vous pouvez faire suivre les messages a un
 ami qui moderera pour vous. Pensez a vous mettre d'accord avec le

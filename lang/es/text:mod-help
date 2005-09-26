@@ -172,7 +172,7 @@ Vacaciones
 Si está temporalmente en otra dirección, simplemente reenvíe
 todos los mensajes que tienen el encabezamiento 'Mailing-List:'
 (o todos los que tienen "Asunto" empezando con 'MODERATE for
-<#L#>@<#h#>' o con 'CONFIRM subscribe to <#L#>@<#H#>') a la nueva
+<#L#>@<#h#>' o con 'CONFIRM subscribe to <#L#>@<#h#>') a la nueva
 dirección. Así podrá leer la lista desde la nueva dirección. Como
 alternativa, puede reenviar los mensajes a un amigo para que él o
 ella los lea en su lugar. Por favor, antes de hacerlo consiga el
