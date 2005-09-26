@@ -9,6 +9,7 @@ extern stralloc charset;
 extern stralloc key;
 extern stralloc language;
 extern stralloc listid;
+extern stralloc local;
 extern stralloc mailinglist;
 extern stralloc outhost;
 extern stralloc outlocal;
