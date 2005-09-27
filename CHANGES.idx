@@ -38,7 +38,7 @@ ezmlm-idx-0.450, ????-??-??
 
 - Modified the "copy" function, which translates from "text" files into
   output emails, to also select sections at run time based on the list's
-  configured flags.
+  configured flags, and to load "text/*" files from /etc/ezmlm/LANG/*.
 
 - Added a "language" configuration file.
 
