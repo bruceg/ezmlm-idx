@@ -14,8 +14,7 @@ test -d lang/"$1" -a -f lang/"$1".sed || {
   sed -f lang/"$1".sed ezmlmrc.template
   ls -1 lang/"$1" \
   | while read file; do
-    sfile=`echo $file | tr : /`
-    echo "</$sfile#E/>"
+    echo "</$file#E/>"
     cat lang/"$1"/$file
   done
   echo "</language#E/>"
