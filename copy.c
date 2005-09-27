@@ -152,6 +152,7 @@ void copy(struct qmail *qqp,
     if (getln(&sstext,&line,&match,'\n') == -1)
       strerr_die4sys(111,FATAL,ERR_READ,fn,": ");
     if (line.len > 0) {		/* line.len is always > 0 if match is true */
+      if (line.s[0] == '#') continue;
       /* suppress blank line for 'H'eader mode */
       if (line.len == 1 && q == 'H') continue;
       if (line.s[0] == '!') {
