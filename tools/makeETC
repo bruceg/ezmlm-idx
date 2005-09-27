@@ -1,0 +1,25 @@
+#!/bin/sh
+# $Id$
+
+langs=`ls -1d lang/?? lang/??_?? | sed -e 's|^lang/||'`
+{
+  echo "d:::755:::"
+  echo "c:::644:/:ezmlmglrc:"
+  echo "c:::644:/:ezmlmrc:"
+  echo "c:::644:/:ezmlmsubrc:"
+
+  for lang in $langs
+  do
+    echo "c:::644:/:ezmlmrc.$lang"
+  done
+
+  for lang in $langs
+  do
+    echo "d:::755:/$lang::"
+    ls -1 lang/$lang/text:* | sed -e 's/^.*://' | while read text
+    do
+      echo "c:::644:/$lang/:$text:lang/$lang/text:$text"
+    done
+  done
+
+} >ETC
