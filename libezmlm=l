@@ -3,6 +3,7 @@ alloc_re.o
 author.o
 auto_bin.o
 auto_cron.o
+auto_etc.o
 auto_qmail.o
 auto_version.o
 byte_chr.o
