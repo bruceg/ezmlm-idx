@@ -1,3 +1,6 @@
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "substdio.h"
 #include "stralloc.h"
 #include "getln.h"
@@ -7,6 +10,7 @@
 #include "error.h"
 #include "strerr.h"
 #include "byte.h"
+#include "scan.h"
 
 stralloc target = {0};
 char *to;
@@ -140,4 +144,5 @@ char **argv;
     if (!match)
       _exit(0);
   }
+  (void)argc;
 }
