@@ -124,7 +124,7 @@ static int try_open(const char *fn)
   if ((fd = open_read(fn)) == -1) {
     if (errno != error_noent)
       strerr_die4sys(111,FATAL,ERR_OPEN,fn,": ");
-    if (str_start(fn,"text/") == 0) {
+    if (str_start(fn,"text/")) {
       if (language.len == 0
 	  || (fd = lang_open(fn+5,language.s)) == -1)
 	fd = lang_open(fn+5,"default");
