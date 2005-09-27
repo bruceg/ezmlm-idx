@@ -181,6 +181,9 @@ void copy(struct qmail *qqp,
 	      if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
               if (!stralloc_cats(&outline,target)) die_nomem();
               break;
+            case 'L':
+              if (!stralloc_cat(&outline,&local)) die_nomem();
+              break;
             case 'R':
               if (!stralloc_cats(&outline,confirm)) die_nomem();
               break;
