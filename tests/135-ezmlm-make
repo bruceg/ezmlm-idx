@@ -36,12 +36,15 @@
 ${EZBIN}/ezmlm-make -+ln -C${EZBIN}/ezmlmrc "$DIR" || \
 	fatal "failed to edit test list to +ln"
 
-# correct bouncer for our binaries:
-###################################
-  ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/bouncer"
-  ${ECHO} "|/${EZBIN}/ezmlm-weed" > "${DIR}/digest/bouncer"
-  ${ECHO} "|/${EZBIN}/ezmlm-return -D '${DIR}'" >> "${DIR}/bouncer"
-  ${ECHO} "|/${EZBIN}/ezmlm-return -d '${DIR}'" >> "${DIR}/digest/bouncer"
+# Set up a text file for use in testing copy()
+  mkdir -p "${DIR}/top"
+  echo 'Local: <#L#>' >"${DIR}/text/top"
+  echo 'local: <#l#>' >>"${DIR}/text/top"
+  echo 'host: <#h#>' >>"${DIR}/text/top"
+  for flag in a b c d e f g h i j k l m n o p q r s t u v w x y z; do
+    echo "<=${flag}=>" >>"${DIR}/text/top"
+    echo "Flag: ${flag}" >>"${DIR}/text/top"
+  done
 
   # remove inlocal/inhost - shouldn't be used
   ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \

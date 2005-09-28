@@ -11,6 +11,7 @@
 # set up prefix
   ${ECHO} "[PFX]" > "${DIR}/prefix"
 # set up trailer
+  mkdir -p "${DIR}/text"
   { ${ECHO} "--- TRAILER ---"; ${ECHO}; } > "${DIR}/text/trailer"
 # test
   { ${ECHO} "X-num: msg1"; make_message; } | \
