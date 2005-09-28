@@ -15,6 +15,10 @@ if [ `head -n 1 conf-bin` != `pwd` ]; then
   pwd >conf-bin
 fi
 
+if [ `head -n 1 conf-etc` != `pwd`/text ]; then
+  echo `pwd`/text >conf-etc
+fi
+
 echo "==================== Testing conf-sub = $db ===================="
 
 `dirname $0`/makerrors

@@ -7,5 +7,4 @@ pwd >conf-bin
 `dirname $0`/test mysql
 `dirname $0`/test pgsql
 
-svn revert conf-bin
-svn revert conf-sub
+svn revert conf-{bin,etc,sub}
