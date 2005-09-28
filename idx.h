@@ -247,13 +247,8 @@
 /* make sense to make these messages visible to anyone else.          */
 #define MODE_MOD_MSG 0700
 
-/* name and location of system-wide customized ezmlmrc. This is where */
-/* ezmlm-make looks first (unless the -c switch is specified) before  */
-/* falling back to the (usually unchanged) version in the ezmlm bin   */
-/* directory. */
-#define TXT_ETC_EZMLMRC "/etc/ezmlm/ezmlmrc"
-
-/* same name added to auto_bin. Note leading slash! */
+/* name of system-wide ezmlmrc, added to auto_etc and then            */
+/* auto_bin. Note leading slash! */
 #define TXT_EZMLMRC "/ezmlmrc"
 
 /* same in dot dir for local config (-c) */

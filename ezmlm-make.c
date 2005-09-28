@@ -434,8 +434,9 @@ void main(int argc,char **argv)
       else
 	strerr_die3x(100,FATAL,template.s,ERR_NOEXIST);
     }
-  } else {			/* /etc/ezmlmrc */
-    if (!stralloc_copys(&template,TXT_ETC_EZMLMRC)) die_nomem();
+  } else {			/* /etc/ezmlm/ezmlmrc */
+    if (!stralloc_copys(&template,auto_etc)) die_nomem();
+    if (!stralloc_cats(&template,TXT_EZMLMRC)) die_nomem();
     if (!stralloc_0(&template)) die_nomem();
     if ((fdin = open_read(template.s)) == -1) {
       if (errno != error_noent)
