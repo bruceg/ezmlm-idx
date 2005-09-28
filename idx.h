@@ -260,8 +260,8 @@
 /* default timestamp for ezmlm-limit */
 #define TXT_LOOPNUM "loopnum"
 
-/* ezmlm-cgi config file for normal SUID root install */
-#define EZ_CGIRC "/etc/ezmlm/ezcgirc"
+/* ezmlm-cgi config file, added to auto_etc, for normal SUID root install */
+#define EZ_CGIRC "/ezcgirc"
 
 /* ezmlm-cgi config file for local install we expect to find the file in PWD */
 #define EZ_CGIRC_LOC ".ezcgirc"

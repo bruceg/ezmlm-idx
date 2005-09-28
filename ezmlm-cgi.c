@@ -35,6 +35,7 @@
 #include "idx.h"
 #include "yyyymm.h"
 #include "cgi.h"
+#include "auto_etc.h"
 
 const char FATAL[] = "ezmlm-cgi: fatal: ";
 #define GET "-getv"
@@ -2064,8 +2065,11 @@ int main(int argc,char **argv)
   euid = (unsigned long) geteuid();			/* chroot only if 0 */
 
   if (!euid) {
-    if ((fd = open_read(EZ_CGIRC)) == -1)		/* open config */
-      strerr_die4sys(111,FATAL,ERR_OPEN,EZ_CGIRC,": ");
+    if (!stralloc_copys(&line,auto_etc)) die_nomem();
+    if (!stralloc_cats(&line,EZ_CGIRC)) die_nomem();
+    if (!stralloc_0(&line)) die_nomem();
+    if ((fd = open_read(line.s)) == -1)			/* open config */
+      strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
   } else {
     if ((fd = open_read(EZ_CGIRC_LOC)) == -1)		/* open local config */
       strerr_die4sys(111,FATAL,ERR_OPEN,EZ_CGIRC_LOC,": ");
