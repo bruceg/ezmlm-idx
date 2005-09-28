@@ -36,13 +36,18 @@ ezmlm-idx-0.450, ????-??-??
   config file for now, but it is considered depricated.  Running
   "ezmlm-make -+" on an existing list will upgrade it.
 
+- Added a "conf-etc" config file to allow changing the path to
+  configuration files (defaults to "/etc/ezmlm").
+
+- Moved all the text files out of the ezmlmrc files into individual
+  files installed in a common location (/etc/ezmlm/LANG by default).
+
 - Modified the "copy" function, which translates from "text" files into
   output emails, to also select sections at run time based on the list's
   configured flags, and to load "text/*" files from /etc/ezmlm/LANG/*.
 
-- Added a "language" configuration file.
-
-- Broke the ezmlmrc text files into separate files internally.
+- Added a "language" control file to mailing lists, which is used to
+  control which directory to pull text files from above.
 
 ezmlm-idx-0.443, 2005-09-01
 ===========================

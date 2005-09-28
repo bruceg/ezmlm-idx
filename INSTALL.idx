@@ -15,6 +15,8 @@ Things you have to decide before starting:
    For installations (e.g. Debian) where qmail is not in "/var/qmail", adjust
    conf-qmail.
 
+   Put the desired configuration path into conf-etc.  Default "/etc/ezmlm".
+
    NOTE: If you follow the test instructions in INSTALL of ezmlm-0.53 after
    adding ezmlm-idx, step 6 will fail. Before this step, edit
    ~/testlist/editor and remove the ezmlm-reject line.
@@ -79,8 +81,7 @@ HOW TO BUILD, TEST, AND INSTALL:
     nl, pl, pt_BR, ru, sv. NOTE: A normal ``make'' sets up the en_US
     version (as before).  All known language files are included with
     ezmlm-idx.  If your language is not present, please feel free to
-    contribute one (translate lang/en_US.text but leave comments intact
-    for "diff").
+    contribute one (translate the files in text/en_US).
 
  8. Test the programs:
 	From the build directory, execute ezmlm-test:
@@ -241,7 +242,7 @@ HOW TO BUILD, TEST, AND INSTALL:
 21. For any existing lists which you would like to archive,
     add the following line after the call to ezmlm-send in listdir/editor:
 
-	| /usr/local/ezmlm/ezmlm-archive listdir/DIR || exit 0
+	| /usr/local/bin/ezmlm/ezmlm-archive listdir/DIR || exit 0
 
     This is automatically done when running:
 
@@ -249,7 +250,7 @@ HOW TO BUILD, TEST, AND INSTALL:
 
 22. To display your web based archive, open your browser as follows:
 
-	%lynx http://localhost/cgi-bin/ezmlm-cgi
+	% lynx http://localhost/cgi-bin/ezmlm-cgi
 
  ------------- End Optional items -----------   
 
