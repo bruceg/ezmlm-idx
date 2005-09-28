@@ -1,2 +1,3 @@
-dependon ezmlmrc.en_US
-formake 'cp -f ezmlmrc.en_US ezmlmrc'
+dependon conf-lang ezmlmrc.all
+formake 'rm -f ezmlmrc'
+formake 'ln -s ezmlmrc."`head -n 1 conf-lang`" ezmlmrc'

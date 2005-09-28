@@ -73,15 +73,14 @@ HOW TO BUILD, TEST, AND INSTALL:
        % make clean
        % make; make man
 
- 7. To use a language other than US English as the default for list texts:
-       % make ISO
+ 7. To use a language other than US English as the default for list
+    texts, edit the ``conf-lang'' file and change the first line to one
+    of the ISO language designations found in the ``text'' subdirectory.
 
-    where ``iso'' is the ISO language designation. Currently supported
-    are: ch, ch_GB, cs, da, de, en_US (en, us), es, fr, hu, id, ita, ja,
-    nl, pl, pt_BR, ru, sv. NOTE: A normal ``make'' sets up the en_US
-    version (as before).  All known language files are included with
-    ezmlm-idx.  If your language is not present, please feel free to
-    contribute one (translate the files in text/en_US).
+    NOTE: A normal ``make'' sets up the en_US version (as before).  All
+    known language files are included with ezmlm-idx.  If your language
+    is not present, please feel free to contribute one (translate the
+    files in text/en_US and lang/en_US.*).
 
  8. Test the programs:
 	From the build directory, execute ezmlm-test:

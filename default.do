@@ -84,16 +84,6 @@ case "$1" in
     dependon makelang VERSION ezmlmrc.template lang/$lang.add lang/$lang.sed
     formake "./makelang $lang"
     ;;
-  ch) dependon ch_GB ;;
-  en) dependon en_US ;;
-  ita)
-    dependon ezmlmrc.it
-    formake 'cp -f ezmlmrc.it ezmlmrc'
-    ;;
-  ?? | ??_??)
-    dependon ezmlmrc.$1
-    formake "cp -f ezmlmrc.$1 ezmlmrc"
-    ;;
   *)
     nosuchtarget
     ;;

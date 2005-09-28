@@ -39,6 +39,8 @@ ezmlm-idx-5.0.0, ????-??-??
 - Added a "conf-etc" config file to allow changing the path to
   configuration files (defaults to "/etc/ezmlm").
 
+- Added a "conf-lang" config file to replace the "make ISO" mechanism.
+
 - Moved all the text files out of the ezmlmrc files into individual
   files installed in a common location (/etc/ezmlm/LANG by default).
 

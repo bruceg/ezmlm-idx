@@ -5,7 +5,6 @@ langs=`cd text && echo ?? ??_??`
 {
   echo "d:::755:::"
   echo "c:::644:/:ezmlmglrc:"
-  echo "c:::644:/:ezmlmrc:"
   echo "c:::644:/:ezmlmsubrc:"
 
   for lang in $langs
