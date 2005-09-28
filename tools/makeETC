@@ -17,7 +17,7 @@ langs=`cd text && echo ?? ??_??`
     echo "d:::755:/$lang::"
     ls -1 text/$lang | while read text
     do
-      echo "c:::644:/$lang/:$text:lang/$lang/$text"
+      echo "c:::644:/$lang/:$text:text/$lang/$text"
     done
   done
 
