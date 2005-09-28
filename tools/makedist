@@ -19,16 +19,9 @@ if ! grep -q " ${base}, " HISTORY; then
   exit 1
 fi
 
-if [ `svn diff | wc -c` -gt 0 ]; then
-  echo "$0: uncommitted changes exist."
-  exit 1
-fi
+svn revert conf-*
 
-if [ `head -n 1 conf-sub` != std ]; then
-  echo "$0: Please put 'std' into the conf-sub file"
-  exit 1
-fi
-
+tools/makeETC
 tools/makemake
 
 echo "Building the idx.patch"
@@ -37,7 +30,7 @@ tools/makepatch
 echo "Setting up the temporary directory"
 trap 'rm -r $base' EXIT
 mkdir $base
-cp --parents `cat SOURCES EXTRADIST` sub_*/* $base/
+cp --parents `cat SOURCES EXTRADIST` sub_*/* text/*/* $base/
 mv idx.patch $base/
 chmod -R +r $base
 
