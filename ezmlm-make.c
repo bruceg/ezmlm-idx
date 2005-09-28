@@ -20,6 +20,7 @@
 #include "errtxt.h"
 #include "die.h"
 #include "idx.h"
+#include "auto_etc.h"
 #include "auto_version.h"
 
 			/* defaults. All other flags are false = 0 */
