@@ -1,0 +1,22 @@
+#!/bin/sh
+# $Id$
+set -e
+VERSION=$(head -n 1 VERSION)
+TOP=$PWD
+rm -f ${VERSION}.tar.gz
+$(dirname $0)/makedist
+tar -xzf ezmlm-0.53.tar.gz
+cd ezmlm-0.53
+trap 'cd $TOP && rm -r ezmlm-0.53' EXIT
+tar -xzf ${TOP}/${VERSION}.tar.gz
+mv -f ${VERSION}/* .
+rmdir $VERSION
+patch -p0 <idx.patch
+mkdir image
+for dir in bin etc man; do
+  echo ${PWD}/image/${dir} >conf-${dir}
+  mkdir image/${dir}
+done
+make it man
+make setup
+ls -lR image | ${PAGER:-less}
