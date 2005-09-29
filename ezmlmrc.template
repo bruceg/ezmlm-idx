@@ -107,6 +107,8 @@
 </+archive/>
 </+subscribers/>
 </+bounce/>
+# dir for editing text files
+</+text#n/>
 # dirs for digests
 </+digest#d/>
 </+digest/subscribers#d/>
