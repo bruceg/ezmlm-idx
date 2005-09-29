@@ -95,6 +95,7 @@ EOF
     for deps in *.deps; do
 	target=${deps%.deps}
 	cmds=$target.cmds
+	target=`echo $target | tr : /`
 	if [ -s $deps -o -s $cmds ]; then
 	    echo
 	    echo "$target: \\"
