@@ -204,7 +204,7 @@ int read_line(const char *dpm,stralloc *sa)
 int read_new_config(void)
 {
   if (read_line("/flags",&oldflags) != 0) return 0;
-  if (euid > 0 && !flags['c' - 'a'] && (cfname.len != 0))
+  if (euid > 0 && !flags['c' - 'a'] && (cfname.len == 0))
     read_line("/ezmlmrc",&cfname);
   read_line("/dot",&dot);
   read_line("/outlocal",&local);
@@ -243,7 +243,7 @@ int read_old_config(void)
       line.s[line.len - 1] = '\0';
       switch (ch = line.s[0]) {
       case 'X':
-	if (euid > 0 && !flags['c' - 'a'] && (cfname.len > 0))
+	if (euid > 0 && !flags['c' - 'a'] && (cfname.len == 0))
 	  if (!stralloc_copys(&cfname,line.s+2)) die_nomem();
 	break;	/* for safety: ignore if root */
       case 'T': if (!stralloc_copys(&dot,line.s+2)) die_nomem(); break;
