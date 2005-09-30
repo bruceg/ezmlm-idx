@@ -240,7 +240,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   load_config(dir);
-  set_cpouthost(&outlocal);
+  set_cpouthost(&outhost);
   set_cpoutlocal(&outlocal);
 
   getconf_line(&modtime,"modtime",0,dir);
