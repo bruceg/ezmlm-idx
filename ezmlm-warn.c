@@ -290,8 +290,6 @@ void main(int argc,char **argv)
   if (flagdig)
     if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
 
-  set_cpoutlocal(&outlocal);	/* for copy */
-  set_cpouthost(&outhost);	/* for copy */
   ddir = when / 10000;
   dfile = when - 10000 * ddir;
 

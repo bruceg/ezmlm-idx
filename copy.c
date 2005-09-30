@@ -38,8 +38,6 @@
 static stralloc line = {0};
 static stralloc outline = {0};
 static stralloc qline = {0};
-static stralloc outlocal = {0};
-static stralloc outhost = {0};
 static substdio sstext;
 static char textbuf[256];
 static const char *target = "?????";
@@ -47,19 +45,6 @@ static const char *verptarget = "?????";
 static const char *confirm = "?????";
 static unsigned int confirmlocal;
 static const char *szmsgnum = "?????";
-
-void set_cpoutlocal(const stralloc *ln)
-{	/* must be quoted for safety. Note that substitutions that use */
-	/* outlocal within an atom may create illegal addresses */
-  if (!quote(&outlocal,ln))
-    die_nomem();
-}
-
-void set_cpouthost(const stralloc *ln)
-{
-  if (!stralloc_copy(&outhost,ln))
-    die_nomem();
-}
 
 void set_cptarget(const char *tg)
 {
@@ -152,7 +137,8 @@ void copy_xlate(stralloc *out,
 	if (!stralloc_cats(out,target)) die_nomem();
 	break;
       case 'L':
-	if (!stralloc_cat(out,&local)) die_nomem();
+	if (!quote(&qline,&local)) die_nomem();
+	if (!stralloc_cat(out,&qline)) die_nomem();
 	break;
       case 'R':
 	if (!stralloc_cats(out,confirm)) die_nomem();
@@ -161,7 +147,8 @@ void copy_xlate(stralloc *out,
 	if (!stralloc_catb(out,confirm,confirmlocal)) die_nomem();
 	break;
       case 'l':
-	if (!stralloc_cat(out,&outlocal)) die_nomem();
+	if (!quote(&qline,&outlocal)) die_nomem();
+	if (!stralloc_cat(out,&qline)) die_nomem();
 	break;
       case 'h':
       case 'H':

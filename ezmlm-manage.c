@@ -627,8 +627,6 @@ int main(int argc,char **argv)
   if (str_equal(sender,"#@[]"))
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
-  set_cpouthost(&outhost);
-
   if (!stralloc_copys(&ddir,dir)) die_nomem();
 
   if (case_starts(action,"digest")) {			/* digest */
@@ -654,7 +652,6 @@ int main(int argc,char **argv)
 
   if (!stralloc_0(&ddir)) die_nomem();
   workdir = ddir.s;
-  set_cpoutlocal(&outlocal);
 
   if (!stralloc_copys(&target,sender)) die_nomem();
   if (action[0]) {

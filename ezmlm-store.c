@@ -259,8 +259,6 @@ void main(int argc,char **argv)
   if (!stralloc_cat(&accept,&action)) die_nomem();
   if (!stralloc_0(&accept)) die_nomem();
 
-  set_cpoutlocal(&outlocal);
-  set_cpouthost(&outhost);
   set_cptarget(accept.s);	/* for copy () */
   set_cpconfirm(reject.s);
 

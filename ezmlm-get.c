@@ -925,8 +925,6 @@ void main(int argc,char **argv)
   flagindexed = getconf_line(&line,"indexed",0,dir);
   flagarchived = getconf_line(&line,"archived",0,dir);
 
-  set_cpouthost(&outhost);
-
     if (!stralloc_copys(&ddir,dir)) die_nomem();
     if (!stralloc_cats(&ddir,"/digest")) die_nomem();
     if (!stralloc_0(&ddir)) die_nomem();
@@ -953,7 +951,6 @@ void main(int argc,char **argv)
   if (!stralloc_copys(&edir,dir)) die_nomem();	/* not needed for -dig, but */
   if (!stralloc_cats(&edir,"/allow")) die_nomem();	/* be safe */
   if (!stralloc_0(&edir)) die_nomem();
-  set_cpoutlocal(&outlocal);		/* needed for copy */
 
   if (flagqmqp) {
     if (qmail_open(&qq,&qmqpservers) == -1)		/* open qmail */

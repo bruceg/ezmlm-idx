@@ -608,8 +608,6 @@ void main(int argc,char **argv)
       if (!stralloc_copys(&to,sender)) die_nomem();
     if (!stralloc_0(&to)) die_nomem();
 
-    set_cpoutlocal(&outlocal);		/* necessary in case there are <#l#> */
-    set_cpouthost(&outhost);		/* necessary in case there are <#h#> */
 					/* we don't want to be send to a list*/
     hdr_adds("Mailing-List: ezmlm-request");
     if (listid.len > 0)

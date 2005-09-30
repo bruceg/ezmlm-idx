@@ -398,8 +398,6 @@ void main(int argc,char **argv)
   } else
     msgnum = 1L;			/* if num not there */
 
-  set_cpoutlocal(&outlocal);
-  set_cpouthost(&outhost);
   flagsublist = getconf_line(&sublist,"sublist",0,dir);
 
   if (!stralloc_copys(&line,QMQPSERVERS)) die_nomem();

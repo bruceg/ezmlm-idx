@@ -213,9 +213,6 @@ void main(int argc,char **argv)
   if (str_equal(sender,"#@[]"))
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
-  set_cpoutlocal(&outlocal);	/* for copy() */
-  set_cpouthost(&outhost);	/* for copy() */
-
   /* local should be >= def, but who knows ... */
   cp = local + str_len(local) - str_len(def) - 2;
   if (cp < local) die_badformat();
