@@ -79,9 +79,10 @@ case "$1" in
     formake 'sub=`head -n 1 conf-sub` ; ln sub_$$sub/'$1 $1
     formake "touch $1"
     ;;
-  ezmlmrc.?? | ezmlmrc.??_??)
-    lang=${1#ezmlmrc.}
-    dependon makelang VERSION ezmlmrc.template lang/$lang.add lang/$lang.sed
+  lang/*/ezmlmrc)
+    lang=${1#lang/}
+    lang=${lang%/ezmlmrc}
+    dependon makelang VERSION ezmlmrc.template lang/$lang/sed
     formake "./makelang $lang"
     ;;
   *)

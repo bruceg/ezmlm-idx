@@ -1,3 +1,3 @@
-ls -1 text | while read lang; do
-  dependon ezmlmrc.$lang
+ls -1 lang | while read lang; do
+  dependon lang/${lang}/ezmlmrc
 done
