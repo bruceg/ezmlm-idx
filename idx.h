@@ -247,9 +247,11 @@
 /* make sense to make these messages visible to anyone else.          */
 #define MODE_MOD_MSG 0700
 
-/* name of system-wide ezmlmrc, added to auto_etc and then            */
-/* auto_bin. Note leading slash! */
+/* name of ezmlmrc file, added to directory names */
 #define TXT_EZMLMRC "/ezmlmrc"
+
+/* name of default configuration directory, added to auto_etc */
+#define TXT_DEFAULT "/default"
 
 /* same in dot dir for local config (-c) */
 #define TXT_DOTEZMLMRC ".ezmlmrc"
