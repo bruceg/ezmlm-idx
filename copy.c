@@ -211,6 +211,7 @@ void copy(struct qmail *qqp,
               if (!stralloc_cat(&outline,&outlocal)) die_nomem();
               break;
             case 'h':
+            case 'H':
               if (!stralloc_cat(&outline,&outhost)) die_nomem();
               break;
             case 't':

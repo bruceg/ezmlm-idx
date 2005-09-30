@@ -59,9 +59,10 @@
 #
 # Substitutions made at runtime are:
 # <#A#> target email address
+# <#H#> outhost
 # <#L#> outlocal (unchanged)
 # <#R#> confirm address (equivalent to <#r#>@<#h#>)
-# <#h#> host
+# <#h#> outhost
 # <#l#> outlocal (may contain "-digest")
 # <#n#> message number
 # <#r#> local part of the confirm address
