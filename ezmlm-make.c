@@ -266,6 +266,27 @@ int read_old_config(void)
   return 1;
 }
 
+static int open_template(stralloc *fn)
+{
+  int fd;
+  struct stat st;
+  if (!stralloc_0(fn)) die_nomem();
+  if (stat(fn->s,&st) == -1)
+    strerr_die4sys(111,FATAL,ERR_STAT,fn->s,": ");
+  if (S_ISDIR(st.st_mode)) {
+    --fn->len;
+    if (!stralloc_cats(fn,TXT_EZMLMRC)) die_nomem();
+    if (!stralloc_0(fn)) die_nomem();
+  }
+  if ((fd = open_read(fn->s)) == -1) {
+    if (errno != error_noent)
+      strerr_die4sys(111,FATAL,ERR_OPEN,fn->s,": ");
+    else
+      strerr_die3x(100,FATAL,template.s,ERR_NOEXIST);
+  }
+  return fd;
+}
+
 void main(int argc,char **argv)
 {
   int opt;
@@ -428,32 +449,12 @@ void main(int argc,char **argv)
       if (!stralloc_copy(&template,&cfname)) die_nomem();
     } else
       if (!stralloc_cats(&template,TXT_DOTEZMLMRC)) die_nomem();
-    if (!stralloc_0(&template)) die_nomem();
-    if ((fdin = open_read(template.s)) == -1) {
-      if (errno != error_noent)
-	strerr_die4sys(111,FATAL,ERR_OPEN,template.s,": ");
-      else
-	strerr_die3x(100,FATAL,template.s,ERR_NOEXIST);
-    }
-  } else {			/* /etc/ezmlm/ezmlmrc */
+    fdin = open_template(&template);
+  } else {
+    /* /etc/ezmlm/default/ezmlmrc */
     if (!stralloc_copys(&template,auto_etc)) die_nomem();
-    if (!stralloc_cats(&template,TXT_EZMLMRC)) die_nomem();
-    if (!stralloc_0(&template)) die_nomem();
-    if ((fdin = open_read(template.s)) == -1) {
-      if (errno != error_noent)
-        strerr_die4sys(111,FATAL,ERR_OPEN,template.s,": ");
-      else {			/* ezbin/ezmlmrc */
-	if (!stralloc_copys(&template,auto_bin)) die_nomem();
-	if (!stralloc_cats(&template,TXT_EZMLMRC)) die_nomem();
-	if (!stralloc_0(&template)) die_nomem();
-	if ((fdin = open_read(template.s)) == -1) {
-	  if (errno != error_noent)
-	    strerr_die4sys(111,FATAL,ERR_OPEN,template.s,": ");
-	  else
-	    strerr_die3x(100,FATAL,template.s,ERR_NOEXIST);
-	}
-      }
-    }
+    if (!stralloc_cats(&template,TXT_DEFAULT)) die_nomem();
+    fdin = open_template(&template);
   }
 
   dcreate("");		/* This is all we do, the rest is up to ezmlmrc */

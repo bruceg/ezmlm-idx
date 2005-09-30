@@ -307,6 +307,11 @@ to override a default when using
 .B \-+
 or
 .BR \-e .
+If the given path is a directory instead of a file, the actual ezmlmrc
+file is taken as
+.IR arg/ezmlmrc ,
+and the other ezmlm-idx programs will use the directory to look up files
+(such as text files) that are not present in the list directory.
 .TP 5
 .B \-d
 Digest.
