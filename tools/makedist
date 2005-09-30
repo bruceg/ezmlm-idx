@@ -30,7 +30,9 @@ tools/makepatch
 echo "Setting up the temporary directory"
 trap 'rm -r $base' EXIT
 mkdir $base
-cp --parents `cat SOURCES EXTRADIST` sub_*/* text/*/* $base/
+cp --parents `cat SOURCES EXTRADIST` $base/
+find sub_* lang -name .svn -prune -o -type f -print \
+| xargs cp --parents --target-directory=$base/
 mv idx.patch $base/
 chmod -R +r $base
 

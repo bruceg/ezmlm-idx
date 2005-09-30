@@ -3,14 +3,14 @@
 set -e
 cd `dirname $0`/../lang
 noupdates=true
-for en in en_US/*; do
-  base=${en#en_US/}
+for en in en_US/text/*; do
+  base=${en#en_US/text/}
   baserev=`sed -e '/$Id:/!d;s/^.*$Id: [^ ]* //;s/ .*$//' $en`
   missing=""
   old=""
   for lang in ?? ??_??; do
     if [ $lang != en_US ]; then
-      other=$lang/$base
+      other=$lang/text/$base
       if ! [ -e $other ]; then
 	missing="$missing $lang"
       else
