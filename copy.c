@@ -128,25 +128,22 @@ static int try_open(const char *fn)
 /* skip tag. If outlocal/outhost are not set, the tags are*/
 /* skipped. If confirm/taget are not set, the tags are    */
 /* replaced by "???????" */
-void copy_line(stralloc *out,
-	       stralloc *line,
-	       char q)
+void xlate_line(stralloc *out,
+		const stralloc *line,
+		char q)
 {
   unsigned int pos;
   unsigned int nextpos;
-  int done;
 
   pos = 0;
   nextpos = 0;
-  done = 0;
   out->len = 0;
-  while ((pos += byte_chr(line->s+pos,line->len-pos,'<')) != line->len) {
+  while ((pos += byte_chr(line->s+pos,line->len-pos,'<')) < line->len) {
     if (pos + 4 < line->len &&
 	line->s[pos+1] == '#' &&
 	line->s[pos+3] == '#' &&
 	line->s[pos+4] == '>') {
       /* tag. Copy first part of line */
-      done = 1;				/* did something */
       if (!stralloc_catb(out,line->s+nextpos,pos-nextpos))
 	die_nomem();
       switch(line->s[pos+2]) {
@@ -185,13 +182,8 @@ void copy_line(stralloc *out,
     } else
       ++pos;				/* try next position */
   }
-  if (!done)
-    codeput(line->s,line->len,q);
-  else {
-    if (!stralloc_catb(out,line->s+nextpos,line->len-nextpos))
-      die_nomem();		/* remainder */
-    codeput(out->s,out->len,q);
-  }
+  if (!stralloc_catb(out,line->s+nextpos,line->len-nextpos))
+    die_nomem();		/* remainder */
 }
 
 void copy(struct qmail *qqp,
@@ -247,7 +239,8 @@ void copy(struct qmail *qqp,
       }
       if (!flagsmatched) continue;
 
-      copy_line(&outline,&line,q);
+      xlate_line(&outline,&line,q);
+      codeput(outline.s,outline.len,q);
 
       /* Last line is missing its trailing newline, add one on output. */
       if (!match)
