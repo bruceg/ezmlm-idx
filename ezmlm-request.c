@@ -183,12 +183,12 @@ void parseline(char *cp)
     if (*cp1 == '\t') *cp1 = ' ';
     ++cp1;
   }
-					/* NOTE: outlocal has '\0' added! */
-  if (outlocal.len < str_len(cp) && cp[outlocal.len -1] == '-' &&
-	case_starts(cp,outlocal.s))	 {	/* normal ezmlm cmd */
-    command = cp + outlocal.len;		/* after the '-' */
-    listlocal = outlocal.s;
-    listhost = outhost.s;
+					/* NOTE: listname has '\0' added! */
+  if (listname.len < str_len(cp) && cp[listname.len -1] == '-' &&
+	case_starts(cp,listname.s))	 {	/* normal ezmlm cmd */
+    command = cp + listname.len;		/* after the '-' */
+    listlocal = listname.s;
+    listhost = hostname.s;
     cp1 = command;
     while (*cp1 && *cp1 != '-') ++cp1;		/* find next '-' */
     if (*cp1) {
@@ -320,8 +320,8 @@ void main(int argc,char **argv)
 
   if (!stralloc_copy(&listname,&outlocal)) die_nomem();
   if (!stralloc_copy(&hostname,&outhost)) die_nomem();
-  if (!stralloc_0(&outlocal)) die_nomem();
-  if (!stralloc_0(&outhost)) die_nomem();
+  if (!stralloc_0(&listname)) die_nomem();
+  if (!stralloc_0(&hostname)) die_nomem();
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(99,INFO,ERR_NOSENDER);
@@ -337,9 +337,9 @@ void main(int argc,char **argv)
 
   if (!stralloc_copys(&mydtline,
        "Delivered-To: request processor for ")) die_nomem();
-  if (!stralloc_cats(&mydtline,outlocal.s)) die_nomem();
+  if (!stralloc_cats(&mydtline,listname.s)) die_nomem();
   if (!stralloc_cats(&mydtline,"@")) die_nomem();
-  if (!stralloc_cats(&mydtline,outhost.s)) die_nomem();
+  if (!stralloc_cats(&mydtline,hostname.s)) die_nomem();
   if (!stralloc_cats(&mydtline,"\n")) die_nomem();
 
   flagnosubject = 1;
@@ -481,14 +481,14 @@ void main(int argc,char **argv)
       if (cfname)
         strerr_die1x(100,ERR_REQ_LISTNAME);
       else
-       listlocal = outlocal.s;	/* This is at the -request address */
+       listlocal = listname.s;	/* This is at the -request address */
     }
 	/* if !cfname listhost is made outhost. If cfname, listhost=outhost */
 	/* is ok. listhost=0 => first match in config. Other listhost is ok */
 	/* only if match is found. Otherwise it's set to outhost. */
 
-    if (!cfname || (listhost && !case_diffs(listhost,outhost.s)))
-      listhost = outhost.s;
+    if (!cfname || (listhost && !case_diffs(listhost,hostname.s)))
+      listhost = hostname.s;
     else {			 /* Check listhost against config file */
       pos = str_len(listlocal);
       fd = open_read(cfname);
@@ -522,11 +522,11 @@ void main(int argc,char **argv)
         }
       }
       if (!flagok)
-        listhost = outhost.s;
+        listhost = hostname.s;
       close(fd);
     }
     if (!listhost)
-      listhost = outhost.s;
+      listhost = hostname.s;
     if (!userlocal) {
       if (!stralloc_copys(&usr,sender)) die_nomem();
       if (!stralloc_0(&usr)) die_nomem();
@@ -591,9 +591,9 @@ void main(int argc,char **argv)
       userlocal = listlocal; listlocal = 0;
       userhost = listhost; listhost = 0;
     }
-    if (!stralloc_copys(&from,outlocal.s)) die_nomem();
+    if (!stralloc_copys(&from,listname.s)) die_nomem();
     if (!stralloc_cats(&from,"-return-@")) die_nomem();
-    if (!stralloc_cats(&from,outhost.s)) die_nomem();
+    if (!stralloc_cats(&from,hostname.s)) die_nomem();
     if (!stralloc_0(&from)) die_nomem();
 
     if (userlocal) {
@@ -602,14 +602,14 @@ void main(int argc,char **argv)
       if (userhost) {
         if (!stralloc_cats(&to,userhost)) die_nomem();
        } else {
-        if (!stralloc_cats(&to,outhost.s)) die_nomem();
+        if (!stralloc_cats(&to,hostname.s)) die_nomem();
       }
     } else
       if (!stralloc_copys(&to,sender)) die_nomem();
     if (!stralloc_0(&to)) die_nomem();
 
-    set_cpoutlocal(&listname);		/* necessary in case there are <#l#> */
-    set_cpouthost(&hostname);		/* necessary in case there are <#h#> */
+    set_cpoutlocal(&outlocal);		/* necessary in case there are <#l#> */
+    set_cpouthost(&outhost);		/* necessary in case there are <#h#> */
 					/* we don't want to be send to a list*/
     hdr_adds("Mailing-List: ezmlm-request");
     if (listid.len > 0)
@@ -621,7 +621,7 @@ void main(int argc,char **argv)
     hdr_add2("To: ",line.s,line.len);
     hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
     qmail_puts(&qq,"Subject: ");
-    if (!quote2(&line,outlocal.s)) die_nomem();
+    if (!quote2(&line,listname.s)) die_nomem();
     qmail_put(&qq,line.s,line.len);
     qmail_puts(&qq,TXT_RESULTS);
     hdr_ctboundary();
