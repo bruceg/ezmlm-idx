@@ -1,24 +1,29 @@
 #!/bin/sh
 # $Id$
 
-langs=`cd text && echo ?? ??_??`
+doit() {
+  lang=$1
+  echo "d:::755:/$lang::"
+  ls -1 lang/$lang | while read file; do
+    if [ $file = sed ]; then
+      continue
+    fi
+    path=lang/$lang/$file
+    if [ -d $path ]; then
+      doit $lang/$file
+    else
+      echo "c:::644:/$lang/:$file:lang/$lang/$file"
+    fi
+  done
+}
+
 {
   echo "d:::755:::"
   echo "c:::644:/:ezmlmglrc:"
   echo "c:::644:/:ezmlmsubrc:"
 
-  for lang in $langs
-  do
-    echo "c:::644:/:ezmlmrc.$lang"
-  done
-
-  for lang in $langs
-  do
-    echo "d:::755:/$lang::"
-    ls -1 text/$lang | while read text
-    do
-      echo "c:::644:/$lang/:$text:text/$lang/$text"
-    done
+  ls -1 lang | while read lang; do
+    doit $lang
   done
 
 } >ETC
