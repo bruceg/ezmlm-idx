@@ -1,6 +1,7 @@
 #ifndef COPY_H
 #define COPY_H
 
+extern void copy_xlate(stralloc *out,const stralloc *in,char q);
 extern void copy(struct qmail *qq,const char *fn,char q);
 extern void set_cpoutlocal(const stralloc *);
 extern void set_cpouthost(const stralloc *);

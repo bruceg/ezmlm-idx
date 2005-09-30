@@ -128,7 +128,7 @@ static int try_open(const char *fn)
 /* skip tag. If outlocal/outhost are not set, the tags are*/
 /* skipped. If confirm/taget are not set, the tags are    */
 /* replaced by "???????" */
-void xlate_line(stralloc *out,
+void copy_xlate(stralloc *out,
 		const stralloc *line,
 		char q)
 {
@@ -239,7 +239,7 @@ void copy(struct qmail *qqp,
       }
       if (!flagsmatched) continue;
 
-      xlate_line(&outline,&line,q);
+      copy_xlate(&outline,&line,q);
       codeput(outline.s,outline.len,q);
 
       /* Last line is missing its trailing newline, add one on output. */
