@@ -123,6 +123,77 @@ static int try_open(const char *fn)
   return fd;
 }
 
+/* Find tags <#x#>. Replace with for x=R confirm, for x=A */
+/* target, x=l outlocal, x=h outhost. For others, just    */
+/* skip tag. If outlocal/outhost are not set, the tags are*/
+/* skipped. If confirm/taget are not set, the tags are    */
+/* replaced by "???????" */
+void copy_line(stralloc *out,
+	       stralloc *line,
+	       char q)
+{
+  unsigned int pos;
+  unsigned int nextpos;
+  int done;
+
+  pos = 0;
+  nextpos = 0;
+  done = 0;
+  out->len = 0;
+  while ((pos += byte_chr(line->s+pos,line->len-pos,'<')) != line->len) {
+    if (pos + 4 < line->len &&
+	line->s[pos+1] == '#' &&
+	line->s[pos+3] == '#' &&
+	line->s[pos+4] == '>') {
+      /* tag. Copy first part of line */
+      done = 1;				/* did something */
+      if (!stralloc_catb(out,line->s+nextpos,pos-nextpos))
+	die_nomem();
+      switch(line->s[pos+2]) {
+      case 'A':
+	if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
+	if (!stralloc_cats(out,target)) die_nomem();
+	break;
+      case 'L':
+	if (!stralloc_cat(out,&local)) die_nomem();
+	break;
+      case 'R':
+	if (!stralloc_cats(out,confirm)) die_nomem();
+	break;
+      case 'r':
+	if (!stralloc_catb(out,confirm,confirmlocal)) die_nomem();
+	break;
+      case 'l':
+	if (!stralloc_cat(out,&outlocal)) die_nomem();
+	break;
+      case 'h':
+      case 'H':
+	if (!stralloc_cat(out,&outhost)) die_nomem();
+	break;
+      case 't':
+	if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
+	if (!stralloc_cats(out,verptarget)) die_nomem();
+	break;
+      case 'n':
+	if (!stralloc_cats(out,szmsgnum)) die_nomem();
+	break;
+      default:
+	break;			/* unknown tags killed */
+      }
+      pos += 5;
+      nextpos = pos;
+    } else
+      ++pos;				/* try next position */
+  }
+  if (!done)
+    codeput(line->s,line->len,q);
+  else {
+    if (!stralloc_catb(out,line->s+nextpos,line->len-nextpos))
+      die_nomem();		/* remainder */
+    codeput(out->s,out->len,q);
+  }
+}
+
 void copy(struct qmail *qqp,
 	  const char *fn,	/* text file name */
 	  char q)		/* '\0' for regular output, 'B' for base64, */
@@ -130,8 +201,8 @@ void copy(struct qmail *qqp,
 {
   int fd;
   int flagsmatched = 1;
-  int match, done;
-  unsigned int pos,nextpos;
+  int match;
+  unsigned int pos;
 
   qq = qqp;
   fd = try_open(fn);
@@ -176,66 +247,7 @@ void copy(struct qmail *qqp,
       }
       if (!flagsmatched) continue;
 
-		/* Find tags <#x#>. Replace with for x=R confirm, for x=A */
-		/* target, x=l outlocal, x=h outhost. For others, just    */
-		/* skip tag. If outlocal/outhost are not set, the tags are*/
-		/* skipped. If confirm/taget are not set, the tags are    */
-		/* replaced by "???????" */
-      pos = 0;
-      nextpos = 0;
-      done = 0;
-      outline.len = 0;			/* zap outline */
-      while ((pos += byte_chr(line.s+pos,line.len-pos,'<')) != line.len) {
-        if (pos + 4 < line.len &&
-            line.s[pos+1] == '#' &&
-            line.s[pos+3] == '#' &&
-            line.s[pos+4] == '>') {	/* tag. Copy first part of line */
-          done = 1;				/* did something */
-          if (!stralloc_catb(&outline,line.s+nextpos,pos-nextpos))
-			 die_nomem();
-          switch(line.s[pos+2]) {
-            case 'A':
-	      if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
-              if (!stralloc_cats(&outline,target)) die_nomem();
-              break;
-            case 'L':
-              if (!stralloc_cat(&outline,&local)) die_nomem();
-              break;
-            case 'R':
-              if (!stralloc_cats(&outline,confirm)) die_nomem();
-              break;
-	    case 'r':
-	      if (!stralloc_catb(&outline,confirm,confirmlocal)) die_nomem();
-	      break;
-            case 'l':
-              if (!stralloc_cat(&outline,&outlocal)) die_nomem();
-              break;
-            case 'h':
-            case 'H':
-              if (!stralloc_cat(&outline,&outhost)) die_nomem();
-              break;
-            case 't':
-	      if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
-              if (!stralloc_cats(&outline,verptarget)) die_nomem();
-              break;
-            case 'n':
-              if (!stralloc_cats(&outline,szmsgnum)) die_nomem();
-              break;
-            default:
-              break;			/* unknown tags killed */
-          }
-          pos += 5;
-          nextpos = pos;
-        } else
-          ++pos;				/* try next position */
-      }
-      if (!done)
-        codeput(line.s,line.len,q);
-      else {
-        if (!stralloc_catb(&outline,line.s+nextpos,line.len-nextpos))
-		die_nomem();		/* remainder */
-        codeput(outline.s,outline.len,q);
-      }
+      copy_line(&outline,&line,q);
 
       /* Last line is missing its trailing newline, add one on output. */
       if (!match)
