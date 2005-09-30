@@ -6,8 +6,8 @@
 #define NO_FLAGS ('z' - 'a' + 1)
 
 extern stralloc charset;
+extern stralloc ezmlmrc;
 extern stralloc key;
-extern stralloc language;
 extern stralloc listid;
 extern stralloc local;
 extern stralloc mailinglist;

@@ -34,7 +34,6 @@
 #include "die.h"
 #include "idx.h"
 #include "config.h"
-#include "auto_etc.h"
 
 static stralloc line = {0};
 static stralloc outline = {0};
@@ -103,31 +102,20 @@ static void codeputs(const char *l,char code)
   codeput(l,str_len(l),code);
 }
 
-static int lang_open(const char *fn,const char *lang)
-{
-  int fd;
-  if (!stralloc_copys(&line,auto_etc)) die_nomem();
-  if (!stralloc_append(&line,"/")) die_nomem();
-  if (!stralloc_cats(&line,lang)) die_nomem();
-  if (!stralloc_append(&line,"/")) die_nomem();
-  if (!stralloc_cats(&line,fn)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
-  if ((fd = open_read(line.s)) == -1)
-    if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
-  return fd;
-}
-
 static int try_open(const char *fn)
 {
   int fd;
   if ((fd = open_read(fn)) == -1) {
     if (errno != error_noent)
       strerr_die4sys(111,FATAL,ERR_OPEN,fn,": ");
-    if (str_start(fn,"text/")) {
-      if (language.len == 0
-	  || (fd = lang_open(fn+5,language.s)) == -1)
-	fd = lang_open(fn+5,"default");
+    if (ezmlmrc.len != 0) {
+      if (!stralloc_copy(&line,&ezmlmrc)) die_nomem();
+      if (!stralloc_append(&line,"/")) die_nomem();
+      if (!stralloc_cats(&line,fn)) die_nomem();
+      if (!stralloc_0(&line)) die_nomem();
+      if ((fd = open_read(line.s)) == -1)
+	if (errno != error_noent)
+	  strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
     }
   }
   if (fd == -1)
