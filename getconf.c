@@ -13,7 +13,6 @@
 
 static stralloc data = {0};
 static stralloc xdata = {0};
-static stralloc path = {0};
 
 int getconf(stralloc *sa,const char *fn,int flagrequired,
 	    const char *dir)
