@@ -5,6 +5,7 @@
 #include "slurp.h"
 #include "strerr.h"
 #include "getconf.h"
+#include "altpath.h"
 #include "die.h"
 #include "idx.h"
 
@@ -19,7 +20,7 @@ int getconf(stralloc *sa,const char *fn,int flagrequired,
 
   if (!stralloc_copys(&data,""))
     die_nomem();
-  switch(slurp(fn,&data,128)) {
+  switch (alt_slurp(fn,&data,128)) {
     case -1:
       strerr_die6sys(111,FATAL,"unable to read ",dir,"/",fn,": ");
     case 0:
