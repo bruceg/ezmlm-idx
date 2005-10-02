@@ -1,5 +1,6 @@
 alloc.o
 alloc_re.o
+altpath.o
 author.o
 auto_bin.o
 auto_cron.o

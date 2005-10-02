@@ -29,7 +29,7 @@
 #include "quote.h"
 #include "copy.h"
 #include "mime.h"
-#include "open.h"
+#include "altpath.h"
 #include "byte.h"
 #include "die.h"
 #include "idx.h"
@@ -85,27 +85,6 @@ static void codeput(const char *l,unsigned int n,char code)
 static void codeputs(const char *l,char code)
 {
   codeput(l,str_len(l),code);
-}
-
-static int try_open(const char *fn)
-{
-  int fd;
-  if ((fd = open_read(fn)) == -1) {
-    if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_OPEN,fn,": ");
-    if (ezmlmrc.len != 0) {
-      if (!stralloc_copy(&line,&ezmlmrc)) die_nomem();
-      if (!stralloc_append(&line,"/")) die_nomem();
-      if (!stralloc_cats(&line,fn)) die_nomem();
-      if (!stralloc_0(&line)) die_nomem();
-      if ((fd = open_read(line.s)) == -1)
-	if (errno != error_noent)
-	  strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
-    }
-  }
-  if (fd == -1)
-    strerr_die4sys(100,FATAL,ERR_OPEN,fn,": ");
-  return fd;
 }
 
 /* Find tags <#x#>. Replace with for x=R confirm, for x=A */
@@ -184,7 +163,7 @@ void copy(struct qmail *qqp,
   unsigned int pos;
 
   qq = qqp;
-  fd = try_open(fn);
+  fd = alt_open_read(fn);
   substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
   for (;;) {
     if (getln(&sstext,&line,&match,'\n') == -1)
