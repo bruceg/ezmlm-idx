@@ -7,9 +7,13 @@
 #include "getconf.h"
 #include "altpath.h"
 #include "die.h"
+#include "config.h"
+#include "copy.h"
 #include "idx.h"
 
 static stralloc data = {0};
+static stralloc xdata = {0};
+static stralloc path = {0};
 
 int getconf(stralloc *sa,const char *fn,int flagrequired,
 	    const char *dir)
@@ -29,14 +33,15 @@ int getconf(stralloc *sa,const char *fn,int flagrequired,
       strerr_die5x(100,FATAL,dir,"/",fn," does not exist");
   }
   if (!stralloc_append(&data,"\n")) die_nomem();
+  copy_xlate(&xdata,&data,'H');
   if (!stralloc_copys(sa,"")) die_nomem();
   i = 0;
-  for (j = 0;j < data.len;++j)
-    if (data.s[j] == '\n') {
+  for (j = 0;j < xdata.len;++j)
+    if (xdata.s[j] == '\n') {
       k = j;
-      while ((k > i) && ((data.s[k-1] == ' ') || (data.s[k-1] == '\t'))) --k;
-      if ((k > i) && (data.s[i] != '#')) {
-        if (!stralloc_catb(sa,data.s + i,k - i)) die_nomem();
+      while ((k > i) && ((xdata.s[k-1] == ' ') || (xdata.s[k-1] == '\t'))) --k;
+      if ((k > i) && (xdata.s[i] != '#')) {
+        if (!stralloc_catb(sa,xdata.s + i,k - i)) die_nomem();
         if (!stralloc_0(sa)) die_nomem();
       }
       i = j + 1;
