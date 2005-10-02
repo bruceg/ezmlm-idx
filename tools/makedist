@@ -21,7 +21,6 @@ fi
 
 svn revert conf-*
 
-tools/makeETC
 tools/makemake
 
 echo "Building the idx.patch"
