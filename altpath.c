@@ -4,8 +4,6 @@
 #include "config.h"
 #include "die.h"
 #include "error.h"
-#include "errtxt.h"
-#include "strerr.h"
 #include "open.h"
 #include "slurp.h"
 #include "altpath.h"
@@ -24,17 +22,10 @@ const char *altpath(stralloc *s,const char *fn)
 int alt_open_read(const char *fn)
 {
   int fd;
-  if ((fd = open_read(fn)) == -1) {
-    if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_OPEN,fn,": ");
-    if (ezmlmrc.len != 0) {
-      if ((fd = open_read(altpath(&path,fn))) == -1)
-	if (errno != error_noent)
-	  strerr_die4sys(111,FATAL,ERR_OPEN,path.s,": ");
-    }
-  }
-  if (fd == -1)
-    strerr_die4sys(100,FATAL,ERR_OPEN,fn,": ");
+  if ((fd = open_read(fn)) == -1
+      && errno == error_noent
+      && ezmlmrc.len > 0)
+    fd = open_read(altpath(&path,fn));
   return fd;
 }
 
