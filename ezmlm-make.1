@@ -277,16 +277,13 @@ Use
 .I dot
 resides.
 .B ezmlm-make
-otherwise uses the
-system wide ezmlmrc
-file (normally /etc/ezmlm/ezmlmrc and if not found there, the ezmlmrc file
-in the ezmlm binary directory).
+otherwise uses the system wide ezmlmrc file (normally
+.IR /etc/ezmlm/default/ezmlmrc ).
 The
 .B \-c
 switch may cause you to execute
 .B ezmlm-make
-based on a
-configuration file controlled by another user.
+based on a configuration file controlled by another user.
 .B ezmlm-make
 does not allow periods in any tag to restrict all actions to within
 .IR dir .
@@ -954,10 +951,8 @@ after all other actions.
 
 .B ezmlm-make
 will use
-.B /etc/ezmlm/ezmlmrc
-and if not found
-.B ezmlmrc
-in the ezmlm binary directory. This can be overridden with the
+.BR /etc/ezmlm/default/ezmlmrc .
+This can be overridden with the
 .B \-c
 and
 .B \-C
