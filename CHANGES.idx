@@ -28,8 +28,16 @@ cn_GB,cs,pl,ru,da,pt
 If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
 in the next version.
 
-ezmlm-idx-5.0.0, ????-??-??
+ezmlm-idx-5.0.0, 2005-10-03
 ===========================
+
+- Moved all the language-specific files (that is, all the "text" files
+  plus "charset" and "mailinglist") out of the ezmlmrc files into
+  individual files installed in a common location (/etc/ezmlm/LANG by
+  default).
+
+- Modified the programs to try to pull files that are not present in the
+  list directory from the common location above.
 
 - Replaced the use of the "config" file in ezmlm-make with individual
   files containing one setting each.  ezmlm-make will still read the
@@ -41,15 +49,9 @@ ezmlm-idx-5.0.0, ????-??-??
 
 - Added a "conf-lang" config file to replace the "make ISO" mechanism.
 
-- Moved all the text files out of the ezmlmrc files into individual
-  files installed in a common location (/etc/ezmlm/LANG by default).
-
 - Modified the "copy" function, which translates from "text" files into
   output emails, to also select sections at run time based on the list's
-  configured flags, and to load "text/*" files from /etc/ezmlm/LANG/*.
-
-- Added a "language" control file to mailing lists, which is used to
-  control which directory to pull text files from above.
+  configured flags.
 
 ezmlm-idx-0.443, 2005-09-01
 ===========================
