@@ -1,6 +1,8 @@
 #!/bin/sh
 # $Id$
 
+set -e
+
 doit() {
   lang=$1
   echo "d:::755:/$lang::"
@@ -16,6 +18,8 @@ doit() {
     fi
   done
 }
+
+make ezmlmrc.all
 
 {
   echo "d:::755:::"
