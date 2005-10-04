@@ -31,6 +31,10 @@ in the next version.
 ezmlm-idx-5.0.1, ????-??-??
 ===========================
 
+- If files cannot be found in either the list directory or the
+  language-specific directory, try to pull them from the default
+  directory (/etc/ezmlm/default).
+
 ezmlm-idx-5.0.0, 2005-10-03
 ===========================
 
