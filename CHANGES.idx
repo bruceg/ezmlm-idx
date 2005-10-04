@@ -35,6 +35,8 @@ ezmlm-idx-5.0.1, ????-??-??
   language-specific directory, try to pull them from the default
   directory (/etc/ezmlm/default).
 
+- Added a proper charset for Japanese texts.
+
 ezmlm-idx-5.0.0, 2005-10-03
 ===========================
 
