@@ -37,6 +37,8 @@ ezmlm-idx-5.0.1, ????-??-??
 
 - Added a proper charset for Japanese texts.
 
+- Added a Spanish translation for post-confirm.  Thanks Ruben Cardenal.
+
 ezmlm-idx-5.0.0, 2005-10-03
 ===========================
 

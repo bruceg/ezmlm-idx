@@ -1,0 +1,27 @@
+# $Id$
+Al parecer ha enviado el mensaje adjunto a la lista
+<#L#>@<#h#>
+
+Para evitar abusos en las listas de correo, cada remitente debe
+confirmar sus propios envios. Si desea aprobar su distribución
+a todos los suscriptores, por favor, escriba a:
+
+!A
+
+Normalmente esto ocurre al pulsar el botón "responder". Usted
+puede comprobar la dirección para asegurarse de que empieza por
+"<#L#>-accept" . Si esto no funciona, simplemente copie la
+dirección y péguela en el campo "Para:" de un nuevo mensaje.
+<=x=>
+
+
+Como alternativa haga clic aquí:
+
+        mailto:<#A#>
+<==>
+
+
+Si no confirma los posts, simplemente ignore este mensaje.
+
+--- Adjunto, el mensaje enviado.
+
