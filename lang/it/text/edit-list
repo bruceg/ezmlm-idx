@@ -1,4 +1,5 @@
 # $Id$
+# Revision: 1
 <=n=>
 Il comando <#L#>-edit.file può essere usato da un amministratore remoto per
 modificare il file di testo che costituiscono il corpo delle risposte dalla

@@ -1,11 +1,18 @@
 #!/bin/bash
 # $Id$
 set -e
+
+getrev() {
+  local rev
+  rev=`sed -e '/^#* *Revision: /!d; s/^.*: //' $1`
+  echo ${rev:-0}
+}
+
 cd `dirname $0`/../lang
 noupdates=true
 for en in en_US/text/*; do
   base=${en#en_US/text/}
-  baserev=`sed -e '/$Id:/!d;s/^.*$Id: [^ ]* //;s/ .*$//' $en`
+  baserev=`getrev $en`
   missing=""
   old=""
   for lang in ?? ??_??; do
@@ -14,8 +21,8 @@ for en in en_US/text/*; do
       if ! [ -e $other ]; then
 	missing="$missing $lang"
       else
-        otherrev=`sed -e '/$Id:/!d;s/^.*$Id: [^ ]* //;s/ .*$//' $other`
-        if [ $baserev -gt $otherrev ]; then
+        otherrev=`getrev $other`
+        if [ "$baserev" -gt "$otherrev" ]; then
 	  old="$old $lang"
         fi
       fi

@@ -1,4 +1,5 @@
 # $Id$
+# Revision: 1
 
 Megoriztem azoknak a digestek listajat a(z) <#L#>-digest listarol,
 amik visszapattantak a cimedrol. Minden kihagyott digest-nel csak az elso

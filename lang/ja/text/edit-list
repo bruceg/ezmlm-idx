@@ -1,4 +1,5 @@
 # $Id$
+# Revision: 1
 <=n=>
 管理者は <#L#>-edit.FILE command を使うことで ezmlm が出力する
 mailing list <#L#> の為の message text を編集することが出来ます。
