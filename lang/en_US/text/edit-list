@@ -1,5 +1,5 @@
 # $Id$
-# Revision: 1
+# Revision: 2
 <=n=>
 The <#L#>-edit.file command can be used by a remote
 administrator to edit the text files that make up the bulk
@@ -14,11 +14,24 @@ the text file.
 File                Use
 
 bottom              bottom of all responses. General command info.
+bounce_bottom       bottom of bounce warnings.
+bounce_num          prefix to the list of message numbers that have bounced.
+bounce_probe        probe message to test if an address is reachable.
+bounce_warn         warning message regarding bouncing messages.
+<=dn=>
+dig_bounce_num      prefix to the list of digest numbers that have bounced.
 digest              'administrivia' section of digests.
+<=n=>
+edit_do             prefix with text editing instructions.
+edit_done           text edit success message.
+edit_list           this list.
 faq                 frequently asked questions specific to this list.
+<=Bn=>
 get_bad             in place of messages not found in the archive.
+<=n=>
 help                general help (between 'top' and 'bottom').
 info                list info. First line should be meaningful on its own.
+<=mn=>
 mod_help            specific help for list moderators.
 mod_reject          to sender of rejected post.
 mod_request         to message moderators together with post.
@@ -26,7 +39,9 @@ mod_sub             to subscriber after moderator confirmed subscribe.
 mod_sub_confirm     to subscription mod to request subscribe confirm.
 mod_timeout         to sender of timed-out post.
 mod_unsub_confirm   to remote admin to request unsubscribe confirm.
-post-confirm         to sender for confirmation of message.
+<=yn=>
+post-confirm        to sender for confirmation of message.
+<=n=>
 sub_bad             to subscriber if confirm was bad.
 sub_confirm         to subscriber to request subscribe confirm.
 sub_nop             to subscriber after re-subscription.
@@ -39,4 +54,3 @@ unsub_bad           to subscriber if unsubscribe confirm was bad.
 unsub_confirm       to subscriber to request unsubscribe confirm.
 unsub_nop           to non-subscriber after unsubscribe.
 unsub_ok            to ex-subscriber after successful unsubscribe.
-
