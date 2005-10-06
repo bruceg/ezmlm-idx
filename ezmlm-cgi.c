@@ -146,9 +146,9 @@ static char lastjp[] = "B";/* to get back to the correct JP after line break */
 
 
 static struct msginfo {	/* clean info on the target message */
-  char item;		/* What we want */
-  char direction;	/* Relation to current msg */
-  char axis;		/* Axis of desired movement [may be calculated] */
+  int item;		/* What we want */
+  int direction;	/* Relation to current msg */
+  int axis;		/* Axis of desired movement [may be calculated] */
   unsigned long source;	/* reference message number */
   unsigned long target;
   unsigned long date;
@@ -488,7 +488,7 @@ int checkhash(const char *s)
   return 1;
 }
 
-int makefn(stralloc *sa,char item,unsigned long n,const char *hash)
+int makefn(stralloc *sa,int item,unsigned long n,const char *hash)
 {
   if (!stralloc_copys(sa,"archive/")) die_nomem();
   if (item == ITEM_MESSAGE) {
@@ -518,7 +518,7 @@ int makefn(stralloc *sa,char item,unsigned long n,const char *hash)
   return 1;
 }
 
-void alink(struct msginfo *infop,unsigned char item,unsigned char axis,
+void alink(struct msginfo *infop,int item,int axis,
 	   unsigned long msg,const char *data,unsigned int l)
 /* links with targets other msg -> msg. If the link is for author, we    */
 /* still supply subject, since most navigation at the message level will */
@@ -566,7 +566,7 @@ void alink(struct msginfo *infop,unsigned char item,unsigned char axis,
   oputs("</a>");
 }
 
-void linktoindex(struct msginfo *infop,unsigned char item)
+void linktoindex(struct msginfo *infop,int item)
 /* for links from message view back to author/subject/threads index */
 {
   oput(url.s,url.len);
@@ -598,7 +598,7 @@ void linktoindex(struct msginfo *infop,unsigned char item)
   oputs("#b\"");
 }
 
-void link_msg(struct msginfo *infop,unsigned char axis,unsigned char direction)
+void link_msg(struct msginfo *infop,int axis,int direction)
 /* Creates <a href="mapa:123:aaaaa...."> using a maximum of available */
 /* info only for links where the target is a message */
 {
@@ -806,7 +806,7 @@ void html_footer(int flagspecial)
 
 /* DATE functions */
 
-void datelink(struct msginfo *infop,unsigned long d,char direction)
+void datelink(struct msginfo *infop,unsigned long d,int direction)
 /* output a date with link back to thread index */
 {
   oput(url.s,url.len);
@@ -1011,7 +1011,7 @@ int show_index(struct msginfo *infop)
   return 1;
 }
 
-void objectlinks(struct msginfo *infop, char item)
+void objectlinks(struct msginfo *infop,int item)
 {
   oputs("<div class=\"objlinks\"><strong>\n");
   if (item == ITEM_DATE) {
@@ -1034,7 +1034,7 @@ void objectlinks(struct msginfo *infop, char item)
   oputs("</strong></div>\n");
 }
 
-int show_object(struct msginfo *infop,char item)
+int show_object(struct msginfo *infop,int item)
 /* shows thread, threads, author */
 /* infop has the info needed to access the author/subject/thread file */
 {
@@ -1589,7 +1589,7 @@ int show_message(struct msginfo *infop)
   return 1;
 }
 
-char decode_item(char ch)
+int decode_item(char ch)
 {
   switch (ch) {
 	case 'm': return ITEM_MESSAGE;
@@ -1603,7 +1603,7 @@ char decode_item(char ch)
   return 0;	/* never reached */
 }
 
-char decode_direction(char ch)
+int decode_direction(char ch)
 {
   switch (ch) {
 	case 's': return DIRECT_SAME;

@@ -39,6 +39,9 @@ ezmlm-idx-5.0.1, ????-??-??
 
 - Added a Spanish translation for post-confirm.  Thanks Ruben Cardenal.
 
+- Fixed a bug in ezmlm-cgi caused by the use of "char" type for array
+  index calculations.
+
 ezmlm-idx-5.0.0, 2005-10-03
 ===========================
 
