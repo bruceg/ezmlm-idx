@@ -7,3 +7,8 @@
 
   ${EZBIN}/ezmlm-make -+ -S "$DIR" || \
   fatal "ezmlm-make failed"
+
+  echo 'Local: <#L#>' >"${DIR}/text/trailer"
+  echo 'local: <#l#>' >>"${DIR}/text/trailer"
+  echo 'host: <#h#>' >>"${DIR}/text/trailer"
+  echo 'num: <#n#>' >>"${DIR}/text/trailer"
