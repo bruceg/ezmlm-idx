@@ -1,0 +1,14 @@
+# $Id$
+
+  prompt "flags and substs:     "
+
+  DEFAULT="digest-subscribe"
+  LOCAL="${LOC}-${DEFAULT}"
+  ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce subscribe probe"
+
+  grepbody Local: xyzzy-__tstlist
+  grepbody local: xyzzy-__tstlist-digest
+  grepbody host: example.com
+
+  ${ECHO} OK
