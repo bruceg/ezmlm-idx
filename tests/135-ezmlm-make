@@ -37,7 +37,7 @@ ${EZBIN}/ezmlm-make -+ln -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "failed to edit test list to +ln"
 
 # Set up a text file for use in testing copy()
-  mkdir -p "${DIR}/top"
+  mkdir -p "${DIR}/text"
   echo 'Local: <#L#>' >"${DIR}/text/top"
   echo 'local: <#l#>' >>"${DIR}/text/top"
   echo 'host: <#h#>' >>"${DIR}/text/top"
