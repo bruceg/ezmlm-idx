@@ -45,16 +45,16 @@ Als uw adres ongewijzigd is gebleven sinds uw inschrijving, kunt u
 ook een bericht sturen naar:
    <<#L#>-unsubscribe@<#H#>>
 
-</#dE/>
+</#d/>
 of voor de digest naar:
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#HEJ/>
+</#HJ/>
 Om adressen toe te voegen of te verwijderen, zal ik een verzoek
 om bevestiging sturen naar het opgegeven adres. Als u dat ontvangt
 kunt u door middel van een reply uw wens bevestigen.
 
-</#E/>
+<//>
 Indien u contact wilt opnemen met de eigenaar van deze lijst, stuurt
 u een bericht naar:
 
@@ -74,7 +74,7 @@ zijn gelaten. Dan is het makkelijker om u te helpen.
 Ik heb een lijst bewaard met berichten van de <#L#> mailing list die
 ge-bounced werden op uw adres.
 
-</#aE/>
+</#a/>
 Deze berichten kunnen nog in het archief staan.
 
 Om de berichten 123-145 op te vragen (maximaal 100 per verzoek),
@@ -85,7 +85,7 @@ Om een overzicht van onderwerpen en schrijver te ontvangen van de
 laatste 100 berichten, stuurt u een e-mail naar:
    <<#L#>-index@<#H#>>
 
-</#E/>
+<//>
 Dit zijn de nummers van de berichten:
 
 </text/dig-bounce-num#E/>
@@ -95,7 +95,7 @@ die ge-bounced werden op uw adres.
 Van iedere digest die u gemist hebt, heb ik het nummer bewaard van
 het eerste bericht in de digest.
 
-</#aE/>
+</#a/>
 Ik bewaar de digests niet, maar u kunt de berichten uit het
 archief ophalen.
 
@@ -107,7 +107,7 @@ Om een overzicht te ontvangen van onderwerpen en schrijvers van
 de laatste 100 berichten, stuurt u een e-mail naar:
    <<#L#>-index@<#H#>>
 
-</#E/>
+<//>
 Dit zijn de digest bericht nummers:
 
 </text/bounce-probe#E/>
@@ -157,14 +157,14 @@ Stuur een e-mail voor info en veel gestelde vragen (FAQ) naar:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#dE/>
+</#d/>
 Gelijksoortige adressen bestaan voor deze list:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#aE/>
+</#a/>
 Om berichten 123-145 te ontvangen (maximaal 100 per verzoek),
 stuurt u een e-mail naar:
    <<#L#>-get.123_145@<#H#>>
@@ -177,7 +177,7 @@ Om alle berichten te ontvangen met hetzelfde onderwerp als bericht 12345
 stuurt u een e-mail naar:
    <<#L#>-thread.12345@<#H#>>
 
-</#E/>
+<//>
 De e-mail die u stuurt hoeft niet leeg te zijn, maar ik zal
 hun inhoud negeren. Alleen het ADRES waar u naar toe stuurt
 is voor mij van belang.
@@ -214,23 +214,23 @@ Op gelijke wijze kunt u een adres verwijderen door een e-mail
 te sturen naar:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#dE/>
+</#d/>
 Voor de digest list is dat:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#E/>
+<//>
 Dat is alles. Subject en tekst hoeft u niet in te voeren.
 
-</#rE/>
+</#r/>
 Ik zal u een verzoek om bevestiging sturen, om zeker te maken
 dat u het verzoek heeft ingediend. U kunt reply-en en
 uw wens wordt uitgevoerd.
-</#RE/>
+</#R/>
 Ik zal een verzoek naar dat adres sturen, in dit geval
 <john@example.com>. De gebruiker hoeft alleen maar een reply
 te sturen om te bevestigen.
-</#E/>
+<//>
 
 De bevestigingen zijn bedoeld om het voor derden moeilijk te
 maken om anderman's adressen aan de lijst toe te voegen.
@@ -247,18 +247,18 @@ een e-mail te sturen naar:
     <<#L#>-subscribe@<#H#>>
     <<#L#>-unsubscribe@<#H#>>
 
-</#dE/>
+</#d/>
 Voor de digest list:
 
     <<#L#>-digest-subscribe@<#H#>>
     <<#L#>-digest-unsubscribe@<#H#>>
 
-</#E/>
+<//>
 De gebruiker zal een verzoek om bevestiging ontvangen
 om zeker te maken dat hij of zij eigenaar is van dat adres.
 Zodra dit bevestigd is, wordt de gebruiker uitgeschreven.
 
-</#sE/>
+</#s/>
 Omdat deze list "moderated" is, stuur ik een tweede verzoek naar
 de moderators. Omdat de gebruiker al aan heeft gegeven zich in
 te willen schrijven, kunt u als moderator zeker zijn dat het
@@ -267,9 +267,9 @@ Als u uw goedkeuring wilt geven aan het verzoek van deze gebruiker
 stuurt u een reply op mijn "CONFIRM" bericht.
 Als u geen goedkeuring geeft, kunt u mijn bericht verwijderen of
 kunt u contact opnemen met de gebruiker voor meer informatie.
-</#SE/>
+</#S/>
 Inschrijvingen werken op dezelfde manier.
-</#E/>
+<//>
 
 De gebruiker kan ook het volgende manier gebruiken:
 
@@ -284,7 +284,7 @@ Uw adres in identiteit worden niet zichtbaar gemaakt aan de
 gebruiker die zich in wil schrijven, tenzij u rechtstreeks e-mail
 aan hem of haar stuurt.
 
-</#rlE/>
+</#rl/>
 Om een lijst met leden te ontvangen van <#L#>@<#H#>, stuurt u
 een e-mail naar:
    <<#L#>-list@<#H#>>
@@ -293,19 +293,19 @@ Om een log te ontvangen van <#L#>@<#H#>, stuurt u
 een e-mail naar:
    <<#L#>-log@<#H#>>
 
-</#rldE/>
+</#rld/>
 Voor digest subscribers:
    <<#L#>-digest-list@<#H#>>
 en:
    <<#L#>-digest-log@<#H#>>
 
-</#rnE/>
+</#rn/>
 U kunt de teksten zelf aanpassen van de berichten die de mailing list
 verstuurt. Om de lijst met teksten en instructies te ontvangen
 stuurt u een e-mail naar:
    <<#L#>-edit@<#H#>>
 
-</#mE/>
+</#m/>
 Moderated
 ---------
 Als berichten "moderated" zijn, zal ik het bericht bewaren en u
@@ -333,7 +333,7 @@ Als ik (normaliter binnen 5 dagen) geen moderate reply heb ontvangen,
 zal ik het bericht aan de afzender terugsturen met een verklaring.
 Uw administrator kan de list dusdanig opzetten dat dergelijke berichten
 gewist worden, zonder kennisgeving.
-</#E/>
+<//>
 
 Vakantie
 --------
@@ -347,7 +347,7 @@ eigenaar van de list.
 Als u automatisch alle verzoeken wilt accepteren als u weg bent, kunt
 u uw mailprogramma instellen om een auto-reply te geven.
 
-</#rE/>
+</#r/>
 Als u vanaf een ander adres administratieve handelingen uit wilt voeren,
 wordt de gebruiker gevraagd om bevestiging, niet aan u.
 Daarna wordt er een bevestigingsverzoek aan alle moderatoren gestuurd.
@@ -355,7 +355,7 @@ Dat doe ik omdat ik niet kan weten of u het originele verzoek hebt gestuurd.
 
 Onthoud dat uw originele verzoek (en adres) in dit geval wel naar de
 gebruiker worden gestuurd.
-</#E/>
+<//>
 
 Veel succes gewenst!
 
@@ -387,11 +387,11 @@ Om dit bericht te weigeren stuurt u een e-mail naar:
 Gewoonlijk kunt u "reply-to-all" aanklikken en dan alle adressen verwijderen,
 behalve het adres wat begint met
 "<#L#>-reject".
-</#xE/>
+</#x/>
 
 Om te weigeren, kunt u ook hier klikken:
 	mailto:<#R#>
-</#E/>
+<//>
 
 U hoeft het hele bericht niet bij te sluiten in uw antwoord.
 Als u opmerkingen naar de afzender van het geweigerde bericht wilt sturen,
@@ -433,11 +433,11 @@ Om te bevestigen kunt u een reply sturen naar dit adres:
 Dit gebeurt gewoonlijk als u "reply" klikt. Als dat niet zou werken
 kunt u bovenstaand adres kopieeren en plakken in de "To:" regel van
 een nieuw bericht
-</#xE/>
+</#x/>
 
 U kunt ook hier klikken:
 	mailto:<#R#>
-</#E/>
+<//>
 
 Als dit niet is wat u wenst, kunt u dit bericht negeren.
 
@@ -456,11 +456,11 @@ Als u hiermee instemt, stuur dan een reply naar dit adres:
 Dit gebeurt gewoonlijk als u op reply klikt. Als dat niet zou werken
 kunt u bovenstaand adres kopieeren en plakken in de "To:" regel van
 een nieuw bericht.
-</#xE/>
+</#x/>
 
 U kunt ook hier klikken:
 	mailto:<#R#>
-</#E/>
+<//>
 
 Als dit niet is wat u wenst, kunt u dit bericht negeren.
 
@@ -482,11 +482,11 @@ wordt toegevoegd aan de <#l#> mailinglist, stuur dan
 een reply naar dit adres:
 
 !R
-</#xE/>
+</#x/>
 
 Of klik hier:
 	mailto:<#R#>
-</#E/>
+<//>
 
 Controleer het reply-adres zorgvuldig of alles goed is overgenomen voor
 u uw bericht verstuurt.
@@ -508,23 +508,23 @@ een reply naar dit adres:
 Dit gebeurt gewoonlijk als u "reply" klikt.
 Als dit niet zou werken, kunt u bovenstaand adres kopieeren en
 plakken in de "To:" regel van een new bericht.
-</#xE/>
+</#x/>
 
 U kunt ook hier klikken:
 	mailto:<#R#>
-</#E/>
+<//>
 
 Deze bevestiging dient twee doelen. Ten eerste weet ik dat ik u e-mail kan
 sturen. Ten tweede beschermt het u voor het geval dat iemand anders u
 tegen uw wil inschrijft op deze mailing list.
 
-</#qE/>
+</#q/>
 Sommige emailprogramma's hebben moeilijkheden met lange adressen. Als u
 niet kunt antwoorden op dit verzoek, stuur dan een bericht naar:
 <<#L#>-request@<#H#>> en zet bovenstaand
 adres (helemaal) in de "Subject:" regel.
 
-</#sE/>
+</#s/>
 Deze list is "moderated". Zodra u deze bevestiging hebt gestuurd, stuur
 ik de moderators een verzoek om u daadwerkelijk toe te voegen.
 Ik zal u meteen in kennis stellen als dat is gebeurd.
@@ -553,7 +553,7 @@ Om u weer uit te schrijven stuurt u een e-mail naar:
 
     <<#l#>-unsubscribe-<#t#>@<#H#>>
 
-</text/top/>
+</text/top#E/>
 Hallo! Ik ben het ezmlm programma. Ik verzorg de
 <#l#>@<#H#> mailing list.
 
@@ -576,11 +576,11 @@ wordt verwijderd van de <#l#> mailinglist, stuur dan
 een reply naar dit adres:
 
 !R
-</#xE/>
+</#x/>
 
 U kunt ook hier klikken:
 	mailto:<#R#>
-</#E/>
+<//>
 
 Ik heb niet gecontroleerd of uw adres op dit moment op de mailing list
 staat. Om te zien onder welk adres u op dit moment bent ingeschreven,
@@ -589,7 +589,7 @@ Ieder bericht bevat uw email adres in het "return path";
 Bijvoorbeeld,  mary@example.com ontvangt berichten met het "return-path":
 <<#l#>-return-<number>-mary=example.com@<#H#>.
 
-</#qE/>
+</#q/>
 Sommige emailprogramma's bevatten fouten en kunnen niet overweg met lange
 adressen. Als u geen reply kunt sturen op dit verzoek, kunt u een bericht
 sturen naar:
@@ -691,9 +691,9 @@ sub_confirm         aan gebruiker als inschrijving is goedgekeurd
 sub_nop             aan gebruiker na hernieuwde inschrijving
 sub_ok              aan gebruiker na succesvolle inschrijving
 top                 staat boven ieder bericht
-</#tnE/>
+</#tn/>
 trailer             staat onder aan elk uitgezonden bericht
-</#nE/>
+</#n/>
 unsub_bad           aan gebruiker als uitschrijving mislukt is
 unsub_confirm       aan gebruiker om uitschrijving te bevestigen
 unsub_nop           aan niet-gebruiker na uitschrijf verzoek

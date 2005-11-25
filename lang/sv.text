@@ -28,11 +28,11 @@ från ett brev som kom från listan. Ifall du inte bytt adress
 sen du påbörjade din prenumeration, skicka ett brev till:
    <<#L#>-unsubscribe@<#H#>>
 
-</#dE/>
+</#d/>
 eller för "digest" versionen:
    <<#L#>-unsubscribe@<#H#>>
 
-</#E/>
+<//>
 För nya/avslutade prenumerationer, skickar jag ett bekräftelse
 brev till adressen. När du får brevet, svara bara på det för
 att genomföra prenumerationsförändringen.
@@ -56,7 +56,7 @@ inklusive HELA brevhuvudet så vi lättare kan hjälpa dig.
 Jag har skapat en lista på de meddelanden från <#L#> listan som
 har "studsat" på väg till dig.
 
-</#aE/>
+</#a/>
 Kopior av dessa meddelanden kan du finna i arkivet.
 
 För att hämta meddelande 123-145 (max 100 per förfrågan), skicka
@@ -67,7 +67,7 @@ För att få en lista på titlar och författare för de senaste 100
 meddelandena, skicka ett brev till:
    <<#L#>-index@<#H#>>
 
-</#E/>
+<//>
 Detta är meddelande nummren:
 
 </text/dig-bounce-num#E/>
@@ -77,7 +77,7 @@ listan, som har "studsat" till din adress. För varje "digest" brev
 som du missat, har jag skrivit upp första meddelandenummret i det
 brevet.
 
-</#aE/>
+</#a/>
 "Digest" meddelanden arkiveras inte, men du kanske kan finna dem
 i akrivet för huvudlistan.
 
@@ -89,7 +89,7 @@ För en lista över författare och titlar på de senaste 100
 meddelandena, skicka ett brev till:
    <<#L#>-index@<#H#>>
 
-</#E/>
+<//>
 Här är "digest" meddelande nummren:
 
 </text/bounce-probe#E/>
@@ -141,14 +141,14 @@ och "FAQn" för listan:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#dE/>
+</#d/>
 Liknande adresser finns för "digest" versionen av listan:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#aE/>
+</#a/>
 För att få meddelande 123 till 145 (max 100 per förfrågan),
 skicka ett brev till:
    <<#L#>-get.123_145@<#H#>>
@@ -161,7 +161,7 @@ För att få alla meddelanden med samma titel som meddelande 12345,
 skicka ett brev till:
    <<#L#>-thread.12345@<#H#>>
 
-</#E/>
+<//>
 Meddelandena behöver inte innehålla något särskilt, det är
 bara adressen som är viktig.
 
@@ -198,23 +198,23 @@ du skickat ett brev till:
 Du kan på samma sätt ta bort en adress med ett meddelande till:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#dE/>
+</#d/>
 För "digest" versionen av listan:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#E/>
+<//>
 Det är allt. Titel och innehåll spelar ingen roll!
 
-</#rE/>
+</#r/>
 Ett bekräftelse brev kommer skickas för att vara säker
 på att det verkligen var du som skickade brevet.
 Svara bara på det brevet och det hela är klart.
-</#RE/>
+</#R/>
 Jag kommer skicka ett bekräftelsebrev till prenumerantens adress,
 i detta fallet <john@example.com>. Allt prenumeranten behöver
 göra är att svara på brevet.
-</#E/>
+<//>
 
 Bekräftelserna är nödvändiga för att göra det svårt för
 en tredje part till att lägga till/ta bort adresser till
@@ -232,18 +232,18 @@ att skicka ett brev till:
 <#L#>-subscribe@<#H#>
 <#L#>-unsubscribe@<#H#>
 
-</#dE/>
+</#d/>
 För "digest" versionen av listan:
 
 <#L#>-digest-subscribe@<#H#>
 <#L#>-digest-unsubscribe@<#H#>
 
-</#E/>
+<//>
 Prenumeranten kommer få ett bekräftelse brev för
 att vara säker på att personen har den adressen.
 När det är klart blir personen borttagen ur listan.
 
-</#sE/>
+</#s/>
 Eftersom denna listan är sluten, kommer jag skicka en andra
 förfrågan till moderatorerna. Eftersom prenumeranten redan har
 bekräftat att den vill vara med på listan, kan du som
@@ -252,9 +252,9 @@ ha med personen på listan, svara på bekräftelse (CONFIRM)
 meddelandet. Ifall du inte vill ha med personen, radera bara
 meddelandet istället (eller kontakta personen för ytterligare
 information).
-</#SE/>
+</#S/>
 Prenumeration fungerar på samma sätt.
-</#E/>
+<//>
 
 Användaren kan också:
 
@@ -268,7 +268,7 @@ och kan svara på det.
 Din adress och identitet kommer att vara hemlig för prenumeranten
 om du inte skickar brev direkt till denne.
 
-</#rlE/>
+</#rl/>
 För att få en lista på prenumeranter på <#L#>@<#H#>,
 skicka ett brev till:
    <<#L#>-list@<#H#>>
@@ -277,19 +277,19 @@ För att få en "transaktionslog" för <#L#>@<#H#>,
 skicka ett brev till:
    <<#L#>-log@<#H#>>
 
-</#rldE/>
+</#rld/>
 För "digest" prenumeranter:
    <<#L#>-digest-list@<#H#>>
 och:
    <<#L#>-digest-log@<#H#>>
 
-</#rnE/>
+</#rn/>
 Du kan ändra textfilerna, som listan använder, på distans. För att
 få en lista på filerna och instruktioner om hur du ändrar dem,
 skicka ett e-mail till:
    <<#L#>-edit@<#H#>>
 
-</#mE/>
+</#m/>
 Modererade utskick
 ------------------
 När utskick är modererade, kommer ett brev att skickas till dig
@@ -316,7 +316,7 @@ så kommer brevet ändå att vara avvisat och vice versa.
 Ifall ingen moderator svarar inom en viss tid (vanligtvis 5 dagar),
 kommer brevet att returneras till författaren med en förklaring
 om vad som hände.
-</#E/>
+<//>
 
 Semestrar
 ---------
@@ -332,7 +332,7 @@ Ifall du vill att allt skall godkännas automatiskt medan du är
 borta, ställ iordning ditt e-mail system så den gör ett autosvar
 på brev med ovan nämnda titlar.
 
-</#rE/>
+</#r/>
 Ifall du försöker administrera listan från en adress som inte är din
 egen, prenumeranten, inte du, kommer frågas efter en bekräftelse.
 Därefter kommer en bekräftelseförfrågan skickas till moderatorerna.
@@ -341,7 +341,7 @@ skickade originalfrågan.
 
 Observera att originalförfrågan, inklusive din adress, skickas till
 prenumeranten i detta fallet.
-</#E/>
+<//>
 
 Lycka till!
 
@@ -361,11 +361,11 @@ Vanligtvis händer detta automatiskt om du trycker på "svara" (reply)
 knappen. Du kan kontrollera adressen att den börjar med:
 "<#L#>-accept". Ifall det inte fungerar, kopiera adressen och
 klistra in den i "Till" ("To:") fältet i ett nytt brev.
-</#xE/>
+</#x/>
 
 Alternativt, tryck här:
 	<mailto:<#A#>>
-</#E/>
+<//>
 
 Föra att skicka tillbaka brevet till avsändaren, skicka ett
 meddelande till:
@@ -375,11 +375,11 @@ meddelande till:
 Vanligtvis är det enklare att trycka på "svara alla" ("reply-to-all")
 knappen och ta bort alla adresser som inte börjar med:
 "<#L#>-reject".
-</#xE/>
+</#x/>
 
 Alternativt, tryck här:
 	<mailto:<#R#>>
-</#E/>
+<//>
 
 Du behöver inte kopiera brevet i ditt svar. Ifall du vill skicka
 med en kommentar till författaren till ett brev du inte accepterat,
@@ -425,11 +425,11 @@ För att bekräfta, skicka ett tomt brev till denna adress:
 Vanligtvis görs det genom "svara" ("reply") knappen.
 Ifall det inte fungerar, kopiera adressen och klistra in den i
 "To:" fältet i ett nytt meddelande.
-</#xE/>
+</#x/>
 
 eller tryck här:
 	<mailto:<#R#>>
-</#E/>
+<//>
 
 Ifall du inte godkänner detta, ignorera detta meddelande.
 
@@ -448,11 +448,11 @@ till denna adress:
 Enklast gör du det genom att trycka på "svara" ("reply") knappen.
 Ifall det inte fungerar, kopiera adressen och klistra in den i
 "Till" ("To:") fältet i det nya meddelandet.
-</#xE/>
+</#x/>
 
 eller tryck här:
 	<mailto:<#R#>>
-</#E/>
+<//>
 
 Ifall du inte håller med, ignorera detta brev.
 
@@ -475,11 +475,11 @@ du vill ha med
 på <#l#> listan, skicka ett brev till denna adress:
 
 !R
-</#xE/>
+</#x/>
 
 eller tryck här:
 	<mailto:<#R#>>
-</#E/>
+<//>
 
 Var noga med att svarsadresser är riktig när du bekräftar
 prenumerationen.
@@ -500,23 +500,23 @@ adderad till <#l#> listan, skicka ett brev till denna adress:
 Enklast görs det genom att trycka på "svara" ("reply") knappen.
 Ifall det inte fungerar, kopiera adressen och klistra in den i
 "Till" ("To:") fältet i ett nytt brev.
-</#xE/>
+</#x/>
 
 eller tryck här:
 	<mailto:<#R#>>
-</#E/>
+<//>
 
 Denna bekräftelse tjänar två syften. Dels säkerställer den att det går
 att skicka brev till dig och dels skyddar den dig mot att andra försöker
 prenumerera någon mot dess vilja.
 
-</#qE/>
+</#q/>
 Det är fel på vissa e-mail program vilket gör att de inte kan hantera
 långa adresser. Ifall du inte kan svara på denna förfrågan, skicka
 istället ett meddelande till <<#L#>-request@<#H#>>
 och skriva hela ovan nämnda adress i titel ("Subject:") raden.
 
-</#sE/>
+</#s/>
 Denna lista är modererad. Så fort du har svarat på denna bekräftelse
 kommer din förfrågan att skickas till moderatorerna för listan.
 Du kommer att underrättas när din prenumeration är aktiverad.
@@ -546,7 +546,7 @@ För att avsluta prenumerationen, skicka ett brev till:
 
     <<#l#>-unsubscribe-<#t#>@<#H#>>
 
-</text/top/>
+</text/top#E/>
 Detta är ett meddelande från ezmlm programmet som har hand om
 <#l#>@<#H#> listan.
 
@@ -571,11 +571,11 @@ du vill ta bort
 från <#l#> listan, skicka ett brev till denna adress:
 
 !R
-</#xE/>
+</#x/>
 
 eller klicka här:
 	<mailto:<#R#>>
-</#E/>
+<//>
 
 Var vänligt att kontrollera svarsadressen noggrant så att den är
 riktig innan du svarar på detta brev.
@@ -596,11 +596,11 @@ från <#l#> listan, skicka ett brev till denna adress:
 Vanligtvis gör man det med "Svara" ("Reply") knappen.
 Ifall det inte fungerar, kopiera adressen nedan och klistra
 in den i "Till" ("To:") fältet i ett nytt brev.
-</#xE/>
+</#x/>
 
 eller tryck här:
 	<mailto:<#R#>>
-</#E/>
+<//>
 
 För att se vilken adress din prenumeration går till, undersök ett
 meddelande från listan. Varje meddelande har din adress dold i
@@ -608,7 +608,7 @@ dess "return path", t ex mary@example.com har får meddelanden
 med "return-path" satt till:
 <<#l#>-return-<nummer>-mary=example.com@<#H#>>.
 
-</#qE/>
+</#q/>
 Vissa email program är felaktiga och kan inte hantera långa adresser.
 Ifall du inte kan svara på detta meddelande, skicka istället ett
 meddelande till <<#L#>-request@<#H#>> och skriv hela ovan nämnda
@@ -671,11 +671,11 @@ Ditt mailprogram borde ha en svarsfunktiuon som använder
 denna address automatiskt. Ifall det inte fungerar, kan du
 kopiera addressen och klistra in den i "To:"/"Till:" fältet
 på ett nytt medelande.
-</#xE/>
+</#x/>
 
 eller klicka här:
         mailto:<#R#>
-</#E/>
+<//>
 
 Jag kan ta bort citeringsmarkeringar (t ex "> ") som din
 mailprogramvara lägger till texten så länge som du inte
@@ -716,9 +716,9 @@ sub_bad             till prenumeranten ifall bekräftelsen var felaktig.
 sub_confirm         till prenumeranten för att bekräfta prenumerationer.
 sub_nop             till prenumeranten efter en dubbel prenumeration.
 sub_ok              till prenumeranten efter en lyckad prenumeration.
-</#tnE/>
+</#tn/>
 trailer             adderas till alla utskick innan de kommer till listan.
-</#nE/>
+</#n/>
 top                 starten på alla svar. Generell kommando information.
 unsub_bad           till prenumeranten ifall avprenumerationen misslyckades.
 unsub_confirm       till prenumeranten för att bekräfta avprenumeration.

@@ -73,17 +73,17 @@ der Mailingliste werden sich bei Ihnen oder über Sie beschweren.
    geht auch:
    <<#L#>-unsubscribe@<#H#>>
 
-</#dE/>
+</#d/>
    Für die Digest-Liste existieren die entsprechenden Adressen:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#HJE/>
+</#HJ/>
 Beim Löschen oder Eintragen von Abonnenten verschicke ich eine
 zusätzliche Kontrollnachricht. Diese muß zur Bestätigung einfach
 nur beantwortet werden.
 
-</#E/>
+<//>
 Falls Sie menschliche Hilfe brauchen, wenden Sie sich bitte an
 den Listeneigentümer:
 
@@ -104,7 +104,7 @@ dadurch wird es sehr viel leichter, Ihnen schnell zu helfen.
 Ich habe mir gemerkt, welche Nachrichten der Mailingliste
    <<#L#>@<#H#>>
 nicht an Sie zugestellt werden konnten.
-</#aE/>
+</#a/>
 Eventuell befinden sich noch Kopien dieser Nachrichten
 im Archiv.
 
@@ -121,7 +121,7 @@ Nachrichten zu bekommen, schicken Sie eine leere Mail an die
 folgende Adresse:
    <#L#>-index@<#H#>
 
-</#E/>
+<//>
 Hier die Nummern der Nachrichten:
 
 </text/dig-bounce-num#E/>
@@ -131,7 +131,7 @@ Ich habe mir gemerkt, welche Nachrichten der Mailingliste
 Pro nicht zugestelltem Digest wird jeweils die Nummer der
 ersten Nachricht vermerkt.
 
-</#aE/>
+</#a/>
 Unter Umständen befinden sich noch Kopien der Nachrichten
 im Archiv. Ich habe mir jeweils die Nummer der ersten
 Nachricht pro Digest gemerkt. Sie können sich die Nachrichten
@@ -151,7 +151,7 @@ Nachrichten zu bekommen, schicken Sie eine leere Mail an die
 folgende Adresse:
    <#L#>-index@<#H#>
 
-</#E/>
+<//>
 Hier die Nummern der ersten Nachricht pro Digest:
 
 </text/bounce-probe#E/>
@@ -214,7 +214,7 @@ die Antworten darauf) vorgesehen.
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#aE/>
+</#a/>
 <<#L#>-get.12@<#H#>>
 Auf diese Weise fordern Sie eine Kopie der Nachricht 12
 vom Archiv an.
@@ -238,7 +238,7 @@ Zusätzlich zu den Betreffzeilen wird der jeweilige Autor
 Anforderung aller Nachrichten, die den gleichen Betreff wie
 die Nachricht 123 haben.
 
-</#E/>
+<//>
 Der Inhalt der Nachrichten muß nicht unbedingt leer sein, Sie
 können auch etwas in die Betreff-Zeilen schreiben. Ich werde
 jedoch beide Angaben ignorieren - nur die angeschriebene Adresse
@@ -303,25 +303,25 @@ Eintragen:
 Löschen:
    <#L#>-unsubscribe-ich=example.com@<#H#>
 
-</#dE/>
+</#d/>
 Entsprechend für die Digest-Liste:
    <#L#>-digest-subscribe-ich=example.com@<#H#>
    <#L#>-digest-unsubscribe-ich=example.com@<#H#>
 
-</#E/>
+<//>
 So einfach ist das :) Sie brauchen nicht einmal einen
 Betreff oder irgendeinen Nachrichtentext schreiben.
 
-</#rE/>
+</#r/>
 Ich werde Ihnen eine Rückfrage schicken, um sicherzugehen daß
 wirklich Sie das Kommando geschickt haben.
 Sie brauchen dann einfach nur noch antworten und der Vorgang
 ist damit abgeschlossen.
-</#RE/>
+</#R/>
 Ich werde zur Sicherheit an die angegebene Adresse (in diesem
 Fall ich@example.com) eine Rückfrage schicken.
 Alles was der Nutzer tun muß, ist auf diese Anfrage zu antworten.
-</#E/>
+<//>
 
 Die Bestätigungsnachrichten sind erforderlich um es Dritten
 schwerer zu machen, beliebige Mailadressen in die Liste
@@ -343,18 +343,18 @@ Bestellen der Liste:
 Abbestellen der Liste:
    <#L#>-unsubscribe@<#H#>
 
-</#dE/>
+</#d/>
 Entsprechend für die Digest-Liste:
 
    <#L#>-digest-subscribe@<#H#>
    <#L#>-digest-unsubscribe@<#H#>
 
-</#E/>
+<//>
 In beiden Fällen bekommt der Nutzer eine Rückfrage, um
 Fälschungen vorzubeugen. Nach Bestätigung wird der Nutzer
 Abonnent der Liste oder aus ihr gelöscht.
 
-</#sE/>
+</#s/>
 Da diese Liste mit moderierten Abonnements arbeitet, wird
 bei einem Abonnement eine zweite Rückfrage an den oder die
 Moderatoren geschickt.
@@ -367,18 +367,18 @@ Eventuell können Sie auch mehr Informationen vom Nutzer einholen
 oder ihm Ihre Gründe für die Nicht-Bestätigung mitteilen.
 Beachten Sie, daß dadurch Ihre Email-Adresse bekannt wird.
 
-</#E/>
+<//>
 Die Nutzer können auch die folgende Adressen benutzen:
 
    <#L#>-subscribe-ich=example.com@<#H#>
    <#L#>-unsubscribe-ich=example.com@<#H#>
 
-</#dE/>
+</#d/>
 Für Digests:
    <#L#>-digest-subscribe-ich=example.com@<#H#>
    <#L#>-digest-unsubscribe-ich=example.com@<#H#>
 
-</#E/>
+<//>
 Damit können sie eine andere als die aktuell benutzte
 Email-Adresse in die Mailingliste einzutragen bzw. sie daraus
 löschen (in diesem Beispiel die Adresse ich@example.com).
@@ -393,7 +393,7 @@ diese Adresse empfängt.
 Ihre Adresse und Identität wird keiner weiteren Person
 offengelegt, es sei denn Sie nehmen direkt Kontakt auf.
 
-</#rlE/>
+</#rl/>
 Information über den Listenzustand
 ----------------------------------
 
@@ -406,14 +406,14 @@ Abgaenge) für <#L#>@<#H#>
 zu bekommen, senden Sie eine Mail an:
    <<#L#>-log@<#H#>>
 
-</#rldE/>
+</#rld/>
 Die Liste der Digest-Abonnenten erhalten Sie über:
    <<#L#>-digest-list@<#H#>>
 
 Das Logfile für die <#L#>-digest@<#H#> Liste über:
    <<#L#>-digest-log@<#H#>>
 
-</#rnE/>
+</#rn/>
 
 Textänderungen
 --------------
@@ -423,7 +423,7 @@ verändern. Um eine Datei- und Kommandoliste dafür zu erhalten schreiben
 Sie an:
    <<#L#>-edit@<#H#>>
 
-</#mE/>
+</#m/>
 
 Moderierte Nachrichten
 ----------------------
@@ -465,7 +465,7 @@ Die Liste kann auch so konfiguriert werden, daß solche
 Nachrichten nicht an den Nutzer zurückgeschickt, sondern
 kommentarlos gelöscht werden.
 
-</#E/>
+<//>
 
 Urlaub und andere Abwesenheit
 -----------------------------
@@ -485,7 +485,7 @@ Wenn Sie für eine Weile alle Anforderungsmails automatisch
 bestätigen wollen, lassen Sie einfach Ihr Mailsystem die Nachrichten
 automatisch beantworten, die die obengenannten Bedingungen erfüllen.
 
-</#rE/>
+</#r/>
 Wenn Sie die Liste von einer Fremdadresse aus administrieren wollen,
 werden nicht Sie, sondern der Nutzer nach einer Bestätigung gefragt.
 Danach wird die Bestätigungsanforderung an alle Moderatoren verschickt.
@@ -495,7 +495,7 @@ ob Sie zur Administration berechtigt sind.
 Bitte beachten Sie, daß in diesem Fall auch Ihre Administrationsmail
 (und Ihre Mailadresse) an den Nutzer übermittelt werden.
 
-</#E/>
+<//>
 Viel Erfolg!
 
 PS: Bitte wenden Sie sich an den Listeneigentümer
@@ -527,12 +527,12 @@ die oben genannte Adresse einfach in die Zieladresse einer neuen
 Nachricht. Beachten Sie dabei aber einen eventuell von Ihrem
 Mailprogramm vorgenommenen Zeilenumbruch, falls die Adresse nicht
 in eine Zeile paßt.
-</#xE/>
+</#x/>
 Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
    mailto:<#A#>
 Kontrollieren Sie aber bitte auch in diesem Fall, daß die Adresse
 nicht durch Zeilenumbruch verstümmelt wurde!
-</#E/>
+<//>
 
 
 Um die Nachricht abzuweisen und an den Absender zurückzuschicken,
@@ -544,12 +544,12 @@ Falls Ihr Programm das unterstützt, können Sie auch an die im
 From: Header angegebene Adresse antworten (das sollte die oben
 angegebene sein).
 
-</#xE/>
+</#x/>
 Wenn Ihr Programm Hyperlinks unterstützt, können Sie auch
 hier klicken:
    mailto:<#R#>
 
-</#E/>
+<//>
 
 Sie müssen keine Kopie der Originalnachricht mitschicken.
 Wenn Sie dem Absender bei einer Ablehnung einen Kommentar zukommen
@@ -610,10 +610,10 @@ Beachten Sie dabei aber einen eventuell von Ihrem Mailprogramm
 vorgenommenen Zeilenumbruch, falls die Adresse nicht in eine Zeile paßt.
 Sie können die Adresse auch kopieren und in einer neuen Mail
 als Empfänger einsetzen.
-</#xE/>
+</#x/>
 Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
    mailto:<#R#>
-</#E/>
+<//>
 
 
 Falls Sie nicht zustimmen, ignorieren Sie diese Nachricht einfach.
@@ -641,10 +641,10 @@ Beachten Sie dabei aber einen eventuell von Ihrem Mailprogramm
 vorgenommenen Zeilenumbruch, falls die Adresse nicht in eine Zeile paßt.
 Sie können die Adresse auch kopieren und in einer neuen Mail
 als Empfänger einsetzen.
-</#xE/>
+</#x/>
 Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
    mailto:<#R#>
-</#E/>
+<//>
 
 Falls Sie nicht zustimmen, ignorieren Sie diese Nachricht einfach.
 Sie können Dem Nutzer natürlich auch eine Begründung Ihrer Ablehnung
@@ -672,11 +672,11 @@ in die Mailingliste
 aufgenommen wird, senden Sie eine leere Mail an die Adresse
 
 !R
-</#xE/>
+</#x/>
 
 Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
    mailto:<#R#>
-</#E/>
+<//>
 
 Prüfen Sie noch einmal genau, daß Sie an die richtige Adresse
 schreiben und diese nicht von Ihrem Mailprogramm verstümmelt wurde.
@@ -701,31 +701,31 @@ Beachten Sie dabei aber einen eventuell von Ihrem Mailprogramm
 vorgenommenen Zeilenumbruch, falls die Adresse nicht in eine Zeile paßt.
 Sie können die Adresse auch kopieren und in einer neuen Mail
 als Empfänger einsetzen.
-</#xE/>
+</#x/>
 Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
    mailto:<#R#>
-</#qE/>
+</#q/>
 
 Manche Mailprogramme sind nicht in der Lage, lange Adressen zu
 verarbeiten. Falls Sie die angegebene Adresse nicht anschreiben
 können, benutzen Sie bitte die Adresse
 <<#L#>-request@<#H#>> und tragen die
 obengenannte Adresse in die Betreff-Zeile (Subject:) ein.
-</#E/>
+<//>
 
 Diese Bestätigung dient zwei Zwecken. Zum einen wird dadurch sicher-
 gestellt, daß ich Mails an Ihre Adresse zustellen kann.
 Zum anderen dient die Bestätigung als Schutz gegen gefälschte
 Mailinglisten-Abonnements.
 
-</#sE/>
+</#s/>
 Diese Mailingliste ist moderiert. Sobald Sie die Bestätigung
 abgeschickt haben, wird eine weitere Bestätigung von den Moderatoren
 eingeholt. Sie erhalten einen Hinweis, wenn der Vorgang abgeschlossen
 wurde. Falls nach etwa zehn Tagen keine Reaktion kam, hat keiner der
 Moderatoren zugestimmt, Sie in die Liste aufzunehmen.
 
-</#E/>
+<//>
 Wenn Sie diese Nachricht nicht beantworten, erhalten Sie die
 Mailingliste nicht. Wenden Sie sich an Ihren Mail-Administrator, wenn
 Sie der Meinung sind, daß jemand unter Ihrem Namen ein gefälschtes
@@ -762,7 +762,7 @@ die Adresse
 
     <<#l#>-unsubscribe-<#t#>@<#H#>>
 
-</text/top/>
+</text/top#E/>
 Hallo, hier ist das ezmlm Programm. Ich verwalte die Mailingliste
    <#l#>@<#H#>
 
@@ -790,11 +790,11 @@ gestrichen werden soll, senden Sie bitte eine leere Mail an
 folgende Adresse:
 
 !R
-</#xE/>
+</#x/>
 
 oder klicken Sie hier, wenn Ihr Programm Hyperlinks unterstützt:
    mailto:<#R#>
-</#E/>
+<//>
 
 Bitte prüfen Sie noch einmal genau, daß Sie an die richtige Adresse
 schreiben und diese nicht von Ihrem Mailprogramm verstümmelt wurde.
@@ -820,17 +820,17 @@ Beachten Sie dabei aber einen eventuell von Ihrem Mailprogramm
 vorgenommenen Zeilenumbruch, falls die Adresse nicht in eine Zeile paßt.
 Sie können die Adresse auch kopieren und in einer neuen Mail
 als Empfänger einsetzen.
-</#xE/>
+</#x/>
 Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
    mailto:<#R#>
-</#qE/>
+</#q/>
 
 Manche Mailprogramme sind nicht in der Lage, lange Adressen zu
 verarbeiten. Falls Sie die angegebene Adresse nicht anschreiben
 können, benutzen Sie bitte die Adresse
 <<#L#>-request@<#H#>> und tragen die
 obengenannte Adresse in die Betreff-Zeile (Subject:) ein.
-</#E/>
+<//>
 
 Ich habe nicht überprüft, ob Ihre Adresse wirklich die Mailingliste
 bezieht. Sollte die Adresse nicht zu den Abonnenten der Mailingliste
@@ -954,9 +954,9 @@ sub_confirm         an Neu-Abonnenten, zur Bestätigung des Abonnements
 sub_nop             an Abonnenten, falls er schon Abonnent ist
 sub_ok              an Abonnenten, wenn Abonnement erfolgreich
 top                 Anfang von allen Antworten
-</#tnE/>
+</#tn/>
 trailer             an alle Listennachrichten angehängt
-</#nE/>
+</#n/>
 unsub_bad           an Abonnenten, wenn Abmeldung abgelehnt
 unsub_confirm       an Abonnenten, Anforderung Abmeldebestätigung
 unsub_nop           an Nicht-Abonnenten, wenn Abmeldung angefordert

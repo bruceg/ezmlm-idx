@@ -8,7 +8,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 -- 
 To unsubscribe, e-mail: <#L#>-unsubscribe@<#H#>
 For additional commands, e-mail: <#L#>-help@<#H#>
-</text/bottom/>
+</text/bottom#E/>
 
 --- Команды списка рассылки <#l#>@<#H#> ---
 
@@ -35,34 +35,34 @@ For additional commands, e-mail: <#L#>-help@<#H#>
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</text/bottom#ai/>
+</#ai/>
 Чтобы получить сообщения с 123 по 145 (max 100 на письмо), пишите сюда:
    <<#L#>-get.123_145@<#H#>>
 
-</text/bottom#aI/>
+</#aI/>
 Для получения письма #12 из архива пошлите письмо по адресу:
    <<#L#>-get.12@<#H#>>
 
-</text/bottom#i/>
+</#i/>
 Адрес для получения индекса с subject и авторами писем 123-456:
    <<#L#>-index.123_456@<#H#>>
 
 # Lists need to be both archived and indexed for -thread to work
-</text/bottom#ai/>
+</#ai/>
 Адрес для получения все писем, связанных с письмом #12345:
    <<#L#>-thread.12345@<#H#>>
 
 # The '#' in the tag below is optional, since no flags follow.
 # The name is optional as well, since the file will always be open
 # at this point.
-</text/bottom#/>
+<//>
 Содержимое писем роли не играет, важен лишь адрес, на который
 вы посылаете письмо.
 
-</text/bottom/>
+<//>
 Если ничего не помогает, вы можете связаться с владельцем
 списка рассылки по адресу <#L#>-owner@<#H#>. 
-</text/bottom/>
+<//>
 
 --- Ниже приведена копия запроса
 
@@ -450,7 +450,7 @@ Hекоторые старые почтовые программы не могут справится с длинными
 ответ на <<#L#>-request@<#H#>> и вставьте 
 весь адрес в поле subject.
 
-</text/sub-confirm#s/>
+</#s/>
 Этот список модерируемый. Когда вы пошлете подтверждение, модератор(ы)
 будут извещены об этом. В случае одобрения вашей подписки модераторам
 вам будет сообщено.
@@ -476,7 +476,7 @@ Hекоторые старые почтовые программы не могут справится с длинными
 забудете, а отказаться от подписки, не зная исходный адрес, будет
 очень трудно.
 
-</text/top/>
+</text/top#E/>
 Добрый день/утро/вечер! Это сообщение от программы ezmlm,
 заведующей списком рассылки <#l#>@<#H#>.
 

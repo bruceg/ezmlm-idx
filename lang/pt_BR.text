@@ -8,7 +8,7 @@ contacte <#L#>-help@<#H#>; gerenciado pelo ezmlm
 ---------------------------------------------------------------------
 Para cancelar a assinatura, envie mensagem para: <#L#>-unsubscribe@<#H#>
 Para comandos adicionais, envie mensagem para: <#L#>-help@<#H#>
-</text/bottom/>
+</text/bottom#E/>
 
 --- Aqui estão os endereços de comando do ezmlm.
 
@@ -39,16 +39,16 @@ Existem também estes endereços similares para a lista "digest":
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</text/bottom#ai/>
+</#ai/>
    <<#L#>-get.12_45@<#H#>>:
    Recupera uma cópia das mensagens 12 a 45 do arquivo.
    No máximo 100 mensagens serão retornadas por requisição.
 
-</text/bottom#aI/>
+</#aI/>
    <<#L#>-get.12@<#H#>>:
    Recupera uma cópia da mensagem 12 do arquivo.
 
-</text/bottom#i/>
+</#i/>
    <<#L#>-index.123_456@<#H#>>:
    Recupera os assuntos das mensagens número 123 a 456.
    Assuntos são retornados em grupos de 100, ou seja você receberá
@@ -56,7 +56,7 @@ Existem também estes endereços similares para a lista "digest":
    Um máximo de 2000 assuntos são retornados por requisição.
 
 # Lists need to be both archived and indexed for -thread to work
-</text/bottom#ai/>
+</#ai/>
    <<#L#>-thread.12345@<#H#>>:
    Recupera uma cópia de todas as mensagens com o mesmo assunto
    da mensagem 12345.
@@ -64,7 +64,7 @@ Existem também estes endereços similares para a lista "digest":
 # The '#' in the tag below is optional, since no flags follow.
 # The name is optional as well, since the file will always be open
 # at this point.
-</text/bottom#/>
+<//>
 Na verdade as mensagens não precisam ser vazias, mas eu irei
 ignorar o seu conteúdo. Somente o ENDEREÇO é importante.
 
@@ -80,12 +80,12 @@ Em ambos os casos, eu (O Sistema) enviarei uma mensagem de confirmação para
 esse endereço; quando você receber esta mensagem, simplesmente
 responda para completar sua assinatura (ou cancelamento).
 
-</text/bottom/>
+<//>
 Se estas instruções são muito complicadas ou você não teve os
 resultados que esperava, por favor escrever o meu dono em
 <#L#>-owner@<#H#>. Mas tenha paciência, o meu dono é
 muito mais devagar do que eu. ;-)
-</text/bottom/>
+<//>
 
 --- Abaixo está uma cópia da requisição que eu recebi.
 
@@ -529,7 +529,7 @@ a este comando, envie uma mensagem para <<#L#>-request@<#H#>>
 e coloque o endereço inteiro abaixo na linha "Subject:" ou
 "Assunto:".
 
-</text/sub-confirm#s/>
+</#s/>
 Esta lista é moderada. Depois que você enviar esta confirmação,
 o pedido será enviado para o(s) moderador(es) desta lista. Eu notificarei
 você quando sua assinatura for ativada.
@@ -555,7 +555,7 @@ Por favor salve esta mensagem para que você saiba o endereço sob o
 qual está inscrito; se mais tarde você quiser cancelar ou alterar
 o seu endereço de assinatura, esta mensagem poderá ser útil.
 
-</text/top/>
+</text/top#E/>
 Oi! Este é o programa ezmlm. Eu estou gerenciando
 a lista <#l#>@<#H#>.
 

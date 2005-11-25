@@ -29,11 +29,11 @@ identique a celle que vous avez utilisee pour vous inscrire, il vous est aussi
 possible d'envoyer un message quelconque a :
    <<#L#>-unsubscribe@<#H#>>
 
-</#dE/>
+</#d/>
 ou pour une liste qui vous serait envoyee sous forme de bulletin, a :
    <<#L#>-unsubscribe@<#H#>>
 
-</#E/>
+<//>
 Pour l'ajout ou le retrait d'adresses, vous receverez systematiquement un
 message de confirmation. Il vous suffira d'y repondre pour achever la
 transaction.
@@ -59,7 +59,7 @@ aisement vous aider.
 J'ai conserve une liste des messages de la liste de diffusion <#L#> qui
 n'ont temporairement pas pu etre delivres a votre adresse.
 
-</#aE/>
+</#a/>
 Une copie de ces messages doit se trouver dans l'archive.
 
 Pour obtenir l'ensemble des messages depuis le numero 123 jusqu'au numero 145
@@ -71,7 +71,7 @@ Pour recevoir un resume des 100 derniers messages, avec uniquement le nom des
 auteurs et les sujets traites, envoyez un message a :
    <<#L#>-index@<#H#>>
 
-</#E/>
+<//>
 Voici les numeros des messages en question :
 
 </text/dig-bounce-num#E/>
@@ -81,7 +81,7 @@ qui n'ont temporairement pas pu etre delivres a votre adresse. Pour chaque
 bulletin que vous n'avez pas pu consulter, j'ai note les numeros du premier
 message qui s'y trouvait.
 
-</#aE/>
+</#a/>
 Aucune archive des bulletins eux-memes n'est conservee, mais vous pouvez
 toujours recuperer les messages a partir de la liste principale.
 
@@ -94,7 +94,7 @@ Et pour recevoir un resume des 100 derniers messages (auteur/sujet), envoyez
 un message a :
    <<#L#>-index@<#H#>>
 
-</#E/>
+<//>
 Voici le numero du premier message de chaque bulletin :
 
 </text/bounce-probe#E/>
@@ -148,14 +148,14 @@ reponses aux questions courantes sur cette liste de diffusion :
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#dE/>
+</#d/>
 Des adresses similaires existent pour la liste sous forme de bulletins :
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
 # ezmlm-make -i necessite l'ajout de la ligne ezmlm-get. Faute de quoi il
 # serait impossible de faire de la saisie multiple !
-</#aE/>
+</#a/>
 Pour obtenir tous les messages situes entre le numero 123 et le numero 145
 (avec un maximum de 100 par requete), envoyez un message a :
    <<#L#>-get.123_145@<#H#>>
@@ -168,7 +168,7 @@ Pour recevoir tous les messages comportant le meme sujet que le message 12345,
 envoyez un message a :
    <<#L#>-thread.12345@<#H#>>
 
-</#E/>
+<//>
 En realite, les messages n'ont pas besoin d'etre vides, leur contenu sera
 totalement ignore. Seul l'ADRESSE a laquelle vous ecrivez est determinante.
 
@@ -207,23 +207,23 @@ De facon similaire, il est possible de retirer son adresse de la liste en
 ecrivant a :
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#dE/>
+</#d/>
 Idem pour les listes presentees sous la forme de bulletins :
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#E/>
+<//>
 C'est tout ! Aucun sujet special ni corps de message n'est requis.
 
-</#rE/>
+</#r/>
 Je vous enverrai une demande de confirmation, pour etre
 sur que vous etes bien a l'origine de la requete. Repondez
 simplement au message et la transaction sera achevee.
-</#RE/>
+</#R/>
 J'enverrai une demande de confirmation a l'adresse de
 l'utilisateur (ici john@example.com).
 Tout ce qu'il aura a faire sera de repondre au message.
-</#E/>
+<//>
 
 Ces etapes de confirmation sont necessaires pour rendre beaucoup plus ardu
 le fait qu'un tiers puisse ajouter ou retirer une adresse de la liste.
@@ -239,18 +239,18 @@ message a :
 <#L#>-subscribe@<#H#> pour l'inscription
 <#L#>-unsubscribe@<#H#> pour la desinscription
 
-</#dE/>
+</#d/>
 Et pour les listes presentees sous forme de bulletins :
 
 <#L#>-digest-subscribe@<#H#>
 <#L#>-digest-unsubscribe@<#H#>
 
-</#E/>
+<//>
 L'utilisateur recevra une demande de confirmation pour etre
 sur qu'il/elle controle l'adresse d'inscription. Une fois
 ceci verifie, l'utilisateur sera desinscrit.
 
-</#sE/>
+</#s/>
 Etant donne que cette liste est moderee pour les abonnements,
 j'enverrai une seconde demande de confirmation aux moderateurs.
 Etant donne que l'utilisateur a deja confirme son desir
@@ -261,9 +261,9 @@ message de confirmation. Dans le cas contraire, vous pouvez
 simplement effacer mon message ou eventuellement contacter l'abonne
 potentiel pour davantage de renseignements.
 
-</#SE/>
+</#S/>
 Les inscriptions fonctionnent de facon analogue.
-</#E/>
+<//>
 
 Il est aussi possible d'utiliser :
 
@@ -277,7 +277,7 @@ courrier a cette adresse et si elle est alors en mesure d'y repondre.
 Votre adresse et votre identite ne seront pas revelees a l'abonne,
 a moins que vous ne lui ecriviez directement.
 
-</#rlE/>
+</#rl/>
 Pour obtenir la liste des abonnees a <#L#>@<#H#>, envoyez un
 message a : 
    <<#L#>-list@<#H#>>
@@ -286,19 +286,19 @@ Pour obtenir un historique des transactions de la liste
 <#L#>@<#H#>, envoyez un message a :
    <<#L#>-log@<#H#>>
 
-</#rldE/>
+</#rld/>
 Pour les abonnes aux bulletins :
    <<#L#>-digest-list@<#H#>>
 et :
    <<#L#>-digest-log@<#H#>>
 
-</#rnE/>
+</#rn/>
 Vous pouvez a distance editer les fichiers de texte contenant les
 messages du robot. Pour obtenir la liste des fichiers et les
 instructions pour les editer, ecrivez a :
    <<#L#>-edit@<#H#>>
 
-</#mE/>
+</#m/>
 Envoi de messages moderes
 -------------------------
 Lorsque l'envoi de messages est modere, je conserverai chaque
@@ -330,7 +330,7 @@ l'expediteur avec une explication de ce qu'il est arrive.
 L'adminsitrateur peut aussi parametrer la liste de facon a ce que
 ces messages "ignores" soient purement et simplement effaces sans
 avertissement prealable, plutot que retournes a l'envoyeur.
-</#E/>
+<//>
 
 Absences
 --------
@@ -348,7 +348,7 @@ vous etes absents, configurez votre client de messagerie pour
 repondre automatiquement a tous les messages qui correspondent aux
 criteres ci-dessus.
 
-</#rE/>
+</#r/>
 Si vous essayez de faire de l'administration a distance a partir
 d'une adresse qui n'est pas la votre, l'abonne, et non vous, devra
 confirmer. Apres cela, une demande de validation sera envoyee a
@@ -358,7 +358,7 @@ que c'est bien vous qui avez emis la requete originale.
 
 A noter que votre requete (et votre adresse) sont transmises a
 l'abonne dans ce cas.
-</#E/>
+<//>
 
 Bonne chance !
 
@@ -383,11 +383,11 @@ Verifiez simplement que l'adresse debute bien par
 "<#L#>-accept".
 Si cela ne fonctionne pas, copiez simplement l'adresse et
 collez la dans le champs representant le destinataire.
-</#xE/>
+</#x/>
 
 Si votre brouteur le permet, vous pouvez aussi cliquer ici :
 	mailto:<#A#>
-</#E/>
+<//>
 
 Pour rejeter la contribution et le retourner a l'expediteur,
 veuillez envoyer un message a :
@@ -397,12 +397,12 @@ veuillez envoyer un message a :
 En pratique, il est souvent plus simple d'effectuer une reponse
 a tous et de retirer tous les adresses, en dehors de celle qui
 debute par "<#L#>-reject".
-</#xE/>
+</#x/>
 
 Si votre brouteur prend en compte les liens hypertexte, vous
 pouvez aussi cliquer ici :
 	mailto:<#R#>
-</#E/>
+<//>
 
 Vous n'avez pas besoin de recopier le message dans vos reponses pour
 l'accepter ou le rejeter. Si vous souhaitez y ajouter un commentaire
@@ -454,11 +454,11 @@ Votre logiciel de messagerie devrait avoir une fonction "Reply"
 pour la traiter automatiquement.
 Si cela ne fonctionne pas, effectuez un copier/coller pour y
 ecrire.
-</#xE/>
+</#x/>
 
 ou, si votre logiciel de messagerie le permet, cliquer ici :
 	mailto:<#R#>
-</#E/>
+<//>
 
 Si vous n'approuvez pas cet abonnement, ne tenez pas compte de
 ce message.
@@ -479,11 +479,11 @@ Votre logiciel de messagerie devrait avoir une fonction "Reply"
 pour utiliser automatiquement cette adresse. Sinon, il vous
 reste le copier/coller.
 
-</#xE/>
+</#x/>
 
 Le lien suivant pourrait aussi fonctionner :
 	mailto:<#R#>
-</#E/>
+<//>
 
 En cas de desaccord, ne tenez pas compte de ce message.
 
@@ -509,11 +509,11 @@ parmi les abonnes de la liste <#l#>, envoyez s'il vous plait une reponse
 quelconque a cette adresse:
 
 !R
-</#xE/>
+</#x/>
 
 ou suivez ce lien :
 	mailto:<#R#>
-</#E/>
+<//>
 
 Une fois de plus, verifiez soigneusement l'adresse de la reponse pour
 etre sur qu'elle est complete avant de renouveller votre inscription.
@@ -536,23 +536,23 @@ quelconque a l'adresse suivante:
 En fait, inutile de la recopier: la fonction "Reply" (repondre a
 l'expediteur) de votre logiciel de messagerie doit s'en charger
 automatiquement. Sinon, il reste le copier/coller.
-</#xE/>
+</#x/>
 
 ou suivez ce lien :
 	mailto:<#R#>
-</#E/>
+<//>
 
 Cette confirmation a deux buts. Tout d'abord, elle verifie que je suis
 capable d'obtenir des messages de vous. Ensuite, elle vous protege au
 cas ou quelqu'un ferait une inscription frauduleuse sous votre nom.
 
-</#qE/>
+</#q/>
 Certains logiciels de messageries sont boggues et ne peuvent prendre
 en compte de longues adresses. Si vous ne pouvez pas repondre a cette
 requete, envoyez a la place un message a <<#L#>-request@<#H#>> et
 mettez l'adresse complete presentee ci-dessus dans le champs "Sujet".
 
-</#sE/>
+</#s/>
 Cette liste est moderee. Apres avoir recu cette confirmation, la
 requete sera envoyee au(x) moderateur(s) de la liste. Je vous
 previendrai lorsque votre inscription sera effective.
@@ -584,7 +584,7 @@ Pour vous desinscrire, envoyez un message a :
 
     <<#l#>-unsubscribe-<#t#>@<#H#>>
 
-</text/top/>
+</text/top#E/>
 Bonjour ! Je suis le programme ezmlm. Je m'occupe de la liste
 de diffusion <#l#>@<#H#>.
 
@@ -610,11 +610,11 @@ vous souhaitez voir
 desabonne de la liste <#l#> , envoyez une reponse quelconque a :
 
 !R
-</#xE/>
+</#x/>
 
 ou suivez ce lien :
 	mailto:<#R#>
-</#E/>
+<//>
 
 A nouveau, verifiez que l'adresse a laquelle vous ecrivez est complete.
 
@@ -636,11 +636,11 @@ En fait, inutile de la recopier: la fonction "Reply" (repondre a
 l'expediteur) de votre logiciel de messagerie doit s'en charger
 automatiquement. Un copier/coller vers le champs "To:" est aussi
 une possible.
-</#xE/>
+</#x/>
 
 Vous pouvez aussi tout aussi bien suivre ce lien :
 	mailto:<#R#>
-</#E/>
+<//>
 
 Je n'ai pas verifie que votre adresse fait actuellement partie de la
 liste. Pour verifier a quelle adresse vous vous etes abonnes, regardez
@@ -649,7 +649,7 @@ adresse cachee dans son chemin de retour; par exemple
 dieu@ciel.paradis.com recoit ses messages avec dans le champ
 "return-path": <<#l#>-return-<nombre>-dieu=ciel.paradis.com@<#H#>.
 
-</#qE/>
+</#q/>
 Certains logiciels de messagerie mal concus ne peuvent traiter les
 adresses au dela d'une certaine taille. S'il vous est impossible de
 repondre a ce message, envoyez a la place un message a l'adresse
@@ -757,9 +757,9 @@ sub_confirm         a l'abonne pour confirmer sa requete.
 sub_nop             a l'abonne apres une nouvelle inscription.
 sub_ok              a l'abonne apres un abonnement reussi.
 top                 en-tete de chaque reponse.
-</#tnE/>
+</#tn/>
 trailer             ajoute a la fin de chaque contribution a la liste.
-</#nE/>
+</#n/>
 unsub_bad           a l'abonne si la confirmation de desinscription est fausse.
 unsub_confirm       a l'abonne pour demander confirmation de desinscription.
 unsub_nop           a un non-abonne apres une demande de desabonnement.

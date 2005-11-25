@@ -16,7 +16,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 ---------------------------------------------------------------------
 Wypisanie?     wy¶lij list: <#L#>-unsubscribe@<#H#>
 Wiêcej pomocy? wy¶lij list: <#L#>-help@<#H#>
-</text/bottom/>
+</text/bottom#E/>
 
 --- Poni¿ej znajduj± siê komendy menad¿era list dyskusyjnych "ezmlm".
 
@@ -42,22 +42,22 @@ I odpowiadaj±ce powy¿szemu adresy, je¶li chodzi ci o przegl±d listy:
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</text/bottom#ai/>
+</#ai/>
    <<#L#>-get.12_45@<#H#>>:
    Chêæ otrzymania kopii listów od nr 12 do 45 z archiwum.
    Jednym listem mo¿esz otrzymaæ maksymalnie 100 listów.
 
-</text/bottom#aI/>
+</#aI/>
    <<#L#>-get.12@<#H#>>:
    Chêæ otrzymania kopii listu nr 12 z archiwum.
-</text/bottom#i/>
+</#i/>
    <<#L#>-index.123_456@<#H#>>:
    Chêæ otrzymania tytu³ów listów od nr 123 do 456 z archiwum.
    Tytu³y s± wysy³ane do Ciebie w paczkach po sto na jeden list.
    Mo¿esz maksymalnie zamówiæ 2000 tytu³ów na jeden raz.
 
 # Lists need to be both archived and indexed for -thread to work
-</text/bottom#ai/>
+</#ai/>
    <<#L#>-thread.12345@<#H#>>:
    Chêæ otrzymania wszystkich kopii listów z tym samym tytu³em
    jaki posiada list o numerze 12345.
@@ -65,7 +65,7 @@ I odpowiadaj±ce powy¿szemu adresy, je¶li chodzi ci o przegl±d listy:
 # The '#' in the tag below is optional, since no flags follow.
 # The name is optional as well, since the file will always be open
 # at this point.
-</text/bottom#/>
+<//>
 
 NIE WYSY£AJ POLECEÑ ADMINISTRACYJNYCH NA LISTÊ DYSKUSYJN¡!
 Jesli to zrobisz, administrator listy ich nie zobaczy, natomiast
@@ -78,13 +78,13 @@ wy¶lij list na adres:
 Wy¶lê Ci wtedy potwierdzenie na ten w³asnie adres; kiedy je otrzymasz,
 po prostu odpowiedz na nie, aby staæ siê prenumeratorem.
 
-</text/bottom#x/>
+</#x/>
 Je¿eli instrukcje, których Ci udzieli³em, s± zbyt trudne, albo
 nie jeste¶ zadowolony z ich efektów, skontaktuj siê z opiekunem listy
 pod adresem <#L#>-owner@<#H#>. 
 Proszê byæ cierpliwym, opiekun listy jest o wiele wolniejszy
 od komputera, którym ja jestem ;-)
-</text/bottom/>
+<//>
 
 --- Za³±cznik jest kopi± polecenia, które otrzyma³em.
 
@@ -508,7 +508,7 @@ a) sprawdzenie siê czy potrafiê wysy³aæ listy na adres przez Ciebie podany,
 b) upewnienie siê czy ktos nie zrobi³ Ci g³upiego dowcipu, zapisuj±c Ciê
    bez twojej wiedzy na nasz± listê.
 
-</text/sub-confirm#s/>
+</#s/>
 Lista jest moderowana. Kiedy wys³a³e¶ ju¿ potwierdzenie, chêæ prenumeraty
 zosta³a przes³ana moderatorowi. Zawiadomiê Ciê odrêbnym listem, je¶li
 zostaniesz wpisany(a) na listê prenumeratorów.
@@ -536,7 +536,7 @@ z którego dok³adnie adresu jestes zapisany(a), informacja ta bêdzie
 niezbêdna, je¶li chcia³(a)by¶ kiedy¶ z listy siê wypisaæ lub zmieniæ
 adres korespondencyjny.
 
-</text/top/>
+</text/top#E/>
 Czesæ! Nazywam siê "ezmlm" i zarz±dzam serwerem pocztowych
 list dyskusyjnych, miêdzy innymi list± o nazwie:
 <#L#>@<#H#>

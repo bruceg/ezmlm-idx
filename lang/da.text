@@ -9,7 +9,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 ---------------------------------------------------------------------
 Vil du fjernes fra listen, så skriv til: <#L#>-unsubscribe@<#H#>
 Vil du have en kommandooversigt, skriv til: <#L#>-help@<#H#>
-</text/bottom/>
+</text/bottom#E/>
 
 --- Kommandooversigt:
 
@@ -37,16 +37,16 @@ Lignende adresser findes for udtræks listen:
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</text/bottom#ai/>
+</#ai/>
 Hent alle brevene i intervallet 123 til 145 (max. 100 ad gangen),
 send et tomt brev til:
    <<#L#>-get.123_145@<#H#>>
 
-</text/bottom#aI/>
+</#aI/>
 Hent brev nummer 12, send et tomt brev til:
    <<#L#>-get.12@<#H#>>
 
-</text/bottom#i/>
+</#i/>
 Hent en oversigt over breve i intervallet 123 til 456, send et
 tomt brev til:
    <<#L#>-index.123_456@<#H#>>
@@ -55,14 +55,14 @@ Resultatet kommer i breve med hundrede titler pr. brev,
 max. 2000 i alt, så eksemplet vil vise dig brev 100 til 499.
 
 # Lists need to be both archived and indexed for -thread to work
-</text/bottom#ai/>
+</#ai/>
 Hent alle breve med samme emne som brev 123:
    <<#L#>-thread.123@<#H#>>
 
 # The '#' in the tag below is optional, since no flags follow.
 # The name is optional as well, since the file will always be open
 # at this point.
-</text/bottom#/>
+<//>
 Dine administrative breve behøver ikke at være tomme, men deres
 indhold vil blive ignoreret. Kommandoen ligger alene i
 modtageradressen 
@@ -78,7 +78,7 @@ Du kan framelde din alternative adresse ved at skrive til:
 jens@example.com vil i begge tilfælde få et brev som skal
 bekræftes for at få udført til/fra meldingen.
 
-</text/bottom/>
+<//>
 Hvis disse instruktioner ikke er tilstrækkelige, og du ikke
 har held med dine kommandoer, kan du skrive til min ejer
 <#L#>-owner@<#H#>, som er et menneske
@@ -86,7 +86,7 @@ har held med dine kommandoer, kan du skrive til min ejer
 
 Uanset hvor håbløst det ser ud, så forsøg IKKE at skrive
 til selve mailing listen, f.eks. for at blive frameldt.
-</text/bottom/>
+<//>
 
 --- Vedlagt: En kopi af det kommando brev du sendte til mig.
 
@@ -500,7 +500,7 @@ adresser. Hvis du er ramt af et sådant, kan du istedet skrive
 til <<#L#>-request@<#H#>> og indsætte
 hele adressen ovenfor i emne linjen.
 
-</text/sub-confirm#s/>
+</#s/>
 Denne liste er modereret. Når du har sendt denne bekræftelse,
 vil moderator få besked om af godkende. Du får besked når
 din tilmelding er blevet aktiv.
@@ -526,7 +526,7 @@ Gem dette brev så du ved hvilken adresse du er tilmeldt med, da
 du skal bruge denne adresse hvis du senere vil frameldes eller
 ændre din tilmeldingsadresse.
 
-</text/top/>
+</text/top#E/>
 Hej! Dette er ezmlm programmet. Jeg håndterer <#l#>@<#H#> listen.
 
 </#x/>

@@ -40,12 +40,12 @@ enviar un mensaje a:
 
    <<#L#>-unsubscribe@<#H#>>
 
-</#dE/>
+</#d/>
 o, para los resúmenes, a:
 
    <<#L#>-unsubscribe@<#H#>>
 
-</#E/>
+<//>
 
 Para añadir o eliminar direcciones, le enviaré un mensaje de
 confirmación a esa dirección. Cuando lo reciba, pulse el botón
@@ -70,7 +70,7 @@ CABECERAS intactas para que sea más fácil ayudarle.
 He guardado una lista de todos los mensajes de la lista de correo
 <#L#> que han sido devueltos procedentes de su dirección.
 
-</#aE/>
+</#a/>
 
 Una copia de estos mensajes puede estar en el archivo.
 
@@ -84,7 +84,7 @@ mensajes, envíe un mensaje en blanco a:
 
    <<#L#>-index@<#H#>>
 
-</#E/>
+<//>
 Aquí están los números de los mensajes:
 
 </text/dig-bounce-num#E/>
@@ -94,7 +94,7 @@ He guardado una lista de los resúmenes de la lista de correo
 los resúmenes perdidos, he anotado el número del primer mensaje
 en el resumén.
 
-</#aE/>
+</#a/>
 
 No archivo los resúmenes propiamente dichos, pero puede conseguir
 los mensajes del archivo principal de la lista.
@@ -109,7 +109,7 @@ mensajes, envíe un mensaje en blanco a:
 
    <<#L#>-index@<#H#>>
 
-</#E/>
+<//>
 Estos son los números de mensaje de los resúmenes:
 
 </text/bounce-probe#E/>
@@ -163,7 +163,7 @@ información y FAQ de esta lista:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#dE/>
+</#d/>
 Para la lista de resúmenes existen direcciones-comando análogas:
 
    <<#L#>-digest-subscribe@<#H#>>
@@ -171,7 +171,7 @@ Para la lista de resúmenes existen direcciones-comando análogas:
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#aE/>
+</#a/>
 
 Para recibir los mensajes desde el número 123 al 145 (con un
 máximo de 100 por petición), escriba a:
@@ -188,7 +188,7 @@ mensaje 12345, mande un mensaje en blanco a:
 
    <<#L#>-thread.12345@<#H#>>
 
-</#E/>
+<//>
 
 En realidad no es necesario que los mensajes estén en blanco,
 pero si no lo están ignoraré su contenido. Sólo es importante la
@@ -232,18 +232,18 @@ mandando un mensaje a:
 
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#dE/>
+</#d/>
 Para suscribirse o darse de baja de la lista de resúmenes:
 
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-</#E/>
+<//>
 
 Eso es todo. No es necesario poner "Asunto" o cuerpo principal en
 el mensaje.
 
-</#rE/>
+</#r/>
 
 Le mandaré una petición de confirmación, para asegurarme que
 usted me envió la petición. Simplemente responda al mensaje, y se
@@ -268,19 +268,19 @@ correo a:
    <#L#>-subscribe@<#H#>
    <#L#>-unsubscribe@<#H#>
 
-</#dE/>
+</#d/>
 Para la lista de resúmenes:
 
    <#L#>-digest-subscribe@<#H#>
    <#L#>-digest-unsubscribe@<#H#>
 
-</#E/>
+<//>
 
 El usuario recibirá una petición de confirmación para asegurarse
 que él/ella posee la dirección de suscripción. Una vez
 verificada, se procederá a dar de baja al usuario.
 
-</#sE/>
+</#s/>
 
 Como esta lista está moderada para suscripciones, mandaré una
 segunda petición de confirmación al moderador. Como el usuario ya
@@ -291,9 +291,9 @@ responda a mi mensaje de confirmación. En caso contrario, puede
 simplemente borrar mi mensaje o contactar con el suscriptor para
 pedir más información.
 
-</#SE/>
+</#S/>
 Las suscripciones funcionan del mismo modo.
-</#E/>
+<//>
 
 El usuario también puede utilizar:
 
@@ -307,7 +307,7 @@ de confirmación y mandar una contestación.
 Su dirección e identidad no serán reveladas al suscriptor, a no
 ser que le mande correo directamente al usuario.
 
-</#rlE/>
+</#rl/>
 
 Para conseguir una lista de suscriptores para <#L#>@<#H#> envíe
 un mensaje a:
@@ -319,7 +319,7 @@ Para conseguir un log de la lista de transacciones para
 
    <<#L#>-log@<#H#>>
 
-</#rldE/>
+</#rld/>
 Para suscriptores al resumen:
 
    <<#L#>-digest-list@<#H#>>
@@ -328,7 +328,7 @@ y:
 
    <<#L#>-digest-log@<#H#>>
 
-</#rnE/>
+</#rn/>
 
 Usted puede modificar remotamente los ficheros de texto que
 componen las respuestas mandadas por la lista. Para conseguir una
@@ -336,7 +336,7 @@ lista de ficheros e instrucciones de edición, escriba a:
 
    <<#L#>-edit@<#H#>>
 
-</#mE/>
+</#m/>
 Mensajes moderados.
 -------------------
 
@@ -370,7 +370,7 @@ puede configurar la lista para que estos mensajes "ignorados"
 simplemente sean borrados sin notificación, en lugar de ser
 devueltos al remitente.
 
-</#E/>
+<//>
 
 Vacaciones
 ----------
@@ -389,7 +389,7 @@ esté fuera, configure su programa de correo para responder
 automáticamente a mensajes que tienen un "Asunto" que reúna los
 criterios anteriormente expuestos.
 
-</#rE/>
+</#r/>
 
 Si intenta administrar la lista remotamente, desde una dirección
 que no es la suya, el suscriptor cuya dirección está utilizando,
@@ -401,7 +401,7 @@ mandado la petición original.
 En este caso, ¡Recuerde que se manda su petición original (y su
 dirección) al suscriptor!
 
-</#E/>
+<//>
 
 ¡Buena suerte!
 
@@ -427,12 +427,12 @@ Normalmente esto ocurre al pulsar el botón "responder". Usted
 puede comprobar la dirección para asegurarse de que empieza por
 "<#L#>-accept" . Si esto no funciona, simplemente copie la
 dirección y péguela en el campo "Para:" de un nuevo mensaje.
-</#xE/>
+</#x/>
 
 Como alternativa haga clic aquí:
 
 	mailto:<#A#>
-</#E/>
+<//>
 
 Para rechazar el mensaje y hacer que sea devuelto al remitente,
 por favor, mande un mensaje a:
@@ -442,11 +442,11 @@ por favor, mande un mensaje a:
 Normalmente, lo más fácil es hacer clic en el botón "Responder a
 todos" y luego quitar todas las direcciones menos la que empieza
 con "<#L#>-reject".
-</#xE/>
+</#x/>
 
 Como alternativa, haga clic aquí:
 	mailto:<#R#>
-</#E/>
+<//>
 
 No es necesario copiar el mensaje en su respuesta para aceptarlo
 o rechazarlo. Si desea mandar un comentario al remitente de un
@@ -516,12 +516,12 @@ un mensaje en blanco a esta dirección:
 Normalmente, esto ocurre al pulsar el botón "Responder". Si esto
 no funciona, simplemente copie la dirección y péguela en el campo
 "Para:" de un nuevo mensaje. 
-</#xE/>
+</#x/>
 
 o haga clic aquí:
 
 	mailto:<#R#>
-</#E/>
+<//>
 
 Si no está de acuerdo, simplemente ignore este mensaje. 
 
@@ -547,12 +547,12 @@ fuese añadida a la lista de correo <#l#>, por favor, mande un
 mensaje en blanco a esta dirección:
 
 !R
-</#xE/>
+</#x/>
 
 o haga clic aquí:
 
 	mailto:<#R#>
-</#E/>
+<//>
 
 De nuevo, compruebe cuidadosamente la dirección de la respuesta
 para asegurarse que esté todo incluido antes de confirmar su
@@ -575,26 +575,26 @@ mensaje en blanco a esta dirección:
 Normalmente esto ocurre al pulsar el botón "Responder". Si eso no
 funciona, es suficiente copiar la dirección y pegarla en el campo
 "Para:" de un nuevo mensaje. 
-</#xE/>
+</#x/>
 
 o haga clic aquí:
 
 	mailto:<#R#>
-</#E/>
+<//>
 
 Esta confirmación cumple dos propósitos. Primero, verifica que
 puedo mandarle correo. Segundo, le protege en el caso de que
 alguien intente falsificar una petición de suscripción en su
 nombre.
 
-</#qE/>
+</#q/>
 
 Algunos programas de correo no pueden manejar direcciones largas.
 Si no puede responder a esta petición, envíe un mensaje a
 <<#L#>-request@<#H#>> y ponga la dirección entera escrita arriba
 en la línea de "Asunto:".
 
-</#sE/>
+</#s/>
 
 Esta lista está moderada. Una vez que haya enviado esta
 confirmación, se mandará la petición al moderador de la lista.
@@ -625,7 +625,7 @@ Para cancelar su suscripción mande un mensaje a:
 
     <<#l#>-unsubscribe-<#t#>@<#H#>>
 
-</text/top/>
+</text/top#E/>
 
 ¡Hola! Soy el programa ezmlm. Me ocupo de la lista de correo
 <#l#>@<#H#>.
@@ -655,12 +655,12 @@ fuese dado de baja en la lista de correo <#l#>, por favor, mande
 un mensaje en blanco a esta dirección:
 
 !R
-</#xE/>
+</#x/>
 
 o haga clic aquí:
 
 	mailto:<#R#>
-</#E/>
+<//>
 
 De nuevo, compruebe la dirección de respuesta cuidadosamente para
 asegurarse que esté todo incluido antes de confirmar esta acción.
@@ -682,12 +682,12 @@ mensaje en blanco a esta dirección:
 Normalmente esto ocurre al pulsar el botón "Responder". Si no
 funciona, simplemente copie la dirección y péguela en el campo
 "Para:" de un nuevo mensaje. 
-</#xE/>
+</#x/>
 
 o haga clic aquí:
 
 	mailto:<#R#>
-</#E/>
+<//>
 
 No he comprobado si su dirección está actualmente en la lista de
 correo. Para ver que dirección utilizó para suscribirse, mire los
@@ -696,7 +696,7 @@ tiene su dirección oculta dentro de la ruta de retorno; por
 ejemplo, maria@example.com recibe mensajes con la ruta de retorno:
 <<#l#>-return-<número>-maria=example.com@<#H#>>.
 
-</#qE/>
+</#q/>
 
 Algunos programas de correo no pueden manejar direcciones largas.
 Si no puede responder a esta petición, envíe un mensaje a
@@ -806,9 +806,9 @@ sub_confirm   al suscriptor para pedir confirmación de
 sub_nop       al suscriptor después de re-suscribirse.
 sub_ok        al suscriptor después de la suscripción. 
 top           el principio de todas las respuestas.
-</#tnE/>
+</#tn/>
 trailer       añadido a todos los mensajes enviados de la lista.
-</#nE/>
+</#n/>
 unsub_bad     al suscriptor si la confirmación de baja fue 
               incorrecta.
 unsub_confirm al suscriptor para pedir confirmación de 

@@ -9,7 +9,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 ---------------------------------------------------------------------
 Pro odhlá¹ení, po¹lete mail na <#L#>-unsubscribe@<#H#>
 Dal¹í pøíkazy vypí¹e e-mail: <#L#>-help@<#H#>
-</text/bottom/>
+</text/bottom#E/>
 
 --- Administrativní pøíkazy pro list <#l#> ---
 
@@ -34,16 +34,16 @@ Podobné adresy existují i pro list digestù:
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</text/bottom#ai/>
+</#ai/>
 Zprávy èíslo 123 a¾ 145 z archívu (maximálnì 100 zpráv na jeden mail)
 získáte zasláním zprávy na následující adresu:
    <<#L#>-get.123_145@<#H#>>
 
-</text/bottom#aI/>
+</#aI/>
 Zprávu èíslo 12 získáte pomocí následující adresy:
    <<#L#>-get.12@<#H#>>
 
-</text/bottom#i/>
+</#i/>
 Seznam zpráv se subjectem a autorem zpráv 123-456 - e-mail:
    <<#L#>-index.123_456@<#H#>>
 
@@ -51,7 +51,7 @@ Tyto adresy v¾dy vrací seznam 100 zpráv, maximálnì 2000 na jeden po¾adavek.
 Tak¾e ve vý¹e uvedeném pøíkladì ve skuteènosti dostanete seznam zpráv 100-499.
 
 # Lists need to be both archived and indexed for -thread to work
-</text/bottom#ai/>
+</#ai/>
 Pro získání zpráv se stejným subjectem jako zpráva 12345 po¹lete
 prázdný mail na adresu:
    <<#L#>-thread.12345@<#H#>>
@@ -59,7 +59,7 @@ prázdný mail na adresu:
 # The '#' in the tag below is optional, since no flags follow.
 # The name is optional as well, since the file will always be open
 # at this point.
-</text/bottom#/>
+<//>
 Zprávy ve skuteènosti nemusí být prázdné - budu jejich obsah ignorovat.
 Jediná dùle¾itá vìc je ADRESA na kterou mail posíláte.
 
@@ -74,11 +74,11 @@ Odhlásit tuto adresu lze pomocí mailu na adresu
 V obou pøípadech po¹lu ¾ádost o souhlas na tuto adresu. Kdy¾ ji dostanete,
 jednodu¹e na ni odpovìzte a va¹e pøihlá¹ení/odhlá¹ení se dokonèí.
 
-</text/bottom/>
+<//>
 Pokud nedosáhnete po¾adovaných výsledkù, kontaktujte mého správce
 na adrese <#L#>-owner@<#H#>. Prosím o trpìlivost, mùj správce je
 podstatnì pomalej¹í ne¾ já ;-)
-</text/bottom/>
+<//>
 
 --- Pøipojuji kopii po¾adavku, který jsem dostal.
 
@@ -502,7 +502,7 @@ adresy. Pokud nemù¾ete odpovìdìt na tuto adresu, po¹lete
 zprávu na adresu <<#L#>-request@<#H#>>
 a vlo¾te celou vý¹e uvedenou adresu do subjectu.
 
-</text/sub-confirm#s/>
+</#s/>
 Tento list je moderovaný. Jakmile po¹lete potvrzení, po¾adavek
 bude poslán moderátorovi tohoto listu. Uvìdomím vás, jakmile
 bude pøihlá¹ení hotovo.
@@ -528,7 +528,7 @@ Prosím uschovejte si tuto zprávu pro informaci, z jaké adresy
 bylo pøihlá¹ení do listu provedeno. Budete ji potøebovat v pøípadì,
 ¾e se budete chtít odhlásit nebo zmìnit svoji adresu.
 
-</text/top/>
+</text/top#E/>
 Zdravím, tady je program ezmlm. Spravuji diskusní list
 <#l#>@<#H#>.
 

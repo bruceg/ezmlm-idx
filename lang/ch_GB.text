@@ -5,7 +5,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 ---------------------------------------------------------------------
 取消注册，将电子邮件发送到：<#L#>-unsubscribe@<#H#>，如果需要更多的帮助，将
 电子邮件发送到：<#L#>-help@<#H#>。
-</text/bottom/>
+</text/bottom#E/>
 
 ---<#l#> 邮件列表的管理命令---
 
@@ -33,28 +33,28 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</text/bottom#ai/>
+</#ai/>
 获得邮件列表从123到145的历史邮件（每次最多获得100个历史邮件），将电子邮件发
 送到：
    <<#L#>-get.123_145@<#H#>>
 
-</text/bottom#aI/>
+</#aI/>
 获得邮件列表第12条历史邮件，将电子邮件发送到：
    <<#L#>-get.12@<#H#>>
 
-</text/bottom#i/>
+</#i/>
 获得邮件列表从123到456的历史邮件的主题与作者的索引，将电子邮件发送到：
    <<#L#>-index.123_456@<#H#>>
 
 # Lists need to be both archived and indexed for -thread to work
-</text/bottom#ai/>
+</#ai/>
 获得与历史邮件12345相同主题的历史邮件，将电子邮件发送到：
    <<#L#>-thread.12345@<#H#>>
 
 # The '#' in the tag below is optional, since no flags follow.
 # The name is optional as well, since the file will always be open
 # at this point.
-</text/bottom#/>
+<//>
 
 你可以通过电子邮件的方式注册一个其它的地址，举例来讲，你希望通过电子邮件的方式注
 册“john@example.com”，只要在命令后（subscribe）添加“-”并且用“=”代替“@”：
@@ -66,10 +66,10 @@ contact <#L#>-help@<#H#>; run by ezmlm
 使用这种方式注册、取消注册邮件列表时，系统将向该地址发送确认的电子邮件，当该地址
 收到电子邮件时，只要回复电子邮件就能够完成注册和取消注册。
 
-</text/bottom/>
+<//>
 如果你在使用的过程中有任何问题，请将电子邮件发送到邮件列表的管理者<#L#>-owner@<#H#>。
 如果不能解决问题，请与系统的管理员联系。
-</text/bottom/>
+<//>
 
 --- 随信附上的是系统收到的你发送的邮件。
 
@@ -409,7 +409,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 有些电子邮件的客户端程序不能够解析很长的地址。如果你不能够直接回复这封电子邮件，你可
 以向<<#L#>-request@<#H#>>发送邮件并将上面的地址放在邮件的主题中。
 
-</text/sub-confirm#s/>
+</#s/>
 这个邮件列表的注册是需要经过邮件列表的管理者批准的。一旦你回复了确认信，注册请求将直
 接发送到邮件列表的管理者。系统将通知你当邮件列表的管理者同意你加入邮件列表。
 
@@ -431,7 +431,7 @@ contact <#L#>-help@<#H#>; run by ezmlm
 
 请你保存这封电子邮件，以便以后取消注册或改变注册的电子邮件地址。
 
-</text/top/>
+</text/top#E/>
 邮件列表的名称是：<#l#>@<#H#>
 
 </#x/>
