@@ -34,6 +34,9 @@ ezmlm-idx-5.0.1, ????-??-??
 - Fixed a bug in ezmlm-cgi caused by the use of "char" type for array
   index calculations.
 
+- Fixed ezmlm-gate failing to exit 0 on success.  Thanks Ian Charnas and
+  Sami Farin.
+
 ezmlm-idx-5.0.0, 2005-10-03
 ===========================
 

@@ -162,12 +162,12 @@ void main(int argc,char **argv)
     substdio_put(subfderr, " ", 1);
     substdio_puts(subfderr, dir);
     substdio_putsflush(subfderr, "\n");
-    return;
+    _exit(0);
   }
 
   if ((child = wrap_fork()) == 0)
     wrap_execbin(program, opts, dir);
   /* parent */
   wrap_exitcode(child);
+  _exit(0);
 }
-
