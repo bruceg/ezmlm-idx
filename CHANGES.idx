@@ -16,17 +16,9 @@ BUGS:	-ezmlm-idx does not implement a full rfc822 parser. Comments can be
 	-ezmlm-cgi seems not to work with Chinese. The problem has been to
 	 find someone willing/able to participate in debugging.
 
-TODO:
--ezmlm-cgi to run directly under tcpserver.
-
-Acknowledgements, some are missing. Please write bruceg@em.ca if you're
-missing.
-
-Some ezmlmrc are not updated and may not work right:
-cn_GB,cs,pl,ru,da,pt
-
-If you fix them, please send them to ezmlm@list.cr.yp.to for inclusion
-in the next version.
+Some ezmlmrc are not updated and may not work right.  If you fix them,
+please send them to ezmlm@list.cr.yp.to for inclusion in the next
+release.
 
 ezmlm-idx-5.0.1, ????-??-??
 ===========================
