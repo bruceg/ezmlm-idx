@@ -1,5 +1,5 @@
 # $Id$
-# Revision: 1
+# Revision: 2
 <=n=>
 
 El comando <#L#>-edit.file puede ser utilizado por un
@@ -14,39 +14,46 @@ modificar un fichero, simplemente envíe un correo a
 del fichero. Las instrucciones para las modificaciones se envían
 con el fichero.
 
-File                Use
+File                    Use
 
-bottom        final de todas las respuestas. Información general
-              sobre comandos.	      
-digest        sección administrativa de resúmenes. 
-faq           preguntas frecuentes propias de esta lista.
-get_bad       en lugar de mensajes no encontrados en el archivo.
-help          ayuda general (entre 'top' y 'bottom').
-info          información sobre la lista. La primera línea debe
-              tener significado por sí misma. 
-mod_help      ayuda específica para moderadores.
-mod_reject    al remitente del mensaje rechazado.
-mod_request   a los moderadores de mensajes junto a los mensajes.
-mod_sub       al suscriptor después de que el moderador confirme
-              la suscripción.
-mod_sub_confirm  al moderador para pedir confirmación de 
-                 suscripción.
-mod_timeout   al remitente de correo caducado.  
-mod_unsub_confirm  al administrador remoto para pedir confirmación
-                   de baja.
-sub_bad       al suscriptor si la confirmación no fue correcta.
-sub_confirm   al suscriptor para pedir confirmación de 
-              suscripción.
-sub_nop       al suscriptor después de re-suscribirse.
-sub_ok        al suscriptor después de la suscripción. 
-top           el principio de todas las respuestas.
-<=tn=>
-trailer       añadido a todos los mensajes enviados de la lista.
+bottom                  final de todas las respuestas. Información general sobre comandos.
+bounce_bottom           final de las advertencias de mensajes devueltos
+bounce_num              prefijo a la lista del numero de mensajes devueltos
+bounce_probe            mensaje de prueba para comprobar que una direccion existe
+bounce_warn             mensaje de advertencia relativo a mensajes devueltos
+<=dn=>
+dig_bounce_num          prefijo a la lista del numero de resúmenes que han sido devueltos
+digest                  sección administrativa de resúmenes.
 <=n=>
-unsub_bad     al suscriptor si la confirmación de baja fue 
-              incorrecta.
-unsub_confirm al suscriptor para pedir confirmación de 
-              cancelación.
-unsub_nop     al no suscriptor después de darse de baja.
-unsub_ok      al ex suscriptor después de darse de baja.
-
+edit_do                 prefijo con instrucciones para la edición de texto
+edit_done               mensaje de edición de texto correcta
+edit_list               esta lista
+faq                     preguntas frecuentes propias de esta lista.
+<=Bn=>
+get_bad                 en lugar de mensajes no encontrados en el archivo.
+<=n=>
+help                    ayuda general (entre 'top' y 'bottom').
+info                    información sobre la lista. La primera línea debe tener significado por sí misma.
+<=mn=>
+mod_help                ayuda específica para moderadores.
+mod_reject              al remitente del mensaje rechazado.
+mod_request             a los moderadores de mensajes junto a los mensajes.
+mod_sub                 al suscriptor después de que el moderador confirme la suscripción.
+mod_sub_confirm         al moderador para pedir confirmación de suscripción.
+mod_timeout             al remitente de correo caducado.
+mod_unsub_confirm       al administrador remoto para pedir confirmación de baja.
+<=yn=>
+post-confirm            al remitente para confirmación del mensaje
+<=n=>
+sub_bad                 al suscriptor si la confirmación no fue correcta.
+sub_confirm             al suscriptor para pedir confirmación de suscripción.
+sub_nop                 al suscriptor después de re-suscribirse.
+sub_ok                  al suscriptor después de la suscripción.
+top                     el principio de todas las respuestas.
+<=tn=>
+trailer                 añadido a todos los mensajes enviados de la lista.
+<=n=>
+unsub_bad               al suscriptor si la confirmación de baja fue incorrecta.
+unsub_confirm           al suscriptor para pedir confirmación de cancelación.
+unsub_nop               al no suscriptor después de darse de baja.
+unsub_ok                al ex suscriptor después de darse de baja.
