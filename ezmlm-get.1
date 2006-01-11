@@ -14,68 +14,6 @@ ezmlm-get \- handles mailing list archive retrieval and digests
 [
 .I digestcode[f]
 ]
-.SH OPTIONS
-.TP
-.B \-b
-(Default.)
-Copy administrative information and the request to the bottom of replies.
-This informs the recipient of other commands, and allows some error tracking
-in case the recipient did not originate the request.
-.TP
-.B \-B
-Suppress the normal administrative information and request copy. This may make
-it harder for the recipient to diagnose problems and learn commands.
-.TP
-.B \-c
-(Default.)
-Process and reply to commands (does not affect digests).
-.TP
-.B \-C
-Ignore all commands except digest.
-.TP
-.B \-f \fIformat
-.B ezmlm-get
-will use
-.I format
-as the default format for all returned message collections. The default
-is 'm' for MIME with a header subset (see below). Format specifiers
-sent with individual requests override the default set with the
-.B \-f
-switch.
-.TP
-.B \-p
-\-get, \-index, and \-thread commands are available to all users,
-provided other flags are permissive. This overrides normal behavior,
-which is to allow archive retrieval only to moderators, when
-.I dir\fB/public
-does not exist. This is useful to set up non-public lists that still give
-users archive access.
-.TP
-.B \-P
-\-get, \-index, and \-thread commands are available
-only to moderators, even if
-.I dir\fB/public
-exists. The
-.B \-C
-and
-.B \-s
-flags can restrict this further. This is useful for public lists with
-archive retrieval restricted to a subset of users (moderators).
-.TP
-.B \-s
-\-get, \-index, and \-thread requests are processed only if
-.B SENDER
-is a subscriber.
-.TP
-.B \-S
-(Default.)
-Anyone can issue \-get, \-index, and \-thread requests.
-.TP
-.B \-v
-Print version info.
-.TP
-.B \-V
-Print version info.
 .SH DESCRIPTION
 .B ezmlm-get
 handles archive retrieval and optionally makes and sends out
@@ -406,6 +344,68 @@ Most threads are expected to be considerably more short-lived.
 In the unlikely event that there are further messages,
 these can be retrieved by a second request for the 
 highest/lowest message returned in the first request.
+.SH OPTIONS
+.TP
+.B \-b
+(Default.)
+Copy administrative information and the request to the bottom of replies.
+This informs the recipient of other commands, and allows some error tracking
+in case the recipient did not originate the request.
+.TP
+.B \-B
+Suppress the normal administrative information and request copy. This may make
+it harder for the recipient to diagnose problems and learn commands.
+.TP
+.B \-c
+(Default.)
+Process and reply to commands (does not affect digests).
+.TP
+.B \-C
+Ignore all commands except digest.
+.TP
+.B \-f \fIformat
+.B ezmlm-get
+will use
+.I format
+as the default format for all returned message collections. The default
+is 'm' for MIME with a header subset (see below). Format specifiers
+sent with individual requests override the default set with the
+.B \-f
+switch.
+.TP
+.B \-p
+\-get, \-index, and \-thread commands are available to all users,
+provided other flags are permissive. This overrides normal behavior,
+which is to allow archive retrieval only to moderators, when
+.I dir\fB/public
+does not exist. This is useful to set up non-public lists that still give
+users archive access.
+.TP
+.B \-P
+\-get, \-index, and \-thread commands are available
+only to moderators, even if
+.I dir\fB/public
+exists. The
+.B \-C
+and
+.B \-s
+flags can restrict this further. This is useful for public lists with
+archive retrieval restricted to a subset of users (moderators).
+.TP
+.B \-s
+\-get, \-index, and \-thread requests are processed only if
+.B SENDER
+is a subscriber.
+.TP
+.B \-S
+(Default.)
+Anyone can issue \-get, \-index, and \-thread requests.
+.TP
+.B \-v
+Print version info.
+.TP
+.B \-V
+Print version info.
 .SH "CHARACTER SETS"
 If
 .I dir\fB/charset
