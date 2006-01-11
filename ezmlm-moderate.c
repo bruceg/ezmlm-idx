@@ -382,7 +382,7 @@ void main(int argc,char **argv)
       strerr_die4sys(111,FATAL,ERR_SEEK,fnmsg.s,": ");
 
     substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
-    if (qmail_copy(&qq,&sstext) != 0)
+    if (qmail_copy(&qq,&sstext,-1) != 0)
       strerr_die4sys(111,FATAL,ERR_READ,fnmsg.s,": ");
     close(fd);
 

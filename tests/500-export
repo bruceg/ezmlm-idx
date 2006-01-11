@@ -1,7 +1,13 @@
 # $Id$
 
   SENDER="test@example.org"
-  ${ECHO} "From: Test <${SENDER}>" >"$TMP"
+  (
+    ${ECHO} "From: Test <${SENDER}>"
+    ${ECHO}
+    ${ECHO} 1
+    ${ECHO} 2
+    ${ECHO} 3
+  ) >"$TMP"
 
   ${ECHO} Verifying message header and body contents...
 

@@ -344,6 +344,14 @@ Most threads are expected to be considerably more short-lived.
 In the unlikely event that there are further messages,
 these can be retrieved by a second request for the 
 highest/lowest message returned in the first request.
+
+.B ezmlm-get
+reads
+.I dir\fB/copylines
+to determine how many lines of the original message to copy into the
+outgoing message.  If this file is empty or not present, a value of
+.I 0
+is presumed, meaning that only the header is copied.
 .SH OPTIONS
 .TP
 .B \-b

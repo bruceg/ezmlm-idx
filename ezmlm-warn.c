@@ -56,6 +56,7 @@ stralloc fnlasth = {0};
 stralloc fnlastd = {0};
 stralloc lasth = {0};
 stralloc lastd = {0};
+unsigned long copylines = 0;	/* Number of lines from the message to copy */
 struct stat st;
 
 static void die_read(void) { strerr_die4sys(111,FATAL,ERR_READ,fn.s,": "); }
@@ -183,7 +184,7 @@ void doit(int flagw)
     hdr_ctype(CTYPE_MESSAGE);
     qmail_puts(&qq,"\n");
   }
-  if (qmail_copy(&qq,&ssin) < 0) die_read();
+  if (qmail_copy(&qq,&ssin,copylines) < 0) die_read();
   close(fd);
 
   if (flagcd)				/* end multipart/mixed */
@@ -263,6 +264,7 @@ void main(int argc,char **argv)
     }
   startup(dir = argv[optind]);
   load_config(dir);
+  getconf_ulong(&copylines,"copylines",0,dir);
   if (flagdig) {
     if (!stralloc_copys(&digdir,dir)) die_nomem();
     if (!stralloc_cats(&digdir,"/digest")) die_nomem();

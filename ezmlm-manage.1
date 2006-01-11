@@ -107,6 +107,14 @@ field,
 refuses to respond.
 .B ezmlm-manage
 also refuses to respond to bounce messages.
+
+.B ezmlm-manage
+reads
+.I dir\fB/copylines
+to determine how many lines of the original message to copy into the
+outgoing message.  If this file is empty or not present, a value of
+.I 0
+is presumed, meaning that only the header is copied.
 .SH OPTIONS
 .TP 5
 .B \-b

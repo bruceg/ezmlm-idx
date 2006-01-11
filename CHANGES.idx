@@ -23,6 +23,12 @@ release.
 ezmlm-idx-5.0.2, ????-??-??
 ===========================
 
+- All programs that copy the input message (ezmlm-get, ezmlm-manage,
+  ezmlm-reject, ezmlm-request, and ezmlm-warn) will now copy the whole
+  header but only a limited number of lines of the message body,
+  configured by putting a number into "copylines".  If this control file
+  is not present, no body lines are copied (to avoid spam complaints).
+
 - Updated Spanish translation for post-confirm.  Thanks Ruben Cardenal.
 
 ezmlm-idx-5.0.1, 2005-12-16

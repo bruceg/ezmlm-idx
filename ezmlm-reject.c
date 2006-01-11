@@ -42,6 +42,7 @@ int flaghavesubject = 0;
 int flaghavecommand = 0;
 int flagcheck = 0;		/* set after boundary is found in body, */
 				/* until blank line */
+unsigned long copylines = 0;	/* Number of lines from the message to copy */
 
 stralloc mimeremove = {0};
 stralloc mimereject = {0};
@@ -323,7 +324,7 @@ void main(int argc,char **argv)
       qmail_put(&qq,mydtline.s,mydtline.len);
       if (seek_begin(0) == -1)
 	strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
-      if (qmail_copy(&qq,&ssin2) != 0)
+      if (qmail_copy(&qq,&ssin2,copylines) != 0)
 	strerr_die2sys(111,FATAL,ERR_READ_INPUT);
       if (!stralloc_copy(&to,&outlocal)) die_nomem();
       if (!stralloc_cats(&to,"-request@")) die_nomem();

@@ -31,6 +31,16 @@ grepbody() {
   }
 }
 
+grepbodynot() {
+  ${GREP} "^$*" "$QQBODY" >/dev/null 2>&1 && \
+  {
+    ${ECHO} "Body is contains extraneous $1 line:";
+    ${GREP} -i "^$1" "$QQBODY"
+    BUG="${BUG} body"
+    prompt "..............: "
+  }
+}
+
 grephdr_std() {
   grephdr message-id: "<[0123456789]*\\.[0123456789]*\\.ezmlm@${HOST}>"
   grephdr delivered-to: "responder for ${LOC}@${HOST}"

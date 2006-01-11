@@ -240,7 +240,7 @@ void main(int argc,char **argv)
       if (qmail_open(&qq,(stralloc *) 0) == -1)
         strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
       qmail_puts(&qq,dtline);				/* delivered-to */
-      if (qmail_copy(&qq,subfdin) != 0)
+      if (qmail_copy(&qq,subfdin,0) != 0)
         strerr_die2sys(111,FATAL,ERR_READ_INPUT);
       qmail_from(&qq,from.s);
       qmail_to(&qq,to.s);

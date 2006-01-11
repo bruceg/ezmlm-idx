@@ -61,6 +61,7 @@ stralloc cmds = {0};
 stralloc from = {0};
 stralloc to = {0};
 stralloc quoted = {0};
+unsigned long copylines = 0;	/* Number of lines from the message to copy */
 char boundary[COOKIE] = "zxcaeedrqcrtrvthbdty";	/* cheap "rnd" MIME boundary */
 
 struct constmap headerremovemap;
@@ -289,6 +290,7 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind]);
+  getconf_ulong(&copylines,"copylines",0,dir);
 
 	/* do minimum to identify request for this program in case */
 	/* it's invoked in line with e.g. ezmlm-manage */
@@ -700,7 +702,7 @@ void main(int argc,char **argv)
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
       strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
-    if (qmail_copy(&qq,&ssin2) != 0)
+    if (qmail_copy(&qq,&ssin2,copylines) != 0)
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
     if (flagcd)
       hdr_boundary(1);

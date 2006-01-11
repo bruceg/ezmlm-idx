@@ -144,7 +144,7 @@ void sendnotice(const char *d)
         strerr_die4sys(111,FATAL,ERR_SEEK,d,": ");
 
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
-      if (qmail_copy(&qq,&sstext) != 0) die_read();
+      if (qmail_copy(&qq,&sstext,-1) != 0) die_read();
       close (fd);
 
       if (flagmime)

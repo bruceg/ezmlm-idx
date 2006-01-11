@@ -1,0 +1,26 @@
+# $Id$
+
+  prompt "copylines:            "
+
+  DEFAULT="subscribe"
+  LOCAL="${LOC}-${DEFAULT}"
+
+  echo 0 >"$DIR"/copylines
+  ${EZBIN}/ezmlm-manage -S "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce subscribe confirmation"
+  grepbodynot 1
+  grepbodynot 2
+
+  echo 1 >"$DIR"/copylines
+  ${EZBIN}/ezmlm-manage -S "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce subscribe confirmation"
+  grepbody 1
+  grepbodynot 2
+
+  echo 2 >"$DIR"/copylines
+  ${EZBIN}/ezmlm-manage -S "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce subscribe confirmation"
+  grepbody 1
+  grepbody 2
+
+  ${ECHO} OK

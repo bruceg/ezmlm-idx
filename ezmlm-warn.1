@@ -70,6 +70,14 @@ keeps track of the last subdirectory scanned.
 .B ezmlm-warn
 will not send a warning or probe to an address that is
 not currently a subscriber.
+
+.B ezmlm-warn
+reads
+.I dir\fB/copylines
+to determine how many lines of the original message to copy into the
+outgoing message.  If this file is empty or not present, a value of
+.I 0
+is presumed, meaning that only the header is copied.
 .SH OPTIONS
 .TP
 .B \-d

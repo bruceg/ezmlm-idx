@@ -59,6 +59,7 @@ int flagedit = 0;	/* default: text file edit not allowed */
 int flagstorefrom = 1;	/* default: store from: line for subscribes */
 char encin = '\0';	/* encoding of incoming message */
 int flagdig = 0;	/* request is not for digest list */
+unsigned long copylines = 0;	/* Number of lines from the message to copy */
 
 static const char hex[]="0123456789ABCDEF";
 char urlstr[] = "%00";	/* to build a url-encoded version of a char */
@@ -546,7 +547,7 @@ void copybottom(void)
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
       strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
-    if (qmail_copy(&qq,&ssin2) != 0)
+    if (qmail_copy(&qq,&ssin2,copylines) != 0)
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
     if (flagcd)
       hdr_boundary(1);
@@ -614,6 +615,7 @@ int main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   load_config(dir);
+  getconf_ulong(&copylines,"copylines",0,dir);
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);

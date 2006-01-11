@@ -57,6 +57,14 @@ or at the local host.
 Invalid requests for an existing ezmlm list will
 lead to a ``help'' message from
 .BR ezmlm-manage(1) .
+
+.B ezmlm-request
+reads
+.I dir\fB/copylines
+to determine how many lines of the original message to copy into the
+outgoing message.  If this file is empty or not present, a value of
+.I 0
+is presumed, meaning that only the header is copied.
 .SH OPTIONS
 .TP
 .B \-f\fI config

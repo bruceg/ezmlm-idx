@@ -46,6 +46,7 @@ int flagbottom = 1;		/* copy text/bottom + request */
 int flagpublic = 2;		/* 0 = non-public, 1 = public, 2 = respect*/
 				/* dir/public. */
 int flagsub = 0;		/* =1 subscribers only for get/index/thread */
+unsigned long copylines = 0;	/* Number of lines from the message to copy */
 const char *digsz =
 		"from\\to\\subject\\reply-to\\date\\message-id\\cc\\"
 		"mime-version\\content-type\\content-transfer-encoding";
@@ -218,13 +219,9 @@ void get_num(void)
 unsigned long dignum(void)
 {
 /* return dignum if exists, 0 otherwise. */
-
-  unsigned long retval;
-  if (!stralloc_copys(&num,"")) die_nomem();	/* zap */
-  getconf_line(&num,"dignum",0,dir);
-  if(!stralloc_0(&num)) die_nomem();
-  scan_ulong(num.s,&retval);
-  return retval;
+  unsigned long u;
+  getconf_ulong(&u,"dignum",0,dir);
+  return u;
 }
 
 void write_ulong(unsigned long num,unsigned long cum,unsigned long dat,
@@ -282,7 +279,7 @@ void normal_bottom(char format)
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
       strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
-    if (qmail_copy(&qq,&ssin2) != 0)
+    if (qmail_copy(&qq,&ssin2,copylines) != 0)
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
   } else {
     if (flagcd == 'B' && format != RFC1153) {
@@ -807,6 +804,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind++]);
   load_config(dir);
+  getconf_ulong(&copylines,"copylines",0,dir);
 
   digestcode = argv[optind];	/* code to activate digest (-digest-code)*/
 				/* ignore any extra args */
