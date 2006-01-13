@@ -33,6 +33,7 @@ cp --parents `cat SOURCES EXTRADIST` $base/
 find sub_* lang -name .svn -prune -o -type f -print \
 | xargs cp --parents --target-directory=$base/
 mv idx.patch $base/
+sed -e 's/ -W[^ ]*//g' conf-cc >$base/conf-cc
 chmod -R +r $base
 
 #echo "Building symlinks"
