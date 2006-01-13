@@ -29,6 +29,9 @@ ezmlm-idx-5.0.2, ????-??-??
   configured by putting a number into "copylines".  If this control file
   is not present, no body lines are copied (to avoid spam complaints).
 
+- Fixed ezmlm-make to override settings in the config files with command
+  line options instead of the other way around.
+
 - Updated Spanish translation for post-confirm.  Thanks Ruben Cardenal.
 
 ezmlm-idx-5.0.1, 2005-12-16

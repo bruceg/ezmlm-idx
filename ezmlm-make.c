@@ -188,6 +188,8 @@ int read_line(const char *dpm,stralloc *sa)
 {
   int fdin;
   int match;
+  if (sa->len > 0)
+    return 0;
   dirplusmake(dpm);
   if ((fdin = open_read(dirplus.s)) == -1) {
     if (errno != error_noent) die_read();
@@ -200,11 +202,11 @@ int read_line(const char *dpm,stralloc *sa)
     return 0;
   }
 }
-  
+
 int read_new_config(void)
 {
   if (read_line("/flags",&oldflags) != 0) return 0;
-  if (euid > 0 && !flags['c' - 'a'] && (cfname.len == 0))
+  if (euid > 0 && !flags['c' - 'a'])
     read_line("/ezmlmrc",&cfname);
   read_line("/dot",&dot);
   read_line("/outlocal",&local);
