@@ -62,10 +62,11 @@
 # <#H#> outhost
 # <#L#> outlocal (unchanged)
 # <#R#> confirm address (equivalent to <#r#>@<#h#>)
+# <#c#> the confirm cookie
 # <#h#> outhost
 # <#l#> outlocal (may contain "-digest")
 # <#n#> message number
-# <#r#> local part of the confirm address
+# <#r#> local part of the confirm address (equivalent to <#l#>-<#c#>)
 # <#t#> target address, with '@' substituted by '='
 #
 # -0 is used for the main list address when setting up sublists

@@ -44,6 +44,7 @@ static const char *target = "?????";
 static const char *verptarget = "?????";
 static const char *confirm = "?????";
 static unsigned int confirmlocal;
+static unsigned int confirmprefix;
 static const char *szmsgnum = "?????";
 
 void set_cptarget(const char *tg)
@@ -56,10 +57,11 @@ void set_cpverptarget(const char *tg)
   verptarget = tg;
 }
 
-void set_cpconfirm(const char *cf)
+void set_cpconfirm(const char *cf,unsigned int prefixlen)
 {
   confirm = cf;
   confirmlocal = str_chr(cf, '@');
+  confirmprefix = prefixlen + 1;
 }
 
 void set_cpnum(const char *cf)
@@ -121,6 +123,10 @@ void copy_xlate(stralloc *out,
 	break;
       case 'R':
 	if (!stralloc_cats(out,confirm)) die_nomem();
+	break;
+      case 'c':
+	if (!stralloc_catb(out,confirm+confirmprefix,
+			   confirmlocal-confirmprefix)) die_nomem();
 	break;
       case 'r':
 	if (!stralloc_catb(out,confirm,confirmlocal)) die_nomem();

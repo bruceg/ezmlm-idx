@@ -37,6 +37,9 @@ ezmlm-idx-5.0.2, ????-??-??
 - Fixed bug in generation of a (currently unused) email address in the
   subscription confirmation message.
 
+- Substitute <#c#> in (un)subscribe confirm messages with just the
+  confirmation cookie (ie <#r#> without the <#l#>- prefix).
+
 ezmlm-idx-5.0.1, 2005-12-16
 ===========================
 

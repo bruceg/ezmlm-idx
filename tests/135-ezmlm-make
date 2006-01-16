@@ -38,13 +38,21 @@ ${EZBIN}/ezmlm-make -+ln -C${EZBIN}/lang/en_US "$DIR" || \
 
 # Set up a text file for use in testing copy()
   mkdir -p "${DIR}/text"
-  echo 'Local: <#L#>' >"${DIR}/text/top"
-  echo 'local: <#l#>' >>"${DIR}/text/top"
-  echo 'host: <#h#>' >>"${DIR}/text/top"
-  for flag in a b c d e f g h i j k l m n o p q r s t u v w x y z; do
-    echo "<=${flag}=>" >>"${DIR}/text/top"
-    echo "Flag: ${flag}" >>"${DIR}/text/top"
-  done
+  (
+    echo 'Local: <#L#>'
+    echo 'local: <#l#>'
+    echo 'host: <#h#>'
+    echo 'Target: <#A#>'
+    echo 'Confirm: <#R#>'
+    echo 'Cookie: <#c#>'
+    echo 'MsgNum: <#n#>'
+    echo 'ConfirmLocal: <#r#>'
+    echo 'target: <#t#>'
+    for flag in a b c d e f g h i j k l m n o p q r s t u v w x y z; do
+      echo "<=${flag}=>"
+      echo "Flag: ${flag}"
+    done
+  ) >"${DIR}/text/top"
 
   # remove inlocal/inhost - shouldn't be used
   ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \

@@ -7,8 +7,14 @@
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce subscribe probe"
 
-  grepbody Local: xyzzy-__tstlist
-  grepbody local: xyzzy-__tstlist-digest
-  grepbody host: example.com
+  grepbody Local: "xyzzy-__tstlist"
+  grepbody local: "xyzzy-__tstlist-digest"
+  grepbody host: "example.com"
+  grepbody Target: "test@example.org"
+  grepbody target: "test=example.org"
+  grepbody Confirm: "${LOC}-digest-sc.*.*-test=example.org@example.com"
+  grepbody Cookie: "sc.*.*-test=example.org"
+  grepbody MsgNum: "?????"
+  grepbody ConfirmLocal: "${LOC}-digest-sc.*.*-test=example.org"
 
   ${ECHO} OK

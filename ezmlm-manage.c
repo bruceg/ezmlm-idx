@@ -445,7 +445,7 @@ int geton(const char *action)
 	    if (!stralloc_append(&confirm,"@")) die_nomem();
 	    if (!stralloc_cat(&confirm,&outhost)) die_nomem();
 	    if (!stralloc_0(&confirm)) die_nomem();
-	    set_cpconfirm(confirm.s);			/* for !R in copy */
+	    set_cpconfirm(confirm.s,outlocal.len);	/* for !R in copy */
             copy(&qq,"text/top",flagcd);
             copy(&qq,"text/sub-ok",flagcd);
             break;
@@ -507,7 +507,7 @@ void doconfirm(const char *act)
   if (!stralloc_append(&confirm,"@")) die_nomem();
   if (!stralloc_cat(&confirm,&outhost)) die_nomem();
   if (!stralloc_0(&confirm)) die_nomem();
-  set_cpconfirm(confirm.s);		/* for copy */
+  set_cpconfirm(confirm.s,outlocal.len);		/* for copy */
 
   qmail_puts(&qq,"Reply-To: ");
   if (!quote2(&quoted,confirm.s)) die_nomem();
@@ -967,7 +967,7 @@ int main(int argc,char **argv)
       if (!stralloc_append(&confirm,"@")) die_nomem();
       if (!stralloc_cat(&confirm,&outhost)) die_nomem();
       if (!stralloc_0(&confirm)) die_nomem();
-      set_cpconfirm(confirm.s);
+      set_cpconfirm(confirm.s,outlocal.len);
 
       qmail_puts(&qq,"Reply-To: ");
       if (!quote2(&quoted,confirm.s)) die_nomem();

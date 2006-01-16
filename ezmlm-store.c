@@ -260,7 +260,7 @@ void main(int argc,char **argv)
   if (!stralloc_0(&accept)) die_nomem();
 
   set_cptarget(accept.s);	/* for copy () */
-  set_cpconfirm(reject.s);
+  set_cpconfirm(reject.s,quoted.len);
 
   fdmsg = open_trunc(fnmsg.s);
   if (fdmsg == -1)
