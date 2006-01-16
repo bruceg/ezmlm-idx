@@ -440,7 +440,7 @@ int geton(const char *action)
 	    hdr_listsubject1(TXT_WELCOME);
             hdr_ctboundary();
 	    if (!stralloc_copy(&confirm,&outlocal)) die_nomem();
-	    if (!stralloc_append(&confirm,"unsubscribe-")) die_nomem();
+	    if (!stralloc_cats(&confirm,"-unsubscribe-")) die_nomem();
 	    if (!stralloc_cats(&confirm,verptarget.s)) die_nomem();
 	    if (!stralloc_append(&confirm,"@")) die_nomem();
 	    if (!stralloc_cat(&confirm,&outhost)) die_nomem();
