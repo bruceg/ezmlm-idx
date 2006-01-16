@@ -5,6 +5,8 @@ fix manual subscriptions to mod/allow/deny/digest when using SQL
 add support for simultaneous multiple languages
 Fix ezmlm-tests to work even if conf-bin<>$PWD
 
+Rewrite man pages to include a separate "configuration files" section.
+
 Move confirm-related directories in "mod" to new "confirm" directory?
 
 Refactor all header generation into a single module:
