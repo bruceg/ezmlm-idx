@@ -4830,14 +4830,14 @@
 
   1144..11..  SSuubblliissttss ooff eezzmmllmm lliissttss..
 
-  To set up a sublist to an ezmlm list, just use the ezmlm-make ``-5
+  To set up a sublist to an ezmlm list, just use the ezmlm-make ``-0
   mainlist@mainhost'' switch. This will configure your list as a sublist
   to the mainlist@mainhost mailing list.
 
 
   1144..22..  SSuubblliissttss ooff nnoonn--eezzmmllmm lliissttss..
 
-  To set up a sublist to an ezmlm list, just use the ezmlm-make ``-5
+  To set up a sublist to an ezmlm list, just use the ezmlm-make ``-0
   mainlist@mainhost'' switch. This will configure your list as a sublist
   to the mainlist@mainhost mailing list. Since the main list may not use
   the ``Mailing-List'' header, you must identify another header that the
