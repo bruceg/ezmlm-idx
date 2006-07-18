@@ -1,7 +1,8 @@
 #ifndef FORK_H
 #define FORK_H
 
-extern int fork();
-extern int vfork();
+#include <sys/types.h>
+extern pid_t fork();
+extern pid_t vfork();
 
 #endif
