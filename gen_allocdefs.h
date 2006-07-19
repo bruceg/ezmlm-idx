@@ -10,7 +10,7 @@ int ta_ready(ta *x,unsigned int n) \
     i = x->a; \
     if (n > i) { \
       x->a = base + n + (n >> 3); \
-      if (alloc_re((void**)&x->field,i * sizeof(type),x->a * sizeof(type))) \
+      if (alloc_re((void*)&x->field,i * sizeof(type),x->a * sizeof(type))) \
         return 1; \
       x->a = i; return 0; } \
     return 1; } \
@@ -24,7 +24,7 @@ int ta_rplus(ta *x,unsigned int n) \
     i = x->a; n += x->len; \
     if (n > i) { \
       x->a = base + n + (n >> 3); \
-      if (alloc_re((void**)&x->field,i * sizeof(type),x->a * sizeof(type))) \
+      if (alloc_re((void*)&x->field,i * sizeof(type),x->a * sizeof(type))) \
         return 1; \
       x->a = i; return 0; } \
     return 1; } \
