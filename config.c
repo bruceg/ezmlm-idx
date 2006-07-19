@@ -64,7 +64,17 @@ void load_config(const char *dir)
       strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
   }
 
-  getconf_line(&ezmlmrc,"ezmlmrc",0,dir);
+  /* There are problems with using getconf_line to fetch the ezmlmrc
+   * pointer, since the alt location for "ezmlmrc" turns out to be the
+   * whole ezmlmrc file itself. */
+  switch (slurp("ezmlmrc",&ezmlmrc,64)) {
+  case -1:
+    strerr_die4sys(111,FATAL,ERR_READ,dir,"/ezmlmrc: ");
+  case 0:
+    ezmlmrc.len = 0;
+  }
+  ezmlmrc.len = byte_chr(ezmlmrc.s,ezmlmrc.len,'\n');
+
   getconf_line(&outhost,"outhost",1,dir);
   getconf_line(&outlocal,"outlocal",1,dir);
   if (!stralloc_copy(&local,&outlocal)) die_nomem();

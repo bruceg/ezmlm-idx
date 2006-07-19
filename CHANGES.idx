@@ -26,6 +26,8 @@ ezmlm-idx-5.0.3, XXXX-XX-XX
 - Modified the vfork test to use pid_t instead of int, to fix
   portability issues on Solaris.
 
+- Fixed handling of missing ezmlmrc config file.
+
 ezmlm-idx-5.0.2, 2006-01-16
 ===========================
 
