@@ -61,7 +61,7 @@
 #define ERR_UNEXPECTED "program logic error (#5.3.0)"
 #define ERR_BAD_ALL "Sorry, after removing unacceptable MIME parts from your message I was left with nothing (#5.7.0)"
 #define ERR_MIME_QUOTE "MIME boundary lacks end quote"
-#define ERR_SUBST_UNSAFE "Sorry, substitution of target addresses into headers with <#A#> or <#T#> is unsafe and not permitted."
+#define ERR_SUBST_UNSAFE "Sorry, substitution of target addresses into headers with <#A#> or <#t#> is unsafe and not permitted."
 
 /* ezmlm-request unique */
 #define ERR_REQ_LISTNAME "This command requires a mailing list name (#5.1.1)"
