@@ -25,7 +25,6 @@
 #include "now.h"
 #include "fmt.h"
 #include "sgetopt.h"
-#include "auto_bin.h"
 #include "cookie.h"
 #include "errtxt.h"
 #include "copy.h"
