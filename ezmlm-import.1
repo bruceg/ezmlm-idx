@@ -1,0 +1,42 @@
+.\" $Id$
+.TH ezmlm-import 1
+.SH NAME
+ezmlm-import \- import messages into an ezmlm archive
+.SH SYNOPSIS
+.B ezmlm-import
+.I dir
+.I mbox
+.SH DESCRIPTION
+.B ezmlm-import
+scans the input file
+.I mbox
+for messages, and writes each message into a seperate file in
+.IR dir\fB/archive .
+The input file is expected to be in the standard UNIX "mbox" file
+format, which uses lines starting with "From " to mark the start of each
+message.  All text before the first message is discarded, as are the
+seperator lines themselves.
+.SH "SEE ALSO"
+ezmlm(5),
+ezmlm-archive(1),
+ezmlm-idx(1)
+.SH NOTES
+.B ezmlm-import
+does not create any message indices, so it will be necessary to run the
+following command after the import has completed:
+
+.RS
+.B ezmlm-idx
+.I dir
+.RE
+
+Also, if the archive is indexed (by use of the
+.B ezmlm-make
+.I -a
+option) run the following command to rebuild the subject and thread
+indices:
+
+.RS
+.B ezmlm-archive
+.I dir
+.RE

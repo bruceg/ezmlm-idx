@@ -12,6 +12,7 @@ ezmlm-gate.0 \
 ezmlm-get.0 \
 ezmlm-glconf.0 \
 ezmlm-idx.0 \
+ezmlm-import.0 \
 ezmlm-issubn.0 \
 ezmlm-limit.0 \
 ezmlm-list.0 \
