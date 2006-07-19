@@ -208,14 +208,7 @@ int main(int argc,char **argv)
 					/* need only decoded one */
 
 			/* Get message number */
-  switch(slurp("num",&num,32)) {
-    case -1:
-      strerr_die4sys(100,FATAL,ERR_READ,dir,"/num: ");
-    case 0:
-      strerr_die4x(100,FATAL,dir,"/num",ERR_NOEXIST);
-  }
-  if (!stralloc_0(&num)) die_nomem();
-  scan_ulong(num.s,&msgmax);
+  getconf_ulong(&msgmax,"num",1,dir);
   if (msgnum > msgmax) _exit(0);
   if (msgnum) {
     msgnum = (msgnum / 100) * 100 - 1;

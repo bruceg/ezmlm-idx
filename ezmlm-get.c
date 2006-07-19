@@ -204,16 +204,8 @@ void tosender(void)
 
 void get_num(void)
 {
-/* read dir/num -> max. max/cumsizen left alone if not present */
-/* Both of these should have been initialized to 0L */
-
-  unsigned int pos;
-  if (getconf_line(&num,"num",0,dir)) {
-    if(!stralloc_0(&num)) die_nomem();
-    pos = scan_ulong(num.s,&max);
-    if (num.s[pos] == ':') pos++;
-    scan_ulong(num.s+pos,&cumsizen);
-  }
+  /* read dir/num -> max. */
+  getconf_ulong2(&max,&cumsizen,"num",0,dir);
 }
 
 unsigned long dignum(void)

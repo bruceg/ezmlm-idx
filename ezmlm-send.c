@@ -80,7 +80,7 @@ void die_indexn(void)
 
 unsigned long innum;
 unsigned long outnum;
-unsigned long msgnum;
+unsigned long msgnum = 0L;
 unsigned long hash_lo = 0L;
 unsigned long hash_hi = 52L;
 unsigned long msgsize = 0L;
@@ -389,14 +389,8 @@ void main(int argc,char **argv)
 
   getconf(&mimeremove,"mimeremove",0,dir);
 
-  if (getconf_line(&line,"num",0,dir)) {	/* Now non-FATAL, def=0 */
-    if (!stralloc_0(&line)) die_nomem();
-    cp = line.s + scan_ulong(line.s,&msgnum);
-    ++msgnum;
-    if (*cp++ == ':')
-      scan_ulong(cp,&cumsize);
-  } else
-    msgnum = 1L;			/* if num not there */
+  getconf_ulong2(&msgnum,&cumsize,"num",0,dir);
+  ++msgnum;
 
   flagsublist = getconf_line(&sublist,"sublist",0,dir);
 

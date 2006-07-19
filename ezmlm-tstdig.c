@@ -81,12 +81,8 @@ void main(int argc,char **argv)
 
   if (argv[optind])
     die_usage();	/* avoid common error of putting options after dir */
-  if (!getconf_line(&line,"num",0,dir))
-    _exit(99);		/* no msgs no shirt -> no digest */
-  if(!stralloc_0(&line)) die_nomem();
-  pos = scan_ulong(line.s,&num);
-  if (line.s[pos] == ':')
-    scan_ulong(line.s+pos+1,&cumsize);
+  if (!getconf_ulong2(&num,&cumsize,"num",0,dir))
+    _exit(99);
 
   if (getconf_line(&line,"dignum",0,dir)) {
     if(!stralloc_0(&line)) die_nomem();

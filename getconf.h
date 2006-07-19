@@ -7,5 +7,7 @@ extern int getconf_line(stralloc *sa,const char *fn,int flagrequired,
 			const char *dir);
 extern int getconf_ulong(unsigned long *n,const char *fn,int flagrequired,
 			 const char *dir);
+extern int getconf_ulong2(unsigned long *n0,unsigned long *n1,
+			  const char *fn,int flagrequired,const char *dir);
 
 #endif

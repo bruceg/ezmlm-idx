@@ -84,10 +84,8 @@ void main(int argc,char **argv)
 			/* lock for num and for writing loopnum */
   fdlock = lockfile("lock");
 
-  if (!getconf_line(&line,"num",0,dir))
+  if (!getconf_ulong(&num,"num",1,dir))
     _exit(99);						/* no msgs */
-  if(!stralloc_0(&line)) die_nomem();
-  pos = scan_ulong(line.s,&num);			/* current msg */
   if ((flagloop = getconf_line(&line,fn,0,dir))) {
     if(!stralloc_0(&line)) die_nomem();
     pos = scan_ulong(line.s,&loopnum);			/* msg when written */

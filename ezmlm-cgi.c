@@ -1833,10 +1833,8 @@ void date2msg(struct msginfo *infop)
 
 void findlastmsg(struct msginfo *infop)
 {
-  if (!getconf_line(&line,"num",0,dir))
+  if (!getconf_ulong(&(infop->target),"num",0,dir))
     cgierr("Sorry, there are no messages in the archive","","");
-  if (!stralloc_0(&line)) die_nomem();
-  (void) scan_ulong(line.s,&(infop->target));
 }
 
 int do_cmd(struct msginfo *infop)

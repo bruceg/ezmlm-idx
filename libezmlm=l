@@ -50,6 +50,7 @@ fmt_uint.o
 fmt_uint0.o
 fmt_ulong.o
 getconf.o
+getconf_ulong.o
 getln.o
 getln2.o
 hdr_add.o

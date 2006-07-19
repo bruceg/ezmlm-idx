@@ -410,21 +410,17 @@ int main(int argc,char **argv)
 	/* and that the "num" message is final */
   fdlock = lockfile("lock");
 					/* get num */
-  if (!getconf_line(&num,"num",0,dir))
+  getconf_ulong(&max,"num",0,dir);
+  if (max == 0)
     strerr_die1x(100,ERR_EMPTY_LIST);
   (void) close(fdlock);
 
-  if (!stralloc_0(&num)) die_nomem();	/* parse num */
-  (void) scan_ulong(num.s,&max);
   if (!to || to > max) to = max;
 
   fdlock = lockfile("archive/lock");	/* lock index */
   if (!flagcreate && !archnum) {	/* adjust archnum (from) / to */
-    if (getconf_line(&num,"archnum",0,dir)) {
-      if (!stralloc_0(&num)) die_nomem();
-      (void) scan_ulong(num.s,&archnum);
-      archnum++;
-    }
+    if (getconf_ulong(&archnum,"archnum",0,dir))
+      ++archnum;
   }
 
   if (archnum > to)
