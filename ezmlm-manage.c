@@ -149,7 +149,7 @@ void store_from(stralloc *frl,	/* from line */
 {
   int fdin;
   int fdout;
-  long linetime;
+  unsigned long linetime;
 
   if (!flagstorefrom || !frl->len) return;	/* nothing to store */
   lock();
@@ -166,7 +166,8 @@ void store_from(stralloc *frl,	/* from line */
 	strerr_die3sys(111,FATAL,ERR_READ,"from: ");
 	if (!match) break;
 	(void) scan_ulong(line.s,&linetime);
-	if (linetime + 1000000 > when && linetime <= when)
+	if (linetime + 1000000 > (unsigned long) when
+	    && linetime <= (unsigned long) when)
 	  if (substdio_bput(&ssfrom,line.s,line.len))
 	    strerr_die3sys(111,FATAL,ERR_WRITE,"fromn: ");
       }

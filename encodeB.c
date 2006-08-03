@@ -58,7 +58,7 @@ static void dorest(void)
   *cpout++ = '\n';
 }   
 
-void encodeB(const unsigned char *indata,unsigned int n,stralloc *outdata,
+void encodeB(const char *indata,unsigned int n,stralloc *outdata,
 	     int control)	/* 1 = init, 2 = flush */
 	/* converts any character with the high order bit set to */
 	/* base64. In: n chars of indata, out: stralloc outdata  */

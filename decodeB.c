@@ -27,8 +27,8 @@ void decodeB(const char *cpfrom,unsigned int n,stralloc *outdata)
   char holdch[4] = "???";
   int i,j;
   char c;	/* needs to be signed */
-  const unsigned char *cp;
-  const unsigned char *cpnext;
+  const char *cp;
+  const char *cpnext;
 
   cp = cpfrom;
   cpnext = cp + n;
@@ -50,7 +50,7 @@ void decodeB(const char *cpfrom,unsigned int n,stralloc *outdata)
     if (cp >= cpnext) {	/* pad */
       c = 0;
     } else {
-      c = char64enc(*cp);
+      c = char64enc((unsigned)*cp);
       ++cp;
     }
     if (c < 0)		/* ignore illegal characters */

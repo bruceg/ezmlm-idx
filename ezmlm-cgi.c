@@ -425,10 +425,10 @@ void urlencode_puts(const char *s)
   urlencode_put(s,str_len(s));
 }
 
-void anchor_put(unsigned char *s, unsigned int l)
+void anchor_put(char *s, unsigned int l)
 /* http://, ftp:// only */
 {
-  unsigned char *cpl,*cpafter,*cpstart,*cpend;
+  char *cpl,*cpafter,*cpstart,*cpend;
   unsigned int pos,i;
 
   pos = byte_chr(s,l,':');

@@ -46,7 +46,7 @@ char boundary[COOKIE];
 substdio ssout;
 char outbuf[16];
 
-long when;
+unsigned long when;
 char *dir;
 char *workdir;
 int flagdig = 0;
@@ -230,10 +230,10 @@ void main(int argc,char **argv)
 {
   DIR *bouncedir, *bsdir, *hdir;
   direntry *d, *ds;
-  long bouncedate;
-  long bouncetimeout = BOUNCE_TIMEOUT;
-  long lockout = 0L;
-  long ld;
+  unsigned long bouncedate;
+  unsigned long bouncetimeout = BOUNCE_TIMEOUT;
+  unsigned long lockout = 0L;
+  unsigned long ld;
   unsigned long ddir,dfile;
   int fdlock,fd;
   int opt;
@@ -382,7 +382,8 @@ void main(int argc,char **argv)
   if (stat(fnlasth.s,&st) == -1) {
     if (errno != error_noent)
       strerr_die4sys(111,FATAL,ERR_STAT,fnlasth.s,": ");
-  } else if (when < st.st_mtime + 100000 && when > st.st_mtime)
+  } else if (when < (unsigned long)st.st_mtime + 100000
+	     && when > (unsigned long)st.st_mtime)
     _exit(0);			/* 2nd comp to guard against corruption */
 
   if (slurp(fnlasth.s,&lasth,16) == -1)		/* last h cleaned */

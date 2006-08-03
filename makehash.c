@@ -36,7 +36,7 @@ static uint32 littleendian[8] = {
 #define data ((unsigned char *) s->in)
 #define outdata ((unsigned char *) s->out)
 
-static void surfpcs_addlc(surfpcs *s,const unsigned char *x,unsigned int n)
+static void surfpcs_addlc(surfpcs *s,const char *x,unsigned int n)
 	/* modified from Dan's surfpcs_add by skipping ' ' & '\t' and */
 	/* case-independence */
 {
