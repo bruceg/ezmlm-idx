@@ -23,9 +23,11 @@ release.
 ezmlm-idx-5.0.3, XXXX-XX-XX
 ===========================
 
-- Added a new configuration file, "headerkeep" which overrides
-  "headerremove" if it is present.  Instead of removing bad headers, the
-  "headerkeep" file controls which ones *not* to remove.
+- Added a new configuration files "headerkeep" and "mimekeep" which
+  override "headerremove" and "mimeremove" respectively if either of the
+  former are present.  Instead of removing bad headers, the "headerkeep"
+  file controls which ones *not* to remove.  The "mimekeep" file works
+  similarly for MIME parts.
 
 - Added a new program, ezmlm-import, which imports messages from a mbox
   file into ezmlm-idx's message archive.

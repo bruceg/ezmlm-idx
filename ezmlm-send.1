@@ -88,6 +88,11 @@ If not,
 deletes any incoming fields with names listed in
 .IR dir\fB/headerremove .
 
+If present,
+.B ezmlm-send
+removes all MIME parts not specified in
+.IR dir\fB/mimekeep .
+Otherwise
 .B ezmlm-send
 removes MIME parts specified in
 .I dir\fB/mimeremove
@@ -300,7 +305,8 @@ message is a multipart mime message
 Since the MIME parser doesn't decode inner MIME layers of a 
 .I "multipart/*"
 message,
-.I mimeremove
+.IR mimekeep ,
+.IR mimeremove ,
 and
 .I mimereject
 will be applied to the outer MIME layer only.

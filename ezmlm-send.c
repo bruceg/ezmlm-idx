@@ -109,6 +109,7 @@ struct constmap headerremovemap;
 int headerremoveflag = 0;
 stralloc mimeremove = {0};
 struct constmap mimeremovemap;
+int mimeremoveflag = 0;
 char *dir;
 
 struct qmail qq;
@@ -388,7 +389,10 @@ void main(int argc,char **argv)
     flagtrailer = 1;
   }
 
-  getconf(&mimeremove,"mimeremove",0,dir);
+  if (getconf(&mimeremove,"mimekeep",0,dir))
+    mimeremoveflag = 1;
+  else
+    getconf(&mimeremove,"mimeremove",0,dir);
 
   getconf_ulong2(&msgnum,&cumsize,"num",0,dir);
   ++msgnum;
@@ -554,7 +558,7 @@ void main(int argc,char **argv)
                if (!stralloc_copys(&boundary,"--")) die_nomem();
                if (!stralloc_catb(&boundary,cpstart,cp-cpstart))
 			die_nomem();
-	         flagfoundokpart = 0;
+	       flagfoundokpart = 0;
                if (!constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0))
 			die_nomem();
                flagbadpart = 1;		/* skip before first boundary */
@@ -653,13 +657,14 @@ void main(int argc,char **argv)
           while (*cp == ' ' || *cp == '\t') ++cp;
           cpstart = cp;			/* end of type */
           while (*cp != '\n' && *cp != '\t' && *cp != ' ' && *cp != ';') ++cp;
-	  if (constmap(&mimeremovemap,cpstart,cp-cpstart)) {
-            flagbadpart = 1;
-          } else {
+	  flagbadpart = constmap(&mimeremovemap,cpstart,cp-cpstart)
+	    ? !mimeremoveflag
+	    : mimeremoveflag;
+	  if (!flagbadpart) {
+	    /* do this part */
 	    flagfoundokpart = 1;
-            qa_put(lines.s,lines.len);	/* saved lines */
-            flagbadpart = 0;		/* do this part */
-          }
+	    qa_put(lines.s,lines.len); /* saved lines */
+	  }
         } else if (line.len == 1) {	/* end of content desc */
           flagbadpart = 0;		/* default type, so ok */
           flagfoundokpart = 1;		/* this is part of a multipart msg */

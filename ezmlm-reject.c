@@ -51,6 +51,7 @@ stralloc headerreject = {0};
 struct constmap mimeremovemap;
 struct constmap mimerejectmap;
 struct constmap headerrejectmap;
+int mimeremoveflag = 0;
 
 char strnum[FMT_ULONG];
 char buf0[256];
@@ -225,10 +226,13 @@ void main(int argc,char **argv)
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
   if (flagparsemime) {		/* set up MIME parsing */
-    getconf(&mimeremove,"mimeremove",0,dir);
-      constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0);
+    if (getconf(&mimeremove,"mimekeep",0,dir))
+      mimeremoveflag = 1;
+    else
+      getconf(&mimeremove,"mimeremove",0,dir);
+    constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0);
     getconf(&mimereject,"mimereject",0,dir);
-      constmap_init(&mimerejectmap,mimereject.s,mimereject.len,0);
+    constmap_init(&mimerejectmap,mimereject.s,mimereject.len,0);
   }
   if (flagheaderreject) {
     if (!dir) die_usage();
@@ -356,11 +360,11 @@ void main(int argc,char **argv)
     }
 
     if (flagparsemime)
-    if (constmap(&mimeremovemap,cpstart,cp-cpstart) ||
-	constmap(&mimerejectmap,cpstart,cp-cpstart)) {
-      *(cp) = (char) 0;
-      strerr_die5x(100,FATAL,ERR_BAD_TYPE,cpstart,"'",ERR_SIZE_CODE);
-    }
+      if ((!!constmap(&mimeremovemap,cpstart,cp-cpstart) ^ mimeremoveflag) ||
+	  constmap(&mimerejectmap,cpstart,cp-cpstart)) {
+	*(cp) = (char) 0;
+	strerr_die5x(100,FATAL,ERR_BAD_TYPE,cpstart,"'",ERR_SIZE_CODE);
+      }
 
     cpafter = content.s+content.len;
     while((cp += byte_chr(cp,cpafter-cp,';')) != cpafter) {

@@ -132,7 +132,13 @@ SUBJECT='test'
   { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null || \
 	fatal "mimeremove failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
-	fatal "mimeremove without dir"
+	fatal "mimeremove failed without dir"
+
+  ${ECHO} "tExt/htMl" > "$DIR"/mimekeep
+  ${ECHO} "multipart/mixed" > "$DIR"/mimekeep
+  { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null || \
+	fatal "mimekeep failed"
+  ${RM} "$DIR"/mimekeep
 
 # test content-type with something after boundary=xxx
   AFTERBOUND=';micalg=pgp-md5'
@@ -147,15 +153,22 @@ SUBJECT='test'
   ${RM} "$DIR"/mimereject
   AFTERBOUND=''
 
-# if entire message is mimeremove type is should be rejected
+# if entire message is mimeremove type it should be rejected
   ${ECHO} "multipart/mixed" > "$DIR"/mimeremove
   { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null 2>&1  && \
 	fatal "mimereject failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	fatal "mimereject without dir"
 
+# if entire message has no parts in mimekeep it should be rejected
+  ${ECHO} "no/type" > "$DIR"/mimekeep
+  { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null 2>&1  && \
+	fatal "mimekeep failed with dir"
+  { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
+	fatal "mimekeep failed without dir"
+
 # restore
-  ${RM} "$DIR"/mimeremove
+  ${RM} "$DIR"/mimeremove "$DIR"/mimekeep
 
 # test headerreject
   ${ECHO} "Content-TYPE" > "$DIR"/headerreject

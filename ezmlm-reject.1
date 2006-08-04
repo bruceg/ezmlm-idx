@@ -30,14 +30,21 @@ if 0 or omitted.
 .B ezmlm-reject
 will also look for
 .I dir\fB/mimereject
-and 
+and either
+.IR dir\fB/mimekeep
+or
 .IR dir\fB/mimeremove .
-if
+If
 .IR dir\fB/mimereject
 exists,
 Messages of the Content-Types specified or with MIME parts of these
 types will be rejected.
 If
+.I dir\fB/mimekeep
+exists,
+.B ezmlm-reject
+will reject messages of Content-Types other than what is specified.
+Otherwise if
 .I dir\fB/mimeremove
 exists,
 .B ezmlm-reject

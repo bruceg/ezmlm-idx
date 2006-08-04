@@ -114,11 +114,22 @@
 # test mimeremove
   touch "${DIR}/archived" "${DIR}/indexed"
   ${ECHO} "teXT/hTml" > "${DIR}/mimeremove"
-  { ${ECHO} "X-num: msg4"; make_message; } | \
+  { ${ECHO} "X-num: mimeremove"; make_message; } | \
 	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to accept mimeremove message"
   ${GREP} -i 'text/html' < "${DIR}/archive/0/04" >/dev/null &&
 	fatal "failed to remove mimeremove part"
+
+# test mimekeep
+  touch "${DIR}/archived" "${DIR}/indexed"
+  ${ECHO} "multipart/mixed" > "${DIR}/mimekeep"
+  ${ECHO} "teXT/plain" >> "${DIR}/mimekeep"
+  { ${ECHO} "X-num: mimekeep"; make_message; } > msg
+  { ${ECHO} "X-num: mimekeep"; make_message; } | \
+        ${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
+	fatal "failed to accept mimekeep message"
+  ${GREP} -i 'text/html' < "${DIR}/archive/0/05" >/dev/null &&
+	fatal "failed to remove mimekeep part"
 
 # test headerkeep
   ${ECHO} subject >"$DIR"/headerkeep
@@ -127,9 +138,9 @@
   { ${ECHO} "X-num: keeptest"; make_message; } | \
 	${EZBIN}/ezmlm-send -C "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to accept keeptest message"
-  ${GREP} -i '^x-num: keeptest' < "${DIR}/archive/0/05" >/dev/null ||
+  ${GREP} -i '^x-num: keeptest' < "${DIR}/archive/0/06" >/dev/null ||
 	fatal "failed to keep header in headerkeep"
-  ${GREP} -i '^return-receipt-to' < "${DIR}/archive/0/05" >/dev/null &&
+  ${GREP} -i '^return-receipt-to' < "${DIR}/archive/0/06" >/dev/null &&
 	fatal "failed to remove header not in headerkeep"
   ${RM} "$DIR"/headerkeep
 
