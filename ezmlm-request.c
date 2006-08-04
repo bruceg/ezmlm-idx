@@ -65,6 +65,7 @@ unsigned long copylines = 0;	/* Number of lines from the message to copy */
 char boundary[COOKIE] = "zxcaeedrqcrtrvthbdty";	/* cheap "rnd" MIME boundary */
 
 struct constmap headerremovemap;
+int headerremoveflag = 0;
 struct constmap commandmap;
 int flaggotsub = 0;		/* Found a subject */
 	/* cmdstring has all commands seperated by '\'. cmdxlate maps each */
@@ -334,7 +335,10 @@ void main(int argc,char **argv)
   if (str_equal(sender,"#@[]"))
     strerr_die2x(99,INFO,ERR_BOUNCE);
 
-  getconf(&headerremove,"headerremove",1,dir);
+  if (getconf(&headerremove,"headerkeep",0,dir))
+    headerremoveflag = 1;
+  else
+    getconf(&headerremove,"headerremove",1,dir);
   constmap_init(&headerremovemap,headerremove.s,headerremove.len,0);
 
   if (!stralloc_copys(&mydtline,
@@ -563,7 +567,7 @@ void main(int argc,char **argv)
     qmail_put(&qq,mydtline.s,mydtline.len);
 
     flaginheader = 1;
-    flagbadfield = 0;
+    flagbadfield = headerremoveflag;
 
     if (seek_begin(0) == -1)
       strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
@@ -577,9 +581,9 @@ void main(int argc,char **argv)
         if (line.len == 1)
           flaginheader = 0;
         if ((line.s[0] != ' ') && (line.s[0] != '\t')) {
-          flagbadfield = 0;
+          flagbadfield = headerremoveflag;
           if (constmap(&headerremovemap,line.s,byte_chr(line.s,line.len,':')))
-	    flagbadfield = 1;
+	    flagbadfield = !headerremoveflag;
         }
       }
       if (!(flaginheader && flagbadfield))

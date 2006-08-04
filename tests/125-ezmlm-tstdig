@@ -6,22 +6,22 @@
 
   prompt "ezmlm-tstdig:         "
 
-  ${EZBIN}/ezmlm-tstdig -k2 -m5 -t1 "$DIR" || \
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t1 "$DIR" || \
 	fatal "-t1 failed"
-  ${EZBIN}/ezmlm-tstdig -k2 -m5 -t0 "$DIR" && \
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" && \
 	fatal "-t0 failed"
 
   LOCAL="$LOC-xx"
   DEFAULT='xx'
-  ${EZBIN}/ezmlm-tstdig -k2 -m5 -t0 "$DIR" || \
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" || \
 	fatal "problem with -xx in manager position"
   LOCAL="$LOC-dig."
   DEFAULT='dig.'
-  ${EZBIN}/ezmlm-tstdig -k2 -m5 -t0 "$DIR" && \
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" && \
 	fatal "problem with -dig in manager position"
   LOCAL="$LOC-digest-"
   DEFAULT='digest-'
-  ${EZBIN}/ezmlm-tstdig -k2 -m5 -t0 "$DIR" || \
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" || \
 	{ ${ECHO} "err with -digest- in mgr pos: 0.31 bug fixed in 0.321"
 	  prompt "ezmlm-tstdig.......   "
 	  BUG="${BUG} digest"
@@ -30,10 +30,10 @@
   ${UNSET} DEFAULT
   ${EZBIN}/ezmlm-tstdig -k2 -m4 -t1 "$DIR" || \
 	fatal "-m failed"
-  ${EZBIN}/ezmlm-tstdig -k1 -m5 -t0 "$DIR" || \
+  ${EZBIN}/ezmlm-tstdig -k1 -m10 -t0 "$DIR" || \
 	fatal "-k failed"
   LOCAL="$LOC"
-  ${EZBIN}/ezmlm-tstdig -k1 -m5 -t0 "$DIR" > "$ERR" 2>&1 || \
+  ${EZBIN}/ezmlm-tstdig -k1 -m10 -t0 "$DIR" > "$ERR" 2>&1 || \
 	{
 	 ${ECHO} "problem with DEFAULT unset: 0.32 bug, OK in 0.321."
 	 prompt "ezmlm-tstdig.......   "

@@ -110,6 +110,7 @@
 # make sure headerremove was done
   ${GREP} -i 'return-receipt-to' < "${DIR}/archive/0/01" >/dev/null &&
 	fatal "failed to remove headerremove"
+
 # test mimeremove
   touch "${DIR}/archived" "${DIR}/indexed"
   ${ECHO} "teXT/hTml" > "${DIR}/mimeremove"
@@ -118,5 +119,18 @@
 	fatal "failed to accept mimeremove message"
   ${GREP} -i 'text/html' < "${DIR}/archive/0/04" >/dev/null &&
 	fatal "failed to remove mimeremove part"
+
+# test headerkeep
+  ${ECHO} subject >"$DIR"/headerkeep
+  ${ECHO} from >>"$DIR"/headerkeep
+  ${ECHO} x-num >>"$DIR"/headerkeep
+  { ${ECHO} "X-num: keeptest"; make_message; } | \
+	${EZBIN}/ezmlm-send -C "$DIR" >"$ERR" 2>&1 || \
+	fatal "failed to accept keeptest message"
+  ${GREP} -i '^x-num: keeptest' < "${DIR}/archive/0/05" >/dev/null ||
+	fatal "failed to keep header in headerkeep"
+  ${GREP} -i '^return-receipt-to' < "${DIR}/archive/0/05" >/dev/null &&
+	fatal "failed to remove header not in headerkeep"
+  ${RM} "$DIR"/headerkeep
 
   ${ECHO} "OK"

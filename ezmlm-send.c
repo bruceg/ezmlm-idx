@@ -106,6 +106,7 @@ int flagsublist;
 stralloc sublist = {0};
 stralloc headerremove = {0};
 struct constmap headerremovemap;
+int headerremoveflag = 0;
 stralloc mimeremove = {0};
 struct constmap mimeremovemap;
 char *dir;
@@ -399,7 +400,10 @@ void main(int argc,char **argv)
   if (!stralloc_0(&line)) die_nomem();
   (void) getconf(&qmqpservers,line.s,0,dir);
 
-  getconf(&headerremove,"headerremove",1,dir);
+  if (getconf(&headerremove,"headerkeep",0,dir))
+    headerremoveflag = 1;
+  else
+    getconf(&headerremove,"headerremove",1,dir);
   if (!constmap_init(&headerremovemap,headerremove.s,headerremove.len,0))
 	die_nomem();
 
@@ -480,7 +484,7 @@ void main(int argc,char **argv)
   flagmlwasthere = 0;
   flaginheader = 1;
   flagfoundokpart = 1;
-  flagbadfield = 0;
+  flagbadfield = headerremoveflag;
   flagbadpart = 0;
   flagseenext = 0;
   flagsubline = 0;
@@ -561,11 +565,11 @@ void main(int argc,char **argv)
       } else if ((*line.s != ' ') && (*line.s != '\t')) {
         flagsubline = 0;
         flagfromline = 0;
-        flagbadfield = 0;
+        flagbadfield = headerremoveflag;
         flagarchiveonly = 0;
         flagcontline = 0;
 	if (constmap(&headerremovemap,line.s,byte_chr(line.s,line.len,':')))
-	  flagbadfield = 1;
+	  flagbadfield = !headerremoveflag;
         if ((flagnoreceived || !flagreceived) &&
 		case_startb(line.s,line.len,"Received:")) {
             if (!flagreceived) {		/* get date from first rec'd */

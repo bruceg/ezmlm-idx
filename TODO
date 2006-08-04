@@ -1,9 +1,11 @@
+Add a "mimekeep" control file, to override "mimeremove".
 Put a real address into To: header in ezmlm-store (and others?)
 Fix email addresses in INSTALL.idx
 add ezmlm-receipt to build system (needs to be fixed to compile)
 fix manual subscriptions to mod/allow/deny/digest when using SQL
 add support for simultaneous multiple languages
 Fix ezmlm-tests to work even if conf-bin<>$PWD
+Add support for run-time configurable error texts (errtxt.h).
 
 Rewrite man pages to include a separate "configuration files" section.
 
@@ -23,3 +25,6 @@ sub-confirm#s de en_US es fr hu id it ja nl sv
 Implement pre/post (un)subscribe hooks (and possibly others):
 -Set up "hooks" directory
 -If hooks/NAME exists, execute it at appropriate time
+
+Tests:
+-headerkeep/remove in ezmlm-request
