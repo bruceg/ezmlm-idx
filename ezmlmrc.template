@@ -178,18 +178,20 @@
 <#D#>/Mailbox
 </#W/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
-# Handles subscription. Add flags if you want a non-default digest format.
-# Service subject commands to the # request address if the -q switch is given.
-# Also -l and -d enable subscriber listing/text file editing, for remote adms.
-# -u gives subscriber only archive access
+# The "manager" handles subscription and other requests.
+</manager/>
+|<#B#>/ezmlm-weed
+# Add flags if you want a non-default digest format.
 </manager#ab/>
 |<#B#>/ezmlm-get -P '<#D#>' <#C#>
 </manager#aGB/>
 |<#B#>/ezmlm-get '<#D#>' <#C#>
 </manager#agB/>
 |<#B#>/ezmlm-get -s '<#D#>' <#C#>
+# Service subject commands to the # request address if the -q switch is given.
 </manager#q/>
 |<#B#>/ezmlm-request '<#D#>'
+# -l and -d enable subscriber listing/text file editing, for remote adms.
 # Ok to add -l/-d even for non-mod lists, since ezmlm-manage
 # won't allow it unless there are remote admins. The lack of logic other than
 # AND makes this very tedious ...
@@ -308,6 +310,7 @@
 # not remove it since we can't remove the symlinks to it (they're outside
 # of the list dir.
 </moderator#m/>
+|<#B#>/ezmlm-weed
 |<#B#>/ezmlm-moderate '<#D#>'
 </#mi/>
 |<#B#>/ezmlm-archive '<#D#>' || exit 0

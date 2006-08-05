@@ -32,6 +32,8 @@ ezmlm-idx-5.0.3, XXXX-XX-XX
 - Added a new program, ezmlm-import, which imports messages from a mbox
   file into ezmlm-idx's message archive.
 
+- Added ezmlm-weed to both the moderator and manager control files.
+
 - Modified the vfork test to use pid_t instead of int, to fix
   portability issues on Solaris.
 
