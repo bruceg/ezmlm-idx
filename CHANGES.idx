@@ -34,6 +34,8 @@ ezmlm-idx-5.0.3, XXXX-XX-XX
 
 - Added ezmlm-weed to both the moderator and manager control files.
 
+- Added several more autoresponder signatures to ezmlm-weed.
+
 - Modified the vfork test to use pid_t instead of int, to fix
   portability issues on Solaris.
 

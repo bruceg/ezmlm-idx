@@ -79,6 +79,8 @@ void main(void)
       _exit(99);
     if (stralloc_starts(&line,"Precedence: junk"))
       _exit(99);
+    if (stralloc_starts(&line,"Auto-Submitted:"))
+      _exit(99);
 /* for Novell Groupwise */
     if (stralloc_starts(&line,"Subject: Message status - delivered"))
       _exit(99);
@@ -86,7 +88,16 @@ void main(void)
       _exit(99);
     if (stralloc_starts(&line,"Subject: Out of Office AutoReply:"))
       _exit(99);
-
+    /* Other autoresponders */
+    if (stralloc_starts(&line,"X-Amazon-Auto-Reply:"))
+      _exit(99);
+    if (stralloc_starts(&line,"X-Mailer: KANA Response"))
+      _exit(99);
+    if (stralloc_starts(&line,"Thread-Topic: AutoResponse"))
+      _exit(99);
+    if (stralloc_starts(&line,"Subject: AutoResponse -"))
+      _exit(99);
+    
     if (stralloc_starts(&line,"From: Mail Delivery Subsystem <MAILER-DAEMON@"))
       flagmds = 1;
     if (stralloc_starts(&line,"Subject: Warning: could not send message"))
