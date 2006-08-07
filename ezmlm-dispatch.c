@@ -212,14 +212,14 @@ void main(int argc,char **argv)
   if (!sender)
     strerr_die2x(100,FATAL,ERR_NOSENDER);
   def = env_get("DEFAULT");
-  if (!def || !*def)
-    strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
   if ((listdir = argv[optind++]) != 0) {
     if (!is_dir(0))
       strerr_die3x(100,FATAL,"Not a directory: ",path.s);
-    dispatch(def,def);
+    dispatch(listdir,def);
   }
+  else if (!def || !*def)
+    strerr_die2x(100,FATAL,ERR_NODEFAULT);
   else {
     if (def[str_chr(def,'/')] != 0)
       strerr_die2x(100,FATAL,"Recipient address may not contain '/'");
