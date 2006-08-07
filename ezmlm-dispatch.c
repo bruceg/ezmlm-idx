@@ -90,7 +90,7 @@ static void forward(const char *rcpt)
   ++did_forward;
 }
 
-static void execute_line(const char *line)
+static int execute_line(const char *line)
 {
   int child;
   int code;
@@ -103,42 +103,46 @@ static void execute_line(const char *line)
   switch (*line) {
   case '#':
     /* ignore comments */
-    break;
+    return 0;
   case '|':
     if ((child = wrap_fork()) == 0)
       wrap_execsh(line+1);
-    if ((code = wrap_waitpid(child)) != 0)
-      _exit(code);
+    code = wrap_waitpid(child);
     ++did_program;
-    break;
+    return code;
   case '/':
   case '.':
     strerr_die3x(100,FATAL,path.s,": Delivery to files is not supported.");
-    break;
+    return 100;
   default:
     if (*line == '&')
       ++line;
     forward(line);
+    return 0;
   }
 }
 
-static void execute_file(stralloc *file)
+static int execute_file(stralloc *file)
 {
   unsigned int start;
   unsigned int end;
   unsigned int len;
+  int code;
   for (start = 0; start < file->len; start = end + 1) {
     len = byte_chr(file->s+start,file->len-start,'\n');
     end = start + len;
     file->s[end] = 0;
-    execute_line(file->s+start);
+    if ((code = execute_line(file->s+start)) != 0)
+      return code;
   }
+  return 0;
 }
 
 static void execute(const char *fn,const char *def)
      /* Load and execute a qmail command file. */
 {
   stralloc file = {0,0,0};
+  int code;
   if (def != 0)
     env_put2("DEFAULT",def);
   else
@@ -146,13 +150,13 @@ static void execute(const char *fn,const char *def)
   make_path(fn);
   if (slurp(path.s,&file,256) != 1)
     strerr_die4sys(111,FATAL,ERR_READ_INPUT,path.s,": ");
-  execute_file(&file);
+  code = execute_file(&file);
   substdio_puts(subfderr,"did 0+");
   substdio_put(subfderr,strnum,fmt_ulong(strnum,did_forward));
   substdio_puts(subfderr,"+");
   substdio_put(subfderr,strnum,fmt_ulong(strnum,did_program));
   substdio_putsflush(subfderr,"\n");
-  _exit(0);
+  _exit(code);
 }
 
 static void try_dispatch(const char *def,const char *prefix,unsigned int len,
