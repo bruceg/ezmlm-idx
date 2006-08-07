@@ -29,34 +29,14 @@ static const char *sender;
 static stralloc basedir;
 
 static struct qmail qq;
-static stralloc path;
 static char strnum[FMT_ULONG];
 static int did_program;
 static int did_forward;
 
-static void make_path(const char *fn)
-{
-  if (!stralloc_copy(&path,&basedir)) die_nomem();
-  if (fn) {
-    if (!stralloc_cats(&path,"/")) die_nomem();
-    if (!stralloc_cats(&path,fn)) die_nomem();
-  }
-  if (!stralloc_0(&path)) die_nomem();
-}
-
-static int is_dir(const char *fn)
-{
-  struct stat st;
-  make_path(fn);
-  return wrap_stat(path.s,&st) == 0
-    && S_ISDIR(st.st_mode);
-}
-
 static int is_file(const char *fn)
 {
   struct stat st;
-  make_path(fn);
-  return wrap_stat(path.s,&st) == 0
+  return wrap_stat(fn,&st) == 0
     && S_ISREG(st.st_mode);
 }
 
@@ -85,7 +65,7 @@ static void forward(const char *rcpt)
   ++did_forward;
 }
 
-static int execute_line(const char *line)
+static int execute_line(const char *fn,const char *line)
 {
   int child;
   int code;
@@ -107,7 +87,7 @@ static int execute_line(const char *line)
     return code;
   case '/':
   case '.':
-    strerr_die3x(100,FATAL,path.s,": Delivery to files is not supported.");
+    strerr_die5x(100,FATAL,basedir.s,"/",fn,": Delivery to files is not supported.");
     return 100;
   default:
     if (*line == '&')
@@ -117,7 +97,7 @@ static int execute_line(const char *line)
   }
 }
 
-static int execute_file(stralloc *file)
+static int execute_file(const char *fn,stralloc *file)
 {
   unsigned int start;
   unsigned int end;
@@ -127,7 +107,7 @@ static int execute_file(stralloc *file)
     len = byte_chr(file->s+start,file->len-start,'\n');
     end = start + len;
     file->s[end] = 0;
-    if ((code = execute_line(file->s+start)) != 0)
+    if ((code = execute_line(fn,file->s+start)) != 0)
       return code;
   }
   return 0;
@@ -142,10 +122,9 @@ static void execute(const char *fn,const char *def)
     env_put2("DEFAULT",def);
   else
     env_unset("DEFAULT");
-  make_path(fn);
-  if (slurp(path.s,&file,256) != 1)
-    strerr_die4sys(111,FATAL,ERR_READ_INPUT,path.s,": ");
-  code = execute_file(&file);
+  if (slurp(fn,&file,256) != 1)
+    strerr_die6sys(111,FATAL,ERR_READ_INPUT,basedir.s,"/",fn,": ");
+  code = execute_file(fn,&file);
   substdio_puts(subfderr,"did 0+");
   substdio_put(subfderr,strnum,fmt_ulong(strnum,did_forward));
   substdio_puts(subfderr,"+");
@@ -205,9 +184,8 @@ void main(int argc,char **argv)
 
   if (argv[optind] == 0)
     die_usage();
+  wrap_chdir(argv[optind]);
   if (!stralloc_copys(&basedir,argv[optind++])) die_nomem();
-  if (!is_dir(0))
-    strerr_die3x(100,FATAL,"Not a directory: ",basedir.s);
 
   sender = env_get("SENDER");
   if (!sender)
@@ -215,8 +193,7 @@ void main(int argc,char **argv)
   def = env_get("DEFAULT");
 
   if (argv[optind] != 0) {
-    if (!is_dir(argv[optind]))
-      strerr_die3x(100,FATAL,"Not a directory: ",path.s);
+    wrap_chdir(argv[optind]);
     dispatch(argv[optind],def);
   }
   else if (!def || !*def)
@@ -225,7 +202,7 @@ void main(int argc,char **argv)
     if (def[str_chr(def,'/')] != 0)
       strerr_die2x(100,FATAL,"Recipient address may not contain '/'");
 
-    if (is_dir(def))
+    if (chdir(def) == 0)
       dispatch(def,0);
 
     dash = str_len(def);
@@ -236,7 +213,7 @@ void main(int argc,char **argv)
       if (dash <= 0)
 	break;
       def[dash] = 0;
-      if (is_dir(def))
+      if (chdir(def) == 0)
 	dispatch(def,def+dash+1);
       def[dash] = '-';
     }

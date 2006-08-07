@@ -67,6 +67,13 @@ executes, or zero otherwise.
 .SH SEE ALSO
 ezmlm-make(1), ezmlm-manage(1), ezmlm-send(1)
 .SH CAVEATS
+Unlike
+.BR qmail-local ,
+.B ezmlm-dispatch
+changes directory into the list directory before executing any
+commands.  Programs which expect to be executed from the starting
+directory will fail.  No ezmlm-idx programs are impacted by this.
+.P
 For security reasons,
 .B ezmlm-dispatch
 does not allow delivery to any address with a "/" in it.  This will
