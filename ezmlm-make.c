@@ -361,7 +361,8 @@ void main(int argc,char **argv)
     /* lock for edit */
     dirplusmake("/lock");
     fdlock = lockfile(dirplus.s);
-    read_new_config() || read_old_config();
+    if (!read_new_config())
+      read_old_config();
   }
 
   if ((p = *argv++) != 0) {
