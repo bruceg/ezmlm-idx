@@ -12,6 +12,9 @@ ezmlm-sub \- manually add addresses to a mailing list
 ]
 .I dir
 [
+.I subdir
+]
+[
 .I box\fB@\fIdomain 
 [
 .I name
@@ -23,7 +26,7 @@ ezmlm-sub \- manually add addresses to a mailing list
 adds each address
 .I box\fB@\fIdomain
 to the mailing list stored in
-.IR dir .
+.IR dir / subdir .
 .I name
 is added as a comment to the subscription log, if the
 .B \-n

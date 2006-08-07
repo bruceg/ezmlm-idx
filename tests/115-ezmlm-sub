@@ -47,7 +47,7 @@
 	fatal "ezmlm-issubn: -n failed for subscriber"
 
 # add to allow
-  ${EZBIN}/ezmlm-sub "${DIR}/allow" "ZZtop@hoSt" || \
+  ${EZBIN}/ezmlm-sub "$DIR" allow "ZZtop@hoSt" || \
 	fatal "ezmlm-sub: failed to add address to ${DIR}/allow"
 
 # list subscribers
