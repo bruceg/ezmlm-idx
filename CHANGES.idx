@@ -43,6 +43,9 @@ ezmlm-idx-5.0.3, XXXX-XX-XX
 
 - Fixed ezmlm-dispatch to handle working in a non-default .qmail file.
 
+- Modified ezmlm-issubn to accept relative subscriber database names.
+  The changes take into account backwards compatibility.
+
 ezmlm-idx-5.0.2, 2006-01-16
 ===========================
 

@@ -47,12 +47,20 @@ of an error condition. To generate a fatal error, just:
 
 .EX
 |/path/ezmlm-issubn
-.I dir1 ...
+.I dir ...
 || (echo "err msg"; exit 100)
 
 |/path/action_for_subscribers
 |/path/more_for_subscribers
 .EE
+
+If
+.I dir1
+(or more) are present on the command line and are relative paths,
+.B ezmlm-issubn
+only examines the named subdirectories within the preceding absolute
+path
+.IR dir .
 
 .B ezmlm-issubn
 exits 100 on permanent and 111 on temporary errors.
