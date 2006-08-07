@@ -31,6 +31,7 @@
 #include "errtxt.h"
 #include "makehash.h"
 #include "mime.h"
+#include "wrap.h"
 #include "die.h"
 #include "idx.h"
 #include "yyyymm.h"
@@ -2135,8 +2136,7 @@ int main(int argc,char **argv)
     drop_priv(0);	/* don't trust cgierr. No dir, no chroot */
     cgierr("list ",ERR_NOEXIST,"");
   }
-  if (chdir(dir) == -1)					/* chdir listdir */
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  wrap_chdir(dir);
   drop_priv(flagchroot);
 
 /******************************* RELAX **********************************/

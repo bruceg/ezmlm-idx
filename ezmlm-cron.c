@@ -180,8 +180,7 @@ void main(int argc,char **argv)
   if (!stralloc_copys(&euser,ppasswd->pw_name)) die_nomem();
   if (!stralloc_0(&euser)) die_nomem();
 
-  if (chdir(dir.s) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir.s,": ");
+  wrap_chdir(dir.s);
 
   local = argv[optind++];	/* list address, optional for -c & -l */
   if (!local) {

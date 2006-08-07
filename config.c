@@ -29,8 +29,7 @@ void startup(const char *dir)
   if (dir[0] != '/')
     strerr_die2x(100,FATAL,ERR_SLASH);
 
-  if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+  wrap_chdir(dir);
 }
 
 static void load_flags(const char *dir)

@@ -130,6 +130,7 @@ surfpcs.o
 tagmsg.o
 unfoldHDR.o
 wait_pid.o
+wrap_chdir.o
 wrap_execbin.o
 wrap_execsh.o
 wrap_execv.o
