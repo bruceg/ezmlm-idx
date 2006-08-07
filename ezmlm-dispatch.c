@@ -26,8 +26,7 @@ const char USAGE[] =
 "ezmlm-dispatch: usage: ezmlm-dispatch dir [list]";
 
 static const char *sender;
-static const char *basedir;
-static const char *listdir;
+static stralloc basedir;
 
 static struct qmail qq;
 static stralloc path;
@@ -37,11 +36,7 @@ static int did_forward;
 
 static void make_path(const char *fn)
 {
-  if (!stralloc_copys(&path,basedir)) die_nomem();
-  if (listdir) {
-    if (!stralloc_cats(&path,"/")) die_nomem();
-    if (!stralloc_cats(&path,listdir)) die_nomem();
-  }
+  if (!stralloc_copy(&path,&basedir)) die_nomem();
   if (fn) {
     if (!stralloc_cats(&path,"/")) die_nomem();
     if (!stralloc_cats(&path,fn)) die_nomem();
@@ -172,7 +167,8 @@ static void try_dispatch(const char *def,const char *prefix,unsigned int len,
 static void dispatch(const char *dir,const char *def)
      /* Hand off control to one of the command files in the list directory. */
 {
-  listdir = dir;
+  if (!stralloc_append(&basedir,"/")) die_nomem();
+  if (!stralloc_cats(&basedir,dir)) die_nomem();
   /* FIXME: set up $EXT $EXT2 $EXT3 $EXT4 ?  Is it feasable? */
   if (def == 0)
     execute("editor",0);
@@ -207,20 +203,21 @@ void main(int argc,char **argv)
       die_usage();
     }
 
-  if ((basedir = argv[optind++]) == 0)
+  if (argv[optind] == 0)
     die_usage();
+  if (!stralloc_copys(&basedir,argv[optind++])) die_nomem();
   if (!is_dir(0))
-    strerr_die3x(100,FATAL,"Not a directory: ",basedir);
+    strerr_die3x(100,FATAL,"Not a directory: ",basedir.s);
 
   sender = env_get("SENDER");
   if (!sender)
     strerr_die2x(100,FATAL,ERR_NOSENDER);
   def = env_get("DEFAULT");
 
-  if ((listdir = argv[optind++]) != 0) {
-    if (!is_dir(0))
+  if (argv[optind] != 0) {
+    if (!is_dir(argv[optind]))
       strerr_die3x(100,FATAL,"Not a directory: ",path.s);
-    dispatch(listdir,def);
+    dispatch(argv[optind],def);
   }
   else if (!def || !*def)
     strerr_die2x(100,FATAL,ERR_NODEFAULT);
