@@ -23,6 +23,16 @@ release.
 ezmlm-idx-5.2.0, ????-??-??
 ===========================
 
+- Command-line options to several programs are being replaced by option
+  files:
+	noconfirmsub		ezmlm-manage -S
+	noconfirmunsub		ezmlm-manage -U
+	remoteedit		ezmlm-manage -e
+	remotelist		ezmlm-manage -l
+  Using the command-line options still works, so existing lists will not
+  need to be modified, but all new lists and lists edited with
+  ezmlm-make -+ will now use the flag files.
+	
 ezmlm-idx-5.1.0, 2006-08-08
 ===========================
 

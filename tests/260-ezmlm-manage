@@ -21,11 +21,13 @@ ${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >/dev/null 2>&1 && \
 LOCAL="$LOC-edit.test-$MOD=$HOST"
 DEFAULT="edit.test-$MOD=$HOST"
 ${ECHO} "X-num: edit2" > "$TMP"
+${RM} -f "$DIR"/remoteedit
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \
 	fatal "-E failed for edit2"
 ${ECHO} "X-num: edit3" > "$TMP"
 ${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "-e failed for remote admin for edit3"
+touch "$DIR"/remoteedit
 
 # complete edit. SENDER can be any address
 SENDER="${MAN}@$HOST"
@@ -62,7 +64,11 @@ ${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >/dev/null 2>&1 && \
 LOCAL="$LOC-allow-list-$MOD=$HOST"
 DEFAULT="allow-list-$MOD=$HOST"
 ${ECHO} "X-num: list2" > "$TMP"
+${RM} -f "$DIR"/remotelist
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >/dev/null 2>&1 && \
+	fatal "failed to reject list request with no remotelist flag"
+touch "$DIR"/remotelist
+${EZBIN}/ezmlm-manage -L "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "-L failed to reject list request"
 
 qqclean
@@ -78,7 +84,11 @@ ${GREP} "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
 LOCAL="$LOC-allow-log-$MOD=$HOST"
 DEFAULT="allow-log-$MOD=$HOST"
 ${ECHO} "X-num: log2" > "$TMP"
+${RM} -f "$DIR"/remotelist
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \
+	fatal "failed to reject log request with no remotelist flag"
+touch "$DIR"/remotelist
+${EZBIN}/ezmlm-manage -L "$DIR" < "$TMP" >"$ERR" 2>&1 && \
 	fatal "-L failed to reject log request"
 
 qqclean

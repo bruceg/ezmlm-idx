@@ -107,14 +107,6 @@ field,
 refuses to respond.
 .B ezmlm-manage
 also refuses to respond to bounce messages.
-
-.B ezmlm-manage
-reads
-.I dir\fB/copylines
-to determine how many lines of the original message to copy into the
-outgoing message.  If this file is empty or not present, a value of
-.I 0
-is presumed, meaning that only the header is copied.
 .SH OPTIONS
 .TP 5
 .B \-b
@@ -281,6 +273,40 @@ version information.
 Display
 .B ezmlm-manage
 version information.
+.SH FILES
+.TP
+.I dir\fB/copylines
+This file sets the number of lines of the original message body to copy
+into the response message.  If it is not present, no lines will be
+copied.  The full header is always copied.
+.TP
+.I dir\fB/noconfirmsub
+Sets the
+.B \-S
+option if
+.B \-s
+is not on the command line.
+.TP
+.I dir\fB/noconfirmunsub
+Sets the
+.B \-U
+option if
+.B \-u
+is not on the command line.
+.TP
+.I dir\fB/remotelist
+Sets the
+.B \-e
+option if
+.B \-E
+is not on the command line.
+.TP
+.I dir\fB/remoteedit
+Sets the
+.B \-l
+option if
+.B \-L
+is not on the command line.
 .SH "CHARACTER SETS"
 If
 .I dir\fB/charset
