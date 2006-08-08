@@ -261,7 +261,7 @@
 </#uM/>
 |<#B#>/ezmlm-issubn '<#D#>' . digest allow mod || { echo "@ONLYSUBSCRIBERS@ (#5.7.2)"; exit 100 ; }
 </#um/>
-|<#B#>/ezmlm-gate '<#D#>' '<#D#>' '<#D#>/digest' '<#D#>/allow' '<#D#>/mod'
+|<#B#>/ezmlm-gate '<#D#>' . digest allow mod
 # For message moderation or confirmation, editor has store/clean
 </#y/>
 |<#B#>/ezmlm-store '<#D#>'
