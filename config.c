@@ -9,6 +9,7 @@
 #include "idx.h"
 #include "slurp.h"
 #include "strerr.h"
+#include "wrap.h"
 
 stralloc charset = {0};
 stralloc ezmlmrc = {0};
