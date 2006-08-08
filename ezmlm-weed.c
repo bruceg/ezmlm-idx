@@ -81,6 +81,29 @@ void main(void)
       _exit(99);
     if (stralloc_starts(&line,"Auto-Submitted:"))
       _exit(99);
+    /* Mailing list signatures */
+    if (stralloc_starts(&line,"Precedence: list"))
+      _exit(99);
+    if (stralloc_starts(&line,"Mailing-List:"))
+      _exit(99);
+    if (stralloc_starts(&line,"List-ID:"))
+      _exit(99);
+    if (stralloc_starts(&line,"X-Mailing-List:"))
+      _exit(99);
+    if (stralloc_starts(&line,"X-ML-Name:"))
+      _exit(99);
+    if (stralloc_starts(&line,"List-Help:"))
+      _exit(99);
+    if (stralloc_starts(&line,"List-Unsubscribe:"))
+      _exit(99);
+    if (stralloc_starts(&line,"List-Subscribe:"))
+      _exit(99);
+    if (stralloc_starts(&line,"List-Post:"))
+      _exit(99);
+    if (stralloc_starts(&line,"List-Owner:"))
+      _exit(99);
+    if (stralloc_starts(&line,"List-Archive:"))
+      _exit(99);
 /* for Novell Groupwise */
     if (stralloc_starts(&line,"Subject: Message status - delivered"))
       _exit(99);
