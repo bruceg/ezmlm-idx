@@ -20,7 +20,7 @@ Some ezmlmrc are not updated and may not work right.  If you fix them,
 please send them to ezmlm@list.cr.yp.to for inclusion in the next
 release.
 
-ezmlm-idx-5.1.0, XXXX-XX-XX
+ezmlm-idx-5.1.0, 2006-08-08
 ===========================
 
 - Added a new configuration files "headerkeep" and "mimekeep" which
@@ -32,6 +32,10 @@ ezmlm-idx-5.1.0, XXXX-XX-XX
 - Added a new program, ezmlm-import, which imports messages from a mbox
   file into ezmlm-idx's message archive.
 
+- Modified ezmlm-gate, ezmlm-issubn, ezmlm-list, ezmlm-sub, and
+  ezmlm-unsub to accept relative subscriber database names.  The changes
+  take into account backwards compatibility.
+
 - Added ezmlm-weed to both the moderator and manager control files.
 
 - Added several more autoresponder signatures to ezmlm-weed.
@@ -42,10 +46,6 @@ ezmlm-idx-5.1.0, XXXX-XX-XX
 - Fixed handling of missing ezmlmrc config file.
 
 - Fixed ezmlm-dispatch to handle working in a non-default .qmail file.
-
-- Modified ezmlm-gate, ezmlm-issubn, ezmlm-list, ezmlm-sub, and
-  ezmlm-unsub to accept relative subscriber database names.  The changes
-  take into account backwards compatibility.
 
 ezmlm-idx-5.0.2, 2006-01-16
 ===========================
