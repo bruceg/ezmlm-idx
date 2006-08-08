@@ -2,7 +2,7 @@
 
 fatal() {
   for line in "$@"; do
-    ${ECHO} "$line"
+    ${ECHO} "$line" >&2
   done
   exit 100;
 }
