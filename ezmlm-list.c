@@ -17,7 +17,7 @@
 
 const char FATAL[] = "ezmlm-list: fatal: ";
 const char USAGE[] =
-"ezmlm-list: usage: ezmlm-list [-mMnNvV] dir";
+"ezmlm-list: usage: ezmlm-list [-mMnNvV] dir [subdir]";
 
 int flagnumber = 0;	/* default list subscribers, not number of */
 
@@ -41,7 +41,8 @@ int dummywrite(const char *s,unsigned int l)
 
 void main(int argc,char **argv)
 {
-  char *dir;
+  const char *dir;
+  const char *subdir;
   int flagmysql = 1;	/* use if supported */
   unsigned long n;
   int opt;
@@ -59,13 +60,14 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
+  subdir = argv[optind];
 
   if (flagnumber) {
-    n = putsubs(dir,0,0L,52L,dummywrite,flagmysql);
+    n = putsubs(dir,subdir,0L,52L,dummywrite,flagmysql);
     if (substdio_put(subfdout,strnum,fmt_ulong(strnum,n)) == -1) die_write();
     if (substdio_put(subfdout,"\n",1) == -1) die_write();
   } else
-    (void) putsubs(dir,0,0L,52L,subwrite,flagmysql);
+    (void) putsubs(dir,subdir,0L,52L,subwrite,flagmysql);
   if (substdio_flush(subfdout) == -1) die_write();
   closesub();
   _exit(0);

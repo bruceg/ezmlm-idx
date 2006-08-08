@@ -49,6 +49,10 @@
 # add to allow
   ${EZBIN}/ezmlm-sub "$DIR" allow "ZZtop@hoSt" || \
 	fatal "ezmlm-sub: failed to add address to ${DIR}/allow"
+  ${EZBIN}/ezmlm-list "$DIR"/allow | ${GREP} 'ZZtop@host' >/dev/null 2>&1 || \
+	fatal "ezmlm-sub: failed to find address in ${DIR}/allow"
+  ${EZBIN}/ezmlm-list "$DIR" allow | ${GREP} 'ZZtop@host' >/dev/null 2>&1 || \
+	fatal "ezmlm-sub: failed to find address in ${DIR} allow"
 
 # list subscribers
   ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"$ERR" 2>&1 || \
