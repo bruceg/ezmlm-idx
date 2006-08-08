@@ -264,6 +264,8 @@ void main(int argc,char **argv)
     }
   startup(dir = argv[optind]);
   load_config(dir);
+  if (getconf_line(&line,"nowarn",0,dir))
+    _exit(0);
   getconf_ulong(&copylines,"copylines",0,dir);
   if (flagdig) {
     if (!stralloc_copys(&digdir,dir)) die_nomem();

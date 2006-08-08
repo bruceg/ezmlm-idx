@@ -6,9 +6,20 @@
 
   prompt "ezmlm-warn (1/2):     "
 
+# should not send a warning
+  touch "$DIR"/nowarn
+  ${RM} -f "$QQMSG"
+  ${EZBIN}/ezmlm-warn -t0 "$DIR" >"$ERR" 2>&1 || \
+	fatal "failed with nowarn"
+  test -e "$QQMSG" && \
+	fatal "sent a warning with nowarn"
+  ${RM} -f "$DIR"/nowarn
+
 # should send a warning
   ${EZBIN}/ezmlm-warn -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with normal bounce for warning"
+  test -e "$QQMSG" || \
+	fatal "failed to send warning"
   ${EZBIN}/ezmlm-issubn "$DIR" || \
 	fatal "script error: SENDER is not a subscriber"
 

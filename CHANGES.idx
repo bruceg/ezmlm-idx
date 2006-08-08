@@ -27,6 +27,7 @@ ezmlm-idx-5.2.0, ????-??-??
   files:
 	noconfirmsub		ezmlm-manage -S
 	noconfirmunsub		ezmlm-manage -U
+	nowarn			ezmlm-warn
 	remoteedit		ezmlm-manage -e
 	remotelist		ezmlm-manage -l
   Using the command-line options still works, so existing lists will not
