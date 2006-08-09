@@ -131,17 +131,7 @@
 </+mod/unconfirmed/>
 # links: dot -> dir/editor
 </:/editor/>
-</:-owner/owner/>
-</:-digest-owner/owner#d/>
-</:-return-default/bouncer/>
-</:-digest-return-default/digest/bouncer#d/>
-</:-default/manager/>
-# for message moderation only
-</:-accept-default/moderator#m/>
-</:-reject-default/moderator#m/>
-# for message confirmation only
-</:-confirm-default/confirmer#y/>
-</:-discard-default/confirmer#y/>
+</:-default/dispatch/>
 # Get rid of configuration flags for editing mode so we can start with a
 # clean state.
 </-modpost#eM/>
@@ -194,6 +184,8 @@
 <#D#>/Mailbox
 </#/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
+</dispatch/>
+|<#B#>/ezmlm-dispatch '<#D#>' .
 # The "manager" handles subscription and other requests.
 </manager/>
 |<#B#>/ezmlm-weed

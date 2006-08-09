@@ -23,6 +23,10 @@ release.
 ezmlm-idx-5.2.0, ????-??-??
 ===========================
 
+- The default ezmlmrc template now uses ezmlm-dispatch.  Existing lists
+  will not be impacted, but lists edited with ezmlm-make -+ or -e will
+  start using it.
+
 - Command-line options to several programs are being replaced by option
   files:
 	digestmsgs		ezmlm-tstdig -m #
