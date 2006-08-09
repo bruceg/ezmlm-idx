@@ -1,10 +1,8 @@
 #!/bin/sh
 set -e
 
-pwd >conf-bin
-
 `dirname $0`/test std
 `dirname $0`/test mysql
 `dirname $0`/test pgsql
 
-svn revert conf-{bin,etc,sub}
+svn revert conf-sub

@@ -4,6 +4,7 @@
 #include "stralloc.h"
 #include "wrap.h"
 #include "die.h"
+#include "env.h"
 #include "idx.h"
 
 static stralloc path;
@@ -13,9 +14,12 @@ void wrap_execbin(const char *program,
 	          const char *dir)
 {
   const char *args[4];
+  const char *bin;
   int i;
 
-  if (!stralloc_copys(&path,auto_bin)) die_nomem();
+  if ((bin = env_get("EZMLM_BIN")) == 0)
+    bin = auto_bin;
+  if (!stralloc_copys(&path,bin)) die_nomem();
   if (!stralloc_cats(&path,program)) die_nomem();
   if (!stralloc_0(&path)) die_nomem();
   args[0] = path.s;

@@ -11,14 +11,6 @@ if [ `head -n 1 conf-sub` != $db ]; then
   echo $db >conf-sub
 fi
 
-if [ `head -n 1 conf-bin` != `pwd` ]; then
-  pwd >conf-bin
-fi
-
-if [ `head -n 1 conf-etc` != `pwd`/lang ]; then
-  echo `pwd`/lang >conf-etc
-fi
-
 echo "==================== Testing conf-sub = $db ===================="
 
 `dirname $0`/makerrors
