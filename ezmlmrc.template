@@ -211,8 +211,6 @@
 |<#B#>/ezmlm-manage '<#D#>'
 </#/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
-</#d/>
-|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
 # manage message confirmations
 </confirmer#y/>
 </#my/>
@@ -269,8 +267,6 @@
 </#/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
 # for digest bounces
-</#d/>
-|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
 </#d^4/>
 |<#B#>/ezmlm-tstdig -m30 -k64 -t48 '<#D#>' || exit 99
 </#d4/>

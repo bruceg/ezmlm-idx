@@ -33,7 +33,10 @@ ezmlm-idx-5.2.0, ????-??-??
   Using the command-line options still works, so existing lists will not
   need to be modified, but all new lists and lists edited with
   ezmlm-make -+ will now use the flag files.
-	
+
+- Modified ezmlm-warn to automatically process both the main list and
+  the digest list if neither -d nor -D are specified.
+
 ezmlm-idx-5.1.0, 2006-08-08
 ===========================
 

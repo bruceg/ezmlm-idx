@@ -84,18 +84,27 @@ If
 is present,
 .B ezmlm-warn
 immediately exits without taking any actions.
+
+If neither
+.B \-d
+nor
+.B \-D
+are present on the command line, and a directory named
+.I dir\fB/digest
+exists,
+.B ezmlm-warn
+automatically processes both the main list and the digest list.
 .SH OPTIONS
 .TP
 .B \-d
-process bounces for the digest list, rather than for the main list.
+process bounces for the digest list only, rather than for the main list.
 Digest list bounces are stored in
 .I dir\fB/digest/bounce/
 rather than in
 .IR dir\fB/bounce/ .
 .TP
 .B \-D
-(Default.)
-Process bounces for the main list.
+Process bounces for the main list only.
 .TP
 .B \-l \fIlockout
 .B ezmlm-warn

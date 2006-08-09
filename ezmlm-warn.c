@@ -29,6 +29,7 @@
 #include "lock.h"
 #include "copy.h"
 #include "mime.h"
+#include "wrap.h"
 #include "auto_version.h"
 #include "hdr.h"
 #include "die.h"
@@ -40,7 +41,6 @@ const char FATAL[] = "ezmlm-warn: fatal: ";
 const char USAGE[] =
 "ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir";
 
-stralloc digdir = {0};
 char boundary[COOKIE];
 
 substdio ssout;
@@ -48,8 +48,6 @@ char outbuf[16];
 
 unsigned long when;
 char *dir;
-char *workdir;
-int flagdig = 0;
 stralloc fn = {0};
 stralloc bdname = {0};
 stralloc fnlasth = {0};
@@ -58,6 +56,8 @@ stralloc lasth = {0};
 stralloc lastd = {0};
 unsigned long copylines = 0;	/* Number of lines from the message to copy */
 struct stat st;
+unsigned long bouncetimeout = BOUNCE_TIMEOUT;
+unsigned long lockout = 0L;
 
 static void die_read(void) { strerr_die4sys(111,FATAL,ERR_READ,fn.s,": "); }
 
@@ -96,7 +96,19 @@ void code_qput(const char *s,unsigned int n)
     }
 }
 
-void doit(int flagw)
+static int stralloc_copydir(struct stralloc *s,
+			    int flagdig,
+			    const char *suffix)
+{
+  if (!stralloc_copys(s,dir)) return 0;
+  if (flagdig)
+    if (!stralloc_cats(s,"/digest")) return 0;
+  if (suffix)
+    if (!stralloc_cats(s,suffix)) return 0;
+  return 1;
+}
+
+void doit(int flagw,int flagdig)
 {
   unsigned int i;
   int fd;
@@ -110,10 +122,14 @@ void doit(int flagw)
 
   if (getln(&ssin,&addr,&match,'\0') == -1) die_read();
   if (!match) { close(fd); return; }
-  if (!issub(workdir,0,addr.s)) { close(fd); /*XXX*/unlink(fn.s); return; }
+  if (!issub(dir,flagdig ? "digest" : 0,addr.s)) {
+    close(fd);
+    /*XXX*/unlink(fn.s);
+    return;
+  }
   cookie(hash,"",0,"",addr.s,"");
-  if (!stralloc_copys(&fnhash,workdir)) die_nomem();
-  if (!stralloc_cats(&fnhash,"/bounce/h/")) die_nomem();
+  if (!stralloc_copydir(&line,flagdig,0)) die_nomem();
+  if (!stralloc_copydir(&fnhash,flagdig,"/bounce/h/")) die_nomem();
   if (!stralloc_catb(&fnhash,hash,1)) die_nomem();
   if (!stralloc_cats(&fnhash,"/h")) die_nomem();
   if (!stralloc_catb(&fnhash,hash+1,COOKIE-1)) die_nomem();
@@ -147,10 +163,7 @@ void doit(int flagw)
   copy(&qq,flagw ? "text/bounce-probe" : "text/bounce-warn",flagcd);
 
   if (!flagw) {
-    if (flagdig)
-      copy(&qq,"text/dig-bounce-num",flagcd);
-    else
-      copy(&qq,"text/bounce-num",flagcd);
+    copy(&qq,flagdig ? "text/dig-bounce-num" : "text/bounce-num",flagcd);
     if (!flagcd) {
       fdhash = open_read(fnhash.s);
       if (fdhash == -1) {
@@ -226,57 +239,17 @@ void doit(int flagw)
     strerr_die4sys(111,FATAL,ERR_DELETE,fn.s,": ");
 }
 
-void main(int argc,char **argv)
+static void dodir(int flagdig)
 {
   DIR *bouncedir, *bsdir, *hdir;
   direntry *d, *ds;
   unsigned long bouncedate;
-  unsigned long bouncetimeout = BOUNCE_TIMEOUT;
-  unsigned long lockout = 0L;
   unsigned long ld;
   unsigned long ddir,dfile;
   int fdlock,fd;
-  int opt;
   char ch;
 
-  (void) umask(022);
-  sig_pipeignore();
-  when = (unsigned long) now();
-  while ((opt = getopt(argc,argv,"dDl:t:vV")) != opteof)
-    switch(opt) {
-      case 'd': flagdig = 1; break;
-      case 'D': flagdig = 0; break;
-      case 'l':
-                if (optarg) {	/* lockout in seconds */
-                  (void) scan_ulong(optarg,&lockout);
-                }
-                break;
-      case 't':
-                if (optarg) {	/* bouncetimeout in days */
-                  (void) scan_ulong(optarg,&bouncetimeout);
-                  bouncetimeout *= 3600L * 24L;
-                }
-                break;
-      case 'v':
-      case 'V': strerr_die2x(0, "ezmlm-warn version: ",auto_version);
-      default:
-	die_usage();
-    }
-  startup(dir = argv[optind]);
-  load_config(dir);
-  if (getconf_line(&line,"nowarn",0,dir))
-    _exit(0);
-  getconf_ulong(&copylines,"copylines",0,dir);
-  if (flagdig) {
-    if (!stralloc_copys(&digdir,dir)) die_nomem();
-    if (!stralloc_cats(&digdir,"/digest")) die_nomem();
-    if (!stralloc_0(&digdir)) die_nomem();
-    workdir = digdir.s;
-  } else
-    workdir = dir;
-
-  if (!stralloc_copys(&fnlastd,workdir)) die_nomem();
-  if (!stralloc_cats(&fnlastd,"/bounce/lastd")) die_nomem();
+  if (!stralloc_copydir(&fnlastd,flagdig,"/bounce/lastd")) die_nomem();
   if (!stralloc_0(&fnlastd)) die_nomem();
   if (slurp(fnlastd.s,&lastd,16) == -1)		/* last time d was scanned */
       strerr_die4sys(111,FATAL,ERR_READ,fnlastd.s,": ");
@@ -297,13 +270,11 @@ void main(int argc,char **argv)
   ddir = when / 10000;
   dfile = when - 10000 * ddir;
 
-  if (!stralloc_copys(&line,workdir)) die_nomem();
-  if (!stralloc_cats(&line,"/lockbounce")) die_nomem();
+  if (!stralloc_copydir(&line,flagdig,"/lockbounce")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   fdlock = lockfile(line.s);
 
-  if (!stralloc_copys(&line,workdir)) die_nomem();
-  if (!stralloc_cats(&line,"/bounce/d")) die_nomem();
+  if (!stralloc_copydir(&line,flagdig,"/bounce/d")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   bouncedir = opendir(line.s);
   if (!bouncedir) {
@@ -324,8 +295,7 @@ void main(int argc,char **argv)
 	/* that setting still processes _all_ bounces. */
     if (bouncetimeout) ++bouncedate;
     if (when >= bouncedate * 10000 + bouncetimeout) {
-      if (!stralloc_copys(&bdname,workdir)) die_nomem();
-      if (!stralloc_cats(&bdname,"/bounce/d/")) die_nomem();
+      if (!stralloc_copydir(&bdname,flagdig,"/bounce/d/")) die_nomem();
       if (!stralloc_cats(&bdname,d->d_name)) die_nomem();
       if (!stralloc_0(&bdname)) die_nomem();
       bsdir = opendir(bdname.s);
@@ -346,7 +316,7 @@ void main(int argc,char **argv)
 	if (!stralloc_cats(&fn,ds->d_name)) die_nomem();
 	if (!stralloc_0(&fn)) die_nomem();
 	if ((ds->d_name[0] == 'd') || (ds->d_name[0] == 'w'))
-	  doit(ds->d_name[0] == 'w');
+	  doit(ds->d_name[0] == 'w',flagdig);
         else				/* other stuff is junk */
 	  if (unlink(fn.s) == -1)
 	    strerr_die4sys(111,FATAL,ERR_DELETE,fn.s,": ");
@@ -381,11 +351,9 @@ void main(int argc,char **argv)
 
 				/* no need to do h dir cleaning more than */
 				/* once per 1-2 days (17-30 days for all) */
-  if (stat(fnlasth.s,&st) == -1) {
-    if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_STAT,fnlasth.s,": ");
-  } else if (when < (unsigned long)st.st_mtime + 100000
-	     && when > (unsigned long)st.st_mtime)
+  if (wrap_stat(fnlasth.s,&st) == 0
+      && when < (unsigned long)st.st_mtime + 100000
+      && when > (unsigned long)st.st_mtime)
     _exit(0);			/* 2nd comp to guard against corruption */
 
   if (slurp(fnlasth.s,&lasth,16) == -1)		/* last h cleaned */
@@ -397,7 +365,9 @@ void main(int argc,char **argv)
   else
     ch = 'a';
   lasth.s[0] = ch;
-  if (!stralloc_copys(&line,workdir)) die_nomem();
+  if (!stralloc_copys(&line,dir)) die_nomem();
+  if (flagdig)
+    if (!stralloc_cats(&line,"/digest")) die_nomem();
   if (!stralloc_cats(&line,"/bounce/h/")) die_nomem();
   if (!stralloc_catb(&line,lasth.s,1)) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
@@ -438,7 +408,48 @@ void main(int argc,char **argv)
   (void) close(fd);		/* no big loss. No reason to flush/sync */
 				/* See check of ld above to guard against */
 				/* it being corrupted and > when */
-
   closesub();
-  _exit(0);
+}
+
+int main(int argc,char **argv)
+{
+  int opt;
+  int flagdig = -1;
+
+  (void) umask(022);
+  sig_pipeignore();
+  when = (unsigned long) now();
+  while ((opt = getopt(argc,argv,"dDl:t:vV")) != opteof)
+    switch(opt) {
+      case 'd': flagdig = 1; break;
+      case 'D': flagdig = 0; break;
+      case 'l':
+                if (optarg) {	/* lockout in seconds */
+                  (void) scan_ulong(optarg,&lockout);
+                }
+                break;
+      case 't':
+                if (optarg) {	/* bouncetimeout in days */
+                  (void) scan_ulong(optarg,&bouncetimeout);
+                  bouncetimeout *= 3600L * 24L;
+                }
+                break;
+      case 'v':
+      case 'V': strerr_die2x(0, "ezmlm-warn version: ",auto_version);
+      default:
+	die_usage();
+    }
+  startup(dir = argv[optind]);
+  load_config(dir);
+  if (getconf_line(&line,"nowarn",0,dir))
+    _exit(0);
+  getconf_ulong(&copylines,"copylines",0,dir);
+  if (flagdig >= 0)
+    dodir(flagdig);
+  else {
+    dodir(0);
+    if (wrap_stat("digest",&st) == 0)
+      dodir(1);
+  }
+  return 0;
 }

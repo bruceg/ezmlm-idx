@@ -6,10 +6,10 @@
 
 prompt "ezmlm-warn (2/2):     "
 
-${EZBIN}/ezmlm-warn -t0 "$DIR" >"$ERR" 2>&1 || \
+${EZBIN}/ezmlm-warn -D -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with normal bounce for warning"
 
-${EZBIN}/ezmlm-warn -d -t0 "$DIR" >"$ERR" 2>&1 || \
+${EZBIN}/ezmlm-warn -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with digest bounce for warning"
 
 SENDER="${BNC}@${HOST}"
