@@ -11,6 +11,15 @@
   ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" && \
 	fatal "-t0 failed"
 
+  ${ECHO} 2 >"$DIR"/digestsize
+  ${ECHO} 10 >"$DIR"/digestmsgs
+  ${ECHO} 1 >"$DIR"/digesttime
+  ${EZBIN}/ezmlm-tstdig "$DIR" || \
+	fatal "digesttime=1 failed"
+  ${ECHO} 0 >"$DIR"/digesttime
+  ${EZBIN}/ezmlm-tstdig "$DIR" && \
+	fatal "digesttime=0 failed"
+
   LOCAL="$LOC-xx"
   DEFAULT='xx'
   ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" || \
@@ -26,12 +35,25 @@
 	  prompt "ezmlm-tstdig.......   "
 	  BUG="${BUG} digest"
 	}
+
   LOCAL=''
   ${UNSET} DEFAULT
   ${EZBIN}/ezmlm-tstdig -k2 -m4 -t1 "$DIR" || \
 	fatal "-m failed"
   ${EZBIN}/ezmlm-tstdig -k1 -m10 -t0 "$DIR" || \
 	fatal "-k failed"
+
+  ${ECHO} 2 >"$DIR"/digestsize
+  ${ECHO} 4 >"$DIR"/digestmsgs
+  ${ECHO} 1 >"$DIR"/digesttime
+  ${EZBIN}/ezmlm-tstdig "$DIR" || \
+	fatal "digestmsgs failed"
+  ${ECHO} 1 >"$DIR"/digestsize
+  ${ECHO} 10 >"$DIR"/digestmsgs
+  ${ECHO} 0 >"$DIR"/digesttime
+  ${EZBIN}/ezmlm-tstdig "$DIR" || \
+	fatal "digestsize failed"
+
   LOCAL="$LOC"
   ${EZBIN}/ezmlm-tstdig -k1 -m10 -t0 "$DIR" > "$ERR" 2>&1 || \
 	{
@@ -39,5 +61,6 @@
 	 prompt "ezmlm-tstdig.......   "
 	  BUG="${BUG} tstdig"
 	}
+  ${RM} "$DIR"/digestmsgs "$DIR"/digestsize "$DIR"/digesttime
   ${ECHO} "OK"
   export DEFAULT

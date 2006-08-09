@@ -25,6 +25,9 @@ ezmlm-idx-5.2.0, ????-??-??
 
 - Command-line options to several programs are being replaced by option
   files:
+	digestmsgs		ezmlm-tstdig -m #
+	digestsize		ezmlm-tstdig -k #
+	digesttime		ezmlm-tstdig -t #
 	noconfirmsub		ezmlm-manage -S
 	noconfirmunsub		ezmlm-manage -U
 	nowarn			ezmlm-warn
@@ -36,6 +39,10 @@ ezmlm-idx-5.2.0, ????-??-??
 
 - Modified ezmlm-warn to automatically process both the main list and
   the digest list if neither -d nor -D are specified.
+
+- Modified ezmlm-tstdig to default to 30 messages, 64kB or 48 hours,
+  which is the default previously listed in the ezmlmrc and the
+  recommended numbers in the manual page.
 
 ezmlm-idx-5.1.0, 2006-08-08
 ===========================

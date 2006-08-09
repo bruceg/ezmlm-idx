@@ -66,17 +66,25 @@ arrive while digesting is in progress.
 .B \-k
 Success if more than
 .I kbytes
-of message body has accumulated since the latest digest.
+of message body has accumulated since the latest digest.  Defaults to
+the content of
+.I dir\fB/digestsize
+if it is present, and 64kB otherwise.
 .TP
 .B \-m
 Success if more than
 .I msg
-messages have accumulated since the latest digest.
+messages have accumulated since the latest digest.  Defaults to the
+content of
+.I dir\fB/digestmsgs
+if it is present, and 30 messages otherwise.
 .TP
 .B \-t
 Success if more than
 .I time
-hours have passed since the latest digest.
+hours have passed since the latest digest.  Defaults to the content of
+.I dir\fB/digesttime
+if it is present, and 48 hours otherwise.
 .SH USAGE
 This is an example script for ezmlm-tstdig usage.
 

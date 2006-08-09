@@ -267,11 +267,8 @@
 </#/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
 # for digest bounces
-</#d^4/>
-|<#B#>/ezmlm-tstdig -m30 -k64 -t48 '<#D#>' || exit 99
-</#d4/>
-|<#B#>/ezmlm-tstdig <#4#> '<#D#>' || exit 99
 </#d/>
+|<#B#>/ezmlm-tstdig <#4#> '<#D#>' || exit 99
 |<#B#>/ezmlm-get '<#D#>' || exit 0
 # bouncer for list and digest
 </bouncer/>
