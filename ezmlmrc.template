@@ -71,8 +71,6 @@
 #
 # -0 is used for the main list address when setting up sublists
 # -3 is for the new from header if we want that header replaced
-# -4 for specifying the ezmlm-tstdig switches used in dir/editor. Default
-#    -k64 -m30 -t24. Only used if -g is used.
 # -5 for list-owner address. Mail to list-owner will be forwarded to this addr.
 # -6 for sql connection info
 # -7 for contents of DIR/modpost
@@ -104,8 +102,6 @@
 <#0#>
 </fromheader#3/>
 <#3#>
-</tstdigopts#4/>
-<#4#>
 </+archive/>
 </+subscribers/>
 </+bounce/>
@@ -260,7 +256,7 @@
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
 # for digest bounces
 </#d/>
-|<#B#>/ezmlm-tstdig <#4#> '<#D#>' || exit 99
+|<#B#>/ezmlm-tstdig '<#D#>' || exit 99
 |<#B#>/ezmlm-get '<#D#>' || exit 0
 # bouncer for list and digest
 </bouncer/>

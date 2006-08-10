@@ -27,6 +27,10 @@ ezmlm-idx-5.2.0, ????-??-??
   will not be impacted, but lists edited with ezmlm-make -+ or -e will
   start using it.
 
+- Removed the tstdigopts control file and ezmlm-make -4 option for
+  controlling digest sending parameters in favour of the new files
+  below.  Existing lists will not be impacted.
+
 - Command-line options to several programs are being replaced by option
   files:
 	digestmsgs		ezmlm-tstdig -m #

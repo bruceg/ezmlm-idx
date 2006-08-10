@@ -214,7 +214,6 @@ int read_new_config(void)
   read_line("/digestcode",&code);
   read_line("/sublist",&popt[0]);
   read_line("/fromheader",&popt[3]);
-  read_line("/tstdigopts",&popt[4]);
   read_line("/owner",&popt[5]);
   read_line("/sql",&popt[6]);
   read_line("/modpost",&popt[7]);
