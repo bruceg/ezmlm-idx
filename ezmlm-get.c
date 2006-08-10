@@ -117,7 +117,7 @@ int flagq = 0;			/* don't use 'quoted-printable' */
 char *dir;
 char *workdir;
 char *sender;
-char *digestcode;
+stralloc digestcode = {0};
 
 struct qmail qq;
 
@@ -759,7 +759,6 @@ void main(int argc,char **argv)
   unsigned long chunk;
   unsigned long subs = 0;
   unsigned int pos,pos1;
-  unsigned int len;
   int opt;
   char outformat = DEFAULT_FORMAT;	/* default output format */
   msgentry *msgtable;
@@ -798,8 +797,11 @@ void main(int argc,char **argv)
   load_config(dir);
   getconf_ulong(&copylines,"copylines",0,dir);
 
-  digestcode = argv[optind];	/* code to activate digest (-digest-code)*/
-				/* ignore any extra args */
+  /* Determine the code to activate digest (-digest-code)*/
+  if (argv[optind] == 0)
+    getconf_line(&digestcode,"digestcode",0,dir);
+  else
+    if (stralloc_copys(&digestcode,argv[optind])) die_nomem();
 
   if (!stralloc_copy(&subject,&outlocal)) die_nomem();	/* for subjects */
   if (!stralloc_copy(&listname,&outlocal)) die_nomem();	/* for content disp */
@@ -830,12 +832,12 @@ void main(int argc,char **argv)
       action += 3;
       if (action[0] == '-' || action [0] == '.') {
         action++;
-	if (!digestcode)
-            strerr_die2x(100,FATAL,ERR_BAD_DIGCODE);
-        len = str_len(digestcode);
-        if (len <= str_len(action) && case_startb(action,len,digestcode)) {
-          if (FORMATS[str_chr(FORMATS,*(action+len))])
-            outformat = *(action+len);
+	if (digestcode.len == 0)
+	  strerr_die2x(100,FATAL,ERR_BAD_DIGCODE);
+        if (str_len(action) >= digestcode.len
+	    && case_startb(action,digestcode.len,digestcode.s)) {
+          if (FORMATS[str_chr(FORMATS,*(action+digestcode.len))])
+            outformat = *(action+digestcode.len);
           act = AC_DIGEST;
         } else
           strerr_die2x(100,FATAL,ERR_BAD_DIGCODE);

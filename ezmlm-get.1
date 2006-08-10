@@ -107,10 +107,12 @@ numerical arguments are given.
 .I digestcode
 must be alphanumeric, and match (case-insensitive)
 .I digestcode
-on the
+either on the
 .B ezmlm-get
-command line. Otherwise, the request will be ignored. This is to restrict
-digest creation. The body of the requesting message up to the first line
+command line or in the
+.I dir\fB/digestcode
+file. Otherwise, the request will be ignored. This is to restrict digest
+creation. The body of the requesting message up to the first line
 starting with '-' is copied into the
 .I administrivia 
 section of the digest. This is followed by the contents of
@@ -119,7 +121,7 @@ if this file exists.
 
 .B Note:
 Anyone who can read your
-.I dir\fB/manager
+.I dir\fB/digestcode
 file, digest-requesting scripts, or mail log knows the
 .I digestcode
 and can trigger digests.

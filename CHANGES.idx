@@ -33,6 +33,7 @@ ezmlm-idx-5.2.0, ????-??-??
 
 - Command-line options to several programs are being replaced by option
   files:
+	digestcode		ezmlm-get (digestcode on command-line)
 	digestmsgs		ezmlm-tstdig -m #
 	digestsize		ezmlm-tstdig -k #
 	digesttime		ezmlm-tstdig -t #

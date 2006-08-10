@@ -187,11 +187,11 @@
 |<#B#>/ezmlm-weed
 # Add flags if you want a non-default digest format.
 </manager#ab/>
-|<#B#>/ezmlm-get -P '<#D#>' <#C#>
+|<#B#>/ezmlm-get -P '<#D#>'
 </manager#aGB/>
-|<#B#>/ezmlm-get '<#D#>' <#C#>
+|<#B#>/ezmlm-get '<#D#>'
 </manager#agB/>
-|<#B#>/ezmlm-get -s '<#D#>' <#C#>
+|<#B#>/ezmlm-get -s '<#D#>'
 # Service subject commands to the # request address if the -q switch is given.
 </manager#q/>
 |<#B#>/ezmlm-request '<#D#>'
