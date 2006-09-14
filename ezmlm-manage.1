@@ -308,6 +308,8 @@ address in its response.
 If
 .I action
 is
+.B rc.\fIcookie
+or
 .BR tc.\fIcookie ,
 where
 .I cookie
@@ -337,10 +339,19 @@ Actions of
 and
 .B unsubscribe
 are used in the same way to delete the target from the mailing list.
-Unsubscribes do not require moderator confirmation.
+Unsubscribes do not require moderator confirmation unless the
+.B \-m
+option is given.  Actions of
+.B vc.\fIcookie
+are used for moderator confirmation of unsubscribes.
 
 Actions of
-.B vc.\fIcookie
+.B rc.\fIcookie
+are used to confirm moderator-iniated subscribes for lists configured
+with remote administration (see MODERATION).
+
+Actions of
+.B wc.\fIcookie
 are used to confirm moderator-initiated unsubscribes for lists configured
 with remote administration (see MODERATION).
 

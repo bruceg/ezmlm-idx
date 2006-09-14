@@ -35,6 +35,13 @@ ezmlm-idx-0.444, ????????
   files unconditionally.  Also rewrote places where the filename was
   duplicated in the tags.
 
+- (Un)subscribe requests initiated and confirmed by a moderator are now
+  marked in the Log as "+mod" or "-mod".  This is accomplished by the
+  addition of another pair of subscribe/unsubscribe confirmation
+  commands ("rc.cookie" and "wc.cookie") to ezmlm-manage to
+  differentiate between moderated (un)subscribe requests and
+  (un)subscribe requests iniated and confirmed by a moderator.
+
 ezmlm-idx-0.443, 20050901
 =========================
 

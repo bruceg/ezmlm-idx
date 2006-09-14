@@ -56,6 +56,7 @@ int flagunsubismod = 0;	/* default: do not require moderator approval to */
 			/* unsubscribe from moderated list */
 int flagedit = 0;	/* default: text file edit not allowed */
 int flagstorefrom = 1;	/* default: store from: line for subscribes */
+int flagmod;		/* subscription moderation enabled */
 char flagcd = '\0';	/* default: do not use _Q_uoted printable or _B_ase64 */
 char encin = '\0';	/* encoding of incoming message */
 int flagdig = 0;	/* request is not for digest list */
@@ -420,7 +421,9 @@ int geton(const char *action)
   unsigned char ch;
 
   fl = get_from(target.s,action);		/* try to match up */
-  switch((r = subscribe(workdir,0,target.s,1,fl,"+",1,-1))) {
+  switch((r = subscribe(workdir,0,target.s,1,fl,
+			(*action == ACTION_RC[0]) ? "+mod" : "+",
+			1,-1))) {
     case 1:
 	    qmail_puts(&qq,"List-Unsubscribe: <mailto:");	/*rfc2369 */
 	    qmail_put(&qq,outlocal.s,outlocal.len);
@@ -467,11 +470,13 @@ int geton(const char *action)
   return r;
 }
 
-int getoff(void)
+int getoff(const char *action)
 {
   int r;
 
-  switch((r = subscribe(workdir,0,target.s,0,"","-",1,-1))) {
+  switch((r = subscribe(workdir,0,target.s,0,"",
+			(*action == ACTION_WC[0]) ? "-mod" : "-",
+			1,-1))) {
 			/* no comment for unsubscribe */
     case 1:
             hdr_listsubject1(TXT_GOODBYE);
@@ -494,7 +499,7 @@ int getoff(void)
 
 void doconfirm(const char *act)
 /* This should only be called with valid act for sub/unsub confirms. If act */
-/* is not ACTION_SC or ACTION_TC, it is assumed to be an unsubscribe conf.*/
+/* is not ACTION_[RST]C, it is assumed to be an unsubscribe conf.*/
 /* "act" is the first letter of desired confirm request only as STRING! */
 {
   strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
@@ -518,10 +523,15 @@ void doconfirm(const char *act)
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"\n");
 
-  hdr_listsubject2((*act == ACTION_SC[0] || *act == ACTION_UC[0])
-		   ? TXT_USRCONFIRM : TXT_MODCONFIRM,
-		   (*act == ACTION_SC[0] || *act == ACTION_TC[0])
-		   ? TXT_SUBSCRIBE_TO : TXT_UNSUBSCRIBE_FROM);
+  hdr_listsubject2((*act == ACTION_SC[0]
+		    || *act == ACTION_UC[0])
+		   ? TXT_USRCONFIRM
+		   : TXT_MODCONFIRM,
+		   (*act != ACTION_UC[0]
+		    && *act != ACTION_VC[0]
+		    && *act != ACTION_WC[0])
+		   ? TXT_SUBSCRIBE_TO
+		   : TXT_UNSUBSCRIBE_FROM);
   hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 }
@@ -568,12 +578,12 @@ void copybottom(void)
 int main(int argc,char **argv)
 {
   char *action;
+  const char *ac;
   char *x, *y;
   const char *fname;
   const char *pmod;
   const char *err;
   char *cp,*cpfirst,*cplast,*cpnext,*cpafter;
-  int flagmod;
   int flagremote;
   int flagpublic;
   int opt,r;
@@ -782,7 +792,7 @@ int main(int argc,char **argv)
 
   if (act == AC_SUBSCRIBE) {
     if (pmod && flagremote) {
-      doconfirm(ACTION_TC);
+      doconfirm(ACTION_RC);
       copy(&qq,"text/mod-sub-confirm",flagcd);
       copybottom();
       qmail_to(&qq,pmod);
@@ -826,8 +836,12 @@ int main(int argc,char **argv)
       qmail_to(&qq,target.s);
     }
 
-  } else if (str_start(action,ACTION_TC)) {
-    if (hashok(action,ACTION_TC)) {
+  } else if (str_start(action,ACTION_RC)
+	     ? (ac = ACTION_RC)
+	     : str_start(action,ACTION_TC)
+	     ? (ac = ACTION_TC)
+	     : 0) {
+    if (hashok(action,ac)) {
       r = geton(action);
       mod_bottom();
       if (flagnotify) qmail_to(&qq,target.s);	/* unless suppressed */
@@ -835,7 +849,7 @@ int main(int argc,char **argv)
     } else {
       if (!pmod || !flagremote)	/* else anyone can get a good -tc. */
         die_cookie();
-      doconfirm(ACTION_TC);
+      doconfirm(ac);
       copy(&qq,"text/sub-bad",flagcd);
       copybottom();
       qmail_to(&qq,pmod);
@@ -844,7 +858,7 @@ int main(int argc,char **argv)
   } else if (act == AC_UNSUBSCRIBE) {
     if (flagunsubconf) {
       if (pmod && flagremote) {
-        doconfirm(ACTION_VC);
+        doconfirm(ACTION_WC);
         copy(&qq,"text/mod-unsub-confirm",flagcd);
         copybottom();
 	qmail_to(&qq,pmod);
@@ -860,7 +874,7 @@ int main(int argc,char **argv)
         copybottom();
         sendtomods();
     } else {
-      r = getoff();
+      r = getoff(action);
       copybottom();
       if (!r || flagnotify) qmail_to(&qq,target.s);
 		/* tell owner if problems (-Q) or anyway (-QQ) */
@@ -877,7 +891,7 @@ int main(int argc,char **argv)
         copybottom();
         sendtomods();
       } else {
-        r = getoff();
+        r = getoff(action);
         copybottom();
         if (!r || flagnotify) qmail_to(&qq,target.s);
 		/* tell owner if problems (-Q) or anyway (-QQ) */
@@ -890,9 +904,13 @@ int main(int argc,char **argv)
       qmail_to(&qq,target.s);
     }
 
-  } else if (str_start(action,ACTION_VC)) {
-    if (hashok(action,ACTION_VC)) {
-      r = getoff();
+  } else if (str_start(action,ACTION_VC)
+	     ? (ac = ACTION_VC)
+	     : str_start(action,ACTION_WC)
+	     ? (ac = ACTION_WC)
+	     : 0) {
+    if (hashok(action,ac)) {
+      r = getoff(action);
       if (!r && flagmod)
         strerr_die2x(0,INFO,ERR_UNSUB_NOP);
       mod_bottom();
@@ -905,7 +923,7 @@ int main(int argc,char **argv)
     } else {
       if (!pmod || !flagremote)	/* else anyone can get a good -vc. */
         die_cookie();
-      doconfirm(ACTION_VC);
+      doconfirm(ac);
       copy(&qq,"text/unsub-bad",flagcd);
       copybottom();
       qmail_to(&qq,pmod);
