@@ -832,9 +832,8 @@ void main(int argc,char **argv)
       action += 3;
       if (action[0] == '-' || action [0] == '.') {
         action++;
-	if (digestcode.len == 0)
-	  strerr_die2x(100,FATAL,ERR_BAD_DIGCODE);
-        if (str_len(action) >= digestcode.len
+        if (digestcode.len != 0
+	    && str_len(action) >= digestcode.len
 	    && case_startb(action,digestcode.len,digestcode.s)) {
           if (FORMATS[str_chr(FORMATS,*(action+digestcode.len))])
             outformat = *(action+digestcode.len);
