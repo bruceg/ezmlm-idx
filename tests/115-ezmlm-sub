@@ -10,76 +10,76 @@
 
 # With mysql testing, there may be junk left from earlier testing that
 # gives false positives in testing. Make sure it's detected
-  ${EZBIN}/ezmlm-list "$DIR" >/dev/null || \
+  file_run ezmlm-list "$DIR" || \
 	fatal "ezmlm-list: failed"
 
-  ${EZBIN}/ezmlm-list "$DIR" | ${GREP} '@' >/dev/null 2>&1 && \
+  run ezmlm-list "$DIR" | ${GREP} '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
-  ${EZBIN}/ezmlm-list "${DIR}/digest" | ${GREP} '@' >/dev/null 2>&1 && \
+  run ezmlm-list "${DIR}/digest" | ${GREP} '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
-  ${EZBIN}/ezmlm-list "${DIR}/allow" | ${GREP} '@' >/dev/null 2>&1 && \
+  run ezmlm-list "${DIR}/allow" | ${GREP} '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
 # not subscriber. Test default
-  ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/allow" && \
+  file_run ezmlm-issubn "$DIR" "${DIR}/allow" && \
 	fatal "ezmlm-issubn: failed: exit 0 on non-subscriber (absolute)"
-  ${EZBIN}/ezmlm-issubn "$DIR" . allow && \
+  file_run ezmlm-issubn "$DIR" . allow && \
 	fatal "ezmlm-issubn: failed: exit 0 on non-subscriber (relative)"
 
 # not subscriber. Test -n
-  ${EZBIN}/ezmlm-issubn -n "$DIR" "${DIR}/allow" || \
+  file_run ezmlm-issubn -n "$DIR" "${DIR}/allow" || \
 	fatal "ezmlm-issubn: -n failed for non-subscriber (absolute)"
-  ${EZBIN}/ezmlm-issubn -n "$DIR" . allow || \
+  file_run ezmlm-issubn -n "$DIR" . allow || \
 	fatal "ezmlm-issubn: -n failed for non-subscriber (relative)"
 
 # add subscriber
-  ${EZBIN}/ezmlm-sub "$DIR" "xyZZy@hoSt" || \
+  file_run ezmlm-sub "$DIR" "xyZZy@hoSt" || \
 	fatal "ezmlm-sub: failed to add subscriber"
 
 # is subscriber. Test default
-  ${EZBIN}/ezmlm-issubn "$DIR" . allow || \
+  file_run ezmlm-issubn "$DIR" . allow || \
 	fatal "ezmlm-issubn: failed: exit false for subscriber"
 
 # is subscriber. Test -n
-  ${EZBIN}/ezmlm-issubn -n "$DIR" . allow && \
+  file_run ezmlm-issubn -n "$DIR" . allow && \
 	fatal "ezmlm-issubn: -n failed for subscriber"
 
 # add to allow
-  ${EZBIN}/ezmlm-sub "$DIR" allow "ZZtop@hoSt" || \
+  file_run ezmlm-sub "$DIR" allow "ZZtop@hoSt" || \
 	fatal "ezmlm-sub: failed to add address to ${DIR}/allow"
-  ${EZBIN}/ezmlm-list "$DIR"/allow | ${GREP} 'ZZtop@host' >/dev/null 2>&1 || \
+  run ezmlm-list "$DIR"/allow | ${GREP} 'ZZtop@host' >/dev/null 2>&1 || \
 	fatal "ezmlm-sub: failed to find address in ${DIR}/allow"
-  ${EZBIN}/ezmlm-list "$DIR" allow | ${GREP} 'ZZtop@host' >/dev/null 2>&1 || \
+  run ezmlm-list "$DIR" allow | ${GREP} 'ZZtop@host' >/dev/null 2>&1 || \
 	fatal "ezmlm-sub: failed to find address in ${DIR} allow"
 
 # list subscribers
-  ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"$ERR" 2>&1 || \
+  run ezmlm-list "$DIR" | ${GREP} "xyZZy" >/dev/null 2>&1 || \
 	fatal "ezmlm-list: failed to list subscribers"
 
 # remove subscriber
-  ${EZBIN}/ezmlm-unsub "$DIR" "xYzZy@hOst" || \
+  file_run ezmlm-unsub "$DIR" "xYzZy@hOst" || \
 	fatal "ezmlm-unsub: failed to remove subscriber"
 
 # see that it was removed
-  ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"$ERR" 2>&1 && \
+  run ezmlm-list "$DIR" | ${GREP} "xyZZy" >/dev/null 2>&1 && \
 	fatal "ezmlm-unsub: failed to remove address"
 
   SENDER="zztop@HOst"
 
 # check for address in allow
-  ${EZBIN}/ezmlm-issubn "$DIR" "${DIR}/allow" || \
+  file_run ezmlm-issubn "$DIR" "${DIR}/allow" || \
 	fatal "ezmlm-sub/issubn: failed to add/look in 2nd db (absolute)"
-  ${EZBIN}/ezmlm-issubn "$DIR" . allow || \
+  file_run ezmlm-issubn "$DIR" . allow || \
 	fatal "ezmlm-sub/issubn: failed to add/look in 2nd db (relative)"
 
 # remove (multiple) (non)existing addresses from allow
-  ${EZBIN}/ezmlm-unsub "${DIR}/allow" "xYzZy@hOst" "zZToP@HOSt" || \
+  file_run ezmlm-unsub "${DIR}/allow" "xYzZy@hOst" "zZToP@HOSt" || \
 	fatal "ezmlm-unsub: failed to remove subscriber"
 
 # verify removal
-  ${EZBIN}/ezmlm-issubn "$DIR" . allow && \
+  file_run ezmlm-issubn "$DIR" . allow && \
 	fatal "ezmlm-unsub/issubn: failed to remove address"
 
 # clean up

@@ -7,28 +7,24 @@
   prompt "ezmlm-make (1/2):     "
 
 # edit non-existant list
-  ${EZBIN}/ezmlm-make -e -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
-	"$LOC" "$HOST" > /dev/null 2>&1 && \
+  run ezmlm-make -e -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" && \
 	fatal "ezmlm-make failed reject edit of non-existing list:"
 
 # make simple test list
-  ${EZBIN}/ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
-	"$LOC" "$HOST" || \
+  run ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" || \
 	fatal "ezmlm-make failed to create test list"
 
 # remake simple test list which should fail
-  ${EZBIN}/ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
-	"$LOC" "$HOST" >/dev/null 2>&1 && \
+  run ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" && \
 	fatal "failed to reject creation of existing list"
 
 # edit the list (add digest)
-  ${EZBIN}/ezmlm-make -+d -C${EZBIN}/lang/en_US "$DIR" || \
+  run ezmlm-make -+d -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "ezmlm-make failed to edit test list"
 
 # edit the list (add digest)
   ${MV} "${DIR}/flags" "${DIR}/flags~"
-  ${EZBIN}/ezmlm-make -ed -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" \
-	>/dev/null 2>&1 || \
+  run ezmlm-make -ed -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" || \
 	{ ${ECHO} "failed without DIR/flags"
 	  prompt "ezmlm-make ......     "
 	}
@@ -60,8 +56,8 @@
 RDBMS='STD'
 prompt "Using RDBMS support:  "
 if [ $USESQL ]; then
-  ${EZBIN}/ezmlm-make -+6 "$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
-	-C${EZBIN}/lang/en_US "$DIR"|| \
+  run ezmlm-make -+6 "$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
+	-C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "ezmlm-make failed to add SQL config info"
 
   ${STRINGS} ${EZBIN}/ezmlm-sub | ${GREP} -i 'MySQL' >/dev/null 2>&1 && \

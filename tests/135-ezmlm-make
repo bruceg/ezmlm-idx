@@ -7,7 +7,7 @@
   prompt "ezmlm-make (2/2):     "
 
 # make sure a few ezmlm-make switches work
-  ${EZBIN}/ezmlm-make -+qkgu -C${EZBIN}/lang/en_US "$DIR" || \
+  run ezmlm-make -+qkgu -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "failed to edit test list to +qkgu"
   ${GREP} deny "${DIR}/editor" >/dev/null 2>&1 || \
 	fatal "failed to implement -k for list"
@@ -18,7 +18,7 @@
   ${GREP} allow "${DIR}/editor" >/dev/null 2>&1 || \
 	fatal "failed to implement -u for list"
 
-  ${EZBIN}/ezmlm-make -+QKGU -C${EZBIN}/lang/en_US "$DIR" || \
+  run ezmlm-make -+QKGU -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "failed to edit test list to +QKGU"
   ${GREP} deny "${DIR}/editor" >/dev/null 2>&1 && \
 	fatal "failed to implement -K for list"
@@ -30,10 +30,10 @@
 	fatal "failed to implement -U for list"
 
 # edit the list (add moderation and remove admin)
-  ${EZBIN}/ezmlm-make -+rsm -C${EZBIN}/lang/en_US "$DIR" || \
+  run ezmlm-make -+rsm -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "failed to edit test list to +rsm"
 # edit the list (add text file editing and list/log)
-${EZBIN}/ezmlm-make -+ln -C${EZBIN}/lang/en_US "$DIR" || \
+run ezmlm-make -+ln -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "failed to edit test list to +ln"
 
 # Set up a text file for use in testing copy()

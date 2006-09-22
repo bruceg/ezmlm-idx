@@ -7,7 +7,7 @@
 prompt "ezmlm-get (index):    "
 
 # blast digest recipient account with all these excerpts.
-${EZBIN}/ezmlm-sub "${DIR}/digest" "${DIG}@$HOST"
+run ezmlm-sub "${DIR}/digest" "${DIG}@$HOST"
 
 # first ezmlm-get in the manager position:
 
@@ -23,7 +23,7 @@ SENDER="${BNC}@$HOST"
 LOCAL="$LOC-xxxx"
 DEFAULT='xxxx'
 ${ECHO} "X-num: index1" > "$TMP"
-${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
+file_run ezmlm-get "$DIR" || \
 	fatal " failed to exit 0 for non-recognized commands"
 msgexists && \
 	fatal " failed to abort on non-recognized commands"
@@ -32,26 +32,26 @@ msgexists && \
 qqclean
 LOCAL="$LOC-"
 DEFAULT=''
-${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
+file_run ezmlm-get "$DIR" || \
 	fatal " failed to exit 0 for list-@host"
 msgexists && \
 	fatal " failed to exit on list-@host"
 
 # Make sure this address is not a subscriber
-${EZBIN}/ezmlm-unsub "$DIR" "${SENDER}" >/dev/null 2>&1
-${EZBIN}/ezmlm-unsub "$DIR"/allow "${SENDER}" >/dev/null 2>&1
-${EZBIN}/ezmlm-unsub "$DIR"/digest "${SENDER}" >/dev/null 2>&1
+run ezmlm-unsub "$DIR" "${SENDER}" >/dev/null 2>&1
+run ezmlm-unsub "$DIR"/allow "${SENDER}" >/dev/null 2>&1
+run ezmlm-unsub "$DIR"/digest "${SENDER}" >/dev/null 2>&1
 
 qqclean
 LOCAL="$LOC-index"
 DEFAULT='index'
-${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1 && \
+file_run ezmlm-get -s "$DIR" && \
 	fatal "-s failed to reject -index from non-sub"
 msgexists && \
 	fatal "-s delivered response to non-subscriber"
 
 qqclean
-${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
+file_run ezmlm-get "$DIR" 
 if [ "$?" -ne "99" ]; then
 	fatal "failed to exit 99 after -index"
 fi
@@ -63,7 +63,7 @@ ${GREP} T"$SENDER" "$QQENV" >/dev/null 2>&1 || \
 qqclean
 ${ECHO} "X-num: index2" > "$TMP"
 SENDER="${DIG}@$HOST"
-${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1
+file_run ezmlm-get -s "$DIR" 
 if [ "$?" -ne "99" ]; then
 	fatal "-s failed to exit 99 after -index"
 fi

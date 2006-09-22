@@ -21,7 +21,7 @@
   chmod +x "${DIR}/mod/pending/2" "${DIR}/mod/pending/1999999999"
 
   qqclean
-  ${EZBIN}/ezmlm-clean "$DIR" >"$ERR" 2>&1 ||
+  file_run ezmlm-clean "$DIR" ||
 	fatal "failed first invocation"
   if [ -r "${DIR}/mod/pending/1" ]; then
 	fatal "failed to remove non-x moderation queue entry 1"
@@ -38,7 +38,7 @@ Return-Path: <${DIG}@$HOST>
 X-num: clean4
 EOF
   chmod +x "${DIR}/mod/pending/4"
-  ${EZBIN}/ezmlm-clean -R "$DIR" >"$ERR" 2>&1 ||
+  file_run ezmlm-clean -R "$DIR" ||
 	fatal "-R failed"
   if [ -r  "${DIR}/mod/pending/4" ]; then
 	fatal "failed to remove moderation queue entry 4"

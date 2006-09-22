@@ -4,7 +4,7 @@
 
   DEFAULT="subscribe"
   LOCAL="${LOC}-${DEFAULT}"
-  ${EZBIN}/ezmlm-manage -S "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  file_run ezmlm-manage -S "$DIR" || \
   fatal "failed to produce subscribe confirmation"
 
   grephdr_manage

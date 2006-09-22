@@ -7,7 +7,7 @@
 prompt "ezmlm-moderate:       "
 
 # make sure we get the (mis)accepted message(s)
-${EZBIN}/ezmlm-sub "$DIR" "${SND}@$HOST"
+file_run ezmlm-sub "$DIR" "${SND}@$HOST"
 
 # REJ is set in 145-ezmlm-store, as the reject address for "mod1" message
 LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
@@ -21,8 +21,7 @@ DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
     echo '> rejection test message'
     echo '> %%%'
 } > "$TMP"
-${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" <"$TMP" \
-	>"$ERR" 2>&1 || \
+file_run ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" || \
 		fatal "failed on rejection"
 msgexists ||
 	fatal "failed to send rejection notice for message mod1"
@@ -38,8 +37,7 @@ qqclean
 # ACC is set in 145-ezmlm-store, as the accept address for "mod3" message
 LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`
-${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
-	 </dev/null >"$ERR" 2>&1 || \
+file_run ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" || \
 		fatal "failed on acceptance"
 msgexists || \
 	fatal "failed to post message mod3"
@@ -55,30 +53,26 @@ ls -l "${DIR}/mod/accepted/" | ${GREP} '[0-9]' >/dev/null 2>&1 || \
 REJ1=`${ECHO} "$REJ" | sed s/reject/accept/`
 LOCAL=`${ECHO} "$REJ1" | cut -d@ -f1`
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
-${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
-	</dev/null >/dev/null 2>&1 && \
+file_run ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" && \
 	fatal "failed to bounce accept of rejected message"
 
 LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
-${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
-	</dev/null >/dev/null 2>&1 || \
+file_run ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" || \
 	fatal "failed to silently ignore re-rejection"
 
 ACC1=`${ECHO} "$ACC" | sed s/accept/reject/`
 LOCAL=`${ECHO} "$ACC1" | cut -d@ -f1`
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
-${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
-	</dev/null >/dev/null 2>&1 && \
+file_run ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" && \
 	fatal "failed to bounce reject of accepted message"
 
 LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`
-${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
-	</dev/null >/dev/null 2>&1 || \
+file_run ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" || \
 	fatal "failed to silently ignore re-acceptance"
 
 ${ECHO} "OK"
 
 # cleanup
-${EZBIN}/ezmlm-unsub "$DIR" "${SND}@$HOST"
+file_run ezmlm-unsub "$DIR" "${SND}@$HOST"

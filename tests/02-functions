@@ -143,16 +143,26 @@ msgexists() {
 #############################
 # Program execution helpers #
 #############################
+
+# Run the program, and redirect stderr to $ERR.
+# All programs get run this way.
 run() {
   program="$1"
   shift
-  test -d "$DIR" && ${ECHO} -n >> "$TMP"
-  ${EZBIN}/ezmlm-$program "$@" < "$TMP" > "$ERR" 2>&1
+  ${EZBIN}/$program "$@" 2> "$ERR"
   return $?
 }
 
+# Run the program, redirecting all output to $ERR and input from $TMP.
+file_run() {
+  ${ECHO} -n >> "$TMP"
+  run "$@" < "$TMP" > "$ERR" 2>&1
+  return $?
+}
+
+# Make a message and then run the program.
 make_message_run() {
   make_message > "$TMP"
-  run "$@"
+  file_run "$@"
   return $?
 }

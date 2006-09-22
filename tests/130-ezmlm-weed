@@ -6,9 +6,9 @@
 
   prompt "ezmlm-weed:           "
 
-  ${ECHO} "Subject: test" | ${EZBIN}/ezmlm-weed || \
+  ${ECHO} "Subject: test" | run ezmlm-weed || \
 	fatal "failed to accept good message"
-  ${ECHO} "Subject: success notice" | ${EZBIN}/ezmlm-weed >/dev/null 2>&1 && \
+  ${ECHO} "Subject: success notice" | run ezmlm-weed && \
 	fatal "failed to reject bad message"
 
   ${ECHO} "OK"

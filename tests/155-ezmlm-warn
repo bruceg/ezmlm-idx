@@ -9,23 +9,23 @@
 # should not send a warning
   touch "$DIR"/nowarn
   ${RM} -f "$QQMSG"
-  ${EZBIN}/ezmlm-warn -D -t0 "$DIR" >"$ERR" 2>&1 || \
+  file_run ezmlm-warn -D -t0 "$DIR" || \
 	fatal "failed with nowarn"
   test -e "$QQMSG" && \
 	fatal "sent a warning with nowarn"
   ${RM} -f "$DIR"/nowarn
 
 # should send a warning
-  ${EZBIN}/ezmlm-warn -D -t0 "$DIR" >"$ERR" 2>&1 || \
+  file_run ezmlm-warn -D -t0 "$DIR" || \
 	fatal "failed with normal bounce for warning"
   test -e "$QQMSG" || \
 	fatal "failed to send warning"
-  ${EZBIN}/ezmlm-issubn "$DIR" || \
+  run ezmlm-issubn "$DIR" || \
 	fatal "script error: SENDER is not a subscriber"
 
-  ${EZBIN}/ezmlm-warn -d -t0 "$DIR" >"$ERR" 2>&1 || \
+  file_run ezmlm-warn -d -t0 "$DIR" || \
 	fatal "failed with digest bounce for warning"
-  ${EZBIN}/ezmlm-issubn "${DIR}/digest" || \
+  run ezmlm-issubn "${DIR}/digest" || \
 	fatal "script error: SENDER is not a digest subscriber"
 
   ${ECHO} "OK"

@@ -6,19 +6,19 @@
   LOCAL="${LOC}-${DEFAULT}"
 
   echo 0 >"$DIR"/copylines
-  ${EZBIN}/ezmlm-manage -S "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  file_run ezmlm-manage -S "$DIR" || \
   fatal "failed to produce subscribe confirmation"
   grepbodynot 1
   grepbodynot 2
 
   echo 1 >"$DIR"/copylines
-  ${EZBIN}/ezmlm-manage -S "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  file_run ezmlm-manage -S "$DIR" || \
   fatal "failed to produce subscribe confirmation"
   grepbody 1
   grepbodynot 2
 
   echo 2 >"$DIR"/copylines
-  ${EZBIN}/ezmlm-manage -S "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  file_run ezmlm-manage -S "$DIR" || \
   fatal "failed to produce subscribe confirmation"
   grepbody 1
   grepbody 2
