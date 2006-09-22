@@ -103,6 +103,9 @@ qqclean()
 
 make_message()
 {
+  if [ ! -z "$MAKE_HEADER" ]; then
+      ${ECHO} "$MAKE_HEADER"
+  fi
   ${ECHO} "ReCEIved: #LAST#"
   ${ECHO} "ReCeIved: #PENULTIMATE#"
   ${ECHO} "retuRN-RECeipt-to: nobody"
@@ -135,4 +138,21 @@ exists() {
 
 msgexists() {
   ${TEST} -s "$QQMSG" -a -s "${QQENV}"
+}
+
+#############################
+# Program execution helpers #
+#############################
+run() {
+  program="$1"
+  shift
+  test -d "$DIR" && ${ECHO} -n >> "$TMP"
+  ${EZBIN}/ezmlm-$program "$@" < "$TMP" > "$ERR" 2>&1
+  return $?
+}
+
+make_message_run() {
+  make_message > "$TMP"
+  run "$@"
+  return $?
 }

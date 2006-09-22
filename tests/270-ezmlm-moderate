@@ -20,7 +20,8 @@ DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
     echo '> %%%'
     echo '> rejection test message'
     echo '> %%%'
-} | ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
+} > "$TMP"
+${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" <"$TMP" \
 	>"$ERR" 2>&1 || \
 		fatal "failed on rejection"
 msgexists ||

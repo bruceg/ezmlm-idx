@@ -14,8 +14,8 @@
   mkdir -p "${DIR}/text"
   { ${ECHO} "--- TRAILER ---"; ${ECHO}; } > "${DIR}/text/trailer"
 # test
-  { ${ECHO} "X-num: msg1"; make_message; } | \
-	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
+  MAKE_HEADER="X-num: msg1"
+  make_message_run send "$DIR" || \
 	fatal "failed to accept normal message"
   if [ `cat "${DIR}/num"` != "1:1" ]; then
 	fatal "failed to create num for normal message 1"; 
@@ -48,8 +48,8 @@
 
 # test to see that trailer is added to nom-mime messages
   CONTENT=''
-  { ${ECHO} "X-num: msg5"; make_message; } | \
-	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1  || \
+  MAKE_HEADER="X-num: msg5"
+  make_message_run send "$DIR" || \
 	fatal "failed to accept non-mime message"
 
   ${GREP} 'TRAILER' "$QQMSG" >/dev/null 2>&1 || \
@@ -57,8 +57,8 @@
 
 # test to see that trailer is suppressed for multipart/signed
   CONTENT='multipart/signed'
-  { ${ECHO} "X-num: msg6"; make_message; } | \
-	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1  || \
+  MAKE_HEADER="X-num: msg6"
+  make_message_run send "$DIR" || \
 	fatal "failed to accept multipart/signed message"
 
   ${GREP} 'TRAILER' "$QQMSG" >/dev/null 2>&1 && \
@@ -73,7 +73,7 @@
 # test content-type with something after boundary=xxx
   AFTERBOUND=';micalg=pgp-md5'
   ${ECHO} "text/html" > "$DIR"/mimeremove
-  make_message | ${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1  || \
+  make_message_run send "$DIR" >"$ERR" 2>&1  || \
 	{ ${ECHO} "err with text after boundary: 0.30 bug fixed in 0.322"
 	  prompt "ezmlm-send.........   "
 	  BUG="${BUG} send_bound"
@@ -84,8 +84,8 @@
   ${RM} "$DIR"/mimeremove
 
 # -r => don't trim received headers
-  { ${ECHO} "X-num: msg2"; make_message; } | \
-	${EZBIN}/ezmlm-send -r "$DIR" >"$ERR" 2>&1 || \
+  MAKE_HEADER="X-num: msg2"
+  make_message_run send -r "$DIR" 2>&1 || \
 	fatal "failed to accept normal message 2"
 
   ${GREP} "2:" "${DIR}/archive/0/index" >/dev/null 2>&1 && \
@@ -97,8 +97,8 @@
 	fatal "-r failed to leave received header"
 
 # -C eliminate SENDER from addressees
-  { ${ECHO} "X-num: msg3"; make_message; } | \
-	${EZBIN}/ezmlm-send -C "$DIR" >"$ERR" 2>&1 || \
+  MAKE_HEADER="X-num: msg3"
+  make_message_run send -C "$DIR" || \
 	fatal "failed to accept normal message 3"
   ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
 
@@ -114,8 +114,8 @@
 # test mimeremove
   touch "${DIR}/archived" "${DIR}/indexed"
   ${ECHO} "teXT/hTml" > "${DIR}/mimeremove"
-  { ${ECHO} "X-num: mimeremove"; make_message; } | \
-	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
+  MAKE_HEADER="X-num: mimeremove"
+  make_message_run send "$DIR" || \
 	fatal "failed to accept mimeremove message"
   ${GREP} -i 'text/html' < "${DIR}/archive/0/04" >/dev/null &&
 	fatal "failed to remove mimeremove part"
@@ -124,9 +124,8 @@
   touch "${DIR}/archived" "${DIR}/indexed"
   ${ECHO} "multipart/mixed" > "${DIR}/mimekeep"
   ${ECHO} "teXT/plain" >> "${DIR}/mimekeep"
-  { ${ECHO} "X-num: mimekeep"; make_message; } > msg
-  { ${ECHO} "X-num: mimekeep"; make_message; } | \
-        ${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
+  MAKE_HEADER="X-num: mimekeep"
+  make_message_run send "$DIR" || \
 	fatal "failed to accept mimekeep message"
   ${GREP} -i 'text/html' < "${DIR}/archive/0/05" >/dev/null &&
 	fatal "failed to remove mimekeep part"
@@ -135,8 +134,8 @@
   ${ECHO} subject >"$DIR"/headerkeep
   ${ECHO} from >>"$DIR"/headerkeep
   ${ECHO} x-num >>"$DIR"/headerkeep
-  { ${ECHO} "X-num: keeptest"; make_message; } | \
-	${EZBIN}/ezmlm-send -C "$DIR" >"$ERR" 2>&1 || \
+  MAKE_HEADER="X-num: keeptest"
+  make_message_run send -C "$DIR" || \
 	fatal "failed to accept keeptest message"
   ${GREP} -i '^x-num: keeptest' < "${DIR}/archive/0/06" >/dev/null ||
 	fatal "failed to keep header in headerkeep"
