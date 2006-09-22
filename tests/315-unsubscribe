@@ -1,0 +1,31 @@
+# $Id$
+
+prompt "dispatch unsubscribe: "
+
+make_message > "$TMP"
+
+touch "$DIR"/noconfirmunsub
+SENDER=user1@host
+
+dispatch unsubscribe \
+|| fatal "initial unsubscribe dispatch failed"
+
+issub . $SENDER \
+&& fatal "unconfirmed unsubscribe did not remove address"
+
+${RM} "$DIR"/noconfirmunsub
+SENDER=user2@host
+
+dispatch unsubscribe \
+|| fatal "initial unsubscribe dispatch failed"
+
+issub . $SENDER \
+|| fatal "initial unsubscribe did not ask for confirmation"
+
+dispatch $(parse_reply_to) \
+|| fatal "unsubscribe confirmation failed"
+
+issub . $SENDER \
+&& fatal "unsubscribe confirmation did not remove address"
+
+${ECHO} "OK"

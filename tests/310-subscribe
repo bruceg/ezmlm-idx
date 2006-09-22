@@ -1,0 +1,62 @@
+# $Id$
+
+prompt "dispatch subscribe:   "
+
+make_message > "$TMP"
+
+${RM} "$DIR"/modsub
+touch "$DIR"/noconfirmsub
+SENDER=user1@host
+
+issub . $SENDER \
+&& fatal "test subscriber is already subscribed?"
+
+dispatch subscribe \
+|| fatal "initial subscribe dispatch failed"
+
+issub . $SENDER \
+|| fatal "unconfirmed subscribe did not add address"
+
+${RM} "$DIR"/noconfirmsub
+SENDER=user2@host
+
+issub . $SENDER \
+&& fatal "test subscriber is already subscribed?"
+
+dispatch subscribe \
+|| fatal "initial subscribe dispatch failed"
+
+issub . $SENDER \
+&& fatal "initial subscribe did not ask for confirmation"
+
+dispatch $(parse_reply_to) \
+|| fatal "subscribe confirmation failed"
+
+issub . $SENDER \
+|| fatal "subscribe confirmation did not add address"
+
+touch "$DIR"/modsub
+SENDER=user3@host
+
+issub . $SENDER \
+&& fatal "test subscriber is already subscribed?"
+
+dispatch subscribe \
+|| fatal "initial subscribe dispatch failed"
+
+issub . $SENDER \
+&& fatal "initial subscribe did not ask for confirmation"
+
+dispatch $(parse_reply_to) \
+|| fatal "subscribe confirmation failed"
+
+issub . $SENDER \
+&& fatal "subscribe confirmation did not ask for moderator confirmation"
+
+dispatch $(parse_reply_to) \
+|| fatal "moderator subscribe confirmation failed"
+
+issub . $SENDER \
+|| fatal "moderator subscribe confirmation did not add address"
+
+${ECHO} "OK"
