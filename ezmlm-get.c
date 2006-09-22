@@ -801,7 +801,10 @@ void main(int argc,char **argv)
   if (argv[optind] == 0)
     getconf_line(&digestcode,"digestcode",0,dir);
   else
-    if (stralloc_copys(&digestcode,argv[optind])) die_nomem();
+    if (!stralloc_copys(&digestcode,argv[optind])) die_nomem();
+  /* This fixup is necessary for the case_startb comparison below. */
+  if (!stralloc_0(&digestcode)) die_nomem();
+  --digestcode.len;
 
   if (!stralloc_copy(&subject,&outlocal)) die_nomem();	/* for subjects */
   if (!stralloc_copy(&listname,&outlocal)) die_nomem();	/* for content disp */

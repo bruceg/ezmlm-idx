@@ -26,7 +26,7 @@ ${ECHO} "X-num: dig1" > "${DIR}/headeradd"
 SENDER="${BNC}@$HOST"
 LOCAL="$LOC-dig.code"
 DEFAULT='dig.code'
-${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 && \
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" > "$ERR" 2>&1 && \
 	fatal "failed to reject -dig when no digest code was on cmd-line"
 if [ -r "${DIR}/dignum" ]; then
 	fatal "script error: dignum exists"
@@ -49,7 +49,7 @@ msgexists || \
 	fatal "dig1 from manager wasn't delivered"
 
 qqclean
-${EZBIN}/ezmlm-get "$DIR" 'code' < "$TMP" >/dev/null 2>&1
+${EZBIN}/ezmlm-get "$DIR" 'code' < "$TMP" > "$ERR" 2>&1
 if [ "$?" != "99" ]; then
 	fatal "failed to exit 99 when nothing to digest in manager position"
 fi
@@ -57,16 +57,16 @@ msgexists && \
 	fatal "empty dig1 from manager was delivered"
 
 qqclean
-${EZBIN}/ezmlm-get "$DIR" 'coden' < "$TMP" >/dev/null 2>&1 && \
+${EZBIN}/ezmlm-get "$DIR" 'coden' < "$TMP" > "$ERR" 2>&1 && \
 	fatal "failed to reject -dig with bad digest code 'coden'"
 msgexists && \
 	fatal "delivered -dig with bad digest code 'coden'"
 
 qqclean
-${EZBIN}/ezmlm-get "$DIR" 'cod' < "$TMP" >/dev/null 2>&1 && \
+${EZBIN}/ezmlm-get "$DIR" 'cod' < "$TMP" > "$ERR" 2>&1 && \
 	fatal "failed to reject -dig with bad digest code 'cod'"
 msgexists && \
-	fatal "delivered -dig with bad digest code 'code'"
+	fatal "delivered -dig with bad digest code 'cod'"
 
 # now in the editor position:
 qqclean
