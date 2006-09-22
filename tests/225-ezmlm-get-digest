@@ -57,20 +57,43 @@ msgexists && \
 	fatal "empty dig1 from manager was delivered"
 
 qqclean
-file_run ezmlm-get "$DIR" 'coden' && \
-	fatal "failed to reject -dig with bad digest code 'coden'"
+${ECHO} code > "$DIR"/digestcode
+file_run ezmlm-get "$DIR"
+if [ "$?" != "99" ]; then
+	fatal "failed to exit 99 when nothing to digest in manager position"
+fi
 msgexists && \
-	fatal "delivered -dig with bad digest code 'coden'"
+	fatal "empty dig1 from manager was delivered"
+
+qqclean
+file_run ezmlm-get "$DIR" 'coden' && \
+	fatal "failed to reject -dig with bad digest code 'coden' on command line"
+msgexists && \
+	fatal "delivered -dig with bad digest code 'coden' on command line"
+
+qqclean
+${ECHO} coden > "$DIR"/digestcode
+file_run ezmlm-get "$DIR" && \
+	fatal "failed to reject -dig with bad digest code 'coden' in file"
+msgexists && \
+	fatal "delivered -dig with bad digest code 'coden' in file"
 
 qqclean
 file_run ezmlm-get "$DIR" 'cod' && \
-	fatal "failed to reject -dig with bad digest code 'cod'"
+	fatal "failed to reject -dig with bad digest code 'cod' on command line"
 msgexists && \
-	fatal "delivered -dig with bad digest code 'cod'"
+	fatal "delivered -dig with bad digest code 'cod' on command line"
+
+qqclean
+${ECHO} code > "$DIR"/digestcode
+file_run ezmlm-get "$DIR" && \
+	fatal "failed to reject -dig with bad digest code 'cod' in file"
+msgexists && \
+	fatal "delivered -dig with bad digest code 'cod' in file"
 
 # now in the editor position:
 qqclean
-${RM} -f "${DIR}/dignum"
+${RM} -f "${DIR}/dignum" "$DIR"/digestcode
 LOCAL="$LOC"
 ${UNSET} DEFAULT
 ${ECHO} "X-num: dig2" > "${DIR}/headeradd"
