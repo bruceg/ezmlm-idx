@@ -2,8 +2,7 @@
 
 prompt "dispatch subscribe:   "
 
-${RM} "$DIR"/modsub
-touch "$DIR"/noconfirmsub
+run ezmlm-make -+hS "$DIR"
 SENDER=user1@host
 
 issub . $SENDER \
@@ -15,7 +14,7 @@ dispatch subscribe \
 issub . $SENDER \
 || fatal "unconfirmed subscribe did not add address"
 
-${RM} "$DIR"/noconfirmsub
+run ezmlm-make -+H "$DIR"
 SENDER=user2@host
 
 issub . $SENDER \
@@ -33,7 +32,7 @@ dispatch $(parse_reply_to) \
 issub . $SENDER \
 || fatal "subscribe confirmation did not add address"
 
-touch "$DIR"/modsub
+run ezmlm-make -+s "$DIR"
 SENDER=user3@host
 
 issub . $SENDER \

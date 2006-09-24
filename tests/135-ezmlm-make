@@ -32,6 +32,8 @@
 # edit the list (add moderation and remove admin)
   run ezmlm-make -+rsm -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "failed to edit test list to +rsm"
+  test -e "$DIR"/modsub \
+  || fatal "failed to create modsub file"
 # edit the list (add text file editing and list/log)
 run ezmlm-make -+ln -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "failed to edit test list to +ln"

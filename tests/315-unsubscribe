@@ -2,7 +2,7 @@
 
 prompt "dispatch unsubscribe: "
 
-touch "$DIR"/noconfirmunsub
+run ezmlm-make -+j "$DIR"
 SENDER=user1@host
 
 dispatch unsubscribe \
@@ -11,7 +11,7 @@ dispatch unsubscribe \
 issub . $SENDER \
 && fatal "unconfirmed unsubscribe did not remove address"
 
-${RM} "$DIR"/noconfirmunsub
+run ezmlm-make -+J "$DIR"
 SENDER=user2@host
 
 dispatch unsubscribe \

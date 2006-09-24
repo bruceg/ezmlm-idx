@@ -1,3 +1,4 @@
+Merge revs 571:HEAD from branches/5.1
 Add an ezmlm-config man page listing all config files
 
 Put a real address into To: header in ezmlm-store (and others?)
@@ -25,4 +26,8 @@ Implement pre/post (un)subscribe hooks (and possibly others):
 -If hooks/NAME exists, execute it at appropriate time
 
 Tests:
+*finish the ezmlmrc tests (through ezmlm-dispatch)
+-add more ezmlm-make create/remove file tests
 -headerkeep/remove in ezmlm-request
+-use grepq in place of ${GREP} >/dev/null
+-rewrite all ezmlm-issubn tests in terms of the new issub function
