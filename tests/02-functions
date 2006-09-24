@@ -181,7 +181,12 @@ make_message_run() {
 # Run ezmlm-dispatch
 dispatch() {
   fixup_bin
-  DEFAULT="$1"
+  if [ -z "$1" ]; then
+    unset DEFAULT
+  else
+    DEFAULT="$1"
+  fi
+  export DEFAULT
   make_message_run ezmlm-dispatch "$DIR" .
 }
 

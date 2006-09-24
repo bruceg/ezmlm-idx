@@ -2,8 +2,6 @@
 
 prompt "dispatch unsubscribe: "
 
-make_message > "$TMP"
-
 touch "$DIR"/noconfirmunsub
 SENDER=user1@host
 

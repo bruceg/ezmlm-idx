@@ -1,0 +1,11 @@
+# $Id$
+
+prompt "dispatch reject:      "
+
+SENDER=user1@host
+
+${ECHO} "20:10" > "$DIR"/msgsize
+dispatch \
+&& fatal "ezmlm-reject was not run in the editor"
+
+${ECHO} "OK"

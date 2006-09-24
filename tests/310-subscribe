@@ -2,8 +2,6 @@
 
 prompt "dispatch subscribe:   "
 
-make_message > "$TMP"
-
 ${RM} "$DIR"/modsub
 touch "$DIR"/noconfirmsub
 SENDER=user1@host
