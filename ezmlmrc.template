@@ -96,12 +96,18 @@
 #<#D#>
 </dot/>
 <#T#>
+</outhost/>
+<#H#>
+</outlocal/>
+<#L#>
 </digestcode/>
 <#C#>
+</-sublist#e^0/>
 </sublist#0/>
 <#0#>
 </fromheader#3/>
 <#3#>
+# create the directories
 </+archive/>
 </+subscribers/>
 </+bounce/>
@@ -128,58 +134,63 @@
 # links: dot -> dir/editor
 </:/editor/>
 </:-default/dispatch/>
-# Get rid of configuration flags for editing mode so we can start with a
-# clean state.
-</-modpost#eM/>
-</-modsub#eS/>
-</-remote#eR/>
-</-public#eP/>
+#
+# ezmlm-make option flags
+#
+# -a archived
 </-indexed#eA/>
+</indexed#a/>
 </-archived#eA/>
+</archived#a/>
+# -f prefix
 </-prefix#eF/>
-</-text/trailer#eT/>
-</-sublist#e^0/>
-</-mimeremove#eX/>
-# Not needed, except for message moderation.
-</-moderator#eM/>
-# Not needed, except for message confirmation.
-</-confirmer#eY/>
-# We don't clean out text files to make it easier for users
-# doing manual config by e.g. touching dir/remote.
-# subscription moderation
-</modsub#s/>
-<#8#>
-# remote admin
-</remote#r/>
-<#9#>
-# message moderation
-</modpost#m/>
-<#7#>
-# Message confirmation
-</-confirmpost#eY/>
-</confirmpost#y/>
-# Subscription confirmation
+</prefix#fE/>
+[<#L#>]
+# -h subscription confirmation
 </-noconfirmsub#eH/>
 </noconfirmsub#h/>
-# Unsubscription confirmation
+# -j unsubscription confirmation
 </-noconfirmunsub#eJ/>
 </noconfirmunsub#j/>
-# Remote text editing
-</-remoteedit#eN/>
-</remoteedit#n/>
-# Remote subscriber listing
+# -l remote subscriber listing
 </-remotelist#eL/>
 </remotelist#l/>
-# Warnings
+# -m message moderation
+</-modpost#eM/>
+</modpost#m/>
+<#7#>
+# -n remote text editing
+</-remoteedit#eN/>
+</remoteedit#n/>
+# -p public list
+</-public#eP/>
+</public#p/>
+# -r remote admin
+</-remote#eR/>
+</remote#r/>
+<#9#>
+# -s subscription moderation
+</-modsub#eS/>
+</modsub#s/>
+<#8#>
+# -w warnings
 </-nowarn#eW/>
 </nowarn#w/>
+# -y message confirmation
+</-confirmpost#eY/>
+</confirmpost#y/>
+#
+# dot-qmail files
+#
 # List owner mail
-</owner#5/>
+</owner/>
+</#5/>
 <#5#>
-</owner#^5/>
+</#^5/>
 <#D#>/Mailbox
 </#/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
+# Primary dispatcher
 </dispatch/>
 |<#B#>/ezmlm-dispatch '<#D#>' .
 # The "manager" handles subscription and other requests.
@@ -188,9 +199,9 @@
 # Add flags if you want a non-default digest format.
 </manager#ab/>
 |<#B#>/ezmlm-get -P '<#D#>'
-</manager#aGB/>
+</manager#aBG/>
 |<#B#>/ezmlm-get '<#D#>'
-</manager#agB/>
+</manager#aBg/>
 |<#B#>/ezmlm-get -s '<#D#>'
 # Service subject commands to the # request address if the -q switch is given.
 </manager#q/>
@@ -200,7 +211,9 @@
 </#/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
 # manage message confirmations
+</-confirmer#eY/>
 </confirmer#y/>
+|<#B#>/ezmlm-weed
 </#my/>
 |<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-store -Y '<#D#>'"
 </#My/>
@@ -268,6 +281,7 @@
 # moderator is set up only for message moderated lists. However, '-e' does
 # not remove it since we can't remove the symlinks to it (they're outside
 # of the list dir.
+</-moderator#eM/>
 </moderator#m/>
 |<#B#>/ezmlm-weed
 |<#B#>/ezmlm-moderate '<#D#>'
@@ -297,13 +311,6 @@ from
 </lockbounce/>
 </digest/lockbounce#d/>
 </digest/lock#d/>
-</public#p/>
-</archived#a/>
-</indexed#a/>
-</outhost/>
-<#H#>
-</outlocal/>
-<#L#>
 # Headeradd needs to always exist but leave out stuff for sublists
 </headeradd#E^0/>
 # Good for mailing list stuff (and vacation program)
@@ -323,6 +330,7 @@ From: <#3#>
 </msgsize#xE/>
 30000:2
 # remove mime parts if -x
+</-mimeremove#eX/>
 </mimeremove#xE/>
 application/excel
 application/rtf
@@ -417,21 +425,19 @@ x-world/x-vrml
 # chemical/x-pdb
 # --------------------- Handle SQL connect info
 </-sql#^6e/>
-</-digest/sql#^6e/>
-</-allow/sql#^6e/>
-</-mod/sql#^6e/>
 </sql#6W/>
 <#6#>
 </sql#6w/>
 <#6#>:<#L#>@<#H#>
+</-digest/sql#^6e/>
 </digest/sql#6dW/>
 <#6#>_digest
 </digest/sql#6dw/>
 <#6#>_digest:<#L#>_digest@<#H#>
+</-allow/sql#^6e/>
 </allow/sql#6/>
 <#6#>_allow
+</-mod/sql#^6e/>
 </mod/sql#6m/>
 <#6#>_mod
 # -------------------- End sql stuff
-</prefix#fE/>
-[<#L#>]
