@@ -30,12 +30,13 @@ remake_creates f prefix
 remake_creates h noconfirmsub
 remake_creates j noconfirmunsub
 remake_creates l remotelist
-remake_creates m modpost
+remake_creates m moderator modpost
 remake_creates n remoteedit
 remake_creates p public
 remake_creates r remote
 remake_creates s modsub
 remake_creates w nowarn
-remake_creates y confirmpost
+remake_creates x mimeremove
+remake_creates y confirmer confirmpost
 
 run ezmlm-make -+p "$DIR"
