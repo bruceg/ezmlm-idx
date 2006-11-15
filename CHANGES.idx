@@ -23,16 +23,20 @@ release.
 ezmlm-idx-5.2.0, ????-??-??
 ===========================
 
-- The default ezmlmrc template now uses ezmlm-dispatch.  Existing lists
-  will not be impacted, but lists edited with ezmlm-make -+ or -e will
-  start using it.
+This version targets moving all configuration settings out of the
+editor/manager/bouncer/etc files and into individual files in the list
+directory.  All changes are backwards compatible with existing lists
+(the command-line options still exist), but new lists and lists edited
+with ezmlm-make -+ or -e will be changed.
 
-- Removed the tstdigopts control file and ezmlm-make -4 option for
+- The default ezmlmrc template now uses ezmlm-dispatch.
+
+- Removed the tstdigopts control file and the ezmlm-make -4 option for
   controlling digest sending parameters in favour of the new files
-  below.  Existing lists will not be impacted.
+  below.
 
-- Command-line options to several programs are being replaced by option
-  files:
+- Command-line options to several programs have been supplemented with
+  configuration files in the list directory:
 	digestcode		ezmlm-get (digestcode on command-line)
 	digestmsgs		ezmlm-tstdig -m #
 	digestsize		ezmlm-tstdig -k #
@@ -42,9 +46,6 @@ ezmlm-idx-5.2.0, ????-??-??
 	nowarn			ezmlm-warn
 	remoteedit		ezmlm-manage -e
 	remotelist		ezmlm-manage -l
-  Using the command-line options still works, so existing lists will not
-  need to be modified, but all new lists and lists edited with
-  ezmlm-make -+ will now use the flag files.
 
 - Modified ezmlm-warn to automatically process both the main list and
   the digest list if neither -d nor -D are specified.
