@@ -8,7 +8,7 @@
 #include "now.h"
 #include "fmt.h"
 #include "open.h"
-#include "subscribe.h"
+#include "sub_std.h"
 
 /* appends (not crash-proof) a line to "Log". The format is: */
 /* "timestamp event address[ comment]\n". address is free of ' ' */
