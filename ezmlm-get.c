@@ -184,10 +184,13 @@ void zapnonsub(const char *szerr)
   if (sender && *sender) {	/* "no sender" is not a subscriber */
     if (!flagsub)
       return;
+    opensub(dir,0,0);
     if (issub(dir,0,sender))
       return;		/* subscriber */
+    opensub(ddir.s,0,0);
     if (issub(ddir.s,0,sender))
       return;		/* digest subscriber */
+    opensub(edir.s,0,0);
     if (issub(edir.s,0,sender))
       return;		/* allow addresses */
   }
@@ -901,6 +904,7 @@ void main(int argc,char **argv)
         }
       }
       if (!stralloc_0(&moddir)) die_nomem();
+      opensub(moddir.s,0,0);
       pmod = issub(moddir.s,0,sender);
       if (!pmod)			/* sender = moderator? */
         strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
@@ -1283,6 +1287,7 @@ void main(int argc,char **argv)
 
   qmail_from(&qq,line.s);
   if (act == AC_DIGEST) {	 /* Do recipients */
+    opensub(workdir,0,0);
     tagmsg(workdir,mno,seed.s,"d",hashout,qq.msgbytes,chunk);
     if (chunk) {
       if (!stralloc_copys(&line,"T")) die_nomem();

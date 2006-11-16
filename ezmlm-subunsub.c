@@ -64,6 +64,7 @@ void subunsub_main(int submode,
     ++optind;
   else
     subdir = 0;
+  opensub(dir,subdir,flagmysql);
 
   if (forcehash == 0) forcehash = (int) u;
 

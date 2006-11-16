@@ -193,6 +193,7 @@ void main(int argc,char **argv)
   if (!stralloc_0(&moderators)) die_nomem();
 
   if (sender) {
+      opensub(moderators.s,0,0);
       pmod = issub(moderators.s,0,sender);
       closesub();
 				/* sender = moderator? */

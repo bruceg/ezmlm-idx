@@ -54,18 +54,23 @@ void main(int argc,char **argv)
    * In the latter case, do not check the primary database. */
   while ((subdir = argv[optind++]) != 0) {
     if (subdir[0] == '/') {
-      if (prevsubdir == 0)
+      if (prevsubdir == 0) {
+	opensub(dir,0,0);
 	testsub(dir,0);
+      }
       dir = subdir;
       prevsubdir = 0;
     }
     else {
+      opensub(dir,subdir,0);
       testsub(dir,subdir);
       prevsubdir = subdir;
     }
   }
-  if (prevsubdir == 0)
+  if (prevsubdir == 0) {
+    opensub(dir,0,0);
     testsub(dir,0);
+  }
   closesub();
   if (flagsub)			/* not subscriber anywhere */
     _exit(0);

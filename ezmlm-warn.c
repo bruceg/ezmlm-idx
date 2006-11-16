@@ -272,6 +272,7 @@ void main(int argc,char **argv)
     workdir = digdir.s;
   } else
     workdir = dir;
+  opensub(workdir,0,0);
 
   if (!stralloc_copys(&fnlastd,workdir)) die_nomem();
   if (!stralloc_cats(&fnlastd,"/bounce/lastd")) die_nomem();

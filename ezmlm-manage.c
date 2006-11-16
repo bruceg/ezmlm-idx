@@ -665,6 +665,7 @@ int main(int argc,char **argv)
 
   if (!stralloc_0(&ddir)) die_nomem();
   workdir = ddir.s;
+  opensub(workdir,0,0);
 
   if (!stralloc_copys(&target,sender)) die_nomem();
   if (action[0]) {

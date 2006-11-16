@@ -364,6 +364,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind++]);
   load_config(dir);
+  opensub(dir,0,0);
 
   sender = env_get("SENDER");
 
