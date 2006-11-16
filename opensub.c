@@ -1,3 +1,5 @@
+/*$Id$*/
+
 #include "subscribe.h"
 #include "sub_std.h"
 
@@ -63,7 +65,7 @@ static int wrap_subscribe(const char *dir,
 
 const char *opensub(const char *dir,
 		    const char *subdir,
-		    const char **table)
+		    int flagplugin)
 {
   checktag = wrap_checktag;
   issub = std_issub;
@@ -75,7 +77,7 @@ const char *opensub(const char *dir,
   return 0;
   (void)dir;
   (void)subdir;
-  (void)table;
+  (void)flagplugin;
 }
 
 void closesub(void)

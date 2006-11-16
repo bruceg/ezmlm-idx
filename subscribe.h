@@ -11,7 +11,7 @@
 
 extern const char *opensub(const char *dir,
 			   const char *subdir,
-			   const char **table);
+			   int flagplugin);
 
 extern void closesub(void);
 
