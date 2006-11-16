@@ -1,3 +1,2 @@
 ezmlm-subunsub.o
 -lezmlm
-sql.lib

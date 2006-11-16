@@ -1,5 +1,4 @@
 dependon \
-symlinks \
 ezmlm-accept \
 ezmlm-archive \
 ezmlm-check \

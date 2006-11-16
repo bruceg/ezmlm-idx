@@ -40,12 +40,12 @@ case "$1" in
     formake 'shar -m `cat FILES` > shar'
     formake 'chmod 400 shar'
     ;;
-  compile|load|makelib)
+  compile|load|makelib|makeso)
     dependon make-$1 warn-auto.sh systype
     formake "( cat warn-auto.sh; ./make-$1 "'"`cat systype`"'" ) > $1"
     formake "chmod 755 $1"
     ;;
-  make-compile|make-load|make-makelib)
+  make-compile|make-load|make-makelib|make-makeso)
     dependon $1.sh auto-ccld.sh
     formake "cat auto-ccld.sh $1.sh > $1"
     formake "chmod 755 $1"
@@ -60,22 +60,17 @@ case "$1" in
     formake 'chmod 755 find-systype'
     ;;
   auto-ccld.sh)
-    dependon conf-cc conf-ld conf-sub warn-auto.sh
+    dependon conf-cc conf-ld conf-ldso conf-sub warn-auto.sh
     formake '( cat warn-auto.sh; \'
     formake 'sub=`head -n 1 conf-sub` ; \'
-    formake 'echo CC=\'\''`head -n 1 conf-cc` `head -n 1 sub_$$sub/conf-sqlcc`\'\''; \'
-    formake 'echo LD=\'\''`head -n 1 conf-ld`\'\'' \'
+    formake 'echo CC=\'\''`head -n 1 conf-cc`\'\''; \'
+    formake 'echo LD=\'\''`head -n 1 conf-ld`\'\''; \'
+    formake 'echo LDSO=\'\''`head -n 1 conf-ldso`\'\''; \'
     formake ') > auto-ccld.sh'
     ;;
   ezmlm-mktab)
     dependon conf-sub
     formake "rm -f $1"
-    formake 'sub=`head -n 1 conf-sub` ; ln sub_$$sub/'$1 $1
-    formake "touch $1"
-    ;;
-  checktag.c | issub.c | logmsg.c | subscribe.c | opensub.c | putsubs.c | tagmsg.c | searchlog.c)
-    dependon conf-sub
-    formake "rm -f $1 ${1%.c}.o"
     formake 'sub=`head -n 1 conf-sub` ; ln sub_$$sub/'$1 $1
     formake "touch $1"
     ;;
