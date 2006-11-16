@@ -9,9 +9,9 @@
 /* the 'username' if defined is omitted from the output. flagadd = 1 adds  */
 /* a subscriber, flagadd = 0 removes the address. */
 
-extern const char *opensub(const char *dir,
-			   const char *subdir,
-			   int flagplugin);
+extern void opensub(const char *dir,
+		    const char *subdir,
+		    int flagplugin);
 
 extern void closesub(void);
 

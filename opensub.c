@@ -63,9 +63,9 @@ static int wrap_subscribe(const char *dir,
   (void)flagmysql;
 }
 
-const char *opensub(const char *dir,
-		    const char *subdir,
-		    int flagplugin)
+void opensub(const char *dir,
+	     const char *subdir,
+	     int flagplugin)
 {
   checktag = wrap_checktag;
   issub = std_issub;
@@ -74,7 +74,6 @@ const char *opensub(const char *dir,
   tagmsg = wrap_tagmsg;
   searchlog = std_searchlog;
   subscribe = wrap_subscribe;
-  return 0;
   (void)dir;
   (void)subdir;
   (void)flagplugin;
