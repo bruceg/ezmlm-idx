@@ -6,7 +6,7 @@
 #include "cookie.h"
 #include "slurp.h"
 #include "errtxt.h"
-#include "subscribe.h"
+#include "sub_std.h"
 #include "makehash.h"
 #include "die.h"
 #include "idx.h"

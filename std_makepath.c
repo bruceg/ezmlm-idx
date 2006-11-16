@@ -2,7 +2,7 @@
 
 #include "die.h"
 #include "stralloc.h"
-#include "subscribe.h"
+#include "sub_std.h"
 
 void std_makepath(stralloc *fn,
 		  const char *dir,

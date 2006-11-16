@@ -12,7 +12,7 @@
 #include "substdio.h"
 #include "case.h"
 #include "errtxt.h"
-#include "subscribe.h"
+#include "sub_std.h"
 #include "qmail.h"
 #include "die.h"
 

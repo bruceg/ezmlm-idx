@@ -14,7 +14,7 @@
 #include "strerr.h"
 #include "error.h"
 #include "errtxt.h"
-#include "subscribe.h"
+#include "sub_std.h"
 #include "die.h"
 
 static stralloc line = {0};

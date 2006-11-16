@@ -13,7 +13,7 @@
 #include "uint32.h"
 #include "subhash.h"
 #include "fmt.h"
-#include "subscribe.h"
+#include "sub_std.h"
 #include "errtxt.h"
 #include "die.h"
 #include "idx.h"

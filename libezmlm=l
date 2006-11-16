@@ -70,6 +70,7 @@ now.o
 open_append.o
 open_read.o
 open_trunc.o
+opensub.o
 qmail.o
 qmail_copy.o
 quote.o

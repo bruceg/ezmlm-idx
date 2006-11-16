@@ -9,7 +9,7 @@
 #include "slurp.h"
 #include "byte.h"
 #include "errtxt.h"
-#include "subscribe.h"
+#include "sub_std.h"
 #include "config.h"
 
 static char strnum[FMT_ULONG];
