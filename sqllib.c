@@ -6,7 +6,8 @@
 #include "stralloc.h"
 #include "strerr.h"
 #include "errtxt.h"
-#include "subscribe.h"
+#include "sub_std.h"
+#include "sqllib.h"
 
 static stralloc myp = {0};
 static stralloc ers = {0};
