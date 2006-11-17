@@ -51,6 +51,16 @@ case "$1" in
     dependon makelang VERSION ezmlmrc.template lang/$lang/sed
     formake "./makelang $lang"
     ;;
+  lib/auto_version.c)
+    dependon auto-str VERSION
+    formake './auto-str auto_version `head -n 1 VERSION` > lib/auto_version.c'
+    ;;
+  lib/auto_*.c)
+    base=${1%.c}
+    base=${base##*_}
+    dependon auto-str conf-$base
+    formake "./auto-str auto_${base} \`head -n 1 conf-${base}\` > $1"
+    ;;
   *)
     nosuchtarget
     ;;
