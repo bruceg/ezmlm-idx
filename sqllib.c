@@ -23,6 +23,7 @@ const char *parsesql(const char *dir,
 /* Note that myp is static and all pointers point to it.*/
 {
   unsigned int j;
+  const char *port;
 
   info->db = "ezmlm";
 
@@ -30,6 +31,7 @@ const char *parsesql(const char *dir,
 
 		/* host:port:db:table:user:pw:name */
   myp.len = 0;
+  port = 0;
   switch (slurp(fn.s,&myp,128)) {
 	case -1:	if (!stralloc_copys(&ers,ERR_READ)) return ERR_NOMEM;
 			if (!stralloc_cat(&ers,&fn)) return ERR_NOMEM;
@@ -45,7 +47,7 @@ const char *parsesql(const char *dir,
   info->host = myp.s;
   if (myp.s[j = str_chr(myp.s,':')]) {
     myp.s[j++] = '\0';
-    info->port = myp.s + j;
+    port = myp.s + j;
     if (myp.s[j += str_chr(myp.s+j,':')]) {
       myp.s[j++] = '\0';
       info->user = myp.s + j;
@@ -63,6 +65,8 @@ const char *parsesql(const char *dir,
       }
     }
   }
+  if (port && *port)
+    scan_ulong(port,&info->port);
   if (info->host && !*info->host)
     info->host = (char *) 0;
   if (info->user && !*info->user)

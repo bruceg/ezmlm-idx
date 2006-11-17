@@ -5,7 +5,7 @@
 struct sqlinfo
 {
   const char *host;
-  const char *port;
+  unsigned long port;
   const char *db;
   const char *user;
   const char *pw;
