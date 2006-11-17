@@ -11,9 +11,8 @@ then
       libs="$libs $line"
       libscat="$libscat "'`'"cat $line"'`'
       ;;
-    -l*)
+    -*)
       dashl="$dashl $line"
-      libs="$libs `echo $line | sed -e 's/^-l/lib/' -e 's/$/.a/'`"
       ;;
     *)
       objs="$objs $line"
