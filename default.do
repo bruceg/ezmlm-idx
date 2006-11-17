@@ -35,11 +35,6 @@ then
 fi
 
 case "$1" in
-  shar)
-    dependon FILES `cat FILES`
-    formake 'shar -m `cat FILES` > shar'
-    formake 'chmod 400 shar'
-    ;;
   compile|load|makelib|makeso)
     dependon make-$1 warn-auto.sh systype
     formake "( cat warn-auto.sh; ./make-$1 "'"`cat systype`"'" ) > $1"
@@ -49,30 +44,6 @@ case "$1" in
     dependon $1.sh auto-ccld.sh
     formake "cat auto-ccld.sh $1.sh > $1"
     formake "chmod 755 $1"
-    ;;
-  systype)
-    dependon find-systype trycpp.c
-    formake './find-systype > systype'
-    ;;
-  find-systype)
-    dependon find-systype.sh auto-ccld.sh
-    formake 'cat auto-ccld.sh find-systype.sh > find-systype'
-    formake 'chmod 755 find-systype'
-    ;;
-  auto-ccld.sh)
-    dependon conf-cc conf-ld conf-ldso conf-sub warn-auto.sh
-    formake '( cat warn-auto.sh; \'
-    formake 'sub=`head -n 1 conf-sub` ; \'
-    formake 'echo CC=\'\''`head -n 1 conf-cc`\'\''; \'
-    formake 'echo LD=\'\''`head -n 1 conf-ld`\'\''; \'
-    formake 'echo LDSO=\'\''`head -n 1 conf-ldso`\'\''; \'
-    formake ') > auto-ccld.sh'
-    ;;
-  ezmlm-mktab)
-    dependon conf-sub
-    formake "rm -f $1"
-    formake 'sub=`head -n 1 conf-sub` ; ln sub_$$sub/'$1 $1
-    formake "touch $1"
     ;;
   lang/*/ezmlmrc)
     lang=${1#lang/}
