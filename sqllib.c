@@ -26,6 +26,8 @@ const char *parsesql(const char *dir,
   const char *port;
 
   info->db = "ezmlm";
+  info->host = info->user = info->pw = info->table = 0;
+  info->port = 0;
 
   std_makepath(&fn,dir,subdir,"/sql",0);
 

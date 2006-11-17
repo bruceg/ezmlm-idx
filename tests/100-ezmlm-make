@@ -64,9 +64,9 @@ if [ $USESQL ]; then
 	-C${EZBIN}/lang/en_US "$DIR"|| \
 	fatal "ezmlm-make failed to add SQL config info"
 
-  ${STRINGS} ${EZBIN}/ezmlm-sub | ${GREP} -i 'MySQL' >/dev/null 2>&1 && \
+  ${STRINGS} ${EZBIN}/sub-sql.so | ${GREP} -i 'MySQL' >/dev/null 2>&1 && \
 	RDBMS='MySQL'
-  ${STRINGS} ${EZBIN}/ezmlm-sub | ${GREP} -i 'libpq.' >/dev/null 2>&1 && \
+  ${STRINGS} ${EZBIN}/sub-sql.so | ${GREP} -i 'libpq.' >/dev/null 2>&1 && \
 	RDBMS='PostgreSQL'
   if [ "$RDBMS" = 'STD' ]; then
 	${ECHO} "No recognized support. If none, will default to std dbs."

@@ -1,4 +1,0 @@
--L/usr/local/pgsql/lib -lpq -lcrypt
-
-# the top line will be used when linking. Edit to reflect your PostgreSQL
-# installation. 
