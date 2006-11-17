@@ -1,7 +1,13 @@
 /*$Id$*/
 
-#include "subscribe.h"
+#include <dlfcn.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include "die.h"
+#include "strerr.h"
 #include "sub_std.h"
+#include "subscribe.h"
+#include "auto_lib.h"
 
 checktag_fn checktag = 0;
 closesub_fn closesub = 0;
@@ -66,15 +72,40 @@ static int wrap_subscribe(const char *dir,
   (void)flagmysql;
 }
 
+static stralloc path;
+
 void initsub(const char *dir)
 {
-  checktag = wrap_checktag;
-  closesub = no_closesub;
-  issub = std_issub;
-  logmsg = (logmsg_fn)no_logmsg;
-  putsubs = wrap_putsubs;
-  tagmsg = wrap_tagmsg;
-  searchlog = std_searchlog;
-  subscribe = wrap_subscribe;
-  (void)dir;
+  struct stat st;
+  void *handle;
+  struct sub_plugin *plugin;
+
+  std_makepath(&path,dir,0,"/sql",0);
+  if (stat(path.s,&st) == 0) {
+    std_makepath(&path,auto_lib,0,"/sub-sql.so",0);
+    if ((handle = dlopen(path.s, RTLD_NOW | RTLD_LOCAL)) == 0)
+      strerr_die3x(111,FATAL,"Could not load SQL plugin: ",dlerror());
+    else if ((plugin = dlsym(handle,"sub_plugin")) == 0)
+      strerr_die3x(111,FATAL,"SQL plugin is missing symbols: ",dlerror());
+    else {
+      checktag = plugin->checktag;
+      closesub = plugin->closesub;
+      issub = plugin->issub;
+      logmsg = plugin->logmsg;
+      putsubs = plugin->putsubs;
+      tagmsg = plugin->tagmsg;
+      searchlog = plugin->searchlog;
+      subscribe = plugin->subscribe;
+    }
+  }
+  else {
+    checktag = wrap_checktag;
+    closesub = no_closesub;
+    issub = std_issub;
+    logmsg = (logmsg_fn)no_logmsg;
+    putsubs = wrap_putsubs;
+    tagmsg = wrap_tagmsg;
+    searchlog = std_searchlog;
+    subscribe = wrap_subscribe;
+  }
 }

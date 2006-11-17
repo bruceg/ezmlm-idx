@@ -68,4 +68,18 @@ extern tagmsg_fn tagmsg;
 extern searchlog_fn searchlog;
 extern subscribe_fn subscribe;
 
+#define SUB_PLUGIN_VERSION 1
+struct sub_plugin
+{
+  int version;
+  checktag_fn checktag;
+  closesub_fn closesub;
+  issub_fn issub;
+  logmsg_fn logmsg;
+  putsubs_fn putsubs;
+  tagmsg_fn tagmsg;
+  searchlog_fn searchlog;
+  subscribe_fn subscribe;
+};
+
 #endif
