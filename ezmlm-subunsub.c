@@ -57,6 +57,7 @@ void subunsub_main(int submode,
     }
 
   startup(dir = argv[optind++]);
+  initsub(dir);
   /* If the second argument is present and does not contain a "@", treat
    * it as the subdirectory parameter and not an address to subscribe. */
   subdir = argv[optind];
@@ -64,7 +65,6 @@ void subunsub_main(int submode,
     ++optind;
   else
     subdir = 0;
-  opensub(dir,subdir,flagmysql);
 
   if (forcehash == 0) forcehash = (int) u;
 

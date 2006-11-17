@@ -4,6 +4,7 @@
 #include "sub_std.h"
 
 checktag_fn checktag = 0;
+closesub_fn closesub = 0;
 issub_fn issub = 0;
 logmsg_fn logmsg = 0;
 putsubs_fn putsubs = 0;
@@ -12,6 +13,8 @@ searchlog_fn searchlog = 0;
 subscribe_fn subscribe = 0;
 
 static const char *no_logmsg(void) { return 0; }
+
+static void no_closesub(void) { }
 
 static const char *wrap_checktag(const char *dir,
 				 unsigned long msgnum,
@@ -63,11 +66,10 @@ static int wrap_subscribe(const char *dir,
   (void)flagmysql;
 }
 
-void opensub(const char *dir,
-	     const char *subdir,
-	     int flagplugin)
+void initsub(const char *dir)
 {
   checktag = wrap_checktag;
+  closesub = no_closesub;
   issub = std_issub;
   logmsg = (logmsg_fn)no_logmsg;
   putsubs = wrap_putsubs;
@@ -75,10 +77,4 @@ void opensub(const char *dir,
   searchlog = std_searchlog;
   subscribe = wrap_subscribe;
   (void)dir;
-  (void)subdir;
-  (void)flagplugin;
-}
-
-void closesub(void)
-{
 }

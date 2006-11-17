@@ -171,6 +171,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   load_config(dir);
+  initsub(dir);
 
   if (flagconfirm == -1)
     flagconfirm = getconf_line(&confirmpost,"confirmpost",0,dir);
@@ -193,7 +194,6 @@ void main(int argc,char **argv)
   if (!stralloc_0(&moderators)) die_nomem();
 
   if (sender) {
-      opensub(moderators.s,0,0);
       pmod = issub(moderators.s,0,sender);
       closesub();
 				/* sender = moderator? */

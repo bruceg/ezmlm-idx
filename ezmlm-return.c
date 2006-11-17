@@ -91,7 +91,6 @@ void dowit(const char *addr,unsigned long when,const stralloc *bounce)
   unsigned int wpos;
   unsigned long wdir,wfile;
 
-  opensub(workdir,0,0);
   if (!issub(workdir,0,addr)) return;
 
   if (!stralloc_copys(&fndate,workdir)) die_nomem();
@@ -141,7 +140,6 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   unsigned int pos;
   unsigned long ddir,dfile;
 
-  opensub(workdir,0,0);
   if (!issub(workdir,0,addr)) return;
 
   if (!stralloc_copys(&fndate,workdir)) die_nomem();
@@ -290,6 +288,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   load_config(dir);
+  initsub(dir);
   workdir = dir;
 
     if (str_start(action,"receipt-")) {
@@ -342,7 +341,6 @@ void main(int argc,char **argv)
       cookie(hash,key.s,key.len,strnum,line.s,"P");
       if (byte_diff(hash,COOKIE,hashcopy)) die_trash();
 
-      opensub(workdir,0,0);
       (void) subscribe(workdir,0,line.s,0,"","-probe",1,-1);
       _exit(99);
     }
@@ -388,7 +386,6 @@ void main(int argc,char **argv)
   }
 
   if (hashp) {		/* scrap bad cookies */
-      opensub(workdir,0,0);
       if ((ret = checktag(workdir,msgnum,0L,"x",(char *) 0,hashp))) {
         if (*ret)
 	  strerr_die2x(111,FATAL,ret);

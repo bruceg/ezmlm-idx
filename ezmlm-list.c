@@ -60,8 +60,8 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
+  initsub(dir);
   subdir = argv[optind];
-  opensub(dir,subdir,flagmysql);
 
   if (flagnumber) {
     n = putsubs(dir,subdir,0L,52L,dummywrite,flagmysql);

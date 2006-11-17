@@ -61,6 +61,7 @@ hdr_listsubject.o
 hdr_mime.o
 hdr_transferenc.o
 idxthread.o
+initsub.o
 lock_ex.o
 lock_exnb.o
 lockfile.o
@@ -70,7 +71,6 @@ now.o
 open_append.o
 open_read.o
 open_trunc.o
-opensub.o
 qmail.o
 qmail_copy.o
 quote.o

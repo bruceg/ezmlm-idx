@@ -626,6 +626,7 @@ int main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   load_config(dir);
+  initsub(dir);
   getconf_ulong(&copylines,"copylines",0,dir);
 
   sender = env_get("SENDER");
@@ -665,7 +666,6 @@ int main(int argc,char **argv)
 
   if (!stralloc_0(&ddir)) die_nomem();
   workdir = ddir.s;
-  opensub(workdir,0,0);
 
   if (!stralloc_copys(&target,sender)) die_nomem();
   if (action[0]) {

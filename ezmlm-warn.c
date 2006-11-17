@@ -264,6 +264,7 @@ void main(int argc,char **argv)
     }
   startup(dir = argv[optind]);
   load_config(dir);
+  initsub(dir);
   getconf_ulong(&copylines,"copylines",0,dir);
   if (flagdig) {
     if (!stralloc_copys(&digdir,dir)) die_nomem();
@@ -272,7 +273,6 @@ void main(int argc,char **argv)
     workdir = digdir.s;
   } else
     workdir = dir;
-  opensub(workdir,0,0);
 
   if (!stralloc_copys(&fnlastd,workdir)) die_nomem();
   if (!stralloc_cats(&fnlastd,"/bounce/lastd")) die_nomem();

@@ -47,6 +47,7 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
+  initsub(dir);
   prevsubdir = 0;
 
   /* This is somewhat convoluted logic to handle both cases where all
@@ -55,20 +56,17 @@ void main(int argc,char **argv)
   while ((subdir = argv[optind++]) != 0) {
     if (subdir[0] == '/') {
       if (prevsubdir == 0) {
-	opensub(dir,0,0);
 	testsub(dir,0);
       }
       dir = subdir;
       prevsubdir = 0;
     }
     else {
-      opensub(dir,subdir,0);
       testsub(dir,subdir);
       prevsubdir = subdir;
     }
   }
   if (prevsubdir == 0) {
-    opensub(dir,0,0);
     testsub(dir,0);
   }
   closesub();
