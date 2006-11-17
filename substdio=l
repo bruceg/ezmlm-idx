@@ -1,7 +1,7 @@
-substdio.o
-substdi.o
-substdo.o
-subfderr.o
-subfdin.o
-subfdout.o
-substdio_copy.o
+lib/substdio.o
+lib/substdi.o
+lib/substdo.o
+lib/subfderr.o
+lib/subfdin.o
+lib/subfdout.o
+lib/substdio_copy.o

@@ -1,2 +1,2 @@
-error.o
-error_str.o
+lib/error.o
+lib/error_str.o
