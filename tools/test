@@ -7,10 +7,6 @@ if [ $# -ne 1 ]; then
 fi
 db=$1
 
-if [ `head -n 1 conf-sub` != $db ]; then
-  echo $db >conf-sub
-fi
-
 if [ `head -n 1 conf-bin` != `pwd` ]; then
   pwd >conf-bin
 fi
@@ -19,8 +15,17 @@ if [ `head -n 1 conf-etc` != `pwd`/lang ]; then
   echo `pwd`/lang >conf-etc
 fi
 
+if [ `head -n 1 conf-lib` != `pwd` ]; then
+  pwd >conf-lib
+fi
+
 echo "==================== Testing conf-sub = $db ===================="
 
 `dirname $0`/makerrors
+if [ $db != 'std' ]; then
+  `dirname $0`/makerrors sub-${db}.so
+  rm sub-sql.so
+  ln -s sub-${db}.so sub-sql.so
+fi
 
 exec ${0}-$db
