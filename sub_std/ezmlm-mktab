@@ -1,7 +1,0 @@
-#!/bin/sh
-echo
-echo "This is the standard database version. You do not need to"
-echo "create any separate databases for this version."
-echo
-exit 1
-

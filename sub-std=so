@@ -1,8 +1,0 @@
-sub_std/checktag.o
-sub_std/issub.o
-sub_std/logmsg.o
-sub_std/opensub.o
-sub_std/putsubs.o
-sub_std/searchlog.o
-sub_std/subscribe.o
-sub_std/tagmsg.o
