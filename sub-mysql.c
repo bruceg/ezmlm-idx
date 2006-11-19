@@ -42,6 +42,7 @@ static stralloc lcaddr = {0};
 static stralloc line = {0};
 static stralloc logline = {0};
 static stralloc quoted = {0};
+static struct sqlinfo info;
 
 static void die_write(void)
 {
@@ -58,16 +59,13 @@ static void _closesub(void)
 }
 
 static const char *_opensub(const char *dir,
-			    const char *subdir,
-			    const char **table)
+			    const char *subdir)
 {
-  struct sqlinfo info;
   const char *err;
   unsigned long portnum = 0L;
 
   if ((err = parsesql(dir,subdir,&info)) != 0)
     return err;
-  *table = info.table;
 
   if (!mysql) {
     if (!(mysql = mysql_init((MYSQL *) 0)))
@@ -106,21 +104,13 @@ static const char *_checktag (const char *dir,		/* the db base dir */
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
-  const char *table;
-  const char *r;
-
-  if ((r = _opensub(dir,0,&table))) {
-    if (*r) return r;
-    return std_checktag(num,action,seed,hash);
-
-  } else {
 
 /* SELECT msgnum FROM table_cookie WHERE msgnum=num and cookie='hash' */
 /* succeeds only is everything correct. 'hash' is quoted since it is  */
 /*  potentially hostile. */
     if (listno) {			/* only for slaves */
       if (!stralloc_copys(&line,"SELECT listno FROM ")) return ERR_NOMEM;
-      if (!stralloc_cats(&line,table)) return ERR_NOMEM;
+      if (!stralloc_cats(&line,info.table)) return ERR_NOMEM;
       if (!stralloc_cats(&line,"_mlog WHERE listno=")) return ERR_NOMEM;
       if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,listno)))
 	return ERR_NOMEM;
@@ -140,7 +130,7 @@ static const char *_checktag (const char *dir,		/* the db base dir */
     }
 
     if (!stralloc_copys(&line,"SELECT msgnum FROM ")) return ERR_NOMEM;
-    if (!stralloc_cats(&line,table)) return ERR_NOMEM;
+    if (!stralloc_cats(&line,info.table)) return ERR_NOMEM;
     if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) return ERR_NOMEM;
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return ERR_NOMEM;
     if (!stralloc_cats(&line," and cookie='")) return ERR_NOMEM;
@@ -163,7 +153,6 @@ static const char *_checktag (const char *dir,		/* the db base dir */
     if (listno)
       (void) logmsg(dir,num,listno,0L,3);	/* non-ess mysql logging */
     return (char *)0;
-  }
 }
 
 static const char *_issub(const char *dir,
@@ -177,18 +166,11 @@ static const char *_issub(const char *dir,
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
-  const char *ret;
-  const char *table;
   unsigned long *lengths;
+  const char *ret;
 
   unsigned int j;
 
-  if ((ret = _opensub(dir,subdir,&table))) {
-    if (*ret) strerr_die2x(111,FATAL,ret);
-
-    return std_issub(dir,subdir,userhost);
-
-  } else {						/* SQL version  */
 	/* SELECT address FROM list WHERE address = 'userhost' AND hash */
 	/* BETWEEN 0 AND 52. Without the hash restriction, we'd make it */
 	/* even easier to defeat. Just faking sender to the list name would*/
@@ -201,7 +183,7 @@ static const char *_issub(const char *dir,
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
 
     if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
-    if (!stralloc_cats(&line,table)) die_nomem();
+    if (!stralloc_cats(&line,info.table)) die_nomem();
     if (!stralloc_cats(&line," WHERE address = '")) die_nomem();
     if (!stralloc_ready(&quoted,2 * addr.len + 1)) die_nomem();
     if (!stralloc_catb(&line,quoted.s,
@@ -227,7 +209,6 @@ static const char *_issub(const char *dir,
       mysql_free_result(result);
     }
     return ret;
-  }
 }
 
 static const char *_logmsg(const char *dir,
@@ -239,17 +220,8 @@ static const char *_logmsg(const char *dir,
 /* Returns NULL on success, "" if dir/sql was not found, and the error   */
 /* string on error.   NOTE: This routine does nothing for non-sql lists! */
 {
-  const char *table;
-  const char *ret;
-
-  if ((ret = _opensub(dir,0,&table))) {
-    if (*ret)
-      return ret;
-    else
-      return (char *) 0;	/* no SQL => success */
-  }
   if (!stralloc_copys(&logline,"INSERT INTO ")) return ERR_NOMEM;
-  if (!stralloc_cats(&logline,table)) return ERR_NOMEM;
+  if (!stralloc_cats(&logline,info.table)) return ERR_NOMEM;
   if (!stralloc_cats(&logline,"_mlog (msgnum,listno,subs,done) VALUES ("))
 	return ERR_NOMEM;
   if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) return ERR_NOMEM;
@@ -269,15 +241,14 @@ static const char *_logmsg(const char *dir,
   if (mysql_real_query(mysql,logline.s,logline.len))	/* log query */
     if (mysql_errno(mysql) != ER_DUP_ENTRY)	/* ignore dups */
 	return mysql_error(mysql);
-  return (char *) 0;
+  return 0;
 }
 
 static unsigned long _putsubs(const char *dir,
 			      const char *subdir,
 			      unsigned long hash_lo,
 			      unsigned long hash_hi,
-			      int subwrite(),		/* write function. */
-			      int flagsql)
+			      int subwrite())		/* write function. */
 
 /* Outputs all userhostesses in 'dbname' to stdout. If userhost is not null */
 /* that userhost is excluded. 'dbname' is the base directory name. For the  */
@@ -291,23 +262,14 @@ static unsigned long _putsubs(const char *dir,
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
-  const char *table;
   unsigned long *lengths;
 
   unsigned long no = 0L;
-  const char *ret = (char *) 0;
-
-  if (!flagsql || (ret = _opensub(dir,subdir,&table))) {
-    if (flagsql && *ret) strerr_die2x(111,FATAL,ret);
-
-    return std_putsubs(dir,subdir,hash_lo,hash_hi,subwrite);
-
-  } else {					/* SQL Version */
 
 						/* main query */
     if (!stralloc_copys(&line,"SELECT address FROM "))
 		die_nomem();
-    if (!stralloc_cats(&line,table)) die_nomem();
+    if (!stralloc_cats(&line,info.table)) die_nomem();
     if (!stralloc_cats(&line," WHERE hash BETWEEN ")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_lo)))
 		die_nomem();
@@ -327,7 +289,6 @@ static unsigned long _putsubs(const char *dir,
 	strerr_die2x(111,FATAL,mysql_error(mysql));
     mysql_free_result(result);
     return no;
-  }
 }
 
 static void _searchlog(const char *dir,		/* work directory */
@@ -340,34 +301,9 @@ static void _searchlog(const char *dir,		/* work directory */
 /* local Log if no mysql connect info. */
 
 {
-
-  unsigned char *cps;
-  unsigned char ch;
-  unsigned int searchlen;
-  const char *ret;
-
   MYSQL_RES *result;
   MYSQL_ROW row;
-  const char *table;
   unsigned long *lengths;
-
-  if (!search) search = (char*)"";	/* defensive */
-  searchlen = str_len(search);
-  case_lowerb(search,searchlen);
-  cps = (unsigned char *) search;
-  while ((ch = *(cps++))) {	/* search is potentially hostile */
-    if (ch >= 'a' && ch <= 'z') continue;
-    if (ch >= '0' && ch <= '9') continue;
-    if (ch == '.' || ch == '_') continue;
-    *(cps - 1) = '_';		/* will match char specified as well */
-  }
-
-  if ((ret = _opensub(dir,subdir,&table))) {
-    if (*ret) strerr_die2x(111,FATAL,ret);
-
-    std_searchlog(dir,subdir,search,subwrite);
-
-  } else {
 
 /* SELECT (*) FROM list_slog WHERE fromline LIKE '%search%' OR address   */
 /* LIKE '%search%' ORDER BY tai; */
@@ -378,7 +314,7 @@ static void _searchlog(const char *dir,		/* work directory */
     if (!stralloc_copys(&line,"SELECT CONCAT(FROM_UNIXTIME(UNIX_TIMESTAMP(tai)),"
 	"'-0000: ',UNIX_TIMESTAMP(tai),' ',edir,etype,' ',address,' ',"
 	"fromline) FROM ")) die_nomem();
-    if (!stralloc_cats(&line,table)) die_nomem();
+    if (!stralloc_cats(&line,info.table)) die_nomem();
     if (!stralloc_cats(&line,"_slog ")) die_nomem();
     if (*search) {	/* We can afford to wait for LIKE '%xx%' */
       if (!stralloc_cats(&line,"WHERE fromline LIKE '%")) die_nomem();
@@ -398,7 +334,6 @@ static void _searchlog(const char *dir,		/* work directory */
     if (!mysql_eof(result))
 	strerr_die2x(111,FATAL,mysql_error(mysql));
     mysql_free_result(result);
-  }
 }
 
 static int _subscribe(const char *dir,
@@ -407,7 +342,6 @@ static int _subscribe(const char *dir,
 		      int flagadd,
 		      const char *comment,
 		      const char *event,
-		      int flagmysql,
 		      int forcehash)
 /* add (flagadd=1) or remove (flagadd=0) userhost from the subscr. database  */
 /* dir. Comment is e.g. the subscriber from line or name. It is added to     */
@@ -429,21 +363,10 @@ static int _subscribe(const char *dir,
   MYSQL_ROW row;
   char *cpat;
   char szhash[3] = "00";
-  const char *r = (char *) 0;
-  const char *table;
 
   unsigned int j;
   unsigned char ch;
 
-  if (userhost[str_chr(userhost,'\n')])
-    strerr_die2x(100,FATAL,ERR_ADDR_NL);
-
-  if (!flagmysql || (r = _opensub(dir,subdir,&table))) {
-    if (r && *r) strerr_die2x(111,FATAL,r);
-
-    return std_subscribe(dir,subdir,userhost,flagadd,comment,event,forcehash);
-
-  } else {				/* SQL version */
     domain.len = 0;			/* clear domain */
 					/* lowercase and check address */
     if (!stralloc_copys(&addr,userhost)) die_nomem();
@@ -472,11 +395,11 @@ static int _subscribe(const char *dir,
 
     if (flagadd) {
       if (!stralloc_copys(&line,"LOCK TABLES ")) die_nomem();
-      if (!stralloc_cats(&line,table)) die_nomem();
+      if (!stralloc_cats(&line,info.table)) die_nomem();
       if (!stralloc_cats(&line," WRITE")) die_nomem();
       safe_query(&line);
       if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
-      if (!stralloc_cats(&line,table)) die_nomem();
+      if (!stralloc_cats(&line,info.table)) die_nomem();
       if (!stralloc_cats(&line," WHERE address='")) die_nomem();
       if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
       if (!stralloc_cats(&line,"'")) die_nomem();
@@ -494,7 +417,7 @@ static int _subscribe(const char *dir,
 	if (mysql_errno(mysql))			/* or ERROR */
 	  strerr_die2x(111,FATAL,mysql_error(mysql));
 	if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
-	if (!stralloc_cats(&line,table)) die_nomem();
+	if (!stralloc_cats(&line,info.table)) die_nomem();
 	if (!stralloc_cats(&line," (address,hash) VALUES ('"))
 		die_nomem();
 	if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
@@ -507,7 +430,7 @@ static int _subscribe(const char *dir,
       }
     } else {							/* unsub */
       if (!stralloc_copys(&line,"DELETE FROM ")) die_nomem();
-      if (!stralloc_cats(&line,table)) die_nomem();
+      if (!stralloc_cats(&line,info.table)) die_nomem();
       if (!stralloc_cats(&line," WHERE address='")) die_nomem();
       if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
       if (forcehash >= 0) {
@@ -527,7 +450,7 @@ static int _subscribe(const char *dir,
 		/* VALUES('address',{'+'|'-'},'etype','[comment]') */
 
     if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
-    if (!stralloc_cats(&logline,table)) die_nomem();
+    if (!stralloc_cats(&logline,info.table)) die_nomem();
     if (!stralloc_cats(&logline,
 	"_slog (address,edir,etype,fromline) VALUES ('")) die_nomem();
     if (!stralloc_cat(&logline,&quoted)) die_nomem();
@@ -553,7 +476,6 @@ static int _subscribe(const char *dir,
 		;				/* ignore errors */
     logaddr(dir,subdir,event,addr.s,comment);	/* also log to old log */
     return 1;					/* desired effect */
-  }
 }
 
 static void _tagmsg(const char *dir,		/* db base dir */
@@ -571,23 +493,15 @@ static void _tagmsg(const char *dir,		/* db base dir */
 /* table_cookie where table and other data is taken from dir/sql. We log  */
 /* arrival of the message (done=0). */
 {
-  const char *table;
   const char *ret;
 
-  std_tagmsg(msgnum,seed,action,hashout);
-
-  if ((ret = _opensub(dir,0,&table))) {
-    if (*ret) strerr_die2x(111,FATAL,ret);
-    return;				/* no sql => success */
-
-  } else {
     if (chunk >= 53L) chunk = 0L;	/* sanity */
 
 	/* INSERT INTO table_cookie (msgnum,cookie) VALUES (num,cookie) */
 	/* (we may have tried message before, but failed to complete, so */
 	/* ER_DUP_ENTRY is ok) */
     if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
-    if (!stralloc_cats(&line,table)) die_nomem();
+    if (!stralloc_cats(&line,info.table)) die_nomem();
     if (!stralloc_cats(&line,"_cookie (msgnum,cookie,bodysize,chunk) VALUES ("))
 		die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgnum))) die_nomem();
@@ -605,9 +519,6 @@ static void _tagmsg(const char *dir,		/* db base dir */
 
     if (! (ret = logmsg(dir,msgnum,0L,0L,1))) return;	/* log done=1*/
     if (*ret) strerr_die2x(111,FATAL,ret);
-  }
-
-  return;
 }
 
 struct sub_plugin sub_plugin = {
@@ -616,8 +527,9 @@ struct sub_plugin sub_plugin = {
   _closesub,
   _issub,
   _logmsg,
+  _opensub,
   _putsubs,
-  _tagmsg,
   _searchlog,
   _subscribe,
+  _tagmsg,
 };

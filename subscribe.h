@@ -9,77 +9,104 @@ extern void initsub(const char *dir);
 /* the 'username' if defined is omitted from the output. flagadd = 1 adds  */
 /* a subscriber, flagadd = 0 removes the address. */
 
-typedef void (*closesub_fn)(void);
+extern const char *checktag(const char *dir,
+			    unsigned long msgnum,
+			    unsigned long listno,
+			    const char *action,
+			    const char *seed,
+			    const char *hash);
 
-typedef int (*subscribe_fn)(const char *dir,
-			    const char *subdir,
-			    const char *username,
-			    int flagadd,
-			    const char *from,
-			    const char *event,
-			    int flagmysql,
-			    int forcehash);
+extern void closesub(void);
 
-typedef const char *(*issub_fn)(const char *dir,
-				const char *subdir,
-				const char *username);
+extern const char *issub(const char *dir,
+			 const char *subdir,
+			 const char *username);
 
-typedef unsigned long (*putsubs_fn)(const char *dir,
-				    const char *subdir,
-				    unsigned long hash_lo,
-				    unsigned long hash_hi,
-				    int subwrite(),
-				    int flagsql);
-
+extern unsigned long putsubs(const char *dir,
+			     const char *subdir,
+			     unsigned long hash_lo,
+			     unsigned long hash_hi,
+			     int subwrite(),
+			     int flagsql);
 /*		int subwrite(char *string, unsigned int length); */
 
-typedef void (*tagmsg_fn)(const char *dir,
+extern const char *logmsg(const char *dir,
 			  unsigned long msgnum,
-			  const char *seed,
-			  const char *action,
-			  char *hashout,
-			  unsigned long bodysize,
-			  unsigned long chunk);
+			  unsigned long,
+			  unsigned long subs,
+			  int done);
 
-typedef const char *(*logmsg_fn)(const char *dir,
-				 unsigned long msgnum,
-				 unsigned long,
-				 unsigned long subs,
-				 int done);
+extern const char *opensub(const char *dir,
+			   const char *subdir,
+			   const char **table);
 
-typedef const char *(*checktag_fn)(const char *dir,
-				   unsigned long msgnum,
-				   unsigned long listno,
-				   const char *action,
-				   const char *seed,
-				   const char *hash);
+extern void searchlog(const char *dir,
+		      const char *subdir,
+		      char *search,
+		      int subwrite());
 
-typedef void (*searchlog_fn)(const char *dir,
-			     const char *subdir,
-			     char *search,
-			     int subwrite());
+extern int subscribe(const char *dir,
+		     const char *subdir,
+		     const char *username,
+		     int flagadd,
+		     const char *from,
+		     const char *event,
+		     int flagmysql,
+		     int forcehash);
 
-extern checktag_fn checktag;
-extern closesub_fn closesub;
-extern issub_fn issub;
-extern logmsg_fn logmsg;
-extern putsubs_fn putsubs;
-extern tagmsg_fn tagmsg;
-extern searchlog_fn searchlog;
-extern subscribe_fn subscribe;
+extern void tagmsg(const char *dir,
+		   unsigned long msgnum,
+		   const char *seed,
+		   const char *action,
+		   char *hashout,
+		   unsigned long bodysize,
+		   unsigned long chunk);
 
 #define SUB_PLUGIN_VERSION 1
 struct sub_plugin
 {
   int version;
-  checktag_fn checktag;
-  closesub_fn closesub;
-  issub_fn issub;
-  logmsg_fn logmsg;
-  putsubs_fn putsubs;
-  tagmsg_fn tagmsg;
-  searchlog_fn searchlog;
-  subscribe_fn subscribe;
+  const char *(*checktag)(const char *dir,
+			  unsigned long msgnum,
+			  unsigned long listno,
+			  const char *action,
+			  const char *seed,
+			  const char *hash);
+  void (*closesub)(void);
+  const char *(*issub)(const char *dir,
+		       const char *subdir,
+		       const char *username);
+  const char *(*logmsg)(const char *dir,
+			unsigned long msgnum,
+			unsigned long,
+			unsigned long subs,
+			int done);
+  const char *(*opensub)(const char *dir,
+			 const char *subdir);
+  unsigned long (*putsubs)(const char *dir,
+			   const char *subdir,
+			   unsigned long hash_lo,
+			   unsigned long hash_hi,
+			   int subwrite());
+/*		int subwrite(char *string, unsigned int length); */
+  void (*searchlog)(const char *dir,
+		    const char *subdir,
+		    char *search,
+		    int subwrite());
+  int (*subscribe)(const char *dir,
+		   const char *subdir,
+		   const char *username,
+		   int flagadd,
+		   const char *from,
+		   const char *event,
+		   int forcehash);
+  void (*tagmsg)(const char *dir,
+		 unsigned long msgnum,
+		 const char *seed,
+		 const char *action,
+		 char *hashout,
+		 unsigned long bodysize,
+		 unsigned long chunk);
 };
 
 #endif
