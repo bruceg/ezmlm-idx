@@ -14,6 +14,20 @@
 
 static stralloc path = {0};
 static struct sub_plugin *plugin = 0;
+static struct sqlinfo info;
+
+static const char *opensub(const char *dir,
+			   const char *subdir,
+			   struct sqlinfo *info)
+{
+  const char *err;
+  if (plugin) {
+    if ((err = parsesql(dir,subdir,info)) != 0)
+      return err;
+    return plugin->open(info);
+  }
+  return 0;
+}
 
 const char *checktag(const char *dir,
 		     unsigned long msgnum,
@@ -23,17 +37,16 @@ const char *checktag(const char *dir,
 		     const char *hash)
 {
   const char *r = 0;
-  if (!plugin || (r = plugin->opensub(dir,0)) != 0) {
-    if (r && *r)
-      return r;
+  if ((r = opensub(dir,0,&info)) != 0)
+    return r;
+  if (plugin == 0)
     return std_checktag(msgnum,action,seed,hash);
-  }
-  return plugin->checktag(dir,msgnum,listno,action,seed,hash);
+  return plugin->checktag(&info,dir,msgnum,listno,action,seed,hash);
 }
 
 void closesub(void) {
   if (plugin != 0)
-    plugin->closesub();
+    plugin->close(&info);
 }
 
 const char *issub(const char *dir,
@@ -41,12 +54,11 @@ const char *issub(const char *dir,
 		  const char *userhost)
 {
   const char *r = 0;
-  if (!plugin || (r = plugin->opensub(dir,subdir)) != 0) {
-    if (r && *r)
-      strerr_die2x(111,FATAL,r);
+  if ((r = opensub(dir,subdir,&info)) != 0)
+    strerr_die2x(111,FATAL,r);
+  if (plugin == 0)
     return std_issub(dir,subdir,userhost);
-  }
-  return plugin->issub(dir,subdir,userhost);
+  return plugin->issub(&info,dir,subdir,userhost);
 }
 
 const char *logmsg(const char *dir,
@@ -56,12 +68,11 @@ const char *logmsg(const char *dir,
 		   int done)
 {
   const char *r = 0;
-  if (!plugin || (r = plugin->opensub(dir,0)) != 0) {
-    if (r && *r)
-      return r;
+  if ((r = opensub(dir,0,&info)) != 0)
+    return r;
+  if (plugin == 0)
     return 0;
-  }
-  return plugin->logmsg(dir,num,listno,subs,done);
+  return plugin->logmsg(&info,dir,num,listno,subs,done);
 }
 
 unsigned long putsubs(const char *dir,
@@ -72,12 +83,11 @@ unsigned long putsubs(const char *dir,
 		      int flagsql)
 {
   const char *r = 0;
-  if (!plugin || !flagsql || (r = plugin->opensub(dir,subdir)) != 0) {
-    if (r && *r)
-      strerr_die2x(111,FATAL,r);
+  if (!flagsql || plugin == 0)
     return std_putsubs(dir,subdir,hash_lo,hash_hi,subwrite);
-  }
-  return plugin->putsubs(dir,subdir,hash_lo,hash_hi,subwrite);
+  if ((r = opensub(dir,subdir,&info)) != 0)
+    strerr_die2x(111,FATAL,r);
+  return plugin->putsubs(&info,dir,subdir,hash_lo,hash_hi,subwrite);
 }
 
 void searchlog(const char *dir,
@@ -101,12 +111,11 @@ void searchlog(const char *dir,
     *(cps - 1) = '_';           /* will match char specified as well */
   }
 
-  if (!plugin || (r = plugin->opensub(dir,subdir)) != 0) {
-    if (r && *r)
-      strerr_die2x(111,FATAL,r);
+  if ((r = opensub(dir,subdir,&info)) != 0)
+    strerr_die2x(111,FATAL,r);
+  if (plugin == 0)
     return std_searchlog(dir,subdir,search,subwrite);
-  }
-  return plugin->searchlog(dir,subdir,search,subwrite);
+  return plugin->searchlog(&info,dir,subdir,search,subwrite);
 }
 
 int subscribe(const char *dir,
@@ -123,12 +132,11 @@ int subscribe(const char *dir,
   if (userhost[str_chr(userhost,'\n')])
     strerr_die2x(100,FATAL,ERR_ADDR_NL);
 
-  if (!plugin || !flagsql || (r = plugin->opensub(dir,subdir)) != 0) {
-    if (r && *r)
-      strerr_die2x(111,FATAL,r);
+  if (!flagsql || plugin == 0)
     return std_subscribe(dir,subdir,userhost,flagadd,comment,event,forcehash);
-  }
-  return plugin->subscribe(dir,subdir,userhost,flagadd,comment,event,forcehash);
+  if ((r = opensub(dir,subdir,&info)) != 0)
+    strerr_die2x(111,FATAL,r);
+  return plugin->subscribe(&info,dir,subdir,userhost,flagadd,comment,event,forcehash);
 }
 
 void tagmsg(const char *dir,
@@ -141,12 +149,10 @@ void tagmsg(const char *dir,
 {
   const char *r = 0;
   std_tagmsg(msgnum,seed,action,hashout);
-  if (!plugin || (r = plugin->opensub(dir,0)) != 0) {
-    if (r && *r)
-      strerr_die2x(111,FATAL,r);
-    return;
-  }
-  return plugin->tagmsg(dir,msgnum,seed,action,hashout,bodysize,chunk);
+  if ((r = opensub(dir,0,&info)) != 0)
+    strerr_die2x(111,FATAL,r);
+  if (plugin != 0)
+    plugin->tagmsg(&info,dir,msgnum,seed,action,hashout,bodysize,chunk);
 }
 
 void initsub(const char *dir)

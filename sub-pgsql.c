@@ -42,26 +42,19 @@ static stralloc lcaddr = {0};
 static stralloc line = {0};
 static stralloc logline = {0};
 static stralloc quoted = {0};
-static struct sqlinfo info;
 
 static void die_write(void)
 {
   strerr_die3x(111,FATAL,ERR_WRITE,"stdout");
 }
 
-static const char *_opensub(const char *dir,	/* database directory */
-			    const char *subdir)
+static const char *_opensub(struct sqlinfo *info)
 {
-  const char *err;
-  
-  if ((err = parsesql(dir,subdir,&info)) != 0)
-    return err;
-
   if (!pgsql) {
     /* Make connection to database */
-    strnum[fmt_ulong(strnum,info.port)] = 0;
-    pgsql = PQsetdbLogin(info.host,info.port?strnum:"",NULL,NULL,
-			 info.db,info.user,info.pw);
+    strnum[fmt_ulong(strnum,info->port)] = 0;
+    pgsql = PQsetdbLogin(info->host,info->port?strnum:"",NULL,NULL,
+			 info->db,info->user,info->pw);
     /* Check  to see that the backend connection was successfully made */
     if (PQstatus(pgsql) == CONNECTION_BAD)
       return PQerrorMessage(pgsql);
@@ -69,7 +62,7 @@ static const char *_opensub(const char *dir,	/* database directory */
   return (char *) 0;
 }
 
-static void _closesub(void)
+static void _closesub(struct sqlinfo *info)
 /* close connection to SQL server, if open */
 {
   if (pgsql)
@@ -78,7 +71,8 @@ static void _closesub(void)
   return;
 }
 
-static const char *_checktag(const char *dir,		/* the db base dir */
+static const char *_checktag(struct sqlinfo *info,
+			     const char *dir,		/* the db base dir */
 			     unsigned long num,	/* message number */
 			     unsigned long listno, /* bottom of range => slave */
 			     const char *action,
@@ -95,7 +89,7 @@ static const char *_checktag(const char *dir,		/* the db base dir */
     /* potentially hostile. */
     if (listno) {			/* only for slaves */
       if (!stralloc_copys(&line,"SELECT listno FROM ")) return ERR_NOMEM;
-      if (!stralloc_cats(&line,info.table)) return ERR_NOMEM;
+      if (!stralloc_cats(&line,info->table)) return ERR_NOMEM;
       if (!stralloc_cats(&line,"_mlog WHERE listno=")) return ERR_NOMEM;
       if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,listno)))
 	return ERR_NOMEM;
@@ -117,7 +111,7 @@ static const char *_checktag(const char *dir,		/* the db base dir */
     }
 
     if (!stralloc_copys(&line,"SELECT msgnum FROM ")) return ERR_NOMEM;
-    if (!stralloc_cats(&line,info.table)) return ERR_NOMEM;
+    if (!stralloc_cats(&line,info->table)) return ERR_NOMEM;
     if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) return ERR_NOMEM;
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return ERR_NOMEM;
     if (!stralloc_cats(&line," and cookie='")) return ERR_NOMEM;
@@ -141,7 +135,8 @@ static const char *_checktag(const char *dir,		/* the db base dir */
     return (char *)0;
 }
 
-static const char *_issub(const char *dir, /* directory to basedir */
+static const char *_issub(struct sqlinfo *info,
+			  const char *dir, /* directory to basedir */
 			  const char *subdir,
 			  const char *userhost)
 /* Returns (char *) to match if userhost is in the subscriber database      */
@@ -166,7 +161,7 @@ static const char *_issub(const char *dir, /* directory to basedir */
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
 
     if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
-    if (!stralloc_cats(&line,info.table)) die_nomem();
+    if (!stralloc_cats(&line,info->table)) die_nomem();
     if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
     if (!stralloc_cat(&line,&addr)) die_nomem();
     if (!stralloc_cats(&line,"$'")) die_nomem();
@@ -190,7 +185,8 @@ static const char *_issub(const char *dir, /* directory to basedir */
     return line.s;
 }
 
-static const char *_logmsg(const char *dir,
+static const char *_logmsg(struct sqlinfo *info,
+			   const char *dir,
 			   unsigned long num,
 			   unsigned long listno,
 			   unsigned long subs,
@@ -203,7 +199,7 @@ static const char *_logmsg(const char *dir,
   PGresult *result2;
 
   if (!stralloc_copys(&logline,"INSERT INTO ")) return ERR_NOMEM;
-  if (!stralloc_cats(&logline,info.table)) return ERR_NOMEM;
+  if (!stralloc_cats(&logline,info->table)) return ERR_NOMEM;
   if (!stralloc_cats(&logline,"_mlog (msgnum,listno,subs,done) VALUES ("))
 	return ERR_NOMEM;
   if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) return ERR_NOMEM;
@@ -226,7 +222,7 @@ static const char *_logmsg(const char *dir,
     return (PQerrorMessage(pgsql));
   if(PQresultStatus(result) != PGRES_COMMAND_OK) { /* Check if duplicate */
     if (!stralloc_copys(&logline,"SELECT msgnum FROM ")) return ERR_NOMEM;
-    if (!stralloc_cats(&logline,info.table)) return ERR_NOMEM;
+    if (!stralloc_cats(&logline,info->table)) return ERR_NOMEM;
     if (!stralloc_cats(&logline,"_mlog WHERE msgnum = ")) return ERR_NOMEM;
     if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num)))
       return ERR_NOMEM;
@@ -252,7 +248,8 @@ static const char *_logmsg(const char *dir,
   return 0;
 }
 
-static unsigned long _putsubs(const char *dir,	/* database base dir */
+static unsigned long _putsubs(struct sqlinfo *info,
+			      const char *dir,	/* database base dir */
 			      const char *subdir,
 			      unsigned long hash_lo,
 			      unsigned long hash_hi,
@@ -276,7 +273,7 @@ static unsigned long _putsubs(const char *dir,	/* database base dir */
 						/* main query */
     if (!stralloc_copys(&line,"SELECT address FROM "))
 		die_nomem();
-    if (!stralloc_cats(&line,info.table)) die_nomem();
+    if (!stralloc_cats(&line,info->table)) die_nomem();
     if (!stralloc_cats(&line," WHERE hash BETWEEN ")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_lo)))
 		die_nomem();
@@ -302,7 +299,8 @@ static unsigned long _putsubs(const char *dir,	/* database base dir */
     return no;
 }
 
-static void _searchlog(const char *dir,		/* work directory */
+static void _searchlog(struct sqlinfo *info,
+		       const char *dir,		/* work directory */
 		       const char *subdir,
 		       char *search,		/* search string */
 		       int subwrite())		/* output fxn */
@@ -326,7 +324,7 @@ static void _searchlog(const char *dir,		/* work directory */
 		       "||extract(epoch from tai)||' '"
 		       "||address||' '||edir||etype||' '||fromline FROM "))
       die_nomem();
-    if (!stralloc_cats(&line,info.table)) die_nomem();
+    if (!stralloc_cats(&line,info->table)) die_nomem();
     if (!stralloc_cats(&line,"_slog ")) die_nomem();
     if (*search) {	/* We can afford to wait for LIKE '%xx%' */
       if (!stralloc_cats(&line,"WHERE fromline LIKE '%")) die_nomem();
@@ -353,7 +351,8 @@ static void _searchlog(const char *dir,		/* work directory */
 }
 
 
-static int _subscribe(const char *dir,
+static int _subscribe(struct sqlinfo *info,
+		      const char *dir,
 		      const char *subdir,
 		      const char *userhost,
 		      int flagadd,
@@ -415,7 +414,7 @@ static int _subscribe(const char *dir,
 
     if (flagadd) {
       if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
-      if (!stralloc_cats(&line,info.table)) die_nomem();
+      if (!stralloc_cats(&line,info->table)) die_nomem();
       if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
       if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
       if (!stralloc_cats(&line,"$'")) die_nomem();
@@ -432,7 +431,7 @@ static int _subscribe(const char *dir,
       } else {							/* not there */
 	PQclear(result);
 	if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
-	if (!stralloc_cats(&line,info.table)) die_nomem();
+	if (!stralloc_cats(&line,info->table)) die_nomem();
 	if (!stralloc_cats(&line," (address,hash) VALUES ('"))
 		die_nomem();
 	if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
@@ -448,7 +447,7 @@ static int _subscribe(const char *dir,
       }
     } else {							/* unsub */
       if (!stralloc_copys(&line,"DELETE FROM ")) die_nomem();
-      if (!stralloc_cats(&line,info.table)) die_nomem();
+      if (!stralloc_cats(&line,info->table)) die_nomem();
       if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
       if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
       if (forcehash >= 0) {
@@ -475,7 +474,7 @@ static int _subscribe(const char *dir,
 		/* VALUES('address',{'+'|'-'},'etype','[comment]') */
 
     if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
-    if (!stralloc_cats(&logline,info.table)) die_nomem();
+    if (!stralloc_cats(&logline,info->table)) die_nomem();
     if (!stralloc_cats(&logline,
 	"_slog (address,edir,etype,fromline) VALUES ('")) die_nomem();
     if (!stralloc_cat(&logline,&quoted)) die_nomem();
@@ -505,7 +504,8 @@ static int _subscribe(const char *dir,
     return 1;					/* desired effect */
 }
 
-static void _tagmsg(const char *dir,		/* db base dir */
+static void _tagmsg(struct sqlinfo *info,
+		    const char *dir,		/* db base dir */
 		    unsigned long msgnum,	/* number of this message */
 		    const char *seed, /* seed. NULL ok, but less entropy */
 		    const char *action,	/* to make it certain the cookie */
@@ -530,7 +530,7 @@ static void _tagmsg(const char *dir,		/* db base dir */
 	/* (we may have tried message before, but failed to complete, so */
 	/* ER_DUP_ENTRY is ok) */
     if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
-    if (!stralloc_cats(&line,info.table)) die_nomem();
+    if (!stralloc_cats(&line,info->table)) die_nomem();
     if (!stralloc_cats(&line,"_cookie (msgnum,cookie,bodysize,chunk) VALUES ("))
       die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgnum))) die_nomem();
@@ -549,7 +549,7 @@ static void _tagmsg(const char *dir,		/* db base dir */
       strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
     if (PQresultStatus(result) != PGRES_COMMAND_OK) { /* Possible tuplicate */
       if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
-      if (!stralloc_cats(&line,info.table)) die_nomem();	  
+      if (!stralloc_cats(&line,info->table)) die_nomem();	  
       if (!stralloc_cats(&line,"_cookie WHERE msgnum = ")) die_nomem();
       if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgnum))) 
 	die_nomem();

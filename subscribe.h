@@ -2,6 +2,8 @@
 #ifndef SUBSCRIBE_H
 #define SUBSCRIBE_H
 
+#include "sqllib.h"
+
 extern void initsub(const char *dir);
 
 /* these are the subroutines used for interfacing with the subscriber and  */
@@ -36,10 +38,6 @@ extern const char *logmsg(const char *dir,
 			  unsigned long subs,
 			  int done);
 
-extern const char *opensub(const char *dir,
-			   const char *subdir,
-			   const char **table);
-
 extern void searchlog(const char *dir,
 		      const char *subdir,
 		      char *search,
@@ -66,41 +64,47 @@ extern void tagmsg(const char *dir,
 struct sub_plugin
 {
   int version;
-  const char *(*checktag)(const char *dir,
+  const char *(*checktag)(struct sqlinfo *info,
+			  const char *dir,
 			  unsigned long msgnum,
 			  unsigned long listno,
 			  const char *action,
 			  const char *seed,
 			  const char *hash);
-  void (*closesub)(void);
-  const char *(*issub)(const char *dir,
+  void (*close)(struct sqlinfo *info);
+  const char *(*issub)(struct sqlinfo *info,
+		       const char *dir,
 		       const char *subdir,
 		       const char *username);
-  const char *(*logmsg)(const char *dir,
+  const char *(*logmsg)(struct sqlinfo *info,
+			const char *dir,
 			unsigned long msgnum,
 			unsigned long,
 			unsigned long subs,
 			int done);
-  const char *(*opensub)(const char *dir,
-			 const char *subdir);
-  unsigned long (*putsubs)(const char *dir,
+  const char *(*open)(struct sqlinfo *info);
+  unsigned long (*putsubs)(struct sqlinfo *info,
+			   const char *dir,
 			   const char *subdir,
 			   unsigned long hash_lo,
 			   unsigned long hash_hi,
 			   int subwrite());
 /*		int subwrite(char *string, unsigned int length); */
-  void (*searchlog)(const char *dir,
+  void (*searchlog)(struct sqlinfo *info,
+		    const char *dir,
 		    const char *subdir,
 		    char *search,
 		    int subwrite());
-  int (*subscribe)(const char *dir,
+  int (*subscribe)(struct sqlinfo *info,
+		   const char *dir,
 		   const char *subdir,
 		   const char *username,
 		   int flagadd,
 		   const char *from,
 		   const char *event,
 		   int forcehash);
-  void (*tagmsg)(const char *dir,
+  void (*tagmsg)(struct sqlinfo *info,
+		 const char *dir,
 		 unsigned long msgnum,
 		 const char *seed,
 		 const char *action,
