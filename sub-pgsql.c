@@ -33,8 +33,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static PGconn *pgsql = 0;
-
 static char strnum[FMT_ULONG];
 static stralloc addr = {0};
 static stralloc domain = {0};
@@ -50,14 +48,14 @@ static void die_write(void)
 
 static const char *_opensub(struct sqlinfo *info)
 {
-  if (!pgsql) {
+  if (info->conn == 0) {
     /* Make connection to database */
     strnum[fmt_ulong(strnum,info->port)] = 0;
-    pgsql = PQsetdbLogin(info->host,info->port?strnum:"",NULL,NULL,
-			 info->db,info->user,info->pw);
+    info->conn = PQsetdbLogin(info->host,info->port?strnum:"",NULL,NULL,
+			      info->db,info->user,info->pw);
     /* Check  to see that the backend connection was successfully made */
-    if (PQstatus(pgsql) == CONNECTION_BAD)
-      return PQerrorMessage(pgsql);
+    if (PQstatus((PGconn*)info->conn) == CONNECTION_BAD)
+      return PQerrorMessage((PGconn*)info->conn);
   }
   return (char *) 0;
 }
@@ -65,10 +63,9 @@ static const char *_opensub(struct sqlinfo *info)
 static void _closesub(struct sqlinfo *info)
 /* close connection to SQL server, if open */
 {
-  if (pgsql)
-    PQfinish(pgsql);
-  pgsql = 0;		/* Destroy pointer */
-  (void)info;
+  if ((PGconn*)info->conn)
+    PQfinish((PGconn*)info->conn);
+  info->conn = 0;		/* Destroy pointer */
 }
 
 static const char *_checktag(struct sqlinfo *info,
@@ -95,9 +92,9 @@ static const char *_checktag(struct sqlinfo *info,
       if (!stralloc_cats(&line," AND done > 3")) return ERR_NOMEM;
 
       if (!stralloc_0(&line)) return ERR_NOMEM;
-      result = PQexec( pgsql, line.s );
+      result = PQexec( (PGconn*)info->conn, line.s );
       if(result == NULL)
-	return (PQerrorMessage(pgsql));
+	return (PQerrorMessage((PGconn*)info->conn));
       if( PQresultStatus(result) != PGRES_TUPLES_OK)
 	return (char *) (PQresultErrorMessage(result));
       if( PQntuples(result) > 0 ) {
@@ -116,9 +113,9 @@ static const char *_checktag(struct sqlinfo *info,
     if (!stralloc_cats(&line,"'")) return ERR_NOMEM;
 
     if (!stralloc_0(&line)) return ERR_NOMEM;
-    result = PQexec(pgsql,line.s);
+    result = PQexec((PGconn*)info->conn,line.s);
     if (result == NULL)
-      return (PQerrorMessage(pgsql));
+      return (PQerrorMessage((PGconn*)info->conn));
     if (PQresultStatus(result) != PGRES_TUPLES_OK)
       return (char *) (PQresultErrorMessage(result));
     if(PQntuples(result) < 0) {
@@ -160,9 +157,9 @@ static const char *_issub(struct sqlinfo *info,
     if (!stralloc_cats(&line,"$'")) die_nomem();
 
     if (!stralloc_0(&line)) die_nomem();
-    result = PQexec(pgsql,line.s);
+    result = PQexec((PGconn*)info->conn,line.s);
     if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
+      strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
     if (PQresultStatus(result) != PGRES_TUPLES_OK )
       strerr_die2x(111,FATAL,PQresultErrorMessage(result));
 
@@ -209,9 +206,9 @@ static const char *_logmsg(struct sqlinfo *info,
   if (!stralloc_append(&logline,")")) return ERR_NOMEM;
 
   if (!stralloc_0(&logline)) return ERR_NOMEM;
-  result = PQexec(pgsql,logline.s);
+  result = PQexec((PGconn*)info->conn,logline.s);
   if(result==NULL)
-    return (PQerrorMessage(pgsql));
+    return (PQerrorMessage((PGconn*)info->conn));
   if(PQresultStatus(result) != PGRES_COMMAND_OK) { /* Check if duplicate */
     if (!stralloc_copys(&logline,"SELECT msgnum FROM ")) return ERR_NOMEM;
     if (!stralloc_cats(&logline,info->table)) return ERR_NOMEM;
@@ -226,9 +223,9 @@ static const char *_logmsg(struct sqlinfo *info,
       return ERR_NOMEM;
     /* Query */
     if (!stralloc_0(&logline)) return ERR_NOMEM;
-    result2 = PQexec(pgsql,logline.s);
+    result2 = PQexec((PGconn*)info->conn,logline.s);
     if (result2 == NULL)
-      return (PQerrorMessage(pgsql));
+      return (PQerrorMessage((PGconn*)info->conn));
     if (PQresultStatus(result2) != PGRES_TUPLES_OK)
       return (char *) (PQresultErrorMessage(result2));
     /* No duplicate, return ERROR from first query */
@@ -271,9 +268,9 @@ static unsigned long _putsubs(struct sqlinfo *info,
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_hi)))
       die_nomem();
     if (!stralloc_0(&line)) die_nomem();
-    result = PQexec(pgsql,line.s);
+    result = PQexec((PGconn*)info->conn,line.s);
     if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
+      strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
     if (PQresultStatus(result) != PGRES_TUPLES_OK)
       strerr_die2x(111,FATAL,PQresultErrorMessage(result));
 
@@ -324,9 +321,9 @@ static void _searchlog(struct sqlinfo *info,
     if (!stralloc_cats(&line," ORDER by tai")) die_nomem();
       
     if (!stralloc_0(&line)) die_nomem();  
-    result = PQexec(pgsql,line.s);
+    result = PQexec((PGconn*)info->conn,line.s);
     if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
+      strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
     if (PQresultStatus(result) != PGRES_TUPLES_OK)
       strerr_die2x(111,FATAL,PQresultErrorMessage(result));
     
@@ -407,9 +404,9 @@ static int _subscribe(struct sqlinfo *info,
       if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
       if (!stralloc_cats(&line,"$'")) die_nomem();
       if (!stralloc_0(&line)) die_nomem();
-      result = PQexec(pgsql,line.s);
+      result = PQexec((PGconn*)info->conn,line.s);
       if (result == NULL)
-	strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
+	strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
       if (PQresultStatus(result) != PGRES_TUPLES_OK)
 	strerr_die2x(111,FATAL,PQresultErrorMessage(result));
 
@@ -427,9 +424,9 @@ static int _subscribe(struct sqlinfo *info,
 	if (!stralloc_cats(&line,szhash)) die_nomem();	/* hash */
 	if (!stralloc_cats(&line,")")) die_nomem();
 	if (!stralloc_0(&line)) die_nomem();
-	result = PQexec(pgsql,line.s);
+	result = PQexec((PGconn*)info->conn,line.s);
 	if (result == NULL)
-	  strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
+	  strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
 	if (PQresultStatus(result) != PGRES_COMMAND_OK)
 	  strerr_die2x(111,FATAL,PQresultErrorMessage(result));
       }
@@ -447,9 +444,9 @@ static int _subscribe(struct sqlinfo *info,
       }
       
       if (!stralloc_0(&line)) die_nomem();
-      result = PQexec(pgsql,line.s);
+      result = PQexec((PGconn*)info->conn,line.s);
       if (result == NULL)
-	strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
+	strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
       if (PQresultStatus(result) != PGRES_COMMAND_OK)
 	strerr_die2x(111,FATAL,PQresultErrorMessage(result));
       if (atoi(PQcmdTuples(result))<1)
@@ -483,7 +480,7 @@ static int _subscribe(struct sqlinfo *info,
     if (!stralloc_cats(&logline,"')")) die_nomem();
 
     if (!stralloc_0(&logline)) die_nomem();
-    result = PQexec(pgsql,logline.s);		/* log (ignore errors) */
+    result = PQexec((PGconn*)info->conn,logline.s);		/* log (ignore errors) */
     PQclear(result);
 
     if (!stralloc_0(&addr))
@@ -529,9 +526,9 @@ static void _tagmsg(struct sqlinfo *info,
     if (!stralloc_cats(&line,")")) die_nomem();
     
     if (!stralloc_0(&line)) die_nomem();
-    result = PQexec(pgsql,line.s);
+    result = PQexec((PGconn*)info->conn,line.s);
     if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
+      strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
     if (PQresultStatus(result) != PGRES_COMMAND_OK) { /* Possible tuplicate */
       if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
       if (!stralloc_cats(&line,info->table)) die_nomem();	  
@@ -540,9 +537,9 @@ static void _tagmsg(struct sqlinfo *info,
 	die_nomem();
       /* Query */
       if (!stralloc_0(&line)) die_nomem();
-      result2 = PQexec(pgsql,line.s);
+      result2 = PQexec((PGconn*)info->conn,line.s);
       if (result2 == NULL)
-	strerr_die2x(111,FATAL,PQerrorMessage(pgsql));
+	strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
       if (PQresultStatus(result2) != PGRES_TUPLES_OK)
 	strerr_die2x(111,FATAL,PQresultErrorMessage(result2));
       /* No duplicate, return ERROR from first query */

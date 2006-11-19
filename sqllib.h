@@ -10,6 +10,7 @@ struct sqlinfo
   const char *user;
   const char *pw;
   const char *table;
+  void *conn;
 };
 
 extern const char *parsesql(const char *dir,

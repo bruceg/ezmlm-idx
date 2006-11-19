@@ -33,8 +33,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static MYSQL *mysql = 0;
-
 static char strnum[FMT_ULONG];
 static stralloc addr = {0};
 static stralloc domain = {0};
@@ -51,36 +49,35 @@ static void die_write(void)
 static void _closesub(struct sqlinfo *info)
 /* close connection to SQL server, if open */
 {
-  if (mysql)
-    mysql_close(mysql);
-  mysql = 0;					/* destroy pointer */
-  (void)info;
+  if ((MYSQL*)info->conn)
+    mysql_close((MYSQL*)info->conn);
+  info->conn = 0;					/* destroy pointer */
 }
 
 static const char *_opensub(struct sqlinfo *info)
 {
-  if (!mysql) {
-    if (!(mysql = mysql_init((MYSQL *) 0)))
+  if (!(MYSQL*)info->conn) {
+    if (!(info->conn = mysql_init((MYSQL *) 0)))
 	 return ERR_NOMEM;					/* init */
-    if (!(mysql_real_connect(mysql,info->host,info->user,info->pw,info->db,
-			     info->port,0,CLIENT_COMPRESS)))	/* conn */
-		return mysql_error(mysql);
+    if (!(mysql_real_connect((MYSQL*)info->conn,info->host,info->user,info->pw,
+			     info->db,info->port,0,CLIENT_COMPRESS)))
+		return mysql_error((MYSQL*)info->conn);
   }
   return (char *) 0;
 }
 
-static void safe_query(const stralloc* query)
+static void safe_query(struct sqlinfo *info,const stralloc* query)
 {
-  if (mysql_real_query(mysql,query->s,query->len))
-    strerr_die2x(111,FATAL,mysql_error(mysql));
+  if (mysql_real_query((MYSQL*)info->conn,query->s,query->len))
+    strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
 }
 
-static MYSQL_RES *safe_select(const stralloc* query)
+static MYSQL_RES *safe_select(struct sqlinfo *info,const stralloc* query)
 {
   MYSQL_RES *result;
-  safe_query(query);
-  if ((result = mysql_use_result(mysql)) == 0)
-    strerr_die2x(111,FATAL,mysql_error(mysql));
+  safe_query(info,query);
+  if ((result = mysql_use_result((MYSQL*)info->conn)) == 0)
+    strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
   return result;
 }
 
@@ -107,15 +104,15 @@ static const char *_checktag (struct sqlinfo *info,
       if (!stralloc_cats(&line," AND msgnum=")) return ERR_NOMEM;
       if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return ERR_NOMEM;
       if (!stralloc_cats(&line," AND done > 3")) return ERR_NOMEM;
-      if (mysql_real_query(mysql,line.s,line.len) != 0)
-	return mysql_error(mysql);			/* query */
-      if (!(result = mysql_use_result(mysql)))		/* use result */
-	return mysql_error(mysql);
+      if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)
+	return mysql_error((MYSQL*)info->conn);			/* query */
+      if (!(result = mysql_use_result((MYSQL*)info->conn)))		/* use result */
+	return mysql_error((MYSQL*)info->conn);
       if ((row = mysql_fetch_row(result)))
 	return "";					/*already done */
       else						/* no result */
         if (!mysql_eof(result))
-	  return mysql_error(mysql);
+	  return mysql_error((MYSQL*)info->conn);
       mysql_free_result(result);			/* free res */
     }
 
@@ -129,13 +126,13 @@ static const char *_checktag (struct sqlinfo *info,
     if (!stralloc_cat(&line,&quoted)) return ERR_NOMEM;
     if (!stralloc_cats(&line,"'")) return ERR_NOMEM;
 
-    if (mysql_real_query(mysql,line.s,line.len) != 0)	/* select */
-	return mysql_error(mysql);
-    if (!(result = mysql_use_result(mysql)))
-	return mysql_error(mysql);
+    if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)	/* select */
+	return mysql_error((MYSQL*)info->conn);
+    if (!(result = mysql_use_result((MYSQL*)info->conn)))
+	return mysql_error((MYSQL*)info->conn);
     if (!mysql_fetch_row(result)) {
     if (!mysql_eof(result))		/* some error occurred */
-	return mysql_error(mysql);
+	return mysql_error((MYSQL*)info->conn);
       mysql_free_result(result);	/* eof => query ok, but null result*/
       return "";			/* not parent => perm error */
     }
@@ -177,7 +174,7 @@ static const char *_issub(struct sqlinfo *info,
 	mysql_escape_string(quoted.s,userhost,addr.len))) die_nomem();
     if (!stralloc_cats(&line,"'"))
 		die_nomem();
-    result = safe_select(&line);
+    result = safe_select(info,&line);
     row = mysql_fetch_row(result);
     ret = (char *) 0;
     if (!row) {		/* we need to return the actual address as other */
@@ -185,10 +182,10 @@ static const char *_issub(struct sqlinfo *info,
 			/* to make sure to send to e.g the correct moderator*/
 			/* address. */
       if (!mysql_eof(result))
-		strerr_die2x(111,FATAL,mysql_error(mysql));
+		strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
     } else {
       if (!(lengths = mysql_fetch_lengths(result)))
-		strerr_die2x(111,FATAL,mysql_error(mysql));
+		strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
       if (!stralloc_copyb(&line,row[0],lengths[0])) die_nomem();
       if (!stralloc_0(&line)) die_nomem();
       ret = line.s;
@@ -225,9 +222,9 @@ static const char *_logmsg(struct sqlinfo *info,
   if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) return ERR_NOMEM;
   if (!stralloc_append(&logline,")")) return ERR_NOMEM;
 
-  if (mysql_real_query(mysql,logline.s,logline.len))	/* log query */
-    if (mysql_errno(mysql) != ER_DUP_ENTRY)	/* ignore dups */
-	return mysql_error(mysql);
+  if (mysql_real_query((MYSQL*)info->conn,logline.s,logline.len))	/* log query */
+    if (mysql_errno((MYSQL*)info->conn) != ER_DUP_ENTRY)	/* ignore dups */
+	return mysql_error((MYSQL*)info->conn);
   return 0;
 }
 
@@ -262,17 +259,17 @@ static unsigned long _putsubs(struct sqlinfo *info,
     if (!stralloc_cats(&line," AND ")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_hi)))
 		die_nomem();
-    result = safe_select(&line);
+    result = safe_select(info,&line);
     no = 0;
     while ((row = mysql_fetch_row(result))) {
 	/* this is safe even if someone messes with the address field def */
     if (!(lengths = mysql_fetch_lengths(result)))
-	strerr_die2x(111,FATAL,mysql_error(mysql));
+	strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
       if (subwrite(row[0],lengths[0]) == -1) die_write();
       no++;					/* count for list-list fxn */
     }
     if (!mysql_eof(result))
-	strerr_die2x(111,FATAL,mysql_error(mysql));
+	strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
     mysql_free_result(result);
     return no;
 }
@@ -310,14 +307,14 @@ static void _searchlog(struct sqlinfo *info,
     }	/* ordering by tai which is an index */
       if (!stralloc_cats(&line," ORDER by tai")) die_nomem();
 
-    result = safe_select(&line);
+    result = safe_select(info,&line);
     while ((row = mysql_fetch_row(result))) {
     if (!(lengths = mysql_fetch_lengths(result)))
-	strerr_die2x(111,FATAL,mysql_error(mysql));
+	strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
       if (subwrite(row[0],lengths[0]) == -1) die_write();
     }
     if (!mysql_eof(result))
-	strerr_die2x(111,FATAL,mysql_error(mysql));
+	strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
     mysql_free_result(result);
 }
 
@@ -383,25 +380,25 @@ static int _subscribe(struct sqlinfo *info,
       if (!stralloc_copys(&line,"LOCK TABLES ")) die_nomem();
       if (!stralloc_cats(&line,info->table)) die_nomem();
       if (!stralloc_cats(&line," WRITE")) die_nomem();
-      safe_query(&line);
+      safe_query(info,&line);
       if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
       if (!stralloc_cats(&line,info->table)) die_nomem();
       if (!stralloc_cats(&line," WHERE address='")) die_nomem();
       if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
       if (!stralloc_cats(&line,"'")) die_nomem();
-      safe_query(&line);
-      if (!(result = mysql_use_result(mysql)))
-	strerr_die2x(111,FATAL,mysql_error(mysql));
+      safe_query(info,&line);
+      if (!(result = mysql_use_result((MYSQL*)info->conn)))
+	strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
       if ((row = mysql_fetch_row(result))) {			/* there */
 	while (mysql_fetch_row(result));			/* use'm up */
 	mysql_free_result(result);
-	if (mysql_query(mysql,"UNLOCK TABLES"))
-	  strerr_die2x(111,"FATAL",mysql_error(mysql));
+	if (mysql_query((MYSQL*)info->conn,"UNLOCK TABLES"))
+	  strerr_die2x(111,"FATAL",mysql_error((MYSQL*)info->conn));
         return 0;						/* there */
       } else {							/* not there */
 	mysql_free_result(result);
-	if (mysql_errno(mysql))			/* or ERROR */
-	  strerr_die2x(111,FATAL,mysql_error(mysql));
+	if (mysql_errno((MYSQL*)info->conn))			/* or ERROR */
+	  strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
 	if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
 	if (!stralloc_cats(&line,info->table)) die_nomem();
 	if (!stralloc_cats(&line," (address,hash) VALUES ('"))
@@ -410,9 +407,9 @@ static int _subscribe(struct sqlinfo *info,
 	if (!stralloc_cats(&line,"',")) die_nomem();
 	if (!stralloc_cats(&line,szhash)) die_nomem();	/* hash */
 	if (!stralloc_cats(&line,")")) die_nomem();
-	safe_query(&line);
-	if (mysql_query(mysql,"UNLOCK TABLES"))
-	  strerr_die2x(111,FATAL,mysql_error(mysql));
+	safe_query(info,&line);
+	if (mysql_query((MYSQL*)info->conn,"UNLOCK TABLES"))
+	  strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
       }
     } else {							/* unsub */
       if (!stralloc_copys(&line,"DELETE FROM ")) die_nomem();
@@ -426,8 +423,8 @@ static int _subscribe(struct sqlinfo *info,
         if (!stralloc_cats(&line,"' AND hash BETWEEN 0 AND 52"))
 		die_nomem();
       }
-      safe_query(&line);
-      if (mysql_affected_rows(mysql) == 0)
+      safe_query(info,&line);
+      if (mysql_affected_rows((MYSQL*)info->conn) == 0)
 	return 0;				/* address wasn't there*/
     }
 
@@ -456,7 +453,7 @@ static int _subscribe(struct sqlinfo *info,
     }
     if (!stralloc_cats(&logline,"')")) die_nomem();
 
-    if (mysql_real_query(mysql,logline.s,logline.len))
+    if (mysql_real_query((MYSQL*)info->conn,logline.s,logline.len))
 		;				/* log (ignore errors) */
     if (!stralloc_0(&addr))
 		;				/* ignore errors */
@@ -497,9 +494,9 @@ static void _tagmsg(struct sqlinfo *info,
     if (!stralloc_cats(&line,",")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,chunk))) die_nomem();
     if (!stralloc_cats(&line,")")) die_nomem();
-    if (mysql_real_query(mysql,line.s,line.len) != 0)
-      if (mysql_errno(mysql) != ER_DUP_ENTRY)	/* ignore dups */
-        strerr_die2x(111,FATAL,mysql_error(mysql)); /* cookie query */
+    if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)
+      if (mysql_errno((MYSQL*)info->conn) != ER_DUP_ENTRY)	/* ignore dups */
+        strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn)); /* cookie query */
 
     if (! (ret = logmsg(dir,msgnum,0L,0L,1))) return;	/* log done=1*/
     if (*ret) strerr_die2x(111,FATAL,ret);
