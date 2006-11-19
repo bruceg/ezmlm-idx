@@ -68,15 +68,12 @@ static void _closesub(struct sqlinfo *info)
   if (pgsql)
     PQfinish(pgsql);
   pgsql = 0;		/* Destroy pointer */
-  return;
+  (void)info;
 }
 
 static const char *_checktag(struct sqlinfo *info,
-			     const char *dir,		/* the db base dir */
 			     unsigned long num,	/* message number */
 			     unsigned long listno, /* bottom of range => slave */
-			     const char *action,
-			     const char *seed,		/* cookie base */
 			     const char *hash)		/* cookie */
 /* reads dir/sql. If not present, returns success (NULL). If dir/sql is    */
 /* present, checks hash against the cookie table. If match, returns success*/
@@ -130,14 +127,10 @@ static const char *_checktag(struct sqlinfo *info,
     }
 
     PQclear(result);
-    if (listno)
-      (void) logmsg(dir,num,listno,0L,3);	/* non-ess mysql logging */
     return (char *)0;
 }
 
 static const char *_issub(struct sqlinfo *info,
-			  const char *dir, /* directory to basedir */
-			  const char *subdir,
 			  const char *userhost)
 /* Returns (char *) to match if userhost is in the subscriber database      */
 /* dir, 0 otherwise. dir is a base directory for a list and may NOT         */
@@ -186,7 +179,6 @@ static const char *_issub(struct sqlinfo *info,
 }
 
 static const char *_logmsg(struct sqlinfo *info,
-			   const char *dir,
 			   unsigned long num,
 			   unsigned long listno,
 			   unsigned long subs,
@@ -249,8 +241,6 @@ static const char *_logmsg(struct sqlinfo *info,
 }
 
 static unsigned long _putsubs(struct sqlinfo *info,
-			      const char *dir,	/* database base dir */
-			      const char *subdir,
 			      unsigned long hash_lo,
 			      unsigned long hash_hi,
 			      int subwrite())		/* write function. */
@@ -300,8 +290,6 @@ static unsigned long _putsubs(struct sqlinfo *info,
 }
 
 static void _searchlog(struct sqlinfo *info,
-		       const char *dir,		/* work directory */
-		       const char *subdir,
 		       char *search,		/* search string */
 		       int subwrite())		/* output fxn */
 /* opens dir/Log, and outputs via subwrite(s,len) any line that matches   */
@@ -507,9 +495,6 @@ static int _subscribe(struct sqlinfo *info,
 static void _tagmsg(struct sqlinfo *info,
 		    const char *dir,		/* db base dir */
 		    unsigned long msgnum,	/* number of this message */
-		    const char *seed, /* seed. NULL ok, but less entropy */
-		    const char *action,	/* to make it certain the cookie */
-		    /* differs from one used for a digest */
 		    char *hashout,		/* calculated hash goes here */
 		    unsigned long bodysize,
 		    unsigned long chunk)

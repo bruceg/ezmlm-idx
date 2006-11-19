@@ -65,34 +65,24 @@ struct sub_plugin
 {
   int version;
   const char *(*checktag)(struct sqlinfo *info,
-			  const char *dir,
 			  unsigned long msgnum,
 			  unsigned long listno,
-			  const char *action,
-			  const char *seed,
 			  const char *hash);
   void (*close)(struct sqlinfo *info);
   const char *(*issub)(struct sqlinfo *info,
-		       const char *dir,
-		       const char *subdir,
 		       const char *username);
   const char *(*logmsg)(struct sqlinfo *info,
-			const char *dir,
 			unsigned long msgnum,
 			unsigned long,
 			unsigned long subs,
 			int done);
   const char *(*open)(struct sqlinfo *info);
   unsigned long (*putsubs)(struct sqlinfo *info,
-			   const char *dir,
-			   const char *subdir,
 			   unsigned long hash_lo,
 			   unsigned long hash_hi,
 			   int subwrite());
 /*		int subwrite(char *string, unsigned int length); */
   void (*searchlog)(struct sqlinfo *info,
-		    const char *dir,
-		    const char *subdir,
 		    char *search,
 		    int subwrite());
   int (*subscribe)(struct sqlinfo *info,
@@ -106,8 +96,6 @@ struct sub_plugin
   void (*tagmsg)(struct sqlinfo *info,
 		 const char *dir,
 		 unsigned long msgnum,
-		 const char *seed,
-		 const char *action,
 		 char *hashout,
 		 unsigned long bodysize,
 		 unsigned long chunk);

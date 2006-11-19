@@ -39,9 +39,12 @@ const char *checktag(const char *dir,
   const char *r = 0;
   if ((r = opensub(dir,0,&info)) != 0)
     return r;
-  if (plugin == 0)
-    return std_checktag(msgnum,action,seed,hash);
-  return plugin->checktag(&info,dir,msgnum,listno,action,seed,hash);
+  r = (plugin == 0)
+    ? std_checktag(msgnum,action,seed,hash)
+    : plugin->checktag(&info,msgnum,listno,hash);
+  if (listno && r == 0)
+    (void) logmsg(dir,msgnum,listno,0L,3);
+  return r;
 }
 
 void closesub(void) {
@@ -58,7 +61,7 @@ const char *issub(const char *dir,
     strerr_die2x(111,FATAL,r);
   if (plugin == 0)
     return std_issub(dir,subdir,userhost);
-  return plugin->issub(&info,dir,subdir,userhost);
+  return plugin->issub(&info,userhost);
 }
 
 const char *logmsg(const char *dir,
@@ -72,7 +75,7 @@ const char *logmsg(const char *dir,
     return r;
   if (plugin == 0)
     return 0;
-  return plugin->logmsg(&info,dir,num,listno,subs,done);
+  return plugin->logmsg(&info,num,listno,subs,done);
 }
 
 unsigned long putsubs(const char *dir,
@@ -87,7 +90,7 @@ unsigned long putsubs(const char *dir,
     return std_putsubs(dir,subdir,hash_lo,hash_hi,subwrite);
   if ((r = opensub(dir,subdir,&info)) != 0)
     strerr_die2x(111,FATAL,r);
-  return plugin->putsubs(&info,dir,subdir,hash_lo,hash_hi,subwrite);
+  return plugin->putsubs(&info,hash_lo,hash_hi,subwrite);
 }
 
 void searchlog(const char *dir,
@@ -115,7 +118,7 @@ void searchlog(const char *dir,
     strerr_die2x(111,FATAL,r);
   if (plugin == 0)
     return std_searchlog(dir,subdir,search,subwrite);
-  return plugin->searchlog(&info,dir,subdir,search,subwrite);
+  return plugin->searchlog(&info,search,subwrite);
 }
 
 int subscribe(const char *dir,
@@ -152,7 +155,7 @@ void tagmsg(const char *dir,
   if ((r = opensub(dir,0,&info)) != 0)
     strerr_die2x(111,FATAL,r);
   if (plugin != 0)
-    plugin->tagmsg(&info,dir,msgnum,seed,action,hashout,bodysize,chunk);
+    plugin->tagmsg(&info,dir,msgnum,hashout,bodysize,chunk);
 }
 
 void initsub(const char *dir)
