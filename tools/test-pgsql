@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 
-sub_pgsql/ezmlm-mktab -d -C list | psql -h pgsql eztest >/dev/null 2>&1
-sub_pgsql/ezmlm-mktab list | psql -h pgsql eztest
+./ezmlm-mktab-pgsql -d -C list | psql -h pgsql eztest >/dev/null 2>&1
+./ezmlm-mktab-pgsql list | psql -h pgsql eztest
 
 ./ezmlm-test -d eztest -p '' -h pgsql
 
-sub_pgsql/ezmlm-mktab -d -C list | psql -h pgsql eztest
+./ezmlm-mktab-pgsql -d -C list | psql -h pgsql eztest

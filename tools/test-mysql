@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 
-sub_mysql/ezmlm-mktab -d -C list | mysql --force eztest >/dev/null 2>&1
-sub_mysql/ezmlm-mktab list | mysql eztest
+./ezmlm-mktab-mysql -d -C list | mysql --force eztest >/dev/null 2>&1
+./ezmlm-mktab-mysql list | mysql eztest
 
 ./ezmlm-test -d eztest -p '' -h mysql
 
-sub_mysql/ezmlm-mktab -d -C list | mysql eztest
+./ezmlm-mktab-mysql -d -C list | mysql eztest
