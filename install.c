@@ -40,8 +40,12 @@ stralloc *line;
   unsigned long mode;
   int fdin;
   int fdout;
+  int opt;
 
   x = line->s; xlen = line->len;
+  opt = (*x == '?');
+  x += opt;
+  xlen -= opt;
 
   type = x;
   i = byte_chr(x,xlen,':'); if (i == xlen) return;
@@ -86,8 +90,12 @@ stralloc *line;
 
     case 'c':
       fdin = open_read(name);
-      if (fdin == -1)
-	strerr_die4sys(111,FATAL,"unable to read ",name,": ");
+      if (fdin == -1) {
+	if (opt)
+	  return;
+	else
+	  strerr_die4sys(111,FATAL,"unable to read ",name,": ");
+      }
       substdio_fdbuf(&ssin,read,fdin,inbuf,sizeof(inbuf));
 
       fdout = open_trunc(target.s);
