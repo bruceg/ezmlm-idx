@@ -1,3 +1,11 @@
+Use subdb(dir,subdir,...) exclusively in ezmlm-*.c -- no subdirs in the
+first parameter.
+
+Figure out how to get rid of -fPIC in conf-cc
+  Maybe make conf-ccso and conf-ldso, with flags to add to the normal
+  conf-cc and conf-ld ?
+Only compile files in lib/ and *=so with PIC flags
+
 Add a "mimekeep" control file, to override "mimeremove".
 Put a real address into To: header in ezmlm-store (and others?)
 Fix email addresses in INSTALL.idx

@@ -23,6 +23,12 @@ release.
 ezmlm-idx-6.0.0, ????-??-??
 ===========================
 
+This version introduces dynamically loaded plugins to replace the
+specialized MySQL and PgSQL versions.  If you were previously using
+MySQL or PgSQL support, please follow the instructions in UPGRADE.idx.
+After this configuration, this version is backwards configurable with
+previous versions.
+
 ezmlm-idx-5.1.1, ????-??-??
 ===========================
 
