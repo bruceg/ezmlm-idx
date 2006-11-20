@@ -141,13 +141,6 @@ void main(int argc,char **argv)
   if (moddir && !ret) {			/* if exit 0 and moddir, add issub */
     pmod = (char *) 0;
     while (moddir && !pmod && sender) {
-      if (moddir[0] == '/') {
-	if (str_diffn(moddir,dir,dir_len) != 0
-	    || (moddir[dir_len] != '/'
-		&& moddir[dir_len] != 0))
-	  strerr_die2x(111,FATAL,"FIXME: usage not supported");
-	moddir += dir_len + 1;
-      }
       pmod = issub(dir,moddir,sender);
       closesub();
       moddir = argv[optind++];

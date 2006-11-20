@@ -16,6 +16,23 @@ static stralloc path = {0};
 static struct sub_plugin *plugin = 0;
 static struct sqlinfo info;
 
+static const char *fixsubdir(const char *dir,
+			     const char *subdir)
+{
+  unsigned int dir_len;
+  if (subdir[0] == '/') {
+    dir_len = str_len(dir);
+    if (str_diffn(subdir,dir,dir_len) != 0
+	|| (subdir[dir_len] != '/'
+	    || subdir[dir_len] != 0))
+      strerr_die2x(111,FATAL,"FIXME: absolute subdirectories no longer supported.");
+    subdir += dir_len + (subdir[dir_len] == '/');
+  }
+  if (subdir != 0 && subdir[str_chr(subdir,'/')] == '/')
+    strerr_die2x(111,FATAL,"FIXME: paths in subdir names no longer supported.");
+  return subdir;
+}
+
 static const char *opensub(const char *dir,
 			   const char *subdir,
 			   struct sqlinfo *info)
@@ -57,6 +74,7 @@ const char *issub(const char *dir,
 		  const char *userhost)
 {
   const char *r = 0;
+  subdir = fixsubdir(dir,subdir);
   if ((r = opensub(dir,subdir,&info)) != 0)
     strerr_die2x(111,FATAL,r);
   if (plugin == 0)
@@ -86,6 +104,7 @@ unsigned long putsubs(const char *dir,
 		      int flagsql)
 {
   const char *r = 0;
+  subdir = fixsubdir(dir,subdir);
   if (!flagsql || plugin == 0)
     return std_putsubs(dir,subdir,hash_lo,hash_hi,subwrite);
   if ((r = opensub(dir,subdir,&info)) != 0)
@@ -102,6 +121,8 @@ void searchlog(const char *dir,
   unsigned char ch;
   unsigned int searchlen;
   const char *r = 0;
+
+  subdir = fixsubdir(dir,subdir);
 
   if (!search) search = (char*)"";      /* defensive */
   searchlen = str_len(search);
@@ -131,6 +152,8 @@ int subscribe(const char *dir,
 	      int forcehash)
 {
   const char *r = 0;
+
+  subdir = fixsubdir(dir,subdir);
 
   if (userhost[str_chr(userhost,'\n')])
     strerr_die2x(100,FATAL,ERR_ADDR_NL);
