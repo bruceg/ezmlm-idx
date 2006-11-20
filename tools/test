@@ -19,7 +19,7 @@ if [ `head -n 1 conf-lib` != `pwd` ]; then
   pwd >conf-lib
 fi
 
-echo "==================== Testing conf-sub = $db ===================="
+echo "==================== Testing subdb = $db ===================="
 
 `dirname $0`/makerrors
 if [ $db != 'std' ]; then
