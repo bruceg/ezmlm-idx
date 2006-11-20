@@ -25,6 +25,7 @@ c:::755:/:ezmlm-send:
 c:::755:/:ezmlm-split:
 c:::755:/:ezmlm-store:
 c:::755:/:ezmlm-sub:
+c:::755:/:ezmlm-to40x-mysql:
 c:::755:/:ezmlm-tstdig:
 c:::755:/:ezmlm-unsub:
 c:::755:/:ezmlm-warn:
