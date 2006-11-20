@@ -18,7 +18,9 @@ to the list in
 .IR dir .
 If not, the message is sent for moderation via
 .BR ezmlm-store .
-The named subscriber list directories may be given as relative to
+The named subscriber list directories must be either relative to
+.I dir
+or fall within
 .IR dir .
 
 The default is to send the message for moderation.
@@ -87,7 +89,8 @@ Add the moderator(s) (usually the list owner):
 
 .EX
 .B ezmlm-sub
-.I dir\fB/mod
+.I dir
+.B mod
 moderator@host
 .EE
 
