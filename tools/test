@@ -23,8 +23,8 @@ echo "==================== Testing conf-sub = $db ===================="
 
 `dirname $0`/makerrors
 if [ $db != 'std' ]; then
-  `dirname $0`/makerrors sub-${db}.so
-  rm sub-sql.so
+  `dirname $0`/makerrors $db
+  rm -f sub-sql.so
   ln -s sub-${db}.so sub-sql.so
 fi
 
