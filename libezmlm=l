@@ -62,7 +62,6 @@ lib/hdr_listsubject.o
 lib/hdr_mime.o
 lib/hdr_transferenc.o
 lib/idxthread.o
-lib/initsub.o
 lib/lock_ex.o
 lib/lock_exnb.o
 lib/lockfile.o
@@ -83,7 +82,6 @@ lib/sig_catch.o
 lib/sig_pipe.o
 lib/slurp.o
 lib/slurpclose.o
-lib/sqllib.o
 lib/std_checktag.o
 lib/std_issub.o
 lib/std_makepath.o
@@ -111,6 +109,7 @@ lib/stralloc_pend.o
 lib/strerr.o
 lib/strerr_die.o
 lib/strerr_sys.o
+lib/subdb.o
 lib/subfderr.o
 lib/subfdin.o
 lib/subfdout.o

@@ -19,7 +19,6 @@
 #include "readwrite.h"
 #include "scan.h"
 #include "slurp.h"
-#include "sqllib.h"
 #include "str.h"
 #include "stralloc.h"
 #include "strerr.h"

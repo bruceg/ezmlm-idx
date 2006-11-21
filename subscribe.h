@@ -2,7 +2,16 @@
 #ifndef SUBSCRIBE_H
 #define SUBSCRIBE_H
 
-#include "sqllib.h"
+struct sqlinfo
+{
+  const char *host;
+  unsigned long port;
+  const char *db;
+  const char *user;
+  const char *pw;
+  const char *table;
+  void *conn;
+};
 
 extern void initsub(const char *dir);
 
