@@ -40,15 +40,14 @@ const char FATAL[] = "ezmlm-warn: fatal: ";
 const char USAGE[] =
 "ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir";
 
-stralloc digdir = {0};
 char boundary[COOKIE];
 
 substdio ssout;
 char outbuf[16];
 
 unsigned long when;
-char *dir;
-char *workdir;
+const char *dir;
+const char *workdir;
 int flagdig = 0;
 stralloc fn = {0};
 stralloc bdname = {0};
@@ -110,7 +109,7 @@ void doit(int flagw)
 
   if (getln(&ssin,&addr,&match,'\0') == -1) die_read();
   if (!match) { close(fd); return; }
-  if (!issub(workdir,0,addr.s)) { close(fd); /*XXX*/unlink(fn.s); return; }
+  if (!issub(workdir,addr.s)) { close(fd); /*XXX*/unlink(fn.s); return; }
   cookie(hash,"",0,"",addr.s,"");
   if (!stralloc_copys(&fnhash,workdir)) die_nomem();
   if (!stralloc_cats(&fnhash,"/bounce/h/")) die_nomem();
@@ -266,13 +265,7 @@ void main(int argc,char **argv)
   load_config(dir);
   initsub(dir);
   getconf_ulong(&copylines,"copylines",0,dir);
-  if (flagdig) {
-    if (!stralloc_copys(&digdir,dir)) die_nomem();
-    if (!stralloc_cats(&digdir,"/digest")) die_nomem();
-    if (!stralloc_0(&digdir)) die_nomem();
-    workdir = digdir.s;
-  } else
-    workdir = dir;
+  workdir = flagdig ? "digest" : ".";
 
   if (!stralloc_copys(&fnlastd,workdir)) die_nomem();
   if (!stralloc_cats(&fnlastd,"/bounce/lastd")) die_nomem();

@@ -337,7 +337,6 @@ static void _searchlog(struct sqlinfo *info,
 
 
 static int _subscribe(struct sqlinfo *info,
-		      const char *dir,
 		      const char *subdir,
 		      const char *userhost,
 		      int flagadd,
@@ -485,12 +484,11 @@ static int _subscribe(struct sqlinfo *info,
 
     if (!stralloc_0(&addr))
 		;				/* ignore errors */
-    logaddr(dir,subdir,event,addr.s,comment);	/* also log to old log */
+    logaddr(subdir,event,addr.s,comment);	/* also log to old log */
     return 1;					/* desired effect */
 }
 
 static void _tagmsg(struct sqlinfo *info,
-		    const char *dir,		/* db base dir */
 		    unsigned long msgnum,	/* number of this message */
 		    char *hashout,		/* calculated hash goes here */
 		    unsigned long bodysize,
@@ -549,7 +547,7 @@ static void _tagmsg(struct sqlinfo *info,
     }
     PQclear(result);
 
-    if (! (ret = logmsg(dir,msgnum,0L,0L,1))) return;	/* log done=1*/
+    if (! (ret = logmsg(msgnum,0L,0L,1))) return;	/* log done=1*/
     if (*ret) strerr_die2x(111,FATAL,ret);
 }
 

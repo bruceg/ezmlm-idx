@@ -27,9 +27,6 @@ void startup(const char *dir)
   if (dir == 0)
     die_usage();
 
-  if (dir[0] != '/')
-    strerr_die2x(100,FATAL,ERR_SLASH);
-
   wrap_chdir(dir);
 }
 

@@ -11,8 +11,7 @@ extern void initsub(const char *dir);
 /* the 'username' if defined is omitted from the output. flagadd = 1 adds  */
 /* a subscriber, flagadd = 0 removes the address. */
 
-extern const char *checktag(const char *dir,
-			    unsigned long msgnum,
+extern const char *checktag(unsigned long msgnum,
 			    unsigned long listno,
 			    const char *action,
 			    const char *seed,
@@ -20,31 +19,26 @@ extern const char *checktag(const char *dir,
 
 extern void closesub(void);
 
-extern const char *issub(const char *dir,
-			 const char *subdir,
+extern const char *issub(const char *subdir,
 			 const char *username);
 
-extern unsigned long putsubs(const char *dir,
-			     const char *subdir,
+extern unsigned long putsubs(const char *subdir,
 			     unsigned long hash_lo,
 			     unsigned long hash_hi,
 			     int subwrite(),
 			     int flagsql);
 /*		int subwrite(char *string, unsigned int length); */
 
-extern const char *logmsg(const char *dir,
-			  unsigned long msgnum,
+extern const char *logmsg(unsigned long msgnum,
 			  unsigned long,
 			  unsigned long subs,
 			  int done);
 
-extern void searchlog(const char *dir,
-		      const char *subdir,
+extern void searchlog(const char *subdir,
 		      char *search,
 		      int subwrite());
 
-extern int subscribe(const char *dir,
-		     const char *subdir,
+extern int subscribe(const char *subdir,
 		     const char *username,
 		     int flagadd,
 		     const char *from,
@@ -52,8 +46,7 @@ extern int subscribe(const char *dir,
 		     int flagmysql,
 		     int forcehash);
 
-extern void tagmsg(const char *dir,
-		   unsigned long msgnum,
+extern void tagmsg(unsigned long msgnum,
 		   const char *seed,
 		   const char *action,
 		   char *hashout,
@@ -81,12 +74,10 @@ struct sub_plugin
 			   unsigned long hash_lo,
 			   unsigned long hash_hi,
 			   int subwrite());
-/*		int subwrite(char *string, unsigned int length); */
   void (*searchlog)(struct sqlinfo *info,
 		    char *search,
 		    int subwrite());
   int (*subscribe)(struct sqlinfo *info,
-		   const char *dir,
 		   const char *subdir,
 		   const char *username,
 		   int flagadd,
@@ -94,7 +85,6 @@ struct sub_plugin
 		   const char *event,
 		   int forcehash);
   void (*tagmsg)(struct sqlinfo *info,
-		 const char *dir,
 		 unsigned long msgnum,
 		 char *hashout,
 		 unsigned long bodysize,

@@ -38,8 +38,7 @@ static void lineout(int subwrite())
   return;
 }
 
-void std_searchlog(const char *dir,		/* work directory */
-		   const char *subdir,
+void std_searchlog(const char *subdir,
 		   char *search,		/* search string */
 		   int subwrite())		/* output fxn */
 /* opens dir/Log, and outputs via subwrite(s,len) any line that matches */
@@ -67,7 +66,7 @@ void std_searchlog(const char *dir,		/* work directory */
     *(cps - 1) = '_';			/* will [also] match char specified */
   }
 
-  std_makepath(&line,dir,subdir,"/Log",0);
+  std_makepath(&line,subdir,"/Log",0);
   fd = open_read(line.s);
   if (fd == -1) {
     if (errno != error_noent)

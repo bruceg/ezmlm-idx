@@ -13,24 +13,14 @@
 
 const char FATAL[] = "ezmlm-issubn: fatal: ";
 const char USAGE[] =
-"ezmlm-issubn: usage: ezmlm-issubn [-nN] dir [dir1 ...]";
-
-static int flagsub = 0;
-const char *addr;
-
-static void testsub(const char *dir,const char *subdir)
-{
-  if (issub(dir,subdir,addr)) {
-    closesub();
-    _exit(flagsub);
-  }
-}
+"ezmlm-issubn: usage: ezmlm-issubn [-nN] dir [subdir ...]";
 
 void main(int argc,char **argv)
 {
   const char *dir;
   const char *subdir;
-  const char *prevsubdir;
+  const char *addr;
+  int flagsub = 0;
   int opt;
 
   addr = env_get("SENDER");
@@ -48,30 +38,21 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind++]);
   initsub(dir);
-  prevsubdir = 0;
 
-  /* This is somewhat convoluted logic to handle both cases where all
-   * command-lne arguments are absolute and where some are relative. 
-   * In the latter case, do not check the primary database. */
-  while ((subdir = argv[optind++]) != 0) {
-    if (subdir[0] == '/') {
-      if (prevsubdir == 0) {
-	testsub(dir,0);
-      }
-      dir = subdir;
-      prevsubdir = 0;
-    }
-    else {
-      testsub(dir,subdir);
-      prevsubdir = subdir;
+  if (optind >= argc) {
+    if (issub(0,addr)) {
+      closesub();
+      _exit(flagsub);
     }
   }
-  if (prevsubdir == 0) {
-    testsub(dir,0);
+  else {
+    while ((subdir = argv[optind++]) != 0) {
+      if (issub(subdir,addr)) {
+	closesub();
+	_exit(flagsub);
+      }
+    }
   }
   closesub();
-  if (flagsub)			/* not subscriber anywhere */
-    _exit(0);
-  else
-    _exit(99);
+  _exit(flagsub ? 0 : 99);		/* not subscriber anywhere */
 }

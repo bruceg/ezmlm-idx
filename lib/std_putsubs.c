@@ -27,8 +27,7 @@ static void die_write(void)
   strerr_die3x(111,FATAL,ERR_WRITE,"stdout");
 }
 
-unsigned long std_putsubs(const char *dir,	/* database base dir */
-			  const char *subdir,
+unsigned long std_putsubs(const char *subdir,
 			  unsigned long hash_lo,
 			  unsigned long hash_hi,
 			  int subwrite())	/* write function. */
@@ -47,7 +46,7 @@ unsigned long std_putsubs(const char *dir,	/* database base dir */
   int match;
   unsigned int hashpos;
 
-    std_makepath(&fn,dir,subdir,"/subscribers/",'?');
+    std_makepath(&fn,subdir,"/subscribers/",'?');
     hashpos = fn.len - 2;
     if (hash_lo > 52) hash_lo = 52;
     if (hash_hi > 52) hash_hi = 52;

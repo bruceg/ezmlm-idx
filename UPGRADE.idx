@@ -15,6 +15,8 @@ see INSTALL.idx. For details on what's new in this version, see CHANGES.idx.
 Steps required for upgrading from ezmlm-idx-5.x.x and earlier
 -------------------------------------------------------------
 
+FIXME: add notes about absolute paths
+
 If you were previously using an install of ezmlm-idx that was compiled
 with MySQL or PgSQL support and have set up lists that use this SQL
 support, you will need to build and install the apropriate plugin and

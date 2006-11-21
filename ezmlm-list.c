@@ -64,11 +64,11 @@ void main(int argc,char **argv)
   subdir = argv[optind];
 
   if (flagnumber) {
-    n = putsubs(dir,subdir,0L,52L,dummywrite,flagmysql);
+    n = putsubs(subdir,0L,52L,dummywrite,flagmysql);
     if (substdio_put(subfdout,strnum,fmt_ulong(strnum,n)) == -1) die_write();
     if (substdio_put(subfdout,"\n",1) == -1) die_write();
   } else
-    (void) putsubs(dir,subdir,0L,52L,subwrite,flagmysql);
+    (void) putsubs(subdir,0L,52L,subwrite,flagmysql);
   if (substdio_flush(subfdout) == -1) die_write();
   closesub();
   _exit(0);

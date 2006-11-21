@@ -38,7 +38,7 @@ if [ "$DROP" = "y" ]; then
 
 /* drop old tables.  */
 /* Usage: */
-/* ezmlm-mktab [-d] troot | psql -h host -u userid -d database */
+/* ezmlm-mktab [-d] troot | psql -h host -U userid -d database */
 
 DROP TABLE ${TROOT};
 DROP TABLE ${TROOT}_slog;

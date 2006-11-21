@@ -13,8 +13,7 @@ struct sqlinfo
   void *conn;
 };
 
-extern const char *parsesql(const char *dir,
-			    const char *subdir,
+extern const char *parsesql(const char *subdir,
 			    struct sqlinfo *info);
 
 #endif

@@ -66,10 +66,9 @@ stralloc fnhash = {0};
 stralloc fnhashnew = {0};
 
 stralloc quoted = {0};
-stralloc ddir = {0};
-char *sender;
-char *dir;
-char *workdir;
+const char *sender;
+const char *dir;
+const char *workdir;
 
 void die_hashnew(void)
 { strerr_die4sys(111,FATAL,ERR_WRITE,fnhashnew.s,": "); }
@@ -91,7 +90,7 @@ void dowit(const char *addr,unsigned long when,const stralloc *bounce)
   unsigned int wpos;
   unsigned long wdir,wfile;
 
-  if (!issub(workdir,0,addr)) return;
+  if (!issub(workdir,addr)) return;
 
   if (!stralloc_copys(&fndate,workdir)) die_nomem();
   if (!stralloc_cats(&fndate,"/bounce/d")) die_nomem();
@@ -140,7 +139,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   unsigned int pos;
   unsigned long ddir,dfile;
 
-  if (!issub(workdir,0,addr)) return;
+  if (!issub(workdir,addr)) return;
 
   if (!stralloc_copys(&fndate,workdir)) die_nomem();
   if (!stralloc_cats(&fndate,"/bounce/d")) die_nomem();
@@ -289,7 +288,6 @@ void main(int argc,char **argv)
   startup(dir = argv[optind]);
   load_config(dir);
   initsub(dir);
-  workdir = dir;
 
     if (str_start(action,"receipt-")) {
       flagreceipt = 1;
@@ -303,12 +301,7 @@ void main(int argc,char **argv)
 	default: break;
       }
     }
-  if (flagdig) {
-    if (!stralloc_copys(&ddir,dir)) die_nomem();
-    if (!stralloc_cats(&ddir,"/digest")) die_nomem();
-    if (!stralloc_0(&ddir)) die_nomem();
-    workdir = ddir.s;
-  }
+  workdir = flagdig ? "digest" : ".";
 
   if (!*action) die_trash();
 
@@ -341,7 +334,7 @@ void main(int argc,char **argv)
       cookie(hash,key.s,key.len,strnum,line.s,"P");
       if (byte_diff(hash,COOKIE,hashcopy)) die_trash();
 
-      (void) subscribe(workdir,0,line.s,0,"","-probe",1,-1);
+      (void) subscribe(workdir,line.s,0,"","-probe",1,-1);
       _exit(99);
     }
 
@@ -386,20 +379,20 @@ void main(int argc,char **argv)
   }
 
   if (hashp) {		/* scrap bad cookies */
-      if ((ret = checktag(workdir,msgnum,0L,"x",(char *) 0,hashp))) {
+      if ((ret = checktag(msgnum,0L,"x",(char *) 0,hashp))) {
         if (*ret)
 	  strerr_die2x(111,FATAL,ret);
 	else
 	  die_trash();
       } else if (flagreceipt) {
-	if (!(ret = logmsg(dir,msgnum,listno,0L,5))) {
+	if (!(ret = logmsg(msgnum,listno,0L,5))) {
 	  closesub();
 	  strerr_die6x(99,INFO,"receipt:",cp," [",hashp,"]");
 	}
 	if (*ret) strerr_die2x(111,FATAL,ret);
 	else strerr_die2x(0,INFO,ERR_DONE);
       } else if (*action) {	/* post VERP master bounce */
-	if ((ret = logmsg(dir,msgnum,listno,0L,-1))) {
+	if ((ret = logmsg(msgnum,listno,0L,-1))) {
 	  closesub();
 	  strerr_die4x(0,INFO,"bounce [",hashp,"]");
 	}
@@ -474,8 +467,8 @@ void main(int argc,char **argv)
 	  if ((i = str_rchr(line.s,'@')) >= 5) {	/* 00_52@host */
 	    line.s[i] = '\0';				/* 00_52 */
 	    (void) scan_ulong(line.s + i - 5,&listno);
-	      if ((ret = logmsg(dir,msgnum,listno + 1,0L,-1)) && *ret)
-		strerr_die2x(111,FATAL,ret);
+	    if ((ret = logmsg(msgnum,listno + 1,0L,-1)) && *ret)
+	      strerr_die2x(111,FATAL,ret);
 	    strerr_warn3(INFO,"bounce ",line.s + i - 5,(struct strerr *) 0);
 	    flagmasterbounce = 1;
 	  }

@@ -67,9 +67,9 @@ char urlstr[] = "%00";	/* to build a url-encoded version of a char */
 
 int act = AC_NONE;	/* desired action */
 unsigned int actlen = 0;/* str_len of above */
-char *dir;
-char *workdir;
-char *sender;
+const char *dir;
+const char *workdir;
+const char *sender;
 
 void die_cookie(void)
 {
@@ -84,7 +84,6 @@ stralloc line = {0};
 stralloc qline = {0};
 stralloc quoted = {0};
 stralloc moddir = {0};
-stralloc ddir = {0};
 stralloc modsub = {0};
 stralloc remote = {0};
 stralloc from = {0};
@@ -418,7 +417,7 @@ int geton(const char *action)
   unsigned char ch;
 
   fl = get_from(target.s,action);		/* try to match up */
-  switch((r = subscribe(workdir,0,target.s,1,fl,
+  switch((r = subscribe(workdir,target.s,1,fl,
 			(*action == ACTION_RC[0]) ? "+mod" : "+",
 			1,-1))) {
     case 1:
@@ -471,7 +470,7 @@ int getoff(const char *action)
 {
   int r;
 
-  switch((r = subscribe(workdir,0,target.s,0,"",
+  switch((r = subscribe(workdir,target.s,0,"",
 			(*action == ACTION_WC[0]) ? "-mod" : "-",
 			1,-1))) {
 			/* no comment for unsubscribe */
@@ -535,7 +534,7 @@ void doconfirm(const char *act)
 
 void sendtomods(void)
 {
-  putsubs(moddir.s,0,0L,52L,subto,1);
+  putsubs(moddir.s,0L,52L,subto,1);
 }
 
 void copybottom(void)
@@ -641,31 +640,29 @@ int main(int argc,char **argv)
   if (str_equal(sender,"#@[]"))
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
-  if (!stralloc_copys(&ddir,dir)) die_nomem();
+  workdir = ".";
 
   if (case_starts(action,"digest")) {			/* digest */
     action += 6;
     if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
-    if (!stralloc_cats(&ddir,"/digest")) die_nomem();
+    workdir = "digest";
     flagdig = FLD_DIGEST;
   } else if (case_starts(action,ACTION_ALLOW)) {	/* allow */
     action += str_len(ACTION_ALLOW);
     if (!stralloc_append(&outlocal,"-")) die_nomem();
     if (!stralloc_cats(&outlocal,ACTION_ALLOW)) die_nomem();
-    if (!stralloc_cats(&ddir,"/allow")) die_nomem();
+    workdir = "allow";
     flagdig = FLD_ALLOW;
   } else if (case_starts(action,ACTION_DENY)) {		/* deny */
     action += str_len(ACTION_DENY);
     if (!stralloc_append(&outlocal,"-")) die_nomem();
     if (!stralloc_cats(&outlocal,ACTION_DENY)) die_nomem();
-    if (!stralloc_cats(&ddir,"/deny")) die_nomem();
+    workdir = "deny";
     flagdig = FLD_DENY;
   }
   if (flagdig)				/* zap '-' after db specifier */
     if (*(action++) != '-') die_badaddr();
 
-  if (!stralloc_0(&ddir)) die_nomem();
-  workdir = ddir.s;
 
   if (!stralloc_copys(&target,sender)) die_nomem();
   if (action[0]) {
@@ -709,23 +706,22 @@ int main(int argc,char **argv)
 			/* Yes, this needs to be cleaned up! */
 
   if (flagmod || flagremote) {
-    if (modsub.len && modsub.s[0] == '/') {
+    if (modsub.len) {
       if (!stralloc_copy(&moddir,&modsub)) die_nomem();
-    } else if (remote.len && remote.s[0] == '/') {
+    } else if (remote.len) {
       if (!stralloc_copy(&moddir,&remote)) die_nomem();
     } else {
-      if (!stralloc_copys(&moddir,dir)) die_nomem();
-      if (!stralloc_cats(&moddir,"/mod")) die_nomem();
+      if (!stralloc_copys(&moddir,"mod")) die_nomem();
     }
     if (!stralloc_0(&moddir)) die_nomem();
 		/* for these the reply is 'secret' and goes to sender  */
 		/* This means that they can be triggered from a SENDER */
 		/* that is not a mod, but never send to a non-mod */
     if (act == AC_NONE || flagdig == FLD_DENY)	/* None of the above */
-      pmod = issub(moddir.s,0,sender);
+      pmod = issub(moddir.s,sender);
 				/* sender = moderator? */
     else
-      pmod = issub(moddir.s,0,target.s);
+      pmod = issub(moddir.s,target.s);
 				/* target = moderator? */
    } else
      pmod = 0;			/* always 0 for non-mod/remote lists */
@@ -914,9 +910,9 @@ int main(int argc,char **argv)
 
     if (act == AC_LIST) {
       (void) code_qput(TXT_LISTMEMBERS,str_len(TXT_LISTMEMBERS));
-      i = putsubs(workdir,0,0L,52L,code_subto,1);
+      i = putsubs(workdir,0L,52L,code_subto,1);
     } else			/* listn */
-      i = putsubs(workdir,0,0L,52L,dummy_to,1);
+      i = putsubs(workdir,0L,52L,dummy_to,1);
 
     (void) code_qput("\n  ======> ",11);
     (void) code_qput(strnum,fmt_ulong(strnum,i));
@@ -933,7 +929,7 @@ int main(int argc,char **argv)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
     hdr_listsubject1((*action == 0) ? TXT_SUB_LOG : TXT_SUB_LOG_SEARCH);
     hdr_ctboundary();
-    searchlog(workdir,0,action,code_subto);
+    searchlog(workdir,action,code_subto);
     copybottom();
     qmail_to(&qq,pmod);
 
@@ -1209,7 +1205,7 @@ int main(int argc,char **argv)
     } else {
       if (!stralloc_copy(&to,&target)) die_nomem();
     }
-    if (issub(workdir,0,target.s))
+    if (issub(workdir,target.s))
       copy(&qq,"text/sub-nop",flagcd);
     else
       copy(&qq,"text/unsub-nop",flagcd);

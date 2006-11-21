@@ -187,15 +187,14 @@ void main(int argc,char **argv)
     wrap_exitcode(child);
   }
 
-  if (!moderators.len || !(moderators.s[0] == '/')) {
-    if (!stralloc_copys(&moderators,dir)) die_nomem();
-    if (!stralloc_cats(&moderators,"/mod")) die_nomem();
+  if (!moderators.len) {
+    if (!stralloc_copys(&moderators,"mod")) die_nomem();
   }
   if (!stralloc_0(&moderators)) die_nomem();
 
   if (sender) {
-      pmod = issub(moderators.s,0,sender);
-      closesub();
+    pmod = issub(moderators.s,sender);
+    closesub();
 				/* sender = moderator? */
   } else
     pmod = 0;
@@ -410,11 +409,10 @@ void main(int argc,char **argv)
     qmail_to(&qq,pmod);
   else {
     if (flagself) {				/* to all moderators */
-      if (!stralloc_copys(&moderators,dir)) die_nomem();
-      if (!stralloc_cats(&moderators,"/mod")) die_nomem();
+      if (!stralloc_copys(&moderators,"mod")) die_nomem();
       if (!stralloc_0(&moderators)) die_nomem();
     }
-    putsubs(moderators.s,0,0,52,subto,1);
+    putsubs(moderators.s,0,52,subto,1);
   }
 
   if (*(err = qmail_close(&qq)) == '\0') {

@@ -101,10 +101,6 @@ char archtype=' ';
 stralloc mod = {0};		/* moderator addr for non-public lists */
 const char *pmod = (char *) 0;	/* pointer to above */
 
-/* for digest */
-stralloc ddir = {0};
-stralloc edir = {0};
-
 int act = AC_NONE;		/* Action we do */
 int flageditor = 0;		/* if we're invoked for within dir/editor */
 struct stat st;
@@ -114,10 +110,10 @@ int flagarchived;		/* if list is archived */
 int flagindexed;		/* if list is indexed */
 int flagq = 0;			/* don't use 'quoted-printable' */
 
-char *dir;
-char *workdir;
-char *sender;
-char *digestcode;
+const char *dir;
+const char *workdir;
+const char *sender;
+const char *digestcode;
 
 struct qmail qq;
 
@@ -184,11 +180,11 @@ void zapnonsub(const char *szerr)
   if (sender && *sender) {	/* "no sender" is not a subscriber */
     if (!flagsub)
       return;
-    if (issub(dir,0,sender))
+    if (issub(0,sender))
       return;		/* subscriber */
-    if (issub(ddir.s,0,sender))
+    if (issub("digest",sender))
       return;		/* digest subscriber */
-    if (issub(edir.s,0,sender))
+    if (issub("allow",sender))
       return;		/* allow addresses */
   }
   strerr_die4x(100,FATAL,ERR_SUBSCRIBER_CAN,szerr,ERR_571);
@@ -893,16 +889,15 @@ void main(int argc,char **argv)
       flagremote = getconf_line(&line,"remote",0,dir);
       if (!flagremote)
         strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
-      if (!moddir.len || moddir.s[0] != '/') {
-        if (line.len && line.s[0] == '/') {
+      if (!moddir.len) {
+        if (line.len) {
           if (!stralloc_copy(&moddir,&line)) die_nomem();
         } else {
-          if (!stralloc_copys(&moddir,dir)) die_nomem();
-          if (!stralloc_cats(&moddir,"/mod")) die_nomem();
+          if (!stralloc_copys(&moddir,"mod")) die_nomem();
         }
       }
       if (!stralloc_0(&moddir)) die_nomem();
-      pmod = issub(moddir.s,0,sender);
+      pmod = issub(moddir.s,sender);
       if (!pmod)			/* sender = moderator? */
         strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
       else {
@@ -916,11 +911,8 @@ void main(int argc,char **argv)
   flagindexed = getconf_line(&line,"indexed",0,dir);
   flagarchived = getconf_line(&line,"archived",0,dir);
 
-    if (!stralloc_copys(&ddir,dir)) die_nomem();
-    if (!stralloc_cats(&ddir,"/digest")) die_nomem();
-    if (!stralloc_0(&ddir)) die_nomem();
   if (act == AC_DIGEST) {
-    workdir = ddir.s;
+    workdir = "digest";
     if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
     if (getconf_line(&line,"chunk",0,dir)) {
       if (!stralloc_0(&line)) die_nomem();
@@ -937,11 +929,8 @@ void main(int argc,char **argv)
       flagqmqp = getconf(&qmqpservers,line.s,0,dir);
     }
   } else
-    workdir = dir;
+    workdir = ".";
 
-  if (!stralloc_copys(&edir,dir)) die_nomem();	/* not needed for -dig, but */
-  if (!stralloc_cats(&edir,"/allow")) die_nomem();	/* be safe */
-  if (!stralloc_0(&edir)) die_nomem();
 
   if (flagqmqp) {
     if (qmail_open(&qq,&qmqpservers) == -1)		/* open qmail */
@@ -1284,7 +1273,7 @@ void main(int argc,char **argv)
 
   qmail_from(&qq,line.s);
   if (act == AC_DIGEST) {	 /* Do recipients */
-    tagmsg(workdir,mno,seed.s,"d",hashout,qq.msgbytes,chunk);
+    tagmsg(mno,seed.s,"d",hashout,qq.msgbytes,chunk);
     if (chunk) {
       if (!stralloc_copys(&line,"T")) die_nomem();
       if (!stralloc_cat(&line,&outlocal)) die_nomem();
@@ -1310,7 +1299,7 @@ void main(int argc,char **argv)
         qmail_put(&qq,line2.s,line2.len);
       }
     } else
-      subs = putsubs(workdir,0,0L,52L,&subto,1);
+      subs = putsubs(workdir,0L,52L,&subto,1);
   } else {			/* if local is set, sender is checked */
     if (pmod)
       qmail_to(&qq,pmod);
@@ -1321,9 +1310,9 @@ void main(int argc,char **argv)
   if (*(err = qmail_close(&qq)) == '\0') {	/* Done. Skip rest. */
     if (act == AC_DIGEST) {
       if (chunk)
-	(void) logmsg(workdir,mno,0L,0L,2);
+	(void) logmsg(mno,0L,0L,2);
       else
-        (void) logmsg(workdir,mno,0L,subs,4);
+        (void) logmsg(mno,0L,subs,4);
     }
     closesub();			/* close db connection */
     unlock();			/* NOP if nothing locked */

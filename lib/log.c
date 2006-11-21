@@ -20,7 +20,7 @@ static char num[FMT_ULONG];
 static stralloc line = {0};
 static stralloc fn = {0};
 
-void logaddr(const char *dir,const char *subdir,const char *event,
+void logaddr(const char *subdir,const char *event,
 	     const char *addr,const char *comment)
 {
   char ch;
@@ -46,7 +46,7 @@ void logaddr(const char *dir,const char *subdir,const char *event,
   }
   if (!stralloc_cats(&line,"\n")) return;
 
-  std_makepath(&fn,dir,subdir,"/Log",0);
+  std_makepath(&fn,subdir,"/Log",0);
   fd = open_append(fn.s);
   if (fd == -1) return;
   substdio_fdbuf(&ss,write,fd,buf,sizeof(buf));
