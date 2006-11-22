@@ -45,7 +45,7 @@ static void die_write(void)
   strerr_die3x(111,FATAL,ERR_WRITE,"stdout");
 }
 
-static void _closesub(struct sqlinfo *info)
+static void _closesub(struct subdbinfo *info)
 /* close connection to SQL server, if open */
 {
   if ((MYSQL*)info->conn)
@@ -53,7 +53,7 @@ static void _closesub(struct sqlinfo *info)
   info->conn = 0;					/* destroy pointer */
 }
 
-static const char *_opensub(struct sqlinfo *info)
+static const char *_opensub(struct subdbinfo *info)
 {
   if (!(MYSQL*)info->conn) {
     if (!(info->conn = mysql_init((MYSQL *) 0)))
@@ -65,13 +65,13 @@ static const char *_opensub(struct sqlinfo *info)
   return (char *) 0;
 }
 
-static void safe_query(struct sqlinfo *info,const stralloc* query)
+static void safe_query(struct subdbinfo *info,const stralloc* query)
 {
   if (mysql_real_query((MYSQL*)info->conn,query->s,query->len))
     strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
 }
 
-static MYSQL_RES *safe_select(struct sqlinfo *info,const stralloc* query)
+static MYSQL_RES *safe_select(struct subdbinfo *info,const stralloc* query)
 {
   MYSQL_RES *result;
   safe_query(info,query);
@@ -80,7 +80,7 @@ static MYSQL_RES *safe_select(struct sqlinfo *info,const stralloc* query)
   return result;
 }
 
-static const char *_checktag (struct sqlinfo *info,
+static const char *_checktag (struct subdbinfo *info,
 			      unsigned long num,	/* message number */
 			      unsigned long listno,	/* bottom of range => slave */
 			      const char *hash)		/* cookie */
@@ -139,7 +139,7 @@ static const char *_checktag (struct sqlinfo *info,
     return (char *)0;
 }
 
-static const char *_issub(struct sqlinfo *info,
+static const char *_issub(struct subdbinfo *info,
 			  const char *userhost)
 /* Returns (char *) to match if userhost is in the subscriber database      */
 /* dir, 0 otherwise. dir is a base directory for a list and may NOT         */
@@ -194,7 +194,7 @@ static const char *_issub(struct sqlinfo *info,
     return ret;
 }
 
-static const char *_logmsg(struct sqlinfo *info,
+static const char *_logmsg(struct subdbinfo *info,
 			   unsigned long num,
 			   unsigned long listno,
 			   unsigned long subs,
@@ -227,7 +227,7 @@ static const char *_logmsg(struct sqlinfo *info,
   return 0;
 }
 
-static unsigned long _putsubs(struct sqlinfo *info,
+static unsigned long _putsubs(struct subdbinfo *info,
 			      unsigned long hash_lo,
 			      unsigned long hash_hi,
 			      int subwrite())		/* write function. */
@@ -273,7 +273,7 @@ static unsigned long _putsubs(struct sqlinfo *info,
     return no;
 }
 
-static void _searchlog(struct sqlinfo *info,
+static void _searchlog(struct subdbinfo *info,
 		       char *search,		/* search string */
 		       int subwrite())		/* output fxn */
 /* opens dir/Log, and outputs via subwrite(s,len) any line that matches   */
@@ -317,7 +317,7 @@ static void _searchlog(struct sqlinfo *info,
     mysql_free_result(result);
 }
 
-static int _subscribe(struct sqlinfo *info,
+static int _subscribe(struct subdbinfo *info,
 		      const char *subdir,
 		      const char *userhost,
 		      int flagadd,
@@ -459,7 +459,7 @@ static int _subscribe(struct sqlinfo *info,
     return 1;					/* desired effect */
 }
 
-static void _tagmsg(struct sqlinfo *info,
+static void _tagmsg(struct subdbinfo *info,
 		    unsigned long msgnum,	/* number of this message */
 		    char *hashout,		/* calculated hash goes here */
 		    unsigned long bodysize,

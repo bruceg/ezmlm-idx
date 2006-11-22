@@ -15,15 +15,16 @@
 
 static stralloc path = {0};
 static struct sub_plugin *plugin = 0;
-static struct sqlinfo info;
+static struct subdbinfo info;
 static const char* basedir;
 
-static const char *parsesql(void)
-/* reads the file "sql", and if the file exists, parses it into the         */
-/* components. The string should be host:port:user:pw:db:base_table.  If    */
-/* the file does not exists, returns "". On success returns NULL. On error  */
-/* returns error string for temporary error. */
-/* Note that myp is static and all pointers point to it.*/
+static const char *parsesubdb(const char *filename, const char *assumed)
+/* reads the named file , and if the file exists, parses it into the
+ * components. The string should be
+ * [plugin:]host[:port[:user[:pw[:db[:base_table]]]]].  If the file does
+ * not exists, returns "". On success returns NULL. On error returns
+ * error string for temporary error.  Note that myp is static and all
+ * pointers point to it.*/
 {
   unsigned int j;
   const char *port;
@@ -33,12 +34,12 @@ static const char *parsesql(void)
   info.host = info.user = info.pw = info.table = info.conn = 0;
   info.port = 0;
 
-		/* host:port:db:table:user:pw:name */
+		/* [plugin:]host:port:db:table:user:pw:name */
   myp.len = 0;
   port = 0;
-  switch (slurp("sql",&myp,128)) {
+  switch (slurp(filename,&myp,128)) {
 	case -1:	if (!stralloc_copys(&myp,ERR_READ)) return ERR_NOMEM;
-			if (!stralloc_cats(&myp,"sql")) return ERR_NOMEM;
+			if (!stralloc_cats(&myp,filename)) return ERR_NOMEM;
 			if (!stralloc_0(&myp)) return ERR_NOMEM;
 			return myp.s;
 	case 0: return "";
@@ -48,8 +49,17 @@ static const char *parsesql(void)
     myp.s[j] = '\0';
 						/* get connection parameters */
   if (!stralloc_0(&myp)) return ERR_NOMEM;
-  info.host = myp.s;
-  if (myp.s[j = str_chr(myp.s,':')]) {
+  if (assumed != 0) {
+    info.plugin = assumed;
+    j = 0;
+  }
+  else {
+    info.plugin = myp.s;
+    if (myp.s[j = str_chr(myp.s,':')])
+      myp.s[j++] = '\0';
+  }
+  info.host = myp.s + j;
+  if (myp.s[j += str_chr(myp.s+j,':')]) {
     myp.s[j++] = '\0';
     port = myp.s + j;
     if (myp.s[j += str_chr(myp.s+j,':')]) {
@@ -69,6 +79,8 @@ static const char *parsesql(void)
       }
     }
   }
+  if (!info.plugin || !*info.plugin)
+    return ERR_NO_PLUGIN;
   if (port && *port)
     scan_ulong(port,&info.port);
   if (info.host && !*info.host)
@@ -80,7 +92,7 @@ static const char *parsesql(void)
   if (info.db && !*info.db)
     info.db = (char *) 0;
   if (!info.table || !*info.table)
-    return ERR_NO_TABLE;
+    info.table = "ezmlm";
   info.base_table = info.table;
   return (char *) 0;
 }
@@ -268,13 +280,21 @@ void initsub(const char *dir)
   const char *err;
 
   basedir = dir;
-  if ((err = parsesql()) == 0) {
-    std_makepath(&path,auto_lib,"/sub-sql.so",0);
+  if ((err = parsesubdb("subdb",0)) == 0
+      || (*err == '\0'
+	  && (err = parsesubdb("sql","sql")) == 0)) {
+    if (!stralloc_copys(&path,auto_lib)) die_nomem();
+    if (!stralloc_cats(&path,"/sub-")) die_nomem();
+    if (!stralloc_cats(&path,info.plugin)) die_nomem();
+    if (!stralloc_cats(&path,".so")) die_nomem();
+    if (!stralloc_0(&path)) die_nomem();
     if ((handle = dlopen(path.s, RTLD_NOW | RTLD_LOCAL)) == 0)
-      strerr_die3x(111,FATAL,"Could not load SQL plugin: ",dlerror());
+      strerr_die5x(111,FATAL,"Could not load plugin ",path.s,": ",
+		   dlerror());
     else if ((plugin = dlsym(handle,"sub_plugin")) == 0)
-      strerr_die3x(111,FATAL,"SQL plugin is missing symbols: ",dlerror());
+      strerr_die5x(111,FATAL,"Plugin ",path.s," is missing symbols: ",
+		   dlerror());
   }
-  else if (*err != 0)
+  else if (*err != '\0')
     strerr_die2x(111,FATAL,err);
 }

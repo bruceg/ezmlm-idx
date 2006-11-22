@@ -1,0 +1,28 @@
+# $Id$
+
+#####################
+# ezmlm SQL support #
+#####################
+
+if [ -e "$DIR"/sql ]; then
+
+  prompt "ezmlm SQL:            "
+
+  echo sql:`head -n 1 "$DIR"/sql` >"$DIR"/subdb
+  mv "$DIR"/sql "$DIR"/backup.sql
+
+  ${EZBIN}/ezmlm-list "$DIR" >/dev/null || \
+	fatal "ezmlm-list: failed"
+
+  ${EZBIN}/ezmlm-list "$DIR" allow >/dev/null || \
+	fatal "ezmlm-list: failed"
+
+  ${EZBIN}/ezmlm-list "$DIR" . >/dev/null || \
+	fatal "ezmlm-list: failed"
+
+  rm -f "$DIR"/subdb
+  mv "$DIR"/backup.sql "$DIR"/sql
+
+  ${ECHO} "OK"
+
+fi

@@ -41,6 +41,12 @@ support, please follow the instructions in UPGRADE.idx.  After this
 configuration, this version is backwards configurable with previous
 versions.
 
+The plugin support also adds support for a DIR/subdb file which
+supercedes DIR/sql.  The file should contain the subscriber database
+plugin name followed by the content that would have gone into DIR/sql.
+If it is not found, DIR/sql is used instead with an assumed plugin name
+of "sql".
+
 ezmlm-idx-5.1.1, ????-??-??
 ===========================
 

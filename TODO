@@ -1,6 +1,7 @@
 Change semantics of the -6 ezmlm-make option:
   read in DIR/sql, but prefix with "sql:"
   write out DIR/subdb
+Fix up ezmlm-make.1 man page to match
 
 Figure out how to get rid of -fPIC in conf-cc
   Maybe make conf-ccso and conf-ldso, with flags to add to the normal

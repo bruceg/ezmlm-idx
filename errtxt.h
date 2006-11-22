@@ -150,7 +150,7 @@
 #define ERR_PARSE "unable to parse "
 #define ERR_DONE "message already successfully processed by this list"
 #define ERR_MAX_BOUNCE "max bounces exceeded: bounce will not be saved"
-#define ERR_NO_TABLE "no table specified in database connect data"
+#define ERR_NO_PLUGIN "no plugin specified in database connect data"
 
 #endif
 

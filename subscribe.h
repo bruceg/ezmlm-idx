@@ -2,8 +2,9 @@
 #ifndef SUBSCRIBE_H
 #define SUBSCRIBE_H
 
-struct sqlinfo
+struct subdbinfo
 {
+  const char *plugin;
   const char *host;
   unsigned long port;
   const char *db;
@@ -67,34 +68,34 @@ extern void tagmsg(unsigned long msgnum,
 struct sub_plugin
 {
   int version;
-  const char *(*checktag)(struct sqlinfo *info,
+  const char *(*checktag)(struct subdbinfo *info,
 			  unsigned long msgnum,
 			  unsigned long listno,
 			  const char *hash);
-  void (*close)(struct sqlinfo *info);
-  const char *(*issub)(struct sqlinfo *info,
+  void (*close)(struct subdbinfo *info);
+  const char *(*issub)(struct subdbinfo *info,
 		       const char *username);
-  const char *(*logmsg)(struct sqlinfo *info,
+  const char *(*logmsg)(struct subdbinfo *info,
 			unsigned long msgnum,
 			unsigned long,
 			unsigned long subs,
 			int done);
-  const char *(*open)(struct sqlinfo *info);
-  unsigned long (*putsubs)(struct sqlinfo *info,
+  const char *(*open)(struct subdbinfo *info);
+  unsigned long (*putsubs)(struct subdbinfo *info,
 			   unsigned long hash_lo,
 			   unsigned long hash_hi,
 			   int subwrite());
-  void (*searchlog)(struct sqlinfo *info,
+  void (*searchlog)(struct subdbinfo *info,
 		    char *search,
 		    int subwrite());
-  int (*subscribe)(struct sqlinfo *info,
+  int (*subscribe)(struct subdbinfo *info,
 		   const char *subdir,
 		   const char *username,
 		   int flagadd,
 		   const char *from,
 		   const char *event,
 		   int forcehash);
-  void (*tagmsg)(struct sqlinfo *info,
+  void (*tagmsg)(struct subdbinfo *info,
 		 unsigned long msgnum,
 		 char *hashout,
 		 unsigned long bodysize,
