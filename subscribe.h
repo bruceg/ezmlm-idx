@@ -10,6 +10,7 @@ struct sqlinfo
   const char *user;
   const char *pw;
   const char *table;
+  const char *base_table;
   void *conn;
 };
 

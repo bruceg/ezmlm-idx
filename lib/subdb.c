@@ -1,8 +1,6 @@
 /*$Id$*/
 
 #include <dlfcn.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include "case.h"
 #include "die.h"
 #include "errtxt.h"
@@ -20,33 +18,29 @@ static struct sub_plugin *plugin = 0;
 static struct sqlinfo info;
 static const char* basedir;
 
-static stralloc myp = {0};
-static stralloc ers = {0};
-static stralloc table = {0};
-
-static const char *parsesql(const char *subdir,
-			    struct sqlinfo *info)
-/* reads the file dbname/sql, and if the file exists, parses it into the    */
-/* components. The string should be host:port:user:pw:db:table.         If  */
+static const char *parsesql(void)
+/* reads the file "sql", and if the file exists, parses it into the         */
+/* components. The string should be host:port:user:pw:db:base_table.  If    */
 /* the file does not exists, returns "". On success returns NULL. On error  */
 /* returns error string for temporary error. */
 /* Note that myp is static and all pointers point to it.*/
 {
   unsigned int j;
   const char *port;
+  static stralloc myp = {0};
 
-  info->db = "ezmlm";
-  info->host = info->user = info->pw = info->table = info->conn = 0;
-  info->port = 0;
+  info.db = "ezmlm";
+  info.host = info.user = info.pw = info.table = info.conn = 0;
+  info.port = 0;
 
 		/* host:port:db:table:user:pw:name */
   myp.len = 0;
   port = 0;
   switch (slurp("sql",&myp,128)) {
-	case -1:	if (!stralloc_copys(&ers,ERR_READ)) return ERR_NOMEM;
-			if (!stralloc_cats(&ers,"sql")) return ERR_NOMEM;
-			if (!stralloc_0(&ers)) return ERR_NOMEM;
-			return ers.s;
+	case -1:	if (!stralloc_copys(&myp,ERR_READ)) return ERR_NOMEM;
+			if (!stralloc_cats(&myp,"sql")) return ERR_NOMEM;
+			if (!stralloc_0(&myp)) return ERR_NOMEM;
+			return myp.s;
 	case 0: return "";
   }
   if (!stralloc_append(&myp,"\n")) return ERR_NOMEM;
@@ -54,51 +48,65 @@ static const char *parsesql(const char *subdir,
     myp.s[j] = '\0';
 						/* get connection parameters */
   if (!stralloc_0(&myp)) return ERR_NOMEM;
-  info->host = myp.s;
+  info.host = myp.s;
   if (myp.s[j = str_chr(myp.s,':')]) {
     myp.s[j++] = '\0';
     port = myp.s + j;
     if (myp.s[j += str_chr(myp.s+j,':')]) {
       myp.s[j++] = '\0';
-      info->user = myp.s + j;
+      info.user = myp.s + j;
       if (myp.s[j += str_chr(myp.s+j,':')]) {
 	myp.s[j++] = '\0';
-        info->pw = myp.s + j;
+        info.pw = myp.s + j;
 	if (myp.s[j += str_chr(myp.s+j,':')]) {
 	  myp.s[j++] = '\0';
-          info->db = myp.s + j;
+          info.db = myp.s + j;
 	  if (myp.s[j += str_chr(myp.s+j,':')]) {
 	    myp.s[j++] = '\0';
-	    info->table = myp.s + j;
+	    info.table = myp.s + j;
 	  }
 	}
       }
     }
   }
   if (port && *port)
-    scan_ulong(port,&info->port);
-  if (info->host && !*info->host)
-    info->host = (char *) 0;
-  if (info->user && !*info->user)
-    info->user = (char *) 0;
-  if (info->pw && !*info->pw)
-    info->pw = (char *) 0;
-  if (info->db && !*info->db)
-    info->db = (char *) 0;
-  if (!info->table || !*info->table)
+    scan_ulong(port,&info.port);
+  if (info.host && !*info.host)
+    info.host = (char *) 0;
+  if (info.user && !*info.user)
+    info.user = (char *) 0;
+  if (info.pw && !*info.pw)
+    info.pw = (char *) 0;
+  if (info.db && !*info.db)
+    info.db = (char *) 0;
+  if (!info.table || !*info.table)
     return ERR_NO_TABLE;
-  if (subdir != 0
-      && subdir[0] != 0
-      && (subdir[0] != '.' || subdir[1] != 0)) {
-    if (!stralloc_copys(&table,info->table)) return ERR_NOMEM;
-    if (!stralloc_append(&table,"_")) return ERR_NOMEM;
-    if (!stralloc_cats(&table,subdir)) return ERR_NOMEM;
-    if (!stralloc_0(&table)) return ERR_NOMEM;
-    info->table = table.s;
-  }
+  info.base_table = info.table;
   return (char *) 0;
 }
 
+/* Set the info.table based on a combination of the previously-recorded
+ * info.base_table field and the given subdir/sub-table. */
+static void subinfo(const char *subdir)
+{
+  static stralloc table = {0};
+
+  if (subdir != 0
+      && subdir[0] != 0
+      && (subdir[0] != '.' || subdir[1] != 0)) {
+    if (!stralloc_copys(&table,info.base_table)) die_nomem();
+    if (!stralloc_append(&table,"_")) die_nomem();
+    if (!stralloc_cats(&table,subdir)) die_nomem();
+    if (!stralloc_0(&table)) die_nomem();
+    info.table = table.s;
+  }
+  else
+    info.table = info.base_table;
+}
+
+/* Fix up the named subdirectory to strip off the leading base directory
+ * if it is an absolute path, or reject it if it falls outside of the
+ * base directory. */
 static const char *fixsubdir(const char *subdir)
 {
   unsigned int dir_len;
@@ -117,14 +125,11 @@ static const char *fixsubdir(const char *subdir)
   return subdir;
 }
 
-static const char *opensub(const char *subdir,
-			   struct sqlinfo *info)
+static const char *opensub(const char *subdir)
 {
-  const char *err;
   if (plugin) {
-    if ((err = parsesql(subdir,info)) != 0)
-      return err;
-    return plugin->open(info);
+    subinfo(subdir);
+    return plugin->open(&info);
   }
   return 0;
 }
@@ -136,7 +141,7 @@ const char *checktag(unsigned long msgnum,
 		     const char *hash)
 {
   const char *r = 0;
-  if ((r = opensub(0,&info)) != 0)
+  if ((r = opensub(0)) != 0)
     return r;
   r = (plugin == 0)
     ? std_checktag(msgnum,action,seed,hash)
@@ -156,7 +161,7 @@ const char *issub(const char *subdir,
 {
   const char *r = 0;
   subdir = fixsubdir(subdir);
-  if ((r = opensub(subdir,&info)) != 0)
+  if ((r = opensub(subdir)) != 0)
     strerr_die2x(111,FATAL,r);
   if (plugin == 0)
     return std_issub(subdir,userhost);
@@ -169,7 +174,7 @@ const char *logmsg(unsigned long num,
 		   int done)
 {
   const char *r = 0;
-  if ((r = opensub(0,&info)) != 0)
+  if ((r = opensub(0)) != 0)
     return r;
   if (plugin == 0)
     return 0;
@@ -186,7 +191,7 @@ unsigned long putsubs(const char *subdir,
   subdir = fixsubdir(subdir);
   if (!flagsql || plugin == 0)
     return std_putsubs(subdir,hash_lo,hash_hi,subwrite);
-  if ((r = opensub(subdir,&info)) != 0)
+  if ((r = opensub(subdir)) != 0)
     strerr_die2x(111,FATAL,r);
   return plugin->putsubs(&info,hash_lo,hash_hi,subwrite);
 }
@@ -213,7 +218,7 @@ void searchlog(const char *subdir,
     *(cps - 1) = '_';           /* will match char specified as well */
   }
 
-  if ((r = opensub(subdir,&info)) != 0)
+  if ((r = opensub(subdir)) != 0)
     strerr_die2x(111,FATAL,r);
   if (plugin == 0)
     return std_searchlog(subdir,search,subwrite);
@@ -237,7 +242,7 @@ int subscribe(const char *subdir,
 
   if (!flagsql || plugin == 0)
     return std_subscribe(subdir,userhost,flagadd,comment,event,forcehash);
-  if ((r = opensub(subdir,&info)) != 0)
+  if ((r = opensub(subdir)) != 0)
     strerr_die2x(111,FATAL,r);
   return plugin->subscribe(&info,subdir,userhost,flagadd,comment,event,forcehash);
 }
@@ -251,7 +256,7 @@ void tagmsg(unsigned long msgnum,
 {
   const char *r = 0;
   std_tagmsg(msgnum,seed,action,hashout);
-  if ((r = opensub(0,&info)) != 0)
+  if ((r = opensub(0)) != 0)
     strerr_die2x(111,FATAL,r);
   if (plugin != 0)
     plugin->tagmsg(&info,msgnum,hashout,bodysize,chunk);
@@ -259,15 +264,17 @@ void tagmsg(unsigned long msgnum,
 
 void initsub(const char *dir)
 {
-  struct stat st;
   void *handle;
+  const char *err;
 
   basedir = dir;
-  if (stat("sql",&st) == 0) {
+  if ((err = parsesql()) == 0) {
     std_makepath(&path,auto_lib,"/sub-sql.so",0);
     if ((handle = dlopen(path.s, RTLD_NOW | RTLD_LOCAL)) == 0)
       strerr_die3x(111,FATAL,"Could not load SQL plugin: ",dlerror());
     else if ((plugin = dlsym(handle,"sub_plugin")) == 0)
       strerr_die3x(111,FATAL,"SQL plugin is missing symbols: ",dlerror());
   }
+  else if (*err != 0)
+    strerr_die2x(111,FATAL,err);
 }

@@ -25,13 +25,15 @@ ezmlm-idx-6.0.0, ????-??-??
 
 This version introduces two major changes in how ezmlm-idx operates.
 
-First, the naming of subscriber lists has been revamped.  In
-previous versions, the subscriber list would be identified by a full
-path to the list directory.  In this version, the lists are identified
-by their subdirectory name within the list base directory.  Full paths
-are supported in some places for backwards compatibility, but only
-where they fall within the list directory.  This coincidentally removes
-the absolute path requirement in all places except ezmlm-make.
+First, the naming of subscriber lists has been revamped.  In previous
+versions, the subscriber list would be identified by a full path to the
+list directory.  In this version, the lists are identified by their
+subdirectory name within the list base directory.  Full paths are
+supported in some places for backwards compatibility, but only where
+they fall within the list directory.  This coincidentally removes the
+absolute path requirement in all places except ezmlm-make, and
+eliminates the need for (and use of) all the "sql" files not in the list
+base directory.
 
 Second, the two SQL subscriber database libraries have been moved into
 dynamically loaded plugins.  If you were previously using MySQL or PgSQL

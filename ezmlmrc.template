@@ -459,21 +459,8 @@ x-world/x-vrml
 # chemical/x-pdb
 # --------------------- Handle SQL connect info
 </-sql#^6e/>
-</-digest/sql#^6e/>
-</-allow/sql#^6e/>
-</-mod/sql#^6e/>
-</sql#6W/>
+</sql#6/>
 <#6#>
-</sql#6w/>
-<#6#>:<#L#>@<#H#>
-</digest/sql#6dW/>
-<#6#>_digest
-</digest/sql#6dw/>
-<#6#>_digest:<#L#>_digest@<#H#>
-</allow/sql#6/>
-<#6#>_allow
-</mod/sql#6m/>
-<#6#>_mod
 # -------------------- End sql stuff
 </prefix#fE/>
 [<#L#>]

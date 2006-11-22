@@ -10,7 +10,7 @@
   DEFAULT='unsubscribe'
   SENDER="${SND}@$HOST"
 
-  ${EZBIN}/ezmlm-sub "$DIR" "${SND}@$HOST"
+  ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
   ${EZBIN}/ezmlm-manage -U "$DIR" </dev/null >"$ERR" 2>&1 || \
 	fatal "failed with -U"
   ${EZBIN}/ezmlm-issubn "$DIR" && \
@@ -18,7 +18,7 @@
 
   LOCAL="$LOC-digest-subscribe"
   DEFAULT='digest-subscribe'
-  ${EZBIN}/ezmlm-unsub "$DIR" digest "${SND}@$HOST"
+  ${EZBIN}/ezmlm-unsub "$DIR" digest "$SENDER"
 
 # test that access to the deny db is restricted to remote admins
   LOCAL="$LOC-deny-subscribe"
@@ -60,7 +60,7 @@
 	fatal "failed with -S"
   ${EZBIN}/ezmlm-issubn "$DIR" digest || \
 	fatal "digest-subscribe with -S failed"
-  ${EZBIN}/ezmlm-unsub "$DIR" digest "${SND}@$HOST"
+  ${EZBIN}/ezmlm-unsub "$DIR" digest "$SENDER"
   touch "${DIR}/modsub" || \
 	{ ${ECHO} "Failed to restore DIR/modsub"; exit 99; }
 
