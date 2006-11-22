@@ -5,6 +5,8 @@ ezmlm-test \- test ezmlm programs
 .SH SYNOPSIS
 .B ezmlm-test
 [
+.B \-s\fI subdb
+] [
 .B \-h\fI host
 ] [
 .B \-u\fI user
@@ -72,12 +74,17 @@ SQL database are used for testing. To use the SQL database with an
 empty password, specify
 .BR \-p\ '' .
 .TP
+.B \-s\fI subdb
+Use the
+.I subdb
+plugin for the subscriber databases.
+.TP
 .B \-t\fI sqltable
 Use
 .I sqltable
 as the table root name for the SQL database tables, if an SQL database
 is used (see
-.BR \-p ).
+.BR \-s ).
 Default is ``list''.
 .TP
 .B \-u\fI sqluser

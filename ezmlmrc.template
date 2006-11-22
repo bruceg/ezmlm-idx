@@ -457,9 +457,9 @@ x-world/x-vrml
 # application/x-sh
 # application/x-shar
 # chemical/x-pdb
-# --------------------- Handle SQL connect info
-</-sql#^6e/>
-</sql#6/>
+# --------------------- Handle subscriber database info
+</-subdb#^6e/>
+</subdb#6/>
 <#6#>
 # -------------------- End sql stuff
 </prefix#fE/>

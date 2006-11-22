@@ -24,8 +24,6 @@ echo "==================== Testing subdb = $db ===================="
 `dirname $0`/makerrors
 if [ $db != 'std' ]; then
   `dirname $0`/makerrors $db
-  rm -f sub-sql.so
-  ln -s sub-${db}.so sub-sql.so
 fi
 
 exec ${0}-$db

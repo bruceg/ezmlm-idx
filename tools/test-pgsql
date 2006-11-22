@@ -4,6 +4,6 @@ set -e
 ./ezmlm-mktab-pgsql -d -C list | psql -h pgsql eztest >/dev/null 2>&1
 ./ezmlm-mktab-pgsql list | psql -h pgsql eztest
 
-./ezmlm-test -d eztest -p '' -h pgsql
+./ezmlm-test -s pgsql -d eztest -p '' -h pgsql
 
 ./ezmlm-mktab-pgsql -d -C list | psql -h pgsql eztest

@@ -8,7 +8,7 @@
 # cleanup the mysql sub tables so we can repeat if necessary
 # the Log test will pass due to old data once we access the mysql log,
 # rather than the file, but what the ...
-  if [ $USESQL ]; then
+  if [ -n "$SUBDB" ]; then
 	${EZBIN}/ezmlm-unsub "$DIR" digest "${MAN}@$HOST" "${DIG}@$HOST" \
 		>/dev/null 2>&1
 	${EZBIN}/ezmlm-unsub "$DIR" mod "${MOD}@$HOST" \

@@ -45,7 +45,8 @@ The plugin support also adds support for a DIR/subdb file which
 supercedes DIR/sql.  The file should contain the subscriber database
 plugin name followed by the content that would have gone into DIR/sql.
 If it is not found, DIR/sql is used instead with an assumed plugin name
-of "sql".
+of "sql".  ezmlm-make will read in and convert DIR/sql if DIR/subdb does
+not exist, but it writes out DIR/subdb.
 
 ezmlm-idx-5.1.1, ????-??-??
 ===========================

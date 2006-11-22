@@ -216,7 +216,11 @@ int read_new_config(void)
   read_line("/fromheader",&popt[3]);
   read_line("/tstdigopts",&popt[4]);
   read_line("/owner",&popt[5]);
-  read_line("/sql",&popt[6]);
+  if (read_line("/subdb",&popt[6]) != 0
+      && read_line("/sql",&line) == 0) {
+    if (!stralloc_copyb(&popt[6],"sql:",4)) die_nomem();
+    if (!stralloc_catb(&popt[6],line.s,line.len)) die_nomem();
+  }
   read_line("/modpost",&popt[7]);
   read_line("/modsub",&popt[8]);
   read_line("/remote",&popt[9]);
@@ -320,7 +324,8 @@ void main(int argc,char **argv)
   for (pos = 0; pos < (unsigned int) NO_FLAGS; pos++) {
     flags[pos] = 0;
   }
-  for (pos = 0; pos < 10; popt[pos++].len = 0);
+  for (pos = 0; pos < 10; ++pos)
+    popt[pos].len = 0;
 
   while ((opt = getopt(argc,argv,
    "+aAbBcC:dDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0:3:4:5:6:7:8:9:"))

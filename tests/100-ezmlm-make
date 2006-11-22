@@ -56,26 +56,12 @@
 
   ${ECHO} "OK"
 
-# Add sql files for sql testing
-RDBMS='STD'
-prompt "Using RDBMS support:  "
-if [ $USESQL ]; then
-  ${EZBIN}/ezmlm-make -+6 "$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
+# Add subdb files for plugin testing
+${ECHO} "Using subdb plugin:   ${SUBDB:-None}"
+if [ -n "$SUBDB" ]; then
+  ${EZBIN}/ezmlm-make -+6 "$SUBDB:$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
 	-C${EZBIN}/lang/en_US "$DIR"|| \
-	fatal "ezmlm-make failed to add SQL config info"
-
-  ${STRINGS} ${EZBIN}/sub-sql.so | ${GREP} -i 'MySQL' >/dev/null 2>&1 && \
-	RDBMS='MySQL'
-  ${STRINGS} ${EZBIN}/sub-sql.so | ${GREP} -i 'libpq.' >/dev/null 2>&1 && \
-	RDBMS='PostgreSQL'
-  if [ "$RDBMS" = 'STD' ]; then
-	${ECHO} "No recognized support. If none, will default to std dbs."
-  else
-	${ECHO} "$RDBMS. Hope empty tables exist."
-  fi
-
-else
-	${ECHO} "No."
+	fatal "ezmlm-make failed to add subdb config info"
 fi
 
   # remove inlocal/inhost - shouldn't be used

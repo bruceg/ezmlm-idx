@@ -34,18 +34,20 @@ fi
 SQLUSER=''	# must be empty
 # Set if we've found bug from old version
 BUG=''
-# Use RDBMS, set if -p was specified even if PW empty, e.g. Postgres
-USESQL=''
+# Use subdb plugin
+SUBDB=''
 # process arguments
 
 while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 	case "$1" in
+		-s)
+			SUBDB="$2"; shift; shift;;
 		-d)
 			DB="$2"; shift; shift;;
 		-h)
 			SQLHOST="$2"; shift; shift;;
 		-p)
-			PW="$2"; USESQL=1; shift; shift;;
+			PW="$2"; shift; shift;;
 		-u)
 			SQLUSER="$2"; shift; shift;;
 		-t)
@@ -55,14 +57,15 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 		*)
 			${ECHO} "$i"
 			${ECHO} "Usage: ezmlm-test [-/]" \
-				"[-p sqlpassword [-u sqluser] [-d sqldb]" \
+				"[-s plugin [-p sqlpassword] [-u sqluser] [-d sqldb]" \
 				"[-t sqltable] [-h sqlhost]]"
 			${ECHO}
 			${ECHO} "args have to be separated from switches!"
 			${ECHO}
-			${ECHO} "defaults: -d ezmlm"
-			${ECHO} "          -h [empty => RDBMS default]"
-			${ECHO} "          -p [empty - don't use SQL support]"
+			${ECHO} "defaults: -s [empty - use standard subdb]"
+			${ECHO} "          -d ezmlm"
+			${ECHO} "          -h [empty => plugin default]"
+			${ECHO} "          -p [empty]"
 			${ECHO} "          -s 1 [run test from beginning]"
 			${ECHO} "          -t list"
 			${ECHO} "          -u eztest"
@@ -107,7 +110,7 @@ fi
 ########################
 # remove old test list #
 ########################
-if [ $USESQL ]; then
+if [ -n "$SUBDB" ]; then
 	${EZBIN}/ezmlm-unsub "$DIR" digest "${MAN}@$HOST" "${DIG}@$HOST" \
 		>"$ERR" 2>&1
 	${EZBIN}/ezmlm-unsub "$DIR" mod "${MOD}@$HOST" \

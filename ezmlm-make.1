@@ -760,11 +760,12 @@ for more info.)
 will configure the list to forward mail directed to the list owner to
 .IR owner@host .
 .TP
-.B \-6\fI\ host:port:user:password:datab:table
-SQL connect info. Use the sql
-.IR host
-(default localhost),
-connecting to
+.B \-6\fI\ plugin:host:port:user:password:datab:table
+Subscriber database info. Use the database plugin named
+.I plugin
+which connects to
+.I host
+(default localhost), on port number
 .I port
 (default port for SQL server) as
 .I user
@@ -772,12 +773,10 @@ with
 .I password
 using database
 .I datab
-(default ezmlm)
+(default "ezmlm")
 and the table root name
 .I table
-(default ezmlm)
-This will have no effect unless the ezmlm programs
-are compiled with SQL support.
+(default "ezmlm")
 .TP
 .B \-7 \fI/msg_mod_path
 Make
