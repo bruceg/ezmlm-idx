@@ -1,16 +1,14 @@
-Change semantics of the -6 ezmlm-make option:
-  read in DIR/sql, but prefix with "sql:"
-  write out DIR/subdb
-Fix up ezmlm-make.1 man page to match
-
 Figure out how to get rid of -fPIC in conf-cc
   Maybe make conf-ccso and conf-ldso, with flags to add to the normal
   conf-cc and conf-ld ?
 Only compile files in lib/ and *=so with PIC flags
 
-*** Write an ezmlm-upgrade DIR script to:
-  Empty "modsub" and "remote" if they do not start with "/"
-  Strip DIR/ from "modsub" and "remote" if they start with "/"
+Modify initsub to take the contents of the subdb file as a parameter
+  (if not given, then load up the DIR/subdb file)
+Modify the programs that call subdb functions with flagsql=0 to use the
+above with subdb="std".
+Move the "std" subdb into a plugin.
+
 Fixup man pages and FAQ.idx regarding modsub and remote contents
 ?Remove "dir" argument from getconf?
 

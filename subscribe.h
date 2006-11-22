@@ -10,7 +10,6 @@ struct subdbinfo
   const char *db;
   const char *user;
   const char *pw;
-  const char *table;
   const char *base_table;
   void *conn;
 };
@@ -74,6 +73,7 @@ struct sub_plugin
 			  const char *hash);
   void (*close)(struct subdbinfo *info);
   const char *(*issub)(struct subdbinfo *info,
+		       const char *table,
 		       const char *username);
   const char *(*logmsg)(struct subdbinfo *info,
 			unsigned long msgnum,
@@ -82,14 +82,16 @@ struct sub_plugin
 			int done);
   const char *(*open)(struct subdbinfo *info);
   unsigned long (*putsubs)(struct subdbinfo *info,
+			   const char *table,
 			   unsigned long hash_lo,
 			   unsigned long hash_hi,
 			   int subwrite());
   void (*searchlog)(struct subdbinfo *info,
+		    const char *table,
 		    char *search,
 		    int subwrite());
   int (*subscribe)(struct subdbinfo *info,
-		   const char *subdir,
+		   const char *table,
 		   const char *username,
 		   int flagadd,
 		   const char *from,
