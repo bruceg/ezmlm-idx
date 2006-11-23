@@ -11,7 +11,7 @@
 
   ${ECHO} Verifying message header and body contents...
 
-  run ezmlm-make -+ -S "$DIR" || \
+  ${EZBIN}/ezmlm-make -+ -S "$DIR" || \
   fatal "ezmlm-make failed"
 
   echo 'Local: <#L#>' >"${DIR}/text/trailer"

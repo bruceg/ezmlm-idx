@@ -6,61 +6,38 @@
 
   prompt "ezmlm-tstdig:         "
 
-  run ezmlm-tstdig -k2 -m10 -t1 "$DIR" || \
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t1 "$DIR" || \
 	fatal "-t1 failed"
-  run ezmlm-tstdig -k2 -m10 -t0 "$DIR" && \
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" && \
 	fatal "-t0 failed"
-
-  ${ECHO} 2 >"$DIR"/digestsize
-  ${ECHO} 10 >"$DIR"/digestmsgs
-  ${ECHO} 1 >"$DIR"/digesttime
-  run ezmlm-tstdig "$DIR" || \
-	fatal "digesttime=1 failed"
-  ${ECHO} 0 >"$DIR"/digesttime
-  run ezmlm-tstdig "$DIR" && \
-	fatal "digesttime=0 failed"
 
   LOCAL="$LOC-xx"
   DEFAULT='xx'
-  run ezmlm-tstdig -k2 -m10 -t0 "$DIR" || \
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" || \
 	fatal "problem with -xx in manager position"
   LOCAL="$LOC-dig."
   DEFAULT='dig.'
-  run ezmlm-tstdig -k2 -m10 -t0 "$DIR" && \
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" && \
 	fatal "problem with -dig in manager position"
   LOCAL="$LOC-digest-"
   DEFAULT='digest-'
-  run ezmlm-tstdig -k2 -m10 -t0 "$DIR" || \
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" || \
 	{ ${ECHO} "err with -digest- in mgr pos: 0.31 bug fixed in 0.321"
 	  prompt "ezmlm-tstdig.......   "
 	  BUG="${BUG} digest"
 	}
-
   LOCAL=''
   ${UNSET} DEFAULT
-  run ezmlm-tstdig -k2 -m4 -t1 "$DIR" || \
+  ${EZBIN}/ezmlm-tstdig -k2 -m4 -t1 "$DIR" || \
 	fatal "-m failed"
-  run ezmlm-tstdig -k1 -m10 -t0 "$DIR" || \
+  ${EZBIN}/ezmlm-tstdig -k1 -m10 -t0 "$DIR" || \
 	fatal "-k failed"
-
-  ${ECHO} 2 >"$DIR"/digestsize
-  ${ECHO} 4 >"$DIR"/digestmsgs
-  ${ECHO} 1 >"$DIR"/digesttime
-  run ezmlm-tstdig "$DIR" || \
-	fatal "digestmsgs failed"
-  ${ECHO} 1 >"$DIR"/digestsize
-  ${ECHO} 10 >"$DIR"/digestmsgs
-  ${ECHO} 0 >"$DIR"/digesttime
-  run ezmlm-tstdig "$DIR" || \
-	fatal "digestsize failed"
-
   LOCAL="$LOC"
-  file_run ezmlm-tstdig -k1 -m10 -t0 "$DIR" || \
+  ${EZBIN}/ezmlm-tstdig -k1 -m10 -t0 "$DIR" > "$ERR" 2>&1 || \
 	{
 	 ${ECHO} "problem with DEFAULT unset: 0.32 bug, OK in 0.321."
 	 prompt "ezmlm-tstdig.......   "
 	  BUG="${BUG} tstdig"
 	}
-  ${RM} "$DIR"/digestmsgs "$DIR"/digestsize "$DIR"/digesttime
   ${ECHO} "OK"
   export DEFAULT

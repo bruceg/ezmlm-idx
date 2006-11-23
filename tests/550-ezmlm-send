@@ -12,7 +12,7 @@ message goes here
 EOF
 
   LOCAL="$LOC"
-  file_run ezmlm-send "$DIR" || \
+  ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce post"
 
   grephdr_list 1

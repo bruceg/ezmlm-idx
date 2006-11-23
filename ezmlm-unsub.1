@@ -49,8 +49,29 @@ to lowercase before removing
 .I box\fB@\fIdomain
 from the mailing list.
 
-.SH OPTIONS
-.SS GENERAL
+.SH "GENERAL OPTIONS"
+.TP
+.B \-h \fIhash
+With SQL support, the argument is used as the hash. The argument should
+be between 1 and 99. The hash is used in
+in the distribution of addresses between sublists. As the hash is normally
+between 0 and 52, controlling the hash makes it possible to add addresses
+that cannot be manipulated remotely.
+.TP
+.B \-H
+(Default.)
+The address can be removed if it has a hash in the normal range
+(0..52).  Only used by SQL subscriber databases.
+.TP
+.B \-m
+(Default.)
+Use the configured subscriber database for the list.
+.TP
+.B \-M
+Use the standard subscriber database even if the list was configured to
+use another plugin.  This is equivalent to specifying
+.B \-S
+.IR std .
 .TP
 .B \-n
 Assume arguments are pairs of
@@ -70,6 +91,15 @@ will be added to the subscription log.
 Arguments are all addresses of the type
 .IR box\fB@\fIdomain .
 .TP
+.B \-S\fI subdb
+Connect to the given subscriber database plugin.  This option can be
+used to manipulate alternate subscriber databases.  The contents of the
+parameter should be the same as would be given to
+.B ezmlm-make -6\fR.
+Use in combination with
+.B ezmlm-list(1)
+to convert an SQL address db to a ezmlm standard address database.
+.TP
 .B \-v
 Display
 .B ezmlm-unsub(1)
@@ -79,30 +109,6 @@ version information.
 Display
 .B ezmlm-unsub(1)
 version information.
-.SS SQL
-These options are silently ignored in the absence of SQL support.
-.TP
-.B \-h \fIhash
-With mysql support the argument is used as the hash. The argument should
-be between 1 and 99. The hash is used in
-in the distribution of addresses between sublists. As the hash is normally
-between 0 and 52, controlling the hash makes it possible to remove addresses
-that cannot be manipulated remotely. A hash of 99 is reserved for sublists,
-and a hash of 98 is reserved for ``receipt'' addresses serviced by
-.B ezmlm-receipt(1).
-.TP
-.B \-H
-(Default.)
-The address can be removed if it has a hash in the normal range (0..52).
-.TP
-.B \-m
-(Default.)
-Use SQL support if available.
-.TP
-.B \-M
-Do not use SQL support even if available.  This option can be used to
-manipulate a normal local subscriber database even for lists with SQL
-support.
 .SH "SEE ALSO"
 ezmlm-list(1),
 ezmlm-manage(1),

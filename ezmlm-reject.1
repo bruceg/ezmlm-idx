@@ -19,21 +19,38 @@ If the message has a ``Precedence: junk'' header,
 exits 99 causing the message to be ignored. This causes replies from (some)
 vacation programs to be ignored.
 
+If
+.I dir
+is specified,
 .B ezmlm-reject
-rejects messages that are outside a configured size range (see
+reads
 .I dir\fB/msgsize
-below).
-If a list of MIME types to reject is present,
+for a maximum:minimum message body size in bytes. Either number will be ignored
+if 0 or omitted.
 .B ezmlm-reject
-will reject any message that is or contains a listed content-type.  If a
-list of MIME types to keep is present,
+will also look for
+.I dir\fB/mimereject
+and either
+.IR dir\fB/mimekeep
+or
+.IR dir\fB/mimeremove .
+If
+.IR dir\fB/mimereject
+exists,
+Messages of the Content-Types specified or with MIME parts of these
+types will be rejected.
+If
+.I dir\fB/mimekeep
+exists,
 .B ezmlm-reject
-will reject any message that both is not and does not contain a listed
-content-type.  Otherwise if a list of MIME types to remove is present,
+will reject messages of Content-Types other than what is specified.
+Otherwise if
+.I dir\fB/mimeremove
+exists,
 .B ezmlm-reject
-will reject any message that is one of the listed content-types.
-Individual parts of a composite MIME messages will be stripped out later
-by
+will reject messages of the Content-Types specified. These content-types will
+be accepted as parts of a composite MIME message. They will be
+stripped out later by
 .BR ezmlm-send(1) .
 
 .B ezmlm-reject
@@ -52,6 +69,14 @@ into the appropriate .qmail file put:
 
 Now rejected posts will
 go to this address, and the recipient can take appropriate action.
+
+.B ezmlm-reject
+reads
+.I dir\fB/copylines
+to determine how many lines of the original message to copy into the
+outgoing message.  If this file is empty or not present, a value of
+.I 0
+is presumed, meaning that only the header is copied.
 .SH OPTIONS
 .TP
 .B \-b
@@ -141,30 +166,6 @@ is not specified, to assure backwards compatibility with existing ezmlm lists.
 .TP
 .B \-T
 Do not require the list address in the ``To:'' or ``Cc:'' header(s).
-.SH "CONFIGURATION FILES"
-If
-.I dir
-is specified on the command line,
-.B ezmlm-reject
-reads the following configuration files.
-.TP
-.I dir\fB/copylines
-The number of lines of the original message body to copy into the
-response message.  If this file is not present or empty, no lines will
-be copied.  The full header is always copied.
-.TP
-.I dir\fB/msgsize
-The message size limits expressed as "maxsize:minsize".  Either number
-will be ignored if it is 0 or omitted.
-.TP
-.I dir\fB/mimekeep
-The list of MIME types to keep.
-.TP
-.I dir\fB/mimereject
-The list of MIME types to reject.
-.TP
-.I dir\fB/mimeremove
-The list of MIME types to remove.
 .SH BUGS
 .B ezmlm-reject
 does not handle rfc822 comments in ``Content-Type:'' lines if present

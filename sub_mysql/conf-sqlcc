@@ -1,4 +1,0 @@
--I/usr/include/mysql
-
-# the top line will be used when compiling. Edit to reflect your mysql
-# installation. This is for a the MySQL-3.22.10.i386 rpm.

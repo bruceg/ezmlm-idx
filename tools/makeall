@@ -1,15 +1,9 @@
 #!/bin/sh
 # $Id$
 set -e
-if ! [ -s conf-sub ]; then
+if ! [ -s conf-cc ]; then
   echo "$0: must be in compile directory"
   exit 1
 fi
 
-for sub in std mysql pgsql; do
-  echo "==================== Making conf-sub = $sub ===================="
-  echo $sub >conf-sub
-  `dirname $0`/makerrors clean it
-done
-make clean
-svn revert conf-sub
+`dirname $0`/makerrors clean it mysql pgsql

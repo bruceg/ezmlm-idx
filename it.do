@@ -1,5 +1,4 @@
 dependon \
-symlinks \
 ezmlm-accept \
 ezmlm-archive \
 ezmlm-check \
@@ -31,4 +30,5 @@ ezmlm-unsub \
 ezmlm-warn \
 ezmlm-weed \
 ezmlm-test \
+sub-std.so \
 ezmlmrc.all

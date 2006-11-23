@@ -7,24 +7,28 @@
   prompt "ezmlm-make (1/2):     "
 
 # edit non-existant list
-  run ezmlm-make -e -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" && \
+  ${EZBIN}/ezmlm-make -e -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
+	"$LOC" "$HOST" > /dev/null 2>&1 && \
 	fatal "ezmlm-make failed reject edit of non-existing list:"
 
 # make simple test list
-  run ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" || \
+  ${EZBIN}/ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
+	"$LOC" "$HOST" || \
 	fatal "ezmlm-make failed to create test list"
 
 # remake simple test list which should fail
-  run ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" && \
+  ${EZBIN}/ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
+	"$LOC" "$HOST" >/dev/null 2>&1 && \
 	fatal "failed to reject creation of existing list"
 
 # edit the list (add digest)
-  run ezmlm-make -+d -C${EZBIN}/lang/en_US "$DIR" || \
+  ${EZBIN}/ezmlm-make -+d -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "ezmlm-make failed to edit test list"
 
 # edit the list (add digest)
   ${MV} "${DIR}/flags" "${DIR}/flags~"
-  run ezmlm-make -ed -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" || \
+  ${EZBIN}/ezmlm-make -ed -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" \
+	>/dev/null 2>&1 || \
 	{ ${ECHO} "failed without DIR/flags"
 	  prompt "ezmlm-make ......     "
 	}
@@ -52,26 +56,12 @@
 
   ${ECHO} "OK"
 
-# Add sql files for sql testing
-RDBMS='STD'
-prompt "Using RDBMS support:  "
-if [ $USESQL ]; then
-  run ezmlm-make -+6 "$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
-	-C${EZBIN}/lang/en_US "$DIR" || \
-	fatal "ezmlm-make failed to add SQL config info"
-
-  ${STRINGS} ${EZBIN}/ezmlm-sub | ${GREP} -i 'MySQL' >/dev/null 2>&1 && \
-	RDBMS='MySQL'
-  ${STRINGS} ${EZBIN}/ezmlm-sub | ${GREP} -i 'libpq.' >/dev/null 2>&1 && \
-	RDBMS='PostgreSQL'
-  if [ "$RDBMS" = 'STD' ]; then
-	${ECHO} "No recognized support. If none, will default to std dbs."
-  else
-	${ECHO} "$RDBMS. Hope empty tables exist."
-  fi
-
-else
-	${ECHO} "No."
+# Add subdb files for plugin testing
+${ECHO} "Using subdb plugin:   ${SUBDB:-std}"
+if [ -n "$SUBDB" ]; then
+  ${EZBIN}/ezmlm-make -+6 "$SUBDB:$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
+	-C${EZBIN}/lang/en_US "$DIR"|| \
+	fatal "ezmlm-make failed to add subdb config info"
 fi
 
   # remove inlocal/inhost - shouldn't be used

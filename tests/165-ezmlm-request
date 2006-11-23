@@ -13,7 +13,7 @@
   ${ECHO} "X-num: req1" > "$TMP"
 # use a non-existing command
   ${ECHO} "Subject: qqqq ${SND}@$HOST" >> "$TMP"
-  file_run ezmlm-request "$DIR" 
+  ${EZBIN}/ezmlm-request "$DIR" < "$TMP" > "$ERR" 2>&1
   if [ "$?" != "99" ]; then
 	fatal "qqqq command in subject failed to exit 99"
   fi
@@ -24,7 +24,7 @@
   ${ECHO} "X-num: req1" > "$TMP"
 # test full ezmlm cmd in subject and command substitution
   ${ECHO} "Subject: ${LOC}-remove-${SND}=${HOST}@${HOST}" >> "$TMP"
-  file_run ezmlm-request "$DIR" 
+  ${EZBIN}/ezmlm-request "$DIR" < "$TMP" > "$ERR" 2>&1
   if [ "$?" != "99" ]; then
 	fatal "full ezmlm command in subject failed to exit 99"
   fi
@@ -34,7 +34,7 @@
 
   ${ECHO} "X-num: req1" > "$TMP"
   ${ECHO} "Subject: subscribe ${LOC}@${HOST} ${SND}@${HOST}" >> "$TMP"
-  file_run ezmlm-request "$DIR" 
+  ${EZBIN}/ezmlm-request "$DIR" < "$TMP" > "$ERR" 2>&1
   if [ "$?" != "99" ]; then
 	fatal "other command in subject failed to exit 99"
   fi
@@ -45,7 +45,7 @@
   ${ECHO} "X-num: req1" > "$TMP"
   ${ECHO} "Subject: subscribe" >> "$TMP"
   ${ECHO} "	${LOC}@${HOST} ${SND}@${HOST}" >> "$TMP"
-  file_run ezmlm-request "$DIR" 
+  ${EZBIN}/ezmlm-request "$DIR" < "$TMP" > "$ERR" 2>&1
   if [ "$?" != "99" ]; then
 	fatal "multi-line other command in subject failed to exit 99"
   fi

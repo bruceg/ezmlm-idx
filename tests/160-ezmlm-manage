@@ -10,28 +10,28 @@
   DEFAULT='unsubscribe'
   SENDER="${SND}@$HOST"
 
-  run ezmlm-sub "$DIR" "${SND}@$HOST"
-  file_run ezmlm-manage -U "$DIR" </dev/null || \
+  ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
+  ${EZBIN}/ezmlm-manage -U "$DIR" </dev/null >"$ERR" 2>&1 || \
 	fatal "failed with -U"
-  run ezmlm-issubn "$DIR" && \
+  ${EZBIN}/ezmlm-issubn "$DIR" && \
 	fatal "unsubscribe with -U failed"
 
   LOCAL="$LOC-digest-subscribe"
   DEFAULT='digest-subscribe'
-  run ezmlm-unsub "${DIR}/digest" "${SND}@$HOST"
+  ${EZBIN}/ezmlm-unsub "$DIR" digest "$SENDER"
 
 # test that access to the deny db is restricted to remote admins
   LOCAL="$LOC-deny-subscribe"
   DEFAULT='deny-subscribe'
-  run ezmlm-manage "$DIR" </dev/null >/dev/null 2>&1 && \
+  ${EZBIN}/ezmlm-manage "$DIR" </dev/null >/dev/null 2>&1 && \
 	{
 	 ${ECHO} "Deny open to regular subscribers: 0.31 bug, OK in 0.321."
 	 prompt "ezmlm-manage ...      "
 	 BUG="${BUG} deny"
 	}
   SENDER="${MOD}@$HOST"
-  run ezmlm-sub "${DIR}/mod" "$SENDER" || exit 100
-  file_run ezmlm-manage "$DIR" </dev/null || \
+  ${EZBIN}/ezmlm-sub "$DIR" mod "$SENDER" || exit 100
+  ${EZBIN}/ezmlm-manage "$DIR" </dev/null > "$ERR" 2>&1 || \
 	fatal "Deny access denied to remote admin!"
 
 # make non-moderated
@@ -41,7 +41,7 @@
 # make non-remote
   ${RM} -f "${DIR}/remote" || \
 	{ ${ECHO} "Failed to remove DIR/remote"; exit 99; }
-  file_run ezmlm-manage "$DIR" </dev/null && \
+  ${EZBIN}/ezmlm-manage "$DIR" </dev/null > "$ERR" 2>&1 && \
 	{
 	 ${ECHO} "Deny even without remote/modsub: 0.31 bug, OK in 0.321."
 	 prompt "ezmlm-manage ...      "
@@ -49,18 +49,18 @@
 	}
 
 # restore remote/SENDER/mod/LOCAL/DEFAULT
-  run ezmlm-unsub "${DIR}/mod" "$SENDER" || exit 100
+  ${EZBIN}/ezmlm-unsub "$DIR" mod "$SENDER" || exit 100
   SENDER="${SND}@$HOST"		# restore order
   touch "${DIR}/remote" || \
-	{ ${ECHO} "Failed to recreate DIR/remote"; exit 99; }
+	{ ${ECHO} "Failed to remove DIR/remote"; exit 99; }
   LOCAL="$LOC-digest-subscribe"
 	DEFAULT='digest-subscribe'
 
-  file_run ezmlm-manage -S "$DIR" </dev/null || \
+  ${EZBIN}/ezmlm-manage -S "$DIR" </dev/null >"$ERR" 2>&1 || \
 	fatal "failed with -S"
-  run ezmlm-issubn "${DIR}/digest" || \
+  ${EZBIN}/ezmlm-issubn "$DIR" digest || \
 	fatal "digest-subscribe with -S failed"
-  run ezmlm-unsub "${DIR}/digest" "${SND}@$HOST"
+  ${EZBIN}/ezmlm-unsub "$DIR" digest "$SENDER"
   touch "${DIR}/modsub" || \
 	{ ${ECHO} "Failed to restore DIR/modsub"; exit 99; }
 
@@ -69,7 +69,7 @@
   ${ECHO} "X-num: sub1" > "$TMP"
   ${ECHO} "From: Mr. User requests <${MAN}@$HOST>" >> "$TMP"
   ${ECHO} >> "$TMP"
-  run ezmlm-manage "$DIR" < "$TMP" \
+  ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" \
 		>"$ERR" 2>&1 || \
 	fatal "digest-subscribe with request failed"
 
@@ -77,7 +77,7 @@
 	fatal "failed getting digest-subscribe confirm request"
 
   # Add moderator
-  run ezmlm-sub "${DIR}/mod" "${MOD}@$HOST"
+  ${EZBIN}/ezmlm-sub "$DIR" mod "${MOD}@$HOST"
 
   LOCAL=`${GREP} "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	fatal "failed to find confirm address in -subscribe reply"
@@ -86,13 +86,13 @@
   ${ECHO} "X-num: sub3" > "$TMP"
   ${ECHO} "From: Mr. User confirms <$SENDER>" >> "$TMP"
   ${ECHO} >> "$TMP"
-  run ezmlm-manage "$DIR" < "$TMP" \
+  ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" \
 		>"$ERR" 2>&1 || \
 	fatal "failed to send user conf for sub1"
   msgexists || \
 	fatal "failed to receive user conf for sub1"
   SENDER="${MOD}@$HOST"
-  run ezmlm-issubn "$DIR" && \
+  ${EZBIN}/ezmlm-issubn "$DIR" && \
 	fatal "unsub without mod for moderated list failed"
   ${GREP} 'sub3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting subscribe moderation confirm request"
@@ -104,15 +104,15 @@
   ${ECHO} "X-num: modR1" > "$TMP"
   ${ECHO} "FROM: moderator agrees <$SENDER>" >> "$TMP"
   ${ECHO} >> "$TMP"
-  run ezmlm-manage ${SW_FROM} "$DIR" < "$TMP"\
+  ${EZBIN}/ezmlm-manage ${SW_FROM} "$DIR" < "$TMP"\
 		>/dev/null 2>&1 || \
 	fatal "failed to send digest sub mod accept for sub3"
 
-  run ezmlm-sub "$DIR" "${MAN}@$HOST"
+  ${EZBIN}/ezmlm-sub "$DIR" "${MAN}@$HOST"
   LOCAL="$LOC-unsubscribe"
   DEFAULT='unsubscribe'
   ${ECHO} "X-num: sub2" > "$TMP"
-  file_run ezmlm-manage "$DIR" || \
+  ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "unsubscribe request failed"
 
   # check digest-subscribe and list-unsubscribe replies
@@ -123,14 +123,14 @@
 	fatal "failed to find confirm address in -unsubscribe reply"
   DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
   ${ECHO} "X-num: sub4" > "$TMP"
-  file_run ezmlm-manage "$DIR" || \
+  ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "failed to send conf for sub2"
 
 # -get function for backwards compatibility
   LOCAL="$LOC-get.1"
   DEFAULT='get.1'
   ${ECHO} "X-num: manget1" > "$TMP"
-  file_run ezmlm-manage "$DIR" || \
+  ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "get failed"
 
   # Check -get.1 reply
@@ -140,7 +140,7 @@
 	fatal "get.1 failed to return archived message"
 
 # -C should disable it
-  file_run ezmlm-manage -C "$DIR" && \
+  ${EZBIN}/ezmlm-manage -C "$DIR" < "$TMP" >"$ERR" 2>&1 && \
 	fatal "-C failed to disable -get"
 
   ${ECHO} "OK"

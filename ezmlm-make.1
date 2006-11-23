@@ -231,10 +231,10 @@ and
 is also sticky.
 .B ezmlmrc(5)
 is set up so that most text files (and
-.IR dir\fB/headeradd ,
-.IR dir\fB/headerkeep ,
+.IR DIR\fB/headeradd ,
+.IR DIR\fB/headerkeep ,
 and
-.IR dir\fB/headerremove )
+.IR DIR\fB/headerremove )
 are not overwritten if they already exist so as to preserve
 manual customizations. If
 .I local
@@ -319,12 +319,9 @@ will set up the
 .I local\fB\-digest@host
 digest list to disseminate digest of the list messages. By default, this
 is done when 30 messages, 48 hours, or 64 kbytes of message body text have
-accumulated since the last digest. Create the
-.IR dir\fB/digestmsgs ,
-.IR dir\fB/digesttime ,
-and
-.I dir\fB/digestsize
-files respectively to override these defaults. See
+accumulated since the last digest. Use the
+.B \-4
+switch to override these defaults. See
 .B ezmlm-tstdig(1)
 and
 .B ezmlm-get(1)
@@ -365,10 +362,10 @@ then turn it off again (see
 .BR dot-qmail(5) ).
 .B ezmlmrc(5)
 is set up so that most text files (and
-.IR dir\fB/headeradd ,
-.IR dir\fB/headerkeep ,
+.IR DIR\fB/headeradd ,
+.IR DIR\fB/headerkeep ,
 and
-.IR dir\fB/headerremove )
+.IR DIR\fB/headerremove )
 are not overwritten if they already exist so as to preserve
 manual customizations. If
 .I local
@@ -684,17 +681,6 @@ for both
 and
 .I local\fB-digest@\fIhost
 will be run by other means, such as crond.
-If the list is set up with SQL support (see
-.BR \-6 ),
-restrict the list to a subset of addresses by adding the list name to
-the
-.IR dir\fB/sql ,
-.IR dir\fB/allow/sql ,
-.IR dir\fB/digest/sql ,
-and
-.IR dir\fB/mod/sql
-configuration files. Useful only when setting up the main list
-for a large distributed list supported by a SQL address database.
 Also, bounces will be handled by
 .B ezmlm-receipt(1)
 rather than
@@ -743,17 +729,32 @@ Make the list a sublist of list
 sets up the list to replace the ``From:'' header of the message with
 ``From:
 .IR fromarg ''.
+.TP 5
+.B \-4 \fItstdigopts
+.B ezmlm-make
+replaces the
+.B ezmlm-tstdig(1)
+switches used for digest generation with the text in
+.IR tstdigopts .
+This is part of a command line, NOT a specific switch. It should normally
+be placed within single quotes. This switch is mainly for programmatic
+use. For changing list defaults, it is usually easier to create a custom
+.I ~/.ezmlmrc
+file and edit it. The default is '-t24 -m30 -k64'. (See
+.B ezmlm-tstdig(1)
+for more info.)
 .TP
 .B \-5 \fIowner@host
 .B ezmlm-make
 will configure the list to forward mail directed to the list owner to
 .IR owner@host .
 .TP
-.B \-6\fI\ host:port:user:password:datab:table
-SQL connect info. Use the sql
-.IR host
-(default localhost),
-connecting to
+.B \-6\fI\ plugin:host:port:user:password:datab:table
+Subscriber database info. Use the database plugin named
+.I plugin
+which connects to
+.I host
+(default localhost), on port number
 .I port
 (default port for SQL server) as
 .I user
@@ -761,12 +762,10 @@ with
 .I password
 using database
 .I datab
-(default ezmlm)
+(default "ezmlm")
 and the table root name
 .I table
-(default ezmlm)
-This will have no effect unless the ezmlm programs
-are compiled with SQL support.
+(default "ezmlm")
 .TP
 .B \-7 \fI/msg_mod_path
 Make

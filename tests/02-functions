@@ -7,20 +7,6 @@ fatal() {
   exit 100;
 }
 
-fixup_bin() {
-  for file in bouncer confirmer digest/bouncer editor manager moderator owner
-  do
-    if [ -e "$DIR"/$file ]; then
-      sed -e "s|$CONF_BIN/|$EZBIN/|" "$DIR"/$file >"$DIR"/${file}.tmp
-      ${MV} "$DIR"/${file}.tmp "$DIR"/$file
-    fi
-  done
-}
-
-parse_reply_to() {
-  sed -e "/^Reply-To: /!d; s/^.*: *$LOC-//; s/@$HOST$//" "$QQHDR"
-}
-
 grephdr() {
   # Search for the header line, and produce an error if it didn't match.
   ${GREP} -i "^$*$" "$QQHDR" >/dev/null 2>&1 || \
@@ -117,9 +103,6 @@ qqclean()
 
 make_message()
 {
-  if [ ! -z "$MAKE_HEADER" ]; then
-      ${ECHO} "$MAKE_HEADER"
-  fi
   ${ECHO} "ReCEIved: #LAST#"
   ${ECHO} "ReCeIved: #PENULTIMATE#"
   ${ECHO} "retuRN-RECeipt-to: nobody"
@@ -152,49 +135,4 @@ exists() {
 
 msgexists() {
   ${TEST} -s "$QQMSG" -a -s "${QQENV}"
-}
-
-#############################
-# Program execution helpers #
-#############################
-
-# Run the program, and redirect stderr to $ERR.
-# All programs get run this way.
-run() {
-  program="$1"
-  shift
-  ${EZBIN}/$program "$@" 2> "$ERR"
-}
-
-# Run the program, redirecting all output to $ERR and input from $TMP.
-file_run() {
-  ${ECHO} -n >> "$TMP"
-  run "$@" < "$TMP" > "$ERR" 2>&1
-}
-
-# Make a message and then run the program.
-make_message_run() {
-  make_message > "$TMP"
-  file_run "$@"
-}
-
-# Run ezmlm-dispatch
-dispatch() {
-  fixup_bin
-  if [ -z "$1" ]; then
-    unset DEFAULT
-  else
-    DEFAULT="$1"
-  fi
-  export DEFAULT
-  make_message_run ezmlm-dispatch "$DIR" .
-}
-
-# Quiet grep, only test for true/false
-grepq() {
-  ${GREP} "$@" >/dev/null 2>&1
-}
-
-issub() {
-  run ezmlm-list "$DIR" $1 | grepq "^$2$"
 }

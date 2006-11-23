@@ -7,12 +7,12 @@
   prompt "ezmlm-store:          "
 
   SENDER="${SND}@$HOST"
-  run ezmlm-sub "${DIR}/mod" "$SENDER"
+  ${EZBIN}/ezmlm-sub "$DIR" mod "$SENDER"
 
 # message from mod, normal use -> should queue
   qqclean
-  MAKE_HEADER="X-num: mod1"
-  make_message_run ezmlm-store "$DIR" || \
+  { ${ECHO} "X-num: mod1"; make_message; } > ${TMP};
+	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	fatal "failed to process message 1"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod1" > /dev/null || \
@@ -30,8 +30,8 @@
 #
 # no modpost - should go directly to list
   qqclean
-  MAKE_HEADER="X-num: mod2"
-  make_message_run ezmlm-store "$DIR" || \
+  { ${ECHO} "X-num: mod2"; make_message; } > ${TMP};
+	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	{
 	  ${GREP} -v "child" "$ERR" > /dev/null 2>&1
 	  if [ "$?" != "0" ]; then
@@ -56,8 +56,8 @@
 
 # from moderator. Should be queued, even with -P
   qqclean
-  MAKE_HEADER="X-num: mod3"
-  make_message_run ezmlm-store -P "$DIR" || \
+  { ${ECHO} "X-num: mod3"; make_message; } > ${TMP};
+	${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	fatal "-P failed to accept mods post 3"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod3" > /dev/null || \
@@ -71,12 +71,12 @@
 	fatal "No From: ...-accept header in mod request for mod3"
   fi
 
-  run ezmlm-unsub "${DIR}/mod" "$SENDER"
+  ${EZBIN}/ezmlm-unsub "$DIR" mod "$SENDER"
 
 # not from moderator, should be rejected directly with -P
   qqclean
-  MAKE_HEADER="X-num: mod4"
-  make_message_run ezmlm-store -P "$DIR" && \
+  { ${ECHO} "X-num: mod4"; make_message; } > ${TMP};
+	${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < ${TMP} && \
 	fatal "-P failed to reject non-mod message 4"
 
   test -s "$QQMSG" && \

@@ -10,7 +10,23 @@ moderation requests to the moderator(s).
 .B ezmlm-store
 stores a main message sent to a ezmlm mailing list awaiting
 message moderation or user confirmation.
-.SS "USER CONFIRMATION"
+
+If
+.I dir\fB/confirmpost
+exists and
+.B \-Y
+is not set, it work in user confirmation mode.
+If
+.I dir\fB/confirmpost
+does not exists and
+.B \-y
+is not set and
+.I dir\fB/modpost
+exists, it work in message moderation mode.
+Otherwise the message is passed on to
+.BR ezmlm-send(1) .
+
+.SH "USER CONFIRMATION"
 .B ezmlm-store
 reads a mail message and
 stores it in
@@ -26,6 +42,15 @@ For user convenience, the
 address is given in
 the ``Reply-To:'' header.
 
+If the file
+.I dir\fb/confirmpost
+is not empty, the subject of all message confirmation request is
+the first line of that file, followed by
+.IR listname@host .
+Otherwise the subject of all message confirmation requests is
+.B Confirm post to
+.IR listname@host .
+
 Once the confirmation request has been successfully sent,
 .B ezmlm-store
 sets the owner-execute bit of the message in
@@ -34,7 +59,7 @@ Messages without this bit set are the result of incomplete executions of
 .B ezmlm-store
 and are ignored.
 
-.SS MODERATION
+.SH MODERATION
 .B ezmlm-store
 reads a mail message and
 stores it in
@@ -99,9 +124,14 @@ Messages without this bit set are the result of incomplete executions of
 .B ezmlm-store
 and are ignored.
 
-.SS "CONFIRMATION AND MODERATION MESSAGES"
+.SH "CONFIRMATION AND MODERATION MESSAGES"
+At the beginning of the message,
 .B ezmlm-store
-rejects the message if it contains a
+prints a new
+.B Mailing-List
+field with the contents of
+.IR dir\fB/mailinglist .
+It rejects the message if there is already a
 .B Mailing-List
 field.
 
@@ -178,7 +208,7 @@ a given set of addresses.
 .B \-y
 Run in post confirmation mode even if
 .IR dir\fB/confirmpost
-does not exist.
+does not exists.
 .TP
 .B \-Y
 Ignore
@@ -196,43 +226,6 @@ version information.
 Display
 .B ezmlm-store
 version information.
-.SH "CONFIGURATION FILES"
-.TP
-.I dir\fB/charset
-If this file exists,
-.B ezmlm-store
-will use the character set listed for all messages. Otherwise, the
-default ``us-ascii'' will be used. The character set can be suffixed
-by ``:'' followed by a code. If the code is ``Q'', outgoing messages are 
-sent as ``Quoted-Printable'', if it is '`B'' they are sent ``base64'' encoded.
-Otherwise, text is sent as is.
-.TP
-.I dir\fB/confirmpost
-If present and the
-.B \-Y
-option is not set,
-.B ezmlm-store
-works in user confirmation mode.
-
-If this file is not empty, the subject of all message confirmation
-request is the first line of that file, followed by
-.IR listname@host .
-Otherwise the subject of all message confirmation requests is
-.B Confirm post to
-.IR listname@host .
-.TP
-.I dir\fB/mailinglist
-The contents of this file are copied into a new
-.B Mailing-List:
-header in the response.
-.BR ezmlm-store .
-.TP
-.I dir\fB/modpost
-If present and user confirmation mode is not otherwise enabled,
-.B ezmlm-store
-works in message moderation mode.
-Otherwise the message is passed on to
-.BR ezmlm-send(1) .
 .SH USAGE
 First of all, remember that
 .B ezmlm-store
@@ -273,6 +266,16 @@ database. Add the moderators for other posts to
 .I dir\fB/mod/
 using
 .BR ezmlm-sub(1) .
+.SH "CHARACTER SETS"
+If
+.I dir\fB/charset
+exists,
+.B ezmlm-store
+will use the character set listed for all messages. Otherwise, the
+default ``us-ascii'' will be used. The character set can be suffixed
+by ``:'' followed by a code. If the code is ``Q'', outgoing messages are 
+sent as ``Quoted-Printable'', if it is '`B'' they are sent ``base64'' encoded.
+Otherwise, text is sent as is.
 .SH "SEE ALSO"
 ezmlm-clean(1),
 ezmlm-confirm(1),

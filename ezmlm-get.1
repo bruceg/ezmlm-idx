@@ -23,6 +23,10 @@ stored in
 Subscribers of the digest list are stored in
 .IR dir\fB/digest/subscribers/ .
 
+The contents of
+.I dir\fB/headeradd
+are added to the header of outgoing messages.
+
 .B ezmlm-get
 is normally invoked from a
 .B .qmail(7)
@@ -65,7 +69,9 @@ to be of the form
 .IR list\fB-\fIaction .
 Here
 .I list
-is the local name of the list and
+is the first line of
+.IR dir\fB/outlocal
+and
 .I action
 is a request.
 The output is sent to the envelope sender.
@@ -101,12 +107,10 @@ numerical arguments are given.
 .I digestcode
 must be alphanumeric, and match (case-insensitive)
 .I digestcode
-either on the
+on the
 .B ezmlm-get
-command line or in the
-.I dir\fB/digestcode
-file. Otherwise, the request will be ignored. This is to restrict digest
-creation. The body of the requesting message up to the first line
+command line. Otherwise, the request will be ignored. This is to restrict
+digest creation. The body of the requesting message up to the first line
 starting with '-' is copied into the
 .I administrivia 
 section of the digest. This is followed by the contents of
@@ -115,11 +119,17 @@ if this file exists.
 
 .B Note:
 Anyone who can read your
-.I dir\fB/digestcode
+.I dir\fB/manager
 file, digest-requesting scripts, or mail log knows the
 .I digestcode
 and can trigger digests.
 
+.B ezmlm-get
+copies
+.I dir\fB/mailinglist
+into a
+.B Mailing-List
+field in its response.
 If the incoming message has a
 .B Mailing-List
 field,
@@ -127,6 +137,21 @@ field,
 refuses to respond.
 .B ezmlm-get
 also refuses to respond to bounce messages.
+
+If
+.I dir\fB/listid
+exists,
+.B ezmlm-get
+will assume that the format is correct and
+create a ``List-ID:'' header by placing the contents after the
+text ``List-ID: ''. 
+
+If
+.I dir\fB/qmqpservers
+exists,
+.B ezmlm-get will use
+.B qmail-qmqp(1)
+to send digests. Other messages are sent by the normal qmail mechanism.
 
 If
 .I dir\fB/public
@@ -164,9 +189,25 @@ rfc1153. This is a ``plain'' non-MIME format for dumb clients.
 .B m
 (Default.) MIME
 .I multipart/digest 
-with a subset of ordered headers sorted.  The format is no longer
-compliant with rfc1153, as the rfc1153 format is incompatible with
-rfc2046, with which the format is (should be) compatible.
+with a subset of ordered headers sorted.
+Currently, the following headers are
+included in the order listed:
+Date:,
+To:,
+From:,
+Reply-To:,
+Cc:,
+MIME-Version:,
+Content-Type:,
+Message-ID:,
+and Keywords:.
+This can be customized with the optional file
+.IR dir\fB/digheaders ,
+which should contain the desired headers up to but not including the colon.
+
+The format is no longer compliant
+with rfc1153, as the rfc1153 format is incompatible with rfc2046, with
+which the format is (should be) compatible.
 .TP
 .B x
 MIXED: This is the same as the default MIME
@@ -303,6 +344,14 @@ Most threads are expected to be considerably more short-lived.
 In the unlikely event that there are further messages,
 these can be retrieved by a second request for the 
 highest/lowest message returned in the first request.
+
+.B ezmlm-get
+reads
+.I dir\fB/copylines
+to determine how many lines of the original message to copy into the
+outgoing message.  If this file is empty or not present, a value of
+.I 0
+is presumed, meaning that only the header is copied.
 .SH OPTIONS
 .TP
 .B \-b
@@ -333,19 +382,22 @@ sent with individual requests override the default set with the
 switch.
 .TP
 .B \-p
-Forces
-.B public
-mode on.  This is useful to set up non-public lists that still give
+\-get, \-index, and \-thread commands are available to all users,
+provided other flags are permissive. This overrides normal behavior,
+which is to allow archive retrieval only to moderators, when
+.I dir\fB/public
+does not exist. This is useful to set up non-public lists that still give
 users archive access.
 .TP
 .B \-P
-Forces
-.B public
-mode off.  The
+\-get, \-index, and \-thread commands are available
+only to moderators, even if
+.I dir\fB/public
+exists. The
 .B \-C
 and
 .B \-s
-options can restrict this further. This is useful for public lists with
+flags can restrict this further. This is useful for public lists with
 archive retrieval restricted to a subset of users (moderators).
 .TP
 .B \-s
@@ -362,84 +414,16 @@ Print version info.
 .TP
 .B \-V
 Print version info.
-.SH "CONFIGURATION FILES"
-.TP
+.SH "CHARACTER SETS"
+If
 .I dir\fB/charset
-If this file exists,
+exists,
 .B ezmlm-get
 will use the character set listed for all messages. Otherwise, the
 default ``us-ascii'' will be used. The character set can be suffixed
 by ``:'' followed by a code. If the code is ``Q'', outgoing messages are 
 sent as ``Quoted-Printable'', if it is ``B'' they are sent ``base64'' encoded.
 Otherwise, text is sent as is.
-.TP
-.I dir\fB/copylines
-The number of lines of the original message body to copy into the
-response message.  If this file is not present or empty, no lines will
-be copied.  The full header is always copied.
-.TP
-.I dir\fB/digestcode
-This file may contain an alphanumeric secret code used to trigger
-message digests by a remote administrator by use of the
-.B dig\.\fIdigestcode
-command.
-.TP
-.I dir\fB/digheaders
-If this file is present, the named header fields are copied from
-archived messages into MIME digest messages types
-.B m
-and
-.B x
-in the order they appear in this file.  The lines in this file should
-not contain the trailing colon.
-
-If not present, it defaults to:
-.RS
-.nf
-from
-to
-subject
-reply-to
-date
-message-id
-cc
-mime-version
-content-type
-content-transfer-encoding
-.fi
-.RE
-.TP
-.I dir\fB/headeradd
-The contents of this file are added to the header of outgoing messages.
-.TP
-.I dir\fB/listid
-If this file exists, its contents are copied into a
-.B List-ID:
-header in the response.
-.TP
-.I dir\fB/mailinglist
-The contents of this file are copied into a new
-.B Mailing-List:
-header in the response.
-.TP
-.I dir\fB/public
-If present,
-.BR \-get ,
-.BR \-index ,
-and
-.B \-thread
-commands are available to all users (provided other options are
-permissive).  The default behavior is to allow archive retrieval only to
-moderators.
-.TP
-.I dir\fB/outlocal
-Contains the local name of the list.
-.TP
-.I dir\fB/qmqpservers
-If this file exists,
-.B ezmlm-get will use
-.B qmail-qmqp(1)
-to send digests. Other messages are sent by the normal qmail mechanism.
 .SH "FILES"
 .TP
 .I dir\fB/dignum
@@ -455,6 +439,12 @@ Returned if a/the message cannot be found.
 Copied into the
 .I Administrivia
 section of digests after the body of the requesting message.
+.TP
+.I dir\fB/charset
+The character set used for all
+.B ezmlm-get
+messages (see above).
+If not present, the default, ``us-ascii'', is used without encoding.
 .SH BUGS
 The digest format per rfc2046
 should (but is not required to) be multipart/mixed

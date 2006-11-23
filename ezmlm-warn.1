@@ -70,37 +70,26 @@ keeps track of the last subdirectory scanned.
 .B ezmlm-warn
 will not send a warning or probe to an address that is
 not currently a subscriber.
-.SH "CONFIGURATION FILES"
-.TP
+
+.B ezmlm-warn
+reads
 .I dir\fB/copylines
-The number of lines of the original message body to copy into the
-response message.  If this file is not present or empty, no lines will
-be copied.  The full header is always copied.
-.TP
-.I dir\fB/digest
-If this directory exists and neither
-.B \-d
-nor
-.B \-D
-are present on the command line,
-.B ezmlm-warn
-automatically processes both the main list and the digest list.
-.TP
-.I dir\fB/nowarn
-If present,
-.B ezmlm-warn
-immediately exits without taking any actions.
+to determine how many lines of the original message to copy into the
+outgoing message.  If this file is empty or not present, a value of
+.I 0
+is presumed, meaning that only the header is copied.
 .SH OPTIONS
 .TP
 .B \-d
-process bounces for the digest list only, rather than for the main list.
+process bounces for the digest list, rather than for the main list.
 Digest list bounces are stored in
 .I dir\fB/digest/bounce/
 rather than in
 .IR dir\fB/bounce/ .
 .TP
 .B \-D
-Process bounces for the main list only.
+(Default.)
+Process bounces for the main list.
 .TP
 .B \-l \fIlockout
 .B ezmlm-warn

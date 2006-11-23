@@ -1,6 +1,0 @@
-die_badaddr.o
-die_badformat.o
-die_dow.o
-die_nomem.o
-die_sender.o
-die_usage.o

@@ -46,9 +46,9 @@ void main(int argc,char **argv)
   unsigned int pos;
   unsigned long num, digsize, dignum;
   unsigned long cumsize = 0L;
-  unsigned long deltanum = -1L;
-  unsigned long deltawhen = -1L;
-  unsigned long deltasize = -1L;
+  unsigned long deltanum = 0L;
+  unsigned long deltawhen = 0L;
+  unsigned long deltasize = 0L;
   unsigned long when, tsttime, digwhen;
   int fd,fdlock;
 
@@ -78,15 +78,6 @@ void main(int argc,char **argv)
 
 
   startup(dir = argv[optind++]);
-  if (deltanum == (unsigned long)-1L)
-    if (!getconf_ulong(&deltanum,"digestmsgs",0,dir))
-      deltanum = 30;
-  if (deltasize == (unsigned long)-1L)
-    if (!getconf_ulong(&deltasize,"digestsize",0,dir))
-      deltasize = 64;
-  if (deltawhen == (unsigned long)-1L)
-    if (!getconf_ulong(&deltawhen,"digesttime",0,dir))
-      deltawhen = 48;
 
   if (argv[optind])
     die_usage();	/* avoid common error of putting options after dir */

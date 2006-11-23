@@ -2,7 +2,7 @@
 
 const char FATAL[] = "ezmlm-unsub: fatal: ";
 const char USAGE[] =
-"ezmlm-unsub: usage: ezmlm-unsub [-h hash] [-HmMnNvV] dir [box@domain ...]";
+"ezmlm-unsub: usage: ezmlm-unsub [-h hash] [-HmMnNvV] dir [subdir] [box@domain ...]";
 
 extern void subunsub_main(int submode,
 			  const char *version,

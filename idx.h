@@ -222,10 +222,14 @@
 #define ACTION_SC "sc."
 /* moderator subscription confirm */
 #define ACTION_TC "tc."
+/* moderator initiated subscription confirm */
+#define ACTION_RC "rc."
 /* user unsubscribe confirm */
 #define ACTION_UC "uc."
 /* moderator unsubscribe confirm */
 #define ACTION_VC "vc."
+/* moderator initiated unsubscribe confirm */
+#define ACTION_WC "wc."
 
 /* name addition for digest, i.e. list-"digest" Don't change! */
 #define ACTION_DIGEST "digest"

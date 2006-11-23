@@ -7,12 +7,11 @@ if [ $# -ne 1 ]; then
 fi
 db=$1
 
-if [ `head -n 1 conf-sub` != $db ]; then
-  echo $db >conf-sub
-fi
-
-echo "==================== Testing conf-sub = $db ===================="
+echo "==================== Testing subdb = $db ===================="
 
 `dirname $0`/makerrors
+if [ $db != 'std' ]; then
+  `dirname $0`/makerrors $db
+fi
 
 exec ${0}-$db

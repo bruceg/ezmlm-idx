@@ -13,13 +13,13 @@ DEFAULT='index'
 ${ECHO} "X-num: thread1" > "$TMP"
 LOCAL="$LOC-thread.1"
 DEFAULT='thread.1'
-file_run ezmlm-get -s "$DIR" && \
+${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "-s failed to reject -thread from non-sub"
 msgexists && \
 	fatal "-s failed to reject -thread from non-sub"
 
 qqclean
-file_run ezmlm-get "$DIR" 
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	fatal "failed to exit 99 after -thread"
 fi
@@ -29,7 +29,7 @@ msgexists || \
 qqclean
 ${ECHO} "X-num: thread2" > "$TMP"
 SENDER="${DIG}@$HOST"
-file_run ezmlm-get -s "$DIR" 
+${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	fatal "-s failed to exit 99 after -thread"
 fi

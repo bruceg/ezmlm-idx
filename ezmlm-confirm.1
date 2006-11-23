@@ -67,8 +67,13 @@ In this case,
 notifies the sender of the failure.
 Notification is in the form of a fatal error from qmail.
 
+At the beginning of the message,
 .B ezmlm-confirm
-rejects the message if it contains a
+prints a new
+.B Mailing-List
+field with the contents of
+.IR dir\fB/mailinglist .
+It rejects the message if there is already a
 .B Mailing-List
 field.
 
@@ -95,21 +100,16 @@ version information.
 Display
 .B ezmlm-confirm
 version information.
-.SH "CONFIGURATION FILES"
-.TP
+.SH "CHARACTER SETS"
+If
 .I dir\fB/charset
-If this file exists,
+exists,
 .B ezmlm-confirm
 will use the character set listed for all messages. Otherwise, the
 default ``us-ascii'' will be used. The character set can be suffixed
 by ``:'' followed by a code. If the code is ``Q'', outgoing messages are 
 sent as ``Quoted-Printable'', if it is ``B'' they are sent ``base64'' encoded.
 Otherwise, text is sent as is.
-.TP
-.I dir\fB/mailinglist
-The contents of this file are copied into a new
-.B Mailing-List:
-header in the response.
 .SH "SEE ALSO"
 ezmlm-moderate(1),
 ezmlm-clean(1),

@@ -4,13 +4,13 @@
 ezmlm-gate \- Gate posts depending on message SENDER
 .SH SYNOPSIS
 .B ezmlm-gate [-0cCmMpPrRsSvVyY] [-q file]
-.I dir [moddir1] [moddir2 ...]
+.I dir [modsubdir1] [modsubdir2 ...]
 .SH DESCRIPTION
 .B ezmlm-gate
 checks if SENDER is in it least one of the subscriber lists
 with base directory
-.IR moddir1 ,
-.IR moddir2 ,
+.IR dir / modsubdir1 ,
+.IR dir / modsubdir2 ,
 etc.
 If it is, the message is posted via
 .B ezmlm-send 
@@ -18,7 +18,9 @@ to the list in
 .IR dir .
 If not, the message is sent for moderation via
 .BR ezmlm-store .
-The named subscriber list directories may be given as relative to
+The named subscriber list directories must be either relative to
+.I dir
+or fall within
 .IR dir .
 
 The default is to send the message for moderation.
@@ -46,8 +48,8 @@ program exits 111, delivery is deferred. If it exits 99, the message is
 sent to the list. If it exits 0, the next line is executed. If it exits
 with any other exit code, the message is sent for moderation. Subscriber
 status per
-.IR moddir1 ,
-.IR moddir2 ,
+.IR modsubdir1 ,
+.IR modsubdir2 ,
 etc, is tested only if all the programs have been executed and the final
 exit code is 0. Thus, programs can cause moderation (100), posting (99), or
 defer the decision to the next program and ultimately to subscriber status.
@@ -87,7 +89,8 @@ Add the moderator(s) (usually the list owner):
 
 .EX
 .B ezmlm-sub
-.I dir\fB/mod
+.I dir
+.B mod
 moderator@host
 .EE
 

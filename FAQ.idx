@@ -406,8 +406,8 @@
         To add or remove moderators:
 
 
-          % ezmlm-sub DIR/moddir moderator@host.domain
-          % ezmlm-unsub DIR/moddir moderator@host.domain
+          % ezmlm-sub DIR moddir moderator@host.domain
+          % ezmlm-unsub DIR moddir moderator@host.domain
 
 
 
@@ -990,8 +990,8 @@
 
           % ezmlm-make -rdugm -5 me@host ~/list ~/.qmail-list me-list host
           % ezmlm-sub ~/list me@host
-          % ezmlm-sub ~/list/digest me@host
-          % ezmlm-sub ~/list/mod me@host
+          % ezmlm-sub ~/list digest me@host
+          % ezmlm-sub ~/list mod me@host
 
 
 
@@ -1435,7 +1435,7 @@
   the subscription moderator to DDIIRR//mmoodd//:
 
 
-       % ezmlm-sub DIR/mod moderator@host
+       % ezmlm-sub DIR mod moderator@host
 
 
 
@@ -1462,7 +1462,7 @@
   remote administrator E-mail address(es) to DDIIRR//mmoodd//:
 
 
-       % ezmlm-sub DIR/mod remoteadm@host
+       % ezmlm-sub DIR mod remoteadm@host
 
 
 
@@ -3557,7 +3557,7 @@
   and add the offending address to DDIIRR//ddeennyy// with
 
 
-               % ezmlm-sub DIR/deny badadr@badhost
+               % ezmlm-sub DIR deny badadr@badhost
 
 
 
@@ -3898,7 +3898,7 @@
   DDIIRR//aallllooww//:
 
 
-               % ezmlm-sub DIR/allow address@host
+               % ezmlm-sub DIR allow address@host
 
 
 
@@ -4536,7 +4536,7 @@
   administrator of the ``moderator'' list:
 
 
-               % ezmlm-sub ~/list/mod/mod supermod@superhost
+               % ezmlm-sub ~/list mod/mod supermod@superhost
 
 
 
@@ -5432,7 +5432,7 @@
   addresses'' to DDIIRR//mmoodd// with
 
 
-       % ezmlm-sub DIR/mod address@host
+       % ezmlm-sub DIR mod address@host
 
 
 

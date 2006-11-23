@@ -364,6 +364,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind++]);
   load_config(dir);
+  initsub(dir,0);
 
   sender = env_get("SENDER");
 
@@ -693,7 +694,7 @@ void main(int argc,char **argv)
 					/* check message tag */
   if (flagsublist) {			/* sublists need tag if selected/suppt*/
     if (flaglog)
-      if ((ret = checktag(dir,innum,hash_lo+1L,"m",(char *) 0,hashout))) {
+      if ((ret = checktag(innum,hash_lo+1L,"m",(char *) 0,hashout))) {
         if (*ret) strerr_die2x(111,FATAL,ret);
         else strerr_die2x(100,FATAL,ERR_NOT_PARENT);
       }
@@ -713,7 +714,7 @@ void main(int argc,char **argv)
   }
 
   if (flaglog) {
-    tagmsg(dir,innum,sender,"m",hashout,qq.msgbytes,53L);
+    tagmsg(innum,sender,"m",hashout,qq.msgbytes,53L);
     hashout[COOKIE] = '\0';
   }
 
@@ -726,12 +727,12 @@ void main(int argc,char **argv)
   if (!stralloc_cats(&line,"-@[]")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   qmail_from(&qq,line.s);			/* envelope sender */
-  subs = putsubs(dir,0,hash_lo,hash_hi,subto,1);	/* subscribers */
+  subs = putsubs(0,hash_lo,hash_hi,subto);	/* subscribers */
   if (flagsublist) hash_lo++;
 
   if (*(err = qmail_close(&qq)) == '\0') {
       if (flaglog)				/* mysql logging */
-	(void) logmsg(dir,outnum,hash_lo,subs,flagsublist ? 3 : 4);
+	(void) logmsg(outnum,hash_lo,subs,flagsublist ? 3 : 4);
       closesub();
       strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
       strerr_die2x(0,"ezmlm-send: info: qp ",strnum);

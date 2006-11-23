@@ -94,6 +94,12 @@ verify the change using the
 .I query
 action.
 
+.B ezmlm-manage
+copies
+.I dir\fB/mailinglist
+into a
+.B Mailing-List
+field in its response.
 If the incoming message has a
 .B Mailing-List
 field,
@@ -101,6 +107,14 @@ field,
 refuses to respond.
 .B ezmlm-manage
 also refuses to respond to bounce messages.
+
+.B ezmlm-manage
+reads
+.I dir\fB/copylines
+to determine how many lines of the original message to copy into the
+outgoing message.  If this file is empty or not present, a value of
+.I 0
+is presumed, meaning that only the header is copied.
 .SH OPTIONS
 .TP 5
 .B \-b
@@ -140,10 +154,14 @@ Alias for the
 switch for backwards compatibility.
 .TP 5
 .B \-e
-Enables remote text editing.
+.B ezmlm-manage
+allows remote administrators to edit files in
+.I dir\fB/text/
+via E-mail.
 .TP 5
 .B \-E
-Disables remote text editing.
+(Default.)
+Text file editing not allowed.
 .TP 5
 .B \-f
 (Default.)
@@ -160,10 +178,26 @@ request.
 Ignore ``From:'' headers.
 .TP 5
 .B \-l
-Enables remote subscriber listing.
+.B ezmlm-manage
+will send a subscriber list in reply to the 
+.I \-list
+command and
+the number of subscribers in reply to the
+.I \-listn
+comman if
+.I dir\fB/modsub
+or
+.I dir\fB/remote
+exist and target (the address the reply is to be sent to) is a moderator.
 .TP 5
 .B \-L
-Disables remote subscriber listing.
+(Default.)
+.B ezmlm-manage
+will ignore the
+.I \-list
+and
+.I \-listn
+commands.
 .TP 5
 .B \-m
 For lists with moderated subscription, require moderator approval also
@@ -180,12 +214,12 @@ command.
 (Default.)
 Requests to unsubscribe from moderated lists do not require moderator approval.
 .TP 5
-.B \-n
+.I \-n
 (Default.)
 Target addresses
 will be notified if the are added or removed from the subscriber list.
 .TP 5
-.B \-N
+.I \-N
 Target addresses will not be notified if they are added/removed from the
 subscriber list by remote admin or moderator action. Also, the target will
 not be notified if they were successfully added/removed when the
@@ -215,16 +249,28 @@ from the subscriber database. This is sometimes desired by owners of small
 lists.
 .TP 5
 .B \-s
-Enables confirmed subscriptions.
+(Default.)
+.B ezmlm-manage
+will handle subscriptions with the normal target handshake.
 .TP 5
 .B \-S
-Disables confirmed subscriptions.
+.B ezmlm-manage
+will eliminate the target handshake from the subscription
+process. This allows anyone to subscribe anybody else. DO NOT use this
+option, unless you know what you are doing. This option may be useful for 
+some moderated lists.
 .TP 5
 .B \-u
-Enables confirmed unsubscriptions.
+(Default.)
+.B ezmlm-manage
+will handle unsubscribe requests with the normal target
+handshake.
 .TP 5
 .B \-U
-Disables confirmed unsubscriptions.
+.B ezmlm-manage
+will eliminate the target handshake from the unsubscription
+process. This allows anyone to unsubscribe anybody else. DO NOT use this
+option, unless you know what you are doing.
 .TP 5
 .B \-v
 Display
@@ -235,10 +281,10 @@ version information.
 Display
 .B ezmlm-manage
 version information.
-.SH "CONFIGURATION FILES"
-.TP
+.SH "CHARACTER SETS"
+If
 .I dir\fB/charset
-If this file exists,
+exists,
 .B ezmlm-manage
 will use the character set listed for all messages. Otherwise, the
 default ``us-ascii'' will be used. The character set can be suffixed
@@ -249,82 +295,6 @@ Otherwise, text is sent as is.
 Incoming text for the
 .I \-edit
 is accepted unencoded or in either of these encodings.
-.TP
-.I dir\fB/copylines
-The number of lines of the original message body to copy into the
-response message.  If this file is not present or empty, no lines will
-be copied.  The full header is always copied.
-.TP
-.I dir\fB/mailinglist
-The contents of this file are copied into a new
-.B Mailing-List:
-header in the response.
-.TP
-.I dir\fB/modsub
-If present, subscriptions are moderated.  If this file starts with a
-forward slash, the first line is used as the base directory for the
-moderator database (
-.IR moddir ).
-Otherwise,
-.I moddir
-is assumed to be
-.IR dir\fB/mod/ .
-The moderator names are assumed
-to be stored in a set of files in
-.IR /moddir\fB/subscribers/ .
-.TP
-.I dir\fB/noconfirmsub
-Disables confirmed subscriptions (unless the
-.B \-s
-option is given).  This will eliminate the target handshake from the
-subscription process. This allows anyone to subscribe anybody else. DO
-NOT use this option, unless you know what you are doing. This option may
-be useful for some moderated lists.  By default
-.B ezmlm-manage
-will handle subscriptions with the normal target handshake.
-.TP
-.I dir\fB/noconfirmunsub
-Disables confirmed unsubscriptions (unless the
-.B \-u
-option is given).  This will eliminate the target handshake from the
-unsubscription process. This allows anyone to unsubscribe anybody
-else. DO NOT use this option, unless you know what you are doing.  By
-default,
-.B ezmlm-manage
-will handle unsubscribe requests with the normal target handshake.
-.TP
-.I dir\fB/remote
-If present, the moderators are allowed to remotely administer the list.
-If this file starts with a forward slash, the first line is used as the
-base directory for the moderator database (
-.IR moddir ).
-If
-.I dir\fB/modsub
-contains a directory name, this contents of this file are ignored.
-.TP
-.I dir\fB/remoteedit
-Enables remote administrators to edit files in
-.I dir\fB/text/
-via e-mail (unless the
-.B \-E
-option is given).  By default
-.B ezmlm-manage
-does not allow remote editing of text files.
-.TP
-.I dir\fB/remotelist
-Enables remote subscriber listing (unless the
-.B \-L
-option is given).
-.B ezmlm-manage
-will send a subscriber list in reply to the 
-.I \-list
-command and the number of subscribers in reply to the
-.I \-listn
-command if moderated subscriptions or remote administration are enabled
-and target (the address the reply is to be sent to) is a moderator.  By
-default
-.B ezmlm-manage
-does not allow remote access to the subscriber list.
 .SH SUBSCRIPTIONS
 If
 .I action
@@ -346,6 +316,8 @@ address in its response.
 If
 .I action
 is
+.B rc.\fIcookie
+or
 .BR tc.\fIcookie ,
 where
 .I cookie
@@ -375,10 +347,19 @@ Actions of
 and
 .B unsubscribe
 are used in the same way to delete the target from the mailing list.
-Unsubscribes do not require moderator confirmation.
+Unsubscribes do not require moderator confirmation unless the
+.B \-m
+option is given.  Actions of
+.B vc.\fIcookie
+are used for moderator confirmation of unsubscribes.
 
 Actions of
-.B vc.\fIcookie
+.B rc.\fIcookie
+are used to confirm moderator-iniated subscribes for lists configured
+with remote administration (see MODERATION).
+
+Actions of
+.B wc.\fIcookie
 are used to confirm moderator-initiated unsubscribes for lists configured
 with remote administration (see MODERATION).
 
@@ -473,16 +454,25 @@ does not exist,
 .B ezmlm-manage
 rejects all archive retrieval attempts.
 .SH MODERATION
-If subscriptions are moderated, users can unsubscribe without moderator
-action, but moderator confirmation is required for subscriptions.
+If
+.I dir\fB/modsub
+exists, subscriptions are moderated. Users can
+unsubscribe without moderator action, but moderator confirmation is required
+for subscriptions.
+
+If
+.I dir\fB/modsub
+starts with a forward slash, it is assumed that the content this is the base
+directory for the moderator database (
+.IR moddir ).
+Otherwise,
+.I moddir
+is assumed to be
+.IR dir\fB/mod/ .
 
 The moderator names are assumed
 to be stored in a set of files in
-.I /moddir\fB/subscribers/
-(see
-.B CONFIGURATION FILES
-above for a description of
-.IR moddir ).
+.IR /moddir\fB/subscribers/ .
 
 To add, remove, and list moderators, use respectively:
 
@@ -521,8 +511,10 @@ All unsubscribe confirmation requests in reply to moderator-initiated
 unsubscribe dialogs have a subject of
 .B CONFIRM unsubscribe from\fI listname@host.
 
-If remote administration is enabled, moderators can initiate a request
-to subscribe a user 'username@userhost' by sending mail to
+If
+.I dir\fB/remote
+exists (remote administration), moderators can initiate a request to
+subscribe a user 'username@userhost' by sending mail to
 .IR listname-subscribe\fB\-username=userhost\fI@host .
 The moderator (not the subscriber) will receive the confirmation request,
 and can complete the transaction. Moderators' request to unsubscribe
@@ -536,8 +528,25 @@ not a subscriber, a notification is sent to the remote admin. This is to make
 the remote admin aware that the address unsubscribed most likely is not the
 subscriber's subscription address.
 
+.I dir\fB/remote
+starts with a forward slash, it is assumed that the content this is the base
+directory for the moderator database (
+.IR moddir ).
+The moderator names are assumed
+to be stored in a set of files in
+.IR /moddir\fB/subscribers/ .
+If both
+.I dir\fB/modsub
+and
+.I dir\fB/remote
+exist, and both contain directory names, the directory name in
+.I dir\fB/modsub
+is used, and the
+.I dir\fB/remote
+entry is ignored.
+
 It is possible to set up
-a mailing list for moderators only by using
+a mailinglist for moderators only by using
 .I dir\fB/mod/
 as the list directory. Make sure that such a list is not public! Otherwise,
 anyone can become a moderator by subscribing to this list.

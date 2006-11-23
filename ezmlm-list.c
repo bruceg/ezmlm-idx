@@ -43,16 +43,17 @@ void main(int argc,char **argv)
 {
   const char *dir;
   const char *subdir;
-  int flagmysql = 1;	/* use if supported */
+  const char *flagsubdb = 0;
   unsigned long n;
   int opt;
 
-  while ((opt = getopt(argc,argv,"mMnNvV")) != opteof)
+  while ((opt = getopt(argc,argv,"mMnNS:vV")) != opteof)
     switch(opt) {
-      case 'm': flagmysql = 1; break;
-      case 'M': flagmysql = 0; break;
+      case 'm': flagsubdb = 0; break;
+      case 'M': flagsubdb = "std"; break;
       case 'n': flagnumber = 1; break;
       case 'N': flagnumber = 0; break;
+      case 'S': flagsubdb = optarg; break;
       case 'v':
       case 'V': strerr_die2x(0, "ezmlm-list version: ",auto_version);
       default:
@@ -60,14 +61,15 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
+  initsub(dir,flagsubdb);
   subdir = argv[optind];
 
   if (flagnumber) {
-    n = putsubs(dir,subdir,0L,52L,dummywrite,flagmysql);
+    n = putsubs(subdir,0L,52L,dummywrite);
     if (substdio_put(subfdout,strnum,fmt_ulong(strnum,n)) == -1) die_write();
     if (substdio_put(subfdout,"\n",1) == -1) die_write();
   } else
-    (void) putsubs(dir,subdir,0L,52L,subwrite,flagmysql);
+    (void) putsubs(subdir,0L,52L,subwrite);
   if (substdio_flush(subfdout) == -1) die_write();
   closesub();
   _exit(0);

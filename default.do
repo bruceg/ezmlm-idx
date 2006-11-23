@@ -35,55 +35,38 @@ then
 fi
 
 case "$1" in
-  shar)
-    dependon FILES `cat FILES`
-    formake 'shar -m `cat FILES` > shar'
-    formake 'chmod 400 shar'
-    ;;
-  compile|load|makelib)
+  compile|load|makelib|makeso)
     dependon make-$1 warn-auto.sh systype
     formake "( cat warn-auto.sh; ./make-$1 "'"`cat systype`"'" ) > $1"
     formake "chmod 755 $1"
     ;;
-  make-compile|make-load|make-makelib)
+  make-compile|make-load|make-makelib|make-makeso)
     dependon $1.sh auto-ccld.sh
     formake "cat auto-ccld.sh $1.sh > $1"
     formake "chmod 755 $1"
-    ;;
-  systype)
-    dependon find-systype trycpp.c
-    formake './find-systype > systype'
-    ;;
-  find-systype)
-    dependon find-systype.sh auto-ccld.sh
-    formake 'cat auto-ccld.sh find-systype.sh > find-systype'
-    formake 'chmod 755 find-systype'
-    ;;
-  auto-ccld.sh)
-    dependon conf-cc conf-ld conf-sub warn-auto.sh
-    formake '( cat warn-auto.sh; \'
-    formake 'sub=`head -n 1 conf-sub` ; \'
-    formake 'echo CC=\'\''`head -n 1 conf-cc` `head -n 1 sub_$$sub/conf-sqlcc`\'\''; \'
-    formake 'echo LD=\'\''`head -n 1 conf-ld`\'\'' \'
-    formake ') > auto-ccld.sh'
-    ;;
-  ezmlm-mktab)
-    dependon conf-sub
-    formake "rm -f $1"
-    formake 'sub=`head -n 1 conf-sub` ; ln sub_$$sub/'$1 $1
-    formake "touch $1"
-    ;;
-  checktag.c | issub.c | logmsg.c | subscribe.c | opensub.c | putsubs.c | tagmsg.c | searchlog.c)
-    dependon conf-sub
-    formake "rm -f $1 ${1%.c}.o"
-    formake 'sub=`head -n 1 conf-sub` ; ln sub_$$sub/'$1 $1
-    formake "touch $1"
     ;;
   lang/*/ezmlmrc)
     lang=${1#lang/}
     lang=${lang%/ezmlmrc}
     dependon makelang VERSION ezmlmrc.template lang/$lang/sed
     formake "./makelang $lang"
+    ;;
+  lib/auto_version.c)
+    dependon auto-str VERSION
+    formake './auto-str auto_version < VERSION > lib/auto_version.c'
+    ;;
+  lib/auto_bin.c|lib/auto_lib.c|lib/auto_etc.c)
+    base=${1%.c}
+    base=${base##*_}
+    ubase=`echo $base | tr a-z A-Z`
+    dependon auto-str conf-$base
+    formake "./auto-str auto_${base} EZMLM_${ubase} <conf-${base} >$1"
+    ;;
+  lib/auto_*.c)
+    base=${1%.c}
+    base=${base##*_}
+    dependon auto-str conf-$base
+    formake "./auto-str auto_${base} <conf-${base} >$1"
     ;;
   *)
     nosuchtarget

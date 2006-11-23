@@ -66,34 +66,17 @@ arrive while digesting is in progress.
 .B \-k
 Success if more than
 .I kbytes
-of message body has accumulated since the latest digest.  Defaults to 64kB.
+of message body has accumulated since the latest digest.
 .TP
 .B \-m
 Success if more than
 .I msg
-messages have accumulated since the latest digest.  Defaults to 30
-messages.
+messages have accumulated since the latest digest.
 .TP
 .B \-t
 Success if more than
 .I time
-hours have passed since the latest digest.  Defaults to 48 hours.
-.SH "CONFIGURATION FILES"
-.TP
-.I dir\fB/digestsize
-Sets the message body size threshold in kB if no
-.B \-k
-option is given.
-.TP
-.I dir\fB/digestmsgs
-Sets the message count threshold if no
-.B \-m
-option is given.
-.TP
-.I dir\fB/digesttime
-Sets the message time threshold in hours if no
-.I \-t
-option is given.
+hours have passed since the latest digest.
 .SH USAGE
 This is an example script for ezmlm-tstdig usage.
 
@@ -115,6 +98,13 @@ ${EZGET} -t "'$2'" "'$1'" < /dev/null
 # improve by testing exit status
 .fi
 .RE
+.PP
+.SH BUGS
+Obviously,
+.B ezmlm-tstdig
+should be integrated into the digesting program so that 
+.I dir\fB/tstdig
+will not be not necessary. This may be done in the next version.
 .SH "SEE ALSO"
 ezmlm-get(1),
 ezmlm-make(1),

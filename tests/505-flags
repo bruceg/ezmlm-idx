@@ -4,7 +4,7 @@
 
   DEFAULT="digest-subscribe"
   LOCAL="${LOC}-${DEFAULT}"
-  file_run ezmlm-manage "$DIR" || \
+  ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce subscribe probe"
 
   grepbody Local: "xyzzy-__tstlist"

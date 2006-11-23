@@ -111,6 +111,7 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
+  initsub(dir,0);
 
   sender = env_get("SENDER");
 
@@ -139,9 +140,7 @@ void main(int argc,char **argv)
   if (moddir && !ret) {			/* if exit 0 and moddir, add issub */
     pmod = (char *) 0;
     while (moddir && !pmod && sender) {
-      pmod = (moddir[0] == '/')
-	? issub(moddir,0,sender)
-	: issub(dir,moddir,sender);
+      pmod = issub(moddir,sender);
       closesub();
       moddir = argv[optind++];
     }
@@ -157,7 +156,7 @@ void main(int argc,char **argv)
   }
 
   if (dontact) {
-    substdio_puts(subfderr, auto_bin);
+    substdio_puts(subfderr, auto_bin());
     substdio_puts(subfderr, program);
     substdio_put(subfderr, " ", 1);
     substdio_put(subfderr, opts->s, opts->len);

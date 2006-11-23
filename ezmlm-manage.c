@@ -49,14 +49,15 @@ int flagnotify = 1;	/* notify subscriber of completed events. 0 also */
 			/* suppresses all subscriber communication for */
 			/* [un]sub if -U/-S is used */
 int flagbottom = 1;	/* default: copy request & admin info to message */
-int flaglist = -1;	/* default: do not reply to -list */
+int flaglist = 0;	/* default: do not reply to -list */
 int flagget = 1;	/* default: service -get requests */
-int flagsubconf = -1;	/* default: require user-confirm for subscribe */
-int flagunsubconf = -1;	/* default: require user-confirm for unsubscribe */
+int flagsubconf = 1;	/* default: require user-confirm for subscribe */
+int flagunsubconf = 1;	/* default: require user-confirm for unsubscribe */
 int flagunsubismod = 0;	/* default: do not require moderator approval to */
 			/* unsubscribe from moderated list */
-int flagedit = -1;	/* default: text file edit not allowed */
+int flagedit = 0;	/* default: text file edit not allowed */
 int flagstorefrom = 1;	/* default: store from: line for subscribes */
+int flagmod;		/* subscription moderation enabled */
 char encin = '\0';	/* encoding of incoming message */
 int flagdig = 0;	/* request is not for digest list */
 unsigned long copylines = 0;	/* Number of lines from the message to copy */
@@ -66,9 +67,9 @@ char urlstr[] = "%00";	/* to build a url-encoded version of a char */
 
 int act = AC_NONE;	/* desired action */
 unsigned int actlen = 0;/* str_len of above */
-char *dir;
-char *workdir;
-char *sender;
+const char *dir;
+const char *workdir;
+const char *sender;
 
 void die_cookie(void)
 {
@@ -83,7 +84,6 @@ stralloc line = {0};
 stralloc qline = {0};
 stralloc quoted = {0};
 stralloc moddir = {0};
-stralloc ddir = {0};
 stralloc modsub = {0};
 stralloc remote = {0};
 stralloc from = {0};
@@ -417,7 +417,8 @@ int geton(const char *action)
   unsigned char ch;
 
   fl = get_from(target.s,action);		/* try to match up */
-  switch((r = subscribe(workdir,0,target.s,1,fl,"+",1,-1))) {
+  switch((r = subscribe(workdir,target.s,1,fl,
+			(*action == ACTION_RC[0]) ? "+mod" : "+",-1))) {
     case 1:
 	    qmail_puts(&qq,"List-Unsubscribe: <mailto:");	/*rfc2369 */
 	    qmail_put(&qq,outlocal.s,outlocal.len);
@@ -464,11 +465,12 @@ int geton(const char *action)
   return r;
 }
 
-int getoff(void)
+int getoff(const char *action)
 {
   int r;
 
-  switch((r = subscribe(workdir,0,target.s,0,"","-",1,-1))) {
+  switch((r = subscribe(workdir,target.s,0,"",
+			(*action == ACTION_WC[0]) ? "-mod" : "-",-1))) {
 			/* no comment for unsubscribe */
     case 1:
             hdr_listsubject1(TXT_GOODBYE);
@@ -491,7 +493,7 @@ int getoff(void)
 
 void doconfirm(const char *act)
 /* This should only be called with valid act for sub/unsub confirms. If act */
-/* is not ACTION_SC or ACTION_TC, it is assumed to be an unsubscribe conf.*/
+/* is not ACTION_[RST]C, it is assumed to be an unsubscribe conf.*/
 /* "act" is the first letter of desired confirm request only as STRING! */
 {
   strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
@@ -515,17 +517,22 @@ void doconfirm(const char *act)
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"\n");
 
-  hdr_listsubject2((*act == ACTION_SC[0] || *act == ACTION_UC[0])
-		   ? TXT_USRCONFIRM : TXT_MODCONFIRM,
-		   (*act == ACTION_SC[0] || *act == ACTION_TC[0])
-		   ? TXT_SUBSCRIBE_TO : TXT_UNSUBSCRIBE_FROM);
+  hdr_listsubject2((*act == ACTION_SC[0]
+		    || *act == ACTION_UC[0])
+		   ? TXT_USRCONFIRM
+		   : TXT_MODCONFIRM,
+		   (*act != ACTION_UC[0]
+		    && *act != ACTION_VC[0]
+		    && *act != ACTION_WC[0])
+		   ? TXT_SUBSCRIBE_TO
+		   : TXT_UNSUBSCRIBE_FROM);
   hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 }
 
 void sendtomods(void)
 {
-  putsubs(moddir.s,0,0L,52L,subto,1);
+  putsubs(moddir.s,0L,52L,subto);
 }
 
 void copybottom(void)
@@ -565,12 +572,12 @@ void copybottom(void)
 int main(int argc,char **argv)
 {
   char *action;
+  const char *ac;
   char *x, *y;
   const char *fname;
   const char *pmod;
   const char *err;
   char *cp,*cpfirst,*cplast,*cpnext,*cpafter;
-  int flagmod;
   int flagremote;
   int flagpublic;
   int opt,r;
@@ -616,6 +623,8 @@ int main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   load_config(dir);
+  initsub(dir,0);
+  getconf_ulong(&copylines,"copylines",0,dir);
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
@@ -629,41 +638,29 @@ int main(int argc,char **argv)
   if (str_equal(sender,"#@[]"))
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
-  if (!stralloc_copys(&ddir,dir)) die_nomem();
-
-  getconf_ulong(&copylines,"copylines",0,dir);
-  if (flagsubconf == -1)
-    flagsubconf = !getconf_line(&line,"noconfirmsub",0,dir);
-  if (flagunsubconf == -1)
-    flagunsubconf = !getconf_line(&line,"noconfirmunsub",0,dir);
-  if (flaglist == -1)
-    flaglist = getconf_line(&line,"remotelist",0,dir);
-  if (flagedit == -1)
-    flagedit = getconf_line(&line,"remoteedit",0,dir);
+  workdir = ".";
 
   if (case_starts(action,"digest")) {			/* digest */
     action += 6;
     if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
-    if (!stralloc_cats(&ddir,"/digest")) die_nomem();
+    workdir = "digest";
     flagdig = FLD_DIGEST;
   } else if (case_starts(action,ACTION_ALLOW)) {	/* allow */
     action += str_len(ACTION_ALLOW);
     if (!stralloc_append(&outlocal,"-")) die_nomem();
     if (!stralloc_cats(&outlocal,ACTION_ALLOW)) die_nomem();
-    if (!stralloc_cats(&ddir,"/allow")) die_nomem();
+    workdir = "allow";
     flagdig = FLD_ALLOW;
   } else if (case_starts(action,ACTION_DENY)) {		/* deny */
     action += str_len(ACTION_DENY);
     if (!stralloc_append(&outlocal,"-")) die_nomem();
     if (!stralloc_cats(&outlocal,ACTION_DENY)) die_nomem();
-    if (!stralloc_cats(&ddir,"/deny")) die_nomem();
+    workdir = "deny";
     flagdig = FLD_DENY;
   }
   if (flagdig)				/* zap '-' after db specifier */
     if (*(action++) != '-') die_badaddr();
 
-  if (!stralloc_0(&ddir)) die_nomem();
-  workdir = ddir.s;
 
   if (!stralloc_copys(&target,sender)) die_nomem();
   if (action[0]) {
@@ -707,23 +704,22 @@ int main(int argc,char **argv)
 			/* Yes, this needs to be cleaned up! */
 
   if (flagmod || flagremote) {
-    if (modsub.len && modsub.s[0] == '/') {
+    if (modsub.len) {
       if (!stralloc_copy(&moddir,&modsub)) die_nomem();
-    } else if (remote.len && remote.s[0] == '/') {
+    } else if (remote.len) {
       if (!stralloc_copy(&moddir,&remote)) die_nomem();
     } else {
-      if (!stralloc_copys(&moddir,dir)) die_nomem();
-      if (!stralloc_cats(&moddir,"/mod")) die_nomem();
+      if (!stralloc_copys(&moddir,"mod")) die_nomem();
     }
     if (!stralloc_0(&moddir)) die_nomem();
 		/* for these the reply is 'secret' and goes to sender  */
 		/* This means that they can be triggered from a SENDER */
 		/* that is not a mod, but never send to a non-mod */
     if (act == AC_NONE || flagdig == FLD_DENY)	/* None of the above */
-      pmod = issub(moddir.s,0,sender);
+      pmod = issub(moddir.s,sender);
 				/* sender = moderator? */
     else
-      pmod = issub(moddir.s,0,target.s);
+      pmod = issub(moddir.s,target.s);
 				/* target = moderator? */
    } else
      pmod = 0;			/* always 0 for non-mod/remote lists */
@@ -763,7 +759,7 @@ int main(int argc,char **argv)
 
   if (act == AC_SUBSCRIBE) {
     if (pmod && flagremote) {
-      doconfirm(ACTION_TC);
+      doconfirm(ACTION_RC);
       copy(&qq,"text/mod-sub-confirm",flagcd);
       copybottom();
       qmail_to(&qq,pmod);
@@ -807,8 +803,12 @@ int main(int argc,char **argv)
       qmail_to(&qq,target.s);
     }
 
-  } else if (str_start(action,ACTION_TC)) {
-    if (hashok(action,ACTION_TC)) {
+  } else if (str_start(action,ACTION_RC)
+	     ? (ac = ACTION_RC)
+	     : str_start(action,ACTION_TC)
+	     ? (ac = ACTION_TC)
+	     : 0) {
+    if (hashok(action,ac)) {
       r = geton(action);
       mod_bottom();
       if (flagnotify) qmail_to(&qq,target.s);	/* unless suppressed */
@@ -816,7 +816,7 @@ int main(int argc,char **argv)
     } else {
       if (!pmod || !flagremote)	/* else anyone can get a good -tc. */
         die_cookie();
-      doconfirm(ACTION_TC);
+      doconfirm(ac);
       copy(&qq,"text/sub-bad",flagcd);
       copybottom();
       qmail_to(&qq,pmod);
@@ -825,7 +825,7 @@ int main(int argc,char **argv)
   } else if (act == AC_UNSUBSCRIBE) {
     if (flagunsubconf) {
       if (pmod && flagremote) {
-        doconfirm(ACTION_VC);
+        doconfirm(ACTION_WC);
         copy(&qq,"text/mod-unsub-confirm",flagcd);
         copybottom();
 	qmail_to(&qq,pmod);
@@ -841,7 +841,7 @@ int main(int argc,char **argv)
         copybottom();
         sendtomods();
     } else {
-      r = getoff();
+      r = getoff(action);
       copybottom();
       if (!r || flagnotify) qmail_to(&qq,target.s);
 		/* tell owner if problems (-Q) or anyway (-QQ) */
@@ -858,7 +858,7 @@ int main(int argc,char **argv)
         copybottom();
         sendtomods();
       } else {
-        r = getoff();
+        r = getoff(action);
         copybottom();
         if (!r || flagnotify) qmail_to(&qq,target.s);
 		/* tell owner if problems (-Q) or anyway (-QQ) */
@@ -871,9 +871,13 @@ int main(int argc,char **argv)
       qmail_to(&qq,target.s);
     }
 
-  } else if (str_start(action,ACTION_VC)) {
-    if (hashok(action,ACTION_VC)) {
-      r = getoff();
+  } else if (str_start(action,ACTION_VC)
+	     ? (ac = ACTION_VC)
+	     : str_start(action,ACTION_WC)
+	     ? (ac = ACTION_WC)
+	     : 0) {
+    if (hashok(action,ac)) {
+      r = getoff(action);
       if (!r && flagmod)
         strerr_die2x(0,INFO,ERR_UNSUB_NOP);
       mod_bottom();
@@ -886,7 +890,7 @@ int main(int argc,char **argv)
     } else {
       if (!pmod || !flagremote)	/* else anyone can get a good -vc. */
         die_cookie();
-      doconfirm(ACTION_VC);
+      doconfirm(ac);
       copy(&qq,"text/unsub-bad",flagcd);
       copybottom();
       qmail_to(&qq,pmod);
@@ -904,9 +908,9 @@ int main(int argc,char **argv)
 
     if (act == AC_LIST) {
       (void) code_qput(TXT_LISTMEMBERS,str_len(TXT_LISTMEMBERS));
-      i = putsubs(workdir,0,0L,52L,code_subto,1);
+      i = putsubs(workdir,0L,52L,code_subto);
     } else			/* listn */
-      i = putsubs(workdir,0,0L,52L,dummy_to,1);
+      i = putsubs(workdir,0L,52L,dummy_to);
 
     (void) code_qput("\n  ======> ",11);
     (void) code_qput(strnum,fmt_ulong(strnum,i));
@@ -923,7 +927,7 @@ int main(int argc,char **argv)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
     hdr_listsubject1((*action == 0) ? TXT_SUB_LOG : TXT_SUB_LOG_SEARCH);
     hdr_ctboundary();
-    searchlog(workdir,0,action,code_subto);
+    searchlog(workdir,action,code_subto);
     copybottom();
     qmail_to(&qq,pmod);
 
@@ -1199,7 +1203,7 @@ int main(int argc,char **argv)
     } else {
       if (!stralloc_copy(&to,&target)) die_nomem();
     }
-    if (issub(workdir,0,target.s))
+    if (issub(workdir,target.s))
       copy(&qq,"text/sub-nop",flagcd);
     else
       copy(&qq,"text/unsub-nop",flagcd);

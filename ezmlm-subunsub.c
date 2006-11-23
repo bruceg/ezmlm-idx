@@ -32,7 +32,7 @@ void subunsub_main(int submode,
   char *cp;
   char ch;
   int match;
-  int flagmysql = 1;	/* use mysql if supported */
+  const char *flagsubdb = 0;
   int forcehash = -1;
   int flagname = 0;
   unsigned long u;
@@ -42,14 +42,15 @@ void subunsub_main(int submode,
   manual[0] = submode ? '+' : '-';
 
   (void) umask(022);
-  while ((opt = getopt(argc,argv,"h:HmMnNvV")) != opteof)
+  while ((opt = getopt(argc,argv,"h:HmMnNvS:V")) != opteof)
     switch(opt) {
       case 'h': (void) scan_ulong(optarg,&u); forcehash = 0; break;
       case 'H': forcehash = -1; break;
-      case 'm': flagmysql = 1; break;
-      case 'M': flagmysql = 0; break;
+      case 'm': flagsubdb = 0; break;
+      case 'M': flagsubdb = "std"; break;
       case 'n': flagname = 1; break;
       case 'N': flagname = 0; break;
+      case 'S': flagsubdb = optarg; break;
       case 'v':
       case 'V': strerr_die2x(0, version,auto_version);
       default:
@@ -57,6 +58,7 @@ void subunsub_main(int submode,
     }
 
   startup(dir = argv[optind++]);
+  initsub(dir,flagsubdb);
   /* If the second argument is present and does not contain a "@", treat
    * it as the subdirectory parameter and not an address to subscribe. */
   subdir = argv[optind];
@@ -71,15 +73,13 @@ void subunsub_main(int submode,
     if (flagname) {
 		/* allow repeats and last addr doesn't need comment */
       while ((addr = argv[optind++])) {
-        (void) subscribe(dir,subdir,addr,submode,argv[optind],manual,
-		flagmysql,forcehash);
+        (void) subscribe(subdir,addr,submode,argv[optind],manual,forcehash);
         if (!argv[optind++]) break;
       }
     } else {
 
       while ((addr = argv[optind++]))
-        (void) subscribe(dir,subdir,addr,submode,"",manual,flagmysql,
-		forcehash);
+        (void) subscribe(subdir,addr,submode,"",manual,forcehash);
     }
   } else {		/* stdin */
     for (;;) {
@@ -102,7 +102,7 @@ void subunsub_main(int submode,
 	  comment = cp + 1;
         }
       }
-      (void)subscribe(dir,subdir,line.s,submode,comment,manual,flagmysql,forcehash);
+      (void)subscribe(subdir,line.s,submode,comment,manual,forcehash);
     }
   }
   closesub();

@@ -20,39 +20,43 @@ Some ezmlmrc are not updated and may not work right.  If you fix them,
 please send them to ezmlm@list.cr.yp.to for inclusion in the next
 release.
 
-ezmlm-idx-5.2.0, ????-??-??
+ezmlm-idx-6.0.0, ????-??-??
 ===========================
 
-This version targets moving all configuration settings out of the
-editor/manager/bouncer/etc files and into individual files in the list
-directory.  All changes are backwards compatible with existing lists
-(the command-line options still exist), but new lists and lists edited
-with ezmlm-make -+ or -e will be changed.
+This version introduces two major changes in how ezmlm-idx operates.
 
-- The default ezmlmrc template now uses ezmlm-dispatch.
+First, the naming of subscriber lists has been revamped.  In previous
+versions, the subscriber list would be identified by a full path to the
+list directory.  In this version, the lists are identified by their
+subdirectory name within the list base directory.  Full paths are
+supported in some places for backwards compatibility, but only where
+they fall within the list directory.  This coincidentally removes the
+absolute path requirement in all places except ezmlm-make, and
+eliminates the need for (and use of) all the "sql" files not in the list
+base directory.
 
-- Removed the tstdigopts control file and the ezmlm-make -4 option for
-  controlling digest sending parameters in favour of the new files
-  below.
+Second, all three subscriber database libraries (standard, MySQL, and
+PostgreSQL) have been moved into dynamically loaded plugins.  If you
+were previously using MySQL or PgSQL support, please follow the
+instructions in UPGRADE.idx.  After this configuration, this version is
+backwards configurable with previous versions.
 
-- Command-line options to several programs have been supplemented with
-  configuration files in the list directory:
-	digestcode		ezmlm-get (digestcode on command-line)
-	digestmsgs		ezmlm-tstdig -m #
-	digestsize		ezmlm-tstdig -k #
-	digesttime		ezmlm-tstdig -t #
-	noconfirmsub		ezmlm-manage -S
-	noconfirmunsub		ezmlm-manage -U
-	nowarn			ezmlm-warn
-	remoteedit		ezmlm-manage -e
-	remotelist		ezmlm-manage -l
+The plugin support also adds support for an optional DIR/subdb file
+which supercedes DIR/sql.  The file should contain the subscriber
+database plugin name followed by the content that would have gone into
+DIR/sql.  If it is not found, DIR/sql is used instead with an assumed
+plugin name of "sql".  ezmlm-make will read in and convert DIR/sql if
+DIR/subdb does not exist, but it writes out DIR/subdb.
 
-- Modified ezmlm-warn to automatically process both the main list and
-  the digest list if neither -d nor -D are specified.
+ezmlm-idx-5.1.1, ????-??-??
+===========================
 
-- Modified ezmlm-tstdig to default to 30 messages, 64kB or 48 hours,
-  which is the default previously listed in the ezmlmrc and the
-  recommended numbers in the manual page.
+- (Un)subscribe requests initiated and confirmed by a moderator are now
+  marked in the Log as "+mod" or "-mod".  This is accomplished by the
+  addition of another pair of subscribe/unsubscribe confirmation
+  commands ("rc.cookie" and "wc.cookie") to ezmlm-manage to
+  differentiate between moderated (un)subscribe requests and
+  (un)subscribe requests iniated and confirmed by a moderator.
 
 ezmlm-idx-5.1.0, 2006-08-08
 ===========================
@@ -142,6 +146,20 @@ ezmlm-idx-5.0.0, 2005-10-03
 - Modified the "copy" function, which translates from "text" files into
   output emails, to also select sections at run time based on the list's
   configured flags.
+
+ezmlm-idx-0.444, 20061123
+=========================
+
+- Fixed text files to not overwrite the "text/top" and "text/bottom"
+  files unconditionally.  Also rewrote places where the filename was
+  duplicated in the tags.
+
+- (Un)subscribe requests initiated and confirmed by a moderator are now
+  marked in the Log as "+mod" or "-mod".  This is accomplished by the
+  addition of another pair of subscribe/unsubscribe confirmation
+  commands ("rc.cookie" and "wc.cookie") to ezmlm-manage to
+  differentiate between moderated (un)subscribe requests and
+  (un)subscribe requests iniated and confirmed by a moderator.
 
 ezmlm-idx-0.443, 2005-09-01
 ===========================

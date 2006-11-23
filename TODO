@@ -1,12 +1,20 @@
-Merge revs 571:HEAD from branches/5.1
-Add an ezmlm-config man page listing all config files
+Figure out how to get rid of -fPIC in conf-cc
+  Maybe make conf-ccso and conf-ldso, with flags to add to the normal
+  conf-cc and conf-ld ?
+Only compile files in lib/ and *=so with PIC flags
+
+Fixup man pages and FAQ.idx regarding modsub and remote contents
+?Remove "dir" argument from getconf?
 
 Put a real address into To: header in ezmlm-store (and others?)
 Fix email addresses in INSTALL.idx
 add ezmlm-receipt to build system (needs to be fixed to compile)
 fix manual subscriptions to mod/allow/deny/digest when using SQL
 add support for simultaneous multiple languages
+Fix ezmlm-tests to work even if conf-bin<>$PWD
 Add support for run-time configurable error texts (errtxt.h).
+
+Rewrite man pages to include a separate "configuration files" section.
 
 Move confirm-related directories in "mod" to new "confirm" directory?
 
@@ -26,7 +34,4 @@ Implement pre/post (un)subscribe hooks (and possibly others):
 -If hooks/NAME exists, execute it at appropriate time
 
 Tests:
-*finish the ezmlmrc tests (through ezmlm-dispatch)
 -headerkeep/remove in ezmlm-request
--use grepq in place of ${GREP} >/dev/null
--rewrite all ezmlm-issubn tests in terms of the new issub function
