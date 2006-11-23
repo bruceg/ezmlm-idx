@@ -139,7 +139,7 @@ HOW TO BUILD, TEST, AND INSTALL:
 ------ OPTIONAL ------
 
 12. If you want qmail to add a subscriber-adapted List-Unsubscribe header to
-    outgoing messages, apply the enclosed qmail-verh-0.03.tar.gz patch to
+    outgoing messages, apply the enclosed qmail-verh-0.07.tar.gz patch to
     qmail-1.03 and follow the documentation in that archive. This is a
     failsafe way in which to unsubscribe, even if subscriber or list have
     changed address.

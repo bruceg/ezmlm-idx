@@ -20,6 +20,7 @@ Some ezmlmrc are not updated and may not work right.  If you fix them,
 please send them to ezmlm@list.cr.yp.to for inclusion in the next
 release.
 
+<<<<<<< .working
 ezmlm-idx-6.0.0, ????-??-??
 ===========================
 
@@ -48,7 +49,7 @@ DIR/sql.  If it is not found, DIR/sql is used instead with an assumed
 plugin name of "sql".  ezmlm-make will read in and convert DIR/sql if
 DIR/subdb does not exist, but it writes out DIR/subdb.
 
-ezmlm-idx-5.1.1, ????-??-??
+ezmlm-idx-5.1.1, 2006-11-23
 ===========================
 
 - (Un)subscribe requests initiated and confirmed by a moderator are now
@@ -57,6 +58,8 @@ ezmlm-idx-5.1.1, ????-??-??
   commands ("rc.cookie" and "wc.cookie") to ezmlm-manage to
   differentiate between moderated (un)subscribe requests and
   (un)subscribe requests iniated and confirmed by a moderator.
+
+- Updated the embeded qmail-verh patch to version 0.07
 
 ezmlm-idx-5.1.0, 2006-08-08
 ===========================
