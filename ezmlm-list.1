@@ -33,12 +33,14 @@ does not strip control characters.
 .TP
 .B \-m
 (Default.)
-Use SQL support if available.
+Use the normal subscriber database for the list.
 .TP
 .B \-M
-Do not use SQL support even if available.
-This option can be used to manipulate
-a normal local subscriber database even for lists with SQL support.
+Use the standard subscriber database even if the list was configured to
+use another plugin.
+This is equivalent to specifying
+.B \-S
+.IR std .
 .TP
 .B \-n
 Print only the number of subscribers.
@@ -46,6 +48,12 @@ Print only the number of subscribers.
 .B \-N
 (Default.)
 List subscriber addresses, one per line.
+.TP
+.B \-S\fI subdb
+Connect to the given subscriber database plugin.  This option can be
+used to manipulate alternate subscriber databases.  The contents of the
+parameter should be the same as would be given to
+.B ezmlm-make -6\fR.
 .TP
 .B \-v
 Display

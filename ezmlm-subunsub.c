@@ -42,7 +42,7 @@ void subunsub_main(int submode,
   manual[0] = submode ? '+' : '-';
 
   (void) umask(022);
-  while ((opt = getopt(argc,argv,"h:HmMnNvV")) != opteof)
+  while ((opt = getopt(argc,argv,"h:HmMnNvS:V")) != opteof)
     switch(opt) {
       case 'h': (void) scan_ulong(optarg,&u); forcehash = 0; break;
       case 'H': forcehash = -1; break;
@@ -50,6 +50,7 @@ void subunsub_main(int submode,
       case 'M': flagsubdb = "std"; break;
       case 'n': flagname = 1; break;
       case 'N': flagname = 0; break;
+      case 'S': flagsubdb = optarg; break;
       case 'v':
       case 'V': strerr_die2x(0, version,auto_version);
       default:

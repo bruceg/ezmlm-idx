@@ -47,12 +47,13 @@ void main(int argc,char **argv)
   unsigned long n;
   int opt;
 
-  while ((opt = getopt(argc,argv,"mMnNvV")) != opteof)
+  while ((opt = getopt(argc,argv,"mMnNS:vV")) != opteof)
     switch(opt) {
       case 'm': flagsubdb = 0; break;
       case 'M': flagsubdb = "std"; break;
       case 'n': flagnumber = 1; break;
       case 'N': flagnumber = 0; break;
+      case 'S': flagsubdb = optarg; break;
       case 'v':
       case 'V': strerr_die2x(0, "ezmlm-list version: ",auto_version);
       default:
