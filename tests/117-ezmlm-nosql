@@ -22,7 +22,7 @@ if [ -n "$SUBDB" ]; then
   ${GREP} "$SENDER" "$DIR"/subscribers/* >/dev/null 2>&1 \
 	|| fatal "test address was not added to files"
 
-  ${EZBIN}/ezmlm-list -M "$DIR" | ${GREP} "$SENDER" \
+  ${EZBIN}/ezmlm-list -M "$DIR" | ${GREP} "$SENDER" >/dev/null \
 	|| fatal "test address was not listed after adding"
 
   ${EZBIN}/ezmlm-unsub -M "$DIR" "$SENDER" \
