@@ -4,10 +4,10 @@
 #include "stralloc.h"
 #include "sub_std.h"
 
-void std_makepath(stralloc *fn,
-		  const char *subdir,
-		  const char *append,
-		  char ch)
+void makepath(stralloc *fn,
+	      const char *subdir,
+	      const char *append,
+	      char ch)
 {
   if (!stralloc_copys(fn,
 		      (subdir != 0

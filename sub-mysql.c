@@ -95,6 +95,8 @@ static MYSQL_RES *safe_select(struct subdbinfo *info,const stralloc* query)
 static const char *_checktag (struct subdbinfo *info,
 			      unsigned long num,	/* message number */
 			      unsigned long listno,	/* bottom of range => slave */
+			      const char *action,
+			      const char *seed,
 			      const char *hash)		/* cookie */
 /* reads dir/sql. If not present, returns success (NULL). If dir/sql is    */
 /* present, checks hash against the cookie table. If match, returns success*/
@@ -149,6 +151,8 @@ static const char *_checktag (struct subdbinfo *info,
     }
     mysql_free_result(result);		/* success! cookie matches */
     return (char *)0;
+    (void)action;
+    (void)seed;
 }
 
 static const char *_issub(struct subdbinfo *info,

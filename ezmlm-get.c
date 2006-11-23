@@ -792,7 +792,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind++]);
   load_config(dir);
-  initsub(dir);
+  initsub(dir,1);
   getconf_ulong(&copylines,"copylines",0,dir);
 
   digestcode = argv[optind];	/* code to activate digest (-digest-code)*/
@@ -1299,7 +1299,7 @@ void main(int argc,char **argv)
         qmail_put(&qq,line2.s,line2.len);
       }
     } else
-      subs = putsubs(workdir,0L,52L,&subto,1);
+      subs = putsubs(workdir,0L,52L,&subto);
   } else {			/* if local is set, sender is checked */
     if (pmod)
       qmail_to(&qq,pmod);

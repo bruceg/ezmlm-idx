@@ -67,6 +67,7 @@ lib/lock_exnb.o
 lib/lockfile.o
 lib/log.o
 lib/makehash.o
+lib/makepath.o
 lib/now.o
 lib/open_append.o
 lib/open_read.o
@@ -82,13 +83,6 @@ lib/sig_catch.o
 lib/sig_pipe.o
 lib/slurp.o
 lib/slurpclose.o
-lib/std_checktag.o
-lib/std_issub.o
-lib/std_makepath.o
-lib/std_putsubs.o
-lib/std_searchlog.o
-lib/std_subscribe.o
-lib/std_tagmsg.o
 lib/str_chr.o
 lib/str_cpy.o
 lib/str_diff.o

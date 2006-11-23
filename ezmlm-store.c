@@ -171,7 +171,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   load_config(dir);
-  initsub(dir);
+  initsub(dir,1);
 
   if (flagconfirm == -1)
     flagconfirm = getconf_line(&confirmpost,"confirmpost",0,dir);
@@ -412,7 +412,7 @@ void main(int argc,char **argv)
       if (!stralloc_copys(&moderators,"mod")) die_nomem();
       if (!stralloc_0(&moderators)) die_nomem();
     }
-    putsubs(moderators.s,0,52,subto,1);
+    putsubs(moderators.s,0,52,subto);
   }
 
   if (*(err = qmail_close(&qq)) == '\0') {

@@ -14,7 +14,7 @@ struct subdbinfo
   void *conn;
 };
 
-extern void initsub(const char *dir);
+extern void initsub(const char *dir, int flagsql);
 
 /* these are the subroutines used for interfacing with the subscriber and  */
 /* moderator address databases. For the put/to address output routines     */
@@ -35,8 +35,7 @@ extern const char *issub(const char *subdir,
 extern unsigned long putsubs(const char *subdir,
 			     unsigned long hash_lo,
 			     unsigned long hash_hi,
-			     int subwrite(),
-			     int flagsql);
+			     int subwrite());
 /*		int subwrite(char *string, unsigned int length); */
 
 extern const char *logmsg(unsigned long msgnum,
@@ -53,7 +52,6 @@ extern int subscribe(const char *subdir,
 		     int flagadd,
 		     const char *from,
 		     const char *event,
-		     int flagmysql,
 		     int forcehash);
 
 extern void tagmsg(unsigned long msgnum,
@@ -70,6 +68,8 @@ struct sub_plugin
   const char *(*checktag)(struct subdbinfo *info,
 			  unsigned long msgnum,
 			  unsigned long listno,
+			  const char *action,
+			  const char *seed,
 			  const char *hash);
   void (*close)(struct subdbinfo *info);
   const char *(*issub)(struct subdbinfo *info,
@@ -77,7 +77,7 @@ struct sub_plugin
 		       const char *username);
   const char *(*logmsg)(struct subdbinfo *info,
 			unsigned long msgnum,
-			unsigned long,
+			unsigned long listno,
 			unsigned long subs,
 			int done);
   const char *(*open)(struct subdbinfo *info);

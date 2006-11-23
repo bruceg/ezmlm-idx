@@ -46,7 +46,7 @@ void logaddr(const char *subdir,const char *event,
   }
   if (!stralloc_cats(&line,"\n")) return;
 
-  std_makepath(&fn,subdir,"/Log",0);
+  makepath(&fn,subdir,"/Log",0);
   fd = open_append(fn.s);
   if (fd == -1) return;
   substdio_fdbuf(&ss,write,fd,buf,sizeof(buf));

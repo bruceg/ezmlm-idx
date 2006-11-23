@@ -60,15 +60,15 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
-  initsub(dir);
+  initsub(dir,flagmysql);
   subdir = argv[optind];
 
   if (flagnumber) {
-    n = putsubs(subdir,0L,52L,dummywrite,flagmysql);
+    n = putsubs(subdir,0L,52L,dummywrite);
     if (substdio_put(subfdout,strnum,fmt_ulong(strnum,n)) == -1) die_write();
     if (substdio_put(subfdout,"\n",1) == -1) die_write();
   } else
-    (void) putsubs(subdir,0L,52L,subwrite,flagmysql);
+    (void) putsubs(subdir,0L,52L,subwrite);
   if (substdio_flush(subfdout) == -1) die_write();
   closesub();
   _exit(0);

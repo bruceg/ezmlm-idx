@@ -418,8 +418,7 @@ int geton(const char *action)
 
   fl = get_from(target.s,action);		/* try to match up */
   switch((r = subscribe(workdir,target.s,1,fl,
-			(*action == ACTION_RC[0]) ? "+mod" : "+",
-			1,-1))) {
+			(*action == ACTION_RC[0]) ? "+mod" : "+",-1))) {
     case 1:
 	    qmail_puts(&qq,"List-Unsubscribe: <mailto:");	/*rfc2369 */
 	    qmail_put(&qq,outlocal.s,outlocal.len);
@@ -471,8 +470,7 @@ int getoff(const char *action)
   int r;
 
   switch((r = subscribe(workdir,target.s,0,"",
-			(*action == ACTION_WC[0]) ? "-mod" : "-",
-			1,-1))) {
+			(*action == ACTION_WC[0]) ? "-mod" : "-",-1))) {
 			/* no comment for unsubscribe */
     case 1:
             hdr_listsubject1(TXT_GOODBYE);
@@ -534,7 +532,7 @@ void doconfirm(const char *act)
 
 void sendtomods(void)
 {
-  putsubs(moddir.s,0L,52L,subto,1);
+  putsubs(moddir.s,0L,52L,subto);
 }
 
 void copybottom(void)
@@ -625,7 +623,7 @@ int main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   load_config(dir);
-  initsub(dir);
+  initsub(dir,1);
   getconf_ulong(&copylines,"copylines",0,dir);
 
   sender = env_get("SENDER");
@@ -910,9 +908,9 @@ int main(int argc,char **argv)
 
     if (act == AC_LIST) {
       (void) code_qput(TXT_LISTMEMBERS,str_len(TXT_LISTMEMBERS));
-      i = putsubs(workdir,0L,52L,code_subto,1);
+      i = putsubs(workdir,0L,52L,code_subto);
     } else			/* listn */
-      i = putsubs(workdir,0L,52L,dummy_to,1);
+      i = putsubs(workdir,0L,52L,dummy_to);
 
     (void) code_qput("\n  ======> ",11);
     (void) code_qput(strnum,fmt_ulong(strnum,i));

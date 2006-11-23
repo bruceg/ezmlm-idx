@@ -30,4 +30,5 @@ ezmlm-unsub \
 ezmlm-warn \
 ezmlm-weed \
 ezmlm-test \
+sub-std.so \
 ezmlmrc.all

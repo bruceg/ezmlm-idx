@@ -57,7 +57,7 @@
   ${ECHO} "OK"
 
 # Add subdb files for plugin testing
-${ECHO} "Using subdb plugin:   ${SUBDB:-None}"
+${ECHO} "Using subdb plugin:   ${SUBDB:-std}"
 if [ -n "$SUBDB" ]; then
   ${EZBIN}/ezmlm-make -+6 "$SUBDB:$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
 	-C${EZBIN}/lang/en_US "$DIR"|| \

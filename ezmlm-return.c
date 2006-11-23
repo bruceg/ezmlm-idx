@@ -287,7 +287,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   load_config(dir);
-  initsub(dir);
+  initsub(dir,1);
 
     if (str_start(action,"receipt-")) {
       flagreceipt = 1;
@@ -334,7 +334,7 @@ void main(int argc,char **argv)
       cookie(hash,key.s,key.len,strnum,line.s,"P");
       if (byte_diff(hash,COOKIE,hashcopy)) die_trash();
 
-      (void) subscribe(workdir,line.s,0,"","-probe",1,-1);
+      (void) subscribe(workdir,line.s,0,"","-probe",-1);
       _exit(99);
     }
 

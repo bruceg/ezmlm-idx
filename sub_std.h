@@ -35,9 +35,9 @@ extern void std_searchlog(const char *subdir,
 			  char *search,
 			  int subwrite());
 
-extern void std_makepath(stralloc *fn,
-			 const char *subdir,
-			 const char *append,
-			 char ch);
+extern void makepath(stralloc *fn,
+		     const char *subdir,
+		     const char *append,
+		     char ch);
 
 #endif

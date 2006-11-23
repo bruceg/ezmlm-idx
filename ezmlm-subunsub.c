@@ -57,7 +57,7 @@ void subunsub_main(int submode,
     }
 
   startup(dir = argv[optind++]);
-  initsub(dir);
+  initsub(dir,flagmysql);
   /* If the second argument is present and does not contain a "@", treat
    * it as the subdirectory parameter and not an address to subscribe. */
   subdir = argv[optind];
@@ -72,15 +72,13 @@ void subunsub_main(int submode,
     if (flagname) {
 		/* allow repeats and last addr doesn't need comment */
       while ((addr = argv[optind++])) {
-        (void) subscribe(subdir,addr,submode,argv[optind],manual,
-		flagmysql,forcehash);
+        (void) subscribe(subdir,addr,submode,argv[optind],manual,forcehash);
         if (!argv[optind++]) break;
       }
     } else {
 
       while ((addr = argv[optind++]))
-        (void) subscribe(subdir,addr,submode,"",manual,flagmysql,
-		forcehash);
+        (void) subscribe(subdir,addr,submode,"",manual,forcehash);
     }
   } else {		/* stdin */
     for (;;) {
@@ -103,8 +101,7 @@ void subunsub_main(int submode,
 	  comment = cp + 1;
         }
       }
-      (void)subscribe(subdir,line.s,submode,comment,manual,
-		      flagmysql,forcehash);
+      (void)subscribe(subdir,line.s,submode,comment,manual,forcehash);
     }
   }
   closesub();

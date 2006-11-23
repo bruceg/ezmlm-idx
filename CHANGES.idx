@@ -35,18 +35,18 @@ absolute path requirement in all places except ezmlm-make, and
 eliminates the need for (and use of) all the "sql" files not in the list
 base directory.
 
-Second, the two SQL subscriber database libraries have been moved into
-dynamically loaded plugins.  If you were previously using MySQL or PgSQL
-support, please follow the instructions in UPGRADE.idx.  After this
-configuration, this version is backwards configurable with previous
-versions.
+Second, all three subscriber database libraries (standard, MySQL, and
+PostgreSQL) have been moved into dynamically loaded plugins.  If you
+were previously using MySQL or PgSQL support, please follow the
+instructions in UPGRADE.idx.  After this configuration, this version is
+backwards configurable with previous versions.
 
-The plugin support also adds support for a DIR/subdb file which
-supercedes DIR/sql.  The file should contain the subscriber database
-plugin name followed by the content that would have gone into DIR/sql.
-If it is not found, DIR/sql is used instead with an assumed plugin name
-of "sql".  ezmlm-make will read in and convert DIR/sql if DIR/subdb does
-not exist, but it writes out DIR/subdb.
+The plugin support also adds support for an optional DIR/subdb file
+which supercedes DIR/sql.  The file should contain the subscriber
+database plugin name followed by the content that would have gone into
+DIR/sql.  If it is not found, DIR/sql is used instead with an assumed
+plugin name of "sql".  ezmlm-make will read in and convert DIR/sql if
+DIR/subdb does not exist, but it writes out DIR/subdb.
 
 ezmlm-idx-5.1.1, ????-??-??
 ===========================
