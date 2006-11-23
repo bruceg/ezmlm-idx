@@ -59,7 +59,7 @@ case "$1" in
     base=${1%.c}
     base=${base##*_}
     dependon auto-str conf-$base
-    formake "./auto-str auto_${base} \`head -n 1 conf-${base}\` > $1"
+    formake "./auto-str auto_${base} <conf-${base} >$1"
     ;;
   *)
     nosuchtarget
