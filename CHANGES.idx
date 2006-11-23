@@ -23,6 +23,8 @@ release.
 ezmlm-idx-5.1.1, ????-??-??
 ===========================
 
+- Updated the qmail-verh patch to version 0.07
+
 - (Un)subscribe requests initiated and confirmed by a moderator are now
   marked in the Log as "+mod" or "-mod".  This is accomplished by the
   addition of another pair of subscribe/unsubscribe confirmation
