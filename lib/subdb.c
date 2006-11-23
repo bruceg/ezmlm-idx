@@ -5,6 +5,7 @@
 #include "config.h"
 #include "cookie.h"
 #include "die.h"
+#include "env.h"
 #include "errtxt.h"
 #include "fmt.h"
 #include "scan.h"
@@ -252,6 +253,7 @@ void tagmsg(unsigned long msgnum,
 void initsub(const char *dir,const char *subdbline)
 {
   void *handle;
+  const char *libdir;
 
   basedir = dir;
   if (subdbline == 0) {
@@ -263,7 +265,9 @@ void initsub(const char *dir,const char *subdbline)
     if (!stralloc_copys(&line,subdbline)) die_nomem();
     parsesubdb(0);
   }
-  if (!stralloc_copys(&path,auto_lib)) die_nomem();
+  if ((libdir = env_get("EZMLM_LIB")) == 0)
+    libdir = auto_lib;
+  if (!stralloc_copys(&path,libdir)) die_nomem();
   if (!stralloc_cats(&path,"/sub-")) die_nomem();
   if (!stralloc_cats(&path,info.plugin)) die_nomem();
   if (!stralloc_cats(&path,".so")) die_nomem();
