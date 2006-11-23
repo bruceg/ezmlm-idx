@@ -15,7 +15,7 @@ void wrap_execbin(const char *program,
   const char *args[4];
   int i;
 
-  if (!stralloc_copys(&path,auto_bin)) die_nomem();
+  if (!stralloc_copys(&path,auto_bin())) die_nomem();
   if (!stralloc_cats(&path,program)) die_nomem();
   if (!stralloc_0(&path)) die_nomem();
   args[0] = path.s;

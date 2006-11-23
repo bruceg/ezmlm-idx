@@ -7,18 +7,6 @@ if [ $# -ne 1 ]; then
 fi
 db=$1
 
-if [ `head -n 1 conf-bin` != `pwd` ]; then
-  pwd >conf-bin
-fi
-
-if [ `head -n 1 conf-etc` != `pwd`/lang ]; then
-  echo `pwd`/lang >conf-etc
-fi
-
-if [ `head -n 1 conf-lib` != `pwd` ]; then
-  pwd >conf-lib
-fi
-
 echo "==================== Testing subdb = $db ===================="
 
 `dirname $0`/makerrors

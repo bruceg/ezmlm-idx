@@ -156,7 +156,7 @@ void main(int argc,char **argv)
   }
 
   if (dontact) {
-    substdio_puts(subfderr, auto_bin);
+    substdio_puts(subfderr, auto_bin());
     substdio_puts(subfderr, program);
     substdio_put(subfderr, " ", 1);
     substdio_put(subfderr, opts->s, opts->len);

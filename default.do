@@ -53,7 +53,14 @@ case "$1" in
     ;;
   lib/auto_version.c)
     dependon auto-str VERSION
-    formake './auto-str auto_version `head -n 1 VERSION` > lib/auto_version.c'
+    formake './auto-str auto_version < VERSION > lib/auto_version.c'
+    ;;
+  lib/auto_bin.c|lib/auto_lib.c|lib/auto_etc.c)
+    base=${1%.c}
+    base=${base##*_}
+    ubase=`echo $base | tr a-z A-Z`
+    dependon auto-str conf-$base
+    formake "./auto-str auto_${base} EZMLM_${ubase} <conf-${base} >$1"
     ;;
   lib/auto_*.c)
     base=${1%.c}

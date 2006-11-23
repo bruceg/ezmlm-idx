@@ -38,11 +38,29 @@ int main(int argc, char **argv)
   value[len] = 0;
   value[str_chr(value,'\n')] = 0;
 
-  subputs("const char ");
-  subputs(name);
-  subputs("[] = \"");
-  subputsbin(value);
-  subputs("\";\n");
+  if (env) {
+    subputs("#include \"env.h\"\n"
+	    "const char *");
+    subputs(name);
+    subputs("(void)\n"
+	    "{\n"
+	    "  const char *env;\n"
+	    "  if ((env = env_get(\"");
+    subputs(env);
+    subputs("\")) == 0)\n"
+	    "    env = \"");
+    subputsbin(value);
+    subputs("\";\n"
+	    "  return env;\n"
+	    "}\n");
+  }
+  else {
+    subputs("const char ");
+    subputs(name);
+    subputs("[] = \"");
+    subputsbin(value);
+    subputs("\";\n");
+  }
   if (substdio_flush(subfdout) == -1) _exit(111);
   return 0;
   (void)argc;

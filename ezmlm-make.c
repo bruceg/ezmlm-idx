@@ -460,7 +460,7 @@ void main(int argc,char **argv)
     fdin = open_template(&template);
   } else {
     /* /etc/ezmlm/default/ezmlmrc */
-    if (!stralloc_copys(&template,auto_etc)) die_nomem();
+    if (!stralloc_copys(&template,auto_etc())) die_nomem();
     if (!stralloc_cats(&template,TXT_DEFAULT)) die_nomem();
     fdin = open_template(&template);
   }
@@ -630,7 +630,7 @@ void main(int argc,char **argv)
                 die_nomem();
         switch (line.s[pos+2]) {
           case 'B':		/* path to ezmlm binaries (no trailing /) */
-            if (!stralloc_cats(&outline,auto_bin)) die_nomem();
+            if (!stralloc_cats(&outline,auto_bin())) die_nomem();
             last = pos + 4; next = pos + 5; break;
           case 'C':		/* digestcode */
 	    if (!stralloc_cat(&outline,&code)) die_nomem();

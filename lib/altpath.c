@@ -3,6 +3,7 @@
 #include "stralloc.h"
 #include "config.h"
 #include "die.h"
+#include "env.h"
 #include "error.h"
 #include "open.h"
 #include "slurp.h"
@@ -23,7 +24,7 @@ const char *altpath(stralloc *s,const char *fn)
 
 const char *altdefaultpath(stralloc *s,const char *fn)
 {
-  if (!stralloc_copys(s,auto_etc)) die_nomem();
+  if (!stralloc_copys(s,auto_etc())) die_nomem();
   if (!stralloc_cats(s,TXT_DEFAULT)) die_nomem();
   if (!stralloc_append(s,"/")) die_nomem();
   if (!stralloc_cats(s,fn)) die_nomem();

@@ -2061,7 +2061,7 @@ int main(int argc,char **argv)
   euid = (unsigned long) geteuid();			/* chroot only if 0 */
 
   if (!euid) {
-    if (!stralloc_copys(&line,auto_etc)) die_nomem();
+    if (!stralloc_copys(&line,auto_etc())) die_nomem();
     if (!stralloc_cats(&line,EZ_CGIRC)) die_nomem();
     if (!stralloc_0(&line)) die_nomem();
     if ((fd = open_read(line.s)) == -1)			/* open config */

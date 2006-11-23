@@ -99,14 +99,6 @@ if [ ! -x "${EZBIN}/ezmlm-make" ]; then
 	exit 99
 fi
 
-if [ x`head -n 1 ${EZBIN}/conf-bin` != x"$EZBIN" ]; then
-	${ECHO} "ezmlm-idx programs are configured to execute in a different"
-	${ECHO} "directory (`head -n 1 ${EZBIN}/conf-bin`) from the directory"
-	${ECHO} "in which they are residing ($EZBIN)."
-	${ECHO} "This will cause some tests to fail."
-	exit 99
-fi
-
 ########################
 # remove old test list #
 ########################
@@ -145,6 +137,8 @@ ${UNSET} A
 ${UNSET} DEFAULT
 
 QMAILQUEUE="$QQTEST"
+EZMLM_BIN="$EZBIN"
+EZMLM_ETC="$EZBIN"/lang
 EZMLM_LIB="$EZBIN"
 
-export DEFAULT LOCAL QMAILQUEUE SENDER EZMLM_LIB
+export DEFAULT LOCAL QMAILQUEUE SENDER EZMLM_BIN EZMLM_ETC EZMLM_LIB

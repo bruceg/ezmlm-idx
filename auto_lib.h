@@ -1,6 +1,6 @@
 #ifndef AUTO_LIB_H
 #define AUTO_LIB_H
 
-extern const char auto_lib[];
+extern const char *auto_lib(void);
 
 #endif
