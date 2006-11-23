@@ -681,17 +681,6 @@ for both
 and
 .I local\fB-digest@\fIhost
 will be run by other means, such as crond.
-If the list is set up with SQL support (see
-.BR \-6 ),
-restrict the list to a subset of addresses by adding the list name to
-the
-.IR dir\fB/sql ,
-.IR dir\fB/allow/sql ,
-.IR dir\fB/digest/sql ,
-and
-.IR dir\fB/mod/sql
-configuration files. Useful only when setting up the main list
-for a large distributed list supported by a SQL address database.
 Also, bounces will be handled by
 .B ezmlm-receipt(1)
 rather than
