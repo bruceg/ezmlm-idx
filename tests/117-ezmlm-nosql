@@ -1,0 +1,39 @@
+# $Id$
+
+#########################
+# ezmlm non-SQL support #
+#########################
+
+if [ -n "$SUBDB" ]; then
+
+  SENDER="someone@elsewhere.com"
+
+  prompt "ezmlm non-SQL:        "
+
+  ${GREP} "$SENDER" "$DIR"/subscribers/* >/dev/null 2>&1 \
+	&& fatal "test address is already in subscriber list"
+
+  ${EZBIN}/ezmlm-list -M "$DIR" | ${GREP} "$SENDER" >/dev/null \
+	&& fatal "test address was listed before adding"
+
+  ${EZBIN}/ezmlm-sub -M "$DIR" "$SENDER" \
+	|| fatal "ezmlm-sub failed"
+
+  ${GREP} "$SENDER" "$DIR"/subscribers/* >/dev/null 2>&1 \
+	|| fatal "test address was not added to files"
+
+  ${EZBIN}/ezmlm-list -M "$DIR" | ${GREP} "$SENDER" \
+	|| fatal "test address was not listed after adding"
+
+  ${EZBIN}/ezmlm-unsub -M "$DIR" "$SENDER" \
+	|| fatal "ezmlm-unsub failed"
+
+  ${GREP} "$SENDER" "$DIR"/subscribers/* >/dev/null 2>&1 \
+	&& fatal "test address was not removed from files"
+
+  ${EZBIN}/ezmlm-list -M "$DIR" | ${GREP} "$SENDER" >/dev/null \
+	&& fatal "test address was listed after removing"
+
+  ${ECHO} "OK"
+
+fi
