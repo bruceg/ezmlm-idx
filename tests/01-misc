@@ -119,6 +119,8 @@ if [ -n "$SUBDB" ]; then
 		>"$ERR" 2>&1
 fi
 ${RM} -rf "$DIR" "$ERR" >/dev/null 2>&1
+test -e "$DIR" \
+&& fatal "Could not remove old list"
 
 #################
 # check version #
