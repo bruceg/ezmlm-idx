@@ -32,7 +32,7 @@ void subunsub_main(int submode,
   char *cp;
   char ch;
   int match;
-  int flagmysql = 1;	/* use mysql if supported */
+  const char *flagsubdb = 0;
   int forcehash = -1;
   int flagname = 0;
   unsigned long u;
@@ -46,8 +46,8 @@ void subunsub_main(int submode,
     switch(opt) {
       case 'h': (void) scan_ulong(optarg,&u); forcehash = 0; break;
       case 'H': forcehash = -1; break;
-      case 'm': flagmysql = 1; break;
-      case 'M': flagmysql = 0; break;
+      case 'm': flagsubdb = 0; break;
+      case 'M': flagsubdb = "std"; break;
       case 'n': flagname = 1; break;
       case 'N': flagname = 0; break;
       case 'v':
@@ -57,7 +57,7 @@ void subunsub_main(int submode,
     }
 
   startup(dir = argv[optind++]);
-  initsub(dir,flagmysql);
+  initsub(dir,flagsubdb);
   /* If the second argument is present and does not contain a "@", treat
    * it as the subdirectory parameter and not an address to subscribe. */
   subdir = argv[optind];

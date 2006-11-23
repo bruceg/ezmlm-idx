@@ -249,18 +249,20 @@ void tagmsg(unsigned long msgnum,
     plugin->tagmsg(&info,msgnum,hashout,bodysize,chunk);
 }
 
-void initsub(const char *dir, int flagsql)
+void initsub(const char *dir,const char *subdbline)
 {
   void *handle;
 
   basedir = dir;
-  if (flagsql) {
+  if (subdbline == 0) {
     if (!loadsubdb("subdb",0))
       if (!loadsubdb("sql","sql"))
 	parsesubdb("std");
   }
-  else
-    parsesubdb("std");
+  else {
+    if (!stralloc_copys(&line,subdbline)) die_nomem();
+    parsesubdb(0);
+  }
   if (!stralloc_copys(&path,auto_lib)) die_nomem();
   if (!stralloc_cats(&path,"/sub-")) die_nomem();
   if (!stralloc_cats(&path,info.plugin)) die_nomem();

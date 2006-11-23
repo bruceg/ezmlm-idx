@@ -43,14 +43,14 @@ void main(int argc,char **argv)
 {
   const char *dir;
   const char *subdir;
-  int flagmysql = 1;	/* use if supported */
+  const char *flagsubdb = 0;
   unsigned long n;
   int opt;
 
   while ((opt = getopt(argc,argv,"mMnNvV")) != opteof)
     switch(opt) {
-      case 'm': flagmysql = 1; break;
-      case 'M': flagmysql = 0; break;
+      case 'm': flagsubdb = 0; break;
+      case 'M': flagsubdb = "std"; break;
       case 'n': flagnumber = 1; break;
       case 'N': flagnumber = 0; break;
       case 'v':
@@ -60,7 +60,7 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
-  initsub(dir,flagmysql);
+  initsub(dir,flagsubdb);
   subdir = argv[optind];
 
   if (flagnumber) {

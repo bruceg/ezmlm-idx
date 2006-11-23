@@ -3,9 +3,6 @@ Figure out how to get rid of -fPIC in conf-cc
   conf-cc and conf-ld ?
 Only compile files in lib/ and *=so with PIC flags
 
-Modify the programs that call subdb functions with flagsql=0 to use the
-above with subdb="std".
-
 Fixup man pages and FAQ.idx regarding modsub and remote contents
 ?Remove "dir" argument from getconf?
 

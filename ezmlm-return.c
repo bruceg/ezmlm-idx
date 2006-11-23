@@ -287,7 +287,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   load_config(dir);
-  initsub(dir,1);
+  initsub(dir,0);
 
     if (str_start(action,"receipt-")) {
       flagreceipt = 1;

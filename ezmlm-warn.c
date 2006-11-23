@@ -263,7 +263,7 @@ void main(int argc,char **argv)
     }
   startup(dir = argv[optind]);
   load_config(dir);
-  initsub(dir,1);
+  initsub(dir,0);
   getconf_ulong(&copylines,"copylines",0,dir);
   workdir = flagdig ? "digest" : ".";
 

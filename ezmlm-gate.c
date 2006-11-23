@@ -111,7 +111,7 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
-  initsub(dir,1);
+  initsub(dir,0);
 
   sender = env_get("SENDER");
 

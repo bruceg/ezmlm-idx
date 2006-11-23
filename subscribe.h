@@ -14,7 +14,7 @@ struct subdbinfo
   void *conn;
 };
 
-extern void initsub(const char *dir, int flagsql);
+extern void initsub(const char *dir,const char *subdbline);
 
 /* these are the subroutines used for interfacing with the subscriber and  */
 /* moderator address databases. For the put/to address output routines     */
