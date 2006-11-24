@@ -1,8 +1,8 @@
 $Id$
 INFORMATION ON BUILDING/USING EZMLM WITH MYSQL SUPPORT
 
-(c) 1999,	Frederik Lindberg,
-		lindberg@id.wustl.edu
+Copyright 1999 Frederik Lindberg, lindberg@id.wustl.edu
+Copyright 2006 Bruce Guenter, bruce@untroubled.org
 		You may use under GPL.
 
 For information on MySQL, see http://www.tcx.se.
@@ -10,9 +10,9 @@ For information on MySQL, see http://www.tcx.se.
 Most of this information is available in FAQ.idx.
 
 If you are interested in contributing/testing a subscriber db interface
-for another SQL server, please see sub_std/README and the routines here,
-and contact lindberg@id.wustl.edu (it may already be in process). See end
-of this file for other ways to contribute.
+for another SQL server, please see README.std and the routines here, and
+contact bruce@untroubled.org (it may already be in process). See end of
+this file for other ways to contribute.
 
 conf-mysql must be edited to reflect your system. On many systems, you
 also need to include ``-lsocket'', as well as change the paths to the
@@ -120,7 +120,7 @@ CONTRIBUTIONS REQESTED
 
 I would be very grateful if there are users out there willing to do any of
 the following and contribute it to this package. Please check with me first
-(lindberg@id.wustl.edu), as the project may already be in progress/done.
+(bruce@untroubled.org), as the project may already be in progress/done.
 
 1. Interfaces for other SQL servers. Oracle, SyBase, ...
 

@@ -1,7 +1,7 @@
   EZFAQ 0.40 - ezmlm-idx and ezmlm FAQ
-  Fred Lindberg, lindberg@id.wustl.edu & Fred B. Ringel,
-  fredr@rivertown.net
-  22-NOV-1999
+  Fred Lindberg, lindberg@id.wustl.edu, Fred B. Ringel,
+  fredr@rivertown.net, & Bruce Guenter bruce@untroubled.org
+  2006-11-24
 
   This document is a collection of frequently asked questions about
   ezmlm-idx. Where applicable, ezmlm itself is also covered. This FAQ
@@ -618,9 +618,7 @@
   11..55..  WWhheerree ccaann II ggeett aallll ooff tthhee eezzmmllmm--rreellaatteedd pprrooggrraammss??
 
   We have now registered ezmlm.org to make access to ezmlm-idx and
-  related programs/documentation easier. www.ezmlm.org is currently an
-  alias for Fred B. Ringel's www.rivertown.net/~ezmlm/ and ftp.ezmlm.org
-  an alias for Fred Lindberg's ftp.id.wustl.edu.
+  related programs/documentation easier.
 
 
      DDaann JJ.. BBeerrnnsstteeiinn''ss eezzmmllmm--00..5533
@@ -699,7 +697,7 @@
 
         To contribute an ezmlmrc(5) file in a new language, start with
         the en_US version from the latest package, and send the gzipped
-        file to lindberg@id.wustl.edu. Please leave comments intact and
+        file to bruce@untroubled.org. Please leave comments intact and
         in English and do not change the order of items in the file.
         This will facilitate maintenance.
 
@@ -884,16 +882,12 @@
 
      +o  The Japanese qmail list: qmail-subscribe@jp.qmail.org
 
-     +o  A ezmlm/idx digest list of djb-qmail: qmail-digest-
-        subscribe@id.wustl.edu
-
-     +o  A ezmlm/idx sublist of djb-qmail (you can test ezmlm-idx
-        commands): qmail-index@id.wustl.edu
-
 
   11..77..  WWhheerree ddoo II sseenndd ccoommmmeennttss oonn tthhiiss ddooccuummeenntt??
 
   To the authors via E-mail:
+
+  +^Ho  Bruce Guenter, bruce@untroubled.org
 
   +o  Fred Lindberg, lindberg@id.wustl.edu
 
@@ -2844,7 +2838,7 @@
   66..22..  HHooww ddoo II rreeppoorrtt eezzmmllmm bbuuggss??
 
   If you have found a bug in the ezmlm-idx additions, please send a bug
-  report by E-mail to lindberg@id.wustl.edu. Describe the error, your
+  report by E-mail to bruce@untroubled.org. Describe the error, your
   setup, and your system in sufficient detail so that it can be
   reproduced by third parties. Include relevant sections of mail log,
   and information about any error messages returned. If you ran into a
@@ -2852,8 +2846,8 @@
   against the distribution.
 
   If you have found a bug in ezmlm proper (unlikely), please send a
-  similar bug report to djb@cr.yp.to or djb-ezmlm@cr.yp.to. If you're
-  unsure where the bug is, you can start with lindberg@id.wustl.edu.  If
+  similar bug report to djb@cr.yp.to or ezmlm@list.cr.yp.to. If you're
+  unsure where the bug is, you can start with bruce@untroubled.org.  If
   you have problems and questions, please refer to the documentation,
   then to mailing list archives, then E-mail the ezmlm mailing list or
   the authors.
@@ -2861,7 +2855,7 @@
 
   66..33..  WWhheerree ddoo II sseenndd ssuuggggeessttiioonnss ffoorr eezzmmllmm--iiddxx iimmpprroovveemmeennttss??
 
-  E-mail to lindberg@id.wustl.edu, ideally with a context diff.  For
+  E-mail to bruce@untroubled.org, ideally with a context diff.  For
   ezmlm proper, ezmlm@list.cr.yp.to may be better.
 
 
@@ -2876,7 +2870,7 @@
   (add ``exit 0'' just before the point of failure and set the
   environment variables as set by the script), then try to run the
   command manually. ~~//____TTSSTTDDIIRR____eerrrr may contain a relevant error
-  message.  For further help, E-mail lindberg@id.wustl.edu.
+  message.  For further help, E-mail bruce@untroubled.org.
 
 
   66..55..  UUssiinngg eezzmmllmm--cchheecckk ttoo ffiinndd sseettuupp eerrrroorrss..
@@ -5201,8 +5195,8 @@
   as described below should be considered only when you expect thousands
   of bouncing addresses (virtually never). The description remains, for
   users of ezmlm-0.53 or earlier versions of ezmlm-idx. For users of
-  ezmlm-0.53 alone, we recommend a patch (
-  <ftp://ftp.id.wustl.edu/pub/patches/ezmlm-return.diff> which fixes a
+  ezmlm-0.53 alone, we recommend a patch
+  (http://ezmlm.org/archive/patches/ezmlm-return.diff) which fixes a
   bug in ezmlm-0.53 bounce handling. The patch is superseded by ezmlm-
   idx.
 
@@ -5601,7 +5595,7 @@
 
   If you have made an eezzmmllmmrrcc((55)) version for another language, please
   make it public domain and E-mail it as an attachment to
-  lindberg@id.wustl.edu. It will then be put into the eezzmmllmmrrcc directory
+  bruce@untroubled.org. It will then be put into the eezzmmllmmrrcc directory
   of the distribution site. Please take advantage of the ``Content-
   transfer-encoding'' capability of ezmlm-idx>=0.30, if needed, as this
   avoids problems when messages are sent via non-8-bit MUAs.
@@ -6021,7 +6015,7 @@
   2211..1177..  RReeppoorrttiinngg sseeccuurriittyy pprroobblleemmss..
 
   Please send private E-mail about any security problems with the ezmlm-
-  idx additions to Fred Lindberg, lindberg@id.wustl.edu.  For ezmlm,
+  idx additions to Bruce Guenter, bruce@untroubled.org.  For ezmlm,
   please send them via private E-mail to Dan J. Bernstein, the author of
   ezmlm proper.
 

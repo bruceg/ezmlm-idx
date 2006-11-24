@@ -2,19 +2,16 @@ $Id$
 INFORMATION ON BUILDING/USING EZMLM WITH POSTGRESQL SUPPORT
 
 Original source:
-(c) 1999,	Frederik Lindberg,
-		lindberg@id.wustl.edu
+(c) 1999, Frederik Lindberg, lindberg@id.wustl.edu
 		You may use under GPL.
 
 and for PostgreSQL modifications:
-(c) 1999, Magnus Stålåker
-        stalaker@umc.se
+(c) 1999, Magnus Stålåker, stalaker@umc.se
+
+Rewritten as a plugin by:
+(c) 2006 Bruce Guenter, bruce@untroubled.org
 
 For information on PostgreSQL, see http://www.postgresql.org/
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-NOTICE! This is a untested beta! USE WITH CAUTION!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 This version of the PostgresSQL supports the basic subscriber address
 database and subscription logging. The log that is searched by the -log.
@@ -26,8 +23,8 @@ supported. Still, the current support covers the functionality used in
 Most of this information is available in FAQ.idx.
 
 If you are interested in contributing/testing a subscriber db interface
-for another SQL server, please see sub_std/README and the routines here,
-and contact lindberg@id.wustl.edu (it may already be in process). See end
+for another SQL server, please see README.std and the routines here,
+and contact bruce@untroubled.org (it may already be in process). See end
 of this file for other ways to contribute.
 
 conf-mysql must be edited to reflect your system. On many systems, you
@@ -136,7 +133,7 @@ CONTRIBUTIONS REQESTED
 
 I would be very grateful if there are users out there willing to do any of
 the following and contribute it to this package. Please check with me first
-(lindberg@id.wustl.edu), as the project may already be in progress/done.
+(bruce@untroubled.org), as the project may already be in progress/done.
 
 1. Interfaces for other SQL servers. Oracle, SyBase, ...
 

@@ -99,7 +99,7 @@ struct sub_plugin
 		   int forcehash);
   void (*tagmsg)(struct subdbinfo *info,
 		 unsigned long msgnum,
-		 char *hashout,
+		 const char *hashout,
 		 unsigned long bodysize,
 		 unsigned long chunk);
 };

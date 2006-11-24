@@ -1,0 +1,18 @@
+$Id$
+STANDARD EZMLM DATABASE INTERFACE
+
+The sub-std.c file comprises the ezmlm subscriber database interface. issub and
+subscribe are backwards compatible with ezmlm-0.53 in terms of function,
+but use a case-insensitive hash for address storage, and take a few
+extra args to be plug-in compatible with alternative interfaces. Logging to
+the subscriber log (DIR/Log) is done from subscribe rather than externally,
+and the subscriber from line is logged as well.
+
+searchlog allows access to DIR/Log.
+
+putsubs does all output of subscriber addresses, both to qmail for subscibers,
+moderator sendouts, etc, and to list subscribers in reply to the -list command.
+
+Alternative subscriber db interface routines should perform equivalent services,
+and fall back to these services if the alternative interface is not configured,
+e.g. if DIR/subdb doe not exist.

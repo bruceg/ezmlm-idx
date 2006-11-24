@@ -15,6 +15,16 @@ see INSTALL.idx. For details on what's new in this version, see CHANGES.idx.
 Steps required for upgrading from ezmlm-idx-5.x.x and earlier
 -------------------------------------------------------------
 
+The usage of ezmlm-issubn, ezmlm-gate, ezmlm-list, ezmlm-sub, and
+ezmlm-unsub has changed.  Where previously the commands would have used
+multiple full paths, they now use relative paths for all tables.  Read
+the manual pages for more details.  The changes have been made so that
+most uses of these tools will still work as before, but some usages may
+break, particularly on new lists or lists that have been edited after
+upgrading.  You may need to upgrade your lists by running:
+
+	ezmlm-make -+ DIR
+
 All lists with paths in their DIR/modsub or DIR/remote files need to
 have those paths checked and possibly modified to ensure that they are
 either single-level relative paths or absolute paths within DIR.

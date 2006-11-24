@@ -48,6 +48,9 @@ DIR/sql.  If it is not found, DIR/sql is used instead with an assumed
 plugin name of "sql".  ezmlm-make will read in and convert DIR/sql if
 DIR/subdb does not exist, but it writes out DIR/subdb.
 
+Make sure to read the UPGRADE.idx file for more information on what
+steps may be necessary to use this version.
+
 ezmlm-idx-5.1.1, 2006-11-23
 ===========================
 
