@@ -1,4 +1,3 @@
-Fixup man pages and FAQ.idx regarding modsub and remote contents
 ?Remove "dir" argument from getconf?
 
 Put a real address into To: header in ezmlm-store (and others?)

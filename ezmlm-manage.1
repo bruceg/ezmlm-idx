@@ -462,17 +462,20 @@ for subscriptions.
 
 If
 .I dir\fB/modsub
-starts with a forward slash, it is assumed that the content this is the base
+is not empty, it is assumed that the content this is the base
 directory for the moderator database (
 .IR moddir ).
 Otherwise,
 .I moddir
 is assumed to be
 .IR dir\fB/mod/ .
+The given path must either be within
+.I dir
+or a relative directory name.
 
 The moderator names are assumed
 to be stored in a set of files in
-.IR /moddir\fB/subscribers/ .
+.IR moddir\fB/subscribers/ .
 
 To add, remove, and list moderators, use respectively:
 
@@ -529,12 +532,15 @@ the remote admin aware that the address unsubscribed most likely is not the
 subscriber's subscription address.
 
 .I dir\fB/remote
-starts with a forward slash, it is assumed that the content this is the base
+is not empty, it is assumed that the content this is the base
 directory for the moderator database (
 .IR moddir ).
 The moderator names are assumed
 to be stored in a set of files in
-.IR /moddir\fB/subscribers/ .
+.IR moddir\fB/subscribers/ .
+The given path must either be within
+.I dir
+or a relative directory name.
 If both
 .I dir\fB/modsub
 and

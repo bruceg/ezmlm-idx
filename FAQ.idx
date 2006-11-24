@@ -3436,8 +3436,7 @@
 
 
   If this fails the list is not subscription moderated. If it succeeds
-  with a directory name with a leading ``/'', this is your ``moddir''.
-  If not:
+  with a directory name, this is your ``moddir''.  If not:
 
 
 
@@ -3446,8 +3445,8 @@
 
 
 
-  If this succeeds with a directory name with a leading ``/'', this is
-  your moddir, otherwise the moddir is ``DDIIRR//mmoodd//''.
+  If this succeeds with a directory name, this is your moddir, otherwise
+  the moddir is ``DDIIRR//mmoodd//''.
 
   Check for moderators:
 
