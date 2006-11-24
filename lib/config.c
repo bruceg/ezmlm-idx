@@ -11,6 +11,7 @@
 #include "strerr.h"
 #include "wrap.h"
 
+const char *listdir = 0;
 stralloc charset = {0};
 stralloc ezmlmrc = {0};
 stralloc key = {0};
@@ -27,6 +28,7 @@ void startup(const char *dir)
   if (dir == 0)
     die_usage();
 
+  listdir = dir;
   wrap_chdir(dir);
 }
 

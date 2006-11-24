@@ -61,7 +61,7 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
-  initsub(dir,flagsubdb);
+  initsub(flagsubdb);
   subdir = argv[optind];
 
   if (flagnumber) {

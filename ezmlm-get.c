@@ -792,7 +792,7 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind++]);
   load_config(dir);
-  initsub(dir,0);
+  initsub(0);
   getconf_ulong(&copylines,"copylines",0,dir);
 
   digestcode = argv[optind];	/* code to activate digest (-digest-code)*/

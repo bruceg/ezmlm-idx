@@ -5,6 +5,7 @@
 
 #define NO_FLAGS ('z' - 'a' + 1)
 
+extern const char *listdir;
 extern stralloc charset;
 extern stralloc ezmlmrc;
 extern stralloc key;

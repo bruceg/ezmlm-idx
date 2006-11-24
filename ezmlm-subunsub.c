@@ -58,7 +58,7 @@ void subunsub_main(int submode,
     }
 
   startup(dir = argv[optind++]);
-  initsub(dir,flagsubdb);
+  initsub(flagsubdb);
   /* If the second argument is present and does not contain a "@", treat
    * it as the subdirectory parameter and not an address to subscribe. */
   subdir = argv[optind];

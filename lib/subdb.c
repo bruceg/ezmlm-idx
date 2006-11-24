@@ -20,7 +20,6 @@ static stralloc line = {0};
 static stralloc path = {0};
 static struct sub_plugin *plugin = 0;
 static struct subdbinfo info;
-static const char* basedir;
 
 static void parsesubdb(const char *plugin)
 /* Parses line into the components. The string should be
@@ -109,8 +108,8 @@ static const char *fixsubdir(const char *subdir)
   unsigned int dir_len;
   if (subdir != 0) {
     if (subdir[0] == '/') {
-      dir_len = str_len(basedir);
-      if (str_diffn(subdir,basedir,dir_len) != 0
+      dir_len = str_len(listdir);
+      if (str_diffn(subdir,listdir,dir_len) != 0
 	  || (subdir[dir_len] != '/'
 	      && subdir[dir_len] != 0))
 	strerr_die2x(111,FATAL,"FIXME: absolute subdirectories no longer supported.");
@@ -250,11 +249,10 @@ void tagmsg(unsigned long msgnum,
     plugin->tagmsg(&info,msgnum,hashout,bodysize,chunk);
 }
 
-void initsub(const char *dir,const char *subdbline)
+void initsub(const char *subdbline)
 {
   void *handle;
 
-  basedir = dir;
   if (subdbline == 0) {
     if (!loadsubdb("subdb",0))
       if (!loadsubdb("sql","sql"))
