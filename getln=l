@@ -1,2 +1,2 @@
-lib/getln.o
-lib/getln2.o
+lib/getln.lo
+lib/getln2.lo

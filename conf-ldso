@@ -1,3 +1,4 @@
-gcc -shared -L/usr/local/pgsql/lib -L/usr/lib/mysql
+-shared
 
-This will be used to link .o files into a shared object.
+These flags will be added to the command line given in conf-ld when
+linking shared objects.

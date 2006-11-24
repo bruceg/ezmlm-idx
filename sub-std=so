@@ -1,2 +1,2 @@
-sub-std.o
+sub-std.lo
 -lezmlm

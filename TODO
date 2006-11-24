@@ -1,8 +1,3 @@
-Figure out how to get rid of -fPIC in conf-cc
-  Maybe make conf-ccso and conf-ldso, with flags to add to the normal
-  conf-cc and conf-ld ?
-Only compile files in lib/ and *=so with PIC flags
-
 Fixup man pages and FAQ.idx regarding modsub and remote contents
 ?Remove "dir" argument from getconf?
 

@@ -1,0 +1,5 @@
+sub-mysql.lo
+-lezmlm
+mysqlclient.lib
+nsl.lib
+m.lib

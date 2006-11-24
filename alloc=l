@@ -1,2 +1,2 @@
-lib/alloc.o
-lib/alloc_re.o
+lib/alloc.lo
+lib/alloc_re.lo
