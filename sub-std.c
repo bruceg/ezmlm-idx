@@ -73,14 +73,14 @@ static const char *_opensub(struct subdbinfo *info)
   (void)info;
 }
 
+/* Checks that the hash of seed matches hash and returns success
+ * (NULL). If not match returns "". If error, returns error string */
 static const char *_checktag(struct subdbinfo *info,
 			     unsigned long num,	/* message number */
 			     unsigned long listno,
 			     const char *action,
 			     const char *seed,	/* cookie base */
 			     const char *hash)	/* cookie */
-/* Checks that the hash of seed matches hash and returns success
- * (NULL). If not match returns "". If error, returns error string */
 {
   char strnum[FMT_ULONG];			/* message number as sz */
   char newcookie[COOKIE];
@@ -97,12 +97,12 @@ static const char *_checktag(struct subdbinfo *info,
   (void)listno;
 }
 
+/* Returns (char *) to match if userhost is in the subscriber database,
+ * 0 otherwise.  NOTE: The returned pointer is NOT VALID after a
+ * subsequent call to issub! */
 static const char *_issub(struct subdbinfo *info,
 			  const char *subdir,
 			  const char *userhost)
-/* Returns (char *) to match if userhost is in the subscriber database, */
-/* 0 otherwise. */
-/* NOTE: The returned pointer is NOT VALID after a subsequent call to issub!*/
 {
 
   int fd;
@@ -189,18 +189,16 @@ static const char *_logmsg(struct subdbinfo *info,
   (void)done;
 }
 
+/* Outputs all userhostesses in 'subdir' through subwrite. 'subdir' is
+ * the subdirectory name.  subwrite must be a function returning >=0 on
+ * success, -1 on error, and taking arguments (char* string, unsigned
+ * int length). It will be called once per address and should take care
+ * of newline or whatever needed for the output form. */
 static unsigned long _putsubs(struct subdbinfo *info,
 			      const char *subdir,
 			      unsigned long hash_lo,
 			      unsigned long hash_hi,
 			      int subwrite())	/* write function. */
-/* Outputs all userhostesses in 'dbname' to stdout. If userhost is not null */
-/* that userhost is excluded. 'dbname' is the base directory name. */
-/* subwrite must be a*/
-/* function returning >=0 on success, -1 on error, and taking arguments     */
-/* (char* string, unsigned int length). It will be called once per address  */
-/* and should take care of newline or whatever needed for the output form.  */
-
 {
 
   unsigned int i;
@@ -255,13 +253,13 @@ static void lineout(int subwrite())
   return;
 }
 
+/* opens dir/Log, and outputs via subwrite(s,len) any line that matches
+ * search. A '_' is search is a wildcard. Any other non-alphanum/'.'
+ * char is replaced by a '_' */
 static void _searchlog(struct subdbinfo *info,
 		       const char *subdir,
 		       char *search,		/* search string */
 		       int subwrite())		/* output fxn */
-/* opens dir/Log, and outputs via subwrite(s,len) any line that matches */
-/* search. A '_' is search is a wildcard. Any other non-alphanum/'.' char */
-/* is replaced by a '_' */
 {
 
   unsigned char x;
@@ -324,6 +322,20 @@ static void _searchlog(struct subdbinfo *info,
   (void)info;
 }
 
+/* Add (flagadd=1) or remove (flagadd=0) userhost from the
+ * subscr. Comment is e.g. the subscriber from line or name. It is added
+ * to the log. Event is the action type, e.g. "probe", "manual",
+ * etc. The direction (sub/unsub) is inferred from flagadd. Returns 1 on
+ * success, 0 on failure. If forcehash is >=0 it is used in place of the
+ * calculated hash. This makes it possible to add addresses with a hash
+ * that does not exist. forcehash has to be 0..99.  for unsubscribes,
+ * the address is only removed if forcehash matches the actual
+ * hash. This way, ezmlm-manage can be prevented from touching certain
+ * addresses that can only be removed by ezmlm-unsub. Usually, this
+ * would be used for sublist addresses (to avoid removal) and sublist
+ * aliases (to prevent users from subscribing them (although the cookie
+ * mechanism would prevent the resulting duplicate message from being
+ * distributed. */
 static int _subscribe(struct subdbinfo *info,
 		      const char *subdir,
 		      const char *userhost,
@@ -331,20 +343,6 @@ static int _subscribe(struct subdbinfo *info,
 		      const char *comment,
 		      const char *event,
 		      int forcehash)
-/* add (flagadd=1) or remove (flagadd=0) userhost from the subscr. database  */
-/* dbname. Comment is e.g. the subscriber from line or name. It is added to  */
-/* the log. Event is the action type, e.g. "probe", "manual", etc. The       */
-/* direction (sub/unsub) is inferred from flagadd. Returns 1 on success, 0   */
-/* on failure. If flagmysql is set and the file "sql" is found in the        */
-/* directory dbname, it is parsed and a mysql db is assumed. if forcehash is */
-/* >=0 it is used in place of the calculated hash. This makes it possible to */
-/* add addresses with a hash that does not exist. forcehash has to be 0..99. */
-/* for unsubscribes, the address is only removed if forcehash matches the    */
-/* actual hash. This way, ezmlm-manage can be prevented from touching certain*/
-/* addresses that can only be removed by ezmlm-unsub. Usually, this would be */
-/* used for sublist addresses (to avoid removal) and sublist aliases (to     */
-/* prevent users from subscribing them (although the cookie mechanism would  */
-/* prevent the resulting duplicate message from being distributed. */
 {
   int fdlock;
 
@@ -493,8 +491,8 @@ static int _subscribe(struct subdbinfo *info,
 }
 
 static void _tagmsg(struct subdbinfo *info,
-		    unsigned long msgnum,	/* number of this message */
-		    char *hashout,
+		    unsigned long msgnum,
+		    const char *hashout,
 		    unsigned long bodysize,
 		    unsigned long chunk)
 {

@@ -57,14 +57,15 @@ static int stralloc_cat_table(stralloc *s,
   return 1;
 }
 
-static void _closesub(struct subdbinfo *info)
 /* close connection to SQL server, if open */
+static void _closesub(struct subdbinfo *info)
 {
   if ((MYSQL*)info->conn)
     mysql_close((MYSQL*)info->conn);
   info->conn = 0;					/* destroy pointer */
 }
 
+/* open connection to the SQL server, if it isn't already open. */
 static const char *_opensub(struct subdbinfo *info)
 {
   if (!(MYSQL*)info->conn) {
@@ -92,15 +93,14 @@ static MYSQL_RES *safe_select(struct subdbinfo *info,const stralloc* query)
   return result;
 }
 
+/* Checks the hash against the cookie table. If it matches, returns NULL,
+ * else returns "". If error, returns error string. */
 static const char *_checktag (struct subdbinfo *info,
 			      unsigned long num,	/* message number */
 			      unsigned long listno,	/* bottom of range => slave */
 			      const char *action,
 			      const char *seed,
 			      const char *hash)		/* cookie */
-/* reads dir/sql. If not present, returns success (NULL). If dir/sql is    */
-/* present, checks hash against the cookie table. If match, returns success*/
-/* (NULL), else returns "". If error, returns error string. */
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
@@ -155,14 +155,12 @@ static const char *_checktag (struct subdbinfo *info,
     (void)seed;
 }
 
+/* Returns matching userhost if it is in the subscriber database, NULL
+ * otherwise.  NOTE: The returned pointer is NOT VALID after a
+ * subsequent call to issub!*/
 static const char *_issub(struct subdbinfo *info,
 			  const char *table,
 			  const char *userhost)
-/* Returns (char *) to match if userhost is in the subscriber database      */
-/* dir, 0 otherwise. dir is a base directory for a list and may NOT         */
-/* be NULL        */
-/* NOTE: The returned pointer is NOT VALID after a subsequent call to issub!*/
-
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
@@ -211,14 +209,13 @@ static const char *_issub(struct subdbinfo *info,
     return ret;
 }
 
+/* Creates an entry for message num and the list listno and code "done".
+ * Returns NULL on success, and the error string on error. */
 static const char *_logmsg(struct subdbinfo *info,
 			   unsigned long num,
 			   unsigned long listno,
 			   unsigned long subs,
 			   int done)
-/* creates an entry for message num and the list listno and code "done". */
-/* Returns NULL on success, "" if dir/sql was not found, and the error   */
-/* string on error.   NOTE: This routine does nothing for non-sql lists! */
 {
   if (!stralloc_copys(&logline,"INSERT INTO ")) return ERR_NOMEM;
   if (!stralloc_cats(&logline,info->base_table)) return ERR_NOMEM;
@@ -244,21 +241,16 @@ static const char *_logmsg(struct subdbinfo *info,
   return 0;
 }
 
+/* Outputs all addresses in the table through subwrite. subwrite must be
+ * a function returning >=0 on success, -1 on error, and taking
+ * arguments (char* string, unsigned int length). It will be called once
+ * per address and should take care of newline or whatever needed for
+ * the output form. */
 static unsigned long _putsubs(struct subdbinfo *info,
 			      const char *table,
 			      unsigned long hash_lo,
 			      unsigned long hash_hi,
 			      int subwrite())		/* write function. */
-
-/* Outputs all userhostesses in 'dbname' to stdout. If userhost is not null */
-/* that userhost is excluded. 'dbname' is the base directory name. For the  */
-/* mysql version, dbname is the directory where the file "sql" with mysql   */
-/* access info is found. If this file is not present or if flagmysql is not */
-/* set, the routine falls back to the old database style. subwrite must be a*/
-/* function returning >=0 on success, -1 on error, and taking arguments     */
-/* (char* string, unsigned int length). It will be called once per address  */
-/* and should take care of newline or whatever needed for the output form.  */
-
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
@@ -291,15 +283,13 @@ static unsigned long _putsubs(struct subdbinfo *info,
     return no;
 }
 
+/* Searches the subscriber log and outputs via subwrite(s,len) any entry
+ * that matches search. A '_' is search is a wildcard. Any other
+ * non-alphanum/'.' char is replaced by a '_'. */
 static void _searchlog(struct subdbinfo *info,
 		       const char *table,
 		       char *search,		/* search string */
 		       int subwrite())		/* output fxn */
-/* opens dir/Log, and outputs via subwrite(s,len) any line that matches   */
-/* search. A '_' is search is a wildcard. Any other non-alphanum/'.' char */
-/* is replaced by a '_'. mysql version. Falls back on "manual" search of  */
-/* local Log if no mysql connect info. */
-
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
@@ -336,6 +326,20 @@ static void _searchlog(struct subdbinfo *info,
     mysql_free_result(result);
 }
 
+/* Add (flagadd=1) or remove (flagadd=0) userhost from the subscriber
+ * database table. Comment is e.g. the subscriber from line or name. It
+ * is added to the log. Event is the action type, e.g. "probe",
+ * "manual", etc. The direction (sub/unsub) is inferred from
+ * flagadd. Returns 1 on success, 0 on failure. If forcehash is >=0 it
+ * is used in place of the calculated hash. This makes it possible to
+ * add addresses with a hash that does not exist. forcehash has to be
+ * 0..99.  For unsubscribes, the address is only removed if forcehash
+ * matches the actual hash. This way, ezmlm-manage can be prevented from
+ * touching certain addresses that can only be removed by
+ * ezmlm-unsub. Usually, this would be used for sublist addresses (to
+ * avoid removal) and sublist aliases (to prevent users from subscribing
+ * them (although the cookie mechanism would prevent the resulting
+ * duplicate message from being distributed. */
 static int _subscribe(struct subdbinfo *info,
 		      const char *table,
 		      const char *userhost,
@@ -343,21 +347,6 @@ static int _subscribe(struct subdbinfo *info,
 		      const char *comment,
 		      const char *event,
 		      int forcehash)
-/* add (flagadd=1) or remove (flagadd=0) userhost from the subscr. database  */
-/* dir. Comment is e.g. the subscriber from line or name. It is added to     */
-/* the log. Event is the action type, e.g. "probe", "manual", etc. The       */
-/* direction (sub/unsub) is inferred from flagadd. Returns 1 on success, 0   */
-/* on failure. If flagmysql is set and the file "sql" is found in the        */
-/* directory dir, it is parsed and a mysql db is assumed. if forcehash is    */
-/* >=0 it is used in place of the calculated hash. This makes it possible to */
-/* add addresses with a hash that does not exist. forcehash has to be 0..99. */
-/* for unsubscribes, the address is only removed if forcehash matches the    */
-/* actual hash. This way, ezmlm-manage can be prevented from touching certain*/
-/* addresses that can only be removed by ezmlm-unsub. Usually, this would be */
-/* used for sublist addresses (to avoid removal) and sublist aliases (to     */
-/* prevent users from subscribing them (although the cookie mechanism would  */
-/* prevent the resulting duplicate message from being distributed. */
-
 {
   MYSQL_RES *result;
   MYSQL_ROW row;
@@ -478,17 +467,13 @@ static int _subscribe(struct subdbinfo *info,
     return 1;					/* desired effect */
 }
 
+/* This routine inserts the cookie into table_cookie. We log arrival of
+ * the message (done=0). */
 static void _tagmsg(struct subdbinfo *info,
 		    unsigned long msgnum,	/* number of this message */
-		    char *hashout,		/* calculated hash goes here */
+		    const char *hashout,	/* previously calculated hash */
 		    unsigned long bodysize,
 		    unsigned long chunk)
-/* This routine creates a cookie from num,seed and the */
-/* list key and returns that cookie in hashout. The use of sender/num and */
-/* first char of action is used to make cookie differ between messages,   */
-/* the key is the secret list key. The cookie will be inserted into       */
-/* table_cookie where table and other data is taken from dir/sql. We log  */
-/* arrival of the message (done=0). */
 {
   const char *ret;
 
