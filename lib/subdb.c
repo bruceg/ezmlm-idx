@@ -118,7 +118,7 @@ static const char *fixsubdir(const char *subdir)
 	++subdir;
     }
     if (subdir[str_chr(subdir,'/')] == '/')
-      strerr_die2x(111,FATAL,ERR_NO_SLASHES);
+      strerr_die2x(111,FATAL,ERR_NO_LEVELS);
     if (subdir[0] == 0
 	|| (subdir[0] == '.' && subdir[1] == 0))
       subdir = 0;
