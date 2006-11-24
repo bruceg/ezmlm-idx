@@ -62,8 +62,8 @@ HOW TO BUILD, TEST, AND INSTALL:
     Others:
     If you're familiar with C programming for the particular RDBMS, it will
     take you no more than a few hours to adapt the files in sub-mysql.c (see
-    docs there). Create a new sub-????.c and send it to bruceg@em.ca for
-    inclusion into the package.
+    docs there). Create a new sub-????.c and send it to
+    bruce@untroubled.org for inclusion into the package.
 
  6. Compile the programs and man pages:
        % make clean
