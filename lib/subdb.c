@@ -112,11 +112,13 @@ static const char *fixsubdir(const char *subdir)
       if (str_diffn(subdir,listdir,dir_len) != 0
 	  || (subdir[dir_len] != '/'
 	      && subdir[dir_len] != 0))
-	strerr_die2x(111,FATAL,"FIXME: absolute subdirectories no longer supported.");
-      subdir += dir_len + (subdir[dir_len] == '/');
+	strerr_die2x(111,FATAL,ERR_NO_ABSOLUTE);
+      subdir += dir_len;
+      while (*subdir == '/')
+	++subdir;
     }
     if (subdir[str_chr(subdir,'/')] == '/')
-      strerr_die2x(111,FATAL,"FIXME: paths in subdir names no longer supported.");
+      strerr_die2x(111,FATAL,ERR_NO_SLASHES);
     if (subdir[0] == 0
 	|| (subdir[0] == '.' && subdir[1] == 0))
       subdir = 0;
