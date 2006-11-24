@@ -363,16 +363,16 @@ void main(int argc,char **argv)
 
 
   startup(dir = argv[optind++]);
-  load_config(dir);
+  load_config();
   initsub(0);
 
   sender = env_get("SENDER");
 
   fdlock = lockfile("lock");
 
-  flagarchived = getconf_line(&line,"archived",0,dir);
-  flagindexed = getconf_line(&line,"indexed",0,dir);
-  flagprefixed = getconf_line(&prefix,"prefix",0,dir);
+  flagarchived = getconf_line(&line,"archived",0);
+  flagindexed = getconf_line(&line,"indexed",0);
+  flagprefixed = getconf_line(&prefix,"prefix",0);
   if (prefix.len) {		/* encoding and serial # support */
 				/* no sanity checks - you put '\n' or '\0' */
 				/* into the coded string, you pay */
@@ -390,25 +390,25 @@ void main(int argc,char **argv)
     flagtrailer = 1;
   }
 
-  if (getconf(&mimeremove,"mimekeep",0,dir))
+  if (getconf(&mimeremove,"mimekeep",0))
     mimeremoveflag = 1;
   else
-    getconf(&mimeremove,"mimeremove",0,dir);
+    getconf(&mimeremove,"mimeremove",0);
 
-  getconf_ulong2(&msgnum,&cumsize,"num",0,dir);
+  getconf_ulong2(&msgnum,&cumsize,"num",0);
   ++msgnum;
 
-  flagsublist = getconf_line(&sublist,"sublist",0,dir);
+  flagsublist = getconf_line(&sublist,"sublist",0);
 
   if (!stralloc_copys(&line,QMQPSERVERS)) die_nomem();
   if (!stralloc_cats(&line,"/0")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
-  (void) getconf(&qmqpservers,line.s,0,dir);
+  (void) getconf(&qmqpservers,line.s,0);
 
-  if (getconf(&headerremove,"headerkeep",0,dir))
+  if (getconf(&headerremove,"headerkeep",0))
     headerremoveflag = 1;
   else
-    getconf(&headerremove,"headerremove",1,dir);
+    getconf(&headerremove,"headerremove",1);
   if (!constmap_init(&headerremovemap,headerremove.s,headerremove.len,0))
 	die_nomem();
 

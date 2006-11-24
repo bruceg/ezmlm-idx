@@ -622,9 +622,9 @@ int main(int argc,char **argv)
     }
 
   startup(dir = argv[optind]);
-  load_config(dir);
+  load_config();
   initsub(0);
-  getconf_ulong(&copylines,"copylines",0,dir);
+  getconf_ulong(&copylines,"copylines",0);
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
@@ -677,8 +677,8 @@ int main(int argc,char **argv)
   set_cptarget(target.s);	/* for copy() */
   make_verptarget();
 
-  flagmod = getconf_line(&modsub,"modsub",0,dir);
-  flagremote = getconf_line(&remote,"remote",0,dir);
+  flagmod = getconf_line(&modsub,"modsub",0);
+  flagremote = getconf_line(&remote,"remote",0);
 
   if (case_equals(action,ACTION_LISTN) ||
 		case_equals(action,ALT_LISTN))

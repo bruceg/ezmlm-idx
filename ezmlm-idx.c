@@ -194,21 +194,21 @@ int main(int argc,char **argv)
       default: die_usage();
   }
   startup(dir = argv[optind]);
-  load_config(dir);
+  load_config();
 
   (void) umask(022);
   sig_pipeignore();
 			/* obtain lock to write index files */
   fdlock = lockfile("lock");
 
-  getconf_line(&prefix,"prefix",0,dir);
+  getconf_line(&prefix,"prefix",0);
 					/* support rfc2047-encoded prefix */
   decodeHDR(prefix.s,prefix.len,&line);
   unfoldHDR(line.s,line.len,&prefix,charset.s,&dummy,0);
 					/* need only decoded one */
 
 			/* Get message number */
-  getconf_ulong(&msgmax,"num",1,dir);
+  getconf_ulong(&msgmax,"num",1);
   if (msgnum > msgmax) _exit(0);
   if (msgnum) {
     msgnum = (msgnum / 100) * 100 - 1;

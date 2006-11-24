@@ -170,16 +170,16 @@ void main(int argc,char **argv)
   }
 
   startup(dir = argv[optind]);
-  load_config(dir);
+  load_config();
   initsub(0);
 
   if (flagconfirm == -1)
-    flagconfirm = getconf_line(&confirmpost,"confirmpost",0,dir);
+    flagconfirm = getconf_line(&confirmpost,"confirmpost",0);
   else
-    getconf_line(&confirmpost,"confirmpost",0,dir);
+    getconf_line(&confirmpost,"confirmpost",0);
 
-  flagmodpost = getconf_line(&moderators,"modpost",0,dir);
-  flagremote = getconf_line(&line,"remote",0,dir);
+  flagmodpost = getconf_line(&moderators,"modpost",0);
+  flagremote = getconf_line(&line,"remote",0);
   if (!flagmodpost && !flagconfirm) {	/* not msg-mod. Pipe to ezmlm-send */
     if ((child = wrap_fork()) == 0)
       wrap_execbin("/ezmlm-send", &sendopt, dir);

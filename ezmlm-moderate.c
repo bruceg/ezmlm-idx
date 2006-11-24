@@ -197,7 +197,7 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
-  load_config(dir);
+  load_config();
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);

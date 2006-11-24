@@ -79,14 +79,14 @@ void main(int argc,char **argv)
 
   if (argv[optind])
     die_usage();	/* avoid common error of putting options after dir */
-  if ((flagmod = getconf_line(&line,"modpost",0,dir)))
+  if ((flagmod = getconf_line(&line,"modpost",0)))
     _exit(0);		/* already mod */
 			/* lock for num and for writing loopnum */
   fdlock = lockfile("lock");
 
-  if (!getconf_ulong(&num,"num",1,dir))
+  if (!getconf_ulong(&num,"num",1))
     _exit(99);						/* no msgs */
-  if ((flagloop = getconf_line(&line,fn,0,dir))) {
+  if ((flagloop = getconf_line(&line,fn,0))) {
     if(!stralloc_0(&line)) die_nomem();
     pos = scan_ulong(line.s,&loopnum);			/* msg when written */
     if (line.s[pos] == ':')

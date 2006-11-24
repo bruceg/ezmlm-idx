@@ -201,14 +201,14 @@ void tosender(void)
 void get_num(void)
 {
   /* read dir/num -> max. */
-  getconf_ulong2(&max,&cumsizen,"num",0,dir);
+  getconf_ulong2(&max,&cumsizen,"num",0);
 }
 
 unsigned long dignum(void)
 {
 /* return dignum if exists, 0 otherwise. */
   unsigned long u;
-  getconf_ulong(&u,"dignum",0,dir);
+  getconf_ulong(&u,"dignum",0);
   return u;
 }
 
@@ -791,9 +791,9 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
-  load_config(dir);
+  load_config();
   initsub(0);
-  getconf_ulong(&copylines,"copylines",0,dir);
+  getconf_ulong(&copylines,"copylines",0);
 
   digestcode = argv[optind];	/* code to activate digest (-digest-code)*/
 				/* ignore any extra args */
@@ -862,7 +862,7 @@ void main(int argc,char **argv)
   if (act == AC_NONE)			/* not for us. Pass the buck. */
     _exit(0);
   if (act != AC_INDEX) {		/* need to do header processing */
-    if(!getconf(&digheaders,"digheaders",0,dir)) {
+    if(!getconf(&digheaders,"digheaders",0)) {
       if(!stralloc_copys(&digheaders,digsz)) die_nomem();
       if (!stralloc_0(&digheaders)) die_nomem();
       psz = digheaders.s;
@@ -878,15 +878,15 @@ void main(int argc,char **argv)
     if (!flagdo)			/* only do digests */
       strerr_die2x(100,FATAL,ERR_NOCMD);
     if (flagpublic == 2)
-      flagpublic = getconf_line(&line,"public",0,dir);
+      flagpublic = getconf_line(&line,"public",0);
     if (!flagpublic) {
 		/* This all to take care of non-public lists. They should*/
 		/* still do digests, but do other things only for        */
 		/* moderators that have remote access. Since this is rare*/
 		/* efforts have been made to keep everything that's not  */
 		/* needed elsewhere in here.                   */
-      getconf_line(&moddir,"modsub",0,dir);
-      flagremote = getconf_line(&line,"remote",0,dir);
+      getconf_line(&moddir,"modsub",0);
+      flagremote = getconf_line(&line,"remote",0);
       if (!flagremote)
         strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
       if (!moddir.len) {
@@ -908,13 +908,13 @@ void main(int argc,char **argv)
     }
   }
 
-  flagindexed = getconf_line(&line,"indexed",0,dir);
-  flagarchived = getconf_line(&line,"archived",0,dir);
+  flagindexed = getconf_line(&line,"indexed",0);
+  flagarchived = getconf_line(&line,"archived",0);
 
   if (act == AC_DIGEST) {
     workdir = "digest";
     if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
-    if (getconf_line(&line,"chunk",0,dir)) {
+    if (getconf_line(&line,"chunk",0)) {
       if (!stralloc_0(&line)) die_nomem();
       (void) scan_ulong(line.s,&chunk);		/* same chunk as main list */
       if (chunk == 0)				/* limit range to 1-53 */
@@ -926,7 +926,7 @@ void main(int argc,char **argv)
       if (!stralloc_copys(&line,QMQPSERVERS)) die_nomem();
       if (!stralloc_cats(&line,"/0")) die_nomem();
       if (!stralloc_0(&line)) die_nomem();
-      flagqmqp = getconf(&qmqpservers,line.s,0,dir);
+      flagqmqp = getconf(&qmqpservers,line.s,0);
     }
   } else
     workdir = ".";
@@ -953,7 +953,7 @@ void main(int argc,char **argv)
     to = max;
     lockup();			/* another digest could corrupt dignum */
 				/* but will be saved only if flagdigrange==0 */
-    if(getconf_line(&num,"dignum",0,dir)) {
+    if(getconf_line(&num,"dignum",0)) {
       if(!stralloc_0(&num)) die_nomem();
       pos = scan_ulong(num.s,&prevmax);
       if (num.s[pos] == ':') pos++;
@@ -976,7 +976,7 @@ void main(int argc,char **argv)
     if (!stralloc_catb(&subject,date,date822fmt(date,&dt)-1))
           die_nomem();		/* skip trailing in date '\n' */
     if (!stralloc_cats(&subject," Issue ")) die_nomem();
-    if (getconf_line(&num,"digissue",0,dir)) {
+    if (getconf_line(&num,"digissue",0)) {
       if(!stralloc_0(&num)) die_nomem();
       scan_ulong(num.s,&issue);
       issue++;

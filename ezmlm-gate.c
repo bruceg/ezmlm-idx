@@ -118,7 +118,7 @@ void main(int argc,char **argv)
   pmod = (char *) 0;
 
   if (queryext) {
-    getconf(&cmds,queryext,1,dir);
+    getconf(&cmds,queryext,1);
     i = 0;
     for (j = 0;j < cmds.len; ++j)
       if (!cmds.s[j]) {

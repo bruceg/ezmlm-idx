@@ -81,10 +81,10 @@ void main(int argc,char **argv)
 
   if (argv[optind])
     die_usage();	/* avoid common error of putting options after dir */
-  if (!getconf_ulong2(&num,&cumsize,"num",0,dir))
+  if (!getconf_ulong2(&num,&cumsize,"num",0))
     _exit(99);
 
-  if (getconf_line(&line,"dignum",0,dir)) {
+  if (getconf_line(&line,"dignum",0)) {
     if(!stralloc_0(&line)) die_nomem();
     pos = scan_ulong(line.s,&dignum);
     if (line.s[pos] == ':')
@@ -116,7 +116,7 @@ void main(int argc,char **argv)
     if (flaglocal) {	/* avoid multiple digests. Of course, ezmlm-tstdig*/
 			/* belongs in ezmlm-digest, but it's too late ....*/
       fdlock = lockfile("lock");
-      getconf_line(&line,"tstdig",0,dir);
+      getconf_line(&line,"tstdig",0);
       if (!stralloc_0(&line)) die_nomem();
       scan_ulong(line.s,&tsttime);	/* give digest 1 h to complete */
 					/* nobody does digests more often */

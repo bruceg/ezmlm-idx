@@ -1834,7 +1834,7 @@ void date2msg(struct msginfo *infop)
 
 void findlastmsg(struct msginfo *infop)
 {
-  if (!getconf_ulong(&(infop->target),"num",0,dir))
+  if (!getconf_ulong(&(infop->target),"num",0))
     cgierr("Sorry, there are no messages in the archive","","");
 }
 

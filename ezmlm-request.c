@@ -291,7 +291,7 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind]);
-  getconf_ulong(&copylines,"copylines",0,dir);
+  getconf_ulong(&copylines,"copylines",0);
 
 	/* do minimum to identify request for this program in case */
 	/* it's invoked in line with e.g. ezmlm-manage */
@@ -319,7 +319,7 @@ void main(int argc,char **argv)
     else
       _exit(0);					/* not for us */
   }
-  load_config(dir);
+  load_config();
 
   if (!stralloc_copy(&listname,&outlocal)) die_nomem();
   if (!stralloc_copy(&hostname,&outhost)) die_nomem();
@@ -335,10 +335,10 @@ void main(int argc,char **argv)
   if (str_equal(sender,"#@[]"))
     strerr_die2x(99,INFO,ERR_BOUNCE);
 
-  if (getconf(&headerremove,"headerkeep",0,dir))
+  if (getconf(&headerremove,"headerkeep",0))
     headerremoveflag = 1;
   else
-    getconf(&headerremove,"headerremove",1,dir);
+    getconf(&headerremove,"headerremove",1);
   constmap_init(&headerremovemap,headerremove.s,headerremove.len,0);
 
   if (!stralloc_copys(&mydtline,

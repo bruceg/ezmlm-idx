@@ -262,9 +262,9 @@ void main(int argc,char **argv)
 	die_usage();
     }
   startup(dir = argv[optind]);
-  load_config(dir);
+  load_config();
   initsub(0);
-  getconf_ulong(&copylines,"copylines",0,dir);
+  getconf_ulong(&copylines,"copylines",0);
   workdir = flagdig ? "digest" : ".";
 
   if (!stralloc_copys(&fnlastd,workdir)) die_nomem();

@@ -18,6 +18,6 @@ extern char flagcd;
 extern int flags[NO_FLAGS];
 
 extern void startup(const char *dir);
-extern void load_config(const char *dir);
+extern void load_config(void);
 
 #endif

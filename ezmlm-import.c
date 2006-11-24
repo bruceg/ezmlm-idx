@@ -106,7 +106,7 @@ int main(int argc,char *argv[])
   startup(dir = argv[optind]);
   lockfile("lock");
 
-  getconf_ulong2(&msgnum,&cumsize,"num",0,dir);
+  getconf_ulong2(&msgnum,&cumsize,"num",0);
   
   fd = 0;
   while (getln(&ssin,&line,&match,'\n') == 0 && match) {

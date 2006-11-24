@@ -198,9 +198,9 @@ void main(int argc,char **argv)
   dir = argv[optind];
   if (dir) {
     startup(dir);
-    load_config(dir);
+    load_config();
     flagparsemime = 1;		/* only if dir do we have mimeremove/reject */
-    if (getconf_line(&line,"msgsize",0,dir)) {
+    if (getconf_line(&line,"msgsize",0)) {
       if (!stralloc_0(&line)) die_nomem();
       len = scan_ulong(line.s,&maxmsgsize);
       if (line.s[len] == ':')
@@ -226,17 +226,17 @@ void main(int argc,char **argv)
     strerr_die2x(100,FATAL,ERR_BOUNCE);
 
   if (flagparsemime) {		/* set up MIME parsing */
-    if (getconf(&mimeremove,"mimekeep",0,dir))
+    if (getconf(&mimeremove,"mimekeep",0))
       mimeremoveflag = 1;
     else
-      getconf(&mimeremove,"mimeremove",0,dir);
+      getconf(&mimeremove,"mimeremove",0);
     constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0);
-    getconf(&mimereject,"mimereject",0,dir);
+    getconf(&mimereject,"mimereject",0);
     constmap_init(&mimerejectmap,mimereject.s,mimereject.len,0);
   }
   if (flagheaderreject) {
     if (!dir) die_usage();
-    getconf(&headerreject,"headerreject",1,dir);
+    getconf(&headerreject,"headerreject",1);
     constmap_init(&headerrejectmap,headerreject.s,headerreject.len,0);
   }
   for (;;) {

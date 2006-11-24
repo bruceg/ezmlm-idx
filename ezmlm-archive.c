@@ -410,7 +410,7 @@ int main(int argc,char **argv)
 	/* and that the "num" message is final */
   fdlock = lockfile("lock");
 					/* get num */
-  getconf_ulong(&max,"num",0,dir);
+  getconf_ulong(&max,"num",0);
   if (max == 0)
     strerr_die1x(100,ERR_EMPTY_LIST);
   (void) close(fdlock);
@@ -419,7 +419,7 @@ int main(int argc,char **argv)
 
   fdlock = lockfile("archive/lock");	/* lock index */
   if (!flagcreate && !archnum) {	/* adjust archnum (from) / to */
-    if (getconf_ulong(&archnum,"archnum",0,dir))
+    if (getconf_ulong(&archnum,"archnum",0))
       ++archnum;
   }
 

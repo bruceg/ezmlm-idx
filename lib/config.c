@@ -32,7 +32,7 @@ void startup(const char *dir)
   wrap_chdir(dir);
 }
 
-static void load_flags(const char *dir)
+static void load_flags(void)
 {
   unsigned int i;
 
@@ -41,7 +41,7 @@ static void load_flags(const char *dir)
   flags['p' - 'a'] = 1;		/* By default, list is public (-p) */
   
   /* Use "key" for temporary storage */
-  if (getconf_line(&key,"flags",0,dir)) {
+  if (getconf_line(&key,"flags",0)) {
     for (i = 0; i < key.len; ++i) {
       const char ch = key.s[i++];
       if (ch >= 'A' && ch <= 'Z')
@@ -52,15 +52,15 @@ static void load_flags(const char *dir)
   }
 }
 
-void load_config(const char *dir)
+void load_config(void)
 {
-  load_flags(dir);
+  load_flags();
 
   switch(slurp("key",&key,512)) {
     case -1:
-      strerr_die4sys(111,FATAL,ERR_READ,dir,"/key: ");
+      strerr_die4sys(111,FATAL,ERR_READ,listdir,"/key: ");
     case 0:
-      strerr_die4x(100,FATAL,dir,"/key",ERR_NOEXIST);
+      strerr_die4x(100,FATAL,listdir,"/key",ERR_NOEXIST);
   }
 
   /* There are problems with using getconf_line to fetch the ezmlmrc
@@ -68,18 +68,18 @@ void load_config(const char *dir)
    * whole ezmlmrc file itself. */
   switch (slurp("ezmlmrc",&ezmlmrc,64)) {
   case -1:
-    strerr_die4sys(111,FATAL,ERR_READ,dir,"/ezmlmrc: ");
+    strerr_die4sys(111,FATAL,ERR_READ,listdir,"/ezmlmrc: ");
   case 0:
     ezmlmrc.len = 0;
   }
   ezmlmrc.len = byte_chr(ezmlmrc.s,ezmlmrc.len,'\n');
 
-  getconf_line(&outhost,"outhost",1,dir);
-  getconf_line(&outlocal,"outlocal",1,dir);
+  getconf_line(&outhost,"outhost",1);
+  getconf_line(&outlocal,"outlocal",1);
   if (!stralloc_copy(&local,&outlocal)) die_nomem();
 
-  getconf_line(&listid,"listid",0,dir);
-  if (getconf_line(&charset,"charset",0,dir)) {
+  getconf_line(&listid,"listid",0);
+  if (getconf_line(&charset,"charset",0)) {
     if (charset.len >= 2 && charset.s[charset.len - 2] == ':') {
       if (charset.s[charset.len - 1] == 'B' ||
 		 charset.s[charset.len - 1] == 'Q') {
@@ -92,5 +92,5 @@ void load_config(const char *dir)
   if (!stralloc_0(&charset)) die_nomem();
 
   // FIXME: need to handle escapes in mailinglist
-  getconf_line(&mailinglist,"mailinglist",1,dir);
+  getconf_line(&mailinglist,"mailinglist",1);
 }

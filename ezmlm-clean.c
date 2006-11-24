@@ -239,9 +239,9 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind]);
-  load_config(dir);
+  load_config();
 
-  getconf_line(&modtime,"modtime",0,dir);
+  getconf_line(&modtime,"modtime",0);
   if (!stralloc_0(&modtime)) die_nomem();
   scan_ulong(modtime.s,&delay);
   if (!delay) delay = DELAY_DEFAULT;

@@ -15,8 +15,7 @@
 static stralloc data = {0};
 static stralloc xdata = {0};
 
-int getconf(stralloc *sa,const char *fn,int flagrequired,
-	    const char *dir)
+int getconf(stralloc *sa,const char *fn,int flagrequired)
 {
   int i;
   unsigned int j;
@@ -26,11 +25,11 @@ int getconf(stralloc *sa,const char *fn,int flagrequired,
     die_nomem();
   switch (alt_slurp(fn,&data,128)) {
     case -1:
-      strerr_die6sys(111,FATAL,ERR_READ,dir,"/",fn,": ");
+      strerr_die6sys(111,FATAL,ERR_READ,listdir,"/",fn,": ");
     case 0:
       if (!flagrequired)
 	return 0;
-      strerr_die5x(100,FATAL,dir,"/",fn,ERR_NOEXIST);
+      strerr_die5x(100,FATAL,listdir,"/",fn,ERR_NOEXIST);
   }
   if (!stralloc_append(&data,"\n")) die_nomem();
   copy_xlate(&xdata,&data,'H');
@@ -49,10 +48,9 @@ int getconf(stralloc *sa,const char *fn,int flagrequired,
   return 1;
 }
 
-int getconf_line(stralloc *sa,const char *fn,int flagrequired,
-		 const char *dir)
+int getconf_line(stralloc *sa,const char *fn,int flagrequired)
 {
-  if (!getconf(sa,fn,flagrequired,dir)) return 0;
+  if (!getconf(sa,fn,flagrequired)) return 0;
   sa->len = byte_chr(sa->s,sa->len,0);
   return 1;
 }
