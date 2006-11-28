@@ -6,8 +6,7 @@ if ! [ -s CHANGES.idx -a -s README.idx -a -s VERSION ]; then
   exit 1
 fi
 
-version=`sed -e 's/^ezmlm-idx-//' -e q VERSION`
-base=ezmlm-idx-$version
+base=`sed -e q VERSION`
 
 if ! grep -q "^${base}, " CHANGES.idx; then
   echo "$0: CHANGES.idx is missing release stamp."
