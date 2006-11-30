@@ -1,7 +1,7 @@
-lib/substdio.lo
-lib/substdi.lo
-lib/substdo.lo
-lib/subfderr.lo
-lib/subfdin.lo
-lib/subfdout.lo
-lib/substdio_copy.lo
+substdio.lo
+substdi.lo
+substdo.lo
+subfderr.lo
+subfdin.lo
+subfdout.lo
+substdio_copy.lo

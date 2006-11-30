@@ -1,6 +1,6 @@
-lib/fmt_str.lo
-lib/fmt_uint.lo
-lib/fmt_uint0.lo
-lib/fmt_ulong.lo
-lib/scan_ulong.lo
-lib/scan_8long.lo
+fmt_str.lo
+fmt_uint.lo
+fmt_uint0.lo
+fmt_ulong.lo
+scan_ulong.lo
+scan_8long.lo

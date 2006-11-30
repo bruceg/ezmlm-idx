@@ -1,2 +1,2 @@
-lib/error.lo
-lib/error_str.lo
+error.lo
+error_str.lo

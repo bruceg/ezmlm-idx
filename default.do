@@ -51,18 +51,18 @@ case "$1" in
     dependon makelang VERSION ezmlmrc.template lang/$lang/sed
     formake "./makelang $lang"
     ;;
-  lib/auto_version.c)
+  auto_version.c)
     dependon auto-str VERSION
-    formake './auto-str auto_version < VERSION > lib/auto_version.c'
+    formake './auto-str auto_version < VERSION > auto_version.c'
     ;;
-  lib/auto_bin.c|lib/auto_lib.c|lib/auto_etc.c)
+  auto_bin.c|auto_lib.c|auto_etc.c)
     base=${1%.c}
     base=${base##*_}
     ubase=`echo $base | tr a-z A-Z`
     dependon auto-str conf-$base
     formake "./auto-str auto_${base} EZMLM_${ubase} <conf-${base} >$1"
     ;;
-  lib/auto_*.c)
+  auto_*.c)
     base=${1%.c}
     base=${base##*_}
     dependon auto-str conf-$base
