@@ -27,16 +27,16 @@ valtoztattad meg az email cimedet a feliratkozas ota, az alabbi
 cimre is kuldheted a leiratkozasi parancsot:
    <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+</#dE/>
 illetve digestrol leiratkozaskor:
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#HJ/>
+</#HJE/>
 Cimek hozzaadasa es torlese eseten megerositesi kerelmet kapsz
 a megadott cimre. Ha megkaptad, egyszeruen valaszolj ra, hogy
 a keres teljesulhessen.
 
-<//>
+</#E/>
 Ha a lista kezelojevel (tulajdonosaval) szeretnel levelezni, az
 emailt ide kuldd:
 
@@ -56,7 +56,7 @@ az OSSZES FEJLECCEL, hogy konnyebben tudjunk segiteni Neked.
 Megoriztem azon levelek listajat a(z) <#L#> listarol,
 amik visszapattantak a cimedrol.
 
-</#a/>
+</#aE/>
 Ezen levelek listaja feltehetoleg megtalalhato az archivumban.
 
 A 123-145 kozotti levelek letoltesehez (maximum 100 level keresenkent)
@@ -68,7 +68,7 @@ Az utolso 100 koruli levelek targyanak es irojanak listajat pedig az
 alabbi email cimre irt ures levellel kaphatod meg:
    <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 A levelek sorszamai:
 
 </text/dig-bounce-num#E/>
@@ -77,7 +77,7 @@ Megoriztem azoknak a digestek listajat a(z) <#L#>-digest listarol,
 amik visszapattantak a cimedrol. Minden kihagyott digest-nel csak az elso
 level szamat irom.
 
-</#a/>
+</#aE/>
 Magukat a digest-eket nem archivalom, de a leveleket le lehet tolteni
 a fo lista archivumabol.
 
@@ -90,7 +90,7 @@ Az utolso 100 koruli levelek targyanak es irojanak listajat pedig az
 alabbi email cimre irt ures levellel teheted meg:
    <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 A digest levelek szamai:
 
 </text/bounce-probe#E/>
@@ -138,14 +138,14 @@ Az informacio es FAQ (gyakran ismetelt kerdesek):
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+</#dE/>
 Hasonlo cimek leteznek a digest listahoz:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#a/>
+</#aE/>
 A 123-tol 145-ig szamozott levelek letoltesehez (maximum 100 level
 keresenkent) ide irj:
    <<#L#>-get.123_145@<#H#>>
@@ -157,7 +157,7 @@ A 12345-os level targyaval megegyezo, osszes level letoltesehez
 az ures levelet ide ird:
    <<#L#>-thread.12345@<#H#>>
 
-<//>
+</#E/>
 A leveleknek valojaban nem szukseges uresnek lenniuk, de a tartalmuk
 kozombos. Csak a cim fontos, ahonnan irsz.
 
@@ -193,23 +193,23 @@ parancs utan, majd hozzairod az email cimet, a "@" jelet kicserelve
 Ugyanilyen egyszeruen tudsz leirattatni egy cimet:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+</#dE/>
 Ugyanez digest-re:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-<//>
+</#E/>
 Ennyi az egesz. Se targy, se szovegtorzs nem szukseges.
 
-</#r/>
+</#rE/>
 Ezutan egy megerositesi kerelmet kuldok Neked, hogy
 meggyozodjunk a keres valodisagarol.  Arra egyszeruen csak
 valaszolnod kell, ami utan a kivansagod teljesul.
-</#R/>
+</#RE/>
 Ezutan kuldeni fogok egy megerositesi kerelmet a felhasznalonak,
 jelen esetben <john@example.com>-nek.  Neki is csak valaszolnia
 kell a levelre.
-<//>
+</#E/>
 
 A megerositesek azert szuksegesek, hogy megnehezitsuk a dolgat
 olyan "mokas" embereknek, akik fel- vagy leiratkoztatnak masokat
@@ -226,18 +226,18 @@ Barki fel- vagy leiratkozhat, ha levelet kuld az alabbi cimekre:
     <<#L#>-subscribe@<#H#>>
     <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+</#dE/>
 Vagy a digest cimekre:
 
     <<#L#>-digest-subscribe@<#H#>>
     <<#L#>-digest-unsubscribe@<#H#>>
 
-<//>
+</#E/>
 A felhasznalo megerositesi kerelmet kap, hogy biztosak legyunk
 benne, hogy az o akarata ervenyesul. Ha ez megtortent, az
 ellenorzott felhasznalo fel- vagy leiratkozasa megtortenik.
 
-</#s/>
+</#sE/>
 Mivel ez egy feliratkozas-moderalt lista, egy masik megerositest
 is elkuldok, a moderator(ok)nak. Mivel a felhasznalo mar
 megerositette feliratkozasi igenyet, a moderator biztos lehet a
@@ -245,9 +245,9 @@ cim valodisagaban. Ha engedelyezni akarod a felhasznalo kereset,
 egyszeruen csak valaszolj a CONFIRM levelre.  Ha nem, csak torold
 a levelet, es/vagy lepj kapcsolatba a potencialis listataggal
 tovabbi informaciokert.
-</#S/>
+</#SE/>
 Az feliratkozasok hasonlokeppen mennek.
-<//>
+</#E/>
 
 A felhasznalo hasznalhatja ezt a format is:
 
@@ -261,26 +261,26 @@ valaszolni.
 A cimed es szemelyazonossagod nem fog kiderulni a listatag szamara,
 hacsak nem direkt irsz levelet a felhasznalonak.
 
-</#rl/>
+</#rlE/>
 A(z) <#L#>@<#H#> lista tagjainak nevsora itt kaphato meg:
    <<#L#>-list@<#H#>>
 
 A tranzakcio naplo a(z) <#L#>@<#H#> listahoz pedig itt:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+</#rldE/>
 A digestre feliratkozottaknak pedig:
    <<#L#>-digest-list@<#H#>>
 es:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+</#rnE/>
 Tavolrol szerkesztheted is a szovegfajlokat, amik meghatarozzak a
 lista altal kikuldott valaszokat. A fajlok listaja es a szerkesztesi
 instrukciok itt szerezhetoek meg:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+</#mE/>
 Moderalt levelezes
 ------------------
 Ha a levelezes moderalt, az elkuldott leveleket elraktarozom, es
@@ -308,7 +308,7 @@ sem (eredetileg 5 nap), akkor visszakuldom a levelet a kuldojenek,
 elmagyarazva, mi tortent.  Az adminisztrator beallithatja a listat
 ugy is, hogy az ilyen mellozott levelek egyszeruen torlodjenek
 barmifele ertesites nelkul, es ne kuldodjenek vissza a feladonak.
-<//>
+</#E/>
 
 Szabadsag
 ---------
@@ -324,7 +324,7 @@ Ha automatikusan engedelyezni akarsz minden kerest, amig tavol vagy,
 allitsd be a levelezesi kliensedet, hogy automatikusan valaszoljon
 azokra a levelekre, amik a fenti kriteriumoknak megfelelnek.
 
-</#r/>
+</#rE/>
 Ha nem sajat cimrol akarsz tavolrol adminisztralni, akkor nem teged,
 hanem a listatagot keri meg a rendszer engedelyezni. Ezutan a
 moderator megerositesi kerelem kimegy az osszes moderatornak.  Ezt
@@ -333,7 +333,7 @@ az, aki az eredeti kerest kuldte.
 
 Vigyazz, mert ebben az esetben az eredeti keresed (es cimed) eljut
 a felhasznalohoz!
-<//>
+</#E/>
 
 Sok szerencset!
 
@@ -352,11 +352,11 @@ Ha engedelyezni akarod, hogy kijusson a listatagoknak, irj az alabbi cimre:
 Altalaban ugyanez tortenik, ha egyszeruen valaszolsz.  Ezt ugy
 ellenorizheted, hogy a cim "<#L#>-accept"-tel kezdodik.  Ha ez
 nem megy, csak masold ki a cimet a Cimzett: mezobe.
-</#x/>
+</#xE/>
 
 Esetleg kattints ide:
 	mailto:<#A#>
-<//>
+</#E/>
 
 Elutasitani a levelet (ami visszakuldi a feladonak) ezen a cimen lehet:
 
@@ -364,11 +364,11 @@ Elutasitani a levelet (ami visszakuldi a feladonak) ezen a cimen lehet:
 
 Altalaban egyszerubb, ha a "Valasz mindenkinek" gombot nyomod meg,
 majd minden mas cimet kitorolsz, ami nem "<#L#>-reject"-tel kezdodik.
-</#x/>
+</#xE/>
 
 Esetleg kattints ide:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Nem kell a teljes levelet visszakuldened, de ha megjegyzest kivansz
 az elutasitashoz fuzni, azt a ket jelzo sor koze (ami harom % jellel
@@ -413,11 +413,11 @@ Engedelyezeshez kerlek irj egy ures valaszlevelet az alabbi cimre:
 Altalaban ugyanez tortenik, ha egyszeruen a "valasz" gombot
 megnyomod. Ha ez nem megy, csak masold a fenti cimet a Cimzett:
 mezobe.
-</#x/>
+</#xE/>
 
 Esetleg kattints ide:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Ha nem jarulsz hozza, nyugodtan torold ezt a levelet.
 
@@ -436,11 +436,11 @@ levelet az alabbi cimre:
 Altalaban ugyanez tortenik, ha egyszeruen a "valasz" gombot
 megnyomod. Ha ez nem megy, csak masold a fenti cimet a Cimzett:
 mezobe.
-</#x/>
+</#xE/>
 
 Esetleg kattints ide:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Ha nem jarulsz hozza, nyugodtan torold ezt a levelet.
 
@@ -462,11 +462,11 @@ cimrol feliratkozz a(z) <#l#> listara, kerlek kuldj egy ures levelet az
 alabbi cimre:
 
 !R
-</#x/>
+</#xE/>
 
 vagy kattints ide:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Megegyszer, gondosan ellenorizd le a szamot, hogy minden szamjegy
 szerepeljen, mielott elkuldened a megerositest.
@@ -488,22 +488,22 @@ az alabbi cimre:
 Altalaban ugyanez tortenik, ha egyszeruen a "valasz" gombot
 megnyomod. Ha ez nem megy, csak masold a fenti cimet a Cimzett:
 mezobe.
-</#x/>
+</#xE/>
 
 vagy kattints ide:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Ez az ellenorzes ket celt szolgal: eloszoris ellenorzi, hogy tudok-e
 levelet kuldeni Neked.  Masodszoris ved Teged, nehogy mas hamisitson
 feliratkozasi kerelmet Neked.
 
-</#q/>
+</#qE/>
 Nehany levelezoszoftver hibas, es nem tudja a hosszu cimeket kezelni.
 Ha nem tudsz valaszolni erre a megerositesre, kuldd a levelet a(z)
 <<#L#>-request@<#H#>> cimre, es a Targy mezobe ird be a teljes cimet.
 
-</#s/>
+</#sE/>
 Ez a lista moderalt.  Ha elkuldod a megerositest, a keres a
 moderatorokhoz kerul.  Ertesitest fogsz kapni, ha a feliratkozasod
 sikeres lett.
@@ -556,11 +556,11 @@ cimrol leiratkozz a(z) <#l#> listara, kerlek kuldj egy ures levelet az
 alabbi cimre:
 
 !R
-</#x/>
+</#xE/>
 
 vagy kattints ide:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Megegyszer, gondosan ellenorizd le a szamot, hogy minden szamjegy
 szerepeljen, mielott elkuldened a megerositest.
@@ -582,11 +582,11 @@ az alabbi cimre:
 Altalaban ugyanez tortenik, ha egyszeruen a "valasz" gombot
 megnyomod. Ha ez nem megy, csak masold a fenti cimet a Cimzett:
 mezobe.
-</#x/>
+</#xE/>
 
 vagy kattints ide:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Nem ellenoriztem, hogy a cimed pillanatnyilag fent van-e a listan.
 Hogy megnezd, melyik cimmel vagy feliratkozva a listara, nezd meg a
@@ -594,7 +594,7 @@ listarol jott leveleidet.  Mindegyik tartalmazza elrejtve a
 return-path-ben.  Peldaul mary@example.com leveleinek return-path-je:
 <<#l#>-return-<szam>-mary=example.com@<#l#>>.
 
-</#q/>
+</#qE/>
 Nehany levelezoprogram hibas es nem tudja kezelni a hosszu cimeket.
 Ha nem tudsz valaszolni erre a keresre, valaszolj inkabb a(z)
 <<#L#>-request@<#H#>> cimre, es a teljes cimet ird be a Targy: mezobe.
@@ -693,9 +693,9 @@ sub_confirm         A leendo listatagnak, a feliratkozas megerositesere.
 sub_nop             A listatagnak, az ujrairatkozas utan.
 sub_ok              A listatagnak, sikeres feliratkozas utan.
 top                 Minden valasz fejlece.
-</#tn/>
+</#tnE/>
 trailer             Minden listas level vegere (altalanos info)
-</#n/>
+</#nE/>
 unsub_bad           A listatagnak, ha a leiratkozas megerosites hibas volt.
 unsub_confirm       A listatagnak, a leiratkozas megerositesere.
 unsub_nop           Nem listatagnak, leiratkozas keresekor.

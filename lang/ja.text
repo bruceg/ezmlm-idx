@@ -33,13 +33,13 @@ command $B$O0J2<$N(B address $B08$K6u$N(B message $B$rAw$k$3$H$G<B9T$5$l$^$
      <<#L#>-unsubscribe@<#H#>>
      (Stop subscription)
 
-</#d/>
+</#dE/>
 digest $B$N9XFI$rCf;_$9$k$K$O0J2<$N(B address $B08$F$K6u$N(B message $B$r(B
 $BAw$C$F2<$5$$!#(B
      <<#L#>-digest-unsubscribe@<#H#>>
      (Stop digest subscription)
 
-<//>
+</#E/>
 $B9XFI$N3+;O$*$h$SCf;_$N:]$K$O(B ezmlm $B$O3NG'$N0Y$N(B message $B$r(B
 $B;XDj$5$l$?(B address $B08$F$KAw?.$7$^$9!#$=$N3NG'$N0Y$N(B message
 $B$KBP$7$F!"(Breply $B$rJV$9$3$H$G3NG'$N<jB3$-$O=*N;$7$^$9!#(B
@@ -63,7 +63,7 @@ mailing list <#L#> $B$N<g:K<T$N(B
 mailing list <#L#> $B$,5.J}08$KAw$C$?(B message $B$NFb(B
 $BG[Aw$K<:GT$7$?$b$N$NHV9f$rE:IU$7$F$*$-$^$9!#(B
 
-</#a/>
+</#aE/>
 message $B$O(B archive $BCf$KJ]B8$5$l$F$$$^$9!#(B
 
 $B6u$N(B message $B$r0J2<$N(B command address $B$KAw$k$3$H$G!"5.J}$,<u$1<h$l(B
@@ -77,7 +77,7 @@ message $B$O(B archive $BCf$KJ]B8$5$l$F$$$^$9!#(B
    * $B:G?7(B 100$BDL$NEj9F<T$H(B Subject: $B9T$r<h$j=P$9(B
      <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 $BG[Aw$K<:GT$7$?(B message $B$NHV9f$O0J2<$NDL$j$G$9(B:
 
 </text/dig-bounce-num#E/>
@@ -85,7 +85,7 @@ message $B$O(B archive $BCf$KJ]B8$5$l$F$$$^$9!#(B
 $BG[Aw$K<:GT$7$?(B mailing list <#L#> $B$N(B digest $BHG$K(B
 $B4^$^$l$F$$$?:G=i$N(B message $BHV9f$rE:IU$7$F$*$-$^$9!#(B
 
-</#a/>
+</#aE/>
 ezmlm $B$O(B digest $B<+BN$OJ]B8$7$F$$$^$;$s!#(B
 $B$G$9$,!"0J2<$N(B command address $B$K6u$N(B message $B$rAw$k;v$G(B
 mailing list <#L#> $BK\BN$N(B
@@ -100,7 +100,7 @@ archive $B$+$i!"5.J}$,<u$1<h$l$J$+$C$?(B message $B72$r<h$j=P$9(B
    * $B:G?7(B 100$BDL$NEj9F<T$H(B Subject: $B9T$r<h$j=P$9(B
      <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 --- $B0J2<$O(B digest $BHG$N3+;O(B message $BHV9f0lMw$G$9(B ---
 
 </text/bounce-probe#E/>
@@ -174,7 +174,7 @@ mailing list <#L#> $B$X$N(B post $B$O(B
      <<#L#>-faq@<#H#>>
      (Get FAQ) 
 
-</#d/>
+</#dE/>
    * digest list <#L#>-digest $B$N9XFI$r3+;O$9$k(B
      <<#L#>-digest-subscribe@<#H#>>
      (Start digest subscription) 
@@ -185,7 +185,7 @@ mailing list <#L#> $B$X$N(B post $B$O(B
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#a/>
+</#aE/>
    * 123 $BHV$+$i(B 145 $BHVKx$N(B message $B$r<h$j=P$9(B
      <<#L#>-get.123_145@<#H#>>
      $B!J0lEY$K<h$j=P$;$k$N$O:GBg$G(B 100$BDL$G$9!K(B
@@ -197,7 +197,7 @@ mailing list <#L#> $B$X$N(B post $B$O(B
      $B<h$j=P$9(B
      <<#L#>-thread.12345@<#H#>>
 
-<//>
+</#E/>
 command address $B08$F$N(B message $B$O(B address $B$N$_$,I,MW$G$9!#Cf?H$O(B
 $B2?$,$"$C$F$bL5;k$5$l$^$9!#(B
 
@@ -252,7 +252,7 @@ Remote subscription
 
 $B$X6u$N(B message $B$rAw$C$F2<$5$$!#(B
 
-</#d/>
+</#dE/>
 digest list $B$K2C$($?$j!&30$7$?$j$9$k>l9g$bF1MM$K$7$F(B
 
         <<#L#>-digest-subscribe-john=example.com@<#H#>>
@@ -260,20 +260,20 @@ digest list $B$K2C$($?$j!&30$7$?$j$9$k>l9g$bF1MM$K$7$F(B
 
 $B$NMM$K$J$j$^$9!#(B
 
-<//>
+</#E/>
 message $B$NCf?H$OI,MW$"$j$^$;$s!#(Baddress $B$@$1$,=EMW$G$9!#(B
 
-</#r/>
+</#rE/>
 ezmlm $B$O5.J}$K3NG'$N(B message $B$rAw$j$^$9!#$3$l$O(B request $B$,(B
 $BK\Ev$K5.J}$+$i$N$b$N$+$r3NG'$9$k$?$a$G$9!#Aw$i$l$?(B message $B$K(B
 reply $B$9$k;v$G<jB3$-$O40N;$7$^$9!#(B
 
-</#R/>
+</#RE/>
 ezmlm $B$O(B user $B$KBP$7$F3NG'$N(B message $B$rAw$j$^$9!#(B
 $B>e5-$N>l9g$O(B <john@example.com> $B08$K3NG'$N(B message $B$,Aw$i$l$k(B
 $B$3$H$K$J$j$^$9!#3NG'$N(B message $B$r<u$1<h$C$?(B user $B$O(B reply $B$r(B
 $B$9$k$3$H$G3NG'$,=*N;$7$^$9!#(B
-<//>
+</#E/>
 
 $B$3$N3NG'$K$h$C$F!"Bh;0<T$K$h$k967b$r:$Fq$J$b$N$K$7$F$$$^$9!#(B
 
@@ -291,7 +291,7 @@ Subscription
 	<<#L#>-unsubscribe@<#H#>>
 	(Stop subscription)
 
-</#d/>
+</#dE/>
 digest list $B$N9XFI3+;O!&=*N;$O0J2<$N(B command address $B$G$9!#(B
 
         <<#L#>-digest-subscribe@<#H#>>
@@ -300,10 +300,10 @@ digest list $B$N9XFI3+;O!&=*N;$O0J2<$N(B command address $B$G$9!#(B
 	<<#L#>-digest-unsubscribe@<#H#>>
 	(Stop digest subscription)
 
-<//>
+</#E/>
 $BH/?.<T$K$O3NG'$N(B message $B$,(B ezmlm $B$+$iAw$i$l$^$9!#(B
 
-</#s/>
+</#sE/>
 $B$3$N(B mailing list $B$N9XFI3+;O!&C&B`$O4IM}<T$N4FFD2<$G9T$o$l$kMM(B
 $B@_Dj$5$l$F$$$^$9!#4IM}<T08$K3NG'$r=P$9A0$K(B ezmlm $B$O(B request $B$r(B
 $B=P$7$?H/?.<T$X3NG'$N(B message $B$rAw$j!"(Brequest $B$,K\J*$+H]$+$r3NG'(B
@@ -313,9 +313,9 @@ request $B$,@5Ev$J$b$N$H;W$&$N$G$"$l$P!"(Bezmlm $B$+$iFO$$$?3NG'$N(B
 message $B$KBP$7$F(B reply $B$7$F2<$5$$!#@5Ev$G$J$$$H;W$&$N$G$"$l$P(B
 ezmlm $B$+$i$N(B message $B$rC1=c$KL5;k$7$F2<$5$$!#$=$7$F!"I,MW$J$i(B
 request $B$NH/?.<T$KO"Mm$7$F$_$F2<$5$$!#(B
-</#S/>
+</#SE/>
 $B9XFI3+;O!&C&B`$O<+F0$G=hM}$5$l$^$9!#(B
-<//>
+</#E/>
 
 $B$^$?!"(B
 
@@ -333,21 +333,21 @@ request $B$NH/?.<T$KO"Mm$7$F$_$F2<$5$$!#(B
 $B4IM}<T$N(B address $B$=$NB>$N>pJs$O9XFI<T$K$O0l@ZO"Mm$5$l$^$;$s!#(B
 $B!JL^O@!"5.J}$,D>@\(B mail $B$rAw$C$?>l9g$OJL$G$9!K(B
 
-</#rl/>
+</#rlE/>
 mailing list <#L#>@<#H#> $B$N9VFI<T0lMw$O(B
 $B0J2<$N(B address $B$+$iF@$i$l$^$9!#(B
         <<#L#>-list@<#H#>>
 ezmlm $B$N(B log $B$O0J2<$N(B address $B$+$iF@$i$l$^$9!#(B
         <<#L#>-log@<#H#>>
 
-</#rld/>
+</#rldE/>
 mailing list <#L#>@<#H#> $B$N(B digest $BHG$N9VFI<T0lMw$O(B
 $B0J2<$N(B address $B$+$iF@$i$l$^$9!#(B
         <<#L#>-digest-list@<#H#>>
 digest $BHG$K4X$9$k(B log $B$O0J2<$N(B address $B$G$9!#(B
         <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+</#rnE/>
 ezmlm $B$,Aw$j=P$9(B message text $B$rJT=8$9$k$K$O!"0J2<$N(B command address:
 
         <<#L#>-edit@<#H#>>
@@ -355,7 +355,7 @@ ezmlm $B$,Aw$j=P$9(B message text $B$rJT=8$9$k$K$O!"0J2<$N(B command address
 $B08$K6u$N(B e-mail $B$rAw$C$F2<$5$$!#(B
 $B!JJT=82DG=$J(B message $B0lMw5Z$S!"JT=8J}K!$OJV?.$K4^$^$l$F$$$^$9!K(B
 
-</#m/>
+</#mE/>
 Moderated posts
 ---------------
 message $B$r?3::$9$kMM$K@_Dj$5$l$F$$$k>l9g$O!"(Bezmlm $B$O(B post $B$5$l$?(B
@@ -385,7 +385,7 @@ ezmlm $B$ODj$a$i$l$?4|8B!JDL>o$O(B 5$BF|!K0JFb$K?3::$N7k2L$r<u$1(B
 $B<h$l$J$$>l9g$K$O!"H/?.<T08$KM}M3$rF1:-$7$F(B message $B$rJVAw$7$^$9!#(B
 $B!JI,MW$H$"$l$P!"4|8B@Z$l$N(B message $B$rC1=c$K:o=|$9$kMM$K$b(B
   $B@_Dj=PMh$^$9!K(B
-<//>
+</#E/>
 
 Vacations
 ---------
@@ -403,7 +403,7 @@ Vacations
 $B$"$l$P!">e5-$N4IM}MQ(B message $B$KBP$7$FE,@Z$J1~Ez$r<+F0@8@.$9$k(B
 $BMM$K@_Dj$7$F2<$5$$!#(B
 
-</#r/>
+</#rE/>
 $B9XFI3+;O!&=*N;$N:n6H$r4IM}<T$G$"$k5.J}$N$b$N$G$J$$(B address $B$+$i(B
 $B9T$C$?>l9g!"9XFI3+;O!&=*N;$NBP>]$K$J$C$?(B address $B08$K3NG'$N(B message
 $B$,FO$-$^$9!#$=$N8e$KA44IM}<T08$K3NG'$N(B message $B$,FO$-$^$9!#$3$l$O(B
@@ -413,7 +413,7 @@ request $B$rH/9T$7$?$N$,5.J}<+?H$+H]$+$r(B ezmlm $B$,H=CG$9$k<jCJ$r;}$C$F(B
 $B$3$N>l9g$O!"5.J}$NAw?.$7$?(B message $B$d(B address $B$,BP>]$H$J$C$?(B user
 $B08$KAw$i$l$k;v$r3P$($F$*$$$F2<$5$$!#(B
 
-<//>
+</#E/>
 $B$*<j?t$r$*$+$1$7$^$9!#(B
 
 PS: $B2?$+ITL@$JE@Ey$,$"$j$^$7$?$i!"<g:K<T$N(B
@@ -443,14 +443,14 @@ post $B$rG'$a$k>l9g$O!"0J2<$N(B address
 
 $B$rIU$1$F(B reply message $B$r:n@.$7$F2<$5$$!#(B
 
-</#x/>
+</#xE/>
 
 MUA $B$K$h$C$F$O(B
 
         mailto:<#A#>
 
 $B$r(B click $B$9$k$@$1$G=`Hw$,=PMh$k>l9g$b$"$k$G$7$g$&!#(B
-<//>
+</#E/>
 
 post $B$rG'$a$J$$>l9g$O!"0J2<$N(B address
 
@@ -460,14 +460,14 @@ post $B$rG'$a$J$$>l9g$O!"0J2<$N(B address
 
 MUA $B$K(B "reply-to-all" $B$N5!G=$,$"$k$N$J$i(B <#L#>-reject $B0J30$G(B
 $B;O$^$kB>$N(B address $B$r:o=|$9$k$N$,4JC1$G$7$g$&!#(B
-</#x/>
+</#xE/>
 
 MUA $B$K$h$C$F$O(B
 
         mailto:<#R#>
 
 $B$r(B click $B$9$k$@$1$G=`Hw$,=PMh$k>l9g$b$"$k$G$7$g$&!#(B
-<//>
+</#E/>
 
 *** post $B$5$l$?(B message $BK\BN$O(B copy $B$9$kI,MW$O$"$j$^$;$s(B ***
 
@@ -530,14 +530,14 @@ mailing list <#L#> $B$N4IM}<T$,(B
         To: <#R#>
 
 $B$r<jF0$G@_Dj$7$F(B message $B$rAw$C$F2<$5$$!#(B
-</#x/>
+</#xE/>
 
 MUA $B$K$h$C$F$O(B
 
         mailto:<#R#>
 
 $B$r(B click $B$9$k$@$1$G=`Hw$,=PMh$k$G$7$g$&!#(B
-<//>
+</#E/>
 
 $B9XFI$rG'$a$J$$>l9g$O!"$3$N(B message $B$rL5;k$7$F$/$@$5$$!#(B
 
@@ -559,14 +559,14 @@ MUA $B$K$h$C$F$O(B
         To: <#R#>
 
 $B$r<jF0$G@_Dj$7$F(B message $B$rAw$C$F2<$5$$!#(B
-</#x/>
+</#xE/>
 
 MUA $B$K$h$C$F$O(B
 
         mailto:<#R#>
 
 $B$r(B click $B$9$k$@$1$G=`Hw$,=PMh$k$G$7$g$&!#(B
-<//>
+</#E/>
 
 $BC&B`$rG'$a$J$$>l9g$O!"$3$N(B message $B$rL5;k$7$F2<$5$$!#(B
 
@@ -589,14 +589,14 @@ address $B$r@Z$j5M$a$F$7$^$&;v$,$"$k$N$G!"A4$F$N(B address $B$,(B
 !R
 
 $B$KAw$C$F2<$5$$!#(B
-</#x/>
+</#xE/>
 
 Mail User Agent (MUA) $B$K$h$C$F$O(B
 
         mailto:<#R#>
 
 $B$r(B click $B$9$k$@$1$G3NG'$N(B message $B$rAw$k=`Hw$b=PMh$k$G$7$g$&!#(B
-<//>
+</#E/>
 
 $B7+$jJV$9MM$G$9$,!"(Breply $B$N(B address $BA4$F$,@5$7$/<h$j9~$^$l$F(B
 $B$$$k$+!"Aw?.A0$K3NG'$7$F2<$5$$!#(B
@@ -626,21 +626,21 @@ Mail User Agent (MUA) $B$K$h$C$F$O(B
         To:<#R#>
 
 $B$H$7$F(B message $B$r:n@.$7$F2<$5$$!#(B
-</#x/>
+</#xE/>
 
 MUA $B$K$h$C$F$O(B
 
         mailto:<#R#>
 
 $B$r(B click $B$9$k$@$1=`Hw$,=PMh$k$b$N$b$"$k$G$7$g$&!#(B
-<//>
+</#E/>
 
 $B$3$N3NG'$K$O0J2<$NFs$D$N0UL#$,$"$j$^$9!#(B
 
         * $B;XDj$5$l$?(B address $B$G(B message $B$,Aw?.=PMh$k$+H]$+(B
         * $B5.J}$N(B address $B$r56$C$?(B request $B$rGS=|$9$k(B
 
-</#q/>
+</#qE/>
 e-mail $B$r07$&4D6-$K$h$C$F$O!"(Bezmlm $B$,;H$&D9$$(B address $B$r(B
 $B$&$^$/07$($J$$;v$,$"$j$^$9!#$=$NMM$J>l9g$O0J2<$N(B address
 
@@ -649,7 +649,7 @@ e-mail $B$r07$&4D6-$K$h$C$F$O!"(Bezmlm $B$,;H$&D9$$(B address $B$r(B
 $B$K(B "Subject: <#R#>" $B$H$7$F(B
 message $B$rAw$C$F2<$5$$!#(B
 
-</#s/>
+</#sE/>
 mailing list <#L#> $B$O(B moderated $B$J(B mailing list $B$G$9!#(B
 $B5.J}$,$3$N3NG'$rAw?.$9$k$H!"A4$F$N4IM}<T08$F$K5.J}$N9XFI$rG'$a$k$+H]$+(B
 $B$N3NG'$,FO$-$^$9!#4IM}<T$,9XFI$r>5G'$7$?8e!"5.J}08$F$K$=$N;]$NDLCN$,(B
@@ -686,7 +686,7 @@ mailing list <#L#> $B$O(B moderated $B$J(B mailing list $B$G$9!#(B
 
 mailing list <#L#>@<#H#> $B$r4IM}$7$F$$$^$9!#(B
 
-</#x/>
+</#xE/>
 $B$3$N(B mailing list $B$N<g:K<T$K$O(B
 
         <#L#>-owner@<#H#>
@@ -712,14 +712,14 @@ address $B$r@Z$j5M$a$F$7$^$&;v$,$"$k$N$G!"A4$F$N(B address $B$,(B
 !R
 
 $B$KAw$C$F2<$5$$!#(B
-</#x/>
+</#xE/>
 
 Mail User Agent (MUA) $B$K$h$C$F$O(B
 
         mailto:<#R#>
 
 $B$r(B click $B$9$k$@$1$G3NG'$N(B message $B$rAw$k=`Hw$b=PMh$k$G$7$g$&!#(B
-<//>
+</#E/>
 
 $B7+$jJV$9MM$G$9$,!"(Breply $B$N(B address $BA4$F$,@5$7$/<h$j9~$^$l$F(B
 $B$$$k$+!"Aw?.A0$K3NG'$7$F2<$5$$!#(B
@@ -749,14 +749,14 @@ Mail User Agent (MUA) $B$K$h$C$F$O(B
         To: <#R#>
 
 $B$H$7$F(B message $B$r:n@.$7$F2<$5$$!#(B
-</#x/>
+</#xE/>
 
 $B$^$?!"(BMail User Agent (MUA) $B$K$h$C$F$O(B
 
         mailto:<#R#>
 
 $B$r(B click $B$7$F(B message $B$r:n@.$9$k;v$b=PMh$k$G$7$g$&!#(B
-<//>
+</#E/>
 
 $B5.J}$N(B address $B$,9XFI<T$+H]$+$O(B check $B$7$F$$$^$;$s!#(B
 $B$I$N(B address $B$G9XFI$r$7$F$$$k$N$+$O!"(Bmailing list $B$+$i(B
@@ -767,7 +767,7 @@ Mail User Agent (MUA) $B$K$h$C$F$O(B
 
 $B$H$$$&6q9g$$$G$9!#(B
 
-</#q/>
+</#qE/>
 $B4D6-$K$h$C$F$O!"D9$$(B address $B$r$&$^$/07$($J$$>l9g$,M-$j$^$9!#(B
 $B$3$N(B message $B$K(B reply $B$r$&$^$/JV$;$J$$MM$J$i!"0J2<$N(B address
 
@@ -878,10 +878,10 @@ sub_nop             $B4{$K9XFI<T$K$J$C$F$$$k?M$,:F$S9XFI(B request $B$r=P$7$?
                     $BAw$i$l$^$9!#(B
 sub_ok              $B9XFI$N<jB3$-$,=*N;$7$?8e$KAw$i$l$^$9!#(B
 top                 ezmlm $B$,Aw?.$9$kA4$F$N1~Ez$NF,$KIU$-$^$9!#(B
-</#tn/>
+</#tnE/>
 trailer             $B$3$N(B mailing list $B$KBP$9$kA4$F$N(B post $B$NKvHx$K(B
                     $BIU$1B-$5$l$FAw$i$l$^$9!#(B
-</#n/>
+</#nE/>
 unsub_bad           $B9XFI<T$+$i$N9XFICf;_3NG'$,IT@5$J>l9g$KAw$i$l$^$9!#(B
 unsub_confirm       $B9XFI<T$+$i$N9XFICf;_$N(B request $B$N3NG'$N$?$a$KAw$i$l$^$9!#(B
 unsub_nop           $B9XFI<T0J30$,9XFI$rCf;_$7$h$&$H$7$?;~$KAw$i$l$^$9!#(B

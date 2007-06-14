@@ -28,11 +28,11 @@ qualsiasi messaggio della lista. Se non hai cambiato indirizzo da
 quando ti sei iscritto, puoi anche mandare un messaggio a:
     <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+</#dE/>
 o per le raccolte a:
    <<#L#>-unsubscribe@<#H#>>
 
-<//>
+</#E/>
 
 Per l'aggiunta o la rimozione degli indirizzi di email, ti spedirò
 una conferma. Quando la riceverai, ti basta semplicemente rispondere
@@ -57,7 +57,7 @@ complete per farti aiutare più facilmente.
 Ho tenuto una copia dei messaggi della lista <#L#> che sono tornati
 indietro dal tuo indirizzo.
 
-</#a/>
+</#aE/>
 Le copie di questi messaggi potrebbero essere nell'archivio.
 
 
@@ -71,7 +71,7 @@ messaggi scrivi a:
 
    <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 Ecco i numeri dei messaggi:
 
 </text/dig-bounce-num#E/>
@@ -80,7 +80,7 @@ Ho un elenco delle raccolte dalla mailing list <#L#>-digest che sono
 tornate indietro dal tuo indirizzo. Per ogni raccolta che ti sei
 perso ho annotato il numero del primo messaggio della raccolta. 
 
-</#a/>
+</#aE/>
 Io non archivio le raccolte stesse, ma sei in grado di prendere i
 messaggi dall'archivio  principale della mailing list.
 
@@ -93,7 +93,7 @@ Per ricevere l'elenco dei soggetti e degli autori degli ultimi 100 messaggi
 scrivi a:
    <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 Ecco i numeri delle raccolte:
 
 </text/bounce-probe#E/>
@@ -145,14 +145,14 @@ della lista:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+</#dE/>
 Indirizzi analoghi esistono per la lista delle raccolte:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#a/>
+</#aE/>
 Per ricevere i messaggi dal numero 123 al numero 145 (massimo 100 per ogni
 richiesta), scrivi a:
    <<#L#>-get.123_145@<#H#>>
@@ -164,7 +164,7 @@ Per ricevere tutti i messaggi con lo stesso oggetto del messaggio
 12345, spedisci un messaggio vuoto a:
    <<#L#>-thread.12345@<#H#>>
 
-<//>
+</#E/>
 I messaggi in realtà non é necessario che siano vuoti, ma ignorerò
 il loro contenuto. E' importante solo l'INDIRIZZO dal quale li spedisci.
 
@@ -195,24 +195,24 @@ a:    <<#L#>-subscribe-john=example.com@<#H#>>
 Analogamente puoi rimuovere l'indirizzo scrivendo a:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+</#dE/>
 Per la lista delle raccolte:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-<//>
+</#E/>
 Questo è tutto. Non sono necessari comandi nell' oggetto o nel corpo del 
 messaggio!
 
-</#r/>
+</#rE/>
 Ti spedirò una richiesta di conferma, per essere sicuro che tu abbia
 realmente spedito la richiesta. Rispondi semplicemente al messaggio e i 
 tuoi desideri saranno eseguiti.
-</#R/>
+</#RE/>
 Spedirò una richiesta di conferma all'indirizzo dell'utente, in questo caso
 a <john@example.com>. Tutto ciò che l'utente dovrà fare sarà quello di 
 rispondere alla richiesta di conferma.
-<//>
+</#E/>
 
 I messaggi di conferma sono necessari per rendere estremamente difficile a
 qualcun altro di aggiungere o togliere un indirizzo dalla lista.
@@ -227,18 +227,18 @@ Qualsiasi utente può iscriversi o rimuoversi scrivendo a:
     <<#L#>-subscribe@<#H#>>
     <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+</#dE/>
 Per la lista delle raccolte:
 
     <<#L#>-digest-subscribe@<#H#>>
     <<#L#>-digest-unsubscribe@<#H#>>
 
-<//>
+</#E/>
 L'utente riceverà una richiesta di conferma per essere sicuri che
 controlli veramente l'indirizzo di iscrizione. Una volta fatta la
 verifica l'utente viene rimosso.
 
-</#s/>
+</#sE/>
 Visto che questa lista è moderata per le iscrizioni, spedirò una seconda
 richiesta di conferma al moderatore. Dato che l'utente ha già confermato 
 il desiderio di essere nella lista, come moderatore puoi essere certo che 
@@ -246,9 +246,9 @@ l'indirizzo sia esistente. Se vuoi approvare la richiesta dell'utente,
 rispondi semplicemente al mio messaggio di CONFERMA. In caso contrario puoi
 cancellare il mio messaggio o il potenziale iscrivente per maggiori 
 informazioni.
-</#S/>
+</#SE/>
 Le iscrizioni funzionano allo stesso modo.
-<//>
+</#E/>
 
 L'utente può anche utilizzare:
 
@@ -262,26 +262,26 @@ in grado di rispondergli.
 Il tuo indirizzo e la tua identità non saranno resi noti agli iscritti, a meno
 che tu non decida di scrivergli direttamente.
 
-</#rl/>
+</#rlE/>
 Per ricevere l'elenco degli iscritti a: <#L#>@<#H#> invia un messaggio a:
    <<#L#>-list@<#H#>>
 
 Per ricevere il log delle transazioni per <#L#>@<#H#> scrivi a:
    <<#L#>-log@<#H#>>
-</#rld/>
+</#rldE/>
 Per gli iscritti alle raccolte:
    <<#L#>-digest-list@<#H#>>
 e:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+</#rnE/>
 Puoi modificare a distanza i file di testo che compongono le risposte che 
 la lista spedisce. Per ricevere un elenco dei file e delle istruzioni per
 modificarli, scrivi a:
    <<#L#>-edit@<#H#>>
 
 
-</#m/>
+</#mE/>
 Moderazione dei messaggi
 ------------------------
 Quando i messaggi sono moderati, archivierò il messaggio spedito e te ne
@@ -309,7 +309,7 @@ Se non ricevo risposte dal moderatore entro un certo numero di giorni
 che è successo. Il tuo amministratore può anche configurare la lista in modo
 tale che questi messaggi "ignorati" vengano cancellati senza avviso, invece
 che rispediti al mittente. 
-<//>
+</#E/>
 
 Assenze
 ---------
@@ -325,7 +325,7 @@ Se vuoi approvare in automatico tutte le richieste mentre sei via, allora
 configura il tuo programma di posta in modo tale da risondere in automatico ai
 messaggi che hanno gli oggetti conformi ai criteri sopracitati.
 
-</#r/>
+</#rE/>
 Se vuoi amministrare la lista da un indirizzo che non è il tuo ti verrà
 chiesta una conferma. Fatto ciò, verrà inviata una richiesta di conferma a
 tutti i moderatori. Faccio così perchè non c'è modo di conoscere che sia stato
@@ -333,7 +333,7 @@ davvero tu a mandarmi la richiesta originale.
 
 Ricorda che la tua richiesta originale ( e il tuo indirizzo) sono spediti a
 tutti gli iscritti in questo caso! 
-<//>
+</#E/>
 
 Buona fortuna!
 
@@ -353,11 +353,11 @@ In genere ciò accade non appena schiacci il bottone "Rispondi". Puoi
 controllare l'indirizzo per assicurarti che inizi con "<#L#>-accept".
 Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
 "A:" di un nuovo messaggio.
-</#x/>
+</#xE/>
 
 Oppure clicca qui:
 	mailto:<#A#>
-<//>
+</#E/>
 
 Per rifiutare il messaggio e fare in modo che esso venga rispedito al
 mittente, per favore spedisci un messaggio a:
@@ -366,11 +366,11 @@ mittente, per favore spedisci un messaggio a:
 
 Di solito è più facile cliccare sul bottone "Rispondi a tutti:", e poi
 togliere tutti gli indirizzi tranne quello che inizia con "<#L#>-reject".
-</#x/>
+</#xE/>
 
 Oppure clicca qui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Non è necessario copiare il messaggio nella risposta per accettarlo o
 rifiutarlo. Se desideri spedire un commento al mittente del messaggio
@@ -398,11 +398,11 @@ eventualmente controllare che l'indirizzo a cui va la risposta
 cominci con "<#L#>-confirm".
 Se non funziona, copia nel campo "A:" di un nuovo messaggio
 l'indirizzo.
-</#x/>
+</#xE/>
 
 Oppure, clicca qui:
       mailto:<#A#>
-<//>
+</#E/>
 Se non intendi confermare la pubblicazione del messaggio,
 non occorre che tu faccia nulla.
 
@@ -439,11 +439,11 @@ Per confermare spedisci una risposta vuota a questo indirizzo:
 In genere ciò accade non appena schiacci il bottone "Rispondi". 
 Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
 "A:" di un nuovo messaggio.
-</#x/>
+</#xE/>
 
 oppure clicca qui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Se non sei d'accordo ti basta ignorare questo messaggio.
 
@@ -462,11 +462,11 @@ risposta vuota a questo indirizzo:
 In genere ciò accade non appena schiacci il bottone "Rispondi". 
 Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
 "A:" di un nuovo messaggio.
-</#x/>
+</#xE/>
 
 oppure clicca qui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Se non sei d'accordo ti basta ignorare questo messaggio.
 
@@ -491,11 +491,11 @@ venga aggiunto alla mailing list <#l#>, per favore spedisci una
 risposta vuota a questo indirizzo:
 
 !R
-</#x/>
+</#xE/>
 
 oppure clicca qui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Di nuovo, controlla l'indirizzo di risposta per assicurarti che sia tutto
 incluso prima di confermare la tua iscrizione.
@@ -517,23 +517,23 @@ questo indirizzo:
 In genere ciò accade non appena schiacci il bottone "Rispondi". 
 Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
 "A:" di un nuovo messaggio.
-</#x/>
+</#xE/>
 
 oppure clicca qui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Questa conferma è necessaria per due motivi. Il primo è che verifica che io
 sia in grado  di ricevere la posta da te. Il secondo motivo è che ti protegge 
 nel caso qualcuno stia tentando di fare un'iscrizione a nome tuo.
 
-</#q/>
+</#qE/>
 Alcuni programmi di posta sono difettosi e non sono in grado di gestire
 indirizzi molto lunghi. Se non riesci a rispondere a questa richiesta
 spedisci un messaggio a <<#L#>-request@<#H#>> e metti l'indirizzo
 intero indicato sopra nel campo "Oggetto:".
 
-</#s/>
+</#sE/>
 Questa mailing list è moderata. Una volta spedita questa conferma la richiesta
 verrà spedita al/i moderatore/i della lista. Ti farò sapere quando la tua
 iscrizione sarà accettata.
@@ -588,11 +588,11 @@ venga rimosso dalla mailing list <#l#>, per favore manda una risposta vuota
 all'indirizzo:
 
 !R
-</#x/>
+</#xE/>
 
 oppure clicca qui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Di nuovo, controlla l'indirizzo di risposta per assicurarti che sia tutto
 incluso prima di confermare la tua iscrizione.
@@ -614,11 +614,11 @@ questo indirizzo:
 In genere ciò accade non appena schiacci il bottone "Rispondi". 
 Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
 "A:" di un nuovo messaggio.
-</#x/>
+</#xE/>
 
 oppure clicca qui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Non ho controllato che il tuo indirizzo sia al momento nella mailing list.
 Per vedere quale indirizzo hai usato per iscriverti, guarda ai messaggi che
@@ -626,7 +626,7 @@ stai ricevendo dalla mailing list. Ciascun messaggio ha il tuo indirizzo
 nascosto nel campo di ritorno; per esempio, mary@example.com riceve i messaggi
 con il campo di ritorno:<<#l#>-return-<numero>-mary=example.com@<#H#>.
 
-</#q/>
+</#qE/>
 Alcuni programmi di posta sono difettosi e non sono in grado di gestire
 indirizzi molto lunghi. Se non riesci a rispondere a questa richiesta
 spedisci un messaggio a <<#L#>-request@<#H#>> e metti l'indirizzo
@@ -726,9 +726,9 @@ sub_confirm   all'iscritto per chiedere conferma dell'iscrizione.
 sub_nop       all'iscritto dopo una re-iscrizione.
 sub_ok        all'iscritto dopo che è stata accettata l'iscrizione.
 top           l'inizio di tutte le risposte.
-</#tn/>
+</#tnE/>
 trailer       aggiunto ai messaggi spediti fuori dalla lista
-</#n/>
+</#nE/>
 unsub_bad     all'iscritto se la conferma di cancellazione è sbagliata.
 unsub_confirm all'iscritto per chiedere conferma di cancellazione.
 unsub_nop     al non-iscritto dopo la cancellazione.

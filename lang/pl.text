@@ -35,29 +35,29 @@ zadawana pytania na temat listy wraz z odpowiedziami'):
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+</#dE/>
 I odpowiadaj±ce powy¿szemu adresy, je¶li chodzi ci o przegl±d listy:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#ai/>
+</#aiE/>
    <<#L#>-get.12_45@<#H#>>:
    Chêæ otrzymania kopii listów od nr 12 do 45 z archiwum.
    Jednym listem mo¿esz otrzymaæ maksymalnie 100 listów.
 
-</#aI/>
+</#aIE/>
    <<#L#>-get.12@<#H#>>:
    Chêæ otrzymania kopii listu nr 12 z archiwum.
-</#i/>
+</#iE/>
    <<#L#>-index.123_456@<#H#>>:
    Chêæ otrzymania tytu³ów listów od nr 123 do 456 z archiwum.
    Tytu³y s± wysy³ane do Ciebie w paczkach po sto na jeden list.
    Mo¿esz maksymalnie zamówiæ 2000 tytu³ów na jeden raz.
 
 # Lists need to be both archived and indexed for -thread to work
-</#ai/>
+</#aiE/>
    <<#L#>-thread.12345@<#H#>>:
    Chêæ otrzymania wszystkich kopii listów z tym samym tytu³em
    jaki posiada list o numerze 12345.
@@ -65,7 +65,7 @@ I odpowiadaj±ce powy¿szemu adresy, je¶li chodzi ci o przegl±d listy:
 # The '#' in the tag below is optional, since no flags follow.
 # The name is optional as well, since the file will always be open
 # at this point.
-<//>
+</#E/>
 
 NIE WYSY£AJ POLECEÑ ADMINISTRACYJNYCH NA LISTÊ DYSKUSYJN¡!
 Jesli to zrobisz, administrator listy ich nie zobaczy, natomiast
@@ -78,13 +78,13 @@ wy¶lij list na adres:
 Wy¶lê Ci wtedy potwierdzenie na ten w³asnie adres; kiedy je otrzymasz,
 po prostu odpowiedz na nie, aby staæ siê prenumeratorem.
 
-</#x/>
+</#xE/>
 Je¿eli instrukcje, których Ci udzieli³em, s± zbyt trudne, albo
 nie jeste¶ zadowolony z ich efektów, skontaktuj siê z opiekunem listy
 pod adresem <#L#>-owner@<#H#>. 
 Proszê byæ cierpliwym, opiekun listy jest o wiele wolniejszy
 od komputera, którym ja jestem ;-)
-<//>
+</#E/>
 
 --- Za³±cznik jest kopi± polecenia, które otrzyma³em.
 
@@ -99,7 +99,7 @@ wys³ane na listê o nazwie <#L#>. Aby dostaæ kopiê tych listów
 z archiuwm, np. listu o numerze 12345, wyslij pust± wiadomosæ
 na adres: <#L#>-get.12345@<#H#>.
 
-</#ia/>
+</#iaE/>
 Aby zamówiæ listê tytu³ów i autorów stu ostatnich wiadomo¶ci,
 wy¶lij pusty list na adres: <#L#>-index@<#H#>.
 
@@ -107,7 +107,7 @@ Aby dostaæ pêczek listów od 123 do 131 (maksymalnie 100 na jeden raz),
 wy¶lij pust± wiadomosæ na adres:
 <#L#>-get.123_145@<#H#>.
 
-<//>
+</#E/>
 Poni¿ej znajduj± sie numery listów:
 
 </text/dig-bounce-num#E/>
@@ -120,14 +120,14 @@ spróbowaæ dostaæ listy z archiwum g³ównego.
 Aby dostaæ list nr 12345 z archiwum, wy¶lij pusty list na
 adres: <#L#>-get.12345@<#H#>.
 
-</#ia/>
+</#iaE/>
 Aby dostaæ listê tytu³ów i autorów ostatnich stu listów, wy¶lij
 pust± wiadomosc na adres: <#L#>-index@<#H#>.
 
 Aby dostaæ pêczek listów od numeru 123 do 145 (maksymalnie sto naraz)
 wy¶lij pust± wiadomosæ pod adres: <#L#>-get.123_145@<#H#>.
 
-<//>
+</#E/>
 Poni¿ej znajdziesz numery przegl±dów listy:
 
 </text/bounce-probe#E/>
@@ -159,7 +159,7 @@ Aby wykre¶liæ swoój adres pocztowy z listy subskrybentów, napisz pod adres:
 Aby wys³aæ cokolwiek na listê, pisz pod adres:
 	<#L#>@<#H#>
 
-</#iax/>
+</#iaxE/>
 	Opiekun listy pocztowej - 
         - <<#L#>-owner@<#H#>>
 
@@ -191,25 +191,25 @@ o adresie janek@example.com poprzez wys³anie listu na adres:
 <#L#>-subscribe-janek=example.com@<#H#>
 <#L#>-unsubscribe-janek=example.com@<#H#>
 
-</#g/>
+</#gE/>
 Odpowiednio dla przegl±du listy:
 
 <#L#>-digest-subscribe-janek=example.com@<#H#>
 <#L#>-digest-unsubscribe-janek=example.com@<#H#>
 
-<//>
+</#E/>
 To wszystko. Nie musisz nadawaæ listowi tytu³u, nie musisz
 równie¿ pisaæ nic w jego tre¶ci!
 
-</#r/>
+</#rE/>
 Wy¶lê Ci pro¶bê o potwierdzenie 
 Co zrobiæ z moim listem?
 Po prostu odpowiedz na niego i gotowe.
-</#R/>
+</#RE/>
 Wy¶lê pro¶bê o potwierdzenie chêci uczestnictwa na adres
 autora listu.
 Wystarczy, ze na te pro¶be odpowie, a bedzie zapisany.
-<//>
+</#E/>
 
 Zawiadomiê subskrybenta, je¿eli jego/jej dane dotyczace
 jego subskrybcji zostan± zmienione.
@@ -223,7 +223,7 @@ wys³anie listu na adres:
 <#L#>-subscribe@<#H#>
 <#L#>-unsubscribe@<#H#>
 
-</#g/>
+</#gE/>
 Obs³uga przegl±du listy:
 
 <#L#>-digest-subscribe@<#H#>
@@ -235,13 +235,13 @@ wys³ane. Je¿eli zostanie to potwierdzone, zostanie usuniêty
 z listy prenumeratorów.
 Podobna procedura obowi±zuje podczas zapisywania siê na listê.
 
-</#s/>
+</#sE/>
 Podczas procedury zapisywania siê na listê, pro¶ba
 o potwierdzenie zapisu jest wysy³ana równie¿ do moderatora listy.
 Pozytywna odpowied¼ moderatora dope³ni zapisu na listê.
-</#S/>
+</#SE/>
 Zapisy funkcjonuj± w ten sam sposób.
-<//>
+</#E/>
 
 U¿ytkownik mo¿e równie¿ u¿ywaæ adresów:
 
@@ -261,7 +261,7 @@ rzeczywi¶cie istnieje.
 Twój rzeczywisty adres pocztowy nie bêdzie ujawniony prenumaratorowi.
 Pozwoli to zachowaæ Ci anonimowo¶æ.
 
-</#rl/>
+</#rlE/>
 Aby uzyskaæ listê prenumeratorów <#L#>@<#H#>, 
 wy¶lij list na adres:
    <<#L#>-list@<#H#>>
@@ -270,19 +270,19 @@ Chc±c uzyskaæ dziennik pok³adowy listy <#L#>@<#H#>,
 wy¶lij list na adres:
    <<#L#>-list@<#H#>>
 
-</#rld/>
+</#rldE/>
 Adresy w³a¶ciwe dla przegl±du listy:
    <<#L#>-digest-list@<#H#>>
 i:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+</#rnE/>
 Mo¿esz zdalnie zmieniaæ pliki tekstowe, którymi pos³uguje siê automat
 podczas obs³ugi listy dyskusyjnej. Aby uzyskaæ zbiór plików oraz
 instrukcje, jak je zmieniaæ, napisz pod adres:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+</#mE/>
 Przesy³ki moderowane
 --------------------
 Je¿eli przesy³ki podlegaj± moderowaniu, umieszczam wys³ane listy
@@ -309,7 +309,7 @@ wcze¶niej odrzuci³e¶, lub odwrotnie, oczywi¶cie Ci o tym powiem.
 Je¿eli nie dostanê odpowiedzi od moderatora przez okre¶lony czas,
 zwykle jest to piêæ dni, zwrócê list nadawcy z opisem zaistnia³ej
 sytuacji.
-<//>
+</#E/>
 
 Wakacje
 -------
@@ -328,7 +328,7 @@ Je¿eli chcesz automatycznie aprobowaæ wszelkie przesy³ki kierowane
 na listê, skonfiguruj swój program pocztowy tak, aby automatycznie
 odpowiada³ na listy maj±ce tematy zgodne z powy¿szymi kryteriami.
 
-</#r/>
+</#rE/>
 Uwa¿aj, je¿eli bêdziesz próbowa³ zdalnie zarz±dzaæ list± z adresu,
 który nie jest wpisany jako adres administratora, prenumerator,
 a nie Ty, zostanie poproszony o potwierdzenie, które zostanie
@@ -339,7 +339,7 @@ kryjesz siê za poczt± przychodz±c± z nieznanego adresu.
 Pamiêtaj, ¿e w powy¿szym wypadku Twoje ¿ycznie skierowane do serwera
 i równie¿ Twój adres s± przesy³ane do prenumeratora! Przestajesz byæ
 wówczas anonimowy.
-<//>
+</#E/>
 
 Powodzenia!
 
@@ -360,21 +360,21 @@ prenumeratorów, wy¶lij, proszê, list na adres:
 # This does the default !A for normal setups, but puts in a 'mailto:address'
 # for lists created with the -x switch.
 !A
-</#x/>
+</#xE/>
 
 mailto:<#A#>
 # Below is a minimalist tag. It just means that succeeding lines should be
 # added to the currently open file in all cases.
-<//>
+</#E/>
 
 Aby odmówiæ wys³ania listu, i zwróciæ go nadawcy, proszê
 przes³aæ wiadomosæ na adres: 
 
 !R
-</#x/>
+</#xE/>
 
 mailto:<#R#>
-<//>
+</#E/>
 
 Nie musisz za³±czaæ kopii listu, który akceptujesz (lub nie) do
 wys³ania na listê. Je¿eli chcesz przes³aæ jak±¶ notkê do nadawcy
@@ -423,10 +423,10 @@ rzeczywiscie podobne ¿yczenie wys³a³.
 Aby udzieliæ zgody, proszê wys³aæ pust± odpowiedz na adres:
 
 !R
-</#x/>
+</#xE/>
 
 mailto:<#R#>
-<//>
+</#E/>
 
 Twój program pocztowy powienien automatycznie prawid³owo zaadresowaæ
 list, je¿eli u¿yjesz opcji "Odpowiedz/Reply".
@@ -444,10 +444,10 @@ z listy prenumeratorów listy <#l#>.
 Je¿eli siê zgadzasz, wyslij, proszê, pust± odpowiedz na adres:
 
 !R
-</#x/>
+</#xE/>
 
 mailto:<#R#>
-<//>
+</#E/>
 
 Twój program pocztowy powienien automatycznie prawid³owo zaadresowaæ
 list, je¿eli u¿yjesz opcji "Odpowiedz/Reply".
@@ -472,19 +472,19 @@ na listê dyskusyjn± <#L#>, wy¶lij pust± odpowied¼
 pod adres:
 
 !R
-</#x/>
+</#xE/>
 
 mailto:<#R#>
-<//>
+</#E/>
 
 Pamiêtaj, sprawd¼ dok³adnie czy zalaczy³e¶(a¶) pe³ny numer, oczywi¶cie
 uczyñ to przed wys³aniem listu ;-)
 
 Przepraszam za k³opoty.
 Opiekun listy -
-</#x/>
+</#xE/>
 <#L#>-owner@<#H#>
-<//>
+</#E/>
 
 </text/sub-confirm#E/>
 Aby potwierdziæ chêæ zapisania siê z adresu:
@@ -495,10 +495,10 @@ na listê dyskusyjn± o nazwie <#L#>,
 wy¶lij, proszê, pust± odpowied¼ pod adres:
 
 !R
-</#x/>
+</#xE/>
 
 mailto:<#R#>
-<//>
+</#E/>
 
 Twój program pocztowy powienien automatycznie zaadresowaæ przesy³kê,
 je¿eli u¿yjesz opcji "odpowiedz/reply".
@@ -508,7 +508,7 @@ a) sprawdzenie siê czy potrafiê wysy³aæ listy na adres przez Ciebie podany,
 b) upewnienie siê czy ktos nie zrobi³ Ci g³upiego dowcipu, zapisuj±c Ciê
    bez twojej wiedzy na nasz± listê.
 
-</#s/>
+</#sE/>
 Lista jest moderowana. Kiedy wys³a³e¶ ju¿ potwierdzenie, chêæ prenumeraty
 zosta³a przes³ana moderatorowi. Zawiadomiê Ciê odrêbnym listem, je¶li
 zostaniesz wpisany(a) na listê prenumeratorów.
@@ -541,7 +541,7 @@ Czesæ! Nazywam siê "ezmlm" i zarz±dzam serwerem pocztowych
 list dyskusyjnych, miêdzy innymi list± o nazwie:
 <#L#>@<#H#>
 
-</#x/>
+</#xE/>
 Jestem komputerem, bezdusznym s³ug± opiekuna listy, cz³owieka :-),
 którego mo¿na znale¼æ pod adresem:
 <#L#>-owner@<#H#>.
@@ -563,10 +563,10 @@ Przygotowa³em nowy numer potwierdzenia. Aby ponownie potwierdziæ
 z listy prenumeratorów <#l#>, wy¶lij pust± odpowiedz na adres:
 
 !R
-</#x/>
+</#xE/>
 
 mailto:<#R#>
-<//>
+</#E/>
 
 Pamiêtaj, sprawd¼ dokladnie czy za³aczy³e¶(a¶) pe³ny numer potwierdzenia,
 uczyñ to oczywi¶cie przed wys³aniem listu ;-)
@@ -584,10 +584,10 @@ z listy prenumaratorów <#L#>, prze¶lij, proszê, pust±
 odpowied¼ na ten list pod adres:
 
 !R
-</#x/>
+</#xE/>
 
 mailto:<#R#>
-<//>
+</#E/>
 
 Twój program pocztowy powienien automatycznie zaadresowaæ przesy³kê,
 je¿eli u¿yjesz opcji "odpowiedz/reply".
@@ -625,11 +625,11 @@ Je¿eli moje rady nie skutkuj±, niestety nie mogê Ci ju¿ wiêcej pomóc.
 Prze¶lij, proszê, jak±kolwiek przesy³kê z listy wraz z krótk± informacj±,
 co chcesz osi±gn±æ, do opiekuna listy, pod adres:
 
-</#x/>
+</#xE/>
 mailto:<#L#>-owner@<#H#>
-</#X/>
+</#XE/>
     <#l#>-owner@<#H#>
-<//>
+</#E/>
 
 który to opiekun siê tym zajmie. We¼ pod uwagê, ¿e cz³owiek jest nieco
 wolniejszy od komputera :-), wiêc b±d¼ cierpliwy(a).
@@ -689,9 +689,9 @@ sub_confirm         do prenumeratora z pro¶b± dokonania potwierdzenia.
 sub_nop             tre¶æ listu powitalnego dla ponownie subskrybuj±cego.
 sub_ok              tre¶æ listu powitalnego dla nowozapisanego.
 top                 pocz±tek ka¿dego listu, ostro¿nie!
-</#tn/>
+</#tnE/>
 trailer             tekst dodawany do ka¿dego listu, ostro¿nie!
-</#n/>
+</#nE/>
 unsub_bad           do prenumeratora, je¶li jego potwierdzenie jest z³e.
 unsub_confirm       tre¶æ potwierdzenia po ¿yczeniu wypisania siê z listy.
 unsub_nop           do osoby nie bêd±cej prenumeratorem, wypisuj±cej siê.

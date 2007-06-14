@@ -28,11 +28,11 @@ Jika anda belum ganti alamat e-mail sejak menjadi pelanggan, bisa juga
 berhenti dengan mengirim e-mail ke:
    <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+</#dE/>
 atau untuk digest ke:
    <<#L#>-unsubscribe@<#H#>>
 
-<//>
+</#E/>
 Untuk penambahan atau penghapusan satu alamat, konfirmasi akan dikirim
 ke alamat tersebut. Jika anda menerimanya, cukup reply e-mail
 konfirmasi tersebut.
@@ -56,7 +56,7 @@ untuk mempermudah kami menolong anda.
 Kami menyimpan daftar posting dari milis <#L#> yang mental dari
 alamat anda.
 
-</#a/>
+</#aE/>
 Kopi dari posting-posting ini mungkin masih ada di dalam arsip.
 
 Untuk mendapatkan posting 123-145 (maksimum 100 posting untuk setiap 
@@ -67,7 +67,7 @@ Untuk mendapatkan daftar subjek dan penulis dari 100 posting terakhir,
 kirim e-mail kosong ke:
    <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 Berikut adalah nomor-nomor posting:
 
 </text/dig-bounce-num#E/>
@@ -76,7 +76,7 @@ Kami telah menyimpan daftar digest dari milis <#L#>-digest yang
 mental dari alamat anda.  Untuk setiap digest yang tidak anda terima,
 kami telah mencatat nomor dari posting pertama dari digest tersebut.
 
-</#a/>
+</#aE/>
 Kami sendiri tidak menyimpan digest-digest tersebut, tapi mungkin anda
 dapat mengambilnya dari arsip milis utamanya.
 
@@ -88,7 +88,7 @@ Untuk mendapatkan daftar subjek dan penulis dari 100 posting terakhir,
 kirim e-mail kosong ke:
    <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 Berikut adalah nomor-nomor posting dari digest:
 
 </text/bounce-probe#E/>
@@ -137,14 +137,14 @@ Kirim e-mail ke alamat berikut untuk info dan FAQ list:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+</#dE/>
 Alamat berikut bisa digunakan untuk list digest:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#a/>
+</#aE/>
 Untuk mendapatkan posting 123-145 (maksimum 100), kirim e-mail ke:
    <<#L#>-get.123_145@<#H#>>
 
@@ -155,7 +155,7 @@ Untuk menerima semua posting dengan subjek yang sama dengan posting 12345,
 kirim e-mail ke:
    <<#L#>-thread.12345@<#H#>>
 
-<//>
+</#E/>
 E-mail tidak perlu kosong, tapi program ini tidak akan membaca isi mail. 
 Hanya alamat tujuan e-mail yang penting.
 
@@ -190,23 +190,23 @@ ganti dari '@'. Contoh, untuk mendaftarkan alamat tersebut, kirim mail ke:
 Dengan cara yang sama, untuk menghapus alamat tersebut, kirim mail ke:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+</#dE/>
 Untuk list digest:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-<//>
+</#E/>
 Itu saja. Tidak perlu subjek dan isi dari postingnya!
 
-</#r/>
+</#rE/>
 Kami akan mengirimkan sebuah permohonan konfirmasi, untuk memastikan
 bahwa anda benar-benar mengirimkan permohonan tersebut. Yang perlu anda
 lakukan adalah mereply ke mail konfirmasi tersebut.
-</#R/>
+</#RE/>
 Kami akan mengirimkan sebuah permohonan konfirmasi ke alamat tersebut,
 dalam hal ini <john@example.com>. Yang bersangkutan tinggal menjawab
 mail konfirmasi tersebut.
-<//>
+</#E/>
 
 Konfirmasi-konfirmasi tersebut sangat penting untuk menghindari pihak
 ketiga untuk menambah atau menghapus sebuah alamat e-mail ke dalam list.
@@ -222,18 +222,18 @@ Setiap pemakai dapat berlangganan atau berhenti dengan mengirim e-mail ke:
 <#L#>-subscribe@<#H#>
 <#L#>-unsubscribe@<#H#>
 
-</#d/>
+</#dE/>
 Untuk list digest:
 
 <#L#>-digest-subscribe@<#H#>
 <#L#>-digest-unsubscribe@<#H#>
 
-<//>
+</#E/>
 Si fulan akan menerima sebuah permohonan konfirmasi untuk memastikan
 bahwa dialah pemilik alamat e-mail yang sebenarnya.  Setelah ini telah dapat
 dikonfirmasikan, yang bersangkutan akan dihapus dari list.
 
-</#s/>
+</#sE/>
 Karena milis ini telah dimoderatori untuk dapat berlangganan, kami akan
 mengirimkan permohonan konfirmasi kedua kepada moderator. Karena si
 fulan telah berkeinginan untuk masuk ke dalam list, anda sebagai
@@ -241,9 +241,9 @@ moderator dapat percaya bahwa alamat pemakai tersebut adalah benar. Jika
 anda ingin menyetujui permohonan tersebut, reply ke mail CONFIRM kami.
 Jika tidak, anda dapat menghapus mail dari kami ini atau mungkin
 mengkontak calon pelanggan list untuk keterangan lebih lanjut.
-</#S/>
+</#SE/>
 Untuk berlangganan adalah sama caranya.
-<//>
+</#E/>
 
 Si fulan dapat juga mengirim mail ke:
 
@@ -257,25 +257,25 @@ permohonan konfirmasi tersebut dan dapat mereplynya.
 Alamat dan identitas anda tidak akan tampak pada mail ke si pelanggan,
 kecuali kalau anda mengirim mail secara langsung ke yang bersangkutan.
 
-</#rl/>
+</#rlE/>
 Untuk mendapatkan daftar pelanggan <#L#>@<#H#>, kirim mail ke:
    <<#L#>-list@<#H#>>
 
 Untuk mendapatkan daftar log transaksi <#L#>@<#H#>, kirim mail ke:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+</#rldE/>
 Untuk pelanggan-pelanggan digest:
    <<#L#>-digest-list@<#H#>>
 dan:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+</#rnE/>
 Anda dapat dari jarak jauh mengedit file-file yang dikirim oleh list.
 Untuk mendapatkan daftar file dan petunjuk untuk mengeditnya, e-mail ke:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+</#mE/>
 Posting-posting termoderatori
 -----------------------------
 Ketika posting-posting dimoderatori, kami akan menyimpan posting yang
@@ -303,7 +303,7 @@ Jika kami tidak menerima reply dari moderator dalam waktu tertentu
 dengan penjelasan tentang apa yang telah terjadi. Anda sebagai administrator
 dapat juga mengatur listnya untuk menghapus posting-posting tersebut tanpa
 pemberitahuan, juga tanpa perlu dikembalikan ke si pengirim.
-<//>
+</#E/>
 
 Vakansi
 -------
@@ -319,7 +319,7 @@ Jika anda ingin secara otomatis menyetujui semua permohonan-permohonan
 ketika anda sedang pergi, atur program mail anda untuk mereply otomatis ke
 semua posting yang mempunyai subjek sesuai keterangan di atas.
 
-</#r/>
+</#rE/>
 Jika anda mencoba untuk melakukan administrasi jarak jauh dari sebuah
 alamat yang bukan milik anda, si pemohon, bukan anda, akan dimintakan
 konfirmasinya.  Setelah itu, sebuah permohonan konfirmasi akan
@@ -328,7 +328,7 @@ mengetahui apakah permohonan tersebut benar berasal dari anda.
 
 Tolong perhatikan bahwa permohonan asli anda (dan alamat anda) akan
 dikirimkan ke si pemohon dalam hal ini!
-<//>
+</#E/>
 
 Semoga sukses!
 
@@ -349,11 +349,11 @@ Biasanya, yang perlu anda lakukan adalah dengan menekan tombol "reply".
 Anda dapat mencek untuk memastikan bahwa alamatnya dimulai dengan
 "<#L#>-accept".  Jika ini tidak berhasil, kopi alamatnya dan letakkan
 kembali ke dalam kolom "To:" di posting yang baru.
-</#x/>
+</#xE/>
 
 Alternatif lainnya, klik di sini:
 	mailto:<#A#>
-<//>
+</#E/>
 
 Untuk menolak posting dan mengembalikannya ke si pengirim, kirim sebuah
 posting ke:
@@ -363,11 +363,11 @@ posting ke:
 Biasanya, cara termudah adalah dengan menekan tombol "reply-to-all", dan
 kemudian menghapus semua alamat kecuali yang dimulai dengan
 "<#L#>-reject".
-</#x/>
+</#xE/>
 
 Alternatif lainnya, klik di sini:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Anda tidak perlu untuk mengkopi isi dari posting ke dalam respon
 persetujuan atau penolakan anda.  Jika anda ingin membuat komentar
@@ -413,11 +413,11 @@ Untuk mengkonfirmasikannya, kirim reply kosong ke alamat berikut:
 Biasanya, yang perlu anda lakukan adalah dengan menekan tombol "reply".
 Jika ini tidak berhasil, kopi alamatnya dan letakkan kembali ke dalam 
 kolom "To:" di posting yang baru.
-</#x/>
+</#xE/>
 
 atau klik di sini:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Jika anda tidak menyetujuinya, jangan hiraukan posting tersebut.
 
@@ -436,11 +436,11 @@ ke alamat ini:
 Biasanya, yang perlu anda lakukan adalah dengan menekan tombol "reply".
 Jika ini tidak berhasil, kopi alamatnya dan letakkan kembali ke dalam
 kolom "To:" di posting yang baru.
-</#x/>
+</#xE/>
 
 atau klik di sini:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Jika anda tidak menyetujuinya, jangan hiraukan posting tersebut.
 
@@ -463,11 +463,11 @@ masuk ke dalam milis <#l#>,
 kirim mail kosong ke alamat:
 
 !R
-</#x/>
+</#xE/>
 
 atau klik di sini:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Sekali lagi, cek alamat replynya secara cermat untuk memastikan bahwa
 semuanya telah masuk sebelum anda mengirim konfirmasi anda.
@@ -489,23 +489,23 @@ ke alamat berikut:
 Biasanya, yang perlu anda lakukan adalah dengan menekan tombol "reply".
 Jika ini tidak berhasil, kopi alamatnya dan letakkan kembali ke dalam
 kolom "To:" di posting yang baru.
-</#x/>
+</#xE/>
 
 atau klik di sini:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Mail konfirmasi ini mempunyai dua tujuan.  Pertama, untuk memastikan
 bahwa kami dapat menghubungi anda.  Kedua, untuk mencegah orang lain
 memalsukan permohonan pendaftaran atas nama anda.
 
-</#q/>
+</#qE/>
 Beberapa program mail tidak berfungsi sempurna dan tidak dapat menangani
 alamat-alamat panjang.  Jika anda tidak dapat mereply ke permohonan ini,
 kirimkan sebuah mail ke <<#L#>-request@<#H#>> dan taruh
 alamat-alamat yang nampak di atas ke dalam baris "Subject:". 
 
-</#s/>
+</#sE/>
 List ini dimoderatori.  Sekali anda telah mengirim konfirmasi ini,
 permohonannya akan dikirimkan ke moderator dari list ini.  Kami akan
 mengabari anda jika e-mail anda telah diaktifkan.
@@ -539,7 +539,7 @@ Untuk berhenti, kirim mail ke:
 Hai! Ini adalah program ezmlm.
 Kami yang mengurus milis <#l#>@<#H#>.
 
-</#x/>
+</#xE/>
 Kami bekerja untuk pemilik kami, yang dapat dijangkau pada alamat e-mail 
 <#l#>-owner@<#H#>.
 
@@ -560,11 +560,11 @@ dihapus dari milis <#l#>,
 kirim reply kosong ke alamat:
 
 !R
-</#x/>
+</#xE/>
 
 atau klik di sini:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Sekali lagi, cek alamat replynya secara cermat untuk memastikan bahwa
 semuanya telah masuk sebelum anda mengirim konfirmasi anda.
@@ -586,11 +586,11 @@ kirim mail kosong ke alamat:
 Biasanya, yang perlu anda lakukan adalah dengan menekan tombol "reply".
 Jika ini tidak berhasil, kopi alamatnya dan letakkan kembali ke dalam
 kolom "To:" di posting yang baru.
-</#x/>
+</#xE/>
 
 atau klik di sini:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Kami belum mencek apakah alamat anda sudah ada di dalam milis. Untuk
 melihat alamat apa yang anda pakai untuk mendaftar, lihat mail yang anda
@@ -598,7 +598,7 @@ terima dari milis. Setiap mail mempunyai alamat anda yang tersembunyi di
 dalam return-pathnya; sebagai contoh, mary@example.com menerima mail
 dengan return-path: <<#l#>-return-<number>-mary=example.com@<#H#>.
 
-</#q/>
+</#qE/>
 Beberapa program mail tidak berfungsi sempurna dan tidak dapat menangani
 alamat-alamat panjang. Jika anda tidak dapat mereply ke permohonan ini,
 kirimkan sebuah mail ke <<#L#>-request@<#H#>> dan taruh alamat-alamat
@@ -699,9 +699,9 @@ sub_confirm         untuk pelanggan untuk permohonan berlangganan.
 sub_nop             untuk pelanggan setelah mendaftar ulang.
 sub_ok              untuk pelanggan setelah permohonannya sukses.
 top                 bagian atas dari semua tanggapan.
-</#tn/>
+</#tnE/>
 trailer             ditambahkan ke semua posting yang terkirim.
-</#n/>
+</#nE/>
 unsub_bad           untuk pelanggan jika konfirmasi berhenti tidak sukses.
 unsub_confirm       untuk pelanggan untuk permohonan berhenti.
 unsub_nop           untuk bukan-pelanggan setelah berhenti.

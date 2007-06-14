@@ -26,16 +26,16 @@ message. If you haven't changed addresses since subscribing,
 you can also send a message to:
    <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+</#dE/>
 or for the digest to:
    <<#L#>-digest-unsubscribe@<#H#>>
 
-</#HJ/>
+</#HJE/>
 For addition or removal of addresses, I'll send a confirmation
 message to that address. When you receive it, simply reply to it
 to complete the transaction.
 
-<//>
+</#E/>
 If you need to get in touch with the human owner of this list,
 please send a message to:
 
@@ -55,7 +55,7 @@ to make it easier to help you.
 I've kept a list of which messages from the <#L#> mailing list have 
 bounced from your address.
 
-</#a/>
+</#aE/>
 Copies of these messages may be in the archive.
 
 To retrieve a set of messages 123-145 (a maximum of 100 per request),
@@ -66,7 +66,7 @@ To receive a subject and author list for the last 100 or so messages,
 send an empty message to:
    <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 Here are the message numbers:
 
 </text/dig-bounce-num#E/>
@@ -75,7 +75,7 @@ I've kept a list of which digests from the <#L#>-digest mailing list
 have bounced from your address. For each digest you missed, I have
 noted the number of the first message in the digest.
 
-</#a/>
+</#aE/>
 I do not archive the digests themselves, but you may be able to
 get the messages from the main list archive.
 
@@ -87,7 +87,7 @@ To receive a subject and author list for the last 100 or so messages,
 send an empty message to:
    <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 Here are the digest message numbers:
 
 </text/bounce-probe#E/>
@@ -136,14 +136,14 @@ Send mail to the following for info and FAQ for this list:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+</#dE/>
 Similar addresses exist for the digest list:
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#a/>
+</#aE/>
 To get messages 123 through 145 (a maximum of 100 per request), mail:
    <<#L#>-get.123_145@<#H#>>
 
@@ -154,7 +154,7 @@ To receive all messages with the same subject as message 12345,
 send an empty message to:
    <<#L#>-thread.12345@<#H#>>
 
-<//>
+</#E/>
 The messages do not really need to be empty, but I will ignore
 their content. Only the ADDRESS you send to is important.
 
@@ -189,23 +189,23 @@ of the '@'. For instance, to subscribe that address, send mail to:
 You can similarly remove the address by sending a message to:
    <<#L#>-unsubscribe-john=example.com@<#H#>>
 
-</#d/>
+</#dE/>
 For the digest list:
    <<#L#>-digest-subscribe-john=example.com@<#H#>>
    <<#L#>-digest-unsubscribe-john=example.com@<#H#>>
 
-<//>
+</#E/>
 That's all. No subject and no message body needed!
 
-</#r/>
+</#rE/>
 I will send you a confirmation request, to make sure
 that you really sent the request. Simply reply to the
 message, and your wish has been granted.
-</#R/>
+</#RE/>
 I will send a confirmation request to the user address, in this
 case <john@example.com>. All the user has to do is to reply to 
 this confirmation request message.
-<//>
+</#E/>
 
 The confirmations are necessary to make it extremely hard
 for a third party to add or remove an address to the list.
@@ -221,18 +221,18 @@ Any user can subscribe or unsubscribe by sending mail to:
     <<#L#>-subscribe@<#H#>>
     <<#L#>-unsubscribe@<#H#>>
 
-</#d/>
+</#dE/>
 For the digest list:
 
     <<#L#>-digest-subscribe@<#H#>>
     <<#L#>-digest-unsubscribe@<#H#>>
 
-<//>
+</#E/>
 The user will receive a confirmation request to make
 sure s/he controls the subscription address. Once this
 is verified the user is unsubscribed.
 
-</#s/>
+</#sE/>
 Since this list is moderated for subscriptions, I will send a
 second confirmation request to the moderator(s). Since the user
 has already confirmed the desire to be on the list, you as the
@@ -240,9 +240,9 @@ moderator can be highly confident that the subscriber address is
 real. If you want to approve the users request, simply reply to
 my CONFIRM message. If not, you can simply delete my message or
 possibly contact the potential subscriber for more information.
-</#S/>
+</#SE/>
 Subscriptions work the same way.
-<//>
+</#E/>
 
 The user can also use:
 
@@ -256,25 +256,25 @@ able to reply to it.
 Your address and identity will not be revealed to the subscriber,
 unless you send mail directly to the user.
 
-</#rl/>
+</#rlE/>
 To get a subscriber list for <#L#>@<#H#>, send a message to:
    <<#L#>-list@<#H#>>
 
 To get a list transaction log <#L#>@<#H#>, send a message to:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+</#rldE/>
 For digest subscribers:
    <<#L#>-digest-list@<#H#>>
 and:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+</#rnE/>
 You can remotely edit the text files that make up the responses the
 list sends out. To get a list of files and editing instructions, mail:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+</#mE/>
 Moderated posts
 ---------------
 When posts are moderated, I will save the posted message and send
@@ -302,7 +302,7 @@ time (normally 5 days), I will return the message to the sender
 with an explanation of what happened. Your administrator can also
 set up the list so that such "ignored" messages are simply deleted
 without notification, rather than returned to sender.
-<//>
+</#E/>
 
 Vacations
 ---------
@@ -318,7 +318,7 @@ If you would like to automatically approve all requests while you
 are gone, set up you mail client to auto-reply to messages that
 have subjects meeting the above criteria.
 
-</#r/>
+</#rE/>
 If you try to do remote administration from an address that is not
 your own, the subscriber, not you, will be asked to confirm. After
 that, a moderator confirm request is sent to all moderators.
@@ -327,7 +327,7 @@ sent the original request.
 
 Please note that your original request (and your address) are sent to
 the subscriber in this case!
-<//>
+</#E/>
 
 Good luck!
 
@@ -348,11 +348,11 @@ Usually, this happens when you just hit the "reply" button. You can
 check the address to make sure that it starts with
 "<#L#>-accept". If this does not work, simply copy the
 address and paste it into the "To:" field of a new message.
-</#x/>
+</#xE/>
 
 Alternatively, click here:
 	mailto:<#A#>
-<//>
+</#E/>
 
 To reject the post and cause it to be returned to the
 sender, please send a message to:
@@ -362,11 +362,11 @@ sender, please send a message to:
 Usually, it is easiest to hit the "reply-to-all" button, and then
 remove all the addresses except the one starting with
 "<#L#>-reject".
-</#x/>
+</#xE/>
 
 Alternatively, click here:
 	mailto:<#R#>
-<//>
+</#E/>
 
 You do not need to copy the post in your response to accept or 
 reject it. If you wish to send a comment to the sender of a rejected
@@ -393,11 +393,11 @@ Usually, this happens when you just hit the "reply" button. You can
 check the address to make sure that it starts with
 "<#L#>-confirm". If this does not work, simply
 copy the address and paste it into the "To:" field of a new message.
-</#x/>
+</#xE/>
 
 Alternatively, click here:
        mailto:<#A#>
-<//>
+</#E/>
 
 If you don't confirm post, simply ignore this message.
 
@@ -435,11 +435,11 @@ To confirm, please send an empty reply to this address:
 Usually, this happens when you just hit the "reply" button.
 If this does not work, simply copy the address and paste it into
 the "To:" field of a new message.
-</#x/>
+</#xE/>
 
 or click here:
 	mailto:<#R#>
-<//>
+</#E/>
 
 If you don't approve, simply ignore this message.
 
@@ -458,11 +458,11 @@ an empty reply to this address:
 Usually, this happens when you just hit the "reply" button.
 If this does not work, simply copy the address and paste it into
 the "To:" field of a new message.
-</#x/>
+</#xE/>
 
 or click here:
 	mailto:<#R#>
-<//>
+</#E/>
 
 If you don't approve, simply ignore this message.
 
@@ -485,11 +485,11 @@ added to the <#l#> mailing list, please send
 an empty reply to this address:
 
 !R
-</#x/>
+</#xE/>
 
 or click here:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Again, check the reply address carefully to make sure it is all included 
 before you confirm your subscription.
@@ -511,23 +511,23 @@ an empty reply to this address:
 Usually, this happens when you just hit the "reply" button.
 If this does not work, simply copy the address and paste it into
 the "To:" field of a new message.
-</#x/>
+</#xE/>
 
 or click here:
 	mailto:<#R#>
-<//>
+</#E/>
 
 This confirmation serves two purposes. First, it verifies that I am able
 to get mail through to you. Second, it protects you in case someone
 forges a subscription request in your name.
 
-</#q/>
+</#qE/>
 Some mail programs are broken and cannot handle long addresses. If you
 cannot reply to this request, instead send a message to
 <<#L#>-request@<#H#>> and put the
 entire address listed above into the "Subject:" line.
 
-</#s/>
+</#sE/>
 This list is moderated. Once you have sent this confirmation, the
 request will be sent to the moderator(s) of this list. I will notify
 you when your subscription has been activated.
@@ -581,11 +581,11 @@ removed from the <#l#> mailing list, please send an empty reply
 to this address:
 
 !R
-</#x/>
+</#xE/>
 
 or click here:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Again, check the reply address carefully to make sure it is all included 
 before you confirm this action.
@@ -607,11 +607,11 @@ to this address:
 Usually, this happens when you just hit the "reply" button.
 If this does not work, simply copy the address and paste it into
 the "To:" field of a new message.
-</#x/>
+</#xE/>
 
 or click here:
 	mailto:<#R#>
-<//>
+</#E/>
 
 I haven't checked whether your address is currently on the mailing list.
 To see what address you used to subscribe, look at the messages you are
@@ -620,7 +620,7 @@ inside its return path; for example, mary@example.com receives
 messages with return path:
 <<#l#>-return-<number>-mary=example.com@<#H#>.
 
-</#q/>
+</#qE/>
 Some mail programs are broken and cannot handle long addresses. If you
 cannot reply to this request, instead send a message to
 <<#L#>-request@<#H#>> and put the entire address listed above
@@ -722,9 +722,9 @@ sub_confirm         to subscriber to request subscribe confirm.
 sub_nop             to subscriber after re-subscription.
 sub_ok              to subscriber after successful subscription.
 top                 top of all responses.
-</#tn/>
+</#tnE/>
 trailer             added to all posts sent out from the list.
-</#n/>
+</#nE/>
 unsub_bad           to subscriber if unsubscribe confirm was bad.
 unsub_confirm       to subscriber to request unsubscribe confirm.
 unsub_nop           to non-subscriber after unsubscribe.

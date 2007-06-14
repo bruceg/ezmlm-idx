@@ -31,6 +31,8 @@ in the next version.
 ezmlm-idx-0.445, ????????
 =========================
 
+- Fixed ezmlmrc files to not overwrite text files when editing a list.
+
 ezmlm-idx-0.444, 20061123
 =========================
 

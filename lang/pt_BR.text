@@ -32,23 +32,23 @@ uma mensagem vazia para qualquer destes endereços:
    <<#L#>-info@<#H#>>
    <<#L#>-faq@<#H#>>
 
-</#d/>
+</#dE/>
 Existem também estes endereços similares para a lista "digest":
    <<#L#>-digest-subscribe@<#H#>>
    <<#L#>-digest-unsubscribe@<#H#>>
 
 # ezmlm-make -i needed to add ezmlm-get line. If not, we can't do
 # multi-get!
-</#ai/>
+</#aiE/>
    <<#L#>-get.12_45@<#H#>>:
    Recupera uma cópia das mensagens 12 a 45 do arquivo.
    No máximo 100 mensagens serão retornadas por requisição.
 
-</#aI/>
+</#aIE/>
    <<#L#>-get.12@<#H#>>:
    Recupera uma cópia da mensagem 12 do arquivo.
 
-</#i/>
+</#iE/>
    <<#L#>-index.123_456@<#H#>>:
    Recupera os assuntos das mensagens número 123 a 456.
    Assuntos são retornados em grupos de 100, ou seja você receberá
@@ -56,7 +56,7 @@ Existem também estes endereços similares para a lista "digest":
    Um máximo de 2000 assuntos são retornados por requisição.
 
 # Lists need to be both archived and indexed for -thread to work
-</#ai/>
+</#aiE/>
    <<#L#>-thread.12345@<#H#>>:
    Recupera uma cópia de todas as mensagens com o mesmo assunto
    da mensagem 12345.
@@ -64,7 +64,7 @@ Existem também estes endereços similares para a lista "digest":
 # The '#' in the tag below is optional, since no flags follow.
 # The name is optional as well, since the file will always be open
 # at this point.
-<//>
+</#E/>
 Na verdade as mensagens não precisam ser vazias, mas eu irei
 ignorar o seu conteúdo. Somente o ENDEREÇO é importante.
 
@@ -80,12 +80,12 @@ Em ambos os casos, eu (O Sistema) enviarei uma mensagem de confirmação para
 esse endereço; quando você receber esta mensagem, simplesmente
 responda para completar sua assinatura (ou cancelamento).
 
-<//>
+</#E/>
 Se estas instruções são muito complicadas ou você não teve os
 resultados que esperava, por favor escrever o meu dono em
 <#L#>-owner@<#H#>. Mas tenha paciência, o meu dono é
 muito mais devagar do que eu. ;-)
-<//>
+</#E/>
 
 --- Abaixo está uma cópia da requisição que eu recebi.
 
@@ -97,13 +97,13 @@ muito mais devagar do que eu. ;-)
 
 Eu, O sistema, mantenho um controle das mensagens da lista <#L> que não
 foram entregues para o seu endereço.
-</#a/>
+</#aE/>
 Cópias destas mensagens podem estar no arquivo.
-</#aI/>
+</#aIE/>
 Para pegar a mensagem 12345 do arquivo, envie uma mensagem vazia para
   <<#L#>-get.12345@<#H#>>
 
-</#ia/>
+</#iaE/>
 Para recuperar uma lista de assuntos e autores das últimas 100
 mensagens, envie uma mensagem vazia para:
    <<#L#>-index@<#H#>>
@@ -112,7 +112,7 @@ Para recuperar as mensagens 123 a 145 (no máximo 100 por comando),
 envie uma mensagem vazia para:
    <<#L#>-get.123_145@<#H#>>
 
-<//>
+</#E/>
 Aqui estão os números das mensagens:
 
 </text/dig-bounce-num#E/>
@@ -122,11 +122,11 @@ não foram entregues para o seu endereço. Para cada "digest" que você
 não recebeu, eu tenho anotado o número da primeira mensagem do "digest".
 Então você pode pegar as mensagens do arquivo da lista principal.
 
-</#aI/>
+</#aIE/>
 Para recuperar a mensagem 12345 do arquivo, envie uma mensagem vazia para:
    <<#L#>-get.12345@<#H#>>
 
-</#ia/>
+</#iaE/>
 Para recuperar as mensagens 123 a 145 (no máximo 100 por requisição),
 envie uma mensagem vazia para:
    <<#L#>-get.123_145@<#H#>>
@@ -135,7 +135,7 @@ Para recuperar uma lista de assuntos e autores das últimas 100
 mensagens, envie uma mensagem vazia para:
    <<#L#>-index@<#H#>>
 
-<//>
+</#E/>
 Aqui estão os números dos "digests":
 
 </text/bounce-probe#E/>
@@ -200,23 +200,23 @@ envie uma mensagem para:
 Semelhantemente, você pode remover esse endereço, enviando mensagem para:
    <<#L#>-unsubscribe-john=host.domain@<#H#>>
 
-</#d/>
+</#dE/>
 Para a lista "digest":
    <<#L#>-digest-subscribe-john=host.domain@<#H#>>
    <<#L#>-digest-unsubscribe-john=host.domain@<#H#>>
 
-<//>
+</#E/>
 Isto é tudo. Nenhum texto no assunto nem no corpo de mensagem é necessário!
 
-</#r/>
+</#rE/>
 Enviarei para você um pedido de confirmação, para ter certeza
 que é realmente você quem enviou o comando. Simplesmente
 retorne a mensagem, e o comando será executado.
-</#R/>
+</#RE/>
 Enviarei um pedido de confirmação para o endereço do usuário,
 neste caso <john@host.domain>. Tudo que o usuário tem que fazer é
 retornar este pedido de confirmação.
-<//>
+</#E/>
 
 As confirmações são necessárias para evitar que pessoas
 não autorizadas cadastrem ou removam endereços da lista.
@@ -233,18 +233,18 @@ enviando mensagem para:
 <#L#>-subscribe@<#H#>
 <#L#>-unsubscribe@<#H#>
 
-</#d/>
+</#dE/>
 Para a lista "digest":
 
 <#L#>-digest-subscribe@<#H#>
 <#L#>-digest-unsubscribe@<#H#>
 
-<//>
+</#E/>
 O usuário receberá um pedido de confirmação para eu ter
 certeza de que ele controle o endereço de assinatura. Quando este
 endereço for verificado, ele será descadastrado.
 
-</#s/>
+</#sE/>
 Sendo esta lista moderada para assinatura, enviarei um segundo
 pedido de confirmação para o(s) moderador(es). Se o usuário
 já tiver confirmado o desejo de ficar na lista, você como
@@ -253,9 +253,9 @@ Se você deseja aprovar os pedidos do usuário, simplesmente
 retorne a mensagem de CONFIRMAÇÃO. Caso contrário, simplesmente
 ignore a minha mensagem ou possivelmente escreva o potencial
 assinante para obter mais informações.
-</#S/>
+</#SE/>
 Assinaturas funcionam da mesma forma.
-<//>
+</#E/>
 
 O usuário também pode usar estas formas:
 
@@ -269,7 +269,7 @@ capaz de responder à confirmação.
 Seu endereço e identidade não serão revelados para o assinante,
 a não ser que você envie mensagens diretamente para o usuário.
 
-</#rl/>
+</#rlE/>
 Para obter o cadastro de assinantes da lista <#L#>@<#H#>,
 envie uma mensagem para:
    <<#L#>-list@<#H#>>
@@ -278,19 +278,19 @@ Para um registro de transações da lista,
 envie uma mensagem para:
    <<#L#>-log@<#H#>>
 
-</#rld/>
+</#rldE/>
 Para o cadastro de assinantes da lista digest:
    <<#L#>-digest-list@<#H#>>
 e:
    <<#L#>-digest-log@<#H#>>
 
-</#rn/>
+</#rnE/>
 Você pode editar remotamente os arquivos-texto de resposta que a lista
 envia. Para obter uma lista dos arquivos e instruções de edição, envie
 mensagem para:
    <<#L#>-edit@<#H#>>
 
-</#m/>
+</#mE/>
 Postagens moderadas
 -------------------
 Quando as postagens são moderadas, eu colocarei as mensagens em
@@ -320,7 +320,7 @@ período de tempo (normalmente 5 dias), eu retornarei uma mensagem
 para o remetente com uma explicação do ocorrido. O administrador
 também pode configurar a lista para que as mensagens "ignoradas"
 sejam simplesmente removidas, ao invés de retornar para o remetente.
-<//>
+</#E/>
 
 Férias
 ------
@@ -336,7 +336,7 @@ Se você quiser aprovar automaticamente todas as mensagens enquanto
 está fora, configure o seu programa de correio eletrônico para responder
 automaticamente as mensagens que têm os assuntos com os critérios acima.
 
-</#r/>
+</#rE/>
 Se você tentar administrar remotamente a partir de um endereço que
 não é seu, o assinante, não você, será questionado para confirmar.
 Depois disto, um pedido de confirmação é enviado para todos os
@@ -345,7 +345,7 @@ foi você quem enviou o pedido original.
 
 Por favor note que o seu pedido original (e seu endereço) é enviado
 para o assinante neste caso!
-<//>
+</#E/>
 
 Boa sorte!
 
@@ -366,12 +366,12 @@ Na prática, você estará enviado para este endereço quando pressionar o
 botão "reply" ou "responder". Você pode confirmar se o endereço começa com
 "<#L#>-accept". Se isto não funcionar, simplesmente copie
 o endereço e cole-o para o campo "To:" de uma nova mensagem.
-</#x/>
+</#xE/>
 
 Alternativamente, clique aqui:
 	mailto:<#A#>
 
-<//>
+</#E/>
 
 Para rejeitar esta mensagem, retornando-a para o remetente,
 por favor envie uma mensagem para:
@@ -382,11 +382,11 @@ Na prática, é fácil usar o botão "reply-to-all" ou "responder
 para todos", e então remover todos os endereços, exceto o que
 começar com
 "<#L#>-reject".
-</#x/>
+</#xE/>
 
 Alternativamente, clique aqui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Você não precisa copiar esta mensagem na sua resposta para
 aceitá-la ou rejeitá-la. Se você quiser enviar um comentário para
@@ -435,11 +435,11 @@ Para confirmar, por favor envie uma resposta vazia para este endereço:
 Na prática, você estará enviado para este endereço quando clicar no
 botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
 o endereço e cole-o para o campo "To:" de uma nova mensagem.
-</#x/>
+</#xE/>
 
 ou clique aqui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Se você não aprovar, simplesmente ignore esta mensagem.
 
@@ -458,11 +458,11 @@ uma resposta vazia para este endereço:
 Na prática, você estará enviado para este endereço quando clicar no
 botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
 o endereço e cole-o para o campo "To:" de uma nova mensagem.
-</#x/>
+</#xE/>
 
 ou clique aqui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Se você não aprova, simplesmente ignore esta mensagem.
 
@@ -486,11 +486,11 @@ seja incluído na lista <#l#>, por favor envie uma resposta vazia
 para o endereço:
 
 !R
-</#x/>
+</#xE/>
 
 ou clique aqui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Novamente verifique o endereço de resposta cuidadosamente, para ter
 certeza que está completo antes que você confirme a sua assinatura.
@@ -512,24 +512,24 @@ para o endereço:
 Na prática, você estará enviado para este endereço quando clicar no
 botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
 o endereço e cole-o para o campo "To:" de uma nova mensagem.
-</#x/>
+</#xE/>
 
 ou clique aqui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Esta confirmação tem dois propósitos. Primeiro, ela verifica que eu
 consigo receber mensagens de você. Segundo, ela protege você no caso
 de alguém tentar forjar um pedido de assinatura em seu nome.
 
-</#q/>
+</#qE/>
 Alguns programas de correio eletrônico não conseguem manipular endereços
 muito compridos. Se, por causa disto, você não está conseguindo resposta
 a este comando, envie uma mensagem para <<#L#>-request@<#H#>>
 e coloque o endereço inteiro abaixo na linha "Subject:" ou
 "Assunto:".
 
-</#s/>
+</#sE/>
 Esta lista é moderada. Depois que você enviar esta confirmação,
 o pedido será enviado para o(s) moderador(es) desta lista. Eu notificarei
 você quando sua assinatura for ativada.
@@ -559,7 +559,7 @@ o seu endereço de assinatura, esta mensagem poderá ser útil.
 Oi! Este é o programa ezmlm. Eu estou gerenciando
 a lista <#l#>@<#H#>.
 
-</#x/>
+</#xE/>
 Eu estou trabalhando para o meu dono, que pode ser
 contatado pelo endereço <#l#>-owner@<#H#>.
 
@@ -581,11 +581,11 @@ seja removido da lista <#l#>, por favor envie uma resposta vazia
 para o endereço:
 
 !R
-</#x/>
+</#xE/>
 
 ou clique aqui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Novamente verifique com cuidado o endereço de resposta, para ter
 certeza que está completo antes que você confirme esta ação.
@@ -607,11 +607,11 @@ para este endereço:
 Na prática, você estará enviado para este endereço quando clicar no
 botão "reply" ou "responder". Se isto não funcionar, simplesmente copie
 o endereço e cole-o para o campo "To:" de uma nova mensagem.
-</#x/>
+</#xE/>
 
 ou clique aqui:
 	mailto:<#R#>
-<//>
+</#E/>
 
 Eu não verifiquei se o seu endereço está atualmente na lista.
 Para ver qual endereço você usou ao assinar, olhe as mensagens
@@ -620,7 +620,7 @@ oculto dentro do caminho de retorno; por exemplo, maria@xdd.ff.com
 recebe mensagens com caminho de retorno:
 <<#l#>-return-<number>-mary=xdd.ff.com@<#H#>.
 
-</#q/>
+</#qE/>
 Alguns programas de correio eletrônico não conseguem manipular endereços
 muito compridos. Se, por causa disto, você não está conseguindo uma resposta 
 a este comando, envie uma mensagem para <<#L#>-request@<#H#>>
@@ -718,9 +718,9 @@ sub_confirm         para o assinante solicitando confirmação de assinatura.
 sub_nop             para o assinante depois de re-assinatura.
 sub_ok              para o assinante depois de assinatura com sucesso.
 top                 topo de todas as respostas.
-</#tn/>
+</#tnE/>
 trailer             incluído em todas as mensagens enviadas pela lista.
-</#n/>
+</#nE/>
 unsub_bad           para o assinante, se a confirmação de cancelamento
                     é inválida.
 unsub_confirm       para assinante pedindo confirmação para o cancelamento.
