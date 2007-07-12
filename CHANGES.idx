@@ -23,6 +23,9 @@ release.
 ezmlm-idx-5.1.2, ????-??-??
 ===========================
 
+- Fixed ezmlm-send to insert the proper value for the List-ID: header.
+  Thanks Bill Nugent.
+
 ezmlm-idx-5.1.1, 2006-11-23
 ===========================
 
