@@ -479,7 +479,7 @@ void main(int argc,char **argv)
     if (listid.len > 0) {
       flaglistid = 1;
       qmail_puts(&qq,"\nList-ID: ");
-      qmail_put(&qq,line.s,line.len);
+      qmail_put(&qq,listid.s,listid.len);
     }
     qa_puts("\n");
   }
