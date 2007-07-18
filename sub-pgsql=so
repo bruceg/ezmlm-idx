@@ -1,4 +1,4 @@
 sub-pgsql.lo
 -lezmlm
-pq.lib
+-lpq
 crypt.lib
