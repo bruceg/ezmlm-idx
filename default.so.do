@@ -13,7 +13,10 @@ then
       ;;
     -*)
       dashl="$dashl $line"
-      libs="$libs `echo $line | sed -e 's/^-l/lib/' -e 's/$/.a/'`"
+      baselib=`echo $line | sed -e 's/^-l/lib/'`
+      if test -e $baselib=l; then
+        libs="$libs $baselib.a"
+      fi
       ;;
     *)
       objs="$objs $line"
