@@ -22,6 +22,7 @@ EOF
   grephdr from: test@example.org
   grephdr subject: test post
   grephdr x-test-header: one
+  grephdr sender: "<${LOC}@${HOST}>"
   grephdr_empty
 
   grepbody Local: "$LOCAL"
