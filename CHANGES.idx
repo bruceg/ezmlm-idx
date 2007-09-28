@@ -26,6 +26,9 @@ ezmlm-idx-6.0.1, ????-??-??
 - Fixed ezmlm-send to insert the proper value for the List-ID: header.
   Thanks Bill Nugent.
 
+- Added the necessary Sender: header to make DomainKeys work into the
+  ezmlmrc template.
+
 ezmlm-idx-6.0.0, 2006-11-30
 ===========================
 
