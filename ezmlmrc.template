@@ -332,6 +332,7 @@ list-help
 </headerremove#E^0/>
 # For sublists, these should be left in
 list-post
+sender
 # remove from header if -3 'new_from_line'
 </#3E/>
 from
@@ -348,6 +349,8 @@ from
 <#L#>
 # Headeradd needs to always exist but leave out stuff for sublists
 </headeradd#E^0/>
+# This is necessary for DomainKeys signing to work properly
+Sender: <<#l#>@<#h#>>
 # Good for mailing list stuff (and vacation program)
 Precedence: bulk
 # To prevent indexing by findmail.com
