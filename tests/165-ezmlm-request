@@ -17,11 +17,9 @@
   if [ "$?" != "99" ]; then
 	fatal "qqqq command in subject failed to exit 99"
   fi
+  checkenv req1 "$SENDER" "$LOC-qqqq-$SND=${HOST}@$HOST"
 
-  ${GREP} T"$LOC-qqqq-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
-	fatal "'qqqq' subject query rewriting failed"
-
-  ${ECHO} "X-num: req1" > "$TMP"
+  ${ECHO} "X-num: req2" > "$TMP"
 # test full ezmlm cmd in subject and command substitution
   ${ECHO} "Subject: ${LOC}-remove-${SND}=${HOST}@${HOST}" >> "$TMP"
   ${EZBIN}/ezmlm-request "$DIR" < "$TMP" > "$ERR" 2>&1
@@ -32,7 +30,7 @@
   ${GREP} T"$LOC-unsubscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
 	fatal "ezmlm 'remove' subject query rewriting failed"
 
-  ${ECHO} "X-num: req1" > "$TMP"
+  ${ECHO} "X-num: req3" > "$TMP"
   ${ECHO} "Subject: subscribe ${LOC}@${HOST} ${SND}@${HOST}" >> "$TMP"
   ${EZBIN}/ezmlm-request "$DIR" < "$TMP" > "$ERR" 2>&1
   if [ "$?" != "99" ]; then
@@ -42,7 +40,7 @@
   ${GREP} T"$LOC-subscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
 	fatal "ezmlm 'subscribe' subject query rewriting failed"
 
-  ${ECHO} "X-num: req1" > "$TMP"
+  ${ECHO} "X-num: req4" > "$TMP"
   ${ECHO} "Subject: subscribe" >> "$TMP"
   ${ECHO} "	${LOC}@${HOST} ${SND}@${HOST}" >> "$TMP"
   ${EZBIN}/ezmlm-request "$DIR" < "$TMP" > "$ERR" 2>&1

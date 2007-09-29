@@ -23,6 +23,7 @@
   qqclean
   ${EZBIN}/ezmlm-clean "$DIR" >"$ERR" 2>&1 ||
 	fatal "failed first invocation"
+  checkenv clean1 "$LOC-return-@$HOST" "$DIG@$HOST"
   if [ -r "${DIR}/mod/pending/1" ]; then
 	fatal "failed to remove non-x moderation queue entry 1"
   fi
@@ -38,11 +39,14 @@ Return-Path: <${DIG}@$HOST>
 X-num: clean4
 EOF
   chmod +x "${DIR}/mod/pending/4"
+  rm -f "$QQENV"
   ${EZBIN}/ezmlm-clean -R "$DIR" >"$ERR" 2>&1 ||
 	fatal "-R failed"
   if [ -r  "${DIR}/mod/pending/4" ]; then
 	fatal "failed to remove moderation queue entry 4"
   fi
+  exists "$QQENV" \
+  && fatal "second invocation of ezmlm-clean sent a message"
 
   ${GREP} "clean1" "$QQMSG".* >/dev/null 2>&1 && \
 	fatal "removal of non-x mod queue entry 1 wasn't silent"

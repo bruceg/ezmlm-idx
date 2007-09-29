@@ -41,10 +41,6 @@
   ${ECHO} "___:::${LOC}@$HOST" > "${DIR}/split"
   ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to exit 0 after failing to match"
-
-  ${GREP} T"${LOC}-subscribe-${SND}=${HOST}@$HOST" "$QQENV" >/dev/null 2>&1 || \
-	fatal "failed to hand off subscribe request to correct recipient"
-  ${GREP} F"${LOC}-return-@$HOST" "$QQENV" >/dev/null 2>&1 || \
-	fatal "subscribe request has incorrect sender"
+  checkenv spl1 "$LOC-return-@$HOST" "$LOC-subscribe-$SND=$HOST@$HOST"
 
   ${ECHO} "OK"

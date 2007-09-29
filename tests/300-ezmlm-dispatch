@@ -4,9 +4,10 @@
 # ezmlm-dispatch #
 ##################
 
+make_message >"$TMP"
 testdispatch() {
   DEFAULT="$2"
-  ${EZBIN}/ezmlm-dispatch "$DIR" $1 <"$QQMSG" 2>&1 \
+  ${EZBIN}/ezmlm-dispatch "$DIR" $1 <"$TMP" 2>&1 \
   | grep "^$3$" >/dev/null \
   || fatal "did not dispatch DEFAULT='$2' from '$1' to '$3'"
 }
@@ -32,7 +33,7 @@ testdispatch '' list1-reject-xyzzy 'list1 moderator'
 testdispatch '' list1-xyzzy 'list1 manager'
 
 unset DEFAULT
-${EZBIN}/ezmlm-dispatch "$DIR" list2 <"$QQMSG" 2>&1 | grep "^list2 editor$" >/dev/null \
+${EZBIN}/ezmlm-dispatch "$DIR" list2 <"$TMP" 2>&1 | grep "^list2 editor$" >/dev/null \
 || fatal "did not dispatch from 'list2' to 'list2 editor'"
 export DEFAULT
 

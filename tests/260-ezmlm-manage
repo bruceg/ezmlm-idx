@@ -26,6 +26,7 @@ ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \
 ${ECHO} "X-num: edit3" > "$TMP"
 ${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "-e failed for remote admin for edit3"
+checkenv edit3 "$LOC-return-@$HOST" "$MOD@$HOST"
 
 # complete edit. SENDER can be any address
 SENDER="${MAN}@$HOST"
@@ -74,6 +75,7 @@ ${GREP} 'list3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -list reply to list3"
 ${GREP} "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to get list reply to list3"
+checkenv list3 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 
 LOCAL="$LOC-allow-log-$MOD=$HOST"
 DEFAULT="allow-log-$MOD=$HOST"
@@ -91,5 +93,6 @@ ${GREP} 'log3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -log reply to log3"
 ${GREP} "aaa@bbb" "$QQMSG" | ${GREP} "+m" > /dev/null 2>&1 || \
 	fatal "failed to get log reply to log3"
+checkenv log3 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 
 ${ECHO} "OK"

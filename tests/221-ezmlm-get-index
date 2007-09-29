@@ -57,8 +57,7 @@ if [ "$?" -ne "99" ]; then
 fi
 msgexists || \
 	fatal "No message delivered"
-${GREP} T"$SENDER" "$QQENV" >/dev/null 2>&1 || \
-	fatal "Message delivered to wrong address"
+checkenv index "$LOC-return-@$HOST" "$SENDER"
 
 qqclean
 ${ECHO} "X-num: index2" > "$TMP"
@@ -71,5 +70,6 @@ msgexists || \
 	fatal "No message delivered"
 ${GREP} "index2" "$QQMSG" >/dev/null 2>&1 || \
 	fatal "index2 failed to return"
+checkenv index2 "$LOC-return-@$HOST" "$SENDER"
 
 ${ECHO} "OK"

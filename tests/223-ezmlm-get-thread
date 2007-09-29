@@ -25,6 +25,7 @@ if [ "$?" != "99" ]; then
 fi
 msgexists || \
 	fatal "failed to produce -thread message"
+checkenv thread1 "$LOC-return-@$HOST" "$SENDER"
 
 qqclean
 ${ECHO} "X-num: thread2" > "$TMP"
@@ -35,5 +36,6 @@ if [ "$?" != "99" ]; then
 fi
 msgexists || \
 	fatal "-s failed to produce -thread message"
+checkenv thread2 "$LOC-return-@$HOST" "$SENDER"
 
 ${ECHO} "OK"

@@ -14,12 +14,10 @@
   { ${ECHO} "X-num: mod1"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	fatal "failed to process message 1"
+  checkenv mod1 "$LOC-return-@$HOST" "$SENDER"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod1" > /dev/null || \
 	fatal "failed to queue message 1"
-
-  ${GREP} "$SENDER" "$QQENV" >/dev/null 2>&1 || \
-	fatal "ezmlm-store: failed to deliver mod request to moderator"
 
   REJ=`${GREP} "From: $LOC-reject" "$QQMSG" | cut -d' ' -f2`
   if [ -z "$REJ" ]; then
@@ -40,6 +38,7 @@
 	    EZFORK='no'
 	  fi
 	}
+  checkenv mod2 "$LOC-return-@$HOST" "$SENDER"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod2" > /dev/null && \
 	fatal "queued message 2 despite non-modpost"
@@ -49,9 +48,6 @@
 		fatal "failed to archive message 2 (non-modpost)"
   fi
 
-  test -s "$QQMSG" || \
-	fatal "ezmlm-store: didn't post directly in absence of DIR/modpost"
-
   touch "${DIR}/modpost"
 
 # from moderator. Should be queued, even with -P
@@ -59,12 +55,10 @@
   { ${ECHO} "X-num: mod3"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	fatal "-P failed to accept mods post 3"
+  checkenv mod3 "$LOC-return-@$HOST" "$SENDER"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod3" > /dev/null || \
 	fatal "failed to queue message 3"
-
-  test -s "$QQMSG" || \
-	fatal "ezmlm-store: -P failed to deliver mod request to moderator"
 
   ACC=`${GREP} "Reply-To: $LOC-accept" "$QQMSG" | cut -d' ' -f2`
   if [ -z "$ACC" ]; then

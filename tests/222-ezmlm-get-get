@@ -31,6 +31,7 @@ if [ "$?" != "99" ]; then
 fi
 msgexists || \
 	fatal "get2 failed to return"
+checkenv get2 "$LOC-return-@$HOST" "$SENDER"
 
 # test formats for -get
 qqclean
@@ -44,6 +45,7 @@ if [ "$?" != "99" ]; then
 fi
 msgexists || \
 	fatal "get3 format 'r' failed to return"
+checkenv get3 "$LOC-return-@$HOST" "$SENDER"
 
 qqclean
 ${ECHO} "X-num: get4" > "$TMP"
@@ -55,6 +57,7 @@ if [ "$?" != "99" ]; then
 fi
 msgexists || \
 	fatal "get4 format 'n' failed to return"
+checkenv get4 "$LOC-return-@$HOST" "$SENDER"
 
 qqclean
 ${ECHO} "X-num: get5" > "$TMP"
@@ -66,6 +69,7 @@ if [ "$?" != "99" ]; then
 fi
 msgexists || \
 	fatal "get5 format 'v' failed to return"
+checkenv get5 "$LOC-return-@$HOST" "$SENDER"
 
 qqclean
 ${ECHO} "X-num: get6" > "$TMP"
@@ -77,5 +81,6 @@ if [ "$?" != "99" ]; then
 fi
 msgexists || \
 	fatal "get6 format 'x' failed to return"
+checkenv get6 "$LOC-return-@$HOST" "$SENDER"
 
 ${ECHO} "OK"

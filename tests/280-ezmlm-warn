@@ -6,6 +6,7 @@
 
 prompt "ezmlm-warn (2/2):     "
 
+qqclean
 ${EZBIN}/ezmlm-warn -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with normal bounce for warning"
 

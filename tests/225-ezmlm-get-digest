@@ -47,6 +47,7 @@ if [ ! -r "${DIR}/digissue" ]; then
 fi
 msgexists || \
 	fatal "dig1 from manager wasn't delivered"
+checkenv dig1 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 qqclean
 ${EZBIN}/ezmlm-get "$DIR" 'code' < "$TMP" >/dev/null 2>&1
@@ -78,6 +79,7 @@ ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "failed to exit 0 after digest in editor"
 msgexists || \
 	fatal "dig2 from editor wasn't delivered"
+checkenv dig2 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 # This causes an error on systems where 'unset' doesn't work
 # For these, we skip this test.
@@ -104,6 +106,7 @@ ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "failed to exit 0 after cmd line digest"
 msgexists || \
 	fatal "dig3 from command line wasn't delivered"
+checkenv dig3 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 qqclean
 ${GREP} "3:" "${DIR}/digissue" >/dev/null 2>&1 || \
@@ -120,6 +123,7 @@ ${EZBIN}/ezmlm-get -fr "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "-fr failed for digest"
 msgexists || \
 	fatal "dig4 format 'r' wasn't delivered"
+checkenv dig4 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 qqclean
 ${RM} -f "${DIR}/dignum"
@@ -128,6 +132,7 @@ ${EZBIN}/ezmlm-get -fn "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "-fn failed for digest"
 msgexists || \
 	fatal "dig5 format 'n' wasn't delivered"
+checkenv dig5 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 qqclean
 ${RM} -f "${DIR}/dignum"
@@ -136,13 +141,15 @@ ${EZBIN}/ezmlm-get -fv "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "-fv failed for digest"
 msgexists || \
 	fatal "dig6 format 'x' wasn't delivered"
+checkenv dig6 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 ${RM} -f "${DIR}/dignum"
 ${ECHO} "X-num: dig7" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fx "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "-fx failed for digest"
 msgexists || \
-	fatal "dig6 format 'v' wasn't delivered"
+	fatal "dig7 format 'v' wasn't delivered"
+checkenv dig7 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 # restore headeradd
 mv -f "${DIR}/headeradd.bak" "${DIR}/headeradd"

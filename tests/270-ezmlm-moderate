@@ -28,10 +28,9 @@ msgexists ||
 # ${SND}@$HOST means it was rejected, not send through the list
 ${GREP} "To: ${SND}@$HOST" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to reject message mod1"
-${GREP} T"${SND}@$HOST" "$QQENV" >/dev/null 2>&1 || \
-	fatal "delivered rejection to wrong address"
 ${GREP} '^rejection test message$' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "reject message did not include given text"
+checkenv rejection "$LOC-return-@$HOST" "$SND@$HOST"
 
 qqclean
 # ACC is set in 145-ezmlm-store, as the accept address for "mod3" message
@@ -45,6 +44,7 @@ msgexists || \
 # ${LOC}@$HOST means it was not rejected, but sent through the list
 ${GREP} "To: ${LOC}@$HOST" $QQMSG > /dev/null 2>&1 || \
 	fatal "failed to accept message mod3"
+checkenv accept "$LOC-return-.*-@$HOST-@\\[\\]" "$SND@$HOST" "$MAN@$HOST"
 
 ls -l "${DIR}/mod/rejected/" | ${GREP} '[0-9]' >/dev/null 2>&1 || \
 	fatal "failed to write reject stub"

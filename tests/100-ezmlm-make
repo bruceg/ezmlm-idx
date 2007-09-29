@@ -74,7 +74,7 @@ fi
   (
     ${ECHO} "#!/bin/sh"
     ${ECHO} "${CAT} >'${QQMSG}'"
-    ${ECHO} "${CAT} <&1 >'${QQENV}'"
+    ${ECHO} "${TR} \\\\0 \\\\n <&1 >'${QQENV}'"
     ${ECHO} "${SED} -e '/^$/,\$d' <'${QQMSG}' >'${QQHDR}'"
     ${ECHO} "${SED} -e '1,/^$/d' <'${QQMSG}' >'${QQBODY}'"
     ${ECHO} "cp '${QQMSG}' '${QQMSG}'.\$\$"

@@ -76,6 +76,20 @@ grephdr_empty() {
   }
 }
 
+checkenv()
+{
+  msg="$1"
+  ${HEAD} -n 1 "$QQENV" | grep "^F$2$" >/dev/null \
+  || fatal "envelope for $msg has wrong sender"
+  test $# = $(wc -l <"$QQENV") \
+  || fatal "envelope for $msg has wrong number of recipients"
+  shift 2
+  for rcpt in "$@"; do
+    grep "^T$rcpt$" "$QQENV" >/dev/null \
+    || fatal "envelope for $msg is missing recipient $rcpt"
+  done
+}
+
 ###############################
 # message generating function #
 ###############################
