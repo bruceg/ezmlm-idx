@@ -23,6 +23,9 @@ release.
 ezmlm-idx-6.0.1, ????-??-??
 ===========================
 
+- Fixed all of the subdb plugins to correct a problem that prevented
+  ezmlm-manage from working properly.
+
 - Fixed ezmlm-send to insert the proper value for the List-ID: header.
   Thanks Bill Nugent.
 

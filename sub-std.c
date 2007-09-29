@@ -33,7 +33,6 @@
 
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
-static stralloc line = {0};
 static stralloc fn = {0};
 static stralloc fnnew = {0};
 static stralloc fnlock = {0};
@@ -104,6 +103,7 @@ static const char *_issub(struct subdbinfo *info,
 			  const char *subdir,
 			  const char *userhost)
 {
+  static stralloc line = {0};
 
   int fd;
   unsigned int j;
@@ -200,6 +200,7 @@ static unsigned long _putsubs(struct subdbinfo *info,
 			      unsigned long hash_hi,
 			      int subwrite())	/* write function. */
 {
+  static stralloc line = {0};
 
   unsigned int i;
   int fd;
@@ -237,17 +238,17 @@ static unsigned long _putsubs(struct subdbinfo *info,
     (void)info;
 }
 
-static void lineout(int subwrite())
+static void lineout(const stralloc *line, int subwrite())
 {
   struct datetime dt;
   char date[DATE822FMT];
 
-  (void) scan_ulong(line.s,&when);
+  (void) scan_ulong(line->s,&when);
   datetime_tai(&dt,when);		/* there is always at least a '\n' */
   if (!stralloc_copyb(&outline,date,date822fmt(date,&dt) - 1))
 	die_nomem();
   if (!stralloc_cats(&outline,": ")) die_nomem();
-  if (!stralloc_catb(&outline,line.s,line.len - 1)) die_nomem();
+  if (!stralloc_catb(&outline,line->s,line->len - 1)) die_nomem();
   if (subwrite(outline.s,outline.len) == -1)
 	strerr_die3x(111,FATAL,ERR_WRITE,"output");
   return;
@@ -261,6 +262,7 @@ static void _searchlog(struct subdbinfo *info,
 		       char *search,		/* search string */
 		       int subwrite())		/* output fxn */
 {
+  static stralloc line = {0};
 
   unsigned char x;
   unsigned char y;
@@ -297,7 +299,7 @@ static void _searchlog(struct subdbinfo *info,
       strerr_die2sys(111,FATAL,ERR_READ_INPUT);
     if (!match) break;
     if (!searchlen) {
-      lineout(subwrite);
+      lineout(&line,subwrite);
     } else {		/* simple case-insensitive search */
       cpline = (unsigned char *) line.s - 1;
       cplast = cpline + line.len - searchlen; /* line has \0 at the end */
@@ -311,7 +313,7 @@ static void _searchlog(struct subdbinfo *info,
 	  if (x != y && x != '_') break;		/* '_' = wildcard */
 	}
 	if (!x) {
-	  lineout(subwrite);
+	  lineout(&line,subwrite);
 	  break;
 	}
       }
@@ -344,6 +346,8 @@ static int _subscribe(struct subdbinfo *info,
 		      const char *event,
 		      int forcehash)
 {
+  static stralloc line = {0};
+
   int fdlock;
 
   unsigned int j;

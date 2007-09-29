@@ -162,6 +162,7 @@ static const char *_issub(struct subdbinfo *info,
 			  const char *table,
 			  const char *userhost)
 {
+  static stralloc line = {0};
   MYSQL_RES *result;
   MYSQL_ROW row;
   unsigned long *lengths;

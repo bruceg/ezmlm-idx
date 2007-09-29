@@ -149,6 +149,7 @@ static const char *_issub(struct subdbinfo *info,
 			  const char *table,
 			  const char *userhost)
 {
+  static stralloc line = {0};
   PGresult *result;
 
   unsigned int j;
