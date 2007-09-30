@@ -38,10 +38,11 @@ The database plugins will get installed in the directory named by
 conf-lib.  To make one of these the default (necessary to let old lists
 continue to operate), run:
 
-	ln -s sub-NAME.so `head -n conf-lib`/sub-sql.so
+	ln -s sub-NAME.so /usr/local/lib/ezmlm/sub-sql.so
 
 where "NAME" is either "mysql" or "pgsql" depending on which needs to
-become the default.
+become the default.  Replace /usr/local/lib/ezmlm with the appropriate
+path if the modules were installed elsewhere.
 
 Steps required for upgrading from ezmlm-idx-0.31x/32x
 -----------------------------------------------------
