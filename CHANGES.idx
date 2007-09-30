@@ -35,6 +35,9 @@ ezmlm-idx-6.0.1, ????-??-??
 - Added the necessary Sender: header to make DomainKeys work into the
   ezmlmrc template.
 
+- ezmlm-mktab-mysql and ezmlm-mktab-pgsql will now only be installed if
+  they were built (with "make mysql" or "make pgsql" respectively).
+
 ezmlm-idx-6.0.0, 2006-11-30
 ===========================
 
