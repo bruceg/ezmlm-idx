@@ -64,11 +64,10 @@ void main(void)
   for (;;) {
     get(&line);
     if (line.len == 1) break;
-    if (line.s[0] == ' ' || line.s[0] == '\t') {	/* continuation */
-      if (flagdsn) {
+    if (flagdsn) {
+      if (line.s[0] == ' ' || line.s[0] == '\t')	/* continuation */
 	if (!stralloc_catb(&dsnline,line.s,line.len - 1)) die_nomem();
-	continue;
-      }
+      continue;
     }
     flagdsn = 0;
     if (stralloc_starts(&line,"Subject: success notice"))
@@ -129,12 +128,13 @@ void main(void)
       flagsr = 1;
     if (stralloc_starts(&line,"Auto-Submitted: auto-generated (warning"))
       flagas = 1;
-    if (case_startb(line.s,line.len,"Content-type: multipart/report"))
+    if (case_startb(line.s,line.len,"Content-type: multipart/report")) {
       if (!stralloc_copyb(&dsnline,line.s,line.len - 1)) die_nomem();
       flagdsn = 1;
+    }
   }			/* end of header */
 
-  if (flagdsn) {	/* always only one recipient/action */
+  if (dsnline.len > 0) {	/* always only one recipient/action */
     flagdsn = 0;	/* will be set for correct report type */
     for (i=0; i < dsnline.len; i += 1+byte_chr(dsnline.s+i,dsnline.len-i,';')) {
       while (dsnline.s[i] == ' ' || dsnline.s[i] == '\t')
