@@ -28,8 +28,8 @@ static void surfpcs_init(surfpcs *s,const uint32 k[32])
 }
 
 static uint32 littleendian[8] = {
-  50462976, 117835012, 185207048, 252579084,
-  319951120, 387323156, 454695192, 522067228
+  0x03020100, 0x07060504, 0x0b0a0908, 0x0f0e0d0c,
+  0x13121110, 0x17161514, 0x1b1a1918, 0x1f1e1d1c
 } ;
 #define end ((unsigned char *) littleendian)
 
