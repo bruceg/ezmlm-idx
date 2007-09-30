@@ -1,5 +1,5 @@
 #!/bin/sh
-make "$@" 2>&1 >/dev/null | \
+make -s "$@" 2>&1 | \
 sed	-e "
   /: warning: passing arg 2 of \`sgetoptmine' from incompatible /d;
   /: warning: return type of [\`']main' is not [\`']int'$/d;
