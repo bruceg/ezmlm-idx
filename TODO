@@ -5,6 +5,10 @@ add support for simultaneous multiple languages
 Fix ezmlm-tests to work even if conf-bin<>$PWD
 Add support for run-time configurable error texts (errtxt.h).
 
+Fix the subdb API to eliminate returning pointers to static data.
+
+Automatically do the necessary ezmlm-mktab steps in ezmlm-make.
+
 Rewrite man pages to include a separate "configuration files" section.
 
 Move confirm-related directories in "mod" to new "confirm" directory?
