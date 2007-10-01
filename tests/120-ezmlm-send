@@ -132,7 +132,6 @@
   touch "${DIR}/archived" "${DIR}/indexed"
   ${ECHO} "multipart/mixed" > "${DIR}/mimekeep"
   ${ECHO} "teXT/plain" >> "${DIR}/mimekeep"
-  { ${ECHO} "X-num: mimekeep"; make_message; } > msg
   { ${ECHO} "X-num: mimekeep"; make_message; } | \
         ${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to accept mimekeep message"
