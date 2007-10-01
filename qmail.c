@@ -39,7 +39,9 @@ int qmail_open(struct qmail *qq, const stralloc *sa)
       close(pie[1]);
       if (fd_move(0,pim[0]) == -1) _exit(120);
       if (fd_move(1,pie[0]) == -1) _exit(120);
-      if (chdir(auto_qmail) == -1) _exit(61);
+      if ((cp = env_get("QMAILHOME")) == 0)
+	cp = auto_qmail;
+      if (chdir(cp) == -1) _exit(61);
       if ((cp = env_get("QMAILQUEUE")) != 0)
 	binqqargs[0] = cp;
       else if (sa && sa->len) {		/* count args */
