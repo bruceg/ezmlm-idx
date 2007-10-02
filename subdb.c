@@ -153,14 +153,15 @@ void closesub(void) {
     plugin->close(&info);
 }
 
-const char *issub(const char *subdir,
-		  const char *userhost)
+int issub(const char *subdir,
+	  const char *userhost,
+	  stralloc *recorded)
 {
   const char *r = 0;
   subdir = fixsubdir(subdir);
   if ((r = opensub()) != 0)
     strerr_die2x(111,FATAL,r);
-  return plugin->issub(&info,subdir,userhost);
+  return plugin->issub(&info,subdir,userhost,recorded);
 }
 
 const char *logmsg(unsigned long num,

@@ -142,14 +142,11 @@ static const char *_checktag(struct subdbinfo *info,
     (void)seed;
 }
 
-/* Returns matching userhost if it is in the subscriber database, NULL
- * otherwise.  NOTE: The returned pointer is NOT VALID after a
- * subsequent call to issub!*/
-static const char *_issub(struct subdbinfo *info,
-			  const char *table,
-			  const char *userhost)
+static int _issub(struct subdbinfo *info,
+		  const char *table,
+		  const char *userhost,
+		  stralloc *recorded)
 {
-  static stralloc line = {0};
   PGresult *result;
 
   unsigned int j;
@@ -179,15 +176,19 @@ static const char *_issub(struct subdbinfo *info,
       strerr_die2x(111,FATAL,PQresultErrorMessage(result));
 
     /* No data returned in QUERY */
-    if (PQntuples(result) < 1)
-      return (char *)0;
+    if (PQntuples(result) < 1) {
+      PQclear(result);
+      return 0;
+    }
 
-    if (!stralloc_copyb(&line,PQgetvalue(result,0,0),PQgetlength(result,0,0)))
+    if (recorded) {
+      if (!stralloc_copyb(recorded,PQgetvalue(result,0,0),
+			  PQgetlength(result,0,0)))
 	die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
-
+      if (!stralloc_0(recorded)) die_nomem();
+    }
     PQclear(result);
-    return line.s;
+    return 1;
 }
 
 /* Creates an entry for message num and the list listno and code "done".

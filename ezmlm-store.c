@@ -126,7 +126,8 @@ void main(int argc,char **argv)
   int flaginheader;
   int flagmodpost;
   int flagremote;
-  const char *pmod;
+  int ismod;
+  stralloc mod = {0};
   const char *err;
   int opt;
   unsigned int i;
@@ -193,13 +194,13 @@ void main(int argc,char **argv)
   if (!stralloc_0(&moderators)) die_nomem();
 
   if (sender) {
-    pmod = issub(moderators.s,sender);
+    ismod = issub(moderators.s,sender,&mod);
     closesub();
 				/* sender = moderator? */
   } else
-    pmod = 0;
+    ismod = 0;
 
-  if (!pmod && !flagpublic)
+  if (!ismod && !flagpublic)
     strerr_die2x(100,FATAL,ERR_NO_POST);
 
   fdlock = lockfile("mod/lock");
@@ -279,7 +280,7 @@ void main(int argc,char **argv)
   else
     hdr_add2s("From: ",reject.s);
   hdr_add2s("Reply-To: ",accept.s);
-  if (!flagconfirm && !pmod && flagremote) {	/* if remote admin add -allow- address */
+  if (!flagconfirm && !ismod && flagremote) {	/* if remote admin add -allow- address */
     qmail_puts(&qq,"Cc: ");	/* for ezmlm-gate users */
     strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
     cookie(hash,key.s,key.len-FLD_ALLOW,strnum,sender,"t");
@@ -405,8 +406,8 @@ void main(int argc,char **argv)
   }
   if (flagconfirm)				/* to sender */
     qmail_to(&qq,sender);
-  else if (pmod)				/* to moderator only */
-    qmail_to(&qq,pmod);
+  else if (ismod)				/* to moderator only */
+    qmail_to(&qq,mod.s);
   else {
     if (flagself) {				/* to all moderators */
       if (!stralloc_copys(&moderators,"mod")) die_nomem();

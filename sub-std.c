@@ -96,12 +96,10 @@ static const char *_checktag(struct subdbinfo *info,
   (void)listno;
 }
 
-/* Returns (char *) to match if userhost is in the subscriber database,
- * 0 otherwise.  NOTE: The returned pointer is NOT VALID after a
- * subsequent call to issub! */
-static const char *_issub(struct subdbinfo *info,
-			  const char *subdir,
-			  const char *userhost)
+static int _issub(struct subdbinfo *info,
+		  const char *subdir,
+		  const char *userhost,
+		  stralloc *recorded)
 {
   static stralloc line = {0};
 
@@ -114,7 +112,7 @@ static const char *_issub(struct subdbinfo *info,
     if (!stralloc_cats(&addr,userhost)) die_nomem();
 
     j = byte_rchr(addr.s,addr.len,'@');
-    if (j == addr.len) return (char *) 0;
+    if (j == addr.len) return 0;
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
     if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
     case_lowerb(lcaddr.s + 1,j - 1);	/* totally lc version of addr */
@@ -139,15 +137,20 @@ static const char *_issub(struct subdbinfo *info,
           strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
         if (!match) break;
         if (line.len == lcaddr.len)
-          if (!case_diffb(line.s,line.len,lcaddr.s))
-            { close(fd); return line.s+1; }
+          if (!case_diffb(line.s,line.len,lcaddr.s)) {
+	    close(fd);
+	    if (recorded)
+	      if (!stralloc_copyb(recorded,line.s+1,line.len-1))
+		strerr_die2x(111,FATAL,ERR_NOMEM);
+	    return 1;
+	  }
       }
 
       close(fd);
     }
 	/* here if file not found or (file found && addr not there) */
 
-    if (ch == lcch) return (char *) 0;
+    if (ch == lcch) return 0;
 
 	/* try case sensitive hash for backwards compatibility */
     fn.s[fn.len - 2] = ch;
@@ -155,7 +158,7 @@ static const char *_issub(struct subdbinfo *info,
     if (fd == -1) {
       if (errno != error_noent)
         strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
-      return (char *) 0;
+      return 0;
     }
     substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
 
@@ -164,13 +167,18 @@ static const char *_issub(struct subdbinfo *info,
         strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
       if (!match) break;
       if (line.len == addr.len)
-        if (!case_diffb(line.s,line.len,addr.s))
-          { close(fd); return line.s+1; }
+        if (!case_diffb(line.s,line.len,addr.s)) {
+	  close(fd);
+	  if (recorded)
+	    if (!stralloc_copyb(recorded,line.s+1,line.len-1))
+	      strerr_die2x(111,FATAL,ERR_NOMEM);
+	  return 1;
+	}
     }
 
     close(fd);
 
-    return (char *) 0;
+    return 0;
 
     (void)info;
 }

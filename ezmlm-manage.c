@@ -575,7 +575,8 @@ int main(int argc,char **argv)
   const char *ac;
   char *x, *y;
   const char *fname;
-  const char *pmod;
+  int ismod;
+  stralloc mod = {0};
   const char *err;
   char *cp,*cpfirst,*cplast,*cpnext,*cpafter;
   int flagremote;
@@ -716,26 +717,26 @@ int main(int argc,char **argv)
 		/* This means that they can be triggered from a SENDER */
 		/* that is not a mod, but never send to a non-mod */
     if (act == AC_NONE || flagdig == FLD_DENY)	/* None of the above */
-      pmod = issub(moddir.s,sender);
+      ismod = issub(moddir.s,sender,&mod);
 				/* sender = moderator? */
     else
-      pmod = issub(moddir.s,target.s);
+      ismod = issub(moddir.s,target.s,&mod);
 				/* target = moderator? */
    } else
-     pmod = 0;			/* always 0 for non-mod/remote lists */
+     ismod = 0;			/* always 0 for non-mod/remote lists */
 				/* if DIR/public is missing, we still respond*/
 				/* to requests from moderators for remote    */
-				/* admin and modsub lists. Since pmod   */
+				/* admin and modsub lists. Since ismod   */
 				/* is false for all non-mod lists, only it   */
 				/* needs to be tested. */
   if ((flagpublic = slurp("public",&line,1)) == -1)
       strerr_die4sys(111,FATAL,ERR_READ,dir,"/public: ");
-  if (!flagpublic && !(pmod && flagremote) &&
+  if (!flagpublic && !(ismod && flagremote) &&
                 !case_equals(action,ACTION_HELP))
       strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
 
   if (flagdig == FLD_DENY)
-    if (!pmod || !flagremote)	/* only mods can do */
+    if (!ismod || !flagremote)	/* only mods can do */
       strerr_die1x(100,ERR_NOT_ALLOWED);
 
   if (act == AC_NONE) {		/* none of the above */
@@ -758,11 +759,11 @@ int main(int argc,char **argv)
   msg_headers();
 
   if (act == AC_SUBSCRIBE) {
-    if (pmod && flagremote) {
+    if (ismod && flagremote) {
       doconfirm(ACTION_RC);
       copy(&qq,"text/mod-sub-confirm",flagcd);
       copybottom();
-      qmail_to(&qq,pmod);
+      qmail_to(&qq,mod.s);
     } else if (flagsubconf) {
       doconfirm(ACTION_SC);
       copy(&qq,"text/sub-confirm",flagcd);
@@ -783,7 +784,7 @@ int main(int argc,char **argv)
 
   } else if (act == AC_SC) {
     if (hashok(action,ACTION_SC)) {
-      if (flagmod && !(pmod && str_equal(sender,target.s))) {
+      if (flagmod && !(ismod && str_equal(sender,target.s))) {
         store_from(&fromline,target.s);	/* save from line, if requested */
 					/* since transaction not complete */
         doconfirm(ACTION_TC);
@@ -814,21 +815,21 @@ int main(int argc,char **argv)
       if (flagnotify) qmail_to(&qq,target.s);	/* unless suppressed */
       if (r && flagverbose > 1) to_owner();
     } else {
-      if (!pmod || !flagremote)	/* else anyone can get a good -tc. */
+      if (!ismod || !flagremote)	/* else anyone can get a good -tc. */
         die_cookie();
       doconfirm(ac);
       copy(&qq,"text/sub-bad",flagcd);
       copybottom();
-      qmail_to(&qq,pmod);
+      qmail_to(&qq,mod.s);
     }
 
   } else if (act == AC_UNSUBSCRIBE) {
     if (flagunsubconf) {
-      if (pmod && flagremote) {
+      if (ismod && flagremote) {
         doconfirm(ACTION_WC);
         copy(&qq,"text/mod-unsub-confirm",flagcd);
         copybottom();
-	qmail_to(&qq,pmod);
+	qmail_to(&qq,mod.s);
       } else {
         doconfirm(ACTION_UC);
         copy(&qq,"text/unsub-confirm",flagcd);
@@ -888,19 +889,19 @@ int main(int argc,char **argv)
         qmail_to(&qq,sender);		/* care of it. No need to tell owner */
 		/* if list is moderated skip - otherwise bad with > 1 mod */
     } else {
-      if (!pmod || !flagremote)	/* else anyone can get a good -vc. */
+      if (!ismod || !flagremote)	/* else anyone can get a good -vc. */
         die_cookie();
       doconfirm(ac);
       copy(&qq,"text/unsub-bad",flagcd);
       copybottom();
-      qmail_to(&qq,pmod);
+      qmail_to(&qq,mod.s);
     }
 
   } else if (act == AC_LIST || act == AC_LISTN) {
 
     if (!flaglist || (!flagmod && !flagremote))
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
-    if (!pmod)
+    if (!ismod)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
     hdr_listsubject1(TXT_SUB_LIST);
     hdr_ctboundary();
@@ -916,26 +917,26 @@ int main(int argc,char **argv)
     (void) code_qput(strnum,fmt_ulong(strnum,i));
     (void) code_qput("\n",1);
     copybottom();
-    qmail_to(&qq,pmod);
+    qmail_to(&qq,mod.s);
 
   } else if (act == AC_LOG) {
     action += actlen;
     if (*action == '.' || *action == '_') ++action;
     if (!flaglist || !flagremote)
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
-    if (!pmod)
+    if (!ismod)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
     hdr_listsubject1((*action == 0) ? TXT_SUB_LOG : TXT_SUB_LOG_SEARCH);
     hdr_ctboundary();
     searchlog(workdir,action,code_subto);
     copybottom();
-    qmail_to(&qq,pmod);
+    qmail_to(&qq,mod.s);
 
   } else if (act == AC_EDIT) {
 	/* only remote admins and only if -e is specified may edit */
     if (!flagedit || !flagremote)
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
-    if (!pmod)
+    if (!ismod)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
     len = str_len(ACTION_EDIT);
     if (!case_starts(action,ACTION_EDIT))
@@ -1006,7 +1007,7 @@ int main(int argc,char **argv)
     }
     qmail_puts(&qq,"\n\n");
     copybottom();
-    qmail_to(&qq,pmod);
+    qmail_to(&qq,mod.s);
 
   } else if (str_start(action,ACTION_ED)) {
     datetime_sec u;
@@ -1196,19 +1197,12 @@ int main(int argc,char **argv)
     hdr_listsubject1(TXT_STATUS);
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
-    if (pmod) {	/* pmod points to static storage in issub(). Need to do this */
-		/* before calling issub() again */
-      if (!stralloc_copys(&to,pmod)) die_nomem();
-      if (!stralloc_0(&to)) die_nomem();
-    } else {
-      if (!stralloc_copy(&to,&target)) die_nomem();
-    }
-    if (issub(workdir,target.s))
+    if (issub(workdir,target.s,0))
       copy(&qq,"text/sub-nop",flagcd);
     else
       copy(&qq,"text/unsub-nop",flagcd);
     copybottom();
-    qmail_to(&qq,to.s);
+    qmail_to(&qq,ismod ? mod.s : target.s);
 
   } else if (case_starts(action,ACTION_INFO) ||
 		case_starts(action,ALT_INFO)) {
@@ -1228,14 +1222,14 @@ int main(int argc,char **argv)
     copybottom();
     qmail_to(&qq,target.s);
 
-  } else if (pmod && (act == AC_HELP)) {
+  } else if (ismod && (act == AC_HELP)) {
     hdr_listsubject1(TXT_MOD_HELP);
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/mod-help",flagcd);
     copy(&qq,"text/help",flagcd);
     copybottom();
-    qmail_to(&qq,pmod);
+    qmail_to(&qq,mod.s);
 
   } else {
     act = AC_HELP;

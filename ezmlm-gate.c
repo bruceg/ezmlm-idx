@@ -36,7 +36,7 @@ stralloc storeopt = {0};
 
 char szchar[2] = "-";
   int child;
-  const char *pmod;
+int ismod;
 
 int mailprog(const char *s)
 {
@@ -115,7 +115,7 @@ void main(int argc,char **argv)
 
   sender = env_get("SENDER");
 
-  pmod = (char *) 0;
+  ismod = 0;
 
   if (queryext) {
     getconf(&cmds,queryext,1);
@@ -133,20 +133,20 @@ void main(int argc,char **argv)
 	i = j + 1;
     }
     if (!ret || ret == 99)		/* 111 => temp error */
-      pmod = "";			/* 0, 99 => post */
+      ismod = 1;			/* 0, 99 => post */
 					/* other => moderate */
   }
   moddir = argv[optind++];
   if (moddir && !ret) {			/* if exit 0 and moddir, add issub */
-    pmod = (char *) 0;
-    while (moddir && !pmod && sender) {
-      pmod = issub(moddir,sender);
+    ismod = 0;
+    while (moddir && !ismod && sender) {
+      ismod = issub(moddir,sender,0);
       closesub();
       moddir = argv[optind++];
     }
   }
 
-  if (pmod) {
+  if (ismod) {
     program = "/ezmlm-send";
     opts = &sendopt;
   }

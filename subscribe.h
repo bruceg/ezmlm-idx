@@ -2,6 +2,8 @@
 #ifndef SUBSCRIBE_H
 #define SUBSCRIBE_H
 
+#include "stralloc.h"
+
 struct subdbinfo
 {
   const char *plugin;
@@ -29,8 +31,11 @@ extern const char *checktag(unsigned long msgnum,
 
 extern void closesub(void);
 
-extern const char *issub(const char *subdir,
-			 const char *username);
+/* Returns 1 if userhost is in the subscriber database and sets recorded
+ * (if it is not NULL) to the stored address, 0 otherwise. */
+extern int issub(const char *subdir,
+		 const char *userhost,
+		 stralloc *recorded);
 
 extern unsigned long putsubs(const char *subdir,
 			     unsigned long hash_lo,
@@ -61,7 +66,7 @@ extern void tagmsg(unsigned long msgnum,
 		   unsigned long bodysize,
 		   unsigned long chunk);
 
-#define SUB_PLUGIN_VERSION 1
+#define SUB_PLUGIN_VERSION 2
 struct sub_plugin
 {
   int version;
@@ -72,9 +77,10 @@ struct sub_plugin
 			  const char *seed,
 			  const char *hash);
   void (*close)(struct subdbinfo *info);
-  const char *(*issub)(struct subdbinfo *info,
-		       const char *table,
-		       const char *username);
+  int (*issub)(struct subdbinfo *info,
+	       const char *table,
+	       const char *username,
+	       stralloc *recorded);
   const char *(*logmsg)(struct subdbinfo *info,
 			unsigned long msgnum,
 			unsigned long listno,

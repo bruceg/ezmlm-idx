@@ -155,18 +155,15 @@ static const char *_checktag (struct subdbinfo *info,
     (void)seed;
 }
 
-/* Returns matching userhost if it is in the subscriber database, NULL
- * otherwise.  NOTE: The returned pointer is NOT VALID after a
- * subsequent call to issub!*/
-static const char *_issub(struct subdbinfo *info,
-			  const char *table,
-			  const char *userhost)
+static int _issub(struct subdbinfo *info,
+		  const char *table,
+		  const char *userhost,
+		  stralloc *recorded)
 {
-  static stralloc line = {0};
   MYSQL_RES *result;
   MYSQL_ROW row;
   unsigned long *lengths;
-  const char *ret;
+  int ret;
 
   unsigned int j;
 
@@ -191,22 +188,24 @@ static const char *_issub(struct subdbinfo *info,
 		die_nomem();
     result = safe_select(info,&line);
     row = mysql_fetch_row(result);
-    ret = (char *) 0;
     if (!row) {		/* we need to return the actual address as other */
 			/* dbs may accept user-*@host, but we still want */
 			/* to make sure to send to e.g the correct moderator*/
 			/* address. */
       if (!mysql_eof(result))
 		strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
+      ret = 0;
     } else {
       if (!(lengths = mysql_fetch_lengths(result)))
 		strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
-      if (!stralloc_copyb(&line,row[0],lengths[0])) die_nomem();
-      if (!stralloc_0(&line)) die_nomem();
-      ret = line.s;
+      if (recorded) {
+	if (!stralloc_copyb(recorded,row[0],lengths[0])) die_nomem();
+	if (!stralloc_0(recorded)) die_nomem();
+      }
       while ((row = mysql_fetch_row(result)));	/* maybe not necessary */
-      mysql_free_result(result);
+      ret = 1;
     }
+    mysql_free_result(result);
     return ret;
 }
 

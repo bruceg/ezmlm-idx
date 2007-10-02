@@ -40,14 +40,14 @@ void main(int argc,char **argv)
   initsub(0);
 
   if (optind >= argc) {
-    if (issub(0,addr)) {
+    if (issub(0,addr,0)) {
       closesub();
       _exit(flagsub);
     }
   }
   else {
     while ((subdir = argv[optind++]) != 0) {
-      if (issub(subdir,addr)) {
+      if (issub(subdir,addr,0)) {
 	closesub();
 	_exit(flagsub);
       }

@@ -99,7 +99,7 @@ char archtype=' ';
 
 /* for mods on non-public lists (needed for future fuzzy sub dbs) */
 stralloc mod = {0};		/* moderator addr for non-public lists */
-const char *pmod = (char *) 0;	/* pointer to above */
+int ismod = 0;			/* true for moderator senders */
 
 int act = AC_NONE;		/* Action we do */
 int flageditor = 0;		/* if we're invoked for within dir/editor */
@@ -180,11 +180,11 @@ void zapnonsub(const char *szerr)
   if (sender && *sender) {	/* "no sender" is not a subscriber */
     if (!flagsub)
       return;
-    if (issub(0,sender))
+    if (issub(0,sender,0))
       return;		/* subscriber */
-    if (issub("digest",sender))
+    if (issub("digest",sender,0))
       return;		/* digest subscriber */
-    if (issub("allow",sender))
+    if (issub("allow",sender,0))
       return;		/* allow addresses */
   }
   strerr_die4x(100,FATAL,ERR_SUBSCRIBER_CAN,szerr,ERR_571);
@@ -897,14 +897,9 @@ void main(int argc,char **argv)
         }
       }
       if (!stralloc_0(&moddir)) die_nomem();
-      pmod = issub(moddir.s,sender);
-      if (!pmod)			/* sender = moderator? */
+      ismod = issub(moddir.s,sender,&mod);
+      if (!ismod)			/* sender = moderator? */
         strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
-      else {
-        if (!stralloc_copys(&mod,pmod)) die_nomem();
-        if (!stralloc_0(&mod)) die_nomem();
-        pmod = mod.s;		/* send to address in list not matching bait */
-      }
     }
   }
 
@@ -1301,8 +1296,8 @@ void main(int argc,char **argv)
     } else
       subs = putsubs(workdir,0L,52L,&subto);
   } else {			/* if local is set, sender is checked */
-    if (pmod)
-      qmail_to(&qq,pmod);
+    if (ismod)
+      qmail_to(&qq,mod.s);
     else
       qmail_to(&qq,sender);
   }
