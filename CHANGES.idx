@@ -38,6 +38,9 @@ ezmlm-idx-6.0.1, ????-??-??
 - ezmlm-mktab-mysql and ezmlm-mktab-pgsql will now only be installed if
   they were built (with "make mysql" or "make pgsql" respectively).
 
+Note: The subdb API was modified in this version.  You will need to
+reinstall all sub-* modules along with the main package.
+
 ezmlm-idx-6.0.0, 2006-11-30
 ===========================
 
