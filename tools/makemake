@@ -43,8 +43,10 @@ directtarget() {
 
 dependcc() {
     dependon $1
-    dependon `cpp -M -MM -MG $1 2>/dev/null \
-              | sed -e 's/^[^ ]*://' -e 's/\\\\//'`
+    for file in $(sed -e '/^#include "/!d;s/"$//;s/^.*"//' $1 2>/dev/null);
+    do
+      dependcc $file
+    done
 }
 
 depend() {
