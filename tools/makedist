@@ -19,7 +19,7 @@ if ! grep -q " ${base}, " HISTORY; then
   exit 1
 fi
 
-svn revert conf-*
+git checkout conf-*
 
 tools/makemake
 
@@ -30,7 +30,7 @@ echo "Setting up the temporary directory"
 trap 'rm -r $base' EXIT
 mkdir $base
 cp --parents `cat SOURCES EXTRADIST` $base/
-find sub_* lang -name .svn -prune -o -type f -print \
+find sub_* lang -type f -print \
 | xargs cp --parents --target-directory=$base/
 mv idx.patch $base/
 sed -e 's/ -W[^ ]*//g' conf-cc >$base/conf-cc
@@ -44,7 +44,7 @@ fgrep -vxf REPLACED FILES \
 | ( cd $base && xargs rm -f; )
 
 echo "Generating ChangeLog"
-svn log --verbose file:///home/subversion/repos/ezmlm-idx >$base/ChangeLog
+git log >$base/ChangeLog
 
 echo "Generating FILES.idx"
 ( cd $base && find * -type f >FILES.idx )
