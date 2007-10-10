@@ -282,5 +282,8 @@ void initsub(const char *subdbline)
 
 const char *mktab(void)
 {
+  const char *r;
+  if ((r = opensub()) != 0)
+    return r;
   return plugin->mktab(&info);
 }

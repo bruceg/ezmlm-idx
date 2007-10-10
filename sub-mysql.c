@@ -27,9 +27,11 @@
 #include "subdb.h"
 #include "substdio.h"
 #include "uint32.h"
+#include <sys/types.h>
 #include <mysql.h>
 #include <mysqld_error.h>
 #include <stdio.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 static char strnum[FMT_ULONG];
@@ -503,12 +505,120 @@ static void _tagmsg(struct subdbinfo *info,
     if (*ret) strerr_die2x(111,FATAL,ret);
 }
 
+static const char *create_table(struct subdbinfo *info,
+				const char *suffix1,
+				const char *suffix2)
+{
+  if (!stralloc_copys(&line,"CREATE TABLE ")) return ERR_NOMEM;
+  if (!stralloc_cats(&line,info->base_table)) return ERR_NOMEM;
+  if (!stralloc_cats(&line,suffix1)) return ERR_NOMEM;
+  if (!stralloc_cats(&line,suffix2)) return ERR_NOMEM;
+  if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)
+    if (mysql_errno((MYSQL*)info->conn) != ER_TABLE_EXISTS_ERROR)
+      return mysql_error((MYSQL*)info->conn);
+  return 0;
+}
+
+static const char *create_table_set(struct subdbinfo *info,
+				    const char *suffix,
+				    int do_mlog)
+{
+  const char *r;
+  
+  /* Address table */
+  /* Need varchar. Domain = 3 chars => fixed length, as opposed to
+   * varchar Always select on domain and hash, so that one index should
+   * do primary key(address) is very inefficient for MySQL.  MySQL
+   * tables do not need a primary key. Other RDBMS require one. For the
+   * log tables, just add an INT AUTO_INCREMENT. For the address table,
+   * do that or use address as a primary key. */
+  if ((r = create_table(info,suffix," ("
+			"  hash    TINYINT UNSIGNED NOT NULL,"
+			"  address VARCHAR(255) NOT NULL,"
+			"  INDEX h (hash),"
+			"  INDEX a (address(12))"
+			")")) != 0)
+    return r;
+  /* Subscription log table. No addr idx to make insertion fast, since
+   * that is almost the only thing we do with this table */
+  if ((r = create_table(info,suffix,"_slog ("
+			"  tai		TIMESTAMP,"
+			"  address	VARCHAR(255) NOT NULL,"
+			"  fromline	VARCHAR(255) NOT NULL,"
+			"  edir		CHAR(1) NOT NULL,"
+			"  etype	CHAR(1) NOT NULL,"
+			"  INDEX (tai)"
+			")")) != 0)
+    return r;
+
+  if (do_mlog) {
+    /* main list inserts a cookie here. Sublists check it */
+    if ((r = create_table(info,suffix,"_cookie ("
+			  "  msgnum	INTEGER UNSIGNED NOT NULL,"
+			  "  tai	TIMESTAMP NOT NULL,"
+			  "  cookie	CHAR(20) NOT NULL,"
+			  "  chunk	TINYINT UNSIGNED NOT NULL DEFAULT 0,"
+			  "  bodysize	INTEGER UNSIGNED NOT NULL DEFAULT 0,"
+			  "  PRIMARY KEY (msgnum)"
+			  ")")) != 0)
+      return r;
+
+    /* main and sublist log here when the message is done done=0 for
+     * arrived, done=4 for sent, 5 for receit.  tai reflects last
+     * change */
+    if ((r = create_table(info,suffix,"_mlog ("
+			  "msgnum	INTEGER UNSIGNED NOT NULL,"
+			  "listno	INTEGER UNSIGNED NOT NULL,"
+			  "tai		TIMESTAMP,"
+			  "subs		INTEGER UNSIGNED NOT NULL DEFAULT 0,"
+			  "done		TINYINT NOT NULL DEFAULT 0,"
+			  "PRIMARY KEY listmsg (listno,msgnum,done)"
+			  ")")) != 0)
+      return r;
+  }
+  
+  return 0;
+}
+
+static int isdir(const char *path)
+{
+  struct stat st;
+  return stat(path, &st) == 0
+    && S_ISDIR(st.st_mode);
+}
+
+static const char *_mktab(struct subdbinfo *info)
+{
+  const char *r;
+
+  if ((r = create_table_set(info,"",1)) != 0)
+    return r;
+  if (isdir("allow")) {
+    if ((r = create_table_set(info,"_allow",0)) != 0)
+      return r;
+  }
+  if (isdir("deny")) {
+    if ((r = create_table_set(info,"_deny",0)) != 0)
+      return r;
+  }
+  if (isdir("digest")) {
+    if ((r = create_table_set(info,"_digest",1)) != 0)
+      return r;
+  }
+  if (isdir("mod")) {
+    if ((r = create_table_set(info,"_mod",0)) != 0)
+      return r;
+  }
+  return 0;
+}
+
 struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
   _checktag,
   _closesub,
   _issub,
   _logmsg,
+  _mktab,
   _opensub,
   _putsubs,
   _searchlog,

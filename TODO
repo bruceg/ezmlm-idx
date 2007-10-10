@@ -6,7 +6,6 @@ Add a wrapper for ezmlm-issubn to take the place of the
   @REJECTPOSTS@ and @ONLYSUBSCRIBERS@ bits in the ezmlmrc.template
 
 Automatically do the necessary ezmlm-mktab steps in ezmlm-make.
-- Add the mktab steps to the subdb plugin or a seperate one?
 - What about cleaning up lists?  ezmlm-unmake
 
 Rewrite man pages to include a separate "configuration files" section.
