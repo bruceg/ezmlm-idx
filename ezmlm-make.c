@@ -309,7 +309,7 @@ void main(int argc,char **argv)
   int last;
   unsigned int slpos,hashpos,pos;
   int fdin,fdlock,fdtmp;
-  char *p;
+  const char *p;
   unsigned char ch;
 
   keyadd((unsigned long) getpid());
@@ -688,8 +688,10 @@ void main(int argc,char **argv)
     f_close();
   }
 
-  stralloc_0(&dir);
+  if (!stralloc_0(&dir)) die_nomem();
   wrap_chdir(dir.s);
+  if (popt[6].len > 0)
+    if (!stralloc_0(&popt[6])) die_nomem();
   initsub(popt[6].s);
   if ((p = mktab()) != NULL)
     strerr_die3x(100,FATAL,ERR_MKTAB,p);
