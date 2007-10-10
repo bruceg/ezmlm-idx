@@ -26,7 +26,7 @@
 #include "byte.h"
 #include "sgetopt.h"
 #include "quote.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "mime.h"
 #include "errtxt.h"
 #include "makehash.h"

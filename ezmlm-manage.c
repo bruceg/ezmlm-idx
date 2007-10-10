@@ -23,7 +23,7 @@
 #include "datetime.h"
 #include "now.h"
 #include "fmt.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "cookie.h"
 #include "sgetopt.h"
 #include "copy.h"

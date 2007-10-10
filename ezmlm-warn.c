@@ -34,7 +34,7 @@
 #include "die.h"
 #include "idx.h"
 #include "config.h"
-#include "subscribe.h"
+#include "subdb.h"
 
 const char FATAL[] = "ezmlm-warn: fatal: ";
 const char USAGE[] =

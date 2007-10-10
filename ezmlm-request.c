@@ -28,7 +28,7 @@
 #include "errtxt.h"
 #include "copy.h"
 #include "cookie.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "mime.h"
 #include "hdr.h"
 #include "die.h"

@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "strerr.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "sgetopt.h"
 #include "str.h"
 #include "stralloc.h"

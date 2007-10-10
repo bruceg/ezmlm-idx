@@ -20,7 +20,7 @@
 #include "errtxt.h"
 #include "die.h"
 #include "idx.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "wrap.h"
 #include "config.h"
 #include "auto_version.h"

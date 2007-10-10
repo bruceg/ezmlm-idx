@@ -26,7 +26,7 @@
 #include "now.h"
 #include "cookie.h"
 #include "sgetopt.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "errtxt.h"
 #include "die.h"
 #include "config.h"

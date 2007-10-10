@@ -24,7 +24,7 @@
 #include "strerr.h"
 #include "sub_std.h"
 #include "subhash.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "substdio.h"
 #include "uint32.h"
 #include <mysql.h>

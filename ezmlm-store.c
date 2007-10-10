@@ -32,7 +32,7 @@
 #include "die.h"
 #include "idx.h"
 #include "copy.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "mime.h"
 #include "wrap.h"
 #include "config.h"

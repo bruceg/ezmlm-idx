@@ -28,7 +28,7 @@
 #include "sub_std.h"
 #include "subhash.h"
 #include "substdio.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "uint32.h"
 
 static stralloc addr = {0};

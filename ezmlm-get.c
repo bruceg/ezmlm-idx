@@ -28,7 +28,7 @@
 #include "makehash.h"
 #include "copy.h"
 #include "constmap.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "hdr.h"
 #include "open.h"
 #include "lock.h"

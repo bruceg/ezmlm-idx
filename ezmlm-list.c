@@ -5,7 +5,7 @@
 #include "readwrite.h"
 #include "substdio.h"
 #include "subfd.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "exit.h"
 #include "fmt.h"
 #include "sgetopt.h"

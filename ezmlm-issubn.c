@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include "strerr.h"
 #include "env.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "sgetopt.h"
 #include "errtxt.h"
 #include "die.h"

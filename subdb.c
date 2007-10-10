@@ -13,7 +13,7 @@
 #include "stralloc.h"
 #include "str.h"
 #include "strerr.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "auto_lib.h"
 
 static stralloc line = {0};

@@ -27,7 +27,7 @@
 #include "gen_allocdefs.h"
 #include "constmap.h"
 #include "byte.h"
-#include "subscribe.h"
+#include "subdb.h"
 #include "errtxt.h"
 #include "makehash.h"
 #include "mime.h"
