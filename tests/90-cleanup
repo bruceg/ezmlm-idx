@@ -8,12 +8,22 @@
 # cleanup the mysql sub tables so we can repeat if necessary
 # the Log test will pass due to old data once we access the mysql log,
 # rather than the file, but what the ...
+  ${EZBIN}/ezmlm-rmtab "$DIR"
   if [ -n "$SUBDB" ]; then
-	${EZBIN}/ezmlm-unsub "$DIR" digest "${MAN}@$HOST" "${DIG}@$HOST" \
-		>/dev/null 2>&1
-	${EZBIN}/ezmlm-unsub "$DIR" mod "${MOD}@$HOST" \
-		>/dev/null 2>&1
-	${EZBIN}/ezmlm-unsub "$DIR" allow "aaa@bbb" "ccc@ddd" "eee@fff" \
-		>/dev/null 2>&1
+    ${EZBIN}/ezmlm-rmtab -S std "$DIR"
   fi
+
+  ${EZBIN}/ezmlm-sub "$DIR" "$SENDER" 2>/dev/null \
+  && fatal "ezmlm-sub worked after ezmlm-rmtab"
+
+  ${EZBIN}/ezmlm-list "$DIR" 2>/dev/null | ${GREP} @ >/dev/null \
+  && fatal "subscribers left in subdb after ezmlm-rmtab"
+
+  ${TEST} -e "$DIR"/subscribers \
+       -o -e "$DIR"/allow/subscribers \
+       -o -e "$DIR"/deny/subscribers \
+       -o -e "$DIR"/digest/subscribers \
+       -o -e "$DIR"/mod/subscribers \
+  && fatal "ezmlm-rmtab didn't clean up properly."
+
   ${RM} -rf "$DIR" "$ERR" >/dev/null 2>&1

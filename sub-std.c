@@ -551,6 +551,32 @@ static const char *_mktab(struct subdbinfo *info)
   (void)info;
 }
 
+static const char *rmsubs(const char *subdir)
+{
+  int ch;
+  for (ch = 0; ch < 53; ++ch) {
+    makepath(&fn,subdir,"/subscribers/",ch + 64);
+    unlink(fn.s);
+  }
+  makepath(&fn,subdir,"/subscribers",0);
+  if (rmdir(fn.s) < 0
+      && errno != error_noent)
+    return strerror(errno);
+  return 0;
+}
+
+static const char *_rmtab(struct subdbinfo *info)
+{
+  const char *r;
+  if ((r = rmsubs(".")) != 0) return r;
+  if ((r = rmsubs("allow")) != 0) return r;
+  if ((r = rmsubs("deny")) != 0) return r;
+  if ((r = rmsubs("digest")) != 0) return r;
+  if ((r = rmsubs("mod")) != 0) return r;
+  return 0;
+  (void)info;
+}
+
 struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
   _checktag,
@@ -560,6 +586,7 @@ struct sub_plugin sub_plugin = {
   _mktab,
   _opensub,
   _putsubs,
+  _rmtab,
   _searchlog,
   _subscribe,
   _tagmsg,

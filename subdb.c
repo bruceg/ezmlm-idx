@@ -287,3 +287,11 @@ const char *mktab(void)
     return r;
   return plugin->mktab(&info);
 }
+
+const char *rmtab(void)
+{
+  const char *r;
+  if ((r = opensub()) != 0)
+    return r;
+  return plugin->rmtab(&info);
+}

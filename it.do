@@ -21,6 +21,7 @@ ezmlm-moderate \
 ezmlm-reject \
 ezmlm-request \
 ezmlm-return \
+ezmlm-rmtab \
 ezmlm-send \
 ezmlm-split \
 ezmlm-store \

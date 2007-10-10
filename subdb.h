@@ -20,6 +20,8 @@ extern void initsub(const char *subdbline);
 
 extern const char *mktab(void);
 
+extern const char *rmtab(void);
+
 /* these are the subroutines used for interfacing with the subscriber and  */
 /* moderator address databases. For the put/to address output routines     */
 /* the 'username' if defined is omitted from the output. flagadd = 1 adds  */
@@ -68,7 +70,7 @@ extern void tagmsg(unsigned long msgnum,
 		   unsigned long bodysize,
 		   unsigned long chunk);
 
-#define SUB_PLUGIN_VERSION 2
+#define SUB_PLUGIN_VERSION 3
 struct sub_plugin
 {
   int version;
@@ -95,6 +97,7 @@ struct sub_plugin
 			   unsigned long hash_lo,
 			   unsigned long hash_hi,
 			   int subwrite());
+  const char *(*rmtab)(struct subdbinfo *info);
   void (*searchlog)(struct subdbinfo *info,
 		    const char *table,
 		    char *search,
