@@ -33,6 +33,7 @@
 #include "substdio.h"
 #include "subdb.h"
 #include "uint32.h"
+#include "wrap.h"
 
 static stralloc addr = {0};
 static stralloc lcaddr = {0};
@@ -521,7 +522,7 @@ static void _tagmsg(struct subdbinfo *info,
 static int isdir(const char *path)
 {
   struct stat st;
-  return stat(path, &st) == 0
+  return wrap_stat(path, &st) == 0
     && S_ISDIR(st.st_mode);
 }
 
