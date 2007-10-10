@@ -1,1 +1,1 @@
-dependon sub-pgsql.so ezmlm-mktab-pgsql
+dependon sub-pgsql.so

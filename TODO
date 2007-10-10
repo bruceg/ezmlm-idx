@@ -1,12 +1,14 @@
+*Adjust documentation:
+-CHANGES.idx FAQ.idx INSTALL.idx README.mysql README.pgsql
+-no more ezmlm-mktab*
+-new tool ezmlm-rmtab
+
 Put a real address into To: header in ezmlm-store (and others?)
 add ezmlm-receipt to build system (needs to be fixed to compile)
 add support for simultaneous multiple languages
 Add support for run-time configurable error texts (errtxt.h).
 Add a wrapper for ezmlm-issubn to take the place of the
   @REJECTPOSTS@ and @ONLYSUBSCRIBERS@ bits in the ezmlmrc.template
-
-Automatically do the necessary ezmlm-mktab steps in ezmlm-make.
-- What about cleaning up lists?  ezmlm-unmake
 
 Rewrite man pages to include a separate "configuration files" section.
 

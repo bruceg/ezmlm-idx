@@ -1,1 +1,1 @@
-dependon sub-mysql.so ezmlm-mktab-mysql
+dependon sub-mysql.so

@@ -15,8 +15,6 @@ c:::755:/:ezmlm-limit:
 c:::755:/:ezmlm-list:
 c:::755:/:ezmlm-make:
 c:::755:/:ezmlm-manage:
-?c:::755:/:ezmlm-mktab-mysql:
-?c:::755:/:ezmlm-mktab-pgsql:
 c:::755:/:ezmlm-moderate:
 c:::755:/:ezmlm-reject:
 c:::755:/:ezmlm-request:

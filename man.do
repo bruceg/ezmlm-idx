@@ -18,7 +18,6 @@ ezmlm-limit.0 \
 ezmlm-list.0 \
 ezmlm-make.0 \
 ezmlm-manage.0 \
-ezmlm-mktab.0 \
 ezmlm-moderate.0 \
 ezmlm-receipt.0 \
 ezmlm-reject.0 \
