@@ -18,6 +18,8 @@ struct subdbinfo
 
 extern void initsub(const char *subdbline);
 
+extern const char *mktab(void);
+
 /* these are the subroutines used for interfacing with the subscriber and  */
 /* moderator address databases. For the put/to address output routines     */
 /* the 'username' if defined is omitted from the output. flagadd = 1 adds  */
@@ -86,6 +88,7 @@ struct sub_plugin
 			unsigned long listno,
 			unsigned long subs,
 			int done);
+  const char *(*mktab)(struct subdbinfo *info);
   const char *(*open)(struct subdbinfo *info);
   unsigned long (*putsubs)(struct subdbinfo *info,
 			   const char *table,

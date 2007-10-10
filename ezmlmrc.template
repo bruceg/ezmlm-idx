@@ -107,24 +107,19 @@
 </tstdigopts#4/>
 <#4#>
 </+archive/>
-</+subscribers/>
 </+bounce/>
 # dir for editing text files
 </+text#n/>
 # dirs for digests
 </+digest#d/>
-</+digest/subscribers#d/>
 </+digest/bounce#d/>
 # for extra address db
 </+allow/>
-</+allow/subscribers/>
 # for blacklist
 </+deny#k/>
-</+deny/subscribers#k/>
 # moderator db & mod queue dirs. Needed for -m, -r -s, so we just
 # make them by default.
 </+mod/>
-</+mod/subscribers/>
 </+mod/pending/>
 </+mod/accepted/>
 </+mod/rejected/>

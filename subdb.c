@@ -22,9 +22,11 @@ static struct sub_plugin *plugin = 0;
 static struct subdbinfo info;
 
 static void parsesubdb(const char *plugin)
-/* Parses line into the components. The string should be
+/* Parses line into the components. The string in "line" should be
  * plugin[:host[:port[:user[:pw[:db[:base_table]]]]]]. On success
- * returns NULL. On error returns error string for temporary error. */
+ * returns NULL. On error returns error string for temporary error. If
+ * the "plugin" parameter is not NULL, it is used as the plugin name,
+ * and the info line is assumed to start at host. */
 {
   unsigned int j;
   const char *port;
@@ -276,4 +278,9 @@ void initsub(const char *subdbline)
   else if ((plugin = dlsym(handle,"sub_plugin")) == 0)
     strerr_die5x(111,FATAL,"Plugin ",path.s," is missing symbols: ",
 		 dlerror());
+}
+
+const char *mktab(void)
+{
+  return plugin->mktab(&info);
 }

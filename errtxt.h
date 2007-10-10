@@ -114,6 +114,7 @@
 #define ERR_NEWLINE "newlines not allowed in dir"
 #define ERR_QUOTE "quotes not allowed in dir"
 #define ERR_SYNTAX " syntax error: "
+#define ERR_MKTAB "creating subscriber tables failed: "
 
 /* ezmlm-limit unique */
 #define ERR_EXCESS_MOD "excess traffic: moderating"

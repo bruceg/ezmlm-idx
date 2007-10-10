@@ -1,6 +1,9 @@
 /*$Id$*/
 
+#include <sys/types.h>
 #include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include "byte.h"
 #include "case.h"
@@ -515,12 +518,45 @@ static void _tagmsg(struct subdbinfo *info,
   (void)chunk;
 }
 
+static int isdir(const char *path)
+{
+  struct stat st;
+  return stat(path, &st) == 0
+    && S_ISDIR(st.st_mode);
+}
+
+static const char *_mktab(struct subdbinfo *info)
+{
+  if (mkdir("subscribers", 0777) < 0
+      && errno != error_exist)
+    return strerror(errno);
+  if (isdir("allow"))
+    if (mkdir("allow/subscribers", 0777) < 0
+	&& errno != error_exist)
+      return strerror(errno);
+  if (isdir("deny"))
+    if (mkdir("deny/subscribers", 0777) < 0
+	&& errno != error_exist)
+      return strerror(errno);
+  if (isdir("digest"))
+    if (mkdir("digest/subscribers", 0777) < 0
+	&& errno != error_exist)
+      return strerror(errno);
+  if (isdir("mod"))
+    if (mkdir("mod/subscribers", 0777) < 0
+	&& errno != error_exist)
+      return strerror(errno);
+  return 0;
+  (void)info;
+}
+
 struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
   _checktag,
   _closesub,
   _issub,
   _logmsg,
+  _mktab,
   _opensub,
   _putsubs,
   _searchlog,

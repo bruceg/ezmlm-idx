@@ -12,7 +12,9 @@
 #include "byte.h"
 #include "open.h"
 #include "substdio.h"
+#include "subdb.h"
 #include "str.h"
+#include "wrap.h"
 #include "auto_bin.h"
 #include "getln.h"
 #include "error.h"
@@ -685,6 +687,11 @@ void main(int argc,char **argv)
     f_put(key.s,key.len);
     f_close();
   }
+
+  stralloc_0(&dir);
+  wrap_chdir(dir.s);
+  initsub(popt[6].s);
+  if ((p = mktab()) != NULL)
+    strerr_die3x(100,FATAL,ERR_MKTAB,p);
   _exit(0);
 }
-
