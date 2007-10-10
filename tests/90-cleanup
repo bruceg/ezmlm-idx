@@ -8,7 +8,10 @@
 # cleanup the mysql sub tables so we can repeat if necessary
 # the Log test will pass due to old data once we access the mysql log,
 # rather than the file, but what the ...
-  ${EZBIN}/ezmlm-rmtab "$DIR"
+
+  ${EZBIN}/ezmlm-rmtab "$DIR" \
+  || fatal "ezmlm-rmtab failed"
+
   if [ -n "$SUBDB" ]; then
     ${EZBIN}/ezmlm-rmtab -S std "$DIR"
   fi

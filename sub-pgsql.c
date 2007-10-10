@@ -570,6 +570,31 @@ static void _tagmsg(struct subdbinfo *info,
     if (*ret) strerr_die2x(111,FATAL,ret);
 }
 
+static int table_exists(struct subdbinfo *info,
+			const char *suffix1,
+			const char *suffix2)
+{
+  PGresult *result;
+
+  /* This is a very crude cross-version portable kludge to test if a
+   * table exists by testing if a select from the table succeeds.  */
+  if (!stralloc_copys(&line,"SELECT TRUE FROM ")) return -1;
+  if (!stralloc_cats(&line,info->base_table)) return -1;
+  if (!stralloc_cats(&line,suffix1)) return -1;
+  if (!stralloc_cats(&line,suffix2)) return -1;
+  if (!stralloc_cats(&line," LIMIT 1")) return -1;
+  if (!stralloc_0(&line)) return -1;
+  result = PQexec((PGconn*)info->conn,line.s);
+  if (result == NULL)
+    return -1;
+  if (PQresultStatus(result) == PGRES_TUPLES_OK) {
+    PQclear(result);
+    return 1;
+  }
+  PQclear(result);
+  return 0;
+}
+
 static const char *create_table(struct subdbinfo *info,
 				const char *suffix1,
 				const char *suffix2,
@@ -577,22 +602,8 @@ static const char *create_table(struct subdbinfo *info,
 {
   PGresult *result;
 
-  /* This is a very crude cross-version portable kludge to test if a
-   * table exists by testing if a select from the table succeeds.  */
-  if (!stralloc_copys(&line,"SELECT TRUE FROM ")) return ERR_NOMEM;
-  if (!stralloc_cats(&line,info->base_table)) return ERR_NOMEM;
-  if (!stralloc_cats(&line,suffix1)) return ERR_NOMEM;
-  if (!stralloc_cats(&line,suffix2)) return ERR_NOMEM;
-  if (!stralloc_cats(&line," LIMIT 1")) return ERR_NOMEM;
-  if (!stralloc_0(&line)) return ERR_NOMEM;
-  result = PQexec((PGconn*)info->conn,line.s);
-  if (result == NULL)
-    return PQerrorMessage((PGconn*)info->conn);
-  if (PQresultStatus(result) == PGRES_TUPLES_OK) {
-    PQclear(result);
+  if (table_exists(info,suffix1,suffix2) > 0)
     return 0;
-  }
-  PQclear(result);
   
   if (!stralloc_copys(&line,"CREATE TABLE ")) return ERR_NOMEM;
   if (!stralloc_cats(&line,info->base_table)) return ERR_NOMEM;
@@ -698,6 +709,53 @@ static const char *_mktab(struct subdbinfo *info)
   return 0;
 }
 
+static const char *remove_table(struct subdbinfo *info,
+				const char *suffix1,
+				const char *suffix2)
+{
+  PGresult *result;
+
+  if (table_exists(info,suffix1,suffix2) == 0)
+    return 0;
+  
+  if (!stralloc_copys(&line,"DROP TABLE ")) return ERR_NOMEM;
+  if (!stralloc_cats(&line,info->base_table)) return ERR_NOMEM;
+  if (!stralloc_cats(&line,suffix1)) return ERR_NOMEM;
+  if (!stralloc_cats(&line,suffix2)) return ERR_NOMEM;
+  if (!stralloc_0(&line)) return ERR_NOMEM;
+  result = PQexec((PGconn*)info->conn,line.s);
+  if (result == NULL)
+    return PQerrorMessage((PGconn*)info->conn);
+  if (PQresultStatus(result) != PGRES_COMMAND_OK)
+    return PQresultErrorMessage(result);
+  PQclear(result);
+  return 0;
+}
+
+static const char *remove_table_set(struct subdbinfo *info,
+				    const char *suffix)
+{
+  const char *r;
+  if ((r = remove_table(info,suffix,"_mlog")) != 0
+      || (r = remove_table(info,suffix,"_cookie")) != 0
+      || (r = remove_table(info,suffix,"_slog")) != 0
+      || (r = remove_table(info,suffix,"")) != 0)
+    return r;
+  return 0;
+}
+
+static const char *_rmtab(struct subdbinfo *info)
+{
+  const char *r;
+  if ((r = remove_table_set(info,"")) != 0
+      || (r = remove_table_set(info,"_allow")) != 0
+      || (r = remove_table_set(info,"_deny")) != 0
+      || (r = remove_table_set(info,"_digest")) != 0
+      || (r = remove_table_set(info,"_mod")) != 0)
+    return r;
+  return 0;
+}
+
 struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
   _checktag,
@@ -707,6 +765,7 @@ struct sub_plugin sub_plugin = {
   _mktab,
   _opensub,
   _putsubs,
+  _rmtab,
   _searchlog,
   _subscribe,
   _tagmsg,

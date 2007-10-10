@@ -59,6 +59,9 @@
 # Add subdb files for plugin testing
 ${ECHO} "Using subdb plugin:   ${SUBDB:-std}"
 if [ -n "$SUBDB" ]; then
+  # make sure any old tables no longer exist first
+  ${EZBIN}/ezmlm-rmtab -S "$SUBDB:$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" "$DIR" \
+	>/dev/null 2>&1
   ${EZBIN}/ezmlm-make -+6 "$SUBDB:$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
 	-C${EZBIN}/lang/en_US "$DIR"|| \
 	fatal "ezmlm-make failed to add subdb config info"

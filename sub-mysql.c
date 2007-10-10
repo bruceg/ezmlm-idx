@@ -613,6 +613,44 @@ static const char *_mktab(struct subdbinfo *info)
   return 0;
 }
 
+static const char *remove_table(struct subdbinfo *info,
+				const char *suffix1,
+				const char *suffix2)
+{
+  if (!stralloc_copys(&line,"DROP TABLE ")) return ERR_NOMEM;
+  if (!stralloc_cats(&line,info->base_table)) return ERR_NOMEM;
+  if (!stralloc_cats(&line,suffix1)) return ERR_NOMEM;
+  if (!stralloc_cats(&line,suffix2)) return ERR_NOMEM;
+  if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)
+    if (mysql_errno((MYSQL*)info->conn) != ER_BAD_TABLE_ERROR)
+      return mysql_error((MYSQL*)info->conn);
+  return 0;
+}
+
+static const char *remove_table_set(struct subdbinfo *info,
+				    const char *suffix)
+{
+  const char *r;
+  if ((r = remove_table(info,suffix,"_mlog")) != 0
+      || (r = remove_table(info,suffix,"_cookie")) != 0
+      || (r = remove_table(info,suffix,"_slog")) != 0
+      || (r = remove_table(info,suffix,"")) != 0)
+    return r;
+  return 0;
+}
+
+static const char *_rmtab(struct subdbinfo *info)
+{
+  const char *r;
+  if ((r = remove_table_set(info,"")) != 0
+      || (r = remove_table_set(info,"_allow")) != 0
+      || (r = remove_table_set(info,"_deny")) != 0
+      || (r = remove_table_set(info,"_digest")) != 0
+      || (r = remove_table_set(info,"_mod")) != 0)
+    return r;
+  return 0;
+}
+
 struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
   _checktag,
@@ -622,6 +660,7 @@ struct sub_plugin sub_plugin = {
   _mktab,
   _opensub,
   _putsubs,
+  _rmtab,
   _searchlog,
   _subscribe,
   _tagmsg,
