@@ -1,8 +1,3 @@
-*Adjust documentation:
--CHANGES.idx FAQ.idx INSTALL.idx README.mysql README.pgsql
--no more ezmlm-mktab*
--new tool ezmlm-rmtab
-
 Put a real address into To: header in ezmlm-store (and others?)
 add ezmlm-receipt to build system (needs to be fixed to compile)
 add support for simultaneous multiple languages

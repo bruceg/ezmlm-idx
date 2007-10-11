@@ -23,6 +23,15 @@ release.
 ezmlm-idx-6.1.0, ????-??-??
 ===========================
 
+This version moves the creation of subscriber tables out of
+ezmlm-mktab-* and into ezmlm-make by adding some additional hooks to the
+subdb plugins.  A ezmlm-rmtab program is also added to remove subscriber
+tables, also with hooks in the subdb plugins.  The ezmlm-mktab-*
+programs have been obsoleted by these changes and have been removed.
+
+Note: The subdb API was modified in this version.  You will need to
+reinstall all sub-* modules along with the main package.
+
 ezmlm-idx-6.0.1, 2007-10-06
 ===========================
 

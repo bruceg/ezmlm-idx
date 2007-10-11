@@ -95,27 +95,22 @@ HOW TO BUILD, TEST, AND INSTALL:
 	you can, patches for correcting it.
 
  9. To test the SQL functions, set up a mysql database ``ezmlm'' accessible
-    to a user at this host (see MySQL/PostgreSQL docs; the ezmlm-mktab-*
-    scripts create the necessary tables (see man page) but you must
-    first create a database and a user with sufficient access.
-
-    The following command creates a database for use with ezmlm-test.
-    NOTE that ezmlm-mktab-* and ezmlm-test options must be separated
-    from the switch, whereas the passwd argument for mysql -p must
-    immediately follow the switch.
-	% ./ezmlm-mktab-mysql -d list | mysql -hhost -uuser -ppasswd -f ezmlm
-
-    or for PostgresSQL:
-	% ./ezmlm-mktab-pgsql -d list | pgsql [...] ezmlm
+    to a user at this host (see MySQL/PostgreSQL docs).  The ezmlm-make
+    program will create the necessary tables (see man page) but you must
+    first create a database and a user with sufficient access.  Running
+    ezmlm-mktab-mysql or ezmlm-mktab-pgsql is no longer necessary.
 
     Now execute:
-	% ./ezmlm-test -l user -p passwd -h host
+	% ./ezmlm-test -s mysql -l user -p passwd -h host
+    or:
+	% ./ezmlm-test -s pgsql -l user -p passwd -h host
 
     This will test the SQL part of the binaries. ``host'' defaults to
     ``localhost'' and ``user'' defaults to ``ezmlm''. There is no
-    default for passwd and indeed ezmlm-test uses this switch to know to
-    work with SQL support. Note that -p has to be specified even if the
-    database has no password. In this case, use -p ''.
+    default for the SQL type or password and indeed ezmlm-test uses
+    these switch to know to work with SQL support. Note that -p has to
+    be specified even if the database has no password. In this case, use
+    -p ''.
 
 10. Copy binaries, man pages, and modules to the correct locations.
 	# make setup

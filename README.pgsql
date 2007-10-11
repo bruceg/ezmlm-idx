@@ -9,7 +9,7 @@ and for PostgreSQL modifications:
 (c) 1999, Magnus Stålåker, stalaker@umc.se
 
 Rewritten as a plugin by:
-(c) 2006 Bruce Guenter, bruce@untroubled.org
+(c) 2007 Bruce Guenter, bruce@untroubled.org
 
 For information on PostgreSQL, see http://www.postgresql.org/
 
@@ -65,10 +65,6 @@ list_digest_mlog	message logging table for digest list
 SUBLIST SPLIT TABLES (not supported by this version of the interface)
 list_name	sublist split table for main list
 list_digest_name	sublist split table for digest list.
-
-
-ezmlm-mktab(1) is a script that outputs the table definintions. Look at
-the output for a detailed field description.
 
 The address tables contain (address,domain,hash,h,num). For normal
 lists only the address field is used. For main->sublist clusters, the other
