@@ -39,6 +39,9 @@ void main(int argc,char **argv)
 
   if ((dir = argv[optind++]) != 0)
     startup(dir);
+  else if (flagsubdb == 0)
+    strerr_die2x(100,FATAL,"must specify either -S or dir");
+
   initsub(flagsubdb);
   if ((r = rmtab()) != 0)
     strerr_die3x(100,FATAL,"could not remove tables: ",r);
