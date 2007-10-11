@@ -1,0 +1,57 @@
+.\" $Id$
+.TH ezmlm-rmtab 1
+.SH NAME
+ezmlm-rmtab \- remove the subscriber tables for a mailing list
+.SH SYNOPSIS
+.B ezmlm-rmtab
+[
+.B \-mMvV
+] [
+.B \-S subdb
+] [
+.I dir
+]
+.SH DESCRIPTION
+.B ezmlm-rmtab
+removes all the subscriber tables associated with the mailing list
+stored in
+.I dir
+or in the database specified by the
+.B \-S subdb
+option.
+.SH OPTIONS
+.TP
+.B \-m
+(Default.)
+Use the normal subscriber database for the list.
+.TP
+.B \-M
+Use the standard subscriber database even if the list was configured to
+use another plugin.
+This is equivalent to specifying
+.B \-S
+.IR std .
+.TP
+.B \-S\fI subdb
+Connect to the given subscriber database plugin.  This option can be
+used to manipulate alternate subscriber databases.  The contents of the
+parameter should be the same as would be given to
+.B ezmlm-make -6\fR.
+This parameter overrides the subscriber database configuration in
+.IR dir .
+.TP
+.B \-v
+Display
+.B ezmlm-rmtab(1)
+version information.
+.TP
+.B \-V
+Display
+.B ezmlm-rmtab(1)
+version information.
+.SH "SEE ALSO"
+ezmlm-list(1),
+ezmlm-make(1),
+ezmlm-sub(1),
+ezmlm-unsub(1),
+ezmlm(5)

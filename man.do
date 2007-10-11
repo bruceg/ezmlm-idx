@@ -23,6 +23,7 @@ ezmlm-receipt.0 \
 ezmlm-reject.0 \
 ezmlm-request.0 \
 ezmlm-return.0 \
+ezmlm-rmtab.0 \
 ezmlm-send.0 \
 ezmlm-split.0 \
 ezmlm-store.0 \
