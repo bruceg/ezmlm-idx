@@ -43,6 +43,7 @@ env.lo
 envread.lo
 error.lo
 error_str.lo
+errtxt.lo
 fd_copy.lo
 fd_move.lo
 fmt_str.lo
