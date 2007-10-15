@@ -69,6 +69,7 @@ static void _closesub(struct subdbinfo *info)
 /* open connection to the SQL server, if it isn't already open. */
 static const char *_opensub(struct subdbinfo *info)
 {
+  errtxt_init();
   if (!(MYSQL*)info->conn) {
     if (!(info->conn = mysql_init((MYSQL *) 0)))
 	 return ERR_NOMEM;					/* init */

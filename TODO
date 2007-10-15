@@ -1,7 +1,4 @@
-*Problem with dynamic error texts: sub modules contain a private copy of
-the library, and so won't have their errmap initialized.  May require
-dynamic libezmlm.
-*ezmlm-make needs to call errtxt_init at some point.
+Fix errtxt to not require redundant initialization in sub modules.
 
 Put a real address into To: header in ezmlm-store (and others?)
 add ezmlm-receipt to build system (needs to be fixed to compile)
