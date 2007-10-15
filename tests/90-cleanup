@@ -4,6 +4,7 @@
 # remove test files #
 #####################
 
+${ECHO} Cleaning up...
 
 # cleanup the mysql sub tables so we can repeat if necessary
 # the Log test will pass due to old data once we access the mysql log,
