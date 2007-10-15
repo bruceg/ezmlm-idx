@@ -1,152 +1,155 @@
 #ifndef ERRTXT_H
 #define ERRTXT_H
 
-extern const char *ERR_NOMEM;
-extern const char *ERR_NOCMD;
-extern const char *ERR_CLOSE;
-extern const char *ERR_WRITE;
-extern const char *ERR_READ;
-extern const char *ERR_READ_KEY;
-extern const char *ERR_FLUSH;
-extern const char *ERR_SEEK;
-extern const char *ERR_SYNC;
-extern const char *ERR_CHMOD;
-extern const char *ERR_STAT;
-extern const char *ERR_DELETE;
-extern const char *ERR_READ_INPUT;
-extern const char *ERR_SEEK_INPUT;
-extern const char *ERR_CREATE;
-extern const char *ERR_MOVE;
-extern const char *ERR_OPEN;
-extern const char *ERR_OBTAIN;
-extern const char *ERR_OPEN_LOCK;
-extern const char *ERR_OBTAIN_LOCK;
-extern const char *ERR_NOLOCAL;
-extern const char *ERR_NODEFAULT;
-extern const char *ERR_NODTLINE;
-extern const char *ERR_NOSENDER;
-extern const char *ERR_NOHOST;
-extern const char *ERR_NOEXIST;
-extern const char *ERR_NOEXIST_KEY;
-extern const char *ERR_SWITCH;
-extern const char *ERR_BOUNCE;
-extern const char *ERR_ANONYMOUS;
-extern const char *ERR_NOT_PUBLIC;
-extern const char *ERR_NOT_ARCHIVED;
-extern const char *ERR_NOT_INDEXED;
-extern const char *ERR_NOT_AVAILABLE;
-extern const char *ERR_NOT_ALLOWED;
-extern const char *ERR_BAD_ADDRESS;
-extern const char *ERR_BAD_RETURN_ADDRESS;
-extern const char *ERR_BAD_REQUEST;
-extern const char *ERR_QMAIL_QUEUE;
-extern const char *ERR_TMP_QMAIL_QUEUE;
-extern const char *ERR_NOT_PARENT;
-extern const char *ERR_SUBLIST;
-extern const char *ERR_MAILING_LIST;
-extern const char *ERR_LOOPING;
-extern const char *ERR_SUBSCRIBER_CAN;
-extern const char *ERR_571;
-extern const char *ERR_EMPTY_DIGEST;
-extern const char *ERR_EMPTY_LIST;
-extern const char *ERR_NOINDEX;
-extern const char *ERR_BAD_INDEX;
-extern const char *ERR_BAD_DIGCODE;
-extern const char *ERR_UNEXPECTED;
-extern const char *ERR_BAD_ALL;
-extern const char *ERR_MIME_QUOTE;
-extern const char *ERR_SUBST_UNSAFE;
+extern void errtxt_init(void);
+extern const char *ERR(const char* name);
+
+#define ERR_NOMEM ERR("NOMEM")
+#define ERR_NOCMD ERR("NOCMD")
+#define ERR_CLOSE ERR("CLOSE")
+#define ERR_WRITE ERR("WRITE")
+#define ERR_READ ERR("READ")
+#define ERR_READ_KEY ERR("READ_KEY")
+#define ERR_FLUSH ERR("FLUSH")
+#define ERR_SEEK ERR("SEEK")
+#define ERR_SYNC ERR("SYNC")
+#define ERR_CHMOD ERR("CHMOD")
+#define ERR_STAT ERR("STAT")
+#define ERR_DELETE ERR("DELETE")
+#define ERR_READ_INPUT ERR("READ_INPUT")
+#define ERR_SEEK_INPUT ERR("SEEK_INPUT")
+#define ERR_CREATE ERR("CREATE")
+#define ERR_MOVE ERR("MOVE")
+#define ERR_OPEN ERR("OPEN")
+#define ERR_OBTAIN ERR("OBTAIN")
+#define ERR_OPEN_LOCK ERR("OPEN_LOCK")
+#define ERR_OBTAIN_LOCK ERR("OBTAIN_LOCK")
+#define ERR_NOLOCAL ERR("NOLOCAL")
+#define ERR_NODEFAULT ERR("NODEFAULT")
+#define ERR_NODTLINE ERR("NODTLINE")
+#define ERR_NOSENDER ERR("NOSENDER")
+#define ERR_NOHOST ERR("NOHOST")
+#define ERR_NOEXIST ERR("NOEXIST")
+#define ERR_NOEXIST_KEY ERR("NOEXIST_KEY")
+#define ERR_SWITCH ERR("SWITCH")
+#define ERR_BOUNCE ERR("BOUNCE")
+#define ERR_ANONYMOUS ERR("ANONYMOUS")
+#define ERR_NOT_PUBLIC ERR("NOT_PUBLIC")
+#define ERR_NOT_ARCHIVED ERR("NOT_ARCHIVED")
+#define ERR_NOT_INDEXED ERR("NOT_INDEXED")
+#define ERR_NOT_AVAILABLE ERR("NOT_AVAILABLE")
+#define ERR_NOT_ALLOWED ERR("NOT_ALLOWED")
+#define ERR_BAD_ADDRESS ERR("BAD_ADDRESS")
+#define ERR_BAD_RETURN_ADDRESS ERR("BAD_RETURN_ADDRESS")
+#define ERR_BAD_REQUEST ERR("BAD_REQUEST")
+#define ERR_QMAIL_QUEUE ERR("QMAIL_QUEUE")
+#define ERR_TMP_QMAIL_QUEUE ERR("TMP_QMAIL_QUEUE")
+#define ERR_NOT_PARENT ERR("NOT_PARENT")
+#define ERR_SUBLIST ERR("SUBLIST")
+#define ERR_MAILING_LIST ERR("MAILING_LIST")
+#define ERR_LOOPING ERR("LOOPING")
+#define ERR_SUBSCRIBER_CAN ERR("SUBSCRIBER_CAN")
+#define ERR_571 ERR("571")
+#define ERR_EMPTY_DIGEST ERR("EMPTY_DIGEST")
+#define ERR_EMPTY_LIST ERR("EMPTY_LIST")
+#define ERR_NOINDEX ERR("NOINDEX")
+#define ERR_BAD_INDEX ERR("BAD_INDEX")
+#define ERR_BAD_DIGCODE ERR("BAD_DIGCODE")
+#define ERR_UNEXPECTED ERR("UNEXPECTED")
+#define ERR_BAD_ALL ERR("BAD_ALL")
+#define ERR_MIME_QUOTE ERR("MIME_QUOTE")
+#define ERR_SUBST_UNSAFE ERR("SUBST_UNSAFE")
 
 /* ezmlm-request unique */
-extern const char *ERR_REQ_LISTNAME;
-extern const char *ERR_REQ_LOCAL;
+#define ERR_REQ_LISTNAME ERR("REQ_LISTNAME")
+#define ERR_REQ_LOCAL ERR("REQ_LOCAL")
 
 /* ezmlm-reject unique */
-extern const char *ERR_MAX_SIZE;
-extern const char *ERR_MIN_SIZE;
-extern const char *ERR_SIZE_CODE;
-extern const char *ERR_NO_ADDRESS;
-extern const char *ERR_NO_SUBJECT;
-extern const char *ERR_SUBCOMMAND;
-extern const char *ERR_BODYCOMMAND;
-extern const char *ERR_BAD_TYPE;
-extern const char *ERR_BAD_PART;
-extern const char *ERR_JUNK;
+#define ERR_MAX_SIZE ERR("MAX_SIZE")
+#define ERR_MIN_SIZE ERR("MIN_SIZE")
+#define ERR_SIZE_CODE ERR("SIZE_CODE")
+#define ERR_NO_ADDRESS ERR("NO_ADDRESS")
+#define ERR_NO_SUBJECT ERR("NO_SUBJECT")
+#define ERR_SUBCOMMAND ERR("SUBCOMMAND")
+#define ERR_BODYCOMMAND ERR("BODYCOMMAND")
+#define ERR_BAD_TYPE ERR("BAD_TYPE")
+#define ERR_BAD_PART ERR("BAD_PART")
+#define ERR_JUNK ERR("JUNK")
 
 /* ezmlm-manage unique */
-extern const char *ERR_SUB_NOP;
-extern const char *ERR_UNSUB_NOP;
-extern const char *ERR_BAD_NAME;
-extern const char *ERR_NO_MARK;
-extern const char *ERR_EDSIZE;
-extern const char *ERR_BAD_CHAR;
-extern const char *ERR_EXTRA_SUB;
-extern const char *ERR_EXTRA_UNSUB;
+#define ERR_SUB_NOP ERR("SUB_NOP")
+#define ERR_UNSUB_NOP ERR("UNSUB_NOP")
+#define ERR_BAD_NAME ERR("BAD_NAME")
+#define ERR_NO_MARK ERR("NO_MARK")
+#define ERR_EDSIZE ERR("EDSIZE")
+#define ERR_BAD_CHAR ERR("BAD_CHAR")
+#define ERR_EXTRA_SUB ERR("EXTRA_SUB")
+#define ERR_EXTRA_UNSUB ERR("EXTRA_UNSUB")
 
 
 /* ezmlm-moderation functions unique */
-extern const char *ERR_MOD_TIMEOUT;
-extern const char *ERR_MOD_ACCEPTED;
-extern const char *ERR_MOD_REJECTED;
-extern const char *ERR_MOD_COOKIE;
-extern const char *ERR_FORK;
-extern const char *ERR_EXECUTE;
-extern const char *ERR_CHILD_CRASHED;
-extern const char *ERR_CHILD_FATAL;
-extern const char *ERR_CHILD_TEMP;
-extern const char *ERR_CHILD_UNKNOWN;
-extern const char *ERR_UNIQUE;
-extern const char *ERR_NO_POST;
+#define ERR_MOD_TIMEOUT ERR("MOD_TIMEOUT")
+#define ERR_MOD_ACCEPTED ERR("MOD_ACCEPTED")
+#define ERR_MOD_REJECTED ERR("MOD_REJECTED")
+#define ERR_MOD_COOKIE ERR("MOD_COOKIE")
+#define ERR_FORK ERR("FORK")
+#define ERR_EXECUTE ERR("EXECUTE")
+#define ERR_CHILD_CRASHED ERR("CHILD_CRASHED")
+#define ERR_CHILD_FATAL ERR("CHILD_FATAL")
+#define ERR_CHILD_TEMP ERR("CHILD_TEMP")
+#define ERR_CHILD_UNKNOWN ERR("CHILD_UNKNOWN")
+#define ERR_UNIQUE ERR("UNIQUE")
+#define ERR_NO_POST ERR("NO_POST")
 
 /* ezmlm-make unique */
-extern const char *ERR_VERSION;
-extern const char *ERR_ENDTAG;
-extern const char *ERR_LINKDIR;
-extern const char *ERR_FILENAME;
-extern const char *ERR_PERIOD;
-extern const char *ERR_SLASH;
-extern const char *ERR_NEWLINE;
-extern const char *ERR_QUOTE;
-extern const char *ERR_SYNTAX;
-extern const char *ERR_MKTAB;
+#define ERR_VERSION ERR("VERSION")
+#define ERR_ENDTAG ERR("ENDTAG")
+#define ERR_LINKDIR ERR("LINKDIR")
+#define ERR_FILENAME ERR("FILENAME")
+#define ERR_PERIOD ERR("PERIOD")
+#define ERR_SLASH ERR("SLASH")
+#define ERR_NEWLINE ERR("NEWLINE")
+#define ERR_QUOTE ERR("QUOTE")
+#define ERR_SYNTAX ERR("SYNTAX")
+#define ERR_MKTAB ERR("MKTAB")
 
 /* ezmlm-limit unique */
-extern const char *ERR_EXCESS_MOD;
-extern const char *ERR_EXCESS_DEFER;
+#define ERR_EXCESS_MOD ERR("EXCESS_MOD")
+#define ERR_EXCESS_DEFER ERR("EXCESS_DEFER")
 
 /* ezmlm-cron unique */
-extern const char *ERR_SAME_HOST;
-extern const char *ERR_DOW;
-extern const char *ERR_NOT_CLEAN;
-extern const char *ERR_SUID;
-extern const char *ERR_UID;
-extern const char *ERR_EUID;
-extern const char *ERR_BADUSER;
-extern const char *ERR_BADHOST;
-extern const char *ERR_BADLOCAL;
-extern const char *ERR_LISTNO;
-extern const char *ERR_NO_MATCH;
-extern const char *ERR_SETUID;
-extern const char *ERR_CFHOST;
-extern const char *ERR_EXCLUSIVE;
-extern const char *ERR_CRONTAB;
+#define ERR_SAME_HOST ERR("SAME_HOST")
+#define ERR_DOW ERR("DOW")
+#define ERR_NOT_CLEAN ERR("NOT_CLEAN")
+#define ERR_SUID ERR("SUID")
+#define ERR_UID ERR("UID")
+#define ERR_EUID ERR("EUID")
+#define ERR_BADUSER ERR("BADUSER")
+#define ERR_BADHOST ERR("BADHOST")
+#define ERR_BADLOCAL ERR("BADLOCAL")
+#define ERR_LISTNO ERR("LISTNO")
+#define ERR_NO_MATCH ERR("NO_MATCH")
+#define ERR_SETUID ERR("SETUID")
+#define ERR_CFHOST ERR("CFHOST")
+#define ERR_EXCLUSIVE ERR("EXCLUSIVE")
+#define ERR_CRONTAB ERR("CRONTAB")
 
 /* ezmlm-gate */
-extern const char *ERR_REJECT;
+#define ERR_REJECT ERR("REJECT")
 
 /* issub/subscribe ... */
-extern const char *ERR_ADDR_AT;
-extern const char *ERR_ADDR_LONG;
-extern const char *ERR_ADDR_NL;
+#define ERR_ADDR_AT ERR("ADDR_AT")
+#define ERR_ADDR_LONG ERR("ADDR_LONG")
+#define ERR_ADDR_NL ERR("ADDR_NL")
 
 /* sql */
-extern const char *ERR_COOKIE;
-extern const char *ERR_NOT_ACTIVE;
-extern const char *ERR_PARSE;
-extern const char *ERR_DONE;
-extern const char *ERR_MAX_BOUNCE;
-extern const char *ERR_NO_PLUGIN;
-extern const char *ERR_NO_ABSOLUTE;
-extern const char *ERR_NO_LEVELS;
+#define ERR_COOKIE ERR("COOKIE")
+#define ERR_NOT_ACTIVE ERR("NOT_ACTIVE")
+#define ERR_PARSE ERR("PARSE")
+#define ERR_DONE ERR("DONE")
+#define ERR_MAX_BOUNCE ERR("MAX_BOUNCE")
+#define ERR_NO_PLUGIN ERR("NO_PLUGIN")
+#define ERR_NO_ABSOLUTE ERR("NO_ABSOLUTE")
+#define ERR_NO_LEVELS ERR("NO_LEVELS")
 
 #endif
