@@ -2,7 +2,7 @@
 #include "byte.h"
 #include "config.h"
 #include "die.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "getconf.h"
 #include "idx.h"
 #include "slurp.h"

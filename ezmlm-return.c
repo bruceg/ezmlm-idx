@@ -25,7 +25,7 @@
 #include "cookie.h"
 #include "sgetopt.h"
 #include "subdb.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 #include "config.h"
 #include "idx.h"

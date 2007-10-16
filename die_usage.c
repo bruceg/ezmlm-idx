@@ -1,5 +1,5 @@
 #include "strerr.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 
 void die_usage(void)

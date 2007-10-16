@@ -15,7 +15,7 @@
 #include "getconf.h"
 #include "auto_bin.h"
 #include "sgetopt.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 #include "idx.h"
 #include "subdb.h"

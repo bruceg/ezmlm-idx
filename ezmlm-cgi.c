@@ -26,7 +26,7 @@
 #include "constmap.h"
 #include "byte.h"
 #include "subdb.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "makehash.h"
 #include "mime.h"
 #include "wrap.h"

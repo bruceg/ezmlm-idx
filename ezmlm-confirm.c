@@ -24,7 +24,7 @@
 #include "fmt.h"
 #include "sgetopt.h"
 #include "cookie.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "copy.h"
 #include "open.h"
 #include "lock.h"

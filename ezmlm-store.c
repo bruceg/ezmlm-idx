@@ -22,7 +22,7 @@
 #include "now.h"
 #include "cookie.h"
 #include "sgetopt.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "byte.h"
 #include "case.h"
 #include "quote.h"

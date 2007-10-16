@@ -3,7 +3,7 @@
 #include "case.h"
 #include "byte.h"
 #include "mime.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 #include "idx.h"
 

@@ -1,4 +1,4 @@
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "mime.h"
 #include "stralloc.h"
 #include "strerr.h"

@@ -14,7 +14,7 @@
 #include "error.h"
 #include "scan.h"
 #include "open.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 #include "config.h"
 #include "idx.h"

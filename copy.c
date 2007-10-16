@@ -22,7 +22,7 @@
 #include "case.h"
 #include "readwrite.h"
 #include "qmail.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "error.h"
 #include "quote.h"
 #include "copy.h"

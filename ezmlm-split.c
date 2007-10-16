@@ -23,7 +23,7 @@
 #include "uint32.h"
 #include "subhash.h"
 #include "fmt.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 #include "config.h"
 #include "idx.h"

@@ -43,7 +43,6 @@ env.lo
 envread.lo
 error.lo
 error_str.lo
-errtxt.lo
 fd_copy.lo
 fd_move.lo
 fmt_str.lo
@@ -69,6 +68,7 @@ lockfile.lo
 log.lo
 makehash.lo
 makepath.lo
+msgtxt.lo
 now.lo
 open_append.lo
 open_read.lo

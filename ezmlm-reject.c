@@ -15,7 +15,7 @@
 #include "seek.h"
 #include "scan.h"
 #include "env.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 #include "idx.h"
 #include "config.h"

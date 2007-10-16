@@ -2,7 +2,7 @@
 #include "uint32.h"
 #include "mime.h"
 #include "strerr.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 #include "idx.h"
 

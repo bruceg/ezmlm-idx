@@ -1,5 +1,5 @@
 #include "lock.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "strerr.h"
 #include "die.h"
 #include "idx.h"

@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "strerr.h"
 #include "wrap.h"
 #include "die.h"

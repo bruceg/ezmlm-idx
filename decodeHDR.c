@@ -5,7 +5,7 @@
 #include "byte.h"
 #include "uint32.h"
 #include "mime.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 #include "idx.h"
 

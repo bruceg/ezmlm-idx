@@ -4,7 +4,7 @@
 #include "cookie.h"
 #include "die.h"
 #include "env.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "fmt.h"
 #include "scan.h"
 #include "slurp.h"

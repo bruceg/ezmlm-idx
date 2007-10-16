@@ -3,7 +3,7 @@
 #include "env.h"
 #include "subdb.h"
 #include "sgetopt.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 #include "idx.h"
 #include "config.h"

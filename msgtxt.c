@@ -1,4 +1,4 @@
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "constmap.h"
 #include "die.h"
 #include "str.h"

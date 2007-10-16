@@ -1,7 +1,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "error.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "strerr.h"
 #include "wrap.h"
 #include "die.h"

@@ -11,7 +11,7 @@
 #include "datetime.h"
 #include "die.h"
 #include "error.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "fmt.h"
 #include "getln.h"
 #include "idx.h"

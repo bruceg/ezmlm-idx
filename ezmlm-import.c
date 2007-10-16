@@ -10,7 +10,7 @@
 #include "substdio.h"
 #include "lock.h"
 #include "open.h"
-#include "errtxt.h"
+#include "msgtxt.h"
 #include "die.h"
 #include "fmt.h"
 #include "getln.h"
