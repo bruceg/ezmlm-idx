@@ -196,7 +196,6 @@ void main(int argc,char **argv)
   dir = argv[optind];
   if (dir) {
     startup(dir);
-    load_config();
     flagparsemime = 1;		/* only if dir do we have mimeremove/reject */
     if (getconf_line(&line,"msgsize",0)) {
       if (!stralloc_0(&line)) die_nomem();

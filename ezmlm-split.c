@@ -179,7 +179,6 @@ void main(int argc,char **argv)
   }
 
   startup(dir = argv[optind++]);
-  load_config();
   if (!(split = argv[optind]))
     split = "split";
 

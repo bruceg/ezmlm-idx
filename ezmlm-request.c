@@ -318,7 +318,6 @@ void main(int argc,char **argv)
     else
       _exit(0);					/* not for us */
   }
-  load_config();
 
   if (!stralloc_copy(&listname,&outlocal)) die_nomem();
   if (!stralloc_copy(&hostname,&outhost)) die_nomem();

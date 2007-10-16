@@ -238,7 +238,6 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind]);
-  load_config();
 
   getconf_line(&modtime,"modtime",0);
   if (!stralloc_0(&modtime)) die_nomem();

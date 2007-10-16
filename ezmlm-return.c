@@ -284,7 +284,6 @@ void main(int argc,char **argv)
   if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
 
   startup(dir = argv[optind]);
-  load_config();
   initsub(0);
 
     if (str_start(action,"receipt-")) {

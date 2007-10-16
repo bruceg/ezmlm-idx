@@ -15,21 +15,24 @@ static const char basetxts[] =
 
 static stralloc msgtxt = {0};
 static struct constmap msgmap = {0};
+static int initialized = 0;
 
 void msgtxt_init(void)
 {
-  if (msgmap.num > 0)
+  if (initialized)
     return;
-  if (!constmap_init(&msgmap,basetxts,sizeof basetxts,1))
-    strerr_die2x(100,FATAL,"out of memory");
   getconf(&msgtxt,"msgtxt",1);
   constmap_free(&msgmap);
   if (!constmap_init(&msgmap,msgtxt.s,msgtxt.len,1))
     strerr_die2x(100,FATAL,"out of memory");
+  initialized = 1;
 }
 
 const char *MSG(const char *name)
 {
   const char *c;
+  /* Handle messages before config is loaded */
+  if (msgmap.num == 0)
+    constmap_init(&msgmap,basetxts,sizeof basetxts,1);
   return ((c = constmap(&msgmap,name,str_len(name))) != 0) ? c : name;
 }

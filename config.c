@@ -21,16 +21,6 @@ stralloc outlocal = {0};
 char flagcd = '\0';		/* No transfer encoding by default */
 int flags[NO_FLAGS] = {0};
 
-void startup(const char *dir)
-{
-  if (dir == 0)
-    die_usage();
-
-  msgtxt_init();
-  listdir = dir;
-  wrap_chdir(dir);
-}
-
 static void load_flags(void)
 {
   unsigned int i;
@@ -51,7 +41,7 @@ static void load_flags(void)
   }
 }
 
-void load_config(void)
+static void load_config(void)
 {
   load_flags();
 
@@ -92,4 +82,15 @@ void load_config(void)
 
   // FIXME: need to handle escapes in mailinglist
   getconf_line(&mailinglist,"mailinglist",1);
+}
+
+void startup(const char *dir)
+{
+  if (dir == 0)
+    die_usage();
+
+  listdir = dir;
+  wrap_chdir(dir);
+  load_config();
+  msgtxt_init();
 }

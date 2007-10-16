@@ -169,7 +169,6 @@ void main(int argc,char **argv)
   }
 
   startup(dir = argv[optind]);
-  load_config();
   initsub(0);
 
   if (flagconfirm == -1)

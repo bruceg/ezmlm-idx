@@ -790,7 +790,6 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind++]);
-  load_config();
   initsub(0);
   getconf_ulong(&copylines,"copylines",0);
 

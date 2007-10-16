@@ -192,7 +192,6 @@ int main(int argc,char **argv)
       default: die_usage();
   }
   startup(dir = argv[optind]);
-  load_config();
 
   (void) umask(022);
   sig_pipeignore();
