@@ -31,56 +31,56 @@ const char FATAL[] = "ezmlm-cron: fatal: ";
 const char USAGE[] =
 "ezmlm-cron: usage: ezmlm-cron [-cCdDlLvV] [-w dow] [-t hh:mm] [-i hrs] listadr code";
 
-unsigned long deltah = 24L;	/* default interval 24h */
-unsigned long hh = 4L;		/* default time 04:12 */
-unsigned long mm = 12L;
-const char *dow = "*";		/* day of week */
-const char *qmail_inject = "/bin/qmail-inject ";
-char strnum[FMT_ULONG];
-unsigned long uid,euid;
+static unsigned long deltah = 24L;	/* default interval 24h */
+static unsigned long hh = 4L;		/* default time 04:12 */
+static unsigned long mm = 12L;
+static const char *dow = "*";		/* day of week */
+static const char *qmail_inject = "/bin/qmail-inject ";
+static char strnum[FMT_ULONG];
+static unsigned long uid,euid;
 
-stralloc line = {0};
-stralloc rp = {0};
-stralloc addr = {0};
-stralloc user = {0};
-stralloc euser = {0};
-stralloc dir = {0};
-stralloc listaddr = {0};
+static stralloc line = {0};
+static stralloc rp = {0};
+static stralloc addr = {0};
+static stralloc user = {0};
+static stralloc euser = {0};
+static stralloc dir = {0};
+static stralloc listaddr = {0};
 
-struct passwd *ppasswd;
+static struct passwd *ppasswd;
 
-int opt,match;
-int hostmatch;
-int localmatch;
-unsigned long dh,t;
-int founduser = 0;
-int listmatch = 0;
-int flagconfig = 0;
-int flagdelete = 0;
-int flaglist = 0;
-int flagdigit = 0;
-int flagours;
-int foundlocal;
-int foundmatch = 0;
-unsigned int nolists = 0;
-unsigned long maxlists;
-unsigned int pos,pos2,poslocal,len;
-unsigned int lenhost,lenlocal;
-unsigned int part0start,part0len;
-int fdlock,fdin,fdout;
+static int opt,match;
+static int hostmatch;
+static int localmatch;
+static unsigned long dh,t;
+static int founduser = 0;
+static int listmatch = 0;
+static int flagconfig = 0;
+static int flagdelete = 0;
+static int flaglist = 0;
+static int flagdigit = 0;
+static int flagours;
+static int foundlocal;
+static int foundmatch = 0;
+static unsigned int nolists = 0;
+static unsigned long maxlists;
+static unsigned int pos,pos2,poslocal,len;
+static unsigned int lenhost,lenlocal;
+static unsigned int part0start,part0len;
+static int fdlock,fdin,fdout;
 
-char *local = (char *) 0;	/* list = local@host */
-const char *host = (char *) 0;
-char *code = (char *) 0;	/* digest code */
-const char *cp;
+static char *local = (char *) 0;	/* list = local@host */
+static const char *host = (char *) 0;
+static char *code = (char *) 0;	/* digest code */
+static const char *cp;
 
-void die_syntax(void)
+static void die_syntax(void)
 {
   if (!stralloc_0(&line)) die_nomem();
   strerr_die5x(100,FATAL,TXT_EZCRONRC," ",ERR_SYNTAX,line.s);
 }
 
-void die_argument(void)
+static void die_argument(void)
 {
   strerr_die2x(100,FATAL,ERR_NOT_CLEAN);
 }
