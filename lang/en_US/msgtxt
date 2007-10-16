@@ -132,7 +132,7 @@ ERR_VERSION:ezmlmrc version mismatch. Behavior may not match docs.
 ERR_WRITE:unable to write 
 LISTMEMBERS:\nSubscribers to this list are:\n\n
 NOINDEX:aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->\n
-SUB_CONFIRM_POST:Confirm post to 
+SUB_CONFIRM_POST:Confirm post to <#L#>@<#H#>
 SUB_EDIT_FOR: for 
 SUB_EDIT_LIST:List of editable text files for <#L#>@<#H#>
 SUB_EDIT_RESPONSE:EDIT 
@@ -144,7 +144,7 @@ SUB_INFO:Information for <#L#>@<#H#>
 SUB_LIST:Subscriber list for <#L#>@<#H#>
 SUB_LOG:Subscriber log for <#L#>@<#H#>
 SUB_LOG_SEARCH:Log search results for <#L#>@<#H#>
-SUB_MODERATE:MODERATE for 
+SUB_MODERATE:MODERATE for <#L#>@<#H#>
 SUB_MOD_HELP:Moderator help for <#L#>@<#H#>
 SUB_MOD_SUBSCRIBE:CONFIRM subscribe to <#L#>@<#H#>
 SUB_MOD_UNSUBSCRIBE:CONFIRM unsubscribe from <#L#>@<#H#>

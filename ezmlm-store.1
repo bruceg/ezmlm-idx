@@ -41,15 +41,6 @@ For user convenience, the
 address is given in
 the ``Reply-To:'' header.
 
-If the file
-.I dir\fb/confirmpost
-is not empty, the subject of all message confirmation request is
-the first line of that file, followed by
-.IR listname@host .
-Otherwise the subject of all message confirmation requests is
-.B Confirm post to
-.IR listname@host .
-
 Once the confirmation request has been successfully sent,
 .B ezmlm-store
 sets the owner-execute bit of the message in
@@ -112,8 +103,12 @@ the sender to the ``allow'' database. This allows the moderator to both
 approve the post and add the sender to the list of accepted posters by
 replying to ``all''.
 
-The (default) subject of all message moderation requests is
-.B MODERATE for\fI listname@host.
+The default subject of all message moderation requests is
+.B MODERATE for
+.IR listname@host .
+The default subject of all message confirmation requests is
+.B Confirm post to
+.IR listname@host .
 
 Once the request has been successfully sent to the moderators, 
 .B ezmlm-store

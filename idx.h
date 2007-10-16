@@ -94,12 +94,6 @@
 /* should start with 20 'a' [in place of hash] */
 #define TXT_NOINDEX MSG("NOINDEX")
 
-/* Subject: MODERATE for local@host */
-#define TXT_MODERATE MSG("SUB_MODERATE")
-
-/* Subject: Confirm post to local@host */
-#define TXT_CONFIRM_POST MSG("SUB_CONFIRM_POST")
-
 /* Subject: majordomo results\n\n [where "majordomo" is outlocal] */
 #define TXT_RESULTS MSG("SUB_RESULTS")
 

@@ -73,9 +73,7 @@ stralloc accept = {0};
 stralloc action = {0};
 stralloc reject = {0};
 stralloc quoted = {0};
-stralloc subject = {0};
 stralloc moderators = {0};
-stralloc confirmpost = {0};
 stralloc sendopt = {0};
 
 struct qmail qq;
@@ -172,9 +170,7 @@ void main(int argc,char **argv)
   initsub(0);
 
   if (flagconfirm == -1)
-    flagconfirm = getconf_line(&confirmpost,"confirmpost",0);
-  else
-    getconf_line(&confirmpost,"confirmpost",0);
+    flagconfirm = getconf_line(&line,"confirmpost",0);
 
   flagmodpost = getconf_line(&moderators,"modpost",0);
   flagremote = getconf_line(&line,"remote",0);
@@ -311,31 +307,14 @@ void main(int argc,char **argv)
   }
   qmail_puts(&qq,">\n");
   /* FIXME: Drop the custom subject hack and use hdr_listsubject1 */
-  if (!stralloc_copys(&subject,"Subject: ")) die_nomem();
-  if (flagconfirm) {
-    if (confirmpost.len) {
-      if (!stralloc_cat(&subject,&confirmpost)) die_nomem();
-      if (!stralloc_cats(&subject," ")) die_nomem();
-    } else {
-      if (!stralloc_cats(&subject,TXT_CONFIRM_POST)) die_nomem();
-    }
-  } else {
-    if (!stralloc_cats(&subject,TXT_MODERATE)) die_nomem();
-  }
-  if (!quote(&quoted,&outlocal)) die_nomem();
-  if (!stralloc_cat(&subject,&quoted)) die_nomem();
-  if (!stralloc_append(&subject,"@")) die_nomem();
-  if (!stralloc_cat(&subject,&outhost)) die_nomem();
+  hdr_subject(MSG(flagconfirm ? "SUB_CONFIRM_POST" : "SUB_MODERATE"));
   if (flagmime) {
     hdr_mime(CTYPE_MULTIPART);
-    qmail_put(&qq,subject.s,subject.len);
     hdr_boundary(0);
     hdr_ctype(CTYPE_TEXT);
     hdr_transferenc();
-  } else {
-    qmail_put(&qq,subject.s,subject.len);
+  } else
     qmail_puts(&qq,"\n\n");
-  }
   copy(&qq,flagconfirm?"text/post-confirm":"text/mod-request",flagcd);
   if (flagcd == 'B') {
     encodeB("",0,&line,2);
