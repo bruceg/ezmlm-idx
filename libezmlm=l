@@ -60,6 +60,7 @@ hdr_datemsgid.lo
 hdr_from.lo
 hdr_listsubject.lo
 hdr_mime.lo
+hdr_subject.lo
 hdr_transferenc.lo
 idxthread.lo
 lock_ex.lo
