@@ -1,11 +1,11 @@
 Fix errtxt to not require redundant initialization in sub modules.
+Use <#?#> in texts to eliminate the need for split lines
 
 Fix default language link, currently created in tools/test.
 Fix ezmlm-subunsub to not repeatedly reopen the database.
 Put a real address into To: header in ezmlm-store (and others?)
 add ezmlm-receipt to build system (needs to be fixed to compile)
 add support for simultaneous multiple languages
-Add support for run-time configurable error texts (errtxt.h).
 Add a wrapper for ezmlm-issubn to take the place of the
   @REJECTPOSTS@ and @ONLYSUBSCRIBERS@ bits in the ezmlmrc.template
 

@@ -27,6 +27,10 @@ subdb plugins.  A ezmlm-rmtab program is also added to remove subscriber
 tables, also with hooks in the subdb plugins.  The ezmlm-mktab-*
 programs have been obsoleted by these changes and have been removed.
 
+Also, all error messages, all subject lines, and a few other messages
+are now configured in a single file that is read at run time.
+FIXME add more details about msgtxt.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.
 

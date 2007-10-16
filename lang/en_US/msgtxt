@@ -1,3 +1,9 @@
+ADMINISTRIVIA:\nAdministrivia:\n\n
+BY: by: 
+DOTEZMLMRC:.ezmlmrc
+EDIT_END:%%% END OF TEXT FILE
+EDIT_START:%%% START OF TEXT FILE
+EDIT_SUCCESS:Success editing 
 ERR_571: (#5.7.1)
 ERR_ADDR_AT:address does not contain @
 ERR_ADDR_LONG:address is too long
@@ -124,3 +130,34 @@ ERR_UNIQUE:unable to create unique message file name
 ERR_UNSUB_NOP:target is not a subscriber
 ERR_VERSION:ezmlmrc version mismatch. Behavior may not match docs.
 ERR_WRITE:unable to write 
+LISTMEMBERS:\nSubscribers to this list are:\n\n
+NOINDEX:aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->\n
+SUB_CONFIRM_POST:Confirm post to 
+SUB_EDIT_FOR: for 
+SUB_EDIT_LIST:List of editable text files for 
+SUB_EDIT_RESPONSE:EDIT 
+SUB_FAQ_FOR:FAQ for 
+SUB_GET_MSG:Archive retrieval from 
+SUB_GOODBYE:GOODBYE from 
+SUB_HELP_FOR:Help for 
+SUB_INFO_FOR:Information for 
+SUB_LIST:Subscriber list for 
+SUB_LOG:Subscriber log for 
+SUB_LOG_SEARCH:Log search results for 
+SUB_MODCONFIRM:CONFIRM 
+SUB_MODERATE:MODERATE for 
+SUB_MOD_HELP:Moderator help for 
+SUB_NOP:Already subscribed to 
+SUB_RESULTS: results\n\n
+SUB_RETURNED_POST:Returned post for 
+SUB_STATUS:Subscription status on 
+SUB_SUBSCRIBE_TO:subscribe to 
+SUB_UNSUBSCRIBE_FROM:unsubscribe from 
+SUB_UNSUB_NOP:Not subscribed to 
+SUB_USRCONFIRM:confirm 
+SUB_WELCOME:WELCOME to 
+SUPPRESSED:\n<suppressed>\n\n
+TOP_LAST:):\n
+TOP_MESSAGES: (messages 
+TOP_THROUGH: through 
+TOP_TOPICS:Topics

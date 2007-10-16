@@ -74,83 +74,80 @@
 /* it needs to stay constant in order to comply with rfc1153 */
 
 /* Topics (messages nnn through mmm):\n */
-#define TXT_TOP_TOPICS "Topics"
-#define TXT_TOP_MESSAGES " (messages "
-#define TXT_TOP_THROUGH " through "
-#define TXT_TOP_LAST "):\n"
+#define TXT_TOP_TOPICS MSG("TOP_TOPICS")
+#define TXT_TOP_MESSAGES MSG("TOP_MESSAGES")
+#define TXT_TOP_THROUGH MSG("TOP_THROUGH")
+#define TXT_TOP_LAST MSG("TOP_LAST")
 
 /* in digest */
-#define TXT_ADMINISTRIVIA "\nAdministrivia:\n\n"
-#define TXT_SUPPRESSED "\n<suppressed>\n\n"
+#define TXT_ADMINISTRIVIA MSG("ADMINISTRIVIA")
+#define TXT_SUPPRESSED MSG("SUPPRESSED")
 
 /* for the message author line: 000 by */
 /* keep this short! */
-#define TXT_BY " by: "
+#define TXT_BY MSG("BY")
 
 /* Since this is now run-time configurable, we'll go with the lowest */
 /* common denominator (per rfc2046). -> ISO-8859-1 if you don't like that */
 #define TXT_DEF_CHARSET "us-ascii"
 
 /* should start with 20 'a' [in place of hash] */
-#define TXT_NOINDEX "aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->\n"
-
-/* When copy of the message is suppressed (is this really used?)*/
-#define TXT_SUPPRESSED "\n<suppressed>\n\n"
+#define TXT_NOINDEX MSG("NOINDEX")
 
 /* Subject: MODERATE for local@host */
-#define TXT_MODERATE "MODERATE for "
+#define TXT_MODERATE MSG("SUB_MODERATE")
 
 /* Subject: Confirm post to local@host */
-#define TXT_CONFIRM_POST "Confirm post to "
+#define TXT_CONFIRM_POST MSG("SUB_CONFIRM_POST")
 
 /* Subject: Returned post for local@host */
 /* (used both for rejected and timed-out posts) */
-#define TXT_RETURNED_POST "Returned post for "
+#define TXT_RETURNED_POST MSG("SUB_RETURNED_POST")
 
 /* Subject: CONFIRM subscribe to | unsubscribe from */
-#define TXT_USRCONFIRM "confirm "
-#define TXT_MODCONFIRM "CONFIRM "
-#define TXT_SUBSCRIBE_TO "subscribe to "
-#define TXT_UNSUBSCRIBE_FROM "unsubscribe from "
+#define TXT_USRCONFIRM MSG("SUB_USRCONFIRM")
+#define TXT_MODCONFIRM MSG("SUB_MODCONFIRM")
+#define TXT_SUBSCRIBE_TO MSG("SUB_SUBSCRIBE_TO")
+#define TXT_UNSUBSCRIBE_FROM MSG("SUB_UNSUBSCRIBE_FROM")
 
 /* Subject: WELCOME to */
-#define TXT_WELCOME "WELCOME to "
+#define TXT_WELCOME MSG("SUB_WELCOME")
 
 /* Subject: GOODBYE from */
-#define TXT_GOODBYE "GOODBYE from "
+#define TXT_GOODBYE MSG("SUB_GOODBYE")
 
 /* Subjects for various administrative responses in ezmlm-manage: */
-#define TXT_SUB_NOP "Already subscribed to "
-#define TXT_UNSUB_NOP "Not subscribed to "
-#define TXT_SUB_LIST "Subscriber list for "
-#define TXT_SUB_LOG "Subscriber log for "
-#define TXT_SUB_LOG_SEARCH "Log search results for "
-#define TXT_GET_MSG "Archive retrieval from "
-#define TXT_STATUS "Subscription status on "
-#define TXT_INFO_FOR "Information for "
-#define TXT_FAQ_FOR "FAQ for "
-#define TXT_MOD_HELP "Moderator help for "
-#define TXT_HELP_FOR "Help for "
+#define TXT_SUB_NOP MSG("SUB_NOP")
+#define TXT_UNSUB_NOP MSG("SUB_UNSUB_NOP")
+#define TXT_SUB_LIST MSG("SUB_LIST")
+#define TXT_SUB_LOG MSG("SUB_LOG")
+#define TXT_SUB_LOG_SEARCH MSG("SUB_LOG_SEARCH")
+#define TXT_GET_MSG MSG("SUB_GET_MSG")
+#define TXT_STATUS MSG("SUB_STATUS")
+#define TXT_INFO_FOR MSG("SUB_INFO_FOR")
+#define TXT_FAQ_FOR MSG("SUB_FAQ_FOR")
+#define TXT_MOD_HELP MSG("SUB_MOD_HELP")
+#define TXT_HELP_FOR MSG("SUB_HELP_FOR")
 
 /* Subject: majordomo results\n\n [where "majordomo" is outlocal] */
-#define TXT_RESULTS " results\n\n"
+#define TXT_RESULTS MSG("SUB_RESULTS")
 
 /* Subject: Edit file xxx for list@host */
-#define TXT_EDIT_RESPONSE "EDIT "
-#define TXT_EDIT_FOR " for "
+#define TXT_EDIT_RESPONSE MSG("SUB_EDIT_RESPONSE")
+#define TXT_EDIT_FOR MSG("SUB_EDIT_FOR")
 
 /* Subject: Editable text files for list@host */
-#define TXT_EDIT_LIST "List of editable text files for "
+#define TXT_EDIT_LIST MSG("SUB_EDIT_LIST")
 
 /* markers for ezmlm-manage text file edit */
 /* MUST start with '%' */
-#define TXT_EDIT_START "%%% START OF TEXT FILE"
-#define TXT_EDIT_END "%%% END OF TEXT FILE"
+#define TXT_EDIT_START MSG("EDIT_START")
+#define TXT_EDIT_END MSG("EDIT_END")
 
-#define TXT_EDIT_SUCCESS "Success editing "
+#define TXT_EDIT_SUCCESS MSG("EDIT_SUCCESS")
 
 /* Text for '-list' command */
-#define TXT_LISTMEMBERS "\nSubscribers to this list are:\n\n"
+#define TXT_LISTMEMBERS MSG("LISTMEMBERS")
 
 /* Output formats - letter used to override default */
 #define FORMATS "mrvnx"
