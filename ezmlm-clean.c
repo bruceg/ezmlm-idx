@@ -116,7 +116,7 @@ void sendnotice(const char *d)
 	hdr_add2("List-ID: ",listid.s,listid.len);
       hdr_datemsgid(when+msgnum++);
       hdr_from("-help");
-      hdr_listsubject1(TXT_RETURNED_POST);
+      hdr_subject(MSG("SUB_RETURNED_POST"));
       hdr_add2s("To: ",to.s);
       if (flagmime) {
 	hdr_mime(CTYPE_MULTIPART);

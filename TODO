@@ -1,5 +1,7 @@
+Fix confirmpost subject in ezmlm-store.c
+Fix results subject in ezmlm-request.c
+Handle hdr_listsubject3 somehow with defineable parameters in MSG.
 Fix errtxt to not require redundant initialization in sub modules.
-Use <#?#> in texts to eliminate the need for split lines
 
 Fix default language link, currently created in tools/test.
 Fix ezmlm-subunsub to not repeatedly reopen the database.

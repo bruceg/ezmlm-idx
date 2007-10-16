@@ -437,7 +437,7 @@ int geton(const char *action)
 	    qmail_puts(&qq,"@");
 	    qmail_put(&qq,outhost.s,outhost.len);	/* safe */
 	    qmail_puts(&qq,">\n");
-	    hdr_listsubject1(TXT_WELCOME);
+	    hdr_subject(MSG("SUB_WELCOME"));
             hdr_ctboundary();
 	    if (!stralloc_copy(&confirm,&outlocal)) die_nomem();
 	    if (!stralloc_cats(&confirm,"-unsubscribe-")) die_nomem();
@@ -452,7 +452,7 @@ int geton(const char *action)
     default:
             if (str_start(action,ACTION_TC))
               strerr_die2x(0,INFO,ERR_SUB_NOP);
-	    hdr_listsubject1(TXT_SUB_NOP);
+	    hdr_subject(MSG("SUB_SUBSCRIBE_NOP"));
             hdr_ctboundary();
             copy(&qq,"text/top",flagcd);
             copy(&qq,"text/sub-nop",flagcd);
@@ -471,14 +471,14 @@ int getoff(const char *action)
 			(*action == ACTION_WC[0]) ? "-mod" : "-",-1))) {
 			/* no comment for unsubscribe */
     case 1:
-            hdr_listsubject1(TXT_GOODBYE);
+	    hdr_subject(MSG("SUB_GOODBYE"));
             qmail_puts(&qq,"\n");
             hdr_ctboundary();
             copy(&qq,"text/top",flagcd);
             copy(&qq,"text/unsub-ok",flagcd);
             break;
     default:
-	    hdr_listsubject1(TXT_UNSUB_NOP);
+	    hdr_subject(MSG("SUB_UNSUBSCRIBE_NOP"));
             hdr_ctboundary();
             copy(&qq,"text/top",flagcd);
             copy(&qq,"text/unsub-nop",flagcd);
@@ -515,15 +515,10 @@ void doconfirm(const char *act)
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"\n");
 
-  hdr_listsubject2((*act == ACTION_SC[0]
-		    || *act == ACTION_UC[0])
-		   ? TXT_USRCONFIRM
-		   : TXT_MODCONFIRM,
-		   (*act != ACTION_UC[0]
-		    && *act != ACTION_VC[0]
-		    && *act != ACTION_WC[0])
-		   ? TXT_SUBSCRIBE_TO
-		   : TXT_UNSUBSCRIBE_FROM);
+  hdr_subject(MSG((*act == ACTION_SC[0]) ? "SUB_USR_SUBSCRIBE"
+		  : (*act == ACTION_UC[0]) ? "SUB_USR_UNSUBSCRIBE"
+		  : (*act == ACTION_VC[0]) ? "SUB_MOD_SUBSCRIBE"
+		  : /*(*act == ACTION_WC[0]) ?*/ "SUB_MOD_UNSUBSCRIBE"));
   hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 }
@@ -900,7 +895,7 @@ int main(int argc,char **argv)
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
     if (!ismod)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
-    hdr_listsubject1(TXT_SUB_LIST);
+    hdr_subject(MSG("SUB_LIST"));
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 
@@ -923,7 +918,7 @@ int main(int argc,char **argv)
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
     if (!ismod)
       strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
-    hdr_listsubject1((*action == 0) ? TXT_SUB_LOG : TXT_SUB_LOG_SEARCH);
+    hdr_subject(MSG((*action == 0) ? "SUB_LOG" : "SUB_LOG_SEARCH"));
     hdr_ctboundary();
     searchlog(workdir,action,code_subto);
     copybottom();
@@ -997,7 +992,7 @@ int main(int argc,char **argv)
       (void) code_qput("\n",1);
 
     } else {	/* -edit only, so output list of editable files */
-      hdr_listsubject1(TXT_EDIT_LIST);
+      hdr_subject(MSG("SUB_EDIT_LIST"));
       hdr_ctboundary();
       copy(&qq,"text/top",flagcd);
       copy(&qq,"text/edit-list",flagcd);
@@ -1144,7 +1139,7 @@ int main(int argc,char **argv)
 
     if (!flagget)
       strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
-    hdr_listsubject1(TXT_GET_MSG);
+    hdr_subject(MSG("SUB_GET_MSG"));
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 
@@ -1191,7 +1186,7 @@ int main(int argc,char **argv)
 
   } else if (case_starts(action,ACTION_QUERY) ||
 		case_starts(action,ALT_QUERY)) {
-    hdr_listsubject1(TXT_STATUS);
+    hdr_subject(MSG("SUB_STATUS"));
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     if (issub(workdir,target.s,0))
@@ -1203,7 +1198,7 @@ int main(int argc,char **argv)
 
   } else if (case_starts(action,ACTION_INFO) ||
 		case_starts(action,ALT_INFO)) {
-    hdr_listsubject1(TXT_INFO_FOR);
+    hdr_subject(MSG("SUB_INFO"));
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/info",flagcd);
@@ -1212,7 +1207,7 @@ int main(int argc,char **argv)
 
   } else if (case_starts(action,ACTION_FAQ) ||
 		case_starts(action,ALT_FAQ)) {
-    hdr_listsubject1(TXT_FAQ_FOR);
+    hdr_subject(MSG("SUB_FAQ"));
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/faq",flagcd);
@@ -1220,7 +1215,7 @@ int main(int argc,char **argv)
     qmail_to(&qq,target.s);
 
   } else if (ismod && (act == AC_HELP)) {
-    hdr_listsubject1(TXT_MOD_HELP);
+    hdr_subject(MSG("SUB_MOD_HELP"));
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/mod-help",flagcd);
@@ -1230,7 +1225,7 @@ int main(int argc,char **argv)
 
   } else {
     act = AC_HELP;
-    hdr_listsubject1(TXT_HELP_FOR);
+    hdr_subject(MSG("SUB_HELP"));
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/help",flagcd);

@@ -131,7 +131,7 @@ void doit(int flagw)
   hdr_add2("To: ",quoted.s,quoted.len);
   /* to accomodate transfer-encoding */
   hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
-  hdr_listsubject1(flagw ? "probe from " : "warning from ");
+  hdr_subject(MSG(flagw ? "SUB_PROBE" : "SUB_WARNING"));
 
   if (flagcd) {			/* first part for QP/base64 multipart msg */
     hdr_boundary(0);

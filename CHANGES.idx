@@ -28,7 +28,9 @@ tables, also with hooks in the subdb plugins.  The ezmlm-mktab-*
 programs have been obsoleted by these changes and have been removed.
 
 Also, all error messages, all subject lines, and a few other messages
-are now configured in a single file that is read at run time.
+are now configured in a single file that is read at run time.  Messages
+in this text file will undergo header-style substitution before they are
+output.
 FIXME add more details about msgtxt.
 
 Note: The subdb API was modified in this version.  You will need to

@@ -281,7 +281,7 @@ void main(int argc,char **argv)
     if (replyto)
       hdr_add2s("Reply-To: ",replyto);
     hdr_add2s("To: ",to.s);
-    hdr_listsubject1(TXT_RETURNED_POST);
+    hdr_subject(MSG("SUB_RETURNED_POST"));
 
     if (flagmime) {
       hdr_mime(CTYPE_MULTIPART);
