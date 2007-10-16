@@ -55,7 +55,7 @@ void msgtxt_init(void)
 {
   if (initialized)
     return;
-  readit(&msgtxt,"msgtxt");
+  readit(&msgtxt,"text/messages");
   constmap_free(&msgmap);
   if (!constmap_init(&msgmap,msgtxt.s,msgtxt.len,1))
     die_nomem();

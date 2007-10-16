@@ -31,6 +31,7 @@ get_bad             in place of messages not found in the archive.
 help                general help (between 'top' and 'bottom').
 info                list info. First line should be meaningful on its own.
 <=mn=>
+messages            list of subject lines and internal error messages.
 mod_help            specific help for list moderators.
 mod_reject          to sender of rejected post.
 mod_request         to message moderators together with post.

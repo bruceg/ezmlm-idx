@@ -28,16 +28,17 @@ tables, also with hooks in the subdb plugins.  The ezmlm-mktab-*
 programs have been obsoleted by these changes and have been removed.
 
 Also, all error messages, all subject lines, and a few other messages
-are now configured in a single file that is read at run time.  Messages
-in this text file will undergo header-style substitution before they are
-output.
-FIXME add more details about msgtxt.
+are now configured in a single file named "messages" (in the "text"
+subdirectory) that is read at run time.  Messages in this text file will
+undergo header-style substitution before they are output.
+
+FIXME add more details
 
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 changes also replace the confirmpost subject line hack in ezmlm-store
-with a subject in the msgtxt file.  The contents of DIR/confirmpost are
-now ignored.
+with a subject in the messages file.  The contents of DIR/confirmpost
+are now ignored.
 
 ezmlm-idx-6.0.1, 2007-10-06
 ===========================
