@@ -12,7 +12,7 @@ struct datetime {
   int year;
 } ;
 
-typedef long datetime_sec;
+typedef unsigned long datetime_sec;
 
 extern void datetime_tai(struct datetime *dt,datetime_sec t);
 

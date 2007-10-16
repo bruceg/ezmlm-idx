@@ -254,7 +254,7 @@ int hashok(const char *action,const char *ac)
   x += scan_ulong(x,&u);
   hashdate = u;
   if (hashdate > when) return 0;
-  if (hashdate < when - 1000000) return 0;
+  if (hashdate + 1000000 < when) return 0;
 
   u = hashdate;
   strnum[fmt_ulong(strnum,(unsigned long) u)] = 0;
@@ -496,7 +496,7 @@ void doconfirm(const char *act)
 /* is not ACTION_[RST]C, it is assumed to be an unsubscribe conf.*/
 /* "act" is the first letter of desired confirm request only as STRING! */
 {
-  strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
+  strnum[fmt_ulong(strnum,when)] = 0;
   cookie(hash,key.s,key.len-flagdig,strnum,target.s,act);
   if (!stralloc_copy(&confirm,&outlocal)) die_nomem();
   if (!stralloc_append(&confirm,"-")) die_nomem();

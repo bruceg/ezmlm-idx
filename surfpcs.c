@@ -44,8 +44,8 @@ void surfpcs_add(surfpcs *s,const unsigned char *x,unsigned int n)
 void surfpcs_out(surfpcs *s,unsigned char h[32])
 {
   int i;
-  surfpcs_add(s,".",1);
-  while (s->todo) surfpcs_add(s,"",1);
+  surfpcs_add(s,(const unsigned char*)".",1);
+  while (s->todo) surfpcs_add(s,(const unsigned char*)"",1);
   for (i = 0;i < 8;++i) s->in[i] = s->sum[i];
   for (;i < 12;++i) s->in[i] = 0;
   surf(s->out,s->in,s->seed);
