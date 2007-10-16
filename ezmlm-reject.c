@@ -213,7 +213,7 @@ void main(int argc,char **argv)
       if (!stralloc_cats(&mydtline,"\n")) die_nomem();
     }
   } else {
-    errtxt_init();
+    msgtxt_init();
     flagtook = 1;		/* if no "dir" we can't get outlocal/outhost */
     flagforward = 0;		/* nor forward requests */
   }

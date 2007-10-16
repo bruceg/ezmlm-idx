@@ -26,7 +26,7 @@ void startup(const char *dir)
   if (dir == 0)
     die_usage();
 
-  errtxt_init();
+  msgtxt_init();
   listdir = dir;
   wrap_chdir(dir);
 }
