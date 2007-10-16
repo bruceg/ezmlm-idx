@@ -1,7 +1,10 @@
-Do substitutions on messages at request time instead of load time.
+Add support for multi-level message texts.  Load 3 separate maps: from
+dir, lang, and default.  Return the first match in that order.
+Move msgtxt to text/messages, and add it to text/edit-list
 Fix results subject in ezmlm-request.c
 Handle hdr_listsubject3 somehow with defineable parameters in MSG.
-Fix errtxt to not require redundant initialization in sub modules.
+Fix msgtxt to not require redundant initialization in sub modules.
+Add tests for all subjects in msgtxt.
 
 Fix default language link, currently created in tools/test.
 Fix ezmlm-subunsub to not repeatedly reopen the database.
