@@ -12,6 +12,8 @@
 #include "die.h"
 
 const char FATAL[] = "ezmlm-weed: fatal: ";
+const char USAGE[] =
+"ezmlm-weed: usage: ezmlm-weed";
 
 void get(stralloc *sa)
 {
