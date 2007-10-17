@@ -82,7 +82,7 @@ static const char *MSGn(const char *name,const char *params[10])
   const char *c;
   params[0] = name;
   /* Handle messages before config is loaded */
-  if (map_local.num == 0) {
+  if (!initialized) {
     constmap_init(&map_local,basetxts,sizeof basetxts,1);
     c = constmap(&map_local,name,str_len(name));
   }
