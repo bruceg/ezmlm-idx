@@ -87,7 +87,7 @@ const char *MSG(const char *name)
       if ((c = constmap(&map_default,name,str_len(name))) == 0)
 	c = name;
   if (!stralloc_copys(&data,c)) die_nomem();
-  copy_xlate(&xdata,&data,'H');
+  copy_xlate(&xdata,&data,0,'H');
   if (!stralloc_0(&xdata)) die_nomem();
   return xdata.s;
 }

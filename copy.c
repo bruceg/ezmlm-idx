@@ -14,6 +14,7 @@
 /*   <#n#> outmsgnum                                               */
 /*   <#r#> local part of the confirm address (<#l#>-<#c#>)         */
 /*   <#t#> target address, with '@' substituted by '='             */
+/*   <#0#>-<#9#> temporary parameters, used by some messages       */
 /* Other tags are killed, e.g. removed. A missing file is a        */
 /* permanent error so owner finds out ASAP. May not have access to */
 /* maillog. Content transfer encoding is done for 'B' and 'Q'. For */
@@ -109,6 +110,7 @@ static void codeputs(const char *l,char code)
 /* replaced by "???????" */
 void copy_xlate(stralloc *out,
 		const stralloc *line,
+		const char *params[10],
 		char q)
 {
   unsigned int pos;
@@ -161,6 +163,21 @@ void copy_xlate(stralloc *out,
 	break;
       case 'f':
 	if (!stralloc_cats(out,filename)) die_nomem();
+	break;
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+	if (params != 0)
+	  if (params[line->s[pos+2]-'0'] != 0)
+	    if (!stralloc_cats(out,params[line->s[pos+2]-'0']))
+	      die_nomem();
 	break;
       default:
 	break;			/* unknown tags killed */
@@ -232,7 +249,7 @@ void copy(struct qmail *qqp,
       }
       if (!flagsmatched) continue;
 
-      copy_xlate(&outline,&line,q);
+      copy_xlate(&outline,&line,0,q);
       codeput(outline.s,outline.len,q);
 
       /* Last line is missing its trailing newline, add one on output. */

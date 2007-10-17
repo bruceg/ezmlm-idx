@@ -30,7 +30,7 @@ int getconf(stralloc *sa,const char *fn,int flagrequired)
       strerr_die5x(100,FATAL,listdir,"/",fn,ERR_NOEXIST);
   }
   if (!stralloc_append(&data,"\n")) die_nomem();
-  copy_xlate(&xdata,&data,'H');
+  copy_xlate(&xdata,&data,0,'H');
   if (!stralloc_copys(sa,"")) die_nomem();
   i = 0;
   for (j = 0;j < xdata.len;++j)
