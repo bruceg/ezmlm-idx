@@ -43,7 +43,7 @@ static stralloc quoted = {0};
 
 static void die_write(void)
 {
-  strerr_die3x(111,FATAL,ERR_WRITE,"stdout");
+  strerr_die3x(111,FATAL,MSG("ERR_WRITE"),"stdout");
 }
 
 static void dummyNoticeProcessor(void *arg, const char *message)
@@ -105,16 +105,16 @@ static const char *_checktag(struct subdbinfo *info,
     /* succeeds only is everything correct. 'hash' is quoted since it is  */
     /* potentially hostile. */
     if (listno) {			/* only for slaves */
-      if (!stralloc_copys(&line,"SELECT listno FROM ")) return ERR_NOMEM;
-      if (!stralloc_cats(&line,info->base_table)) return ERR_NOMEM;
-      if (!stralloc_cats(&line,"_mlog WHERE listno=")) return ERR_NOMEM;
+      if (!stralloc_copys(&line,"SELECT listno FROM ")) return MSG("ERR_NOMEM");
+      if (!stralloc_cats(&line,info->base_table)) return MSG("ERR_NOMEM");
+      if (!stralloc_cats(&line,"_mlog WHERE listno=")) return MSG("ERR_NOMEM");
       if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,listno)))
-	return ERR_NOMEM;
-      if (!stralloc_cats(&line," AND msgnum=")) return ERR_NOMEM;
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return ERR_NOMEM;
-      if (!stralloc_cats(&line," AND done > 3")) return ERR_NOMEM;
+	return MSG("ERR_NOMEM");
+      if (!stralloc_cats(&line," AND msgnum=")) return MSG("ERR_NOMEM");
+      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return MSG("ERR_NOMEM");
+      if (!stralloc_cats(&line," AND done > 3")) return MSG("ERR_NOMEM");
 
-      if (!stralloc_0(&line)) return ERR_NOMEM;
+      if (!stralloc_0(&line)) return MSG("ERR_NOMEM");
       result = PQexec( (PGconn*)info->conn, line.s );
       if(result == NULL)
 	return (PQerrorMessage((PGconn*)info->conn));
@@ -127,15 +127,15 @@ static const char *_checktag(struct subdbinfo *info,
 	PQclear(result);
     }
 
-    if (!stralloc_copys(&line,"SELECT msgnum FROM ")) return ERR_NOMEM;
-    if (!stralloc_cats(&line,info->base_table)) return ERR_NOMEM;
-    if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) return ERR_NOMEM;
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return ERR_NOMEM;
-    if (!stralloc_cats(&line," and cookie='")) return ERR_NOMEM;
-    if (!stralloc_catb(&line,strnum,fmt_str(strnum,hash))) return ERR_NOMEM;
-    if (!stralloc_cats(&line,"'")) return ERR_NOMEM;
+    if (!stralloc_copys(&line,"SELECT msgnum FROM ")) return MSG("ERR_NOMEM");
+    if (!stralloc_cats(&line,info->base_table)) return MSG("ERR_NOMEM");
+    if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) return MSG("ERR_NOMEM");
+    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return MSG("ERR_NOMEM");
+    if (!stralloc_cats(&line," and cookie='")) return MSG("ERR_NOMEM");
+    if (!stralloc_catb(&line,strnum,fmt_str(strnum,hash))) return MSG("ERR_NOMEM");
+    if (!stralloc_cats(&line,"'")) return MSG("ERR_NOMEM");
 
-    if (!stralloc_0(&line)) return ERR_NOMEM;
+    if (!stralloc_0(&line)) return MSG("ERR_NOMEM");
     result = PQexec((PGconn*)info->conn,line.s);
     if (result == NULL)
       return (PQerrorMessage((PGconn*)info->conn));
@@ -212,42 +212,42 @@ static const char *_logmsg(struct subdbinfo *info,
   PGresult *result;
   PGresult *result2;
 
-  if (!stralloc_copys(&logline,"INSERT INTO ")) return ERR_NOMEM;
-  if (!stralloc_cats(&logline,info->base_table)) return ERR_NOMEM;
+  if (!stralloc_copys(&logline,"INSERT INTO ")) return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&logline,info->base_table)) return MSG("ERR_NOMEM");
   if (!stralloc_cats(&logline,"_mlog (msgnum,listno,subs,done) VALUES ("))
-	return ERR_NOMEM;
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) return ERR_NOMEM;
-  if (!stralloc_cats(&logline,",")) return ERR_NOMEM;
+	return MSG("ERR_NOMEM");
+  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&logline,",")) return MSG("ERR_NOMEM");
   if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,listno)))
-	return ERR_NOMEM;
-  if (!stralloc_cats(&logline,",")) return ERR_NOMEM;
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) return ERR_NOMEM;
-  if (!stralloc_cats(&logline,",")) return ERR_NOMEM;
+	return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&logline,",")) return MSG("ERR_NOMEM");
+  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&logline,",")) return MSG("ERR_NOMEM");
   if (done < 0) {
     done = - done;
-    if (!stralloc_append(&logline,"-")) return ERR_NOMEM;
+    if (!stralloc_append(&logline,"-")) return MSG("ERR_NOMEM");
   }
-  if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) return ERR_NOMEM;
-  if (!stralloc_append(&logline,")")) return ERR_NOMEM;
+  if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) return MSG("ERR_NOMEM");
+  if (!stralloc_append(&logline,")")) return MSG("ERR_NOMEM");
 
-  if (!stralloc_0(&logline)) return ERR_NOMEM;
+  if (!stralloc_0(&logline)) return MSG("ERR_NOMEM");
   result = PQexec((PGconn*)info->conn,logline.s);
   if(result==NULL)
     return (PQerrorMessage((PGconn*)info->conn));
   if(PQresultStatus(result) != PGRES_COMMAND_OK) { /* Check if duplicate */
-    if (!stralloc_copys(&logline,"SELECT msgnum FROM ")) return ERR_NOMEM;
-    if (!stralloc_cats(&logline,info->base_table)) return ERR_NOMEM;
-    if (!stralloc_cats(&logline,"_mlog WHERE msgnum = ")) return ERR_NOMEM;
+    if (!stralloc_copys(&logline,"SELECT msgnum FROM ")) return MSG("ERR_NOMEM");
+    if (!stralloc_cats(&logline,info->base_table)) return MSG("ERR_NOMEM");
+    if (!stralloc_cats(&logline,"_mlog WHERE msgnum = ")) return MSG("ERR_NOMEM");
     if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num)))
-      return ERR_NOMEM;
-    if (!stralloc_cats(&logline," AND listno = ")) return ERR_NOMEM;
+      return MSG("ERR_NOMEM");
+    if (!stralloc_cats(&logline," AND listno = ")) return MSG("ERR_NOMEM");
     if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,listno)))
-      return ERR_NOMEM;
-    if (!stralloc_cats(&logline," AND done = ")) return ERR_NOMEM;
+      return MSG("ERR_NOMEM");
+    if (!stralloc_cats(&logline," AND done = ")) return MSG("ERR_NOMEM");
     if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,done)))
-      return ERR_NOMEM;
+      return MSG("ERR_NOMEM");
     /* Query */
-    if (!stralloc_0(&logline)) return ERR_NOMEM;
+    if (!stralloc_0(&logline)) return MSG("ERR_NOMEM");
     result2 = PQexec((PGconn*)info->conn,logline.s);
     if (result2 == NULL)
       return (PQerrorMessage((PGconn*)info->conn));
@@ -391,10 +391,10 @@ static int _subscribe(struct subdbinfo *info,
     if (!stralloc_copys(&addr,userhost)) die_nomem();
     if (addr.len > 255)			/* this is 401 in std ezmlm. 255 */
 					/* should be plenty! */
-      strerr_die2x(100,FATAL,ERR_ADDR_LONG);
+      strerr_die2x(100,FATAL,MSG("ERR_ADDR_LONG"));
     j = byte_rchr(addr.s,addr.len,'@');
     if (j == addr.len)
-      strerr_die2x(100,FATAL,ERR_ADDR_AT);
+      strerr_die2x(100,FATAL,MSG("ERR_ADDR_AT"));
     cpat = addr.s + j;
     case_lowerb(cpat + 1,addr.len - j - 1);
 
@@ -604,12 +604,12 @@ static const char *create_table(struct subdbinfo *info,
   if (table_exists(info,suffix1,suffix2) > 0)
     return 0;
   
-  if (!stralloc_copys(&line,"CREATE TABLE ")) return ERR_NOMEM;
-  if (!stralloc_cats(&line,info->base_table)) return ERR_NOMEM;
-  if (!stralloc_cats(&line,suffix1)) return ERR_NOMEM;
-  if (!stralloc_cats(&line,suffix2)) return ERR_NOMEM;
-  if (!stralloc_cats(&line,definition)) return ERR_NOMEM;
-  if (!stralloc_0(&line)) return ERR_NOMEM;
+  if (!stralloc_copys(&line,"CREATE TABLE ")) return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&line,info->base_table)) return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&line,suffix1)) return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&line,suffix2)) return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&line,definition)) return MSG("ERR_NOMEM");
+  if (!stralloc_0(&line)) return MSG("ERR_NOMEM");
   result = PQexec((PGconn*)info->conn,line.s);
   if (result == NULL)
     return PQerrorMessage((PGconn*)info->conn);
@@ -717,11 +717,11 @@ static const char *remove_table(struct subdbinfo *info,
   if (table_exists(info,suffix1,suffix2) == 0)
     return 0;
   
-  if (!stralloc_copys(&line,"DROP TABLE ")) return ERR_NOMEM;
-  if (!stralloc_cats(&line,info->base_table)) return ERR_NOMEM;
-  if (!stralloc_cats(&line,suffix1)) return ERR_NOMEM;
-  if (!stralloc_cats(&line,suffix2)) return ERR_NOMEM;
-  if (!stralloc_0(&line)) return ERR_NOMEM;
+  if (!stralloc_copys(&line,"DROP TABLE ")) return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&line,info->base_table)) return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&line,suffix1)) return MSG("ERR_NOMEM");
+  if (!stralloc_cats(&line,suffix2)) return MSG("ERR_NOMEM");
+  if (!stralloc_0(&line)) return MSG("ERR_NOMEM");
   result = PQexec((PGconn*)info->conn,line.s);
   if (result == NULL)
     return PQerrorMessage((PGconn*)info->conn);

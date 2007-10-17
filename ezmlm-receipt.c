@@ -54,9 +54,9 @@ stralloc fndir = {0};
 stralloc fndatenew = {0};
 
 void die_datenew(void)
-{ strerr_die4sys(111,FATAL,ERR_WRITE,fndatenew.s,": "); }
+{ strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fndatenew.s,": "); }
 void die_msgin(void)
-{ strerr_die2sys(111,FATAL,ERR_READ_INPUT); }
+{ strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT")); }
 
 char strnum[FMT_ULONG];
 char inbuf[1024];
@@ -94,9 +94,9 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   bouncedir = opendir(fndir.s);
   if (!bouncedir)
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
     else
-      strerr_die3x(111,FATAL,fndir.s,ERR_NOEXIST);
+      strerr_die3x(111,FATAL,fndir.s,MSG("ERR_NOEXIST"));
 
   no = MAX_MAIN_BOUNCES;	/* no more than this many allowed */
   while (no && (d = readdir(bouncedir))) {
@@ -106,7 +106,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   }
   closedir(bouncedir);
   if (!no)			/* max no of bounces exceeded */
-    strerr_die2x(0,INFO,ERR_MAX_BOUNCE);
+    strerr_die2x(0,INFO,MSG("ERR_MAX_BOUNCE"));
 				/* save bounce */
   if (!stralloc_copys(&fndate,workdir)) die_nomem();
   if (!stralloc_cats(&fndate,"/bounce/d")) die_nomem();
@@ -143,7 +143,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   if (fsync(fd) == -1) die_datenew();
   if (close(fd) == -1) die_datenew(); /* NFS stupidity */
   if (rename(fndatenew.s,fndate.s) == -1)
-    strerr_die6sys(111,FATAL,ERR_MOVE,fndatenew.s," to ",fndate.s,": ");
+    strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),fndatenew.s," to ",fndate.s,": ");
 }
 
 void main(int argc,char **argv)
@@ -183,7 +183,7 @@ void main(int argc,char **argv)
   sender = env_get("SENDER");
   action = env_get("DEFAULT");
   local = env_get("LOCAL");
-  if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
+  if (!action) strerr_die2x(100,FATAL,MSG("ERR_NODEFAULT"));
 
   workdir = dir;
   /* now see if -digest-return- */
@@ -253,7 +253,7 @@ void main(int argc,char **argv)
 		/* scan bounce for tag. It'll be in the BODY! */
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
     if (!match) break;
     if (case_startb(line.s,line.len,TXT_TAG)) {
       len = str_len(TXT_TAG);
@@ -264,7 +264,7 @@ void main(int argc,char **argv)
     }
   }
   if (seek_begin(0) == -1)
-    strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
+    strerr_die2sys(111,FATAL,MSG("ERR_SEEK_INPUT"));
   substdio_fdbuf(&ssin,read,0,inbuf,sizeof(inbuf));
 
   if (*action) {	/* normal bounce */
@@ -279,8 +279,8 @@ void main(int argc,char **argv)
     if (!stralloc_0(&listaddr)) die_nomem();
 		/* don't check for sub, since issub() doesn't see sublists */
     switch (subreceipt(workdir,msgnum,&tagline,listaddr.s,-1,INFO,FATAL)) {
-	case -1: strerr_die2x(0,INFO,ERR_COOKIE);
-	case -2: strerr_die2x(0,INFO,ERR_NOT_ACTIVE);
+	case -1: strerr_die2x(0,INFO,MSG("ERR_COOKIE"));
+	case -2: strerr_die2x(0,INFO,MSG("ERR_NOT_ACTIVE"));
 	default: doit(listaddr.s,msgnum,when,&bounce);
     }
     closesub();
@@ -294,7 +294,7 @@ void main(int argc,char **argv)
     if (!stralloc_copys(&paragraph,"")) die_nomem();
     for (;;) {
       if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+        strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
       if (!match) die_trash();
       if (!stralloc_cat(&paragraph,&line)) die_nomem();
       if (line.len <= 1) break;

@@ -13,7 +13,7 @@ static const char basetxts[] =
 "ERR_NOMEM:out of memory\0"
 "ERR_READ:unable to read \0"
 "ERR_NOEXIST: does not exist\0"
-"ERR_SUBST_UNSAFE:ERR_SUBST_UNSAFE\0"
+"ERR_SUBST_UNSAFE:Sorry, substitution of target addresses into headers with #A# or #t# is unsafe and not permitted.\0"
 ;
 
 static stralloc msg_local = {0};
@@ -37,7 +37,7 @@ static int readit(stralloc *sa,const char *fn)
     die_nomem();
   switch (slurp(fn,&data,4096)) {
     case -1:
-      strerr_die6sys(111,FATAL,ERR_READ,listdir,"/",fn,": ");
+      strerr_die6sys(111,FATAL,MSG("ERR_READ"),listdir,"/",fn,": ");
     case 0:
       return 0;
   }

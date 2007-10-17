@@ -56,13 +56,13 @@ stralloc lastd = {0};
 unsigned long copylines = 0;	/* Number of lines from the message to copy */
 struct stat st;
 
-static void die_read(void) { strerr_die4sys(111,FATAL,ERR_READ,fn.s,": "); }
+static void die_read(void) { strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": "); }
 
 void makedir(const char *s)
 {
   if (mkdir(s,0755) == -1)
     if (errno != error_exist)
-      strerr_die4x(111,FATAL,ERR_CREATE,s,": ");
+      strerr_die4x(111,FATAL,MSG("ERR_CREATE"),s,": ");
 }
 
 char inbuf[1024];
@@ -117,7 +117,7 @@ void doit(int flagw)
   if (!stralloc_0(&fnhash)) die_nomem();
 
   if (qmail_open(&qq, (stralloc *) 0) == -1)
-    strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
+    strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
 
   hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
   if (listid.len > 0)
@@ -152,12 +152,12 @@ void doit(int flagw)
       fdhash = open_read(fnhash.s);
       if (fdhash == -1) {
         if (errno != error_noent)
-          strerr_die4sys(111,FATAL,ERR_OPEN,fnhash.s,": ");
+          strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnhash.s,": ");
       } else {
         substdio_fdbuf(&sstext,read,fdhash,textbuf,sizeof(textbuf));
         for(;;) {
           if (getln(&sstext,&line,&match,'\n') == -1)
-            strerr_die4sys(111,FATAL,ERR_READ,fnhash.s,": ");
+            strerr_die4sys(111,FATAL,MSG("ERR_READ"),fnhash.s,": ");
           if (!match) break;
           code_qput(line.s,line.len);
         }
@@ -166,7 +166,7 @@ void doit(int flagw)
     } else {
       if (!stralloc_copys(&line,"")) die_nomem();	/* slurp adds! */
       if (slurp(fnhash.s,&line,256) < 0)
-        strerr_die4sys(111,FATAL,ERR_OPEN,fnhash.s,": ");
+        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnhash.s,": ");
       code_qput(line.s,line.len);
     }
   }
@@ -209,7 +209,7 @@ void doit(int flagw)
 
   qmail_to(&qq,addr.s);
   if (*(err = qmail_close(&qq)) != '\0')
-    strerr_die3x(111,FATAL,ERR_TMP_QMAIL_QUEUE, err + 1);
+    strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"), err + 1);
 
   strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
   strerr_warn2("ezmlm-warn: info: qp ",strnum,0);
@@ -217,10 +217,10 @@ void doit(int flagw)
   if (!flagw) {
     if (unlink(fnhash.s) == -1)
       if (errno != error_noent)
-        strerr_die4sys(111,FATAL,ERR_DELETE,fnhash.s,": ");
+        strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),fnhash.s,": ");
   }
   if (unlink(fn.s) == -1)
-    strerr_die4sys(111,FATAL,ERR_DELETE,fn.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),fn.s,": ");
 }
 
 void main(int argc,char **argv)
@@ -268,7 +268,7 @@ void main(int argc,char **argv)
   if (!stralloc_cats(&fnlastd,"/bounce/lastd")) die_nomem();
   if (!stralloc_0(&fnlastd)) die_nomem();
   if (slurp(fnlastd.s,&lastd,16) == -1)		/* last time d was scanned */
-      strerr_die4sys(111,FATAL,ERR_READ,fnlastd.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fnlastd.s,": ");
   if (!stralloc_0(&lastd)) die_nomem();
   (void) scan_ulong(lastd.s,&ld);
   if (!lockout)
@@ -297,7 +297,7 @@ void main(int argc,char **argv)
   bouncedir = opendir(line.s);
   if (!bouncedir) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
     else
       _exit(0);		/* no bouncedir - no bounces! */
   }
@@ -320,10 +320,10 @@ void main(int argc,char **argv)
       bsdir = opendir(bdname.s);
       if (!bsdir) {
 	if (errno != error_notdir)
-	  strerr_die4sys(111,FATAL,ERR_OPEN,bdname.s,":y ");
+	  strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),bdname.s,":y ");
 	else {				/* leftover nnnnn_dmmmmm file */
 	  if (unlink(bdname.s) == -1)
-	    strerr_die4sys(111,FATAL,ERR_DELETE,bdname.s,": ");
+	    strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),bdname.s,": ");
 	  continue;
 	}
       }
@@ -338,12 +338,12 @@ void main(int argc,char **argv)
 	  doit(ds->d_name[0] == 'w');
         else				/* other stuff is junk */
 	  if (unlink(fn.s) == -1)
-	    strerr_die4sys(111,FATAL,ERR_DELETE,fn.s,": ");
+	    strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),fn.s,": ");
       }
       closedir(bsdir);
       if (rmdir(bdname.s) == -1)	/* the directory itself */
       if (errno != error_noent)
-	   strerr_die4sys(111,FATAL,ERR_DELETE,bdname.s,": ");
+	   strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),bdname.s,": ");
     }
   }
   closedir(bouncedir);
@@ -352,33 +352,33 @@ void main(int argc,char **argv)
   line.s[line.len - 2] = 'D';
   fd = open_trunc(line.s);			/* write lastd. Do safe */
 						/* since we read before lock*/
-  if (fd == -1) strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
+  if (fd == -1) strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
   substdio_fdbuf(&ssout,write,fd,outbuf,sizeof(outbuf));
   if (substdio_put(&ssout,strnum,fmt_ulong(strnum,when)) == -1)
-    strerr_die4sys(111,FATAL,ERR_WRITE,line.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),line.s,": ");
   if (substdio_put(&ssout,"\n",1) == -1)	/* prettier */
-    strerr_die4sys(111,FATAL,ERR_WRITE,line.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),line.s,": ");
   if (substdio_flush(&ssout) == -1)
-    strerr_die4sys(111,FATAL,ERR_FLUSH,line.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_FLUSH"),line.s,": ");
   if (fsync(fd) == -1)
-    strerr_die4sys(111,FATAL,ERR_SYNC,line.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_SYNC"),line.s,": ");
   if (close(fd) == -1)
-    strerr_die4sys(111,FATAL,ERR_CLOSE,line.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_CLOSE"),line.s,": ");
 
   if (rename(line.s,fnlastd.s) == -1)
-    strerr_die4sys(111,FATAL,ERR_MOVE,fnlastd.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),fnlastd.s,": ");
 
 				/* no need to do h dir cleaning more than */
 				/* once per 1-2 days (17-30 days for all) */
   if (stat(fnlasth.s,&st) == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_STAT,fnlasth.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_STAT"),fnlasth.s,": ");
   } else if (when < (unsigned long)st.st_mtime + 100000
 	     && when > (unsigned long)st.st_mtime)
     _exit(0);			/* 2nd comp to guard against corruption */
 
   if (slurp(fnlasth.s,&lasth,16) == -1)		/* last h cleaned */
-      strerr_die4sys(111,FATAL,ERR_READ,fnlasth.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fnlasth.s,": ");
   if (!stralloc_0(&lasth)) die_nomem();
   ch = lasth.s[0];				 /* clean h */
   if (ch >= 'a' && ch <= 'o')
@@ -394,7 +394,7 @@ void main(int argc,char **argv)
 
   if (!hdir) {
     if (errno != error_noent)
-    strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
   } else {
 
     while ((d = readdir(hdir))) {
@@ -406,24 +406,24 @@ void main(int argc,char **argv)
       if (!stralloc_0(&fn)) die_nomem();
       if (stat(fn.s,&st) == -1) {
 	if (errno == error_noent) continue;
-	strerr_die4sys(111,FATAL,ERR_STAT,fn.s,": ");
+	strerr_die4sys(111,FATAL,MSG("ERR_STAT"),fn.s,": ");
       }
       if (when > st.st_mtime + 3 * bouncetimeout)
 	if (unlink(fn.s) == -1)
-          strerr_die4sys(111,FATAL,ERR_DELETE,fn.s,": ");
+          strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),fn.s,": ");
     }
     closedir(hdir);
   }
 
   fd = open_trunc(fnlasth.s);			/* write lasth */
-  if (fd == -1) strerr_die4sys(111,FATAL,ERR_OPEN,fnlasth.s,": ");
+  if (fd == -1) strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnlasth.s,": ");
   substdio_fdbuf(&ssout,write,fd,outbuf,sizeof(outbuf));
   if (substdio_put(&ssout,lasth.s,1) == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,fnlasth.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnlasth.s,": ");
   if (substdio_put(&ssout,"\n",1) == -1)	/* prettier */
-    strerr_die4sys(111,FATAL,ERR_OPEN,fnlasth.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnlasth.s,": ");
   if (substdio_flush(&ssout) == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,fnlasth.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnlasth.s,": ");
   (void) close(fd);		/* no big loss. No reason to flush/sync */
 				/* See check of ld above to guard against */
 				/* it being corrupted and > when */

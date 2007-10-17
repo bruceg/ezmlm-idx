@@ -123,7 +123,7 @@ void copy_xlate(stralloc *out,
 	die_nomem();
       switch(line->s[pos+2]) {
       case 'A':
-	if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
+	if (q == 'H') strerr_die1x(111,MSG("ERR_SUBST_UNSAFE"));
 	if (!stralloc_cats(out,target)) die_nomem();
 	break;
       case 'L':
@@ -149,7 +149,7 @@ void copy_xlate(stralloc *out,
 	if (!stralloc_cat(out,&outhost)) die_nomem();
 	break;
       case 't':
-	if (q == 'H') strerr_die1x(111,ERR_SUBST_UNSAFE);
+	if (q == 'H') strerr_die1x(111,MSG("ERR_SUBST_UNSAFE"));
 	if (!stralloc_cats(out,verptarget)) die_nomem();
 	break;
       case 'n':
@@ -195,14 +195,14 @@ void copy(struct qmail *qqp,
   qq = qqp;
   if ((fd = alt_open_read(fn)) == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_OPEN,fn,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn,": ");
     else
-      strerr_die4sys(100,FATAL,ERR_OPEN,fn,": ");
+      strerr_die4sys(100,FATAL,MSG("ERR_OPEN"),fn,": ");
   }
   substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
   for (;;) {
     if (getln(&sstext,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,ERR_READ,fn,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn,": ");
     if (line.len > 0) {		/* line.len is always > 0 if match is true */
       if (line.s[0] == '#') continue;
       /* suppress blank line for 'H'eader mode */

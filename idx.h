@@ -73,34 +73,9 @@
 /* Text that is used in the outgoing messages (there is some other text, but */
 /* it needs to stay constant in order to comply with rfc1153 */
 
-/* Topics (messages nnn through mmm):\n */
-#define TXT_TOP_TOPICS MSG("TOP_TOPICS")
-#define TXT_TOP_MESSAGES MSG("TOP_MESSAGES")
-#define TXT_TOP_THROUGH MSG("TOP_THROUGH")
-#define TXT_TOP_LAST MSG("TOP_LAST")
-
-/* in digest */
-#define TXT_ADMINISTRIVIA MSG("ADMINISTRIVIA")
-#define TXT_SUPPRESSED MSG("SUPPRESSED")
-
-/* for the message author line: 000 by */
-/* keep this short! */
-#define TXT_BY MSG("BY")
-
 /* Since this is now run-time configurable, we'll go with the lowest */
 /* common denominator (per rfc2046). -> ISO-8859-1 if you don't like that */
 #define TXT_DEF_CHARSET "us-ascii"
-
-/* should start with 20 'a' [in place of hash] */
-#define TXT_NOINDEX MSG("NOINDEX")
-
-/* markers for ezmlm-manage text file edit */
-/* MUST start with '%' */
-#define TXT_EDIT_START MSG("EDIT_START")
-#define TXT_EDIT_END MSG("EDIT_END")
-
-/* Text for '-list' command */
-#define TXT_LISTMEMBERS MSG("LISTMEMBERS")
 
 /* Output formats - letter used to override default */
 #define FORMATS "mrvnx"

@@ -149,7 +149,7 @@ void checkarg(const char *s)
     if (ch == '.' || ch == '-' || ch == '_' || ch == '+')
 	continue;				/* ok chars */
     if (ch >= 'A' && ch <= 'Z') continue;	/* UC LETTERS */
-    strerr_die4x(100,ERR_NOT_CLEAN,": \"",s,"\"");
+    strerr_die4x(100,MSG("ERR_NOT_CLEAN"),": \"",s,"\"");
   }
   return;
 }
@@ -205,7 +205,7 @@ void parseline(char *cp)
     }
   } else {				/* '@' before ' ' means complete cmd */
     if (str_chr(cp,'@') < str_chr(cp,' '))	/* addr where local failed */
-	strerr_die2x(100,FATAL,ERR_REQ_LOCAL);
+	strerr_die2x(100,FATAL,MSG("ERR_REQ_LOCAL"));
 						/* to match */
     command = cp;
     cp1 = cp + str_chr(cp,' ');
@@ -300,14 +300,14 @@ void main(int argc,char **argv)
     action = def;
   } else if (cfname) {		/* just list-mdomo */
     local = env_get("LOCAL");
-    if (!local) strerr_die2x(100,FATAL,ERR_NOLOCAL);
+    if (!local) strerr_die2x(100,FATAL,MSG("ERR_NOLOCAL"));
     len = str_len(local);
     if (len >= 8 && !case_diffb(local + len - 8,8,"-return-")) {
       action = (char*)"return-";	/* our bounce with qmail<1.02 */
     } else
       action = (char*)"";	/* list-mdomo-xxx won't work for older lists */
   } else
-    strerr_die3x(100,FATAL,ERR_NODEFAULT," and -f not used");
+    strerr_die3x(100,FATAL,MSG("ERR_NODEFAULT")," and -f not used");
 	/* at this point action = "request" or "request-..." for std use; */
 	/* "" for majordomo@ */
   if (!cfname) {				/* expect request */
@@ -325,13 +325,13 @@ void main(int argc,char **argv)
   if (!stralloc_0(&hostname)) die_nomem();
 
   sender = env_get("SENDER");
-  if (!sender) strerr_die2x(99,INFO,ERR_NOSENDER);
+  if (!sender) strerr_die2x(99,INFO,MSG("ERR_NOSENDER"));
   if (!*sender)
-    strerr_die2x(99,INFO,ERR_BOUNCE);
+    strerr_die2x(99,INFO,MSG("ERR_BOUNCE"));
   if (!sender[str_chr(sender,'@')])
-    strerr_die2x(99,INFO,ERR_ANONYMOUS);
+    strerr_die2x(99,INFO,MSG("ERR_ANONYMOUS"));
   if (str_equal(sender,"#@[]"))
-    strerr_die2x(99,INFO,ERR_BOUNCE);
+    strerr_die2x(99,INFO,MSG("ERR_BOUNCE"));
 
   if (getconf(&headerremove,"headerkeep",0))
     headerremoveflag = 1;
@@ -351,7 +351,7 @@ void main(int argc,char **argv)
     flagnosubject = 0;	/* a command address rather than a complete msg */
     command = action;
     if (str_start(action,"return"))		/* kill bounces */
-      strerr_die2x(0,INFO,ERR_BOUNCE);
+      strerr_die2x(0,INFO,MSG("ERR_BOUNCE"));
     pos = 1 + str_chr(action + 1,'-');
     if (action[pos]) {				/* start of target */
       action[pos] = '\0';
@@ -365,14 +365,14 @@ void main(int argc,char **argv)
   } else {
     for (flagsub = 0;;) {			/* Get Subject: */
       if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+        strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
       if (line.len <= 1)
         break;
       if ((line.s[0] != ' ') && (line.s[0] != '\t')) {
           flagsub = 0;
 
           if (case_startb(line.s,line.len,"mailing-list:"))
-            strerr_die2x(100,FATAL,ERR_MAILING_LIST);
+            strerr_die2x(100,FATAL,MSG("ERR_MAILING_LIST"));
           else if (case_startb(line.s,line.len,"Subject:")) {
             flagsub = flaggotsub = 1;
             pos = 8;
@@ -389,7 +389,7 @@ void main(int argc,char **argv)
 	      flagmultipart = 1;
 	  } else if (line.len == mydtline.len)
             if (!byte_diff(line.s,line.len,mydtline.s))
-               strerr_die2x(100,FATAL,ERR_LOOPING);
+               strerr_die2x(100,FATAL,MSG("ERR_LOOPING"));
       } else if (flagsub) {	/* Continuation line */
           pos = 1;
           len = line.len - 2;	/* skip terminal '\n' */
@@ -414,7 +414,7 @@ void main(int argc,char **argv)
     if (cfname || flagnosubject) {
       for (;;) {					/* parse body */
         if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+        strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
         if (!match) break;
 	if (line.len == 1 && flagmultipart != 2) continue;
 		/* lazy MIME cludge assumes first '--...' is start border */
@@ -473,7 +473,7 @@ void main(int argc,char **argv)
     cmdidx = EZREQ_HELP;
   }
   if (qmail_open(&qq,(stralloc *) 0) == -1)
-    strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
+    strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
 
   if (cmdidx >= 0) {
 	/* Things handled elsewhere. We do want to handle a simple HELP */
@@ -483,7 +483,7 @@ void main(int argc,char **argv)
     if (!stralloc_0(&from)) die_nomem();
     if (!listlocal) {
       if (cfname)
-        strerr_die1x(100,ERR_REQ_LISTNAME);
+        strerr_die1x(100,MSG("ERR_REQ_LISTNAME"));
       else
        listlocal = listname.s;	/* This is at the -request address */
     }
@@ -497,12 +497,12 @@ void main(int argc,char **argv)
       pos = str_len(listlocal);
       fd = open_read(cfname);
       if (fd == -1)
-        strerr_die4sys(111,FATAL,ERR_OPEN,cfname,": ");
+        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),cfname,": ");
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       flagok = 0;			/* got listhost match */
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
-          strerr_die3sys(111,FATAL,ERR_READ,cfname);
+          strerr_die3sys(111,FATAL,MSG("ERR_READ"),cfname);
         if (!match)
           break;
         if (line.len <= 1 || line.s[0] == '#')
@@ -568,12 +568,12 @@ void main(int argc,char **argv)
     flagbadfield = headerremoveflag;
 
     if (seek_begin(0) == -1)
-      strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_SEEK_INPUT"));
     substdio_fdbuf(&ssin,read,0,inbuf,sizeof(inbuf));
 
     for (;;) {
       if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+        strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
 
       if (flaginheader && match) {
         if (line.len == 1)
@@ -641,11 +641,11 @@ void main(int argc,char **argv)
       }
       fd = open_read(cfname);
       if (fd == -1)
-        strerr_die4sys(111,FATAL,ERR_OPEN,cfname,": ");
+        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),cfname,": ");
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
-          strerr_die3sys(111,FATAL,ERR_READ,cfname);
+          strerr_die3sys(111,FATAL,MSG("ERR_READ"),cfname);
         if (!match)
           break;
         if (line.len <= 1 || line.s[0] == '#')
@@ -703,16 +703,16 @@ void main(int argc,char **argv)
     qmail_put(&qq,line.s,line.len);
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
-      strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_SEEK_INPUT"));
     if (qmail_copy(&qq,&ssin2,copylines) != 0)
-      strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
     if (flagcd)
       hdr_boundary(1);
   }
   qmail_from(&qq,from.s);
   qmail_to(&qq,to.s);
   if (*(err = qmail_close(&qq)) != '\0')
-      strerr_die3x(111,FATAL,ERR_TMP_QMAIL_QUEUE,err + 1);
+      strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),err + 1);
 
   strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
   strerr_die3x(99,INFO, "qp ",strnum);

@@ -7,5 +7,5 @@
 void wrap_chdir(const char *dir)
 {
   if (chdir(dir) == -1)
-    strerr_die4sys(111,FATAL,ERR_SWITCH,dir,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_SWITCH"),dir,": ");
 }

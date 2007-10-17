@@ -48,12 +48,12 @@ int mailprog(const char *s)
       /* 0 rec ok, others bounce */
       case 0: case 99: case 100: break;
       case 111:					/* temp error */
-        strerr_die2x(111,FATAL,ERR_CHILD_TEMP);
+        strerr_die2x(111,FATAL,MSG("ERR_CHILD_TEMP"));
       default:
-        strerr_die2x(100,FATAL,ERR_REJECT);	/* other errors => bounce */
+        strerr_die2x(100,FATAL,MSG("ERR_REJECT"));	/* other errors => bounce */
     }
     if (seek_begin(0) == -1)			/* rewind */
-      strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_SEEK_INPUT"));
     return r;
 }
 

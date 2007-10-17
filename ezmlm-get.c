@@ -193,7 +193,7 @@ void zapnonsub(const char *szerr)
     if (issub("allow",sender,0))
       return;		/* allow addresses */
   }
-  strerr_die4x(100,FATAL,ERR_SUBSCRIBER_CAN,szerr,ERR_571);
+  strerr_die4x(100,FATAL,MSG("ERR_SUBSCRIBER_CAN"),szerr,MSG("ERR_571"));
 }
 
 void tosender(void)
@@ -226,30 +226,30 @@ void write_ulong(unsigned long num,unsigned long cum,unsigned long dat,
 
   fd = open_trunc(fnn);
   if (fd == -1)
-     strerr_die6sys(111,FATAL,ERR_CREATE,dir,"/",fnn,": ");
+     strerr_die6sys(111,FATAL,MSG("ERR_CREATE"),dir,"/",fnn,": ");
   substdio_fdbuf(&ssnum,write,fd,numbuf,sizeof(numbuf));
   if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,num)) == -1)
-     strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/",fnn,": ");
+     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
   if (substdio_puts(&ssnum,":") == -1)
-     strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/",fnn,": ");
+     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
   if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,cum)) == -1)
-     strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/",fnn,": ");
+     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
   if (dat) {
     if (substdio_puts(&ssnum,":") == -1)
-       strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/",fnn,": ");
+       strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
     if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,dat)) == -1)
-       strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/",fnn,": ");
+       strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
   }
   if (substdio_puts(&ssnum,"\n") == -1)
-     strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/",fnn,": ");
+     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
   if (substdio_flush(&ssnum) == -1)
-     strerr_die6sys(111,FATAL,ERR_FLUSH,dir,"/",fnn,": ");
+     strerr_die6sys(111,FATAL,MSG("ERR_FLUSH"),dir,"/",fnn,": ");
   if (fsync(fd) == -1)
-     strerr_die6sys(111,FATAL,ERR_SYNC,dir,"/",fnn,": ");
+     strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/",fnn,": ");
   if (close(fd) == -1)
-     strerr_die6sys(111,FATAL,ERR_CLOSE,dir,"/",fnn,": ");
+     strerr_die6sys(111,FATAL,MSG("ERR_CLOSE"),dir,"/",fnn,": ");
   if (rename(fnn,fn) == -1)
-     strerr_die4sys(111,FATAL,ERR_MOVE,fnn,": ");
+     strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),fnn,": ");
 }
 
 void normal_bottom(char format)
@@ -272,9 +272,9 @@ void normal_bottom(char format)
     qmail_put(&qq,quoted.s,quoted.len);
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
-      strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_SEEK_INPUT"));
     if (qmail_copy(&qq,&ssin2,copylines) != 0)
-      strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
   } else {
     if (flagcd == 'B' && format != RFC1153) {
       encodeB("",0,&line,2);	/* flush */
@@ -321,7 +321,7 @@ void postsub(int factype, /* action type (AC_THREAD, AC_GET, AC_DIGEST) */
 /* output after TOC and before first message. */
 {
     code_qputs("");
-    code_qputs(TXT_ADMINISTRIVIA);
+    code_qputs(MSG("ADMINISTRIVIA"));
     code_qputs("");
     if(factype == AC_DIGEST) {
       copy(&qq,"text/digest",flagcd);
@@ -369,7 +369,7 @@ void copymsg(int fd,char format)
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
-           strerr_die4sys(111,FATAL,ERR_READ,line.s,": ");
+           strerr_die4sys(111,FATAL,MSG("ERR_READ"),line.s,": ");
         if (match) {
            qmail_put(&qq,line.s,line.len);
 	   msgsize += line.len;
@@ -384,7 +384,7 @@ void copymsg(int fd,char format)
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
-           strerr_die4sys(111,FATAL,ERR_READ,line.s,": ");
+           strerr_die4sys(111,FATAL,MSG("ERR_READ"),line.s,": ");
         if (match) {
           if (flaginheader) {
             if (line.len == 1) {
@@ -416,7 +416,7 @@ void copymsg(int fd,char format)
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
-           strerr_die4sys(111,FATAL,ERR_READ,line.s,": ");
+           strerr_die4sys(111,FATAL,MSG("ERR_READ"),line.s,": ");
         if (match) {
           if (flaginheader) {
             if (line.len == 1) {
@@ -568,7 +568,7 @@ void msgout(unsigned long msg,char format)
 	fd = open_read(fn.s);
 	if (fd == -1) {
 	  if (errno != error_noent)
-	    strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+	    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
           else
             mime_getbad(msg);
         } else if (fstat(fd,&st) == -1 || (!(st.st_mode & 0100))) {
@@ -590,7 +590,7 @@ void msgout(unsigned long msg,char format)
 	fd = open_read(fn.s);
 	if (fd == -1) {
 	  if (errno != error_noent)
-	    strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+	    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
 	  else {
 	    qmail_puts(&qq,"\n== ");
 	    qmail_put(&qq,strnum,fmt_ulong(strnum,msg));
@@ -656,7 +656,7 @@ void digest(msgentry *msgtable,
             if (!stralloc_copys(&line,"")) die_nomem();
           if (!stralloc_cats(&line,"\t")) die_nomem();
           if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msg))) die_nomem();
-          if (!stralloc_cats(&line,TXT_BY)) die_nomem();
+          if (!stralloc_cats(&line,MSG("BY"))) die_nomem();
           if (pmsgt->authnum) {
 	    cp = authtable[pmsgt->authnum - 1].auth;
 	    len = authtable[pmsgt->authnum - 1].authlen;
@@ -715,7 +715,7 @@ void doheaders(void)
   if (act != AC_DIGEST)
     for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
     if (!match) break;
     if (line.len == 1) break;
     if ((line.s[0] != ' ') && (line.s[0] != '\t')) {
@@ -724,11 +724,11 @@ void doheaders(void)
         if (flageditor)			/* we may be running from a sublist */
           flaggoodfield = 0;
         else
-          strerr_die2x(100,FATAL,ERR_MAILING_LIST);
+          strerr_die2x(100,FATAL,MSG("ERR_MAILING_LIST"));
       }
       if (line.len == mydtline.len)
 	if (byte_equal(line.s,line.len,mydtline.s))
-          strerr_die2x(100,FATAL,ERR_LOOPING);
+          strerr_die2x(100,FATAL,MSG("ERR_LOOPING"));
       if (case_startb(line.s,line.len,"delivered-to:"))
         flaggoodfield = 1;
       if (case_startb(line.s,line.len,"received:"))
@@ -808,13 +808,13 @@ void main(int argc,char **argv)
   def = env_get("DEFAULT");
   sender = env_get("SENDER");
   if (local && *local) {	/* in editor local = outlocal */
-    if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
+    if (!sender) strerr_die2x(100,FATAL,MSG("ERR_NOSENDER"));
     if (!*sender)
-      strerr_die2x(100,FATAL,ERR_BOUNCE);
+      strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
     if (str_equal(sender,"#@[]"))
-      strerr_die2x(100,FATAL,ERR_BOUNCE);
+      strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
     if (!sender[str_chr(sender,'@')])
-      strerr_die2x(100,FATAL,ERR_ANONYMOUS);
+      strerr_die2x(100,FATAL,MSG("ERR_ANONYMOUS"));
     if (def) {
       if (*def) {
 	action = def;
@@ -831,14 +831,14 @@ void main(int argc,char **argv)
       if (action[0] == '-' || action [0] == '.') {
         action++;
 	if (!digestcode)
-            strerr_die2x(100,FATAL,ERR_BAD_DIGCODE);
+            strerr_die2x(100,FATAL,MSG("ERR_BAD_DIGCODE"));
         len = str_len(digestcode);
         if (len <= str_len(action) && case_startb(action,len,digestcode)) {
           if (FORMATS[str_chr(FORMATS,*(action+len))])
             outformat = *(action+len);
           act = AC_DIGEST;
         } else
-          strerr_die2x(100,FATAL,ERR_BAD_DIGCODE);
+          strerr_die2x(100,FATAL,MSG("ERR_BAD_DIGCODE"));
       }
     }
   } else			/* Command line operation */
@@ -879,7 +879,7 @@ void main(int argc,char **argv)
   }
   if (act != AC_DIGEST) {
     if (!flagdo)			/* only do digests */
-      strerr_die2x(100,FATAL,ERR_NOCMD);
+      strerr_die2x(100,FATAL,MSG("ERR_NOCMD"));
     if (flagpublic == 2)
       flagpublic = getconf_line(&line,"public",0);
     if (!flagpublic) {
@@ -891,7 +891,7 @@ void main(int argc,char **argv)
       getconf_line(&moddir,"modsub",0);
       flagremote = getconf_line(&line,"remote",0);
       if (!flagremote)
-        strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
+        strerr_die2x(100,FATAL,MSG("ERR_NOT_PUBLIC"));
       if (!moddir.len) {
         if (line.len) {
           if (!stralloc_copy(&moddir,&line)) die_nomem();
@@ -902,7 +902,7 @@ void main(int argc,char **argv)
       if (!stralloc_0(&moddir)) die_nomem();
       ismod = issub(moddir.s,sender,&mod);
       if (!ismod)			/* sender = moderator? */
-        strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
+        strerr_die2x(100,FATAL,MSG("ERR_NOT_PUBLIC"));
     }
   }
 
@@ -932,9 +932,9 @@ void main(int argc,char **argv)
 
   if (flagqmqp) {
     if (qmail_open(&qq,&qmqpservers) == -1)		/* open qmail */
-      strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
+      strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
   } else if (qmail_open(&qq,(stralloc *) 0) == -1)	/* open qmail */
-      strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
+      strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
 
   set_cpnum("");	/* default for <#n#> replacement */
 
@@ -945,7 +945,7 @@ void main(int argc,char **argv)
 /* dignum is updated to the last message processed. digissue is advanced.    */
 
     if (!flagarchived)
-      strerr_die2x(100,FATAL,ERR_NOT_ARCHIVED);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_ARCHIVED"));
 
     get_num();				/* max = last successful message */
     to = max;
@@ -966,7 +966,7 @@ void main(int argc,char **argv)
     mno = prevmax + 1L;
     if(!max || mno > max)	/* if a digest-list is "sending" the request, */
 				/* don't make noise: errors go to postmaster!*/
-      strerr_die2x(goodexit,FATAL,ERR_EMPTY_DIGEST);
+      strerr_die2x(goodexit,FATAL,MSG("ERR_EMPTY_DIGEST"));
     szmsgnum[fmt_ulong(szmsgnum,mno)] = '\0';
     set_cpnum(szmsgnum);	/* for copy */
 				/* prepare subject to get entropy for tagmsg*/
@@ -1021,7 +1021,7 @@ void main(int argc,char **argv)
 /* to be > 0 and <= last message, to num2 >= num and to num2-num <= MAXGET.  */
 
     if (!flagarchived)
-      strerr_die2x(100,FATAL,ERR_NOT_ARCHIVED);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_ARCHIVED"));
     zapnonsub(ACTION_GET);		/* restrict to subs if requested */
     tosender();
 				/* for rfc1153 */
@@ -1044,7 +1044,7 @@ void main(int argc,char **argv)
 					/* scan will = 0 on the \0 so should*/
 					/* be safe                          */
     if (!max)
-      strerr_die2x(100,FATAL,ERR_EMPTY_LIST);
+      strerr_die2x(100,FATAL,MSG("ERR_EMPTY_LIST"));
     szmsgnum[fmt_ulong(szmsgnum,max)] = '\0';
     set_cpnum(szmsgnum);	/* for copy this is the latest message arch'd*/
     doheaders();
@@ -1089,7 +1089,7 @@ void main(int argc,char **argv)
 /* limited to num+MAXINDEX to limit the amount of data sent.                 */
 
     if (!flagindexed)
-      strerr_die2x(100,FATAL,ERR_NOT_INDEXED);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_INDEXED"));
     if (flagsub)
     zapnonsub(ACTION_INDEX);	/* restrict to subs if requested */
     to = 0;
@@ -1102,7 +1102,7 @@ void main(int argc,char **argv)
     }
     get_num();				/* max = last successful message */
     if (!max)
-      strerr_die2x(100,FATAL,ERR_EMPTY_LIST);
+      strerr_die2x(100,FATAL,MSG("ERR_EMPTY_LIST"));
     szmsgnum[fmt_ulong(szmsgnum,max)] = '\0';
     set_cpnum(szmsgnum);	/* for copy this is the latest message arch'd*/
 
@@ -1136,14 +1136,14 @@ void main(int argc,char **argv)
       fd = open_read(fn.s);
       if (fd == -1)
         if (errno != error_noent)
-          strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+          strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
         else
-          code_qputs(TXT_NOINDEX);
+          code_qputs(MSG("NOINDEX"));
       else {
         substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
         for (;;) {
           if (getln(&sstext,&line,&match,'\n') == -1)
-            strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+            strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
           if (match) {
             if (line.s[0] != '\t') {	/* subject line */
               pos = byte_chr(line.s,line.len,' ');
@@ -1190,15 +1190,15 @@ void main(int argc,char **argv)
 /* message is returned.                                                     */
 
     if (!flagarchived)
-      strerr_die2x(100,FATAL,ERR_NOT_ARCHIVED);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_ARCHIVED"));
     if (!flagindexed)
-      strerr_die2x(100,FATAL,ERR_NOT_INDEXED);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_INDEXED"));
 
     zapnonsub(ACTION_THREAD);		/* restrict to subs if requested*/
 
     get_num();				/* max = last successful message */
     if (!max)
-      strerr_die2x(100,FATAL,ERR_EMPTY_LIST);
+      strerr_die2x(100,FATAL,MSG("ERR_EMPTY_LIST"));
     szmsgnum[fmt_ulong(szmsgnum,max)] = '\0';
     set_cpnum(szmsgnum);	/* for copy this is the latest message arch'd*/
 
@@ -1323,6 +1323,6 @@ void main(int argc,char **argv)
       write_ulong(prevmax,cumsize,(unsigned long) digwhen,"dignum","dignumn");
     }
     unlock();			/* NOP if nothing locked */
-    strerr_die3x(111,FATAL,ERR_TMP_QMAIL_QUEUE,err + 1);
+    strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),err + 1);
   }
 }

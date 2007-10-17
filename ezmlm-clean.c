@@ -57,7 +57,7 @@ const char USAGE[] =
 
 void die_read(void)
 {
-  strerr_die4x(111,FATAL,ERR_READ,fnmsg.s,": ");
+  strerr_die4x(111,FATAL,MSG("ERR_READ"),fnmsg.s,": ");
 }
 
 datetime_sec when;
@@ -95,11 +95,11 @@ void sendnotice(const char *d)
   const char *err;
 
       if (qmail_open(&qq, (stralloc *) 0) == -1)
-        strerr_die2x(111,FATAL,ERR_QMAIL_QUEUE);
+        strerr_die2x(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
 
       fd = open_read(d);
       if (fd == -1)
-        strerr_die4sys(111,FATAL,ERR_OPEN,d,": ");
+        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),d,": ");
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       if (getln(&sstext,&line,&match,'\n') == -1) die_read();
       if (!match) die_read();
@@ -140,7 +140,7 @@ void sendnotice(const char *d)
       }
 
       if (seek_begin(fd) == -1)
-        strerr_die4sys(111,FATAL,ERR_SEEK,d,": ");
+        strerr_die4sys(111,FATAL,MSG("ERR_SEEK"),d,": ");
 
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       if (qmail_copy(&qq,&sstext,-1) != 0) die_read();
@@ -157,7 +157,7 @@ void sendnotice(const char *d)
         qmail_to(&qq,to.s);
 
      if (*(err = qmail_close(&qq)) != '\0')
-       strerr_die3x(111,FATAL,ERR_TMP_QMAIL_QUEUE, err + 1);
+       strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"), err + 1);
 
      strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
      strerr_warn2("ezmlm-clean: info: qp ",strnum,0);
@@ -189,7 +189,7 @@ void dodir(const char *dirname,int reply)
 
   moddir = opendir(dirname);
   if (!moddir)
-    strerr_die6sys(0,FATAL,ERR_OPEN,dir,"/",dirname,": ");
+    strerr_die6sys(0,FATAL,MSG("ERR_OPEN"),dir,"/",dirname,": ");
   while ((d = readdir(moddir))) {
     if (d->d_name[0] == '.') continue;
     scan_ulong(d->d_name,&modtime);

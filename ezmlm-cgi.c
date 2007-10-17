@@ -168,7 +168,7 @@ static substdio ssin;
 
 void die_syntax(const char *s)
 {
-  strerr_die4x(100,FATAL,ERR_SYNTAX,"config file: ",s);
+  strerr_die4x(100,FATAL,MSG("ERR_SYNTAX"),"config file: ",s);
 }
 
 static char outbuf[4096];
@@ -178,7 +178,7 @@ void oput(const char *s, unsigned int l)
 /* unbuffered. Avoid extra copy as httpd buffers */
 {
   if (substdio_put(&ssout,s,l) == -1)
-    strerr_die3sys(111,FATAL,ERR_WRITE,"stdout: ");
+    strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
 }
 
 void oputs(const char *s)
@@ -855,9 +855,9 @@ void finddate(struct msginfo *infop)
   archivedir = opendir("archive/threads/");
   if (!archivedir) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/archive/threads: ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),dir,"/archive/threads: ");
     else
-      strerr_die4sys(100,FATAL,ERR_OPEN,dir,"/archive/threads: ");
+      strerr_die4sys(100,FATAL,MSG("ERR_OPEN"),dir,"/archive/threads: ");
   }
   while ((d = readdir(archivedir))) {		/* dxxx/ */
     if (str_equal(d->d_name,".")) continue;
@@ -955,7 +955,7 @@ int show_index(struct msginfo *infop)
     if (errno == error_noent)
       return 0;
     else
-      strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   if (!stralloc_copyb(&line,strnum,
@@ -971,7 +971,7 @@ int show_index(struct msginfo *infop)
   oputs("<div class=\"idx\"><hr />\n");
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
     if (!match)
       break;
     pos = scan_ulong(line.s,&thismsg);
@@ -990,7 +990,7 @@ int show_index(struct msginfo *infop)
     oputs("\n");
     if (ch == ':') {
       if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+        strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
       if (!match)
         break;
       pos = byte_chr(line.s,line.len,';');
@@ -1061,14 +1061,14 @@ int show_object(struct msginfo *infop,int item)
     if (errno == error_noent)
       return 0;
     else
-      strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   if (item != ITEM_DATE) {
     if (getln(&ssin,&line,&match,'\n') == -1)	/* read subject */
-      strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
     if (!match || line.len < HASHLEN + 2)
-      strerr_die4x(111,FATAL,ERR_READ,fn.s,": nothing there");
+      strerr_die4x(111,FATAL,MSG("ERR_READ"),fn.s,": nothing there");
   }
   switch (item) {
     case ITEM_SUBJECT:
@@ -1104,7 +1104,7 @@ int show_object(struct msginfo *infop,int item)
   oputs("<div class=\"obj\">\n");
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)	/* read subject */
-      strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
     if (!match)
       break;
     pos = scan_ulong(line.s,&thismsg);
@@ -1397,7 +1397,7 @@ void show_part(struct msginfo *infop,int flagshowheaders,int flagstartseen)
   for (flaghtml = whatheader = 0;;) {
     if (!match) return;
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
     if (!match) return;
     if ((btype = check_boundary())) {
       if (decline.len) {		/* flush last line that doesn't */
@@ -1569,7 +1569,7 @@ int show_message(struct msginfo *infop)
     if (errno == error_noent)
       return 0;
     else
-      strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   toggle_flagpre(0);
@@ -1679,37 +1679,37 @@ int msg2hash(struct msginfo *infop)
     if (errno == error_noent)
       return 0;
     else
-      strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   for (;;) {
         if (getln(&ssin,&line,&match,'\n') == -1)
-          strerr_die3sys(111,FATAL,ERR_READ,"index: ");
+          strerr_die3sys(111,FATAL,MSG("ERR_READ"),"index: ");
         if (!match)
 	  return 0;				/* didn't find message */
 	if (*line.s == '\t') continue;		/* author line */
         pos = scan_ulong(line.s,&tmpmsg);
 	if (tmpmsg == infop->source) {
           if (line.s[pos++] != ':' || line.s[pos++] != ' ')
-	    strerr_die3x(100,ERR_SYNTAX,fn.s,": missing subject separator");
+	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,": missing subject separator");
 	  if (line.len < HASHLEN + pos)
-	    strerr_die3x(100,ERR_SYNTAX,fn.s,": missing subject hash");
+	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,": missing subject hash");
 	  if (!stralloc_copyb(&subject,line.s+pos,HASHLEN)) die_nomem();
 	  if (!stralloc_0(&subject)) die_nomem();
 	  infop->subject = subject.s;
           if (getln(&ssin,&line,&match,'\n') == -1)
-            strerr_die3sys(111,FATAL,ERR_READ,"index: ");
+            strerr_die3sys(111,FATAL,MSG("ERR_READ"),"index: ");
           if (!match)
-	    strerr_die3x(100,ERR_SYNTAX,fn.s,
+	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,
 		": author info missing. Truncated?");
 	  pos = byte_chr(line.s,line.len,';');
 	  if (pos == line.len)
-	    strerr_die3x(100,ERR_SYNTAX,fn.s,"missing ';' after date");
+	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,"missing ';' after date");
 	  if (pos > 1)
 	    infop->date = date2yyyymm(line.s+1);	/* ';' marks end ok */
 	  pos++;
 	  if (line.len < HASHLEN + pos)
-	    strerr_die3x(100,ERR_SYNTAX,fn.s,": missing author hash");
+	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,": missing author hash");
 	  if (!stralloc_copyb(&author,line.s+pos,HASHLEN)) die_nomem();
 	  if (!stralloc_0(&author)) die_nomem();
 	  infop->author = author.s;
@@ -1735,24 +1735,24 @@ void setmsg(struct msginfo *infop)
   }
   if ((fd = open_read(fn.s)) == -1) {
     if (errno == error_noent)
-      strerr_die4x(100,FATAL,ERR_OPEN,fn.s,
+      strerr_die4x(100,FATAL,MSG("ERR_OPEN"),fn.s,
 	" in listmsgs. Rerun ezmlm-archive!");
     else
-      strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   if (infop->axis != ITEM_DATE) {
     if (getln(&ssin,&line,&match,'\n') == -1)	/* first line */
-      strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
     if (!match)
-      strerr_die3x(100,ERR_SYNTAX,fn.s,": first line missing");
+      strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,": first line missing");
   }
   msgnav[3] = 0L;		/* next */
   msgnav[4] = 0L;		/* after */
   infop->target = 0L;
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
     if (!match) break;
     msgnav[0] = msgnav[1];
     msgnav[1] = msgnav[2];
@@ -1765,11 +1765,11 @@ void setmsg(struct msginfo *infop)
     }
     if (msgnav[2] == infop->source) {
       if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+        strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
       if (!match) break;
       (void) scan_ulong(line.s,&(msgnav[3]));
       if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
       if (!match) break;
       (void) scan_ulong(line.s,&(msgnav[4]));
       break;
@@ -1943,7 +1943,7 @@ void list_lists()
   html_header("Robot index of lists",0,0,0,0);
   for (;;) {
     if (getln(&ssin,&cfline,&match,'\n') == -1)		/* read line */
-      strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
     if (!match)
       break;
     if (cfline.s[0] == '#') continue;			/* skip comment */
@@ -1973,9 +1973,9 @@ void list_list(unsigned long listno)
   archivedir = opendir("archive/");
   if (!archivedir) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_OPEN,dir,"/archive: ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),dir,"/archive: ");
     else
-      strerr_die4sys(100,FATAL,ERR_OPEN,dir,"/archive: ");
+      strerr_die4sys(100,FATAL,MSG("ERR_OPEN"),dir,"/archive: ");
   }
   cache = 1;
   html_header("Robot index for message sets in list",0,0,0,0);
@@ -2028,16 +2028,16 @@ void list_set(unsigned long msgset)
 /**************** MAY BE SUID ROOT HERE ****************************/
 void drop_priv(int flagchroot)
 {
-  if (!uid) strerr_die2x(100,FATAL,ERR_SUID);		/* not as root */
+  if (!uid) strerr_die2x(100,FATAL,MSG("ERR_SUID"));		/* not as root */
   if (!euid) {
     if (flagchroot)
       if (chroot(dir) == -1)				/* chroot listdir */
         strerr_die4sys(111,FATAL,"failed to chroot ",dir,": ");
     if (setuid(uid) == -1)				/* setuid */
-      strerr_die2sys(111,FATAL,ERR_SETUID);
+      strerr_die2sys(111,FATAL,MSG("ERR_SETUID"));
   }
   euid = (unsigned long) geteuid();
-  if (!euid) strerr_die2x(100,FATAL,ERR_SUID);		/* setuid didn't do it*/
+  if (!euid) strerr_die2x(100,FATAL,MSG("ERR_SUID"));		/* setuid didn't do it*/
 }
 /*******************************************************************/
 
@@ -2063,10 +2063,10 @@ int main(int argc,char **argv)
     if (!stralloc_cats(&line,EZ_CGIRC)) die_nomem();
     if (!stralloc_0(&line)) die_nomem();
     if ((fd = open_read(line.s)) == -1)			/* open config */
-      strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
   } else {
     if ((fd = open_read(EZ_CGIRC_LOC)) == -1)		/* open local config */
-      strerr_die4sys(111,FATAL,ERR_OPEN,EZ_CGIRC_LOC,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),EZ_CGIRC_LOC,": ");
   }
 
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));	/* set up buffer */
@@ -2103,7 +2103,7 @@ int main(int argc,char **argv)
 
   for (sep = pos = 0;;) {
     if (getln(&ssin,&cfline,&match,'\n') == -1)		/* read line */
-      strerr_die4sys(111,FATAL,ERR_READ,fn.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
     if (!match)
       break;
     if (*cfline.s == '#' || cfline.len == 1) continue;	/* skip comment/blank */
@@ -2132,7 +2132,7 @@ int main(int argc,char **argv)
   close(fd);						/* don't accept uid 0*/
   if (!dir) {
     drop_priv(0);	/* don't trust cgierr. No dir, no chroot */
-    cgierr("list ",ERR_NOEXIST,"");
+    cgierr("list ",MSG("ERR_NOEXIST"),"");
   }
   wrap_chdir(dir);
   drop_priv(flagchroot);

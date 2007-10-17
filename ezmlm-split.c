@@ -81,7 +81,7 @@ int findname(void)
   /* make domain pointer */
   cpat = lctarget.s + str_chr(lctarget.s,'@');
   if (!*cpat)
-    strerr_die4x(100,FATAL,ERR_ADDR_AT,": ",target.s);
+    strerr_die4x(100,FATAL,MSG("ERR_ADDR_AT"),": ",target.s);
   cplast = cpat + str_len(cpat) - 1;
   if (*cplast == '.') --cplast;		/* annonying special case */
   cp1 = cpat + byte_rchr(cpat,cplast - cpat, '.');
@@ -97,12 +97,12 @@ int findname(void)
   if (!stralloc_0(&domain)) die_nomem();
 
   if ((fd = open_read(split)) == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,split,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),split,": ");
   substdio_fdbuf(&sssp,read,fd,spbuf,(int) sizeof(spbuf));
   lineno = 0;
   for (;;) {	/* dom:hash_lo:hash_hi:listaddress */
     if (getln(&sssp,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,ERR_READ,split,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),split,": ");
      lineno++;
     if (!match)
       break;
@@ -184,16 +184,16 @@ void main(int argc,char **argv)
 
   if (flagdo) {
     sender = env_get("SENDER");
-    if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
+    if (!sender) strerr_die2x(100,FATAL,MSG("ERR_NOSENDER"));
     if (!*sender)
-      strerr_die2x(100,FATAL,ERR_BOUNCE);
+      strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
     if (!sender[str_chr(sender,'@')])
-      strerr_die2x(100,FATAL,ERR_ANONYMOUS);
+      strerr_die2x(100,FATAL,MSG("ERR_ANONYMOUS"));
     if (str_equal(sender,"#@[]"))
-      strerr_die2x(100,FATAL,ERR_BOUNCE);
+      strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
 
     action = env_get("DEFAULT");
-    if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
+    if (!action) strerr_die2x(100,FATAL,MSG("ERR_NODEFAULT"));
     if (!stralloc_copys(&target,sender)) die_nomem();
     if (action[0]) {
       i = str_chr(action,'-');
@@ -232,18 +232,18 @@ void main(int argc,char **argv)
       if (!stralloc_cats(&to,nhost)) die_nomem();	/* host */
       if (!stralloc_0(&to)) die_nomem();
       dtline = env_get("DTLINE");
-      if (!dtline) strerr_die2x(100,FATAL,ERR_NODTLINE);
+      if (!dtline) strerr_die2x(100,FATAL,MSG("ERR_NODTLINE"));
 
       if (qmail_open(&qq,(stralloc *) 0) == -1)
-        strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
+        strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
       qmail_puts(&qq,dtline);				/* delivered-to */
       if (qmail_copy(&qq,subfdin,0) != 0)
-        strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+        strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
       qmail_from(&qq,from.s);
       qmail_to(&qq,to.s);
 
       if (*(err = qmail_close(&qq)) != '\0')
-        strerr_die3x(111,FATAL,ERR_TMP_QMAIL_QUEUE,err + 1);
+        strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),err + 1);
 
       strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
       strerr_die3x(99,INFO,"qp ",strnum);
@@ -253,7 +253,7 @@ void main(int argc,char **argv)
 
     for (;;) {
       if (getln(subfdin,&line,&match,'\n') == -1)
-	  strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+	  strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
       if (!match) break;
       if (line.len == 1) continue;	/* ignore blank lines */
       if (line.s[0] == '#') continue;	/* ignore comments */
@@ -264,10 +264,10 @@ void main(int argc,char **argv)
       if (!stralloc_cats(&name,target.s)) die_nomem();
       if (!stralloc_append(&name,"\n")) die_nomem();
       if (substdio_put(subfdout,name.s,name.len) == -1)
-	strerr_die2sys(111,ERR_WRITE,"output: ");
+	strerr_die2sys(111,MSG("ERR_WRITE"),"output: ");
     }
     if (substdio_flush(subfdout) == -1)
-      strerr_die2sys(111,ERR_FLUSH,"output: ");
+      strerr_die2sys(111,MSG("ERR_FLUSH"),"output: ");
     _exit(0);
   }
   (void)argc;

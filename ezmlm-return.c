@@ -38,7 +38,7 @@ const char USAGE[] =
 
 void die_badretaddr(void)
 {
-  strerr_die2x(100,FATAL,ERR_BAD_RETURN_ADDRESS);
+  strerr_die2x(100,FATAL,MSG("ERR_BAD_RETURN_ADDRESS"));
 }
 void die_trash(void)
 {
@@ -69,17 +69,17 @@ const char *dir;
 const char *workdir;
 
 void die_hashnew(void)
-{ strerr_die4sys(111,FATAL,ERR_WRITE,fnhashnew.s,": "); }
+{ strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fnhashnew.s,": "); }
 void die_datenew(void)
-{ strerr_die4sys(111,FATAL,ERR_WRITE,fndatenew.s,": "); }
+{ strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fndatenew.s,": "); }
 void die_msgin(void)
-{ strerr_die2sys(111,FATAL,ERR_READ_INPUT); }
+{ strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT")); }
 
 void makedir(const char *s)
 {
   if (mkdir(s,0755) == -1)
     if (errno != error_exist)
-      strerr_die4x(111,FATAL,ERR_CREATE,s,": ");
+      strerr_die4x(111,FATAL,MSG("ERR_CREATE"),s,": ");
 }
 
 void dowit(const char *addr,unsigned long when,const stralloc *bounce)
@@ -126,7 +126,7 @@ void dowit(const char *addr,unsigned long when,const stralloc *bounce)
   if (close(fd) == -1) die_datenew(); /* NFS stupidity */
 
   if (rename(fndatenew.s,fndate.s) == -1)
-    strerr_die6sys(111,FATAL,ERR_MOVE,fndatenew.s," to ",fndate.s,": ");
+    strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),fndatenew.s," to ",fndate.s,": ");
 }
 
 void doit(const char *addr,unsigned long msgnum,unsigned long when,
@@ -204,10 +204,10 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   fd = open_read(fnhash.s);
   if (fd == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_READ,fnhash.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fnhash.s,": ");
     makedir(fndir.s);
     if (rename(fndatenew.s,fndate.s) == -1)
-      strerr_die6sys(111,FATAL,ERR_MOVE,fndatenew.s," to ",fndate.s,": ");
+      strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),fndatenew.s," to ",fndate.s,": ");
   }
   else {
     substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
@@ -217,7 +217,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
     }
     close(fd);
     if (unlink(fndatenew.s) == -1)
-      strerr_die4sys(111,FATAL,ERR_DELETE,fndatenew.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),fndatenew.s,": ");
   }
   if (substdio_puts(&ssout,"   ") == -1) die_hashnew();
   if (substdio_put(&ssout,strnum,fmt_ulong(strnum,msgnum)) == -1) die_hashnew();
@@ -227,7 +227,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   if (close(fdnew) == -1) die_hashnew(); /* NFS stupidity */
 
   if (rename(fnhashnew.s,fnhash.s) == -1)
-    strerr_die6sys(111,FATAL,ERR_MOVE,fnhashnew.s," to ",fnhash.s,": ");
+    strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),fnhashnew.s," to ",fnhash.s,": ");
 }
 
 stralloc bounce = {0};
@@ -279,9 +279,9 @@ void main(int argc,char **argv)
   }
 
   sender = env_get("SENDER");
-  if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
+  if (!sender) strerr_die2x(100,FATAL,MSG("ERR_NOSENDER"));
   action = env_get("DEFAULT");
-  if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
+  if (!action) strerr_die2x(100,FATAL,MSG("ERR_NODEFAULT"));
 
   startup(dir = argv[optind]);
   initsub(0);
@@ -387,14 +387,14 @@ void main(int argc,char **argv)
 	  strerr_die6x(99,INFO,"receipt:",cp," [",hashp,"]");
 	}
 	if (*ret) strerr_die2x(111,FATAL,ret);
-	else strerr_die2x(0,INFO,ERR_DONE);
+	else strerr_die2x(0,INFO,MSG("ERR_DONE"));
       } else if (*action) {	/* post VERP master bounce */
 	if ((ret = logmsg(msgnum,listno,0L,-1))) {
 	  closesub();
 	  strerr_die4x(0,INFO,"bounce [",hashp,"]");
 	}
 	if (*ret) strerr_die2x(111,FATAL,ret);
-	else strerr_die2x(99,INFO,ERR_DONE);
+	else strerr_die2x(99,INFO,MSG("ERR_DONE"));
       }
    } else if (flagreceipt || flagmaster)
 	die_badretaddr();

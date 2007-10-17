@@ -52,7 +52,7 @@ const char USAGE[] =
 
 stralloc fnmsg = {0};
 
-void die_msg(void) { strerr_die4sys(111,FATAL,ERR_WRITE,fnmsg.s,": "); }
+void die_msg(void) { strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fnmsg.s,": "); }
 
 int fdmsg;
 int fdmod;
@@ -163,7 +163,7 @@ void main(int argc,char **argv)
 
   if (sender) {
     if (!*sender || str_equal(sender,"#@[]"))
-      strerr_die2x(100,FATAL,ERR_BOUNCE);
+      strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
   }
 
   startup(dir = argv[optind]);
@@ -194,7 +194,7 @@ void main(int argc,char **argv)
     ismod = 0;
 
   if (!ismod && !flagpublic)
-    strerr_die2x(100,FATAL,ERR_NO_POST);
+    strerr_die2x(100,FATAL,MSG("ERR_NO_POST"));
 
   fdlock = lockfile("mod/lock");
 
@@ -230,7 +230,7 @@ void main(int argc,char **argv)
    if (stat(fnmsg.s,&st) == -1) if (errno == error_noent) break;
    /* really should never get to this point */
    if (i == 2)
-     strerr_die2x(111,FATAL,ERR_UNIQUE);
+     strerr_die2x(111,FATAL,MSG("ERR_UNIQUE"));
    sleep(2);
   }
 
@@ -258,11 +258,11 @@ void main(int argc,char **argv)
 
   fdmsg = open_trunc(fnmsg.s);
   if (fdmsg == -1)
-    strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/",fnmsg.s,": ");
+    strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnmsg.s,": ");
   substdio_fdbuf(&ssmsg,write,fdmsg,msgbuf,sizeof(msgbuf));
 
   if (qmail_open(&qq, (stralloc *) 0) == -1)		/* Open mailer */
-    strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
+    strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
 
   hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
   if (listid.len > 0)
@@ -335,7 +335,7 @@ void main(int argc,char **argv)
   flaginheader = 1;
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
     if (!match) break;
     if (line.len == 1) flaginheader = 0;
     if (flaginheader) {
@@ -343,12 +343,12 @@ void main(int argc,char **argv)
 		!byte_diff(line.s,line.len,mydtline.s)) {
 	close(fdmsg);			/* be nice - clean up */
 	unlink(fnmsg.s);
-        strerr_die2x(100,FATAL,ERR_LOOPING);
+        strerr_die2x(100,FATAL,MSG("ERR_LOOPING"));
       }
       if (case_startb(line.s,line.len,"mailing-list:")) {
 	close(fdmsg);			/* be nice - clean up */
 	unlink(fnmsg.s);
-        strerr_die2x(100,FATAL,ERR_MAILING_LIST);
+        strerr_die2x(100,FATAL,MSG("ERR_MAILING_LIST"));
       }
     }
 
@@ -396,5 +396,5 @@ void main(int argc,char **argv)
       strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
       strerr_die2x(0,"ezmlm-store: info: qp ",strnum);
   } else
-      strerr_die3x(111,FATAL,ERR_TMP_QMAIL_QUEUE,err+1);
+      strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),err+1);
 }

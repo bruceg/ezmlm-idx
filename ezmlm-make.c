@@ -54,20 +54,20 @@ const char USAGE[] =
 
 void die_relative(void)
 {
-  strerr_die2x(100,FATAL,ERR_SLASH);
+  strerr_die2x(100,FATAL,MSG("ERR_SLASH"));
 }
 void die_newline(void)
 {
-  strerr_die2x(100,FATAL,ERR_NEWLINE);
+  strerr_die2x(100,FATAL,MSG("ERR_NEWLINE"));
 }
 void die_quote(void)
 {
-  strerr_die2x(100,FATAL,ERR_QUOTE);
+  strerr_die2x(100,FATAL,MSG("ERR_QUOTE"));
 }
 
 void die_read(void)
 {
-  strerr_die4sys(111,FATAL,ERR_READ,dirplus.s,": ");
+  strerr_die4sys(111,FATAL,MSG("ERR_READ"),dirplus.s,": ");
 }
 
 static stralloc outline = {0};
@@ -126,9 +126,9 @@ void linkdotdir(const char *dash,const char *slash)
   if (flags['e' - 'a'])
     if (unlink(dotplus.s) == -1)
       if (errno != error_noent)
-        strerr_die4x(111,FATAL,ERR_DELETE,dotplus.s,": ");
+        strerr_die4x(111,FATAL,MSG("ERR_DELETE"),dotplus.s,": ");
   if (symlink(dirplus.s,dotplus.s) == -1)
-    strerr_die4sys(111,FATAL,ERR_CREATE,dotplus.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dotplus.s,": ");
   keyaddtime();
 }
 
@@ -137,7 +137,7 @@ void dcreate(const char *slash)
   dirplusmake(slash);
   if (mkdir(dirplus.s,0755) == -1)
     if ((errno != error_exist) || !flags['e' - 'a'])
-      strerr_die4sys(111,FATAL,ERR_CREATE,dirplus.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dirplus.s,": ");
   keyaddtime();
 }
 
@@ -151,7 +151,7 @@ void f_open(const char *slash)
   dirplusmake(slash);
   fd = open_trunc(dirplus.s);
   if (fd == -1)
-    strerr_die4sys(111,FATAL,ERR_CREATE,dirplus.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dirplus.s,": ");
 
   substdio_fdbuf(&ss,write,fd,ssbuf,sizeof(ssbuf));
 }
@@ -159,22 +159,22 @@ void f_open(const char *slash)
 void f_put(const char *buf,unsigned int len)
 {
   if (substdio_bput(&ss,buf,len) == -1)
-    strerr_die4sys(111,FATAL,ERR_WRITE,dirplus.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dirplus.s,": ");
 }
 void f_puts(const char *buf)
 {
   if (substdio_bputs(&ss,buf) == -1)
-    strerr_die4sys(111,FATAL,ERR_WRITE,dirplus.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dirplus.s,": ");
 }
 
 void f_close(void)
 {
   if (substdio_flush(&ss) == -1)
-    strerr_die4sys(111,FATAL,ERR_FLUSH,dirplus.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_FLUSH"),dirplus.s,": ");
   if (fsync(ss.fd) == -1)
-    strerr_die4sys(111,FATAL,ERR_SYNC,dirplus.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_SYNC"),dirplus.s,": ");
   if (close(ss.fd) == -1) /* NFS stupidity */
-    strerr_die4sys(111,FATAL,ERR_CLOSE,dirplus.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_CLOSE"),dirplus.s,": ");
   keyaddtime();
 }
 
@@ -183,7 +183,7 @@ void frm(const char *slash)
   dirplusmake(slash);
   if (unlink(dirplus.s) == -1)
     if (errno != error_noent)
-    strerr_die4sys(111,FATAL,ERR_DELETE,dirplus.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),dirplus.s,": ");
 }
 
 int read_line(const char *dpm,stralloc *sa)
@@ -265,7 +265,7 @@ int read_old_config(void)
 	  if (usecfg && popt[ch - '0'].len == 0)
 	    if (!stralloc_copys(&popt[ch-'0'],line.s+2)) die_nomem();
 	} else
-	  strerr_die4x(111,FATAL,dirplus.s,ERR_SYNTAX,line.s+2);
+	  strerr_die4x(111,FATAL,dirplus.s,MSG("ERR_SYNTAX"),line.s+2);
 	break;
       }
     }
@@ -280,7 +280,7 @@ static int open_template(stralloc *fn)
   struct stat st;
   if (!stralloc_0(fn)) die_nomem();
   if (stat(fn->s,&st) == -1)
-    strerr_die4sys(111,FATAL,ERR_STAT,fn->s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_STAT"),fn->s,": ");
   if (S_ISDIR(st.st_mode)) {
     --fn->len;
     if (!stralloc_cats(fn,TXT_EZMLMRC)) die_nomem();
@@ -288,9 +288,9 @@ static int open_template(stralloc *fn)
   }
   if ((fd = open_read(fn->s)) == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_OPEN,fn->s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn->s,": ");
     else
-      strerr_die3x(100,FATAL,template.s,ERR_NOEXIST);
+      strerr_die3x(100,FATAL,template.s,MSG("ERR_NOEXIST"));
   }
   return fd;
 }
@@ -478,9 +478,9 @@ void main(int argc,char **argv)
   flagdo = 0;
 
   if (getln(&sstext,&line,&match,'\n') == -1)
-    strerr_die4sys(111,FATAL,ERR_READ,template.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_READ"),template.s,": ");
   if (!match)
-    strerr_die4sys(111,FATAL,ERR_READ,template.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_READ"),template.s,": ");
   i = str_rchr(auto_version,'-');			/* check version */
   if (auto_version[i]) i++;
   j = 0;
@@ -490,11 +490,11 @@ void main(int argc,char **argv)
   }							/* first minor */
   if (auto_version[i] != '.' || j + 1 >= line.len ||
 		auto_version[i+1] != line.s[j+1])
-    strerr_warn2(WARNING,ERR_VERSION, (struct strerr *) 0);
+    strerr_warn2(WARNING,MSG("ERR_VERSION"), (struct strerr *) 0);
 
   for (;;) {
     if (getln(&sstext,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,ERR_READ,template.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),template.s,": ");
     if (!match)
       break;
     if (line.s[0] == '#')				/* comment */
@@ -502,7 +502,7 @@ void main(int argc,char **argv)
     if (!stralloc_0(&line)) die_nomem();
     if (line.s[0] == '<' && line.s[1] == '/') {		/* tag */
       if (byte_chr(line.s,line.len,'.') < line.len)
-	strerr_die3x(100,FATAL,ERR_PERIOD,line.s);
+	strerr_die3x(100,FATAL,MSG("ERR_PERIOD"),line.s);
       flagdo = 1;
       flagover = 0;
       hashpos = 0;
@@ -533,7 +533,7 @@ void main(int argc,char **argv)
         }
         if (pos < line.len
 	    && (line.s[pos] != '/' || line.s[pos+1] != '>'))
-          strerr_die3x(100,FATAL,ERR_ENDTAG,line.s);
+          strerr_die3x(100,FATAL,MSG("ERR_ENDTAG"),line.s);
       } else {
         flagdo = 1;
         pos = 2;	/* name needs to be >= 1 char */
@@ -543,7 +543,7 @@ void main(int argc,char **argv)
           pos++;
         }
         if (pos >= line.len)
-          strerr_die3x(100,FATAL,ERR_ENDTAG,line.s);
+          strerr_die3x(100,FATAL,MSG("ERR_ENDTAG"),line.s);
       }
       if (hashpos)
         pos = hashpos;	/* points to after file name */
@@ -562,7 +562,7 @@ void main(int argc,char **argv)
           continue;
         slpos = byte_chr(line.s+3,line.len-3,'/') + 3;
         if (slpos >= pos)
-          strerr_die3x(100,FATAL,ERR_LINKDIR,line.s);
+          strerr_die3x(100,FATAL,MSG("ERR_LINKDIR"),line.s);
         if (!stralloc_copyb(&dname,line.s+slpos,pos-slpos)) die_nomem();
         if (!stralloc_copyb(&lname,line.s+3,slpos-3)) die_nomem();
         if (!stralloc_0(&dname)) die_nomem();
@@ -597,7 +597,7 @@ void main(int argc,char **argv)
 	  fdtmp = open_read(dirplus.s);
 	  if (fdtmp == -1) {
 	    if (errno != error_noent)
-	      strerr_die3sys(111,ERR_OPEN,dirplus.s,": ");
+	      strerr_die3sys(111,MSG("ERR_OPEN"),dirplus.s,": ");
           } else {
 	    flagnotexist = 0;		/* already there - don't do it */
 	    close(fdtmp);
@@ -610,7 +610,7 @@ void main(int argc,char **argv)
           }
           if (flagdo && flagnotexist) {
             if (!fname.len)
-              strerr_die3x(100,FATAL,ERR_FILENAME,line.s);
+              strerr_die3x(100,FATAL,MSG("ERR_FILENAME"),line.s);
             f_open(fname.s);
            if (!stralloc_copy(&oldfname,&fname)) die_nomem();
           }
@@ -695,6 +695,6 @@ void main(int argc,char **argv)
     if (!stralloc_0(&popt[6])) die_nomem();
   initsub(popt[6].s);
   if ((p = mktab()) != NULL)
-    strerr_die3x(100,FATAL,ERR_MKTAB,p);
+    strerr_die3x(100,FATAL,MSG("ERR_MKTAB"),p);
   _exit(0);
 }

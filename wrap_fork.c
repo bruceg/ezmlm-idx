@@ -9,6 +9,6 @@ int wrap_fork(void)
 {
   int child;
   if ((child = fork()) == -1)
-    strerr_die2sys(111, FATAL, ERR_FORK);
+    strerr_die2sys(111, FATAL, MSG("ERR_FORK"));
   return child;
 }

@@ -50,9 +50,9 @@ int openone(unsigned long outnum)
 
   if (mkdir(fnadir.s,0755) == -1)
     if (errno != error_exist)
-      strerr_die4sys(111,FATAL,ERR_CREATE,fnadir.s,": ");
+      strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),fnadir.s,": ");
   if ((fd = open_trunc(fnaf.s)) == -1)
-    strerr_die4sys(111,FATAL,ERR_WRITE,fnaf.s,": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fnaf.s,": ");
 
   substdio_fdbuf(&ssarchive,write,fd,archivebuf,sizeof archivebuf);
   return fd;
@@ -72,9 +72,9 @@ void numwrite(void)
       || write(fd, strnum, i) != i
       || fsync(fd) == -1
       || close(fd) == -1)
-    strerr_die3sys(111,FATAL,ERR_CREATE,"numnew: ");
+    strerr_die3sys(111,FATAL,MSG("ERR_CREATE"),"numnew: ");
   if (rename("numnew","num") == -1)
-    strerr_die3sys(111,FATAL,ERR_MOVE,"numnew: ");
+    strerr_die3sys(111,FATAL,MSG("ERR_MOVE"),"numnew: ");
   
 }
 
@@ -100,7 +100,7 @@ int main(int argc,char *argv[])
     die_usage();
 
   if ((fd = open_read(argv[optind+1])) == -1)
-    strerr_die4sys(111,FATAL,ERR_OPEN,argv[optind+1],": ");
+    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),argv[optind+1],": ");
   substdio_fdbuf(&ssin,read,fd,inputbuf,sizeof inputbuf);
 
   startup(dir = argv[optind]);
@@ -116,7 +116,7 @@ int main(int argc,char *argv[])
 	if (substdio_flush(&ssarchive) == -1
 	    || fchmod(fd,MODE_ARCHIVE|0700) == -1
 	    || close(fd) == -1)
-	  strerr_die4sys(111,FATAL,ERR_WRITE,fnaf.s,": ");
+	  strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fnaf.s,": ");
 	fd = 0;
       }
       ++msgnum;

@@ -122,20 +122,20 @@ void main(int argc,char **argv)
       if ((tsttime + 3600L < when) || (tsttime <= digwhen)) {
         fd = open_trunc("tstdign");
         if (fd == -1)
-          strerr_die6sys(111,FATAL,ERR_CREATE,dir,"/","tstdign",": ");
+          strerr_die6sys(111,FATAL,MSG("ERR_CREATE"),dir,"/","tstdign",": ");
         substdio_fdbuf(&ssnum,write,fd,numbuf,sizeof(numbuf));
         if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,when)) == -1)
-          strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/","tstdign",": ");
+          strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/","tstdign",": ");
         if (substdio_puts(&ssnum,"\n") == -1)
-          strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/","tstdign",": ");
+          strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/","tstdign",": ");
         if (substdio_flush(&ssnum) == -1)
-          strerr_die6sys(111,FATAL,ERR_FLUSH,dir,"/","tstdign",": ");
+          strerr_die6sys(111,FATAL,MSG("ERR_FLUSH"),dir,"/","tstdign",": ");
         if (fsync(fd) == -1)
-          strerr_die6sys(111,FATAL,ERR_SYNC,dir,"/","tstdign",": ");
+          strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/","tstdign",": ");
         if (close(fd) == -1)
-          strerr_die6sys(111,FATAL,ERR_CLOSE,dir,"/","tstdign",": ");
+          strerr_die6sys(111,FATAL,MSG("ERR_CLOSE"),dir,"/","tstdign",": ");
         if (rename("tstdign","tstdig") == -1)
-          strerr_die4sys(111,FATAL,ERR_MOVE,"tstdign",": ");
+          strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),"tstdign",": ");
         _exit(0);
       }
     } else

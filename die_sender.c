@@ -4,5 +4,5 @@
 
 void die_sender(void)
 {
-  strerr_die2x(100,FATAL,ERR_NOSENDER);
+  strerr_die2x(100,FATAL,MSG("ERR_NOSENDER"));
 }

@@ -71,7 +71,7 @@ const char *sender;
 
 void die_cookie(void)
 {
-  strerr_die2x(100,FATAL,ERR_MOD_COOKIE);
+  strerr_die2x(100,FATAL,MSG("ERR_MOD_COOKIE"));
 }
 
 stralloc mydtline = {0};
@@ -152,22 +152,22 @@ void store_from(stralloc *frl,	/* from line */
   if (!flagstorefrom || !frl->len) return;	/* nothing to store */
   lock();
   if ((fdout = open_trunc("fromn")) == -1)
-    strerr_die3sys(111,FATAL,ERR_OPEN,"fromn: ");
+    strerr_die3sys(111,FATAL,MSG("ERR_OPEN"),"fromn: ");
   substdio_fdbuf(&ssfrom,write,fdout,frombuf,(int) sizeof(frombuf));
   if ((fdin = open_read("from")) == -1) {
     if (errno != error_noent)
-      strerr_die3sys(111,FATAL,ERR_OPEN,"from: ");
+      strerr_die3sys(111,FATAL,MSG("ERR_OPEN"),"from: ");
   } else {
       substdio_fdbuf(&sstext,read,fdin,textbuf,(int) sizeof(textbuf));
       for (;;) {
 	if (getln(&sstext,&line,&match,'\n') == -1)
-	strerr_die3sys(111,FATAL,ERR_READ,"from: ");
+	strerr_die3sys(111,FATAL,MSG("ERR_READ"),"from: ");
 	if (!match) break;
 	(void) scan_ulong(line.s,&linetime);
 	if (linetime + 1000000 > (unsigned long) when
 	    && linetime <= (unsigned long) when)
 	  if (substdio_bput(&ssfrom,line.s,line.len))
-	    strerr_die3sys(111,FATAL,ERR_WRITE,"fromn: ");
+	    strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"fromn: ");
       }
       close(fdin);
   }					/* build new entry */
@@ -178,15 +178,15 @@ void store_from(stralloc *frl,	/* from line */
   if (!stralloc_catb(&line,frl->s,frl->len)) die_nomem();
   if (!stralloc_append(&line,"\n")) die_nomem();
   if (substdio_bput(&ssfrom,line.s,line.len) == -1)
-    strerr_die3sys(111,FATAL,ERR_WRITE,"fromn: ");
+    strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"fromn: ");
   if (substdio_flush(&ssfrom) == -1)
-    strerr_die3sys(111,FATAL,ERR_WRITE,"fromn: ");
+    strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"fromn: ");
   if (fsync(fdout) == -1)
-    strerr_die3sys(111,FATAL,ERR_SYNC,"fromn: ");
+    strerr_die3sys(111,FATAL,MSG("ERR_SYNC"),"fromn: ");
   if (close(fdout) == -1)
-    strerr_die3sys(111,FATAL,ERR_CLOSE,"fromn: ");
+    strerr_die3sys(111,FATAL,MSG("ERR_CLOSE"),"fromn: ");
   if (rename("fromn","from") == -1)
-    strerr_die3sys(111,FATAL,ERR_MOVE,"from: ");
+    strerr_die3sys(111,FATAL,MSG("ERR_MOVE"),"from: ");
   unlock();
 }
 
@@ -220,12 +220,12 @@ const char *get_from(const char *adr, /* target address */
     if (errno == error_noent)
       return 0;
     else
-      strerr_die3x(111,FATAL,ERR_READ,"from: ");
+      strerr_die3x(111,FATAL,MSG("ERR_READ"),"from: ");
   }
   substdio_fdbuf(&sstext,read,fd,textbuf,(int) sizeof(textbuf));
   for (;;) {
     if (getln(&sstext,&fromline,&match,'\n') == -1)
-      strerr_die3sys(111,FATAL,ERR_READ,"from: ");
+      strerr_die3sys(111,FATAL,MSG("ERR_READ"),"from: ");
     if (!match) break;
     fromline.s[fromline.len - 1] = (char) 0;
 	/* now:time addr\0fromline\0 read all. They can be out of order! */
@@ -281,7 +281,7 @@ int code_qput(const char *s,unsigned int n)
 
 int code_qputs(const char *s)
 {
-  return code_qput(s,str_len(s));
+  return code_qput(s,str_len(s)) && code_qput("\n",1);
 }
 
 int subto(const char *s,unsigned int l)
@@ -319,9 +319,9 @@ void mod_bottom(void)
 {
       copy(&qq,"text/mod-sub",flagcd);
       copy(&qq,"text/bottom",flagcd);
+      code_qputs("");
+      code_qputs(MSG("SUPPRESSED"));
       code_qputs("\n");
-      code_qputs(TXT_SUPPRESSED);
-      code_qputs("\n\n");
       if (flagcd)
 	hdr_boundary(1);
       if (flagcd == 'B') {
@@ -375,17 +375,17 @@ void msg_headers(void)
 	 ((act == AC_SC) || ((act == AC_SUBSCRIBE) && !flagsubconf));
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
     if (!match) break;
     if (line.len == 1) break;
     if ((line.s[0] != ' ') && (line.s[0] != '\t')) {
       flagfromline = 0;
       flaggoodfield = 0;
       if (case_startb(line.s,line.len,"mailing-list:"))
-        strerr_die2x(100,FATAL,ERR_MAILING_LIST);
+        strerr_die2x(100,FATAL,MSG("ERR_MAILING_LIST"));
       if (line.len == mydtline.len)
 	if (byte_equal(line.s,line.len,mydtline.s))
-          strerr_die2x(100,FATAL,ERR_LOOPING);
+          strerr_die2x(100,FATAL,MSG("ERR_LOOPING"));
       if (case_startb(line.s,line.len,"delivered-to:"))
         flaggoodfield = 1;
       else if (case_startb(line.s,line.len,"received:"))
@@ -458,7 +458,7 @@ int geton(const char *action)
             break;
     default:
             if (str_start(action,ACTION_TC))
-              strerr_die2x(0,INFO,ERR_SUB_NOP);
+              strerr_die2x(0,INFO,MSG("ERR_SUB_NOP"));
 	    hdr_subject(MSG("SUB_SUBSCRIBE_NOP"));
             hdr_ctboundary();
             copy(&qq,"text/top",flagcd);
@@ -466,7 +466,7 @@ int geton(const char *action)
             break;
   }
   if (flagdig == FLD_DENY || flagdig == FLD_ALLOW)
-    strerr_die3x(0,INFO,ERR_EXTRA_SUB,target.s);
+    strerr_die3x(0,INFO,MSG("ERR_EXTRA_SUB"),target.s);
   return r;
 }
 
@@ -492,7 +492,7 @@ int getoff(const char *action)
             break;
   }
   if (flagdig == FLD_DENY || flagdig == FLD_ALLOW)
-    strerr_die3x(0,INFO,ERR_EXTRA_UNSUB,target.s);
+    strerr_die3x(0,INFO,MSG("ERR_EXTRA_UNSUB"),target.s);
   return r;
 }
 
@@ -554,9 +554,9 @@ void copybottom(void)
     qmail_put(&qq,quoted.s,quoted.len);
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
-      strerr_die2sys(111,FATAL,ERR_SEEK_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_SEEK_INPUT"));
     if (qmail_copy(&qq,&ssin2,copylines) != 0)
-      strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
     if (flagcd)
       hdr_boundary(1);
   } else {
@@ -627,16 +627,16 @@ int main(int argc,char **argv)
   getconf_ulong(&copylines,"copylines",0);
 
   sender = env_get("SENDER");
-  if (!sender) strerr_die2x(100,FATAL,ERR_NOSENDER);
+  if (!sender) strerr_die2x(100,FATAL,MSG("ERR_NOSENDER"));
   action = env_get("DEFAULT");
-  if (!action) strerr_die2x(100,FATAL,ERR_NODEFAULT);
+  if (!action) strerr_die2x(100,FATAL,MSG("ERR_NODEFAULT"));
 
   if (!*sender)
-    strerr_die2x(100,FATAL,ERR_BOUNCE);
+    strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
   if (!sender[str_chr(sender,'@')])
-    strerr_die2x(100,FATAL,ERR_ANONYMOUS);
+    strerr_die2x(100,FATAL,MSG("ERR_ANONYMOUS"));
   if (str_equal(sender,"#@[]"))
-    strerr_die2x(100,FATAL,ERR_BOUNCE);
+    strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
 
   workdir = ".";
 
@@ -729,14 +729,14 @@ int main(int argc,char **argv)
 				/* is false for all non-mod lists, only it   */
 				/* needs to be tested. */
   if ((flagpublic = slurp("public",&line,1)) == -1)
-      strerr_die4sys(111,FATAL,ERR_READ,dir,"/public: ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),dir,"/public: ");
   if (!flagpublic && !(ismod && flagremote) &&
                 !case_equals(action,ACTION_HELP))
-      strerr_die2x(100,FATAL,ERR_NOT_PUBLIC);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_PUBLIC"));
 
   if (flagdig == FLD_DENY)
     if (!ismod || !flagremote)	/* only mods can do */
-      strerr_die1x(100,ERR_NOT_ALLOWED);
+      strerr_die1x(100,MSG("ERR_NOT_ALLOWED"));
 
   if (act == AC_NONE) {		/* none of the above */
     if (case_equals(action,ACTION_SUBSCRIBE) ||
@@ -754,7 +754,7 @@ int main(int argc,char **argv)
   if (!stralloc_0(&from)) die_nomem();
 
   if (qmail_open(&qq,(stralloc *) 0) == -1)
-    strerr_die2sys(111,FATAL,ERR_QMAIL_QUEUE);
+    strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
   msg_headers();
 
   if (act == AC_SUBSCRIBE) {
@@ -879,7 +879,7 @@ int main(int argc,char **argv)
     if (hashok(action,ac)) {
       r = getoff(action);
       if (!r && flagmod)
-        strerr_die2x(0,INFO,ERR_UNSUB_NOP);
+        strerr_die2x(0,INFO,MSG("ERR_UNSUB_NOP"));
       mod_bottom();
       if (r) {				/* success to target */
 	qmail_to(&qq,target.s);
@@ -899,17 +899,17 @@ int main(int argc,char **argv)
   } else if (act == AC_LIST || act == AC_LISTN) {
 
     if (!flaglist || (!flagmod && !flagremote))
-      strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_AVAILABLE"));
     if (!ismod)
-      strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_ALLOWED"));
     hdr_subject(MSG("SUB_LIST"));
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 
     if (act == AC_LIST) {
+      (void) code_qputs("");
+      (void) code_qputs(MSG("LISTMEMBERS"));
       (void) code_qputs("\n");
-      (void) code_qputs(TXT_LISTMEMBERS);
-      (void) code_qputs("\n\n");
       i = putsubs(workdir,0L,52L,code_subto);
     } else			/* listn */
       i = putsubs(workdir,0L,52L,dummy_to);
@@ -924,9 +924,9 @@ int main(int argc,char **argv)
     action += actlen;
     if (*action == '.' || *action == '_') ++action;
     if (!flaglist || !flagremote)
-      strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_AVAILABLE"));
     if (!ismod)
-      strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_ALLOWED"));
     hdr_subject(MSG((*action == 0) ? "SUB_LOG" : "SUB_LOG_SEARCH"));
     hdr_ctboundary();
     searchlog(workdir,action,code_subto);
@@ -936,15 +936,15 @@ int main(int argc,char **argv)
   } else if (act == AC_EDIT) {
 	/* only remote admins and only if -e is specified may edit */
     if (!flagedit || !flagremote)
-      strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_AVAILABLE"));
     if (!ismod)
-      strerr_die2x(100,FATAL,ERR_NOT_ALLOWED);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_ALLOWED"));
     len = str_len(ACTION_EDIT);
     if (!case_starts(action,ACTION_EDIT))
       len = str_len(ALT_EDIT);
     if (action[len]) {			/* -edit.file, not just -edit */
       if (action[len] != '.')
-        strerr_die2x(100,FATAL,ERR_BAD_REQUEST);
+        strerr_die2x(100,FATAL,MSG("ERR_BAD_REQUEST"));
       if (!stralloc_copys(&fnedit,"text/")) die_nomem();
       if (!stralloc_cats(&fnedit,action+len+1)) die_nomem();
       if (!stralloc_0(&fnedit)) die_nomem();
@@ -952,14 +952,14 @@ int main(int argc,char **argv)
       i = 5;	/* after the "text/" */
       while ((ch = fnedit.s[i++])) {
         if (((ch > 'z') || (ch < 'a')) && (ch != '_'))
-          strerr_die2x(100,FATAL,ERR_BAD_NAME);
+          strerr_die2x(100,FATAL,MSG("ERR_BAD_NAME"));
         if (ch == '_') fnedit.s[i-1] = '-';
       }
       switch(slurp(fnedit.s,&text,1024)) {	/* entire file! */
         case -1:
-          strerr_die6sys(111,FATAL,ERR_READ,dir,"/",fnedit.s,": ");
+          strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir,"/",fnedit.s,": ");
         case 0:
-          strerr_die5x(100,FATAL,dir,"/",fnedit.s,ERR_NOEXIST);
+          strerr_die5x(100,FATAL,dir,"/",fnedit.s,MSG("ERR_NOEXIST"));
       }
       if (!stralloc_copy(&line,&text)) die_nomem();
       {		/* get rid of nulls to use cookie */
@@ -994,11 +994,9 @@ int main(int argc,char **argv)
       hdr_ctboundary();
       copy(&qq,"text/top",flagcd);
       copy(&qq,"text/edit-do",flagcd);
-      (void) code_qput(TXT_EDIT_START,str_len(TXT_EDIT_START));
-      (void) code_qput("\n",1);
+      (void) code_qputs(MSG("EDIT_START"));
       (void) code_qput(text.s,text.len);
-      (void) code_qput(TXT_EDIT_END,str_len(TXT_EDIT_END));
-      (void) code_qput("\n",1);
+      (void) code_qputs(MSG("EDIT_END"));
 
     } else {	/* -edit only, so output list of editable files */
       hdr_subject(MSG("SUB_EDIT_LIST"));
@@ -1029,7 +1027,7 @@ int main(int argc,char **argv)
     while (*++y) {		/* Name should be guaranteed by the cookie, */
 				/* but better safe than sorry ... */
       if (((*y > 'z') || (*y < 'a')) && (*y != '_'))
-          strerr_die2x(100,FATAL,ERR_BAD_NAME);
+          strerr_die2x(100,FATAL,MSG("ERR_BAD_NAME"));
       if (*y == '_') *y = '-';
     }
 
@@ -1037,9 +1035,9 @@ int main(int argc,char **argv)
 
     switch (slurp(fnedit.s,&text,1024)) {
       case -1:
-        strerr_die6sys(111,FATAL,ERR_READ,dir,"/",fnedit.s,": ");
+        strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir,"/",fnedit.s,": ");
       case 0:
-        strerr_die5x(100,FATAL,dir,"/",fnedit.s,ERR_NOEXIST);
+        strerr_die5x(100,FATAL,dir,"/",fnedit.s,MSG("ERR_NOEXIST"));
     }
     if (!stralloc_copy(&line,&text)) die_nomem();
     {		/* get rid of nulls to use cookie */
@@ -1059,14 +1057,14 @@ int main(int argc,char **argv)
     if (!stralloc_0(&fneditn)) die_nomem();
     fd = open_trunc(fneditn.s);
     if (fd == -1)
-      strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/",fneditn.s,": ");
+      strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fneditn.s,": ");
     substdio_fdbuf(&sstext,write,fd,textbuf,sizeof(textbuf));
     if (!stralloc_copys(&quoted,"")) die_nomem();	/* clear */
     if (!stralloc_copys(&text,"")) die_nomem();
 
     for (;;) {			/* get message body */
       if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die2sys(111,FATAL,ERR_READ_INPUT);
+        strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
       if (!match) break;
       if (!stralloc_cat(&text,&line)) die_nomem();
     }
@@ -1085,8 +1083,8 @@ int main(int argc,char **argv)
     while ((cpnext = cp + byte_chr(cp,cpafter-cp,'\n')) != cpafter) {
       i = byte_chr(cp,cpnext-cp,'%');
       if (i != (unsigned int) (cpnext - cp)) {
-        if (!flaggoodfield) {	/* TXT_EDIT_START/END */
-          if (case_startb(cp+i,cpnext-cp-i,TXT_EDIT_START)) {
+        if (!flaggoodfield) {	/* MSG("EDIT_START")/END */
+          if (case_startb(cp+i,cpnext-cp-i,MSG("EDIT_START"))) {
 		/* start tag. Store users 'quote characters', e.g. '> ' */
             if (!stralloc_copyb(&quoted,cp,i)) die_nomem();
             flaggoodfield = 1;
@@ -1095,14 +1093,14 @@ int main(int argc,char **argv)
             continue;
           }
         } else
-          if (case_startb(cp+i,cpnext-cp-i,TXT_EDIT_END)) {
+          if (case_startb(cp+i,cpnext-cp-i,MSG("EDIT_END"))) {
             flagdone = 1;
             break;
           }
       }
       if (flaggoodfield) {
         if ((len += cpnext - cp - quoted.len + 1) > MAXEDIT)
-          strerr_die1x(100,ERR_EDSIZE);
+          strerr_die1x(100,MSG("ERR_EDSIZE"));
 
         if (quoted.len && cpnext-cp >= (int) quoted.len &&
 			!str_diffn(cp,quoted.s,quoted.len))
@@ -1113,22 +1111,22 @@ int main(int argc,char **argv)
         else
           ++cplast;
         if (substdio_put(&sstext,cp,cplast-cp+1) == -1)
-            strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/",fneditn.s,": ");
+            strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fneditn.s,": ");
       }
       cp = cpnext + 1;
     }
     if (!flagdone)
-      strerr_die2x(100,FATAL,ERR_NO_MARK);
+      strerr_die2x(100,FATAL,MSG("ERR_NO_MARK"));
     if (substdio_flush(&sstext) == -1)
-      strerr_die6sys(111,FATAL,ERR_WRITE,dir,"/",fneditn.s,": ");
+      strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fneditn.s,": ");
     if (fsync(fd) == -1)
-      strerr_die6sys(111,FATAL,ERR_SYNC,dir,"/",fneditn.s,": ");
+      strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/",fneditn.s,": ");
     if (fchmod(fd, 0600) == -1)
-      strerr_die6sys(111,FATAL,ERR_CHMOD,dir,"/",fneditn.s,": ");
+      strerr_die6sys(111,FATAL,MSG("ERR_CHMOD"),dir,"/",fneditn.s,": ");
     if (close(fd) == -1)
-      strerr_die6sys(111,FATAL,ERR_CLOSE,dir,"/",fneditn.s,": ");
+      strerr_die6sys(111,FATAL,MSG("ERR_CLOSE"),dir,"/",fneditn.s,": ");
     if (rename(fneditn.s,fnedit.s) == -1)
-      strerr_die6sys(111,FATAL,ERR_MOVE,dir,"/",fneditn.s,": ");
+      strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),dir,"/",fneditn.s,": ");
 
     unlock();
     hdr_subject(MSG1("SUB_EDIT_SUCCESS",fname));
@@ -1147,7 +1145,7 @@ int main(int argc,char **argv)
     unsigned int pos;
 
     if (!flagget)
-      strerr_die2x(100,FATAL,ERR_NOT_AVAILABLE);
+      strerr_die2x(100,FATAL,MSG("ERR_NOT_AVAILABLE"));
     hdr_subject(MSG("SUB_GET_MSG"));
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
@@ -1168,7 +1166,7 @@ int main(int argc,char **argv)
     fd = open_read(line.s);
     if (fd == -1)
       if (errno != error_noent)
-	strerr_die4sys(111,FATAL,ERR_OPEN,line.s,": ");
+	strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
       else
         copy(&qq,"text/get-bad",flagcd);
     else {
@@ -1181,7 +1179,7 @@ int main(int argc,char **argv)
 	qmail_puts(&qq,"> ");
 	for (;;) {
 	  r = substdio_get(&sstext,&ch,1);
-	  if (r == -1) strerr_die4sys(111,FATAL,ERR_READ,line.s,": ");
+	  if (r == -1) strerr_die4sys(111,FATAL,MSG("ERR_READ"),line.s,": ");
 	  if (r == 0) break;
 	  qmail_put(&qq,&ch,1);
 	  if (ch == '\n') qmail_puts(&qq,"> ");
@@ -1248,7 +1246,7 @@ int main(int argc,char **argv)
       strerr_die2x(0,"ezmlm-manage: info: qp ",strnum);
   } else {
       closesub();
-      strerr_die3x(111,FATAL,ERR_TMP_QMAIL_QUEUE,err + 1);
+      strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),err + 1);
   }
 }
 

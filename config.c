@@ -47,9 +47,9 @@ static void load_config(void)
 
   switch(slurp("key",&key,512)) {
     case -1:
-      strerr_die4sys(111,FATAL,ERR_READ,listdir,"/key: ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),listdir,"/key: ");
     case 0:
-      strerr_die4x(100,FATAL,listdir,"/key",ERR_NOEXIST);
+      strerr_die4x(100,FATAL,listdir,"/key",MSG("ERR_NOEXIST"));
   }
 
   /* There are problems with using getconf_line to fetch the ezmlmrc
@@ -57,7 +57,7 @@ static void load_config(void)
    * whole ezmlmrc file itself. */
   switch (slurp("ezmlmrc",&ezmlmrc,64)) {
   case -1:
-    strerr_die4sys(111,FATAL,ERR_READ,listdir,"/ezmlmrc: ");
+    strerr_die4sys(111,FATAL,MSG("ERR_READ"),listdir,"/ezmlmrc: ");
   case 0:
     ezmlmrc.len = 0;
   }

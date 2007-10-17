@@ -71,7 +71,7 @@ static void parsesubdb(const char *plugin)
     }
   }
   if (!info.plugin || !*info.plugin)
-    strerr_die2x(111,FATAL,ERR_NO_PLUGIN);
+    strerr_die2x(111,FATAL,MSG("ERR_NO_PLUGIN"));
   if (port && *port)
     scan_ulong(port,&info.port);
   if (info.host && !*info.host)
@@ -91,7 +91,7 @@ static int loadsubdb(const char *filename, const char *plugin)
   line.len = 0;
   switch (slurp(filename,&line,128)) {
   case -1:
-    strerr_die3x(111,FATAL,ERR_READ,filename);
+    strerr_die3x(111,FATAL,MSG("ERR_READ"),filename);
   case 0:
     return 0;
   default:
@@ -112,13 +112,13 @@ static const char *fixsubdir(const char *subdir)
       if (str_diffn(subdir,listdir,dir_len) != 0
 	  || (subdir[dir_len] != '/'
 	      && subdir[dir_len] != 0))
-	strerr_die2x(111,FATAL,ERR_NO_ABSOLUTE);
+	strerr_die2x(111,FATAL,MSG("ERR_NO_ABSOLUTE"));
       subdir += dir_len;
       while (*subdir == '/')
 	++subdir;
     }
     if (subdir[str_chr(subdir,'/')] == '/')
-      strerr_die2x(111,FATAL,ERR_NO_LEVELS);
+      strerr_die2x(111,FATAL,MSG("ERR_NO_LEVELS"));
     if (subdir[0] == 0
 	|| (subdir[0] == '.' && subdir[1] == 0))
       subdir = 0;
@@ -228,7 +228,7 @@ int subscribe(const char *subdir,
   subdir = fixsubdir(subdir);
 
   if (userhost[str_chr(userhost,'\n')])
-    strerr_die2x(100,FATAL,ERR_ADDR_NL);
+    strerr_die2x(100,FATAL,MSG("ERR_ADDR_NL"));
 
   if ((r = opensub()) != 0)
     strerr_die2x(111,FATAL,r);

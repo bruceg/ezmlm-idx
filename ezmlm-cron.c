@@ -77,12 +77,12 @@ static const char *cp;
 static void die_syntax(void)
 {
   if (!stralloc_0(&line)) die_nomem();
-  strerr_die5x(100,FATAL,TXT_EZCRONRC," ",ERR_SYNTAX,line.s);
+  strerr_die5x(100,FATAL,TXT_EZCRONRC," ",MSG("ERR_SYNTAX"),line.s);
 }
 
 static void die_argument(void)
 {
-  strerr_die2x(100,FATAL,ERR_NOT_CLEAN);
+  strerr_die2x(100,FATAL,MSG("ERR_NOT_CLEAN"));
 }
 
 int isclean(char *addr,
@@ -165,16 +165,16 @@ void main(int argc,char **argv)
                 die_usage();
     }
   if (flaglist + flagdelete + flagconfig > 1)
-    strerr_die2x(100,FATAL,ERR_EXCLUSIVE);
+    strerr_die2x(100,FATAL,MSG("ERR_EXCLUSIVE"));
   uid = getuid();
   if (uid && !(euid = geteuid()))
-    strerr_die2x(100,FATAL,ERR_SUID);
+    strerr_die2x(100,FATAL,MSG("ERR_SUID"));
   if (!(ppasswd = getpwuid(uid)))
-    strerr_die2x(100,FATAL,ERR_UID);
+    strerr_die2x(100,FATAL,MSG("ERR_UID"));
   if (!stralloc_copys(&user,ppasswd->pw_name)) die_nomem();
   if (!stralloc_0(&user)) die_nomem();
   if (!(ppasswd = getpwuid(euid)))
-    strerr_die2x(100,FATAL,ERR_EUID);
+    strerr_die2x(100,FATAL,MSG("ERR_EUID"));
   if (!stralloc_copys(&dir,ppasswd->pw_dir)) die_nomem();
   if (!stralloc_0(&dir)) die_nomem();
   if (!stralloc_copys(&euser,ppasswd->pw_name)) die_nomem();
@@ -209,25 +209,25 @@ void main(int argc,char **argv)
         die_argument();
   }
   if ((fdin = open_read(TXT_EZCRONRC)) == -1)
-    strerr_die6sys(111,FATAL,ERR_OPEN,dir.s,"/",TXT_EZCRONRC,": ");
+    strerr_die6sys(111,FATAL,MSG("ERR_OPEN"),dir.s,"/",TXT_EZCRONRC,": ");
 	/* first line is special */
   substdio_fdbuf(&ssin,read,fdin,inbuf,sizeof(inbuf));
   if (getln(&ssin,&line,&match,'\n') == -1)
-    strerr_die6sys(111,FATAL,ERR_READ,dir.s,"/",TXT_EZCRONRC,": ");
+    strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir.s,"/",TXT_EZCRONRC,": ");
 
   if (!match)
-    strerr_die6sys(111,FATAL,ERR_READ,dir.s,"/",TXT_EZCRONRC,": ");
+    strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir.s,"/",TXT_EZCRONRC,": ");
 	/* (since we have match line.len has to be >= 1) */
   line.s[line.len - 1] = '\0';
   if (!isclean(line.s,0))	 /* host for bounces */
-    strerr_die4x(100,ERR_CFHOST,dir.s,"/",TXT_EZCRONRC);
+    strerr_die4x(100,MSG("ERR_CFHOST"),dir.s,"/",TXT_EZCRONRC);
   if (!stralloc_copys(&rp,line.s)) die_nomem();
 
   match = 1;
   for(;;) {
     if (!match) break;		/* to allow last line without '\n' */
     if (getln(&ssin,&line,&match,'\n') == -1)
-    strerr_die6sys(111,FATAL,ERR_READ,dir.s,"/",TXT_EZCRONRC,": ");
+    strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir.s,"/",TXT_EZCRONRC,": ");
     if (!line.len)
       break;
     line.s[line.len-1] = '\0';
@@ -241,15 +241,15 @@ void main(int argc,char **argv)
   }
   close(fdin);
   if (!founduser)
-    strerr_die2x(100,FATAL,ERR_BADUSER);
+    strerr_die2x(100,FATAL,MSG("ERR_BADUSER"));
   
   if (flagconfig) {
     line.s[line.len-1] = '\n';	/* not very elegant ;-) */
     substdio_fdbuf(&ssout,write,1,outbuf,sizeof(outbuf));
     if (substdio_put(&ssout,line.s,line.len) == -1)
-      strerr_die3sys(111,FATAL,ERR_WRITE,"stdout: ");
+      strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
     if (substdio_flush(&ssout) == -1)
-      strerr_die3sys(111,FATAL,ERR_WRITE,"stdout: ");
+      strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
     _exit(0);
   }
   ++pos;				/* points to first ':' */
@@ -305,9 +305,9 @@ void main(int argc,char **argv)
   }
   if (!listmatch) {
     if (!hostmatch)
-      strerr_die2x(100,FATAL,ERR_BADHOST);
+      strerr_die2x(100,FATAL,MSG("ERR_BADHOST"));
     if (!localmatch)
-      strerr_die2x(100,FATAL,ERR_BADLOCAL);
+      strerr_die2x(100,FATAL,MSG("ERR_BADLOCAL"));
   }
 	/* assemble correct line */
   if (!flaglist) {
@@ -361,14 +361,14 @@ void main(int argc,char **argv)
   } /* if !flaglist */
   if ((fdin = open_read("crontab")) == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,ERR_READ,dir.s,"/crontab: ");
+      strerr_die4sys(111,FATAL,MSG("ERR_READ"),dir.s,"/crontab: ");
   } else
     substdio_fdbuf(&ssin,read,fdin,inbuf,sizeof(inbuf));
   if (flaglist)
     substdio_fdbuf(&ssout,write,1,outbuf,sizeof(outbuf));
   else {
     if ((fdout = open_trunc("crontabn")) == -1)
-      strerr_die4sys(111,FATAL,ERR_WRITE,dir.s,"/crontabn: ");
+      strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dir.s,"/crontabn: ");
     substdio_fdbuf(&ssout,write,fdout,outbuf,sizeof(outbuf));
   }
   line.len = 0;
@@ -378,10 +378,10 @@ void main(int argc,char **argv)
       if (!flaglist && line.len) {
         line.s[line.len-1] = '\n';
         if (substdio_put(&ssout,line.s,line.len) == -1)
-          strerr_die4sys(111,FATAL,ERR_WRITE,dir.s,"/crontabn: ");
+          strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dir.s,"/crontabn: ");
       }
       if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die4sys(111,FATAL,ERR_READ,dir.s,"/crontab: ");
+        strerr_die4sys(111,FATAL,MSG("ERR_READ"),dir.s,"/crontab: ");
       if (!match)
         break;
       flagours = 0;			/* assume entry is not ours */
@@ -424,9 +424,9 @@ void main(int argc,char **argv)
         foundmatch = 1;
         if (flaglist && (local || flagours)) {
           if (substdio_put(&ssout,line.s,line.len) == -1)
-            strerr_die3sys(111,FATAL,ERR_WRITE,"stdout: ");
+            strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
           if (substdio_put(&ssout,"\n",1) == -1)
-            strerr_die3sys(111,FATAL,ERR_WRITE,"stdout: ");
+            strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
         }
         line.len = 0;		/* same - kill line */
         if (flagours)
@@ -437,29 +437,29 @@ void main(int argc,char **argv)
   }
   if (flaglist) {
     if (substdio_flush(&ssout) == -1)
-      strerr_die3sys(111,FATAL,ERR_FLUSH,"stdout: ");
+      strerr_die3sys(111,FATAL,MSG("ERR_FLUSH"),"stdout: ");
     if (foundmatch)		/* means we had a match */
       _exit(0);
     else
-      strerr_die2x(100,FATAL,ERR_NO_MATCH);
+      strerr_die2x(100,FATAL,MSG("ERR_NO_MATCH"));
   }
 	/* only -d and regular use left */
 
   if (nolists >= maxlists && !flagdelete)
-    strerr_die2x(100,FATAL,ERR_LISTNO);
+    strerr_die2x(100,FATAL,MSG("ERR_LISTNO"));
   if (!flagdelete)
     if (substdio_put(&ssout,addr.s,addr.len-1) == -1)
-      strerr_die4sys(111,FATAL,ERR_WRITE,dir.s,"/crontabn: ");
+      strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dir.s,"/crontabn: ");
   if (flagdelete && !foundlocal)
-    strerr_die2x(111,FATAL,ERR_NO_MATCH);
+    strerr_die2x(111,FATAL,MSG("ERR_NO_MATCH"));
   if (substdio_flush(&ssout) == -1)
-    strerr_die4sys(111,FATAL,ERR_FLUSH,dir.s,"/crontabn: ");
+    strerr_die4sys(111,FATAL,MSG("ERR_FLUSH"),dir.s,"/crontabn: ");
   if (fsync(fdout) == -1)
-    strerr_die4sys(111,FATAL,ERR_SYNC,dir.s,"/crontabn++: ");
+    strerr_die4sys(111,FATAL,MSG("ERR_SYNC"),dir.s,"/crontabn++: ");
   if (close(fdout) == -1)
-    strerr_die4sys(111,FATAL,ERR_CLOSE,dir.s,"/crontabn: ");
+    strerr_die4sys(111,FATAL,MSG("ERR_CLOSE"),dir.s,"/crontabn: ");
   if (rename("crontabn","crontab") == -1)
-    strerr_die4sys(111,FATAL,ERR_MOVE,dir.s,"/crontabn: ");
+    strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),dir.s,"/crontabn: ");
   sendargs[0] = "sh";
   sendargs[1] = "-c";
 
@@ -472,7 +472,7 @@ void main(int argc,char **argv)
   sendargs[3] = 0;
   if ((child = wrap_fork()) == 0) {
     if (setreuid(euid,euid) == -1)
-      strerr_die2sys(100,FATAL,ERR_SETUID);
+      strerr_die2sys(100,FATAL,MSG("ERR_SETUID"));
     wrap_execvp(sendargs);
   }
   /* parent */
@@ -480,6 +480,6 @@ void main(int argc,char **argv)
       case 0:
         _exit(0);
       default:
-        strerr_die2x(111,FATAL,ERR_CRONTAB);
+        strerr_die2x(111,FATAL,MSG("ERR_CRONTAB"));
   }
 }
