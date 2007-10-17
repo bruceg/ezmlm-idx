@@ -217,7 +217,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
     }
     close(fd);
     if (unlink(fndatenew.s) == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),fndatenew.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_DELETE",fndatenew.s));
   }
   if (substdio_puts(&ssout,"   ") == -1) die_hashnew();
   if (substdio_put(&ssout,strnum,fmt_ulong(strnum,msgnum)) == -1) die_hashnew();

@@ -129,9 +129,9 @@ void main(int argc,char **argv)
         if (substdio_puts(&ssnum,"\n") == -1)
           strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","tstdign"));
         if (substdio_flush(&ssnum) == -1)
-          strerr_die6sys(111,FATAL,MSG("ERR_FLUSH"),dir,"/","tstdign",": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_FLUSH","tstdign"));
         if (fsync(fd) == -1)
-          strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/","tstdign",": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_SYNC","tstdign"));
         if (close(fd) == -1)
           strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE","tstdign"));
         if (rename("tstdign","tstdig") == -1)

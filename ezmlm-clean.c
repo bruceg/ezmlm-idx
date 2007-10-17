@@ -140,7 +140,7 @@ void sendnotice(const char *d)
       }
 
       if (seek_begin(fd) == -1)
-        strerr_die4sys(111,FATAL,MSG("ERR_SEEK"),d,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_SEEK",d));
 
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       if (qmail_copy(&qq,&sstext,-1) != 0) die_read();

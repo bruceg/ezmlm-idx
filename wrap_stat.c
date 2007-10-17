@@ -12,7 +12,7 @@ int wrap_stat(const char *fn,struct stat *st)
   int r;
   if ((r = stat(fn,st)) == -1
       && errno != error_noent)
-    strerr_die4sys(111,FATAL,MSG("ERR_STAT"),fn,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fn));
   return r;
 }
 

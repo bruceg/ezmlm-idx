@@ -437,7 +437,7 @@ void main(int argc,char **argv)
   }
   if (flaglist) {
     if (substdio_flush(&ssout) == -1)
-      strerr_die3sys(111,FATAL,MSG("ERR_FLUSH"),"stdout: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_FLUSH","stdout"));
     if (foundmatch)		/* means we had a match */
       _exit(0);
     else
@@ -453,9 +453,9 @@ void main(int argc,char **argv)
   if (flagdelete && !foundlocal)
     strerr_die2x(111,FATAL,MSG("ERR_NO_MATCH"));
   if (substdio_flush(&ssout) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_FLUSH"),dir.s,"/crontabn: ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_FLUSH","crontabn"));
   if (fsync(fdout) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_SYNC"),dir.s,"/crontabn++: ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_SYNC","crontabn++"));
   if (close(fdout) == -1)
     strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE","crontabn"));
   if (rename("crontabn","crontab") == -1)

@@ -56,10 +56,10 @@ void close_proper(substdio *ss,const char *s,const char *sn)
 /* flush,sync,close,move sn->s) */
 {
    if (substdio_flush(ss) == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_FLUSH"),dir,"/",s,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_FLUSH",s));
   if (flagsync)
     if (fsync(ss->fd) == -1)
-       strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/",s,": ");
+       strerr_die2sys(111,FATAL,MSG1("ERR_SYNC",s));
   if (close(ss->fd) == -1)
      strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",s));
   if (rename(sn,s) == -1)

@@ -267,7 +267,7 @@ void main(int argc,char **argv)
 	strerr_die2sys(111,FATAL,MSG("ERR_WRITE_STDOUT"));
     }
     if (substdio_flush(subfdout) == -1)
-      strerr_die2sys(111,MSG("ERR_FLUSH"),"output: ");
+      strerr_die2sys(111,FATAL,MSG("ERR_FLUSH_STDOUT"));
     _exit(0);
   }
   (void)argc;

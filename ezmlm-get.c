@@ -243,9 +243,9 @@ void write_ulong(unsigned long num,unsigned long cum,unsigned long dat,
   if (substdio_puts(&ssnum,"\n") == -1)
      strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn));
   if (substdio_flush(&ssnum) == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_FLUSH"),dir,"/",fnn,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_FLUSH",fnn));
   if (fsync(fd) == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/",fnn,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_SYNC",fnn));
   if (close(fd) == -1)
      strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",fnn));
   if (rename(fnn,fn) == -1)

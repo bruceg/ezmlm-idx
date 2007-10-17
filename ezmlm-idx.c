@@ -290,9 +290,9 @@ int main(int argc,char **argv)
     if (!((msgnum + 1) % 100) ||
 		(msgnum == msgmax)) {	/* last in this set */
       if (substdio_flush(&ssindex) == -1)
-        strerr_die4sys(100,FATAL,MSG("ERR_FLUSH"),fnifn.s, ": ");
+        strerr_die2sys(100,FATAL,MSG1("ERR_FLUSH",fnifn.s));
       if (fsync(fdindexn) == -1)
-        strerr_die4sys(100,FATAL,MSG("ERR_SYNC"),fnifn.s, ": ");
+        strerr_die2sys(100,FATAL,MSG1("ERR_SYNC",fnifn.s));
       if (fchmod(fdindexn,MODE_ARCHIVE | 0700) == -1)
         strerr_die2sys(100,FATAL,MSG1("ERR_WRITE",fnifn.s));
       if (close(fdindexn) == -1)

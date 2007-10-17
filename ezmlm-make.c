@@ -126,7 +126,7 @@ void linkdotdir(const char *dash,const char *slash)
   if (flags['e' - 'a'])
     if (unlink(dotplus.s) == -1)
       if (errno != error_noent)
-        strerr_die4x(111,FATAL,MSG("ERR_DELETE"),dotplus.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_DELETE",dotplus.s));
   if (symlink(dirplus.s,dotplus.s) == -1)
     strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",dotplus.s));
   keyaddtime();
@@ -170,9 +170,9 @@ void f_puts(const char *buf)
 void f_close(void)
 {
   if (substdio_flush(&ss) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_FLUSH"),dirplus.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_FLUSH",dirplus.s));
   if (fsync(ss.fd) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_SYNC"),dirplus.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_SYNC",dirplus.s));
   if (close(ss.fd) == -1) /* NFS stupidity */
     strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",dirplus.s));
   keyaddtime();
@@ -183,7 +183,7 @@ void frm(const char *slash)
   dirplusmake(slash);
   if (unlink(dirplus.s) == -1)
     if (errno != error_noent)
-    strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),dirplus.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_DELETE",dirplus.s));
 }
 
 int read_line(const char *dpm,stralloc *sa)
@@ -280,7 +280,7 @@ static int open_template(stralloc *fn)
   struct stat st;
   if (!stralloc_0(fn)) die_nomem();
   if (stat(fn->s,&st) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_STAT"),fn->s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fn->s));
   if (S_ISDIR(st.st_mode)) {
     --fn->len;
     if (!stralloc_cats(fn,TXT_EZMLMRC)) die_nomem();

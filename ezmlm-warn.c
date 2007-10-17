@@ -217,10 +217,10 @@ void doit(int flagw)
   if (!flagw) {
     if (unlink(fnhash.s) == -1)
       if (errno != error_noent)
-        strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),fnhash.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_DELETE",fnhash.s));
   }
   if (unlink(fn.s) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),fn.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_DELETE",fn.s));
 }
 
 void main(int argc,char **argv)
@@ -323,7 +323,7 @@ void main(int argc,char **argv)
 	  strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",bdname.s));
 	else {				/* leftover nnnnn_dmmmmm file */
 	  if (unlink(bdname.s) == -1)
-	    strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),bdname.s,": ");
+	    strerr_die2sys(111,FATAL,MSG1("ERR_DELETE",bdname.s));
 	  continue;
 	}
       }
@@ -338,12 +338,12 @@ void main(int argc,char **argv)
 	  doit(ds->d_name[0] == 'w');
         else				/* other stuff is junk */
 	  if (unlink(fn.s) == -1)
-	    strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),fn.s,": ");
+	    strerr_die2sys(111,FATAL,MSG1("ERR_DELETE",fn.s));
       }
       closedir(bsdir);
       if (rmdir(bdname.s) == -1)	/* the directory itself */
       if (errno != error_noent)
-	   strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),bdname.s,": ");
+	   strerr_die2sys(111,FATAL,MSG1("ERR_DELETE",bdname.s));
     }
   }
   closedir(bouncedir);
@@ -359,9 +359,9 @@ void main(int argc,char **argv)
   if (substdio_put(&ssout,"\n",1) == -1)	/* prettier */
     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",line.s));
   if (substdio_flush(&ssout) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_FLUSH"),line.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_FLUSH",line.s));
   if (fsync(fd) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_SYNC"),line.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_SYNC",line.s));
   if (close(fd) == -1)
     strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",line.s));
 
@@ -372,7 +372,7 @@ void main(int argc,char **argv)
 				/* once per 1-2 days (17-30 days for all) */
   if (stat(fnlasth.s,&st) == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,MSG("ERR_STAT"),fnlasth.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fnlasth.s));
   } else if (when < (unsigned long)st.st_mtime + 100000
 	     && when > (unsigned long)st.st_mtime)
     _exit(0);			/* 2nd comp to guard against corruption */
@@ -406,11 +406,11 @@ void main(int argc,char **argv)
       if (!stralloc_0(&fn)) die_nomem();
       if (stat(fn.s,&st) == -1) {
 	if (errno == error_noent) continue;
-	strerr_die4sys(111,FATAL,MSG("ERR_STAT"),fn.s,": ");
+	strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fn.s));
       }
       if (when > st.st_mtime + 3 * bouncetimeout)
 	if (unlink(fn.s) == -1)
-          strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),fn.s,": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_DELETE",fn.s));
     }
     closedir(hdir);
   }

@@ -70,7 +70,7 @@ static int checkfile(const char *fn)
   if (stat(fnmsg.s,&st) == 0)
     return 1;
   if (errno != error_noent)
-    strerr_die6sys(111,FATAL,MSG("ERR_STAT"),dir,"/",fnmsg.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fnmsg.s));
   return 0;
 }
 
@@ -198,7 +198,7 @@ void main(int argc, char **argv)
     maketo();			/* extract SENDER to "to" */
     env_put2("SENDER",to.s);	/* set SENDER */
     if (seek_begin(fd) == -1)	/* rewind, since we read an entire buffer */
-      strerr_die4sys(111,FATAL,MSG("ERR_SEEK"),fnmsg.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_SEEK",fnmsg.s));
 
     if ((child = wrap_fork()) == 0) {
       close(0);

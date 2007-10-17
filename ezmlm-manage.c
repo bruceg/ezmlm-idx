@@ -182,7 +182,7 @@ void store_from(stralloc *frl,	/* from line */
   if (substdio_flush(&ssfrom) == -1)
     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","fromn"));
   if (fsync(fdout) == -1)
-    strerr_die3sys(111,FATAL,MSG("ERR_SYNC"),"fromn: ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_SYNC","fromn"));
   if (close(fdout) == -1)
     strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE","fromn"));
   if (rename("fromn","from") == -1)
@@ -1120,7 +1120,7 @@ int main(int argc,char **argv)
     if (substdio_flush(&sstext) == -1)
       strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fneditn.s));
     if (fsync(fd) == -1)
-      strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/",fneditn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_SYNC",fneditn.s));
     if (fchmod(fd, 0600) == -1)
       strerr_die6sys(111,FATAL,MSG("ERR_CHMOD"),dir,"/",fneditn.s,": ");
     if (close(fd) == -1)

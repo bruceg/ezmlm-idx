@@ -102,7 +102,7 @@ int checkfile(const char *fn)
   if (!stralloc_0(&fnmsg)) die_nomem();
   if (stat(fnmsg.s,&st) == -1) {
     if (errno != error_noent)
-      strerr_die6sys(111,FATAL,MSG("ERR_STAT"),dir,"/",fnmsg.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fnmsg.s));
   } else
       return 1;
 
@@ -111,7 +111,7 @@ int checkfile(const char *fn)
   if (!stralloc_0(&fnmsg)) die_nomem();
   if (stat(fnmsg.s,&st) == -1) {
     if (errno != error_noent)
-      strerr_die6sys(111,FATAL,MSG("ERR_STAT"),dir,"/",fnmsg.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fnmsg.s));
   } else
       return -1;
 
@@ -120,7 +120,7 @@ int checkfile(const char *fn)
   if (!stralloc_0(&fnmsg)) die_nomem();
   if (stat(fnmsg.s,&st) == -1) {
     if (errno != error_noent)
-      strerr_die6sys(111,FATAL,MSG("ERR_STAT"),dir,"/",fnmsg.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fnmsg.s));
   } else
       return -2;
   return 0;
@@ -376,7 +376,7 @@ void main(int argc,char **argv)
     }
     qmail_puts(&qq,"\n");
     if (seek_begin(fd) == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_SEEK"),fnmsg.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_SEEK",fnmsg.s));
 
     substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
     if (qmail_copy(&qq,&sstext,-1) != 0)
@@ -430,7 +430,7 @@ void main(int argc,char **argv)
     maketo();			/* extract SENDER to "to" */
     env_put2("SENDER",to.s);	/* set SENDER */
     if (seek_begin(fd) == -1)	/* rewind, since we read an entire buffer */
-      strerr_die4sys(111,FATAL,MSG("ERR_SEEK"),fnmsg.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_SEEK",fnmsg.s));
 
     if ((child = wrap_fork()) == 0) {
       close(0);
