@@ -149,7 +149,7 @@ SUB_MOD_HELP:Moderator help for <#L#>@<#H#>
 SUB_MOD_SUBSCRIBE:CONFIRM subscribe to <#L#>@<#H#>
 SUB_MOD_UNSUBSCRIBE:CONFIRM unsubscribe from <#L#>@<#H#>
 SUB_PROBE:Probe from <#L#>@<#H#>
-SUB_RESULTS: results\n\n
+SUB_RESULTS:<#L#> results
 SUB_RETURNED_POST:Returned post for <#L#>@<#H#>
 SUB_STATUS:Subscription status on <#L#>@<#H#>
 SUB_SUBSCRIBE_NOP:Already subscribed to <#L#>@<#H#>

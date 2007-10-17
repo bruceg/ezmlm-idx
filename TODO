@@ -1,5 +1,4 @@
 Add support for extra substitutions in messages
-Fix results subject in ezmlm-request.c
 Handle hdr_listsubject3 somehow with defineable parameters in MSG.
 Fix msgtxt to not require redundant initialization in sub modules.
 Add tests for all subjects in msgtxt.

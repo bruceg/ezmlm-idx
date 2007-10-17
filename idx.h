@@ -94,9 +94,6 @@
 /* should start with 20 'a' [in place of hash] */
 #define TXT_NOINDEX MSG("NOINDEX")
 
-/* Subject: majordomo results\n\n [where "majordomo" is outlocal] */
-#define TXT_RESULTS MSG("SUB_RESULTS")
-
 /* Subject: Edit file xxx for list@host */
 #define TXT_EDIT_RESPONSE MSG("SUB_EDIT_RESPONSE")
 #define TXT_EDIT_FOR MSG("SUB_EDIT_FOR")

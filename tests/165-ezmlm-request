@@ -58,4 +58,33 @@
   ${GREP} T"$LOC-subscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
 	fatal "ezmlm multi-line 'subscribe' subject query rewriting failed"
 
+  DEFAULT=
+  ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
+  ${ECHO} "X-Num: req5" > "$TMP"
+  ${ECHO} "Subject: which" >> "$TMP"
+  ${ECHO} >> "$TMP"
+  ${ECHO} "which" >> "$TMP"
+  ${ECHO} "${LOC}@${HOST}:${DIR}:Description" > "$DIR"/request-config
+  ${EZBIN}/ezmlm-request -f "$DIR"/request-config "$DIR" < "$TMP" > "$ERR" 2>&1
+  test "$?" = 99 \
+  || fatal "which command failed to exit 99"
+  ${GREP} "^Subject: $LOC results" "$QQMSG" >/dev/null \
+  || fatal "which command had incorrect subject"
+  ${GREP} "^${LOC}@${HOST}$" "$QQMSG" >/dev/null \
+  || fatal "which command failed to find mailing list subscriber"
+
+  ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
+  ${ECHO} "X-Num: req6" > "$TMP"
+  ${ECHO} "Subject: which" >> "$TMP"
+  ${ECHO} >> "$TMP"
+  ${ECHO} "which" >> "$TMP"
+  ${ECHO} "${LOC}@${HOST}:${DIR}:Description" > "$DIR"/request-config
+  ${EZBIN}/ezmlm-request -f "$DIR"/request-config "$DIR" < "$TMP" > "$ERR" 2>&1
+  test "$?" = 99 \
+  || fatal "which command failed to exit 99"
+  ${GREP} "^Subject: $LOC results" "$QQMSG" >/dev/null \
+  || fatal "which command had incorrect subject"
+  ${GREP} "^${LOC}@${HOST}$" "$QQMSG" >/dev/null \
+  && fatal "which command found unsubscribed mailing list subscriber"
+
   ${ECHO} "OK"

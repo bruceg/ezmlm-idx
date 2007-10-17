@@ -622,10 +622,8 @@ void main(int argc,char **argv)
     if (!quote2(&line,to.s)) die_nomem();
     hdr_add2("To: ",line.s,line.len);
     hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
-    qmail_puts(&qq,"Subject: ");
-    if (!quote2(&line,listname.s)) die_nomem();
-    qmail_put(&qq,line.s,line.len);
-    qmail_puts(&qq,TXT_RESULTS);
+    hdr_subject(MSG("SUB_RESULTS"));
+    qmail_puts(&qq,"\n");
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
    if (cmdidx == EZREQ_LISTS || cmdidx == EZREQ_WHICH) {
