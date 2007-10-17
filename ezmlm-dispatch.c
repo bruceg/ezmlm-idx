@@ -55,7 +55,7 @@ static void forward(const char *rcpt)
   qmail_from(&qq,sender);
   qmail_to(&qq,rcpt);
   if (*(err = qmail_close(&qq)) != '\0')
-    strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),err + 1);
+    strerr_die4x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),": ",err + 1);
   strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
   substdio_puts(subfderr,"qp ");
   substdio_puts(subfderr,strnum);

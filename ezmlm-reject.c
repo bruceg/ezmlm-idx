@@ -338,7 +338,7 @@ void main(int argc,char **argv)
         strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
         strerr_die2x(99,"ezmlm-request: info: forward qp ",strnum);
       } else
-        strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),err + 1);
+        strerr_die4x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),": ",err + 1);
     } else
       strerr_die2x(100,FATAL,MSG("ERR_SUBCOMMAND"));
   }

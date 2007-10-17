@@ -466,7 +466,7 @@ int geton(const char *action)
             break;
   }
   if (flagdig == FLD_DENY || flagdig == FLD_ALLOW)
-    strerr_die3x(0,INFO,MSG("ERR_EXTRA_SUB"),target.s);
+    strerr_die2x(0,INFO,MSG1("ERR_EXTRA_SUB",target.s));
   return r;
 }
 
@@ -492,7 +492,7 @@ int getoff(const char *action)
             break;
   }
   if (flagdig == FLD_DENY || flagdig == FLD_ALLOW)
-    strerr_die3x(0,INFO,MSG("ERR_EXTRA_UNSUB"),target.s);
+    strerr_die2x(0,INFO,MSG1("ERR_EXTRA_UNSUB",target.s));
   return r;
 }
 
@@ -1246,7 +1246,7 @@ int main(int argc,char **argv)
       strerr_die2x(0,"ezmlm-manage: info: qp ",strnum);
   } else {
       closesub();
-      strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),err + 1);
+      strerr_die4x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),": ",err + 1);
   }
 }
 

@@ -95,7 +95,7 @@ void sendnotice(const char *d)
   const char *err;
 
       if (qmail_open(&qq, (stralloc *) 0) == -1)
-        strerr_die2x(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
+        strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
 
       fd = open_read(d);
       if (fd == -1)
@@ -157,7 +157,7 @@ void sendnotice(const char *d)
         qmail_to(&qq,to.s);
 
      if (*(err = qmail_close(&qq)) != '\0')
-       strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"), err + 1);
+       strerr_die4x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),": ", err + 1);
 
      strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
      strerr_warn2("ezmlm-clean: info: qp ",strnum,0);

@@ -265,7 +265,7 @@ int read_old_config(void)
 	  if (usecfg && popt[ch - '0'].len == 0)
 	    if (!stralloc_copys(&popt[ch-'0'],line.s+2)) die_nomem();
 	} else
-	  strerr_die4x(111,FATAL,dirplus.s,MSG("ERR_SYNTAX"),line.s+2);
+	  strerr_die5x(111,FATAL,dirplus.s,MSG("ERR_SYNTAX"),": ",line.s+2);
 	break;
       }
     }
@@ -502,7 +502,7 @@ void main(int argc,char **argv)
     if (!stralloc_0(&line)) die_nomem();
     if (line.s[0] == '<' && line.s[1] == '/') {		/* tag */
       if (byte_chr(line.s,line.len,'.') < line.len)
-	strerr_die3x(100,FATAL,MSG("ERR_PERIOD"),line.s);
+	strerr_die4x(100,FATAL,MSG("ERR_PERIOD"),": ",line.s);
       flagdo = 1;
       flagover = 0;
       hashpos = 0;
@@ -533,7 +533,7 @@ void main(int argc,char **argv)
         }
         if (pos < line.len
 	    && (line.s[pos] != '/' || line.s[pos+1] != '>'))
-          strerr_die3x(100,FATAL,MSG("ERR_ENDTAG"),line.s);
+          strerr_die4x(100,FATAL,MSG("ERR_ENDTAG"),": ",line.s);
       } else {
         flagdo = 1;
         pos = 2;	/* name needs to be >= 1 char */
@@ -543,7 +543,7 @@ void main(int argc,char **argv)
           pos++;
         }
         if (pos >= line.len)
-          strerr_die3x(100,FATAL,MSG("ERR_ENDTAG"),line.s);
+          strerr_die4x(100,FATAL,MSG("ERR_ENDTAG"),": ",line.s);
       }
       if (hashpos)
         pos = hashpos;	/* points to after file name */
@@ -562,7 +562,7 @@ void main(int argc,char **argv)
           continue;
         slpos = byte_chr(line.s+3,line.len-3,'/') + 3;
         if (slpos >= pos)
-          strerr_die3x(100,FATAL,MSG("ERR_LINKDIR"),line.s);
+          strerr_die2x(100,FATAL,MSG1("ERR_LINKDIR",line.s));
         if (!stralloc_copyb(&dname,line.s+slpos,pos-slpos)) die_nomem();
         if (!stralloc_copyb(&lname,line.s+3,slpos-3)) die_nomem();
         if (!stralloc_0(&dname)) die_nomem();
@@ -610,7 +610,7 @@ void main(int argc,char **argv)
           }
           if (flagdo && flagnotexist) {
             if (!fname.len)
-              strerr_die3x(100,FATAL,MSG("ERR_FILENAME"),line.s);
+              strerr_die2x(100,FATAL,MSG1("ERR_FILENAME",line.s));
             f_open(fname.s);
            if (!stralloc_copy(&oldfname,&fname)) die_nomem();
           }
@@ -695,6 +695,6 @@ void main(int argc,char **argv)
     if (!stralloc_0(&popt[6])) die_nomem();
   initsub(popt[6].s);
   if ((p = mktab()) != NULL)
-    strerr_die3x(100,FATAL,MSG("ERR_MKTAB"),p);
+    strerr_die4x(100,FATAL,MSG("ERR_MKTAB"),": ",p);
   _exit(0);
 }

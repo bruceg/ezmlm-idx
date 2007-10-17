@@ -43,30 +43,30 @@ ERR_CHILD_FATAL:fatal error from child
 ERR_CHILD_TEMP:temporary error from child
 ERR_CHILD_UNKNOWN:unknown error from child
 ERR_CHMOD:unable to chmod 
-ERR_CLOSE:unable to close <#1#>: 
+ERR_CLOSE:unable to close <#1#>
 ERR_COOKIE:message does not have valid authentication token
-ERR_CREATE:unable to create <#1#>: 
+ERR_CREATE:unable to create <#1#>
 ERR_CRONTAB:crontab update failed. Contact your sysadmin with the above error information
-ERR_DELETE:unable to delete <#1#>: 
+ERR_DELETE:unable to delete <#1#>
 ERR_DONE:message already successfully processed by this list
 ERR_DOW:single comma-separated digits only for day-of-week
 ERR_EDSIZE:Maximum edit file size exceeded (#5.6.0)
 ERR_EMPTY_DIGEST:nothing to digest
 ERR_EMPTY_LIST:no messages in archive
-ERR_ENDTAG:tag lacks /> end marker: 
+ERR_ENDTAG:tag lacks /> end marker
 ERR_EUID:effective user id not found
 ERR_EXCESS_DEFER:excess traffic: deferring
 ERR_EXCESS_MOD:excess traffic: moderating
 ERR_EXCLUSIVE:action-controlling switches are mutually exclusive
 ERR_EXECUTE:unable to execute 
-ERR_EXTRA_SUB:Processed SENDER check addition request for: 
-ERR_EXTRA_UNSUB:Processed SENDER check removal request for: 
-ERR_FILENAME:continuation tag without defined file name: 
-ERR_FLUSH:unable to flush <#1#>: 
-ERR_FLUSH_STDOUT:unable to flush standard output: 
-ERR_FORK:unable to fork: 
+ERR_EXTRA_SUB:Processed SENDER check addition request for: <#1#>
+ERR_EXTRA_UNSUB:Processed SENDER check removal request for: <#1#>
+ERR_FILENAME:continuation tag without defined file name: <#1#>
+ERR_FLUSH:unable to flush <#1#>
+ERR_FLUSH_STDOUT:unable to flush standard output
+ERR_FORK:unable to fork
 ERR_JUNK:Precedence: junk - message ignored
-ERR_LINKDIR:linktag lacks /dir: 
+ERR_LINKDIR:linktag lacks /dir: <#1#>
 ERR_LISTNO:max number of list entries exceeded
 ERR_LOOPING:this message is looping: it already has my Delivered-To line (#5.4.6)
 ERR_MAILING_LIST:message already has a Mailing-List header (maybe I should be a sublist) (#5.7.2)
@@ -74,7 +74,7 @@ ERR_MAX_BOUNCE:max bounces exceeded: bounce will not be saved
 ERR_MAX_SIZE:Sorry, I don't accept messages larger than <#1#> bytes (#5.2.3)
 ERR_MIME_QUOTE:MIME boundary lacks end quote
 ERR_MIN_SIZE:Sorry, I don't accept messages shorter than <#1#> bytes (#5.2.3)
-ERR_MKTAB:creating subscriber tables failed: 
+ERR_MKTAB:creating subscriber tables failed
 ERR_MOD_ACCEPTED:I'm sorry, I've already accepted this message
 ERR_MOD_COOKIE:Illegal or outdated moderator request (#5.7.1)
 ERR_MOD_REJECTED:I'm sorry, I've already rejected this message
@@ -107,29 +107,27 @@ ERR_NO_MATCH:no matching entry found
 ERR_NO_PLUGIN:no plugin specified in database connect data
 ERR_NO_POST:I'm sorry, you are not allowed to post messages to this list (#5.7.2)
 ERR_NO_SUBJECT:Sorry, I don't accept message with empty Subject (#5.7.0)
-ERR_OBTAIN:unable to obtain 
-ERR_OBTAIN_LOCK:unable to obtain lock: 
-ERR_OPEN:unable to open <#1#>: 
+ERR_OBTAIN_LOCK:unable to obtain lock on <#1#>
+ERR_OPEN:unable to open <#1#>
 ERR_OPEN_LISTMSGS:unable to open <#1#> in listmsgs. Rerun ezmlm-archive!
-ERR_OPEN_LOCK:unable to open lock: 
 ERR_PARSE:unable to parse 
-ERR_PERIOD:periods not allowed in tags: 
-ERR_QMAIL_QUEUE:unable to run qmail-queue: 
+ERR_PERIOD:periods not allowed in tags
+ERR_QMAIL_QUEUE:unable to run qmail-queue
 ERR_QUOTE:quotes not allowed in dir
-ERR_READ:unable to read <#1#>: 
-ERR_READ_INPUT:unable to read input: 
+ERR_READ:unable to read <#1#>
+ERR_READ_INPUT:unable to read input
 ERR_READ_KEY:unable to read key
 ERR_READ_NOTHING:unable to read <#1#>: nothing there
-ERR_READ_STDIN:unable to read standard input: 
+ERR_READ_STDIN:unable to read standard input
 ERR_REJECT:Sorry, I've been told to reject this message (#5.7.0)
 ERR_REQ_LISTNAME:This command requires a mailing list name (#5.1.1)
 ERR_REQ_LOCAL:the local part of the command string does not match this list (#5.1.1)
 ERR_SAME_HOST:list and digest must be on same host
-ERR_SEEK:unable to seek <#1#>: 
-ERR_SEEK_INPUT:unable to seek input: 
-ERR_SETUID:unable to set uid: 
+ERR_SEEK:unable to seek <#1#>
+ERR_SEEK_INPUT:unable to seek input
+ERR_SETUID:unable to set uid
 ERR_SLASH:dir and dot must start with slash
-ERR_STAT:unable to stat <#1#>: 
+ERR_STAT:unable to stat <#1#>
 ERR_SUBCOMMAND:Sorry, I don't accept commands in the subject line. Please send a message to the -help address shown in the the ``Mailing-List:'' header for command info (#5.7.0)
 ERR_SUBLIST:sublist messages must have a Mailing-List header (#5.7.2)
 ERR_SUBSCRIBER_CAN:only subscribers can <#1#> (#5.7.1)
@@ -137,16 +135,23 @@ ERR_SUBST_UNSAFE:Sorry, substitution of target addresses into headers with #A# o
 ERR_SUB_NOP:target is already a subscriber
 ERR_SUID:Sorry, I won't run as root
 ERR_SWITCH:unable to switch to 
-ERR_SYNC:unable to sync <#1#>: 
-ERR_SYNTAX: syntax error: 
-ERR_TMP_QMAIL_QUEUE:temporary qmail-queue error: 
+ERR_SYNC:unable to sync <#1#>
+ERR_SYNTAX: syntax error
+ERR_SYNTAX_CONFIG:syntax error in config file <#1#>
+ERR_SYNTAX_MISSING_SEPARATOR: syntax error: <#1#>: missing subject separator
+ERR_SYNTAX_MISSING_SUBJHASH: syntax error: <#1#>: missing subject hash
+ERR_SYNTAX_MISSING_AUTHOR: syntax error: <#1#>: author info missing.
+ERR_SYNTAX_MISSING_SEMIDATE: syntax error: <#1#>: missing ";" after date
+ERR_SYNTAX_MISSING_AUTHHASH: syntax error: <#1#>: missing author hash
+ERR_SYNTAX_MISSING_FIRST: syntax error: <#1#>: first line missing
+ERR_TMP_QMAIL_QUEUE:temporary qmail-queue error
 ERR_UID:user id not found
 ERR_UNEXPECTED:program logic error (#5.3.0)
 ERR_UNIQUE:unable to create unique message file name
 ERR_UNSUB_NOP:target is not a subscriber
 ERR_VERSION:ezmlmrc version mismatch. Behavior may not match docs.
-ERR_WRITE:unable to write <#1#>: 
-ERR_WRITE_STDOUT:unable to write to standard output: 
+ERR_WRITE:unable to write <#1#>
+ERR_WRITE_STDOUT:unable to write to standard output
 LISTMEMBERS:Subscribers to this list are:
 NOINDEX:aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->
 SUB_CONFIRM_POST:Confirm post to <#L#>@<#H#>

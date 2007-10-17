@@ -77,7 +77,7 @@ static const char *cp;
 static void die_syntax(void)
 {
   if (!stralloc_0(&line)) die_nomem();
-  strerr_die5x(100,FATAL,TXT_EZCRONRC," ",MSG("ERR_SYNTAX"),line.s);
+  strerr_die6x(100,FATAL,TXT_EZCRONRC," ",MSG("ERR_SYNTAX"),": ",line.s);
 }
 
 static void die_argument(void)

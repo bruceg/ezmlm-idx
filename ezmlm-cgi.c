@@ -168,7 +168,7 @@ static substdio ssin;
 
 void die_syntax(const char *s)
 {
-  strerr_die4x(100,FATAL,MSG("ERR_SYNTAX"),"config file: ",s);
+  strerr_die2x(100,FATAL,MSG1("ERR_SYNTAX_CONFIG",s));
 }
 
 static char outbuf[4096];
@@ -1689,25 +1689,24 @@ int msg2hash(struct msginfo *infop)
         pos = scan_ulong(line.s,&tmpmsg);
 	if (tmpmsg == infop->source) {
           if (line.s[pos++] != ':' || line.s[pos++] != ' ')
-	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,": missing subject separator");
+	    strerr_die1x(100,MSG1("ERR_SYNTAX_MISSING_SEPARATOR",fn.s));
 	  if (line.len < HASHLEN + pos)
-	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,": missing subject hash");
+	    strerr_die1x(100,MSG1("ERR_SYNTAX_MISSING_HASH",fn.s));
 	  if (!stralloc_copyb(&subject,line.s+pos,HASHLEN)) die_nomem();
 	  if (!stralloc_0(&subject)) die_nomem();
 	  infop->subject = subject.s;
           if (getln(&ssin,&line,&match,'\n') == -1)
             strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
           if (!match)
-	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,
-		": author info missing. Truncated?");
+	    strerr_die1x(100,MSG1("ERR_SYNTAX_MISSING_AUTHOR",fn.s));
 	  pos = byte_chr(line.s,line.len,';');
 	  if (pos == line.len)
-	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,"missing ';' after date");
+	    strerr_die1x(100,MSG1("ERR_SYNTAX_MISSING_SEMIDATE",fn.s));
 	  if (pos > 1)
 	    infop->date = date2yyyymm(line.s+1);	/* ';' marks end ok */
 	  pos++;
 	  if (line.len < HASHLEN + pos)
-	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,": missing author hash");
+	    strerr_die1x(100,MSG1("ERR_SYNTAX_MISSING_AUTHHASH",fn.s));
 	  if (!stralloc_copyb(&author,line.s+pos,HASHLEN)) die_nomem();
 	  if (!stralloc_0(&author)) die_nomem();
 	  infop->author = author.s;
@@ -1742,7 +1741,7 @@ void setmsg(struct msginfo *infop)
     if (getln(&ssin,&line,&match,'\n') == -1)	/* first line */
       strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
     if (!match)
-      strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,": first line missing");
+      strerr_die1x(100,MSG1("ERR_SYNTAX_FIRST_LINE",fn.s));
   }
   msgnav[3] = 0L;		/* next */
   msgnav[4] = 0L;		/* after */

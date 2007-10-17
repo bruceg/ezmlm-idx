@@ -12,6 +12,6 @@ int lockfile(const char *path)
   if (fd == -1)
     strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",path));
   if (lock_ex(fd) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_OBTAIN"),path,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_OBTAIN_LOCK",path));
   return fd;
 }

@@ -1323,6 +1323,6 @@ void main(int argc,char **argv)
       write_ulong(prevmax,cumsize,(unsigned long) digwhen,"dignum","dignumn");
     }
     unlock();			/* NOP if nothing locked */
-    strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),err + 1);
+    strerr_die4x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),": ",err + 1);
   }
 }

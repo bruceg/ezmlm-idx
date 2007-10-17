@@ -737,6 +737,6 @@ void main(int argc,char **argv)
       --msgnum;
       cumsize -= (msgsize + 128L) >> 8;
       numwrite();
-      strerr_die3x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),err + 1);
+      strerr_die4x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),": ",err + 1);
   }
 }
