@@ -457,7 +457,7 @@ void main(int argc,char **argv)
   if (fsync(fdout) == -1)
     strerr_die4sys(111,FATAL,MSG("ERR_SYNC"),dir.s,"/crontabn++: ");
   if (close(fdout) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_CLOSE"),dir.s,"/crontabn: ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE","crontabn"));
   if (rename("crontabn","crontab") == -1)
     strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),dir.s,"/crontabn: ");
   sendargs[0] = "sh";

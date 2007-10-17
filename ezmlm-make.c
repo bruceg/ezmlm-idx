@@ -174,7 +174,7 @@ void f_close(void)
   if (fsync(ss.fd) == -1)
     strerr_die4sys(111,FATAL,MSG("ERR_SYNC"),dirplus.s,": ");
   if (close(ss.fd) == -1) /* NFS stupidity */
-    strerr_die4sys(111,FATAL,MSG("ERR_CLOSE"),dirplus.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",dirplus.s));
   keyaddtime();
 }
 

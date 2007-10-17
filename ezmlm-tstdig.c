@@ -133,7 +133,7 @@ void main(int argc,char **argv)
         if (fsync(fd) == -1)
           strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/","tstdign",": ");
         if (close(fd) == -1)
-          strerr_die6sys(111,FATAL,MSG("ERR_CLOSE"),dir,"/","tstdign",": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE","tstdign"));
         if (rename("tstdign","tstdig") == -1)
           strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),"tstdign",": ");
         _exit(0);

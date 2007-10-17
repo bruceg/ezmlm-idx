@@ -363,7 +363,7 @@ void main(int argc,char **argv)
   if (fsync(fd) == -1)
     strerr_die4sys(111,FATAL,MSG("ERR_SYNC"),line.s,": ");
   if (close(fd) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_CLOSE"),line.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",line.s));
 
   if (rename(line.s,fnlastd.s) == -1)
     strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),fnlastd.s,": ");

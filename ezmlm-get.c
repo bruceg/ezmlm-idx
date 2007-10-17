@@ -247,7 +247,7 @@ void write_ulong(unsigned long num,unsigned long cum,unsigned long dat,
   if (fsync(fd) == -1)
      strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/",fnn,": ");
   if (close(fd) == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_CLOSE"),dir,"/",fnn,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",fnn));
   if (rename(fnn,fn) == -1)
      strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),fnn,": ");
 }

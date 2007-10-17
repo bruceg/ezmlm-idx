@@ -61,7 +61,7 @@ void close_proper(substdio *ss,const char *s,const char *sn)
     if (fsync(ss->fd) == -1)
        strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/",s,": ");
   if (close(ss->fd) == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_CLOSE"),dir,"/",s,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",s));
   if (rename(sn,s) == -1)
      strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),dir,"/",sn,": ");
 }
