@@ -97,7 +97,7 @@ int findname(void)
   if (!stralloc_0(&domain)) die_nomem();
 
   if ((fd = open_read(split)) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),split,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",split));
   substdio_fdbuf(&sssp,read,fd,spbuf,(int) sizeof(spbuf));
   lineno = 0;
   for (;;) {	/* dom:hash_lo:hash_hi:listaddress */

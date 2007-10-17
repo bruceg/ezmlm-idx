@@ -152,7 +152,7 @@ void doit(int flagw)
       fdhash = open_read(fnhash.s);
       if (fdhash == -1) {
         if (errno != error_noent)
-          strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnhash.s,": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fnhash.s));
       } else {
         substdio_fdbuf(&sstext,read,fdhash,textbuf,sizeof(textbuf));
         for(;;) {
@@ -166,7 +166,7 @@ void doit(int flagw)
     } else {
       if (!stralloc_copys(&line,"")) die_nomem();	/* slurp adds! */
       if (slurp(fnhash.s,&line,256) < 0)
-        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnhash.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fnhash.s));
       code_qput(line.s,line.len);
     }
   }
@@ -297,7 +297,7 @@ void main(int argc,char **argv)
   bouncedir = opendir(line.s);
   if (!bouncedir) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
     else
       _exit(0);		/* no bouncedir - no bounces! */
   }
@@ -320,7 +320,7 @@ void main(int argc,char **argv)
       bsdir = opendir(bdname.s);
       if (!bsdir) {
 	if (errno != error_notdir)
-	  strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),bdname.s,":y ");
+	  strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",bdname.s));
 	else {				/* leftover nnnnn_dmmmmm file */
 	  if (unlink(bdname.s) == -1)
 	    strerr_die4sys(111,FATAL,MSG("ERR_DELETE"),bdname.s,": ");
@@ -352,7 +352,7 @@ void main(int argc,char **argv)
   line.s[line.len - 2] = 'D';
   fd = open_trunc(line.s);			/* write lastd. Do safe */
 						/* since we read before lock*/
-  if (fd == -1) strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
+  if (fd == -1) strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
   substdio_fdbuf(&ssout,write,fd,outbuf,sizeof(outbuf));
   if (substdio_put(&ssout,strnum,fmt_ulong(strnum,when)) == -1)
     strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),line.s,": ");
@@ -394,7 +394,7 @@ void main(int argc,char **argv)
 
   if (!hdir) {
     if (errno != error_noent)
-    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
   } else {
 
     while ((d = readdir(hdir))) {
@@ -416,14 +416,14 @@ void main(int argc,char **argv)
   }
 
   fd = open_trunc(fnlasth.s);			/* write lasth */
-  if (fd == -1) strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnlasth.s,": ");
+  if (fd == -1) strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fnlasth.s));
   substdio_fdbuf(&ssout,write,fd,outbuf,sizeof(outbuf));
   if (substdio_put(&ssout,lasth.s,1) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnlasth.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fnlasth.s));
   if (substdio_put(&ssout,"\n",1) == -1)	/* prettier */
-    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnlasth.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fnlasth.s));
   if (substdio_flush(&ssout) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnlasth.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fnlasth.s));
   (void) close(fd);		/* no big loss. No reason to flush/sync */
 				/* See check of ld above to guard against */
 				/* it being corrupted and > when */

@@ -242,7 +242,7 @@ int idx_copy_insertsubject(void)
   fdindex = open_read(fnif.s);
   if (fdindex == -1) {
     if (errno != error_noent)
-      strerr_die4x(111,FATAL,MSG("ERR_OPEN"), fnif.s, ": ");
+      strerr_die2x(111,FATAL,MSG1("ERR_OPEN", fnif.s));
   } else {
     substdio_fdbuf(&ssin,read,fdindex,inbuf,sizeof(inbuf));
     for(;;) {
@@ -381,7 +381,7 @@ void main(int argc,char **argv)
   }
   if ((fd = open_read("text/trailer")) == -1) {	/* see if there is a trailer */
     if (errno == error_noent) flagtrailer = 0;
-    else strerr_die2sys(111,MSG("ERR_OPEN"),"text/trailer: ");
+    else strerr_die2sys(111,FATAL,MSG1("ERR_OPEN","text/trailer"));
   } else {
     close(fd);
     flagtrailer = 1;

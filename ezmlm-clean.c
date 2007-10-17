@@ -99,7 +99,7 @@ void sendnotice(const char *d)
 
       fd = open_read(d);
       if (fd == -1)
-        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),d,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",d));
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       if (getln(&sstext,&line,&match,'\n') == -1) die_read();
       if (!match) die_read();
@@ -189,7 +189,7 @@ void dodir(const char *dirname,int reply)
 
   moddir = opendir(dirname);
   if (!moddir)
-    strerr_die6sys(0,FATAL,MSG("ERR_OPEN"),dir,"/",dirname,": ");
+    strerr_die2sys(0,FATAL,MSG1("ERR_OPEN",dirname));
   while ((d = readdir(moddir))) {
     if (d->d_name[0] == '.') continue;
     scan_ulong(d->d_name,&modtime);

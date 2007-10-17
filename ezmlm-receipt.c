@@ -94,7 +94,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   bouncedir = opendir(fndir.s);
   if (!bouncedir)
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
     else
       strerr_die3x(111,FATAL,fndir.s,MSG("ERR_NOEXIST"));
 

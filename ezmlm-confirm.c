@@ -186,7 +186,7 @@ void main(int argc, char **argv)
     fd = open_read(fnmsg.s);
     if (fd == -1) {
       if (errno !=error_noent)
-        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fnmsg.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fnmsg.s));
       else	/* shouldn't happen since we've got lock */
         strerr_die3x(100,FATAL,fnmsg.s,MSG("ERR_MOD_TIMEOUT"));
     }

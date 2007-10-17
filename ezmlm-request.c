@@ -497,7 +497,7 @@ void main(int argc,char **argv)
       pos = str_len(listlocal);
       fd = open_read(cfname);
       if (fd == -1)
-        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),cfname,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",cfname));
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       flagok = 0;			/* got listhost match */
       for (;;) {
@@ -641,7 +641,7 @@ void main(int argc,char **argv)
       }
       fd = open_read(cfname);
       if (fd == -1)
-        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),cfname,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",cfname));
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)

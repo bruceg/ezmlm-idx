@@ -100,7 +100,7 @@ int main(int argc,char *argv[])
     die_usage();
 
   if ((fd = open_read(argv[optind+1])) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),argv[optind+1],": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",argv[optind+1]));
   substdio_fdbuf(&ssin,read,fd,inputbuf,sizeof inputbuf);
 
   startup(dir = argv[optind]);

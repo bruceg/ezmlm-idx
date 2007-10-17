@@ -193,7 +193,7 @@ void zapnonsub(const char *szerr)
     if (issub("allow",sender,0))
       return;		/* allow addresses */
   }
-  strerr_die3x(100,FATAL,MSG1("ERR_SUBSCRIBER_CAN",szerr));
+  strerr_die2x(100,FATAL,MSG1("ERR_SUBSCRIBER_CAN",szerr));
 }
 
 void tosender(void)
@@ -568,7 +568,7 @@ void msgout(unsigned long msg,char format)
 	fd = open_read(fn.s);
 	if (fd == -1) {
 	  if (errno != error_noent)
-	    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+	    strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
           else
             mime_getbad(msg);
         } else if (fstat(fd,&st) == -1 || (!(st.st_mode & 0100))) {
@@ -590,7 +590,7 @@ void msgout(unsigned long msg,char format)
 	fd = open_read(fn.s);
 	if (fd == -1) {
 	  if (errno != error_noent)
-	    strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+	    strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
 	  else {
 	    qmail_puts(&qq,"\n== ");
 	    qmail_put(&qq,strnum,fmt_ulong(strnum,msg));
@@ -1136,7 +1136,7 @@ void main(int argc,char **argv)
       fd = open_read(fn.s);
       if (fd == -1)
         if (errno != error_noent)
-          strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
         else
           code_qputs(MSG("NOINDEX"));
       else {

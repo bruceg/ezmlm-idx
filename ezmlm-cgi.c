@@ -854,10 +854,8 @@ void finddate(struct msginfo *infop)
   startdate = infop->date;
   archivedir = opendir("archive/threads/");
   if (!archivedir) {
-    if (errno != error_noent)
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),dir,"/archive/threads: ");
-    else
-      strerr_die4sys(100,FATAL,MSG("ERR_OPEN"),dir,"/archive/threads: ");
+    strerr_die2sys((errno == error_noent) ? 100 : 111,
+		   FATAL,MSG1("ERR_OPEN","/archive/threads"));
   }
   while ((d = readdir(archivedir))) {		/* dxxx/ */
     if (str_equal(d->d_name,".")) continue;
@@ -955,7 +953,7 @@ int show_index(struct msginfo *infop)
     if (errno == error_noent)
       return 0;
     else
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   if (!stralloc_copyb(&line,strnum,
@@ -1061,7 +1059,7 @@ int show_object(struct msginfo *infop,int item)
     if (errno == error_noent)
       return 0;
     else
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   if (item != ITEM_DATE) {
@@ -1569,7 +1567,7 @@ int show_message(struct msginfo *infop)
     if (errno == error_noent)
       return 0;
     else
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   toggle_flagpre(0);
@@ -1679,7 +1677,7 @@ int msg2hash(struct msginfo *infop)
     if (errno == error_noent)
       return 0;
     else
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   for (;;) {
@@ -1735,10 +1733,9 @@ void setmsg(struct msginfo *infop)
   }
   if ((fd = open_read(fn.s)) == -1) {
     if (errno == error_noent)
-      strerr_die4x(100,FATAL,MSG("ERR_OPEN"),fn.s,
-	" in listmsgs. Rerun ezmlm-archive!");
+      strerr_die2x(100,FATAL,MSG1("ERR_OPEN_LISTMSGS",fn.s));
     else
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   if (infop->axis != ITEM_DATE) {
@@ -1971,12 +1968,9 @@ void list_list(unsigned long listno)
   flagrobot = 2;
   strnum[fmt_ulong(strnum,listno)] = '\0';
   archivedir = opendir("archive/");
-  if (!archivedir) {
-    if (errno != error_noent)
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),dir,"/archive: ");
-    else
-      strerr_die4sys(100,FATAL,MSG("ERR_OPEN"),dir,"/archive: ");
-  }
+  if (!archivedir)
+    strerr_die2sys((errno == error_noent) ? 100 : 111,
+		   FATAL,MSG1("ERR_OPEN","archive"));
   cache = 1;
   html_header("Robot index for message sets in list",0,0,0,0);
 
@@ -2063,10 +2057,10 @@ int main(int argc,char **argv)
     if (!stralloc_cats(&line,EZ_CGIRC)) die_nomem();
     if (!stralloc_0(&line)) die_nomem();
     if ((fd = open_read(line.s)) == -1)			/* open config */
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
   } else {
     if ((fd = open_read(EZ_CGIRC_LOC)) == -1)		/* open local config */
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),EZ_CGIRC_LOC,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",EZ_CGIRC_LOC));
   }
 
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));	/* set up buffer */

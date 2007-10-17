@@ -209,7 +209,7 @@ void main(int argc,char **argv)
         die_argument();
   }
   if ((fdin = open_read(TXT_EZCRONRC)) == -1)
-    strerr_die6sys(111,FATAL,MSG("ERR_OPEN"),dir.s,"/",TXT_EZCRONRC,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",TXT_EZCRONRC));
 	/* first line is special */
   substdio_fdbuf(&ssin,read,fdin,inbuf,sizeof(inbuf));
   if (getln(&ssin,&line,&match,'\n') == -1)

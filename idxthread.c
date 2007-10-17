@@ -227,7 +227,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
 					/* but the lists is supposedly indexed*/
         flagmissingindex = 1;
       } else
-        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
     } else
       substdio_fdbuf(&ssindex,read,fd,indexbuf,sizeof(indexbuf));
 
@@ -452,14 +452,14 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
   psubt = *psubtable;
   if (fd == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
     else
       strerr_die2x(111,FATAL,MSG("ERR_NOINDEX"));	/* temp - admin can fix! */
   } else {
     substdio_fdbuf(&ssindex,read,fd,indexbuf,sizeof(indexbuf));
     for(;;) {
       if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die3sys(111,FATAL,MSG("ERR_OPEN"),"index: ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_OPEN","index"));
       if (!match)
         break;
       pos=scan_ulong(line.s,&msg);
@@ -498,7 +498,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
     fd = open_read(line.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
     } else {
       substdio_fdbuf(&ssindex,read,fd,indexbuf,sizeof(indexbuf));
       for(;;) {

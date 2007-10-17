@@ -127,7 +127,7 @@ void write_threads(const msgentry *msgtable,
       substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
       if ((fd = open_read(fn.s)) == -1) {
       if (errno != error_noent)
-             strerr_die6sys(111,FATAL,MSG("ERR_OPEN"),dir,"/",fn.s,": ");
+             strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
       } else {
 	substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
       for (;;) {
@@ -220,7 +220,7 @@ void write_threads(const msgentry *msgtable,
     substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
     if ((fd = open_read(fn.s)) == -1) {
       if (errno != error_noent)
-	  strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+	  strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
       if (substdio_puts(&ssout,psubt->sub) == -1)	/* write subject */
 	     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
     } else {					/* copy data */
@@ -294,7 +294,7 @@ void write_threads(const msgentry *msgtable,
     substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
       if ((fd = open_read(fn.s)) == -1) {
 	if (errno != error_noent)
-	  strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+	  strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
         else {			/* didn't exist before: write author */
           if (substdio_put(&ssout,pautht->auth,pautht->authlen) == -1)
 	     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");

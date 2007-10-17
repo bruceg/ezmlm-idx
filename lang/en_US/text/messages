@@ -108,7 +108,8 @@ ERR_NO_POST:I'm sorry, you are not allowed to post messages to this list (#5.7.2
 ERR_NO_SUBJECT:Sorry, I don't accept message with empty Subject (#5.7.0)
 ERR_OBTAIN:unable to obtain 
 ERR_OBTAIN_LOCK:unable to obtain lock: 
-ERR_OPEN:unable to open 
+ERR_OPEN:unable to open <#1#>: 
+ERR_OPEN_LISTMSGS:unable to open <#1#> in listmsgs. Rerun ezmlm-archive!
 ERR_OPEN_LOCK:unable to open lock: 
 ERR_PARSE:unable to parse 
 ERR_PERIOD:periods not allowed in tags: 

@@ -131,7 +131,7 @@ static int _issub(struct subdbinfo *info,
     fd = open_read(fn.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
     } else {
       substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
 
@@ -160,7 +160,7 @@ static int _issub(struct subdbinfo *info,
     fd = open_read(fn.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
       return 0;
     }
     substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
@@ -299,7 +299,7 @@ static void _searchlog(struct subdbinfo *info,
   fd = open_read(line.s);
   if (fd == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
     else
       strerr_die3x(100,FATAL,line.s,MSG("ERR_NOEXIST"));
   }

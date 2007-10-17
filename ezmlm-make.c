@@ -288,7 +288,7 @@ static int open_template(stralloc *fn)
   }
   if ((fd = open_read(fn->s)) == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),fn->s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn->s));
     else
       strerr_die3x(100,FATAL,template.s,MSG("ERR_NOEXIST"));
   }
@@ -597,7 +597,7 @@ void main(int argc,char **argv)
 	  fdtmp = open_read(dirplus.s);
 	  if (fdtmp == -1) {
 	    if (errno != error_noent)
-	      strerr_die3sys(111,MSG("ERR_OPEN"),dirplus.s,": ");
+	      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",dirplus.s));
           } else {
 	    flagnotexist = 0;		/* already there - don't do it */
 	    close(fdtmp);

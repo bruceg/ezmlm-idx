@@ -152,11 +152,11 @@ void store_from(stralloc *frl,	/* from line */
   if (!flagstorefrom || !frl->len) return;	/* nothing to store */
   lock();
   if ((fdout = open_trunc("fromn")) == -1)
-    strerr_die3sys(111,FATAL,MSG("ERR_OPEN"),"fromn: ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_OPEN","fromn"));
   substdio_fdbuf(&ssfrom,write,fdout,frombuf,(int) sizeof(frombuf));
   if ((fdin = open_read("from")) == -1) {
     if (errno != error_noent)
-      strerr_die3sys(111,FATAL,MSG("ERR_OPEN"),"from: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN","from"));
   } else {
       substdio_fdbuf(&sstext,read,fdin,textbuf,(int) sizeof(textbuf));
       for (;;) {
@@ -1166,7 +1166,7 @@ int main(int argc,char **argv)
     fd = open_read(line.s);
     if (fd == -1)
       if (errno != error_noent)
-	strerr_die4sys(111,FATAL,MSG("ERR_OPEN"),line.s,": ");
+	strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
       else
         copy(&qq,"text/get-bad",flagcd);
     else {
