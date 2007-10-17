@@ -1691,7 +1691,7 @@ int msg2hash(struct msginfo *infop)
           if (line.s[pos++] != ':' || line.s[pos++] != ' ')
 	    strerr_die1x(100,MSG1("ERR_SYNTAX_MISSING_SEPARATOR",fn.s));
 	  if (line.len < HASHLEN + pos)
-	    strerr_die1x(100,MSG1("ERR_SYNTAX_MISSING_HASH",fn.s));
+	    strerr_die1x(100,MSG1("ERR_SYNTAX_MISSING_SUBJHASH",fn.s));
 	  if (!stralloc_copyb(&subject,line.s+pos,HASHLEN)) die_nomem();
 	  if (!stralloc_0(&subject)) die_nomem();
 	  infop->subject = subject.s;
@@ -1741,7 +1741,7 @@ void setmsg(struct msginfo *infop)
     if (getln(&ssin,&line,&match,'\n') == -1)	/* first line */
       strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
     if (!match)
-      strerr_die1x(100,MSG1("ERR_SYNTAX_FIRST_LINE",fn.s));
+      strerr_die1x(100,MSG1("ERR_SYNTAX_MISSING_FIRST",fn.s));
   }
   msgnav[3] = 0L;		/* next */
   msgnav[4] = 0L;		/* after */

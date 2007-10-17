@@ -1,0 +1,18 @@
+#!/bin/sh
+cat *.c \
+| sed -e '
+  /MSG[1-9]\?("/!d;
+  s/^.*MSG[1-2]\?("//;
+  s/".*$//;
+' \
+| sort -u \
+| while read tag; do
+  grep "^$tag:" lang/en_US/text/messages >/dev/null \
+  || echo "Missing tag '$tag'"
+done
+
+grep -v '^#' lang/en_US/text/messages \
+| while IFS=: read tag rest; do
+  fgrep "\"$tag\"" *.c >/dev/null \
+  || echo "Extraneous tag '$tag'"
+done
