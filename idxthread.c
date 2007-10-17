@@ -476,7 +476,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
       }
       if (flagauth) {			/* skip author line */
         if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die3sys(111,FATAL,MSG("ERR_OPEN"),"index: ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_OPEN","index"));
       if (!match)
         break;
       }
