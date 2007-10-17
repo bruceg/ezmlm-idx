@@ -45,7 +45,7 @@ ERR_CHILD_UNKNOWN:unknown error from child
 ERR_CHMOD:unable to chmod 
 ERR_CLOSE:unable to close 
 ERR_COOKIE:message does not have valid authentication token
-ERR_CREATE:unable to create 
+ERR_CREATE:unable to create <#1#>: 
 ERR_CRONTAB:crontab update failed. Contact your sysadmin with the above error information
 ERR_DELETE:unable to delete 
 ERR_DONE:message already successfully processed by this list

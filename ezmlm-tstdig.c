@@ -122,7 +122,7 @@ void main(int argc,char **argv)
       if ((tsttime + 3600L < when) || (tsttime <= digwhen)) {
         fd = open_trunc("tstdign");
         if (fd == -1)
-          strerr_die6sys(111,FATAL,MSG("ERR_CREATE"),dir,"/","tstdign",": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","tstdign"));
         substdio_fdbuf(&ssnum,write,fd,numbuf,sizeof(numbuf));
         if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,when)) == -1)
           strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","tstdign"));

@@ -133,7 +133,7 @@ void die_archive(void)
 }
 void die_numnew(void)
 {
-  strerr_die3sys(111,FATAL,MSG("ERR_CREATE"),"numnew: ");
+  strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","numnew"));
 }
 
 void qa_put(const char *buf,unsigned int len)
@@ -224,7 +224,7 @@ int idx_copy_insertsubject(void)
 			/* may not exists since we run before ezmlm-send */
   if (mkdir(fnadir.s,0755) == -1)
     if (errno != error_exist)
-      strerr_die4x(111,FATAL,MSG("ERR_CREATE"),fnadir.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnadir.s));
 
 			/* Open indexn */
   fdindexn = open_trunc(fnifn.s);
@@ -450,7 +450,7 @@ void main(int argc,char **argv)
 
     if (mkdir(fnadir.s,0755) == -1)
       if (errno != error_exist)
-	strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),fnadir.s,": ");
+	strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnadir.s));
     fdarchive = open_trunc(fnaf.s);
     if (fdarchive == -1)
       strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnaf.s));

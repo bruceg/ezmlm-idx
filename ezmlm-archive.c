@@ -123,7 +123,7 @@ void write_threads(const msgentry *msgtable,
       if (!stralloc_cats(&fnn,"n")) die_nomem();
       if (!stralloc_0(&fnn)) die_nomem();
       if ((fdn = open_trunc(fnn.s)) == -1)
-	strerr_die6sys(111,FATAL,MSG("ERR_CREATE"),dir,"/",fnn.s,": ");
+	strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnn.s));
       substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
       if ((fd = open_read(fn.s)) == -1) {
       if (errno != error_noent)
@@ -208,7 +208,7 @@ void write_threads(const msgentry *msgtable,
     if (!stralloc_0(&fn)) die_nomem();
     if (mkdir(fn.s,0755) == -1)
     if (errno != error_exist)
-      strerr_die6sys(111,FATAL,MSG("ERR_CREATE"),dir,"/",fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fn.s));
     fn.s[fn.len - 1] = '/';
     if (!stralloc_catb(&fn,psubt->sub+2,HASHLEN-2)) die_nomem();
     if (!stralloc_copy(&fnn,&fn)) die_nomem();
@@ -216,7 +216,7 @@ void write_threads(const msgentry *msgtable,
     if (!stralloc_0(&fn)) die_nomem();
     if (!stralloc_0(&fnn)) die_nomem();
     if ((fdn = open_trunc(fnn.s)) == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),fnn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnn.s));
     substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
     if ((fd = open_read(fn.s)) == -1) {
       if (errno != error_noent)
@@ -282,7 +282,7 @@ void write_threads(const msgentry *msgtable,
     if (!stralloc_0(&fn)) die_nomem();
     if (mkdir(fn.s,0755) == -1)
     if (errno != error_exist)
-      strerr_die6sys(111,FATAL,MSG("ERR_CREATE"),dir,"/",fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fn.s));
     fn.s[fn.len - 1] = '/';
     if (!stralloc_catb(&fn,pautht->auth+2,HASHLEN-2)) die_nomem();
     if (!stralloc_copy(&fnn,&fn)) die_nomem();
@@ -290,7 +290,7 @@ void write_threads(const msgentry *msgtable,
     if (!stralloc_0(&fn)) die_nomem();
     if (!stralloc_0(&fnn)) die_nomem();
     if ((fdn = open_trunc(fnn.s)) == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),fnn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnn.s));
     substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
       if ((fd = open_read(fn.s)) == -1) {
 	if (errno != error_noent)
@@ -397,13 +397,13 @@ int main(int argc,char **argv)
 
   if (mkdir("archive/threads",0755) == -1)
     if (errno != error_exist)
-      strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dir,"/archive/threads: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","archive/threads"));
   if (mkdir("archive/subjects",0755) == -1)
     if (errno != error_exist)
-      strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dir,"/archive/subjects: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","archive/subjects"));
   if (mkdir("archive/authors",0755) == -1)
     if (errno != error_exist)
-      strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dir,"/archive/authors: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","archive/authors"));
 
 	/* Lock list to assure that no ezmlm-send is working on it */
 	/* and that the "num" message is final */
@@ -431,7 +431,7 @@ int main(int argc,char **argv)
   write_threads(msgtable,subtable,authtable,datetable,archnum,to);
 					/* update archnum */
   if ((fd = open_trunc("archnumn")) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dir,"/archnumn: ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","archnumn"));
   substdio_fdbuf(&ssnum,write,fd,numbuf,sizeof(numbuf));
   if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,to)) == -1)
      strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));

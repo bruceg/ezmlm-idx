@@ -62,7 +62,7 @@ void makedir(const char *s)
 {
   if (mkdir(s,0755) == -1)
     if (errno != error_exist)
-      strerr_die4x(111,FATAL,MSG("ERR_CREATE"),s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",s));
 }
 
 char inbuf[1024];

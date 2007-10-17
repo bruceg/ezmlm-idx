@@ -226,7 +226,7 @@ int main(int argc,char **argv)
 			/* May not exist, so be nice and make it */
       if (mkdir(fnadir.s,0755) == -1)
 	if (errno != error_exist)
-	  strerr_die4sys(100,FATAL,MSG("ERR_CREATE"),fnadir.s,": ");
+	  strerr_die2sys(100,FATAL,MSG1("ERR_CREATE",fnadir.s));
 
 			/* Open index */
       fdindexn = open_trunc(fnifn.s);
@@ -303,7 +303,7 @@ int main(int argc,char **argv)
   }
   fd = open_append("indexed");
   if (fd == -1)
-    strerr_die4sys(100,FATAL,MSG("ERR_CREATE"),dir,"/indexed: ");
+    strerr_die2sys(100,FATAL,MSG1("ERR_CREATE","indexed"));
   close(fd);
   close(fdlock);
   _exit(0);

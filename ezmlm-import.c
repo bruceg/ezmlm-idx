@@ -50,7 +50,7 @@ int openone(unsigned long outnum)
 
   if (mkdir(fnadir.s,0755) == -1)
     if (errno != error_exist)
-      strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),fnadir.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnadir.s));
   if ((fd = open_trunc(fnaf.s)) == -1)
     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnaf.s));
 
@@ -72,7 +72,7 @@ void numwrite(void)
       || write(fd, strnum, i) != i
       || fsync(fd) == -1
       || close(fd) == -1)
-    strerr_die3sys(111,FATAL,MSG("ERR_CREATE"),"numnew: ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","numnew"));
   if (rename("numnew","num") == -1)
     strerr_die3sys(111,FATAL,MSG("ERR_MOVE"),"numnew: ");
   

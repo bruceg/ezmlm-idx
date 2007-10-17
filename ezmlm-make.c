@@ -128,7 +128,7 @@ void linkdotdir(const char *dash,const char *slash)
       if (errno != error_noent)
         strerr_die4x(111,FATAL,MSG("ERR_DELETE"),dotplus.s,": ");
   if (symlink(dirplus.s,dotplus.s) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dotplus.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",dotplus.s));
   keyaddtime();
 }
 
@@ -137,7 +137,7 @@ void dcreate(const char *slash)
   dirplusmake(slash);
   if (mkdir(dirplus.s,0755) == -1)
     if ((errno != error_exist) || !flags['e' - 'a'])
-      strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dirplus.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",dirplus.s));
   keyaddtime();
 }
 
@@ -151,7 +151,7 @@ void f_open(const char *slash)
   dirplusmake(slash);
   fd = open_trunc(dirplus.s);
   if (fd == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dirplus.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",dirplus.s));
 
   substdio_fdbuf(&ss,write,fd,ssbuf,sizeof(ssbuf));
 }
