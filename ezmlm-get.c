@@ -171,6 +171,11 @@ void code_qput(const char *s,unsigned int n)
     }
 }
 
+void code_qputs(const char *s)
+{
+  code_qput(s,str_len(s));
+}
+
 void zapnonsub(const char *szerr)
 /* fatal error if flagsub is set and sender is not a subscriber */
 /* expects the current dir to be the list dir. Error is szerr */
@@ -309,6 +314,7 @@ void presub(unsigned long from,unsigned long to,stralloc *subject,
       if (!stralloc_cats(&line,TXT_TOP_THROUGH)) die_nomem();
       if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,to))) die_nomem();
       if (!stralloc_cats(&line,TXT_TOP_LAST)) die_nomem();
+      if (!stralloc_cats(&line,"\n")) die_nomem();
       code_qput(line.s,line.len);
     }
 }
@@ -317,7 +323,9 @@ void postsub(int factype, /* action type (AC_THREAD, AC_GET, AC_DIGEST) */
 	     char format)	/* output format type (see idx.h) */
 /* output after TOC and before first message. */
 {
-    code_qput(TXT_ADMINISTRIVIA,str_len(TXT_ADMINISTRIVIA));
+    code_qputs("\n");
+    code_qputs(TXT_ADMINISTRIVIA);
+    code_qputs("\n\n");
     if(factype == AC_DIGEST) {
       copy(&qq,"text/digest",flagcd);
       if (flagcd == 'B') {
@@ -1132,8 +1140,10 @@ void main(int argc,char **argv)
       if (fd == -1)
         if (errno != error_noent)
           strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
-        else
-          code_qput(TXT_NOINDEX,str_len(TXT_NOINDEX));
+        else {
+          code_qputs(TXT_NOINDEX);
+	  code_qputs("\n");
+	}
       else {
         substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
         for (;;) {

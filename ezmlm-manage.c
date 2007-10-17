@@ -279,6 +279,11 @@ int code_qput(const char *s,unsigned int n)
     return 0;		/* always succeeds */
 }
 
+int code_qputs(const char *s)
+{
+  return code_qput(s,str_len(s));
+}
+
 int subto(const char *s,unsigned int l)
 {
   qmail_put(&qq,"T",1);
@@ -314,7 +319,9 @@ void mod_bottom(void)
 {
       copy(&qq,"text/mod-sub",flagcd);
       copy(&qq,"text/bottom",flagcd);
-      code_qput(TXT_SUPPRESSED,str_len(TXT_SUPPRESSED));
+      code_qputs("\n");
+      code_qputs(TXT_SUPPRESSED);
+      code_qputs("\n\n");
       if (flagcd)
 	hdr_boundary(1);
       if (flagcd == 'B') {
@@ -900,7 +907,9 @@ int main(int argc,char **argv)
     copy(&qq,"text/top",flagcd);
 
     if (act == AC_LIST) {
-      (void) code_qput(TXT_LISTMEMBERS,str_len(TXT_LISTMEMBERS));
+      (void) code_qputs("\n");
+      (void) code_qputs(TXT_LISTMEMBERS);
+      (void) code_qputs("\n\n");
       i = putsubs(workdir,0L,52L,code_subto);
     } else			/* listn */
       i = putsubs(workdir,0L,52L,dummy_to);

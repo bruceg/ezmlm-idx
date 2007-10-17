@@ -1,4 +1,4 @@
-ADMINISTRIVIA:\nAdministrivia:\n\n
+ADMINISTRIVIA:Administrivia:
 BY: by: 
 DOTEZMLMRC:.ezmlmrc
 EDIT_END:%%% END OF TEXT FILE
@@ -129,8 +129,8 @@ ERR_UNIQUE:unable to create unique message file name
 ERR_UNSUB_NOP:target is not a subscriber
 ERR_VERSION:ezmlmrc version mismatch. Behavior may not match docs.
 ERR_WRITE:unable to write 
-LISTMEMBERS:\nSubscribers to this list are:\n\n
-NOINDEX:aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->\n
+LISTMEMBERS:Subscribers to this list are:
+NOINDEX:aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->
 SUB_CONFIRM_POST:Confirm post to <#L#>@<#H#>
 SUB_EDIT_LIST:List of editable text files for <#L#>@<#H#>
 SUB_EDIT_REQUEST:EDIT <#f#> for <#L#>@<#H#>
@@ -157,8 +157,8 @@ SUB_USR_SUBSCRIBE:confirm subscribe to <#L#>@<#H#>
 SUB_USR_UNSUBSCRIBE:confirm unsubscribe from <#L#>@<#H#>
 SUB_WARNING:Warning from <#L#>@<#H#>
 SUB_WELCOME:WELCOME to <#L#>@<#H#>
-SUPPRESSED:\n<suppressed>\n\n
-TOP_LAST:):\n
+SUPPRESSED:<suppressed>
+TOP_LAST:):
 TOP_MESSAGES: (messages 
 TOP_THROUGH: through 
 TOP_TOPICS:Topics
