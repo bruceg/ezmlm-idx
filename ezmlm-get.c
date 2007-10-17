@@ -74,6 +74,7 @@ unsigned long msgsize = 0L;	/* for digest accounting */
 datetime_sec digwhen;		/* last digest */
 
 char strnum[FMT_ULONG];
+char strnum2[FMT_ULONG];
 char szmsgnum[FMT_ULONG];
 char boundary[COOKIE];
 char hashout[COOKIE];
@@ -174,6 +175,7 @@ void code_qput(const char *s,unsigned int n)
 void code_qputs(const char *s)
 {
   code_qput(s,str_len(s));
+  code_qput("\n",1);
 }
 
 void zapnonsub(const char *szerr)
@@ -308,14 +310,9 @@ void presub(unsigned long from,unsigned long to,stralloc *subject,
     if (!stralloc_cats(subject,"\n\n")) die_nomem();
     code_qput(subject->s,subject->len);
     if (format != NATIVE && factype != AC_THREAD && factype != AC_INDEX) {
-      if (!stralloc_copys(&line,TXT_TOP_TOPICS)) die_nomem();
-      if (!stralloc_cats(&line,TXT_TOP_MESSAGES)) die_nomem();
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,from))) die_nomem();
-      if (!stralloc_cats(&line,TXT_TOP_THROUGH)) die_nomem();
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,to))) die_nomem();
-      if (!stralloc_cats(&line,TXT_TOP_LAST)) die_nomem();
-      if (!stralloc_cats(&line,"\n")) die_nomem();
-      code_qput(line.s,line.len);
+      strnum[fmt_ulong(strnum,from)] = 0;
+      strnum2[fmt_ulong(strnum2,to)] = 0;
+      code_qputs(MSG2("TOP_TOPICS",strnum,strnum2));
     }
 }
 
@@ -323,9 +320,9 @@ void postsub(int factype, /* action type (AC_THREAD, AC_GET, AC_DIGEST) */
 	     char format)	/* output format type (see idx.h) */
 /* output after TOC and before first message. */
 {
-    code_qputs("\n");
+    code_qputs("");
     code_qputs(TXT_ADMINISTRIVIA);
-    code_qputs("\n\n");
+    code_qputs("");
     if(factype == AC_DIGEST) {
       copy(&qq,"text/digest",flagcd);
       if (flagcd == 'B') {
@@ -1140,10 +1137,8 @@ void main(int argc,char **argv)
       if (fd == -1)
         if (errno != error_noent)
           strerr_die4sys(111,FATAL,ERR_OPEN,fn.s,": ");
-        else {
+        else
           code_qputs(TXT_NOINDEX);
-	  code_qputs("\n");
-	}
       else {
         substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
         for (;;) {

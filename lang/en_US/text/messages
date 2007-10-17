@@ -173,7 +173,4 @@ SUB_USR_UNSUBSCRIBE:confirm unsubscribe from <#L#>@<#H#>
 SUB_WARNING:Warning from <#L#>@<#H#>
 SUB_WELCOME:WELCOME to <#L#>@<#H#>
 SUPPRESSED:<suppressed>
-TOP_LAST:):
-TOP_MESSAGES: (messages 
-TOP_THROUGH: through 
-TOP_TOPICS:Topics
+TOP_TOPICS:Topics (messages <#1#> through <#2#>)
