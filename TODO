@@ -1,5 +1,4 @@
-Add support for multi-level message texts.  Load 3 separate maps: from
-dir, lang, and default.  Return the first match in that order.
+Add support for extra substitutions in messages
 Fix results subject in ezmlm-request.c
 Handle hdr_listsubject3 somehow with defineable parameters in MSG.
 Fix msgtxt to not require redundant initialization in sub modules.

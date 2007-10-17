@@ -32,6 +32,12 @@ are now configured in a single file named "messages" (in the "text"
 subdirectory) that is read at run time.  Messages in this text file will
 undergo header-style substitution before they are output.
 
+Unlike other text files, all 3 of the files (DIR/text/messages,
+/etc/ezmlm/LANG/text/messages, and /etc/ezmlm/default/text/messages) are
+read, and only the first match (in the above) is used for any given
+message.  This allows for creation of partial files to override just
+select messages.
+
 FIXME add more details
 
 Note: The subdb API was modified in this version.  You will need to

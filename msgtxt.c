@@ -4,6 +4,7 @@
 #include "constmap.h"
 #include "copy.h"
 #include "die.h"
+#include "slurp.h"
 #include "stralloc.h"
 #include "str.h"
 #include "strerr.h"
@@ -15,8 +16,12 @@ static const char basetxts[] =
 "ERR_SUBST_UNSAFE:ERR_SUBST_UNSAFE\0"
 ;
 
-static stralloc msgtxt = {0};
-static struct constmap msgmap = {0};
+static stralloc msg_local = {0};
+static stralloc msg_alt = {0};
+static stralloc msg_default = {0};
+static struct constmap map_local = {0};
+static struct constmap map_alt = {0};
+static struct constmap map_default = {0};
 static int initialized = 0;
 
 static stralloc data = {0};
@@ -30,11 +35,11 @@ static int readit(stralloc *sa,const char *fn)
 
   if (!stralloc_copys(&data,""))
     die_nomem();
-  switch (alt_slurp(fn,&data,128)) {
+  switch (slurp(fn,&data,4096)) {
     case -1:
       strerr_die6sys(111,FATAL,ERR_READ,listdir,"/",fn,": ");
     case 0:
-      strerr_die5x(100,FATAL,listdir,"/",fn,ERR_NOEXIST);
+      return 0;
   }
   if (!stralloc_append(&data,"\n")) die_nomem();
   if (!stralloc_copys(sa,"")) die_nomem();
@@ -53,11 +58,20 @@ static int readit(stralloc *sa,const char *fn)
 
 void msgtxt_init(void)
 {
+  int didit;
   if (initialized)
     return;
-  readit(&msgtxt,"text/messages");
-  constmap_free(&msgmap);
-  if (!constmap_init(&msgmap,msgtxt.s,msgtxt.len,1))
+  didit = readit(&msg_local,"text/messages");
+  altpath(&xdata,"text/messages");
+  didit += readit(&msg_alt,xdata.s);
+  altdefaultpath(&xdata,"text/messages");
+  didit += readit(&msg_default,xdata.s);
+  if (didit == 0)
+    strerr_die2x(100,FATAL,"No file text/messages file could be read");
+  constmap_free(&map_local);
+  if (!constmap_init(&map_local,msg_local.s,msg_local.len,1)
+      || !constmap_init(&map_alt,msg_alt.s,msg_alt.len,1)
+      || !constmap_init(&map_default,msg_default.s,msg_default.len,1))
     die_nomem();
   initialized = 1;
 }
@@ -66,10 +80,12 @@ const char *MSG(const char *name)
 {
   const char *c;
   /* Handle messages before config is loaded */
-  if (msgmap.num == 0)
-    constmap_init(&msgmap,basetxts,sizeof basetxts,1);
-  if ((c = constmap(&msgmap,name,str_len(name))) == 0)
-    c = name;
+  if (map_local.num == 0)
+    constmap_init(&map_local,basetxts,sizeof basetxts,1);
+  if ((c = constmap(&map_local,name,str_len(name))) == 0)
+    if ((c = constmap(&map_alt,name,str_len(name))) == 0)
+      if ((c = constmap(&map_default,name,str_len(name))) == 0)
+	c = name;
   if (!stralloc_copys(&data,c)) die_nomem();
   copy_xlate(&xdata,&data,'H');
   if (!stralloc_0(&xdata)) die_nomem();
