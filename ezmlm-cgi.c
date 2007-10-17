@@ -969,7 +969,7 @@ int show_index(struct msginfo *infop)
   oputs("<div class=\"idx\"><hr />\n");
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
     if (!match)
       break;
     pos = scan_ulong(line.s,&thismsg);
@@ -988,7 +988,7 @@ int show_index(struct msginfo *infop)
     oputs("\n");
     if (ch == ':') {
       if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
       if (!match)
         break;
       pos = byte_chr(line.s,line.len,';');
@@ -1064,9 +1064,9 @@ int show_object(struct msginfo *infop,int item)
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   if (item != ITEM_DATE) {
     if (getln(&ssin,&line,&match,'\n') == -1)	/* read subject */
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
     if (!match || line.len < HASHLEN + 2)
-      strerr_die4x(111,FATAL,MSG("ERR_READ"),fn.s,": nothing there");
+      strerr_die2x(111,FATAL,MSG1("ERR_READ_NOTHING",fn.s));
   }
   switch (item) {
     case ITEM_SUBJECT:
@@ -1102,7 +1102,7 @@ int show_object(struct msginfo *infop,int item)
   oputs("<div class=\"obj\">\n");
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)	/* read subject */
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
     if (!match)
       break;
     pos = scan_ulong(line.s,&thismsg);
@@ -1395,7 +1395,7 @@ void show_part(struct msginfo *infop,int flagshowheaders,int flagstartseen)
   for (flaghtml = whatheader = 0;;) {
     if (!match) return;
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
     if (!match) return;
     if ((btype = check_boundary())) {
       if (decline.len) {		/* flush last line that doesn't */
@@ -1682,7 +1682,7 @@ int msg2hash(struct msginfo *infop)
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   for (;;) {
         if (getln(&ssin,&line,&match,'\n') == -1)
-          strerr_die3sys(111,FATAL,MSG("ERR_READ"),"index: ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
         if (!match)
 	  return 0;				/* didn't find message */
 	if (*line.s == '\t') continue;		/* author line */
@@ -1696,7 +1696,7 @@ int msg2hash(struct msginfo *infop)
 	  if (!stralloc_0(&subject)) die_nomem();
 	  infop->subject = subject.s;
           if (getln(&ssin,&line,&match,'\n') == -1)
-            strerr_die3sys(111,FATAL,MSG("ERR_READ"),"index: ");
+            strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
           if (!match)
 	    strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,
 		": author info missing. Truncated?");
@@ -1740,7 +1740,7 @@ void setmsg(struct msginfo *infop)
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   if (infop->axis != ITEM_DATE) {
     if (getln(&ssin,&line,&match,'\n') == -1)	/* first line */
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
     if (!match)
       strerr_die3x(100,MSG("ERR_SYNTAX"),fn.s,": first line missing");
   }
@@ -1749,7 +1749,7 @@ void setmsg(struct msginfo *infop)
   infop->target = 0L;
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
     if (!match) break;
     msgnav[0] = msgnav[1];
     msgnav[1] = msgnav[2];
@@ -1762,11 +1762,11 @@ void setmsg(struct msginfo *infop)
     }
     if (msgnav[2] == infop->source) {
       if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
       if (!match) break;
       (void) scan_ulong(line.s,&(msgnav[3]));
       if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
       if (!match) break;
       (void) scan_ulong(line.s,&(msgnav[4]));
       break;
@@ -1940,7 +1940,7 @@ void list_lists()
   html_header("Robot index of lists",0,0,0,0);
   for (;;) {
     if (getln(&ssin,&cfline,&match,'\n') == -1)		/* read line */
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
     if (!match)
       break;
     if (cfline.s[0] == '#') continue;			/* skip comment */
@@ -2097,7 +2097,7 @@ int main(int argc,char **argv)
 
   for (sep = pos = 0;;) {
     if (getln(&ssin,&cfline,&match,'\n') == -1)		/* read line */
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
     if (!match)
       break;
     if (*cfline.s == '#' || cfline.len == 1) continue;	/* skip comment/blank */

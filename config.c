@@ -47,7 +47,7 @@ static void load_config(void)
 
   switch(slurp("key",&key,512)) {
     case -1:
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),listdir,"/key: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ","key"));
     case 0:
       strerr_die4x(100,FATAL,listdir,"/key",MSG("ERR_NOEXIST"));
   }
@@ -57,7 +57,7 @@ static void load_config(void)
    * whole ezmlmrc file itself. */
   switch (slurp("ezmlmrc",&ezmlmrc,64)) {
   case -1:
-    strerr_die4sys(111,FATAL,MSG("ERR_READ"),listdir,"/ezmlmrc: ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_READ","ezmlmrc"));
   case 0:
     ezmlmrc.len = 0;
   }

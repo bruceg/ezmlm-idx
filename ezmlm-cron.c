@@ -213,10 +213,10 @@ void main(int argc,char **argv)
 	/* first line is special */
   substdio_fdbuf(&ssin,read,fdin,inbuf,sizeof(inbuf));
   if (getln(&ssin,&line,&match,'\n') == -1)
-    strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir.s,"/",TXT_EZCRONRC,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_READ",TXT_EZCRONRC));
 
   if (!match)
-    strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir.s,"/",TXT_EZCRONRC,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_READ",TXT_EZCRONRC));
 	/* (since we have match line.len has to be >= 1) */
   line.s[line.len - 1] = '\0';
   if (!isclean(line.s,0))	 /* host for bounces */
@@ -227,7 +227,7 @@ void main(int argc,char **argv)
   for(;;) {
     if (!match) break;		/* to allow last line without '\n' */
     if (getln(&ssin,&line,&match,'\n') == -1)
-    strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir.s,"/",TXT_EZCRONRC,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_READ",TXT_EZCRONRC));
     if (!line.len)
       break;
     line.s[line.len-1] = '\0';
@@ -361,7 +361,7 @@ void main(int argc,char **argv)
   } /* if !flaglist */
   if ((fdin = open_read("crontab")) == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),dir.s,"/crontab: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ","crontab"));
   } else
     substdio_fdbuf(&ssin,read,fdin,inbuf,sizeof(inbuf));
   if (flaglist)
@@ -381,7 +381,7 @@ void main(int argc,char **argv)
           strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dir.s,"/crontabn: ");
       }
       if (getln(&ssin,&line,&match,'\n') == -1)
-        strerr_die4sys(111,FATAL,MSG("ERR_READ"),dir.s,"/crontab: ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_READ","crontab"));
       if (!match)
         break;
       flagours = 0;			/* assume entry is not ours */

@@ -132,7 +132,7 @@ void write_threads(const msgentry *msgtable,
 	substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
       for (;;) {
       if (getln(&ssin,&line,&match,'\n') == -1)
-             strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir,"/",fn.s,": ");
+             strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
       if (!match) break;
       pos = scan_ulong(line.s,&msgnum);
       pos++;			/* skip ':' */
@@ -228,7 +228,7 @@ void write_threads(const msgentry *msgtable,
 	lineno = 0;
 	for (;;) {
 	  if (getln(&ssin,&line,&match,'\n') == -1)
-             strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir,"/",fn.s,": ");
+             strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
           if (!match) break;
 	  if (!lineno) {			/* write subject */
 	    if (line.len < HASHLEN + 1 || line.s[HASHLEN] != ' ')
@@ -304,7 +304,7 @@ void write_threads(const msgentry *msgtable,
 	lineno = 0;
 	for (;;) {
 	  if (getln(&ssin,&line,&match,'\n') == -1)
-             strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir,"/",fn.s,": ");
+             strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
           if (!match) break;
 	  if (!lineno) {			/* write author */
 	    if (line.len < HASHLEN + 1 || line.s[HASHLEN] != ' ')

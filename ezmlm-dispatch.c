@@ -51,7 +51,7 @@ static void forward(const char *rcpt)
   while ((r = read(0,buf,sizeof buf)) > 0)
     qmail_put(&qq,buf,r);
   if (r == -1)
-    strerr_die3sys(111,FATAL,MSG("ERR_READ"),": ");
+    strerr_die2sys(111,FATAL,MSG("ERR_READ_STDIN"));
   qmail_from(&qq,sender);
   qmail_to(&qq,rcpt);
   if (*(err = qmail_close(&qq)) != '\0')

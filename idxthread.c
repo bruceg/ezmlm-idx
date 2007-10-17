@@ -241,14 +241,14 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
       if (!flagmissingindex && (msg > tmpmsg)) {
         flagauth = 0;
         if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die3sys(111,FATAL,MSG("ERR_READ"),"index: ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
         if (!match)
           flagmissingindex = 1;
         else {
           pos = scan_ulong(line.s,&tmpmsg);
           if (line.s[pos++] == ':') {
             if (getln(&ssindex,&authline,&match,'\n') == -1)
-              strerr_die3sys(111,FATAL,MSG("ERR_READ"),"index: ");
+              strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
             if (!match)
               flagmissingindex = 1;
             else {
@@ -503,7 +503,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
       substdio_fdbuf(&ssindex,read,fd,indexbuf,sizeof(indexbuf));
       for(;;) {
         if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die3sys(111,FATAL,MSG("ERR_READ"),"index: ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
         if (!match)
           break;
         pos=scan_ulong(line.s,&msg);
@@ -511,7 +511,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
           pos++;
           flagauth = 1;
           if (getln(&ssindex,&authline,&match,'\n') == -1)
-            strerr_die3sys(111,FATAL,MSG("ERR_READ"),"index: ");
+            strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
           if (!match)
             break;
         } else

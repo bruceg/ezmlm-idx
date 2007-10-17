@@ -91,7 +91,7 @@ static int loadsubdb(const char *filename, const char *plugin)
   line.len = 0;
   switch (slurp(filename,&line,128)) {
   case -1:
-    strerr_die3x(111,FATAL,MSG("ERR_READ"),filename);
+    strerr_die2sys(111,FATAL,MSG1("ERR_READ",filename));
   case 0:
     return 0;
   default:

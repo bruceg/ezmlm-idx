@@ -247,7 +247,7 @@ int idx_copy_insertsubject(void)
     substdio_fdbuf(&ssin,read,fdindex,inbuf,sizeof(inbuf));
     for(;;) {
       if (getln(&ssin,&qline,&match,'\n') == -1)
-        strerr_die4sys(111,FATAL,MSG("ERR_READ"), fnif.s, ": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnif.s));
       if (!match)
         break;
       pos = scan_ulong(qline.s,&idx);
@@ -259,7 +259,7 @@ int idx_copy_insertsubject(void)
         die_indexn();
       if (qline.s[pos] == ':') {	/* has author line */
         if (getln(&ssin,&qline,&match,'\n') == -1)
-          strerr_die4x(111,FATAL,MSG("ERR_READ"), fnif.s, ": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnif.s));
         if (!match && qline.s[0] != '\t')	/* "impossible! */
           strerr_die2x(111,FATAL,MSG("ERR_BAD_INDEX"));
         if (substdio_put(&ssindexn,qline.s,qline.len) == -1)

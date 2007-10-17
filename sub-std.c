@@ -55,7 +55,7 @@ static int fdnew;
 
 static void die_read(void)
 {
-  strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+  strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
 }
 
 static void die_write(const char *name)
@@ -137,7 +137,7 @@ static int _issub(struct subdbinfo *info,
 
       for (;;) {
         if (getln(&ss,&line,&match,'\0') == -1)
-          strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
         if (!match) break;
         if (line.len == lcaddr.len)
           if (!case_diffb(line.s,line.len,lcaddr.s)) {
@@ -167,7 +167,7 @@ static int _issub(struct subdbinfo *info,
 
     for (;;) {
       if (getln(&ss,&line,&match,'\0') == -1)
-        strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
       if (!match) break;
       if (line.len == addr.len)
         if (!case_diffb(line.s,line.len,addr.s)) {
@@ -230,12 +230,12 @@ static unsigned long _putsubs(struct subdbinfo *info,
       fd = open_read(fn.s);
       if (fd == -1) {
         if (errno != error_noent)
-	  strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+	  strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
       } else {
         substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
         for (;;) {
           if (getln(&ssin,&line,&match,'\0') == -1)
-            strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+            strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
           if (!match)
             break;
           if (subwrite(line.s + 1,line.len - 2) == -1) die_write("stdout");

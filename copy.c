@@ -199,7 +199,7 @@ void copy(struct qmail *qqp,
   substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
   for (;;) {
     if (getln(&sstext,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn));
     if (line.len > 0) {		/* line.len is always > 0 if match is true */
       if (line.s[0] == '#') continue;
       /* suppress blank line for 'H'eader mode */

@@ -57,7 +57,7 @@ const char USAGE[] =
 
 void die_read(void)
 {
-  strerr_die4x(111,FATAL,MSG("ERR_READ"),fnmsg.s,": ");
+  strerr_die2x(111,FATAL,MSG1("ERR_READ",fnmsg.s));
 }
 
 datetime_sec when;

@@ -56,7 +56,7 @@ stralloc lastd = {0};
 unsigned long copylines = 0;	/* Number of lines from the message to copy */
 struct stat st;
 
-static void die_read(void) { strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": "); }
+static void die_read(void) { strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s)); }
 
 void makedir(const char *s)
 {
@@ -157,7 +157,7 @@ void doit(int flagw)
         substdio_fdbuf(&sstext,read,fdhash,textbuf,sizeof(textbuf));
         for(;;) {
           if (getln(&sstext,&line,&match,'\n') == -1)
-            strerr_die4sys(111,FATAL,MSG("ERR_READ"),fnhash.s,": ");
+            strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnhash.s));
           if (!match) break;
           code_qput(line.s,line.len);
         }
@@ -268,7 +268,7 @@ void main(int argc,char **argv)
   if (!stralloc_cats(&fnlastd,"/bounce/lastd")) die_nomem();
   if (!stralloc_0(&fnlastd)) die_nomem();
   if (slurp(fnlastd.s,&lastd,16) == -1)		/* last time d was scanned */
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fnlastd.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnlastd.s));
   if (!stralloc_0(&lastd)) die_nomem();
   (void) scan_ulong(lastd.s,&ld);
   if (!lockout)
@@ -378,7 +378,7 @@ void main(int argc,char **argv)
     _exit(0);			/* 2nd comp to guard against corruption */
 
   if (slurp(fnlasth.s,&lasth,16) == -1)		/* last h cleaned */
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fnlasth.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnlasth.s));
   if (!stralloc_0(&lasth)) die_nomem();
   ch = lasth.s[0];				 /* clean h */
   if (ch >= 'a' && ch <= 'o')

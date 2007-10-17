@@ -102,7 +102,7 @@ int findname(void)
   lineno = 0;
   for (;;) {	/* dom:hash_lo:hash_hi:listaddress */
     if (getln(&sssp,&line,&match,'\n') == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),split,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",split));
      lineno++;
     if (!match)
       break;

@@ -115,9 +115,11 @@ ERR_PARSE:unable to parse
 ERR_PERIOD:periods not allowed in tags: 
 ERR_QMAIL_QUEUE:unable to run qmail-queue: 
 ERR_QUOTE:quotes not allowed in dir
-ERR_READ:unable to read 
+ERR_READ:unable to read <#1#>: 
 ERR_READ_INPUT:unable to read input: 
 ERR_READ_KEY:unable to read key
+ERR_READ_NOTHING:unable to read <#1#>: nothing there
+ERR_READ_STDIN:unable to read standard input: 
 ERR_REJECT:Sorry, I've been told to reject this message (#5.7.0)
 ERR_REQ_LISTNAME:This command requires a mailing list name (#5.1.1)
 ERR_REQ_LOCAL:the local part of the command string does not match this list (#5.1.1)

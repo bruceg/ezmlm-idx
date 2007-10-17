@@ -369,7 +369,7 @@ void copymsg(int fd,char format)
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
-           strerr_die4sys(111,FATAL,MSG("ERR_READ"),line.s,": ");
+           strerr_die2sys(111,FATAL,MSG1("ERR_READ",line.s));
         if (match) {
            qmail_put(&qq,line.s,line.len);
 	   msgsize += line.len;
@@ -384,7 +384,7 @@ void copymsg(int fd,char format)
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
-           strerr_die4sys(111,FATAL,MSG("ERR_READ"),line.s,": ");
+           strerr_die2sys(111,FATAL,MSG1("ERR_READ",line.s));
         if (match) {
           if (flaginheader) {
             if (line.len == 1) {
@@ -416,7 +416,7 @@ void copymsg(int fd,char format)
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
-           strerr_die4sys(111,FATAL,MSG("ERR_READ"),line.s,": ");
+           strerr_die2sys(111,FATAL,MSG1("ERR_READ",line.s));
         if (match) {
           if (flaginheader) {
             if (line.len == 1) {
@@ -1143,7 +1143,7 @@ void main(int argc,char **argv)
         substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
         for (;;) {
           if (getln(&sstext,&line,&match,'\n') == -1)
-            strerr_die4sys(111,FATAL,MSG("ERR_READ"),fn.s,": ");
+            strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
           if (match) {
             if (line.s[0] != '\t') {	/* subject line */
               pos = byte_chr(line.s,line.len,' ');

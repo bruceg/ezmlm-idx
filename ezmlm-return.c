@@ -204,7 +204,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   fd = open_read(fnhash.s);
   if (fd == -1) {
     if (errno != error_noent)
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fnhash.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnhash.s));
     makedir(fndir.s);
     if (rename(fndatenew.s,fndate.s) == -1)
       strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),fndatenew.s," to ",fndate.s,": ");

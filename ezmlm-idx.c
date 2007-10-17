@@ -248,7 +248,7 @@ int main(int argc,char **argv)
     fd = open_read(fnaf.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die4sys(100,FATAL,MSG("ERR_READ"),fnaf.s,": ");
+        strerr_die2sys(100,FATAL,MSG1("ERR_READ",fnaf.s));
     } else if (fstat(fd,&st) == -1 || (!(st.st_mode & 0100)))
         close(fd);
     else {

@@ -161,7 +161,7 @@ void store_from(stralloc *frl,	/* from line */
       substdio_fdbuf(&sstext,read,fdin,textbuf,(int) sizeof(textbuf));
       for (;;) {
 	if (getln(&sstext,&line,&match,'\n') == -1)
-	strerr_die3sys(111,FATAL,MSG("ERR_READ"),"from: ");
+	strerr_die2sys(111,FATAL,MSG1("ERR_READ","from"));
 	if (!match) break;
 	(void) scan_ulong(line.s,&linetime);
 	if (linetime + 1000000 > (unsigned long) when
@@ -220,12 +220,12 @@ const char *get_from(const char *adr, /* target address */
     if (errno == error_noent)
       return 0;
     else
-      strerr_die3x(111,FATAL,MSG("ERR_READ"),"from: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ","from"));
   }
   substdio_fdbuf(&sstext,read,fd,textbuf,(int) sizeof(textbuf));
   for (;;) {
     if (getln(&sstext,&fromline,&match,'\n') == -1)
-      strerr_die3sys(111,FATAL,MSG("ERR_READ"),"from: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ","from"));
     if (!match) break;
     fromline.s[fromline.len - 1] = (char) 0;
 	/* now:time addr\0fromline\0 read all. They can be out of order! */
@@ -729,7 +729,7 @@ int main(int argc,char **argv)
 				/* is false for all non-mod lists, only it   */
 				/* needs to be tested. */
   if ((flagpublic = slurp("public",&line,1)) == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),dir,"/public: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ","public"));
   if (!flagpublic && !(ismod && flagremote) &&
                 !case_equals(action,ACTION_HELP))
       strerr_die2x(100,FATAL,MSG("ERR_NOT_PUBLIC"));
@@ -957,7 +957,7 @@ int main(int argc,char **argv)
       }
       switch(slurp(fnedit.s,&text,1024)) {	/* entire file! */
         case -1:
-          strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir,"/",fnedit.s,": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnedit.s));
         case 0:
           strerr_die5x(100,FATAL,dir,"/",fnedit.s,MSG("ERR_NOEXIST"));
       }
@@ -1035,7 +1035,7 @@ int main(int argc,char **argv)
 
     switch (slurp(fnedit.s,&text,1024)) {
       case -1:
-        strerr_die6sys(111,FATAL,MSG("ERR_READ"),dir,"/",fnedit.s,": ");
+        strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnedit.s));
       case 0:
         strerr_die5x(100,FATAL,dir,"/",fnedit.s,MSG("ERR_NOEXIST"));
     }
@@ -1179,7 +1179,7 @@ int main(int argc,char **argv)
 	qmail_puts(&qq,"> ");
 	for (;;) {
 	  r = substdio_get(&sstext,&ch,1);
-	  if (r == -1) strerr_die4sys(111,FATAL,MSG("ERR_READ"),line.s,": ");
+	  if (r == -1) strerr_die2sys(111,FATAL,MSG1("ERR_READ",line.s));
 	  if (r == 0) break;
 	  qmail_put(&qq,&ch,1);
 	  if (ch == '\n') qmail_puts(&qq,"> ");

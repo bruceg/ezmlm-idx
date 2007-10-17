@@ -380,7 +380,7 @@ void main(int argc,char **argv)
 
     substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
     if (qmail_copy(&qq,&sstext,-1) != 0)
-      strerr_die4sys(111,FATAL,MSG("ERR_READ"),fnmsg.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnmsg.s));
     close(fd);
 
     if (flagmime)

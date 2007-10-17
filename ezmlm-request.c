@@ -502,7 +502,7 @@ void main(int argc,char **argv)
       flagok = 0;			/* got listhost match */
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
-          strerr_die3sys(111,FATAL,MSG("ERR_READ"),cfname);
+          strerr_die2sys(111,FATAL,MSG1("ERR_READ",cfname));
         if (!match)
           break;
         if (line.len <= 1 || line.s[0] == '#')
@@ -645,7 +645,7 @@ void main(int argc,char **argv)
       substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
-          strerr_die3sys(111,FATAL,MSG("ERR_READ"),cfname);
+          strerr_die2sys(111,FATAL,MSG1("ERR_READ",cfname));
         if (!match)
           break;
         if (line.len <= 1 || line.s[0] == '#')
