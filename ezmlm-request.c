@@ -594,6 +594,7 @@ void main(int argc,char **argv)
     if (cmdidx == EZREQ_WHICH) {	/* arg is user, not list */
       userlocal = listlocal; listlocal = 0;
       userhost = listhost; listhost = 0;
+      initsub(0);
     }
     if (!stralloc_copys(&from,listname.s)) die_nomem();
     if (!stralloc_cats(&from,"-return-@")) die_nomem();

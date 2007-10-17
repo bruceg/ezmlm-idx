@@ -40,6 +40,11 @@ select messages.
 
 FIXME add more details
 
+Also:
+
+- Fixed a bug in ezmlm-request that caused a segfault when attempting to
+  execute the "which" command.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 changes also replace the confirmpost subject line hack in ezmlm-store
