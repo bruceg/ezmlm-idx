@@ -8,10 +8,10 @@
 static void wrapper(int (*fn)(char*,char**), const char **args)
 {
   fn((char*)*args, (char**)args);
-  strerr_die4sys((errno == error_txtbsy
+  strerr_die2sys((errno == error_txtbsy
                  || errno == error_nomem
 		 || errno == error_io
-		 ) ? 111 : 100, FATAL, MSG("ERR_EXECUTE"), args[0], ": ");
+		 ) ? 111 : 100, FATAL, MSG1("ERR_EXECUTE",args[0]));
 }
 
 extern int execv(char*,char**);

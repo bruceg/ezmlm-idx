@@ -298,7 +298,7 @@ int main(int argc,char **argv)
       if (close(fdindexn) == -1)
         strerr_die2sys(100,FATAL,MSG1("ERR_CLOSE",fnifn.s));
       if (rename(fnifn.s,fnif.s) == -1)
-        strerr_die4x(111,FATAL,MSG("ERR_MOVE"),fnifn.s,": ");
+        strerr_die2x(111,FATAL,MSG2("ERR_MOVE",fnifn.s,fnif.s));
     }
   }
   fd = open_append("indexed");

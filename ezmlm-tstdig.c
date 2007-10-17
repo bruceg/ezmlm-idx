@@ -135,7 +135,7 @@ void main(int argc,char **argv)
         if (close(fd) == -1)
           strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE","tstdign"));
         if (rename("tstdign","tstdig") == -1)
-          strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),"tstdign",": ");
+          strerr_die2sys(111,FATAL,MSG2("ERR_MOVE","tstdign","tstdig"));
         _exit(0);
       }
     } else

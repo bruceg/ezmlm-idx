@@ -249,7 +249,7 @@ void write_ulong(unsigned long num,unsigned long cum,unsigned long dat,
   if (close(fd) == -1)
      strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",fnn));
   if (rename(fnn,fn) == -1)
-     strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),fnn,": ");
+     strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",fnn,fn));
 }
 
 void normal_bottom(char format)
@@ -656,7 +656,9 @@ void digest(msgentry *msgtable,
             if (!stralloc_copys(&line,"")) die_nomem();
           if (!stralloc_cats(&line,"\t")) die_nomem();
           if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msg))) die_nomem();
+          if (!stralloc_append(&line," ")) die_nomem();
           if (!stralloc_cats(&line,MSG("BY"))) die_nomem();
+          if (!stralloc_cats(&line,": ")) die_nomem();
           if (pmsgt->authnum) {
 	    cp = authtable[pmsgt->authnum - 1].auth;
 	    len = authtable[pmsgt->authnum - 1].authlen;

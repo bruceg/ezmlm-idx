@@ -186,7 +186,7 @@ void store_from(stralloc *frl,	/* from line */
   if (close(fdout) == -1)
     strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE","fromn"));
   if (rename("fromn","from") == -1)
-    strerr_die3sys(111,FATAL,MSG("ERR_MOVE"),"from: ");
+    strerr_die2sys(111,FATAL,MSG2("ERR_MOVE","fromn","from"));
   unlock();
 }
 
@@ -1122,11 +1122,11 @@ int main(int argc,char **argv)
     if (fsync(fd) == -1)
       strerr_die2sys(111,FATAL,MSG1("ERR_SYNC",fneditn.s));
     if (fchmod(fd, 0600) == -1)
-      strerr_die6sys(111,FATAL,MSG("ERR_CHMOD"),dir,"/",fneditn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_CHMOD",fneditn.s));
     if (close(fd) == -1)
       strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",fneditn.s));
     if (rename(fneditn.s,fnedit.s) == -1)
-      strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),dir,"/",fneditn.s,": ");
+      strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",fneditn.s,fnedit.s));
 
     unlock();
     hdr_subject(MSG1("SUB_EDIT_SUCCESS",fname));

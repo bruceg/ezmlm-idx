@@ -189,7 +189,7 @@ void numwrite(void)
   if (fsync(fd) == -1) die_numnew();
   if (close(fd) == -1) die_numnew(); /* NFS stupidity */
   if (rename("numnew","num") == -1)
-    strerr_die3sys(111,FATAL,MSG("ERR_MOVE"),"numnew: ");
+    strerr_die2sys(111,FATAL,MSG2("ERR_MOVE","numnew","num"));
 }
 
 stralloc mydtline = {0};
@@ -299,7 +299,7 @@ int idx_copy_insertsubject(void)
   if (fchmod(fdindexn,MODE_ARCHIVE | 0700) == -1) die_indexn();
   if (close(fdindexn) == -1) die_indexn(); /* NFS stupidity */
   if (rename(fnifn.s,fnif.s) == -1)
-    strerr_die4x(111,FATAL,MSG("ERR_MOVE"),fnifn.s,": ");
+    strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",fnifn.s,fnif.s));
   return r;
 }
 

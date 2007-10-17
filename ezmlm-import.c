@@ -74,7 +74,7 @@ void numwrite(void)
       || close(fd) == -1)
     strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","numnew"));
   if (rename("numnew","num") == -1)
-    strerr_die3sys(111,FATAL,MSG("ERR_MOVE"),"numnew: ");
+    strerr_die2sys(111,FATAL,MSG2("ERR_MOVE","numnew","num"));
   
 }
 

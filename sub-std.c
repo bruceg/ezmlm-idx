@@ -443,7 +443,7 @@ static int _subscribe(struct subdbinfo *info,
     close(fdnew);
 
     if (rename(fnnew.s,fn.s) == -1)
-      strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),fnnew.s," to ",fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",fnnew.s,fn.s));
 
     if ((ch == lcch) || flagwasthere) {
       close(fdlock);
@@ -492,7 +492,7 @@ static int _subscribe(struct subdbinfo *info,
     close(fdnew);
 
     if (rename(fnnew.s,fn.s) == -1)
-      strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),fnnew.s," to ",fn.s,": ");
+      strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",fnnew.s,fn.s));
 
     close(fdlock);
     if (flagadd ^ flagwasthere) {

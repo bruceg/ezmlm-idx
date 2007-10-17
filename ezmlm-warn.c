@@ -366,7 +366,7 @@ void main(int argc,char **argv)
     strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",line.s));
 
   if (rename(line.s,fnlastd.s) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),fnlastd.s,": ");
+    strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",line.s,fnlastd.s));
 
 				/* no need to do h dir cleaning more than */
 				/* once per 1-2 days (17-30 days for all) */

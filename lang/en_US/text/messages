@@ -14,7 +14,7 @@
 # <#1#> through <#9#> message specific positional parameters
 #
 ADMINISTRIVIA:Administrivia:
-BY: by: 
+BY:by
 DOTEZMLMRC:.ezmlmrc
 EDIT_END:%%% END OF TEXT FILE
 EDIT_START:%%% START OF TEXT FILE
@@ -37,13 +37,13 @@ ERR_BAD_RETURN_ADDRESS:Invalid bounce or receipt address format (#5.1.1)
 ERR_BAD_TYPE:Sorry, I don't accept messages of MIME Content-Type '<#1#>' (#5.2.3)
 ERR_BODYCOMMAND:Sorry, as the message starts with ``[un]subscribe'' it looks like an adminstrative request. Please send a message to the -help address shown in the ``Mailing-List:'' header for [un]subscribe info (#5.7.0)
 ERR_BOUNCE:I do not reply to bounce messages (#5.7.2)
-ERR_CFHOST:bounce-host required on first line of 
+ERR_CFHOST:bounce-host required on first line of <#1#>
 ERR_CHDIR:Unable to change directory to <#1#>
 ERR_CHILD_CRASHED:child crashed
 ERR_CHILD_FATAL:fatal error from child
 ERR_CHILD_TEMP:temporary error from child
 ERR_CHILD_UNKNOWN:unknown error from child
-ERR_CHMOD:unable to chmod 
+ERR_CHMOD:unable to chmod <#1#>
 ERR_CLOSE:unable to close <#1#>
 ERR_COOKIE:message does not have valid authentication token
 ERR_CREATE:unable to create <#1#>
@@ -59,7 +59,7 @@ ERR_EUID:effective user id not found
 ERR_EXCESS_DEFER:excess traffic: deferring
 ERR_EXCESS_MOD:excess traffic: moderating
 ERR_EXCLUSIVE:action-controlling switches are mutually exclusive
-ERR_EXECUTE:unable to execute 
+ERR_EXECUTE:unable to execute <#1#>
 ERR_EXTRA_SUB:Processed SENDER check addition request for: <#1#>
 ERR_EXTRA_UNSUB:Processed SENDER check removal request for: <#1#>
 ERR_FILENAME:continuation tag without defined file name: <#1#>
@@ -80,7 +80,7 @@ ERR_MOD_ACCEPTED:I'm sorry, I've already accepted this message
 ERR_MOD_COOKIE:Illegal or outdated moderator request (#5.7.1)
 ERR_MOD_REJECTED:I'm sorry, I've already rejected this message
 ERR_MOD_TIMEOUT:I'm sorry, I no longer have this message
-ERR_MOVE:unable to move 
+ERR_MOVE:unable to move <#1#> to <#2#>
 ERR_NEWLINE:newlines not allowed in dir
 ERR_NOCMD:command not available
 ERR_NODEFAULT:DEFAULT not set
@@ -111,7 +111,6 @@ ERR_NO_SUBJECT:Sorry, I don't accept message with empty Subject (#5.7.0)
 ERR_OBTAIN_LOCK:unable to obtain lock on <#1#>
 ERR_OPEN:unable to open <#1#>
 ERR_OPEN_LISTMSGS:unable to open <#1#> in listmsgs. Rerun ezmlm-archive!
-ERR_PARSE:unable to parse 
 ERR_PERIOD:periods not allowed in tags
 ERR_QMAIL_QUEUE:unable to run qmail-queue
 ERR_QUOTE:quotes not allowed in dir

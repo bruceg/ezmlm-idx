@@ -143,7 +143,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   if (fsync(fd) == -1) die_datenew();
   if (close(fd) == -1) die_datenew(); /* NFS stupidity */
   if (rename(fndatenew.s,fndate.s) == -1)
-    strerr_die6sys(111,FATAL,MSG("ERR_MOVE"),fndatenew.s," to ",fndate.s,": ");
+    strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",fndatenew.s,fndate.s));
 }
 
 void main(int argc,char **argv)

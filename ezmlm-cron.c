@@ -220,7 +220,7 @@ void main(int argc,char **argv)
 	/* (since we have match line.len has to be >= 1) */
   line.s[line.len - 1] = '\0';
   if (!isclean(line.s,0))	 /* host for bounces */
-    strerr_die4x(100,MSG("ERR_CFHOST"),dir.s,"/",TXT_EZCRONRC);
+    strerr_die2x(100,FATAL,MSG1("ERR_CFHOST",TXT_EZCRONRC));
   if (!stralloc_copys(&rp,line.s)) die_nomem();
 
   match = 1;
@@ -459,7 +459,7 @@ void main(int argc,char **argv)
   if (close(fdout) == -1)
     strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE","crontabn"));
   if (rename("crontabn","crontab") == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_MOVE"),dir.s,"/crontabn: ");
+    strerr_die2sys(111,FATAL,MSG2("ERR_MOVE","crontabn","crontab"));
   sendargs[0] = "sh";
   sendargs[1] = "-c";
 
