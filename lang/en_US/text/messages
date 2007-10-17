@@ -1,3 +1,18 @@
+# Revision: 1
+#
+# Substitutions made at runtime are:
+# <#A#> target email address
+# <#H#> outhost
+# <#L#> outlocal (unchanged)
+# <#R#> confirm address (equivalent to <#r#>@<#h#>)
+# <#c#> the confirm cookie
+# <#f#> file name (used by the edit command)
+# <#h#> outhost
+# <#l#> outlocal (may contain "-digest")
+# <#n#> message number
+# <#r#> local part of the confirm address (equivalent to <#l#>-<#c#>)
+# <#t#> target address, with '@' substituted by '='
+#
 ADMINISTRIVIA:Administrivia:
 BY: by: 
 DOTEZMLMRC:.ezmlmrc

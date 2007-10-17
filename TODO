@@ -1,4 +1,3 @@
-Add comments to text/messages indicating the substitutions
 Fix msgtxt to not require redundant initialization in sub modules.
 Add tests for all subjects in msgtxt.
 
