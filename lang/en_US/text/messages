@@ -6,6 +6,7 @@
 # <#L#> outlocal (unchanged)
 # <#R#> confirm address (equivalent to <#r#>@<#h#>)
 # <#c#> the confirm cookie
+# <#d#> the list directory
 # <#h#> outhost
 # <#l#> outlocal (may contain "-digest")
 # <#n#> message number

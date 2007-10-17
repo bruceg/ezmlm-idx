@@ -8,7 +8,7 @@
 /*   <#L#> outlocal (unchanged)                                    */
 /*   <#R#> confirm address (<#r#>@<#h#>)                           */
 /*   <#c#> the confirm cookie                                      */
-/*   <#f#> file name                                               */
+/*   <#d#> base directory name                                     */
 /*   <#h#> outhost                                                 */
 /*   <#l#> outlocal (modified for digest requests)                 */
 /*   <#n#> outmsgnum                                               */
@@ -136,6 +136,10 @@ void copy_xlate(stralloc *out,
       case 'c':
 	if (!stralloc_catb(out,confirm+confirmprefix,
 			   confirmlocal-confirmprefix)) die_nomem();
+	break;
+      case 'd':
+	if (listdir != 0)
+	  if (!stralloc_cats(out,listdir)) die_nomem();
 	break;
       case 'r':
 	if (!stralloc_catb(out,confirm,confirmlocal)) die_nomem();
