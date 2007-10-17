@@ -54,7 +54,6 @@ static const char *confirm = "?????";
 static unsigned int confirmlocal;
 static unsigned int confirmprefix;
 static const char *szmsgnum = "?????";
-static const char *filename = "?????";
 
 void set_cptarget(const char *tg)
 {
@@ -76,11 +75,6 @@ void set_cpconfirm(const char *cf,unsigned int prefixlen)
 void set_cpnum(const char *cf)
 {
   szmsgnum = cf;
-}
-
-void set_cpfilename(const char *fn)
-{
-  filename = fn;
 }
 
 static struct qmail *qq;
@@ -160,9 +154,6 @@ void copy_xlate(stralloc *out,
 	break;
       case 'n':
 	if (!stralloc_cats(out,szmsgnum)) die_nomem();
-	break;
-      case 'f':
-	if (!stralloc_cats(out,filename)) die_nomem();
 	break;
       case '0':
       case '1':

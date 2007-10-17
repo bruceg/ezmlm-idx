@@ -76,9 +76,10 @@ void msgtxt_init(void)
   initialized = 1;
 }
 
-const char *MSG(const char *name)
+static const char *MSGn(const char *name,const char *params[10])
 {
   const char *c;
+  params[0] = name;
   /* Handle messages before config is loaded */
   if (map_local.num == 0)
     constmap_init(&map_local,basetxts,sizeof basetxts,1);
@@ -87,7 +88,28 @@ const char *MSG(const char *name)
       if ((c = constmap(&map_default,name,str_len(name))) == 0)
 	c = name;
   if (!stralloc_copys(&data,c)) die_nomem();
-  copy_xlate(&xdata,&data,0,'H');
+  copy_xlate(&xdata,&data,params,'H');
   if (!stralloc_0(&xdata)) die_nomem();
   return xdata.s;
+}
+
+const char *MSG(const char *name)
+{
+  const char *params[10] = {0};
+  return MSGn(name,params);
+}
+
+const char *MSG1(const char *name,const char *p1)
+{
+  const char *params[10] = {0};
+  params[1] = p1;
+  return MSGn(name,params);
+}
+
+const char *MSG2(const char *name,const char *p1,const char *p2)
+{
+  const char *params[10] = {0};
+  params[1] = p1;
+  params[2] = p2;
+  return MSGn(name,params);
 }
