@@ -178,7 +178,7 @@ void oput(const char *s, unsigned int l)
 /* unbuffered. Avoid extra copy as httpd buffers */
 {
   if (substdio_put(&ssout,s,l) == -1)
-    strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
+    strerr_die2sys(111,FATAL,MSG("ERR_WRITE_STDOUT"));
 }
 
 void oputs(const char *s)

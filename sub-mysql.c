@@ -43,7 +43,7 @@ static stralloc quoted = {0};
 
 static void die_write(void)
 {
-  strerr_die3x(111,FATAL,MSG("ERR_WRITE"),"stdout");
+  strerr_die2sys(111,FATAL,MSG("ERR_WRITE_STDOUT"));
 }
 
 static int stralloc_cat_table(stralloc *s,

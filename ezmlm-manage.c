@@ -167,7 +167,7 @@ void store_from(stralloc *frl,	/* from line */
 	if (linetime + 1000000 > (unsigned long) when
 	    && linetime <= (unsigned long) when)
 	  if (substdio_bput(&ssfrom,line.s,line.len))
-	    strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"fromn: ");
+	    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","fromn"));
       }
       close(fdin);
   }					/* build new entry */
@@ -178,9 +178,9 @@ void store_from(stralloc *frl,	/* from line */
   if (!stralloc_catb(&line,frl->s,frl->len)) die_nomem();
   if (!stralloc_append(&line,"\n")) die_nomem();
   if (substdio_bput(&ssfrom,line.s,line.len) == -1)
-    strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"fromn: ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","fromn"));
   if (substdio_flush(&ssfrom) == -1)
-    strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"fromn: ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","fromn"));
   if (fsync(fdout) == -1)
     strerr_die3sys(111,FATAL,MSG("ERR_SYNC"),"fromn: ");
   if (close(fdout) == -1)
@@ -1057,7 +1057,7 @@ int main(int argc,char **argv)
     if (!stralloc_0(&fneditn)) die_nomem();
     fd = open_trunc(fneditn.s);
     if (fd == -1)
-      strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fneditn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fneditn.s));
     substdio_fdbuf(&sstext,write,fd,textbuf,sizeof(textbuf));
     if (!stralloc_copys(&quoted,"")) die_nomem();	/* clear */
     if (!stralloc_copys(&text,"")) die_nomem();
@@ -1111,14 +1111,14 @@ int main(int argc,char **argv)
         else
           ++cplast;
         if (substdio_put(&sstext,cp,cplast-cp+1) == -1)
-            strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fneditn.s,": ");
+            strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fneditn.s));
       }
       cp = cpnext + 1;
     }
     if (!flagdone)
       strerr_die2x(100,FATAL,MSG("ERR_NO_MARK"));
     if (substdio_flush(&sstext) == -1)
-      strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fneditn.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fneditn.s));
     if (fsync(fd) == -1)
       strerr_die6sys(111,FATAL,MSG("ERR_SYNC"),dir,"/",fneditn.s,": ");
     if (fchmod(fd, 0600) == -1)

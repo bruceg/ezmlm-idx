@@ -144,7 +144,8 @@ ERR_UNEXPECTED:program logic error (#5.3.0)
 ERR_UNIQUE:unable to create unique message file name
 ERR_UNSUB_NOP:target is not a subscriber
 ERR_VERSION:ezmlmrc version mismatch. Behavior may not match docs.
-ERR_WRITE:unable to write 
+ERR_WRITE:unable to write <#1#>: 
+ERR_WRITE_STDOUT:unable to write to standard output: 
 LISTMEMBERS:Subscribers to this list are:
 NOINDEX:aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->
 SUB_CONFIRM_POST:Confirm post to <#L#>@<#H#>

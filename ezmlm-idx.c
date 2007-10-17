@@ -231,7 +231,7 @@ int main(int argc,char **argv)
 			/* Open index */
       fdindexn = open_trunc(fnifn.s);
       if (fdindexn == -1)
-        strerr_die4sys(100,FATAL,MSG("ERR_WRITE"),fnifn.s,": ");
+        strerr_die2sys(100,FATAL,MSG1("ERR_WRITE",fnifn.s));
 
 			/* set up buffers for index */
       substdio_fdbuf(&ssindex,write,fdindexn,indexbuf,sizeof(indexbuf));
@@ -284,7 +284,7 @@ int main(int argc,char **argv)
       if (!stralloc_cat(&line,&lines)) die_nomem();
       if (!stralloc_cats(&line,"\n")) die_nomem();
       if (substdio_put(&ssindex,line.s,line.len) == -1)
-          strerr_die4sys(100,FATAL,MSG("ERR_WRITE"),fnifn.s, ": ");
+          strerr_die2sys(100,FATAL,MSG1("ERR_WRITE",fnifn.s));
     }
 
     if (!((msgnum + 1) % 100) ||
@@ -294,7 +294,7 @@ int main(int argc,char **argv)
       if (fsync(fdindexn) == -1)
         strerr_die4sys(100,FATAL,MSG("ERR_SYNC"),fnifn.s, ": ");
       if (fchmod(fdindexn,MODE_ARCHIVE | 0700) == -1)
-        strerr_die4sys(100,FATAL,MSG("ERR_WRITE"),fnifn.s, ": ");
+        strerr_die2sys(100,FATAL,MSG1("ERR_WRITE",fnifn.s));
       if (close(fdindexn) == -1)
         strerr_die4sys(100,FATAL,MSG("ERR_CLOSE"),fnifn.s,": ");
       if (rename(fnifn.s,fnif.s) == -1)

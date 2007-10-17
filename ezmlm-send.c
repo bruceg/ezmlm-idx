@@ -73,7 +73,7 @@ stralloc qmqpservers = {0};
 
 void die_indexn(void)
 {
-  strerr_die4x(111,FATAL,MSG("ERR_WRITE"),fnifn.s,": ");
+  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnifn.s));
 }
 
 unsigned long innum;
@@ -129,7 +129,7 @@ int subto(const char *s,unsigned int l)
 
 void die_archive(void)
 {
-  strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fnaf.s,": ");
+  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnaf.s));
 }
 void die_numnew(void)
 {
@@ -229,7 +229,7 @@ int idx_copy_insertsubject(void)
 			/* Open indexn */
   fdindexn = open_trunc(fnifn.s);
   if (fdindexn == -1)
-    strerr_die4x(111,FATAL,MSG("ERR_WRITE"),fnifn.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnifn.s));
 
 			/* set up buffers for indexn */
   substdio_fdbuf(&ssindexn,write,fdindexn,indexnbuf,sizeof(indexnbuf));
@@ -453,7 +453,7 @@ void main(int argc,char **argv)
 	strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),fnadir.s,": ");
     fdarchive = open_trunc(fnaf.s);
     if (fdarchive == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fnaf.s,": ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnaf.s));
 
     substdio_fdbuf(&ssarchive,write,fdarchive,archivebuf,sizeof(archivebuf));
 						/* return-path to archive */

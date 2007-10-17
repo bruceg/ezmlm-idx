@@ -23,7 +23,7 @@ char strnum[FMT_ULONG];
 
 static void die_write(void)
 {
-  strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
+  strerr_die2sys(111,FATAL,MSG("ERR_WRITE_STDOUT"));
 }
 
 int subwrite(const char *s,unsigned int l)

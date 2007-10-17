@@ -60,7 +60,7 @@ static void die_read(void)
 
 static void die_write(const char *name)
 {
-  strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),name,": ");
+  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",name));
 }
 
 static void _closesub(struct subdbinfo *info)
@@ -261,7 +261,7 @@ static void lineout(const stralloc *line, int subwrite())
   if (!stralloc_cats(&outline,": ")) die_nomem();
   if (!stralloc_catb(&outline,line->s,line->len - 1)) die_nomem();
   if (subwrite(outline.s,outline.len) == -1)
-	strerr_die3x(111,FATAL,MSG("ERR_WRITE"),"output");
+	strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","output"));
   return;
 }
 

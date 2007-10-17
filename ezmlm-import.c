@@ -52,7 +52,7 @@ int openone(unsigned long outnum)
     if (errno != error_exist)
       strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),fnadir.s,": ");
   if ((fd = open_trunc(fnaf.s)) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fnaf.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnaf.s));
 
   substdio_fdbuf(&ssarchive,write,fd,archivebuf,sizeof archivebuf);
   return fd;
@@ -116,7 +116,7 @@ int main(int argc,char *argv[])
 	if (substdio_flush(&ssarchive) == -1
 	    || fchmod(fd,MODE_ARCHIVE|0700) == -1
 	    || close(fd) == -1)
-	  strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fnaf.s,": ");
+	  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnaf.s));
 	fd = 0;
       }
       ++msgnum;

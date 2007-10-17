@@ -229,19 +229,19 @@ void write_ulong(unsigned long num,unsigned long cum,unsigned long dat,
      strerr_die6sys(111,FATAL,MSG("ERR_CREATE"),dir,"/",fnn,": ");
   substdio_fdbuf(&ssnum,write,fd,numbuf,sizeof(numbuf));
   if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,num)) == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn));
   if (substdio_puts(&ssnum,":") == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn));
   if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,cum)) == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn));
   if (dat) {
     if (substdio_puts(&ssnum,":") == -1)
-       strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
+       strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn));
     if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,dat)) == -1)
-       strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
+       strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn));
   }
   if (substdio_puts(&ssnum,"\n") == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn));
   if (substdio_flush(&ssnum) == -1)
      strerr_die6sys(111,FATAL,MSG("ERR_FLUSH"),dir,"/",fnn,": ");
   if (fsync(fd) == -1)

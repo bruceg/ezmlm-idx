@@ -164,7 +164,7 @@ void write_threads(const msgentry *msgtable,
       }
       if (!ffound) {
 	if (substdio_put(&ssout,line.s,line.len) == -1)
-	  strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+	  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
       } else {			/* new # of msg in thread */
 	cp += HASHLEN;		/* HASHLEN [#] Subject always \n at end */
 	if (*(cp++) == ' ' && *(cp++) == '[') {
@@ -194,7 +194,7 @@ void write_threads(const msgentry *msgtable,
     if (!stralloc_catb(&line,psubtm->sub + HASHLEN,psubtm->sublen - HASHLEN))
 			 die_nomem();	/* has \n */
     if (substdio_put(&ssout,line.s,line.len) == -1)
-	strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+	strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
     }
   psubtm++;
   }
@@ -222,7 +222,7 @@ void write_threads(const msgentry *msgtable,
       if (errno != error_noent)
 	  strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
       if (substdio_puts(&ssout,psubt->sub) == -1)	/* write subject */
-	     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+	     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
     } else {					/* copy data */
 	substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
 	lineno = 0;
@@ -234,14 +234,14 @@ void write_threads(const msgentry *msgtable,
 	    if (line.len < HASHLEN + 1 || line.s[HASHLEN] != ' ')
 		flagerror = -3;
 	    if (substdio_put(&ssout,line.s,line.len) == -1)
-	       strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+	       strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
 	    lineno = 1;
 	    continue;
 	  }
 	  (void) scan_ulong(line.s,&msgnum);
 	  if (msgnum >= from) break;
 	  if (substdio_put(&ssout,line.s,line.len) == -1)
-	     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+	     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
 	}
 	(void) close(fd);	/* close old index */
       }
@@ -266,7 +266,7 @@ void write_threads(const msgentry *msgtable,
 	} else
           if (!stralloc_cats(&line,"\n")) die_nomem();
 	if (substdio_put(&ssout,line.s,line.len) == -1)
-	  strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+	  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
       }
       pmsgt++;
     }
@@ -297,7 +297,7 @@ void write_threads(const msgentry *msgtable,
 	  strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
         else {			/* didn't exist before: write author */
           if (substdio_put(&ssout,pautht->auth,pautht->authlen) == -1)
-	     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+	     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
 	}
       } else {					/* copy data */
 	substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
@@ -310,14 +310,14 @@ void write_threads(const msgentry *msgtable,
 	    if (line.len < HASHLEN + 1 || line.s[HASHLEN] != ' ')
 		flagerror = - 4;
 	    if (substdio_put(&ssout,line.s,line.len) == -1)
-	       strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+	       strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
 	    lineno = 1;
 	    continue;
 	  }
 	  (void) scan_ulong(line.s,&msgnum);
 	  if (msgnum >= from) break;
 	  if (substdio_put(&ssout,line.s,line.len) == -1)
-	     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+	     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
 	}
 	(void) close(fd);			/* close old index */
       }
@@ -337,7 +337,7 @@ void write_threads(const msgentry *msgtable,
 		die_nomem();
 	}
 	if (substdio_put(&ssout,line.s,line.len) == -1)
-	  strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+	  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
       }
       pmsgt++;
     }
@@ -434,9 +434,9 @@ int main(int argc,char **argv)
     strerr_die4sys(111,FATAL,MSG("ERR_CREATE"),dir,"/archnumn: ");
   substdio_fdbuf(&ssnum,write,fd,numbuf,sizeof(numbuf));
   if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,to)) == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
   if (substdio_puts(&ssnum,"\n") == -1)
-     strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnn.s,": ");
+     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
   close_proper(&ssnum,"archnum","archnumn");
   switch (flagerror) {
     case 0:

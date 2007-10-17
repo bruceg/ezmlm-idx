@@ -159,12 +159,12 @@ void f_open(const char *slash)
 void f_put(const char *buf,unsigned int len)
 {
   if (substdio_bput(&ss,buf,len) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dirplus.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",dirplus.s));
 }
 void f_puts(const char *buf)
 {
   if (substdio_bputs(&ss,buf) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dirplus.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",dirplus.s));
 }
 
 void f_close(void)

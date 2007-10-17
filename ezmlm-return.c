@@ -69,9 +69,9 @@ const char *dir;
 const char *workdir;
 
 void die_hashnew(void)
-{ strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fnhashnew.s,": "); }
+{ strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnhashnew.s)); }
 void die_datenew(void)
-{ strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fndatenew.s,": "); }
+{ strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fndatenew.s)); }
 void die_msgin(void)
 { strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT")); }
 

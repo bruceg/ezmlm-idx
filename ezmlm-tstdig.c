@@ -125,9 +125,9 @@ void main(int argc,char **argv)
           strerr_die6sys(111,FATAL,MSG("ERR_CREATE"),dir,"/","tstdign",": ");
         substdio_fdbuf(&ssnum,write,fd,numbuf,sizeof(numbuf));
         if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,when)) == -1)
-          strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/","tstdign",": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","tstdign"));
         if (substdio_puts(&ssnum,"\n") == -1)
-          strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/","tstdign",": ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","tstdign"));
         if (substdio_flush(&ssnum) == -1)
           strerr_die6sys(111,FATAL,MSG("ERR_FLUSH"),dir,"/","tstdign",": ");
         if (fsync(fd) == -1)

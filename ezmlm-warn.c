@@ -355,9 +355,9 @@ void main(int argc,char **argv)
   if (fd == -1) strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
   substdio_fdbuf(&ssout,write,fd,outbuf,sizeof(outbuf));
   if (substdio_put(&ssout,strnum,fmt_ulong(strnum,when)) == -1)
-    strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),line.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",line.s));
   if (substdio_put(&ssout,"\n",1) == -1)	/* prettier */
-    strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),line.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",line.s));
   if (substdio_flush(&ssout) == -1)
     strerr_die4sys(111,FATAL,MSG("ERR_FLUSH"),line.s,": ");
   if (fsync(fd) == -1)

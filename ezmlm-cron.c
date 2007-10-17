@@ -247,9 +247,9 @@ void main(int argc,char **argv)
     line.s[line.len-1] = '\n';	/* not very elegant ;-) */
     substdio_fdbuf(&ssout,write,1,outbuf,sizeof(outbuf));
     if (substdio_put(&ssout,line.s,line.len) == -1)
-      strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
+      strerr_die2sys(111,FATAL,MSG("ERR_WRITE_STDOUT"));
     if (substdio_flush(&ssout) == -1)
-      strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
+      strerr_die2sys(111,FATAL,MSG("ERR_WRITE_STDOUT"));
     _exit(0);
   }
   ++pos;				/* points to first ':' */
@@ -368,7 +368,7 @@ void main(int argc,char **argv)
     substdio_fdbuf(&ssout,write,1,outbuf,sizeof(outbuf));
   else {
     if ((fdout = open_trunc("crontabn")) == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dir.s,"/crontabn: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","crontabn"));
     substdio_fdbuf(&ssout,write,fdout,outbuf,sizeof(outbuf));
   }
   line.len = 0;
@@ -378,7 +378,7 @@ void main(int argc,char **argv)
       if (!flaglist && line.len) {
         line.s[line.len-1] = '\n';
         if (substdio_put(&ssout,line.s,line.len) == -1)
-          strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dir.s,"/crontabn: ");
+          strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","crontabn"));
       }
       if (getln(&ssin,&line,&match,'\n') == -1)
         strerr_die2sys(111,FATAL,MSG1("ERR_READ","crontab"));
@@ -424,9 +424,9 @@ void main(int argc,char **argv)
         foundmatch = 1;
         if (flaglist && (local || flagours)) {
           if (substdio_put(&ssout,line.s,line.len) == -1)
-            strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
+            strerr_die2sys(111,FATAL,MSG("ERR_WRITE_STDOUT"));
           if (substdio_put(&ssout,"\n",1) == -1)
-            strerr_die3sys(111,FATAL,MSG("ERR_WRITE"),"stdout: ");
+            strerr_die2sys(111,FATAL,MSG("ERR_WRITE_STDOUT"));
         }
         line.len = 0;		/* same - kill line */
         if (flagours)
@@ -449,7 +449,7 @@ void main(int argc,char **argv)
     strerr_die2x(100,FATAL,MSG("ERR_LISTNO"));
   if (!flagdelete)
     if (substdio_put(&ssout,addr.s,addr.len-1) == -1)
-      strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),dir.s,"/crontabn: ");
+      strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","crontabn"));
   if (flagdelete && !foundlocal)
     strerr_die2x(111,FATAL,MSG("ERR_NO_MATCH"));
   if (substdio_flush(&ssout) == -1)

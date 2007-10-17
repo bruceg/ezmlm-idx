@@ -54,7 +54,7 @@ stralloc fndir = {0};
 stralloc fndatenew = {0};
 
 void die_datenew(void)
-{ strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fndatenew.s,": "); }
+{ strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fndatenew.s)); }
 void die_msgin(void)
 { strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT")); }
 

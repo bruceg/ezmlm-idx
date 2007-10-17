@@ -52,7 +52,7 @@ const char USAGE[] =
 
 stralloc fnmsg = {0};
 
-void die_msg(void) { strerr_die4sys(111,FATAL,MSG("ERR_WRITE"),fnmsg.s,": "); }
+void die_msg(void) { strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnmsg.s)); }
 
 int fdmsg;
 int fdmod;
@@ -258,7 +258,7 @@ void main(int argc,char **argv)
 
   fdmsg = open_trunc(fnmsg.s);
   if (fdmsg == -1)
-    strerr_die6sys(111,FATAL,MSG("ERR_WRITE"),dir,"/",fnmsg.s,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnmsg.s));
   substdio_fdbuf(&ssmsg,write,fdmsg,msgbuf,sizeof(msgbuf));
 
   if (qmail_open(&qq, (stralloc *) 0) == -1)		/* Open mailer */

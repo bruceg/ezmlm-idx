@@ -264,7 +264,7 @@ void main(int argc,char **argv)
       if (!stralloc_cats(&name,target.s)) die_nomem();
       if (!stralloc_append(&name,"\n")) die_nomem();
       if (substdio_put(subfdout,name.s,name.len) == -1)
-	strerr_die2sys(111,MSG("ERR_WRITE"),"output: ");
+	strerr_die2sys(111,FATAL,MSG("ERR_WRITE_STDOUT"));
     }
     if (substdio_flush(subfdout) == -1)
       strerr_die2sys(111,MSG("ERR_FLUSH"),"output: ");
