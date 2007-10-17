@@ -193,7 +193,7 @@ void zapnonsub(const char *szerr)
     if (issub("allow",sender,0))
       return;		/* allow addresses */
   }
-  strerr_die4x(100,FATAL,MSG("ERR_SUBSCRIBER_CAN"),szerr,MSG("ERR_571"));
+  strerr_die3x(100,FATAL,MSG1("ERR_SUBSCRIBER_CAN",szerr));
 }
 
 void tosender(void)

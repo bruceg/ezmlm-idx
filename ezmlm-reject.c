@@ -361,7 +361,7 @@ void main(int argc,char **argv)
       if ((!!constmap(&mimeremovemap,cpstart,cp-cpstart) ^ mimeremoveflag) ||
 	  constmap(&mimerejectmap,cpstart,cp-cpstart)) {
 	*(cp) = (char) 0;
-	strerr_die5x(100,FATAL,MSG("ERR_BAD_TYPE"),cpstart,"'",MSG("ERR_SIZE_CODE"));
+	strerr_die3x(100,FATAL,MSG1("ERR_BAD_TYPE",cpstart));
       }
 
     cpafter = content.s+content.len;
@@ -413,7 +413,7 @@ void main(int argc,char **argv)
         }
 	if (flagparsemime && constmap(&mimerejectmap,cpstart,cp-cpstart)) {
           *cp = '\0';
-          strerr_die4x(100,FATAL,MSG("ERR_BAD_PART"),cpstart,MSG("ERR_SIZE_CODE"));
+          strerr_die2x(100,FATAL,MSG1("ERR_BAD_PART",cpstart));
         }
     } else if (boundary.len && *line.s == '-' && line.len > boundary.len &&
 	!str_diffn(line.s,boundary.s,boundary.len)) {
@@ -427,14 +427,14 @@ void main(int argc,char **argv)
 	  msgsize += line.len;
 	  if (maxmsgsize && msgsize > maxmsgsize) {
 	    strnum[fmt_ulong(strnum,maxmsgsize)] = 0;
-	    strerr_die5x(100,FATAL,MSG("ERR_MAX_SIZE"),strnum," bytes",MSG("ERR_SIZE_CODE"));
+	    strerr_die3x(100,FATAL,MSG1("ERR_MAX_SIZE",strnum));
 	  }
       }
     }
   }
   if (msgsize < minmsgsize) {
     strnum[fmt_ulong(strnum,minmsgsize)] = 0;
-        strerr_die5x(100,FATAL,MSG("ERR_MIN_SIZE"),strnum," bytes",MSG("ERR_SIZE_CODE"));
+        strerr_die5x(100,FATAL,MSG1("ERR_MIN_SIZE",strnum));
   }
   _exit(0);
 }
