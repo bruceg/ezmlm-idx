@@ -15,7 +15,6 @@ struct strerr
 extern struct strerr strerr_sys;
 extern void strerr_sysinit(void);
 
-extern const char *strerr(const struct strerr *se);
 extern void strerr_warn(const char *x1,
 			const char *x2,
 			const char *x3,

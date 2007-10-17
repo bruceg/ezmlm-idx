@@ -101,8 +101,6 @@ stralloc_opyb.lo
 stralloc_opys.lo
 stralloc_pend.lo
 strerr.lo
-strerr_die.lo
-strerr_sys.lo
 subdb.lo
 subfderr.lo
 subfdin.lo

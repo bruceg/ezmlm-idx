@@ -1,21 +1,56 @@
-#include "stralloc.h"
+#include "error.h"
+#include "exit.h"
+#include "substdio.h"
+#include "subfd.h"
 #include "strerr.h"
 
-static stralloc sa = {0};
+struct strerr strerr_sys;
 
-const char *strerr(const struct strerr *se)
+void strerr_sysinit(void)
+{
+  strerr_sys.who = 0;
+  strerr_sys.x = error_str(errno);
+  strerr_sys.y = "";
+  strerr_sys.z = "";
+}
+
+void strerr_warn(const char *x1,
+		 const char *x2,
+		 const char *x3,
+		 const char *x4,
+		 const char *x5,
+		 const char *x6,
+		 const struct strerr *se)
 {
   strerr_sysinit();
  
-  if (!stralloc_copys(&sa,"")) return "out of memory";
+  if (x1) substdio_puts(subfderr,x1);
+  if (x2) substdio_puts(subfderr,x2);
+  if (x3) substdio_puts(subfderr,x3);
+  if (x4) substdio_puts(subfderr,x4);
+  if (x5) substdio_puts(subfderr,x5);
+  if (x6) substdio_puts(subfderr,x6);
  
   while(se) {
-    if (se->x) if (!stralloc_cats(&sa,se->x)) return "out of memory";
-    if (se->y) if (!stralloc_cats(&sa,se->y)) return "out of memory";
-    if (se->z) if (!stralloc_cats(&sa,se->z)) return "out of memory";
+    if (se->x) substdio_puts(subfderr,se->x);
+    if (se->y) substdio_puts(subfderr,se->y);
+    if (se->z) substdio_puts(subfderr,se->z);
     se = se->who;
   }
  
-  if (!stralloc_0(&sa)) return "out of memory";
-  return sa.s;
+  substdio_puts(subfderr,"\n");
+  substdio_flush(subfderr);
+}
+
+void strerr_die(int e,
+		const char *x1,
+		const char *x2,
+		const char *x3,
+		const char *x4,
+		const char *x5,
+		const char *x6,
+		const struct strerr *se)
+{
+  strerr_warn(x1,x2,x3,x4,x5,x6,se);
+  _exit(e);
 }
