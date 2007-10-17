@@ -10,6 +10,7 @@
 #include "strerr.h"
 
 static const char basetxts[] =
+"ERR_CHDIR:unable to change directory to <#1#>\0"
 "ERR_NOMEM:out of memory\0"
 "ERR_READ:unable to read \0"
 "ERR_NOEXIST: does not exist\0"

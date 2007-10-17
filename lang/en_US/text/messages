@@ -38,6 +38,7 @@ ERR_BAD_TYPE:Sorry, I don't accept messages of MIME Content-Type '<#1#>' (#5.2.3
 ERR_BODYCOMMAND:Sorry, as the message starts with ``[un]subscribe'' it looks like an adminstrative request. Please send a message to the -help address shown in the ``Mailing-List:'' header for [un]subscribe info (#5.7.0)
 ERR_BOUNCE:I do not reply to bounce messages (#5.7.2)
 ERR_CFHOST:bounce-host required on first line of 
+ERR_CHDIR:Unable to change directory to <#1#>
 ERR_CHILD_CRASHED:child crashed
 ERR_CHILD_FATAL:fatal error from child
 ERR_CHILD_TEMP:temporary error from child
@@ -134,7 +135,6 @@ ERR_SUBSCRIBER_CAN:only subscribers can <#1#> (#5.7.1)
 ERR_SUBST_UNSAFE:Sorry, substitution of target addresses into headers with #A# or #t# is unsafe and not permitted.
 ERR_SUB_NOP:target is already a subscriber
 ERR_SUID:Sorry, I won't run as root
-ERR_SWITCH:unable to switch to 
 ERR_SYNC:unable to sync <#1#>
 ERR_SYNTAX: syntax error
 ERR_SYNTAX_CONFIG:syntax error in config file <#1#>
