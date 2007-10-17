@@ -2,9 +2,18 @@
 /* !A at the beginning of a line for the target,                   */
 /* !R at the beginning of a line for the confirm reply address,    */
 /* The following substitutions are also made. If not set, ?????    */
-/* will be printed:  <#l#> outlocal                                */
-/* will be printed:  <#h#> outhost                                 */
-/* will be printed:  <#n#> outmsgnum                               */
+/* will be printed:                                                */
+/*   <#A#> target email address                                    */
+/*   <#H#> outhost                                                 */
+/*   <#L#> outlocal (unchanged)                                    */
+/*   <#R#> confirm address (<#r#>@<#h#>)                           */
+/*   <#c#> the confirm cookie                                      */
+/*   <#f#> file name                                               */
+/*   <#h#> outhost                                                 */
+/*   <#l#> outlocal (modified for digest requests)                 */
+/*   <#n#> outmsgnum                                               */
+/*   <#r#> local part of the confirm address (<#l#>-<#c#>)         */
+/*   <#t#> target address, with '@' substituted by '='             */
 /* Other tags are killed, e.g. removed. A missing file is a        */
 /* permanent error so owner finds out ASAP. May not have access to */
 /* maillog. Content transfer encoding is done for 'B' and 'Q'. For */
@@ -44,6 +53,7 @@ static const char *confirm = "?????";
 static unsigned int confirmlocal;
 static unsigned int confirmprefix;
 static const char *szmsgnum = "?????";
+static const char *filename = "?????";
 
 void set_cptarget(const char *tg)
 {
@@ -65,6 +75,11 @@ void set_cpconfirm(const char *cf,unsigned int prefixlen)
 void set_cpnum(const char *cf)
 {
   szmsgnum = cf;
+}
+
+void set_cpfilename(const char *fn)
+{
+  filename = fn;
 }
 
 static struct qmail *qq;
@@ -143,6 +158,9 @@ void copy_xlate(stralloc *out,
 	break;
       case 'n':
 	if (!stralloc_cats(out,szmsgnum)) die_nomem();
+	break;
+      case 'f':
+	if (!stralloc_cats(out,filename)) die_nomem();
 	break;
       default:
 	break;			/* unknown tags killed */
