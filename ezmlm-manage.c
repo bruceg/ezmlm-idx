@@ -981,7 +981,8 @@ int main(int argc,char **argv)
       qmail_put(&qq,quoted.s,quoted.len);
       qmail_puts(&qq,"\n");
 
-      hdr_listsubject3(TXT_EDIT_RESPONSE,action+len+1,TXT_EDIT_FOR);
+      set_cpfilename(action+len+1);
+      hdr_subject(MSG("SUB_EDIT_REQUEST"));
       hdr_ctboundary();
       copy(&qq,"text/top",flagcd);
       copy(&qq,"text/edit-do",flagcd);
@@ -1122,7 +1123,8 @@ int main(int argc,char **argv)
       strerr_die6sys(111,FATAL,ERR_MOVE,dir,"/",fneditn.s,": ");
 
     unlock();
-    hdr_listsubject3(TXT_EDIT_SUCCESS,fname,TXT_EDIT_FOR);
+    set_cpfilename(fname);
+    hdr_subject(MSG("SUB_EDIT_SUCCESS"));
     hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/edit-done",flagcd);

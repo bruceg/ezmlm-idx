@@ -94,16 +94,10 @@
 /* should start with 20 'a' [in place of hash] */
 #define TXT_NOINDEX MSG("NOINDEX")
 
-/* Subject: Edit file xxx for list@host */
-#define TXT_EDIT_RESPONSE MSG("SUB_EDIT_RESPONSE")
-#define TXT_EDIT_FOR MSG("SUB_EDIT_FOR")
-
 /* markers for ezmlm-manage text file edit */
 /* MUST start with '%' */
 #define TXT_EDIT_START MSG("EDIT_START")
 #define TXT_EDIT_END MSG("EDIT_END")
-
-#define TXT_EDIT_SUCCESS MSG("EDIT_SUCCESS")
 
 /* Text for '-list' command */
 #define TXT_LISTMEMBERS MSG("LISTMEMBERS")

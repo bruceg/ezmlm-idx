@@ -3,7 +3,6 @@ BY: by:
 DOTEZMLMRC:.ezmlmrc
 EDIT_END:%%% END OF TEXT FILE
 EDIT_START:%%% START OF TEXT FILE
-EDIT_SUCCESS:Success editing 
 ERR_571: (#5.7.1)
 ERR_ADDR_AT:address does not contain @
 ERR_ADDR_LONG:address is too long
@@ -133,9 +132,9 @@ ERR_WRITE:unable to write
 LISTMEMBERS:\nSubscribers to this list are:\n\n
 NOINDEX:aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->\n
 SUB_CONFIRM_POST:Confirm post to <#L#>@<#H#>
-SUB_EDIT_FOR: for 
 SUB_EDIT_LIST:List of editable text files for <#L#>@<#H#>
-SUB_EDIT_RESPONSE:EDIT 
+SUB_EDIT_REQUEST:EDIT <#f#> for <#L#>@<#H#>
+SUB_EDIT_SUCCESS:Success editing <#f#> for <#L#>@<#H#>
 SUB_FAQ_FOR:FAQ for <#L#>@<#H#>
 SUB_GET_MSG:Archive retrieval from <#L#>@<#H#>
 SUB_GOODBYE:GOODBYE from <#L#>@<#H#>

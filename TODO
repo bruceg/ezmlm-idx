@@ -1,5 +1,4 @@
-Add support for extra substitutions in messages
-Handle hdr_listsubject3 somehow with defineable parameters in MSG.
+Add comments to text/messages indicating the substitutions
 Fix msgtxt to not require redundant initialization in sub modules.
 Add tests for all subjects in msgtxt.
 
