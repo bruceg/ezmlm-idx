@@ -31,6 +31,7 @@
 #include "cookie.h"
 #include "hdr.h"
 #include "die.h"
+#include "wrap.h"
 #include "idx.h"
 #include "copy.h"
 #include "config.h"
@@ -188,8 +189,7 @@ void numwrite(void)
   if (substdio_flush(&ssnumnew) == -1) die_numnew();
   if (fsync(fd) == -1) die_numnew();
   if (close(fd) == -1) die_numnew(); /* NFS stupidity */
-  if (rename("numnew","num") == -1)
-    strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,"numnew","num"));
+  wrap_rename("numnew","num");
 }
 
 stralloc mydtline = {0};
@@ -298,8 +298,7 @@ int idx_copy_insertsubject(void)
   if (fsync(fdindexn) == -1) die_indexn();
   if (fchmod(fdindexn,MODE_ARCHIVE | 0700) == -1) die_indexn();
   if (close(fdindexn) == -1) die_indexn(); /* NFS stupidity */
-  if (rename(fnifn.s,fnif.s) == -1)
-    strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fnifn.s,fnif.s));
+  wrap_rename(fnifn.s,fnif.s);
   return r;
 }
 

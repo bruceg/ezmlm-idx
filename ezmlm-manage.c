@@ -32,6 +32,7 @@
 #include "mime.h"
 #include "hdr.h"
 #include "die.h"
+#include "wrap.h"
 #include "idx.h"
 #include "config.h"
 #include "auto_version.h"
@@ -185,8 +186,7 @@ void store_from(stralloc *frl,	/* from line */
     strerr_die2sys(111,FATAL,MSG1(ERR_SYNC,"fromn"));
   if (close(fdout) == -1)
     strerr_die2sys(111,FATAL,MSG1(ERR_CLOSE,"fromn"));
-  if (rename("fromn","from") == -1)
-    strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,"fromn","from"));
+  wrap_rename("fromn","from");
   unlock();
 }
 
@@ -1125,8 +1125,7 @@ int main(int argc,char **argv)
       strerr_die2sys(111,FATAL,MSG1(ERR_CHMOD,fneditn.s));
     if (close(fd) == -1)
       strerr_die2sys(111,FATAL,MSG1(ERR_CLOSE,fneditn.s));
-    if (rename(fneditn.s,fnedit.s) == -1)
-      strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fneditn.s,fnedit.s));
+    wrap_rename(fneditn.s,fnedit.s);
 
     unlock();
     hdr_subject(MSG1(SUB_EDIT_SUCCESS,fname));

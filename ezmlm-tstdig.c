@@ -19,6 +19,7 @@
 #include "str.h"
 #include "open.h"
 #include "die.h"
+#include "wrap.h"
 #include "idx.h"
 #include "config.h"
 #include "auto_version.h"
@@ -134,8 +135,7 @@ void main(int argc,char **argv)
           strerr_die2sys(111,FATAL,MSG1(ERR_SYNC,"tstdign"));
         if (close(fd) == -1)
           strerr_die2sys(111,FATAL,MSG1(ERR_CLOSE,"tstdign"));
-        if (rename("tstdign","tstdig") == -1)
-          strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,"tstdign","tstdig"));
+        wrap_rename("tstdign","tstdig");
         _exit(0);
       }
     } else

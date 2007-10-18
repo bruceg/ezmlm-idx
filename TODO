@@ -1,7 +1,6 @@
 Fix msgtxt to not require redundant initialization in sub modules.
 Use positional parameters in error messages
 
-Add wrap function for rename
 Fix ezmlm-subunsub to not repeatedly reopen the database.
 Put a real address into To: header in ezmlm-store (and others?)
 add ezmlm-receipt to build system (needs to be fixed to compile)

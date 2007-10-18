@@ -442,8 +442,7 @@ static int _subscribe(struct subdbinfo *info,
     if (fsync(fdnew) == -1) { close(fdnew); die_write(fnnew.s); }
     close(fdnew);
 
-    if (rename(fnnew.s,fn.s) == -1)
-      strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fnnew.s,fn.s));
+    wrap_rename(fnnew.s,fn.s);
 
     if ((ch == lcch) || flagwasthere) {
       close(fdlock);
@@ -491,8 +490,7 @@ static int _subscribe(struct subdbinfo *info,
     if (fsync(fdnew) == -1) { close(fdnew); die_write(fnnew.s); }
     close(fdnew);
 
-    if (rename(fnnew.s,fn.s) == -1)
-      strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fnnew.s,fn.s));
+    wrap_rename(fnnew.s,fn.s);
 
     close(fdlock);
     if (flagadd ^ flagwasthere) {

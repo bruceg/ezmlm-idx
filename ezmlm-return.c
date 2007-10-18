@@ -27,6 +27,7 @@
 #include "subdb.h"
 #include "messages.h"
 #include "die.h"
+#include "wrap.h"
 #include "config.h"
 #include "idx.h"
 #include "auto_version.h"
@@ -125,8 +126,7 @@ void dowit(const char *addr,unsigned long when,const stralloc *bounce)
   if (fsync(fd) == -1) die_datenew();
   if (close(fd) == -1) die_datenew(); /* NFS stupidity */
 
-  if (rename(fndatenew.s,fndate.s) == -1)
-    strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fndatenew.s,fndate.s));
+  wrap_rename(fndatenew.s,fndate.s);
 }
 
 void doit(const char *addr,unsigned long msgnum,unsigned long when,
@@ -206,8 +206,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
     if (errno != error_noent)
       strerr_die2sys(111,FATAL,MSG1(ERR_READ,fnhash.s));
     makedir(fndir.s);
-    if (rename(fndatenew.s,fndate.s) == -1)
-      strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fndatenew.s,fndate.s));
+    wrap_rename(fndatenew.s,fndate.s);
   }
   else {
     substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
@@ -226,8 +225,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   if (fsync(fdnew) == -1) die_hashnew();
   if (close(fdnew) == -1) die_hashnew(); /* NFS stupidity */
 
-  if (rename(fnhashnew.s,fnhash.s) == -1)
-    strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fnhashnew.s,fnhash.s));
+  wrap_rename(fnhashnew.s,fnhash.s);
 }
 
 stralloc bounce = {0};

@@ -20,6 +20,7 @@
 #include "open.h"
 #include "scan.h"
 #include "die.h"
+#include "wrap.h"
 #include "idx.h"
 #include "messages.h"
 #include "config.h"
@@ -62,8 +63,7 @@ void close_proper(substdio *ss,const char *s,const char *sn)
        strerr_die2sys(111,FATAL,MSG1(ERR_SYNC,s));
   if (close(ss->fd) == -1)
      strerr_die2sys(111,FATAL,MSG1(ERR_CLOSE,s));
-  if (rename(sn,s) == -1)
-     strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,sn,s));
+  wrap_rename(sn,s);
 }
 
 void write_threads(const msgentry *msgtable,

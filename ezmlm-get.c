@@ -34,6 +34,7 @@
 #include "scan.h"
 #include "idxthread.h"
 #include "die.h"
+#include "wrap.h"
 #include "idx.h"
 #include "mime.h"
 #include "messages.h"
@@ -248,8 +249,7 @@ void write_ulong(unsigned long num,unsigned long cum,unsigned long dat,
      strerr_die2sys(111,FATAL,MSG1(ERR_SYNC,fnn));
   if (close(fd) == -1)
      strerr_die2sys(111,FATAL,MSG1(ERR_CLOSE,fnn));
-  if (rename(fnn,fn) == -1)
-     strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fnn,fn));
+  wrap_rename(fnn,fn);
 }
 
 void normal_bottom(char format)

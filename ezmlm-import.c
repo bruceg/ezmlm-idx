@@ -12,6 +12,7 @@
 #include "open.h"
 #include "messages.h"
 #include "die.h"
+#include "wrap.h"
 #include "fmt.h"
 #include "getln.h"
 #include "byte.h"
@@ -73,9 +74,7 @@ void numwrite(void)
       || fsync(fd) == -1
       || close(fd) == -1)
     strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"numnew"));
-  if (rename("numnew","num") == -1)
-    strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,"numnew","num"));
-  
+  wrap_rename("numnew","num");
 }
 
 int main(int argc,char *argv[])

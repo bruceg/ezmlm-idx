@@ -458,8 +458,7 @@ void main(int argc,char **argv)
     strerr_die2sys(111,FATAL,MSG1(ERR_SYNC,"crontabn++"));
   if (close(fdout) == -1)
     strerr_die2sys(111,FATAL,MSG1(ERR_CLOSE,"crontabn"));
-  if (rename("crontabn","crontab") == -1)
-    strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,"crontabn","crontab"));
+  wrap_rename("crontabn","crontab");
   sendargs[0] = "sh";
   sendargs[1] = "-c";
 
