@@ -2,12 +2,12 @@
 
   prompt "messages:             "
 
-  echo 'unable to open <#1#>:My message ' >"$DIR"/text/messages
+  echo 'unable to open <#1#>|My message ' >"$DIR"/text/messages
   ${EZBIN}/ezmlm-sub "$DIR" foobar "$SENDER" 2>&1 \
   | ${GREP} ' My message ' >/dev/null \
   || fatal "did not read local text/messages"
 
-  echo 'unable to open <#2#>:My message ' >"$DIR"/text/messages
+  echo 'unable to open <#2#>|My message ' >"$DIR"/text/messages
   ${EZBIN}/ezmlm-sub "$DIR" foobar "$SENDER" 2>&1 \
   | ${GREP} 'ERR_OPEN' >/dev/null \
   && fatal "did not read default text/messages"

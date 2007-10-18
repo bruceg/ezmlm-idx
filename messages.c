@@ -9,6 +9,8 @@
 #include "str.h"
 #include "strerr.h"
 
+#define SPLIT '|'
+
 static stralloc msg_local = {0};
 static stralloc msg_alt = {0};
 static stralloc msg_default = {0};
@@ -55,17 +57,17 @@ void messages_init(void)
     return;
 
   readit(&msg_local,"text/messages");
-  if (!constmap_init(&map_local,msg_local.s,msg_local.len,':'))
+  if (!constmap_init(&map_local,msg_local.s,msg_local.len,SPLIT))
     die_nomem();
 
   altpath(&xdata,"text/messages");
   readit(&msg_alt,xdata.s);
-  if (!constmap_init(&map_alt,msg_alt.s,msg_alt.len,':'))
+  if (!constmap_init(&map_alt,msg_alt.s,msg_alt.len,SPLIT))
     die_nomem();
 
   altdefaultpath(&xdata,"text/messages");
   readit(&msg_default,xdata.s);
-  if (!constmap_init(&map_default,msg_default.s,msg_default.len,':'))
+  if (!constmap_init(&map_default,msg_default.s,msg_default.len,SPLIT))
     die_nomem();
 
   initialized = 1;

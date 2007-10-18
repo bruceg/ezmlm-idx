@@ -11,10 +11,11 @@ except:
 re_msg = re.compile('^#define\s+\S+\s+"([^"]+)"$', re.MULTILINE)
 src_msgs = re_msg.findall(file('messages.h').read())
 
+SPLIT = '|'
 lang_msgs = dict([
-	line[:-1].split(':', 1)
+	line[:-1].split(SPLIT, 1)
 	for line in file('lang/%s/text/messages' % lang).readlines()
-	if line[0] <> '#' and line[0] <> '\n' and ':' in line
+	if line[0] <> '#' and line[0] <> '\n' and SPLIT in line
 	])
 
 missing = 0
