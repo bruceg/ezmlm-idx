@@ -13,7 +13,7 @@
 #include "now.h"
 #include "lock.h"
 #include "sgetopt.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "scan.h"
 #include "case.h"
 #include "str.h"

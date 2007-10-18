@@ -8,7 +8,7 @@
 #include "config.h"
 #include "copy.h"
 #include "idx.h"
-#include "msgtxt.h"
+#include "messages.h"
 
 static stralloc data = {0};
 static stralloc xdata = {0};

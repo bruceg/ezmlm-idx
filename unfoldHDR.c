@@ -2,7 +2,7 @@
 #include "strerr.h"
 #include "case.h"
 #include "byte.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "mime.h"
 #include "die.h"
 #include "idx.h"

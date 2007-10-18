@@ -8,7 +8,7 @@
 #include "subfd.h"
 #include "getln.h"
 #include "strerr.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "die.h"
 
 const char FATAL[] = "ezmlm-weed: fatal: ";

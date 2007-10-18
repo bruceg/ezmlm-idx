@@ -1,4 +1,4 @@
-#include "msgtxt.h"
+#include "messages.h"
 #include "altpath.h"
 #include "config.h"
 #include "constmap.h"

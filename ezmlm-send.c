@@ -26,7 +26,7 @@
 #include "quote.h"
 #include "subdb.h"
 #include "mime.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "makehash.h"
 #include "cookie.h"
 #include "hdr.h"

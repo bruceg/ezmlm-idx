@@ -19,7 +19,7 @@
 #include "getln.h"
 #include "error.h"
 #include "lock.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "die.h"
 #include "idx.h"
 #include "auto_etc.h"

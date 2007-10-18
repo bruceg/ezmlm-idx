@@ -23,7 +23,7 @@
 #include "die.h"
 #include "idx.h"
 #include "mime.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "getconf.h"
 #include "makehash.h"
 #include "config.h"

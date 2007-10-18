@@ -1,4 +1,4 @@
-#include "msgtxt.h"
+#include "messages.h"
 #include "mime.h"
 #include "stralloc.h"
 #include "strerr.h"

@@ -22,7 +22,7 @@
 #include "cookie.h"
 #include "sgetopt.h"
 #include "fmt.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "copy.h"
 #include "open.h"
 #include "scan.h"

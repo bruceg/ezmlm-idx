@@ -1,5 +1,5 @@
 #include "fork.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "strerr.h"
 #include "wrap.h"
 #include "die.h"

@@ -11,7 +11,7 @@
 #include "readwrite.h"
 #include "getln.h"
 #include "scan.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "die.h"
 #include "idx.h"
 #include "config.h"

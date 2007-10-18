@@ -24,7 +24,7 @@
 #include "sgetopt.h"
 #include "byte.h"
 #include "seek.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "copy.h"
 #include "cookie.h"
 #include "subdb.h"

@@ -36,7 +36,7 @@
 #include "die.h"
 #include "idx.h"
 #include "mime.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "config.h"
 #include "auto_version.h"
 

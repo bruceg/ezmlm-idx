@@ -22,7 +22,7 @@
 #include "auto_qmail.h"
 #include "auto_cron.h"
 #include "auto_version.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "die.h"
 #include "idx.h"
 #include "wrap.h"

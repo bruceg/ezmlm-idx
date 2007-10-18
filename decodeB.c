@@ -1,7 +1,7 @@
 #include "stralloc.h"
 #include "strerr.h"
 #include "uint32.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "die.h"
 #include "idx.h"
 

@@ -26,7 +26,7 @@
 #include "die.h"
 #include "idx.h"
 #include "config.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-receipt: fatal: ";

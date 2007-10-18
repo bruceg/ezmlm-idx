@@ -22,7 +22,7 @@
 #include "byte.h"
 #include "die.h"
 #include "idx.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "substdio.h"
 #include "fmt.h"
 #include "readwrite.h"

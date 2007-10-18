@@ -25,7 +25,7 @@
 #include "cookie.h"
 #include "sgetopt.h"
 #include "copy.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "open.h"
 #include "lock.h"
 #include "scan.h"

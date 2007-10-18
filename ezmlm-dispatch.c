@@ -6,7 +6,7 @@
 #include "sgetopt.h"
 #include "substdio.h"
 #include "subfd.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "error.h"
 #include "byte.h"
 #include "fmt.h"

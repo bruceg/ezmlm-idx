@@ -69,7 +69,7 @@ lockfile.lo
 log.lo
 makehash.lo
 makepath.lo
-msgtxt.lo
+messages.lo
 now.lo
 open_append.lo
 open_read.lo

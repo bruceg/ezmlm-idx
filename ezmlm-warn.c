@@ -20,7 +20,7 @@
 #include "fmt.h"
 #include "cookie.h"
 #include "qmail.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "quote.h"
 #include "open.h"
 #include "scan.h"

@@ -7,7 +7,7 @@
 #include "exit.h"
 #include "fmt.h"
 #include "sgetopt.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "die.h"
 #include "idx.h"
 #include "config.h"

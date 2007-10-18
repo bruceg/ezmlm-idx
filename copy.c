@@ -32,7 +32,7 @@
 #include "case.h"
 #include "readwrite.h"
 #include "qmail.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "error.h"
 #include "quote.h"
 #include "copy.h"

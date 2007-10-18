@@ -1,5 +1,5 @@
 #include "strerr.h"
-#include "msgtxt.h"
+#include "messages.h"
 #include "die.h"
 
 void die_sender(void)
