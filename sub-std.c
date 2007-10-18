@@ -70,7 +70,7 @@ static void _closesub(struct subdbinfo *info)
 
 static const char *_opensub(struct subdbinfo *info)
 {
-  msgtxt_init();
+  messages_init();
   return 0;
   (void)info;
 }

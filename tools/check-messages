@@ -1,18 +1,35 @@
-#!/bin/sh
-cat *.c \
-| sed -e '
-  /MSG[1-9]\?("/!d;
-  s/^.*MSG[1-2]\?("//;
-  s/".*$//;
-' \
-| sort -u \
-| while read tag; do
-  grep "^$tag:" lang/en_US/text/messages >/dev/null \
-  || echo "Missing tag '$tag'"
-done
+#!/usr/bin/python2
+import os
+import re
+import sys
 
-grep -v '^#' lang/en_US/text/messages \
-| while IFS=: read tag rest; do
-  fgrep "\"$tag\"" *.c >/dev/null \
-  || echo "Extraneous tag '$tag'"
-done
+try:
+	lang = sys.argv[1]
+except:
+	print 'Usage: %s LANG' % sys.argv[0]
+
+re_msg = re.compile('^#define\s+\S+\s+"([^"]+)"$', re.MULTILINE)
+src_msgs = re_msg.findall(file('messages.h').read())
+
+lang_msgs = dict([
+	line[:-1].split(':', 1)
+	for line in file('lang/%s/text/messages' % lang).readlines()
+	if line[0] <> '#' and line[0] <> '\n' and ':' in line
+	])
+
+missing = 0
+extra = 0
+
+for msg in src_msgs:
+	if not lang_msgs.has_key(msg):
+		print 'Missing:', msg
+		missing += 1
+
+src_msgs = dict(zip(src_msgs, [None]*len(src_msgs)))
+for msg in lang_msgs.keys():
+	if not src_msgs.has_key(msg):
+		print 'Extra:', msg
+		extra += 1
+
+if missing > 0 or extra > 0:
+	print 'Summary: %d missing, %d extra messages' % (missing, extra)
