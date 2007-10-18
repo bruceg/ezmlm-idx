@@ -59,10 +59,10 @@ const char *constmap(struct constmap *cm,const char *s,int len)
   return 0;
 }
 
-int constmap_init(struct constmap *cm,const char *s,int len,int flagcolon)
-/* if flagcolon is true, we process only the stuff before the colon on */
-/* each line. Otherwise, it's the entire line. Still, the entire line */
-/* is stored! */
+int constmap_init(struct constmap *cm,const char *s,int len,int splitchar)
+/* if splitchar is set, we process only the stuff before that character
+ * on each line. Otherwise, it's the entire line. Still, the entire line
+ * is stored! */
 {
   int i;
   int j;
@@ -94,9 +94,9 @@ int constmap_init(struct constmap *cm,const char *s,int len,int flagcolon)
             for (j = 0;j < len;++j)
               if (!s[j]) {
 	        k = j - i;
-	        if (flagcolon) {
+	        if (splitchar) {
 		  for (k = i;k < j;++k)
-		    if (s[k] == ':')
+		    if (s[k] == splitchar)
 		      break;
 		  if (k >= j) { i = j + 1; continue; }
 		  k -= i;

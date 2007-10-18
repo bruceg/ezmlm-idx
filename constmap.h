@@ -13,7 +13,7 @@ struct constmap {
   int *inputlen;
 } ;
 
-extern int constmap_init(struct constmap *cm,const char *s,int len,int flagcolon);
+extern int constmap_init(struct constmap *cm,const char *s,int len,int splitchar);
 extern void constmap_free(struct constmap *cm);
 extern const char *constmap(struct constmap *cm,const char *s,int len);
 extern const char *constmap_get(struct constmap *cm,unsigned int idx);

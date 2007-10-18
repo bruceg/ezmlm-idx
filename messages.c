@@ -55,17 +55,17 @@ void messages_init(void)
     return;
 
   readit(&msg_local,"text/messages");
-  if (!constmap_init(&map_local,msg_local.s,msg_local.len,1))
+  if (!constmap_init(&map_local,msg_local.s,msg_local.len,':'))
     die_nomem();
 
   altpath(&xdata,"text/messages");
   readit(&msg_alt,xdata.s);
-  if (!constmap_init(&map_alt,msg_alt.s,msg_alt.len,1))
+  if (!constmap_init(&map_alt,msg_alt.s,msg_alt.len,':'))
     die_nomem();
 
   altdefaultpath(&xdata,"text/messages");
   readit(&msg_default,xdata.s);
-  if (!constmap_init(&map_default,msg_default.s,msg_default.len,1))
+  if (!constmap_init(&map_default,msg_default.s,msg_default.len,':'))
     die_nomem();
 
   initialized = 1;
