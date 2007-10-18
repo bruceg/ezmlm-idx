@@ -55,12 +55,12 @@ static int fdnew;
 
 static void die_read(void)
 {
-  strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
+  strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
 }
 
 static void die_write(const char *name)
 {
-  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",name));
+  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,name));
 }
 
 static void _closesub(struct subdbinfo *info)
@@ -131,20 +131,20 @@ static int _issub(struct subdbinfo *info,
     fd = open_read(fn.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
+        strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
     } else {
       substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
 
       for (;;) {
         if (getln(&ss,&line,&match,'\0') == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
+          strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
         if (!match) break;
         if (line.len == lcaddr.len)
           if (!case_diffb(line.s,line.len,lcaddr.s)) {
 	    close(fd);
 	    if (recorded)
 	      if (!stralloc_copyb(recorded,line.s+1,line.len-1))
-		strerr_die2x(111,FATAL,MSG("ERR_NOMEM"));
+		strerr_die2x(111,FATAL,MSG(ERR_NOMEM));
 	    return 1;
 	  }
       }
@@ -160,21 +160,21 @@ static int _issub(struct subdbinfo *info,
     fd = open_read(fn.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
+        strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
       return 0;
     }
     substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
 
     for (;;) {
       if (getln(&ss,&line,&match,'\0') == -1)
-        strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
+        strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
       if (!match) break;
       if (line.len == addr.len)
         if (!case_diffb(line.s,line.len,addr.s)) {
 	  close(fd);
 	  if (recorded)
 	    if (!stralloc_copyb(recorded,line.s+1,line.len-1))
-	      strerr_die2x(111,FATAL,MSG("ERR_NOMEM"));
+	      strerr_die2x(111,FATAL,MSG(ERR_NOMEM));
 	  return 1;
 	}
     }
@@ -230,12 +230,12 @@ static unsigned long _putsubs(struct subdbinfo *info,
       fd = open_read(fn.s);
       if (fd == -1) {
         if (errno != error_noent)
-	  strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
+	  strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
       } else {
         substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
         for (;;) {
           if (getln(&ssin,&line,&match,'\0') == -1)
-            strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
+            strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
           if (!match)
             break;
           if (subwrite(line.s + 1,line.len - 2) == -1) die_write("stdout");
@@ -261,7 +261,7 @@ static void lineout(const stralloc *line, int subwrite())
   if (!stralloc_cats(&outline,": ")) die_nomem();
   if (!stralloc_catb(&outline,line->s,line->len - 1)) die_nomem();
   if (subwrite(outline.s,outline.len) == -1)
-	strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","output"));
+	strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,"output"));
   return;
 }
 
@@ -299,15 +299,15 @@ static void _searchlog(struct subdbinfo *info,
   fd = open_read(line.s);
   if (fd == -1) {
     if (errno != error_noent)
-      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,line.s));
     else
-      strerr_die3x(100,FATAL,line.s,MSG("ERR_NOEXIST"));
+      strerr_die3x(100,FATAL,line.s,MSG(ERR_NOEXIST));
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
 
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
+      strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (!match) break;
     if (!searchlen) {
       lineout(&line,subwrite);
@@ -367,16 +367,16 @@ static int _subscribe(struct subdbinfo *info,
   int flagwasthere;
 
   if (userhost[str_chr(userhost,'\n')])
-    strerr_die2x(100,FATAL,MSG("ERR_ADDR_NL"));
+    strerr_die2x(100,FATAL,MSG(ERR_ADDR_NL));
 
     if (!stralloc_copys(&addr,"T")) die_nomem();
     if (!stralloc_cats(&addr,userhost)) die_nomem();
     if (addr.len > 401)
-      strerr_die2x(100,FATAL,MSG("ERR_ADDR_LONG"));
+      strerr_die2x(100,FATAL,MSG(ERR_ADDR_LONG));
 
     j = byte_rchr(addr.s,addr.len,'@');
     if (j == addr.len)
-      strerr_die2x(100,FATAL,MSG("ERR_ADDR_AT"));
+      strerr_die2x(100,FATAL,MSG(ERR_ADDR_AT));
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
     if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
     case_lowerb(lcaddr.s + 1,j - 1);	/* make all-lc version of address */
@@ -443,7 +443,7 @@ static int _subscribe(struct subdbinfo *info,
     close(fdnew);
 
     if (rename(fnnew.s,fn.s) == -1)
-      strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",fnnew.s,fn.s));
+      strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fnnew.s,fn.s));
 
     if ((ch == lcch) || flagwasthere) {
       close(fdlock);
@@ -492,7 +492,7 @@ static int _subscribe(struct subdbinfo *info,
     close(fdnew);
 
     if (rename(fnnew.s,fn.s) == -1)
-      strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",fnnew.s,fn.s));
+      strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fnnew.s,fn.s));
 
     close(fdlock);
     if (flagadd ^ flagwasthere) {

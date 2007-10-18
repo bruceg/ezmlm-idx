@@ -82,7 +82,7 @@ void subunsub_main(int submode,
   } else {		/* stdin */
     for (;;) {
       if (getln(subfdin,&line,&match,'\n') == -1)
-	strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
+	strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
       if (!match) break;
       if (line.len == 1 || *line.s == '#') continue;
       line.s[line.len - 1] = '\0';

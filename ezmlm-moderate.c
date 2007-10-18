@@ -102,7 +102,7 @@ int checkfile(const char *fn)
   if (!stralloc_0(&fnmsg)) die_nomem();
   if (stat(fnmsg.s,&st) == -1) {
     if (errno != error_noent)
-      strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fnmsg.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fnmsg.s));
   } else
       return 1;
 
@@ -111,7 +111,7 @@ int checkfile(const char *fn)
   if (!stralloc_0(&fnmsg)) die_nomem();
   if (stat(fnmsg.s,&st) == -1) {
     if (errno != error_noent)
-      strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fnmsg.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fnmsg.s));
   } else
       return -1;
 
@@ -120,7 +120,7 @@ int checkfile(const char *fn)
   if (!stralloc_0(&fnmsg)) die_nomem();
   if (stat(fnmsg.s,&st) == -1) {
     if (errno != error_noent)
-      strerr_die2sys(111,FATAL,MSG1("ERR_STAT",fnmsg.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fnmsg.s));
   } else
       return -2;
   return 0;
@@ -197,18 +197,18 @@ void main(int argc,char **argv)
   startup(dir = argv[optind++]);
 
   sender = env_get("SENDER");
-  if (!sender) strerr_die2x(100,FATAL,MSG("ERR_NOSENDER"));
+  if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
   local = env_get("LOCAL");
-  if (!local) strerr_die2x(100,FATAL,MSG("ERR_NOLOCAL"));
+  if (!local) strerr_die2x(100,FATAL,MSG(ERR_NOLOCAL));
   def = env_get("DEFAULT");
-  if (!def) strerr_die2x(100,FATAL,MSG("ERR_NODEFAULT"));
+  if (!def) strerr_die2x(100,FATAL,MSG(ERR_NODEFAULT));
 
   if (!*sender)
-    strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
+    strerr_die2x(100,FATAL,MSG(ERR_BOUNCE));
   if (!sender[str_chr(sender,'@')])
-    strerr_die2x(100,FATAL,MSG("ERR_ANONYMOUS"));
+    strerr_die2x(100,FATAL,MSG(ERR_ANONYMOUS));
   if (str_equal(sender,"#@[]"))
-    strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
+    strerr_die2x(100,FATAL,MSG(ERR_BOUNCE));
 
   /* local should be >= def, but who knows ... */
   cp = local + str_len(local) - str_len(def) - 2;
@@ -236,17 +236,17 @@ void main(int argc,char **argv)
 
   switch(checkfile(fnbase.s)) {
     case 0:
-      strerr_die2x(100,FATAL,MSG("ERR_MOD_TIMEOUT"));
+      strerr_die2x(100,FATAL,MSG(ERR_MOD_TIMEOUT));
     case -1:			/* only error if new request != action taken */
       if (str_start(action,ACTION_ACCEPT))
-        strerr_die2x(0,INFO,MSG("ERR_MOD_ACCEPTED"));
+        strerr_die2x(0,INFO,MSG(ERR_MOD_ACCEPTED));
       else
-        strerr_die2x(100,FATAL,MSG("ERR_MOD_ACCEPTED"));
+        strerr_die2x(100,FATAL,MSG(ERR_MOD_ACCEPTED));
     case -2:
       if (str_start(action,ACTION_REJECT))
-        strerr_die2x(0,INFO,MSG("ERR_MOD_REJECTED"));
+        strerr_die2x(0,INFO,MSG(ERR_MOD_REJECTED));
       else
-        strerr_die2x(100,FATAL,MSG("ERR_MOD_REJECTED"));
+        strerr_die2x(100,FATAL,MSG(ERR_MOD_REJECTED));
     default:
       break;
   }
@@ -256,21 +256,21 @@ void main(int argc,char **argv)
   if (str_start(action,ACTION_REJECT)) {
 
     if (qmail_open(&qq, (stralloc *) 0) == -1)
-      strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
+      strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
 
 				/* Build recipient from msg return-path */
     fd = open_read(fnmsg.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fnmsg.s));
+        strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fnmsg.s));
       else
-        strerr_die2x(100,FATAL,MSG("ERR_MOD_TIMEOUT"));
+        strerr_die2x(100,FATAL,MSG(ERR_MOD_TIMEOUT));
     }
     substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
 
     if (getln(&sstext,&line,&match,'\n') == -1 || !match)
-      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
+      strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     maketo();			/* extract SENDER from return-path */
 						/* Build message */
     hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
@@ -281,7 +281,7 @@ void main(int argc,char **argv)
     if (replyto)
       hdr_add2s("Reply-To: ",replyto);
     hdr_add2s("To: ",to.s);
-    hdr_subject(MSG("SUB_RETURNED_POST"));
+    hdr_subject(MSG(SUB_RETURNED_POST));
 
     if (flagmime) {
       hdr_mime(CTYPE_MULTIPART);
@@ -298,7 +298,7 @@ void main(int argc,char **argv)
     if (!stralloc_ready(&text,1024)) die_nomem(); 
     for (;;) {		/* copy moderator's rejection comment */
       if (getln(subfdin,&line,&match,'\n') == -1)
-        strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
+        strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
       if (!match) break;
       if (flaginheader) {
         if (case_startb(line.s,line.len,"Content-Transfer-Encoding:")) {
@@ -376,11 +376,11 @@ void main(int argc,char **argv)
     }
     qmail_puts(&qq,"\n");
     if (seek_begin(fd) == -1)
-      strerr_die2sys(111,FATAL,MSG1("ERR_SEEK",fnmsg.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_SEEK,fnmsg.s));
 
     substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
     if (qmail_copy(&qq,&sstext,-1) != 0)
-      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnmsg.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_READ,fnmsg.s));
     close(fd);
 
     if (flagmime)
@@ -412,25 +412,25 @@ void main(int argc,char **argv)
         strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
         strerr_die2x(0,"ezmlm-moderate: info: qp ",strnum);
     } else
-        strerr_die4x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),": ",err + 1);
+        strerr_die4x(111,FATAL,MSG(ERR_TMP_QMAIL_QUEUE),": ",err + 1);
 
   } else if (str_start(action,ACTION_ACCEPT)) {
         fd = open_read(fnmsg.s);
         if (fd == -1) {
           if (errno !=error_noent)
-            strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fnmsg.s));
+            strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fnmsg.s));
           else	/* shouldn't happen since we've got lock */
-            strerr_die3x(100,FATAL,fnmsg.s,MSG("ERR_MOD_TIMEOUT"));
+            strerr_die3x(100,FATAL,fnmsg.s,MSG(ERR_MOD_TIMEOUT));
 	}
 
     substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
 				/* read "Return-Path:" line */
     if (getln(&sstext,&line,&match,'\n') == -1 || !match)
-      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
+      strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     maketo();			/* extract SENDER to "to" */
     env_put2("SENDER",to.s);	/* set SENDER */
     if (seek_begin(fd) == -1)	/* rewind, since we read an entire buffer */
-      strerr_die2sys(111,FATAL,MSG1("ERR_SEEK",fnmsg.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_SEEK,fnmsg.s));
 
     if ((child = wrap_fork()) == 0) {
       close(0);

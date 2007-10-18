@@ -4,5 +4,5 @@
 
 void die_badformat(void)
 {
-  strerr_die2x(100,FATAL,MSG("ERR_BAD_REQUEST"));
+  strerr_die2x(100,FATAL,MSG(ERR_BAD_REQUEST));
 }

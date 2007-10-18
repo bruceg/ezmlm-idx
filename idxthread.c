@@ -227,7 +227,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
 					/* but the lists is supposedly indexed*/
         flagmissingindex = 1;
       } else
-        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
+        strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,line.s));
     } else
       substdio_fdbuf(&ssindex,read,fd,indexbuf,sizeof(indexbuf));
 
@@ -241,14 +241,14 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
       if (!flagmissingindex && (msg > tmpmsg)) {
         flagauth = 0;
         if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
+          strerr_die2sys(111,FATAL,MSG1(ERR_READ,"index"));
         if (!match)
           flagmissingindex = 1;
         else {
           pos = scan_ulong(line.s,&tmpmsg);
           if (line.s[pos++] == ':') {
             if (getln(&ssindex,&authline,&match,'\n') == -1)
-              strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
+              strerr_die2sys(111,FATAL,MSG1(ERR_READ,"index"));
             if (!match)
               flagmissingindex = 1;
             else {
@@ -264,7 +264,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
         subject = line.s + pos;
         sublen = line.len - pos;
 	if (sublen <= HASHLEN)
-	  strerr_die2x(100,FATAL,MSG("ERR_BAD_INDEX"));
+	  strerr_die2x(100,FATAL,MSG(ERR_BAD_INDEX));
         hasauth = flagauth;
       } else {
         subject = dummyind.s;
@@ -452,14 +452,14 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
   psubt = *psubtable;
   if (fd == -1) {
     if (errno != error_noent)
-      strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,line.s));
     else
-      strerr_die2x(111,FATAL,MSG("ERR_NOINDEX"));	/* temp - admin can fix! */
+      strerr_die2x(111,FATAL,MSG(ERR_NOINDEX));	/* temp - admin can fix! */
   } else {
     substdio_fdbuf(&ssindex,read,fd,indexbuf,sizeof(indexbuf));
     for(;;) {
       if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_OPEN","index"));
+          strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,"index"));
       if (!match)
         break;
       pos=scan_ulong(line.s,&msg);
@@ -476,7 +476,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
       }
       if (flagauth) {			/* skip author line */
         if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_OPEN","index"));
+          strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,"index"));
       if (!match)
         break;
       }
@@ -486,7 +486,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
   if (!locked && idx == idxlatest)
     unlock();
   if (!ffound)
-      strerr_die2x(100,FATAL,MSG("ERR_NOINDEX"));
+      strerr_die2x(100,FATAL,MSG(ERR_NOINDEX));
   for (idx = msg_from / 100; idx <= idxto; idx++) {
 		/* make index file name */
     if (!stralloc_copys(&line,"archive/")) die_nomem();
@@ -498,12 +498,12 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
     fd = open_read(line.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",line.s));
+        strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,line.s));
     } else {
       substdio_fdbuf(&ssindex,read,fd,indexbuf,sizeof(indexbuf));
       for(;;) {
         if (getln(&ssindex,&line,&match,'\n') == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
+          strerr_die2sys(111,FATAL,MSG1(ERR_READ,"index"));
         if (!match)
           break;
         pos=scan_ulong(line.s,&msg);
@@ -511,7 +511,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
           pos++;
           flagauth = 1;
           if (getln(&ssindex,&authline,&match,'\n') == -1)
-            strerr_die2sys(111,FATAL,MSG1("ERR_READ","index"));
+            strerr_die2sys(111,FATAL,MSG1(ERR_READ,"index"));
           if (!match)
             break;
         } else

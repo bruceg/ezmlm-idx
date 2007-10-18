@@ -122,20 +122,20 @@ void main(int argc,char **argv)
       if ((tsttime + 3600L < when) || (tsttime <= digwhen)) {
         fd = open_trunc("tstdign");
         if (fd == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","tstdign"));
+          strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"tstdign"));
         substdio_fdbuf(&ssnum,write,fd,numbuf,sizeof(numbuf));
         if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,when)) == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","tstdign"));
+          strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,"tstdign"));
         if (substdio_puts(&ssnum,"\n") == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","tstdign"));
+          strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,"tstdign"));
         if (substdio_flush(&ssnum) == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_FLUSH","tstdign"));
+          strerr_die2sys(111,FATAL,MSG1(ERR_FLUSH,"tstdign"));
         if (fsync(fd) == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_SYNC","tstdign"));
+          strerr_die2sys(111,FATAL,MSG1(ERR_SYNC,"tstdign"));
         if (close(fd) == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE","tstdign"));
+          strerr_die2sys(111,FATAL,MSG1(ERR_CLOSE,"tstdign"));
         if (rename("tstdign","tstdig") == -1)
-          strerr_die2sys(111,FATAL,MSG2("ERR_MOVE","tstdign","tstdig"));
+          strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,"tstdign","tstdig"));
         _exit(0);
       }
     } else

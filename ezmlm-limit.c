@@ -33,7 +33,7 @@ int flagmod;				/* list moderated */
 int flagloop;
 const char *fn = TXT_LOOPNUM;
 
-void die_new(void) { strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fn)); }
+void die_new(void) { strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fn)); }
 
 stralloc line = {0};
 
@@ -104,14 +104,14 @@ void main(int argc,char **argv)
   } else if (num >= loopnum + deltanum) {	/* excess messages */
     if (!flagd) {
       if ((fd = open_append("modpost")) == -1)	/* create dir/modpost */
-	  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE","subpost"));
+	  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,"subpost"));
       else {
         close(fd);
         unlink(fn);
-        strerr_die2x(0,INFO,MSG("ERR_EXCESS_MOD"));
+        strerr_die2x(0,INFO,MSG(ERR_EXCESS_MOD));
       }
     } else
-        strerr_die2x(111,FATAL,MSG("ERR_EXCESS_DEFER"));
+        strerr_die2x(111,FATAL,MSG(ERR_EXCESS_DEFER));
   }
   _exit(0);
 }

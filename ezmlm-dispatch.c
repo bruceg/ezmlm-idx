@@ -45,17 +45,17 @@ static void forward(const char *rcpt)
   const char *err;
   int r;
   if (qmail_open(&qq,0) == -1)
-    strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
+    strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
   if ((dtline = env_get("DTLINE")) != 0)
     qmail_puts(&qq,dtline);
   while ((r = read(0,buf,sizeof buf)) > 0)
     qmail_put(&qq,buf,r);
   if (r == -1)
-    strerr_die2sys(111,FATAL,MSG("ERR_READ_STDIN"));
+    strerr_die2sys(111,FATAL,MSG(ERR_READ_STDIN));
   qmail_from(&qq,sender);
   qmail_to(&qq,rcpt);
   if (*(err = qmail_close(&qq)) != '\0')
-    strerr_die4x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),": ",err + 1);
+    strerr_die4x(111,FATAL,MSG(ERR_TMP_QMAIL_QUEUE),": ",err + 1);
   strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
   substdio_puts(subfderr,"qp ");
   substdio_puts(subfderr,strnum);
@@ -68,7 +68,7 @@ static int execute_line(const char *fn,const char *line)
   int child;
   int code;
   if (seek_begin(0) == -1)
-    strerr_die2sys(111,FATAL,MSG("ERR_SEEK_INPUT"));
+    strerr_die2sys(111,FATAL,MSG(ERR_SEEK_INPUT));
   while (*line
 	 && (*line == '\t'
 	     || *line == ' '))
@@ -121,7 +121,7 @@ static void execute(const char *fn,const char *def)
   else
     env_unset("DEFAULT");
   if (slurp(fn,&file,256) != 1)
-    strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn));
+    strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn));
   code = execute_file(fn,&file);
   substdio_puts(subfderr,"did 0+");
   substdio_put(subfderr,strnum,fmt_ulong(strnum,did_forward));
@@ -187,7 +187,7 @@ void main(int argc,char **argv)
 
   sender = env_get("SENDER");
   if (!sender)
-    strerr_die2x(100,FATAL,MSG("ERR_NOSENDER"));
+    strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
   def = env_get("DEFAULT");
 
   if (argv[optind] != 0) {
@@ -195,7 +195,7 @@ void main(int argc,char **argv)
     dispatch(argv[optind],def);
   }
   else if (!def || !*def)
-    strerr_die2x(100,FATAL,MSG("ERR_NODEFAULT"));
+    strerr_die2x(100,FATAL,MSG(ERR_NODEFAULT));
   else {
     if (def[str_chr(def,'/')] != 0)
       strerr_die2x(100,FATAL,"Recipient address may not contain '/'");

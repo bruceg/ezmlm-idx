@@ -56,14 +56,14 @@ void close_proper(substdio *ss,const char *s,const char *sn)
 /* flush,sync,close,move sn->s) */
 {
    if (substdio_flush(ss) == -1)
-     strerr_die2sys(111,FATAL,MSG1("ERR_FLUSH",s));
+     strerr_die2sys(111,FATAL,MSG1(ERR_FLUSH,s));
   if (flagsync)
     if (fsync(ss->fd) == -1)
-       strerr_die2sys(111,FATAL,MSG1("ERR_SYNC",s));
+       strerr_die2sys(111,FATAL,MSG1(ERR_SYNC,s));
   if (close(ss->fd) == -1)
-     strerr_die2sys(111,FATAL,MSG1("ERR_CLOSE",s));
+     strerr_die2sys(111,FATAL,MSG1(ERR_CLOSE,s));
   if (rename(sn,s) == -1)
-     strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",sn,s));
+     strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,sn,s));
 }
 
 void write_threads(const msgentry *msgtable,
@@ -123,16 +123,16 @@ void write_threads(const msgentry *msgtable,
       if (!stralloc_cats(&fnn,"n")) die_nomem();
       if (!stralloc_0(&fnn)) die_nomem();
       if ((fdn = open_trunc(fnn.s)) == -1)
-	strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnn.s));
+	strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fnn.s));
       substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
       if ((fd = open_read(fn.s)) == -1) {
       if (errno != error_noent)
-             strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
+             strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
       } else {
 	substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
       for (;;) {
       if (getln(&ssin,&line,&match,'\n') == -1)
-             strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
+             strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
       if (!match) break;
       pos = scan_ulong(line.s,&msgnum);
       pos++;			/* skip ':' */
@@ -164,7 +164,7 @@ void write_threads(const msgentry *msgtable,
       }
       if (!ffound) {
 	if (substdio_put(&ssout,line.s,line.len) == -1)
-	  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+	  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
       } else {			/* new # of msg in thread */
 	cp += HASHLEN;		/* HASHLEN [#] Subject always \n at end */
 	if (*(cp++) == ' ' && *(cp++) == '[') {
@@ -194,7 +194,7 @@ void write_threads(const msgentry *msgtable,
     if (!stralloc_catb(&line,psubtm->sub + HASHLEN,psubtm->sublen - HASHLEN))
 			 die_nomem();	/* has \n */
     if (substdio_put(&ssout,line.s,line.len) == -1)
-	strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+	strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
     }
   psubtm++;
   }
@@ -208,7 +208,7 @@ void write_threads(const msgentry *msgtable,
     if (!stralloc_0(&fn)) die_nomem();
     if (mkdir(fn.s,0755) == -1)
     if (errno != error_exist)
-      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fn.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fn.s));
     fn.s[fn.len - 1] = '/';
     if (!stralloc_catb(&fn,psubt->sub+2,HASHLEN-2)) die_nomem();
     if (!stralloc_copy(&fnn,&fn)) die_nomem();
@@ -216,32 +216,32 @@ void write_threads(const msgentry *msgtable,
     if (!stralloc_0(&fn)) die_nomem();
     if (!stralloc_0(&fnn)) die_nomem();
     if ((fdn = open_trunc(fnn.s)) == -1)
-      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnn.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fnn.s));
     substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
     if ((fd = open_read(fn.s)) == -1) {
       if (errno != error_noent)
-	  strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
+	  strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
       if (substdio_puts(&ssout,psubt->sub) == -1)	/* write subject */
-	     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+	     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
     } else {					/* copy data */
 	substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
 	lineno = 0;
 	for (;;) {
 	  if (getln(&ssin,&line,&match,'\n') == -1)
-             strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
+             strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
           if (!match) break;
 	  if (!lineno) {			/* write subject */
 	    if (line.len < HASHLEN + 1 || line.s[HASHLEN] != ' ')
 		flagerror = -3;
 	    if (substdio_put(&ssout,line.s,line.len) == -1)
-	       strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+	       strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
 	    lineno = 1;
 	    continue;
 	  }
 	  (void) scan_ulong(line.s,&msgnum);
 	  if (msgnum >= from) break;
 	  if (substdio_put(&ssout,line.s,line.len) == -1)
-	     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+	     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
 	}
 	(void) close(fd);	/* close old index */
       }
@@ -260,13 +260,13 @@ void write_threads(const msgentry *msgtable,
 	  cp = pautht->auth;
 	  cp1 = cp + str_chr(cp,' ');
 	  if (cp + HASHLEN != cp1)
-	    strerr_die1x(100,MSG("ERR_BAD_INDEX"));
+	    strerr_die1x(100,MSG(ERR_BAD_INDEX));
 	  if (!stralloc_cats(&line,cp))
 		die_nomem();				/* hash */
 	} else
           if (!stralloc_cats(&line,"\n")) die_nomem();
 	if (substdio_put(&ssout,line.s,line.len) == -1)
-	  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+	  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
       }
       pmsgt++;
     }
@@ -282,7 +282,7 @@ void write_threads(const msgentry *msgtable,
     if (!stralloc_0(&fn)) die_nomem();
     if (mkdir(fn.s,0755) == -1)
     if (errno != error_exist)
-      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fn.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fn.s));
     fn.s[fn.len - 1] = '/';
     if (!stralloc_catb(&fn,pautht->auth+2,HASHLEN-2)) die_nomem();
     if (!stralloc_copy(&fnn,&fn)) die_nomem();
@@ -290,34 +290,34 @@ void write_threads(const msgentry *msgtable,
     if (!stralloc_0(&fn)) die_nomem();
     if (!stralloc_0(&fnn)) die_nomem();
     if ((fdn = open_trunc(fnn.s)) == -1)
-      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnn.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fnn.s));
     substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
       if ((fd = open_read(fn.s)) == -1) {
 	if (errno != error_noent)
-	  strerr_die2sys(111,FATAL,MSG1("ERR_OPEN",fn.s));
+	  strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
         else {			/* didn't exist before: write author */
           if (substdio_put(&ssout,pautht->auth,pautht->authlen) == -1)
-	     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+	     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
 	}
       } else {					/* copy data */
 	substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
 	lineno = 0;
 	for (;;) {
 	  if (getln(&ssin,&line,&match,'\n') == -1)
-             strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn.s));
+             strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
           if (!match) break;
 	  if (!lineno) {			/* write author */
 	    if (line.len < HASHLEN + 1 || line.s[HASHLEN] != ' ')
 		flagerror = - 4;
 	    if (substdio_put(&ssout,line.s,line.len) == -1)
-	       strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+	       strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
 	    lineno = 1;
 	    continue;
 	  }
 	  (void) scan_ulong(line.s,&msgnum);
 	  if (msgnum >= from) break;
 	  if (substdio_put(&ssout,line.s,line.len) == -1)
-	     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+	     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
 	}
 	(void) close(fd);			/* close old index */
       }
@@ -337,7 +337,7 @@ void write_threads(const msgentry *msgtable,
 		die_nomem();
 	}
 	if (substdio_put(&ssout,line.s,line.len) == -1)
-	  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+	  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
       }
       pmsgt++;
     }
@@ -397,13 +397,13 @@ int main(int argc,char **argv)
 
   if (mkdir("archive/threads",0755) == -1)
     if (errno != error_exist)
-      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","archive/threads"));
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archive/threads"));
   if (mkdir("archive/subjects",0755) == -1)
     if (errno != error_exist)
-      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","archive/subjects"));
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archive/subjects"));
   if (mkdir("archive/authors",0755) == -1)
     if (errno != error_exist)
-      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","archive/authors"));
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archive/authors"));
 
 	/* Lock list to assure that no ezmlm-send is working on it */
 	/* and that the "num" message is final */
@@ -411,7 +411,7 @@ int main(int argc,char **argv)
 					/* get num */
   getconf_ulong(&max,"num",0);
   if (max == 0)
-    strerr_die1x(100,MSG("ERR_EMPTY_LIST"));
+    strerr_die1x(100,MSG(ERR_EMPTY_LIST));
   (void) close(fdlock);
 
   if (!to || to > max) to = max;
@@ -431,12 +431,12 @@ int main(int argc,char **argv)
   write_threads(msgtable,subtable,authtable,datetable,archnum,to);
 					/* update archnum */
   if ((fd = open_trunc("archnumn")) == -1)
-    strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","archnumn"));
+    strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archnumn"));
   substdio_fdbuf(&ssnum,write,fd,numbuf,sizeof(numbuf));
   if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,to)) == -1)
-     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
   if (substdio_puts(&ssnum,"\n") == -1)
-     strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnn.s));
+     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
   close_proper(&ssnum,"archnum","archnumn");
   switch (flagerror) {
     case 0:

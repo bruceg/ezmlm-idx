@@ -19,7 +19,7 @@ void get(stralloc *sa)
 {
   int match;
   if (getln(subfdin,sa,&match,'\n') == -1)
-    strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
+    strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
   if (!match) _exit(0);
 }
 

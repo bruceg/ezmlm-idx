@@ -38,7 +38,7 @@ static int readit(stralloc *sa,const char *fn)
     die_nomem();
   switch (slurp(fn,&data,4096)) {
     case -1:
-      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn));
+      strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn));
     case 0:
       return 0;
   }

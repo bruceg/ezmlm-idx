@@ -219,9 +219,9 @@ void main(int argc,char **argv)
 
   sender = env_get("SENDER");
   if (!sender)
-    strerr_die2x(100,FATAL,MSG("ERR_NOSENDER"));
+    strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
   if (!*sender)
-    strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
+    strerr_die2x(100,FATAL,MSG(ERR_BOUNCE));
 
   if (flagparsemime) {		/* set up MIME parsing */
     if (getconf(&mimeremove,"mimekeep",0))
@@ -239,11 +239,11 @@ void main(int argc,char **argv)
   }
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
+      strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (!match) break;
     if (flagheaderreject)
       if (constmap(&headerrejectmap,line.s,byte_chr(line.s,line.len,':')))
-        strerr_die2x(100,FATAL,MSG("ERR_MAILING_LIST"));
+        strerr_die2x(100,FATAL,MSG(ERR_MAILING_LIST));
 
     if (line.len == 1) break;
     cp = line.s; len = line.len;
@@ -273,7 +273,7 @@ void main(int argc,char **argv)
       } else {
 	if (flagforward && line.len == mydtline.len) {
 	  if (!byte_diff(line.s,line.len,mydtline.s))
-            strerr_die2x(100,FATAL,MSG("ERR_LOOPING"));
+            strerr_die2x(100,FATAL,MSG(ERR_LOOPING));
         }
         linetype = ' ';
       }
@@ -282,7 +282,7 @@ void main(int argc,char **argv)
   if (precd.len >= 4 &&
 		(!case_diffb(precd.s + precd.len - 4,4,"junk") ||
 		!case_diffb(precd.s + precd.len - 4,4,"bulk")))
-	  strerr_die1x(99,MSG("ERR_JUNK"));	/* ignore precedence junk/bulk */
+	  strerr_die1x(99,MSG(ERR_JUNK));	/* ignore precedence junk/bulk */
   cp = subject.s;
   len = subject.len;
   while (len && (cp[len-1] == ' ' || cp[len-1] == '\t')) --len;
@@ -314,20 +314,20 @@ void main(int argc,char **argv)
   }
 
   if (!flagtook && !getto(&to))
-    strerr_die2x(exitquiet,FATAL,MSG("ERR_NO_ADDRESS"));
+    strerr_die2x(exitquiet,FATAL,MSG(ERR_NO_ADDRESS));
 
   if (flagneedsubject && !flaghavesubject)
-    strerr_die2x(100,FATAL,MSG("ERR_NO_SUBJECT"));
+    strerr_die2x(100,FATAL,MSG(ERR_NO_SUBJECT));
 
   if (flagrejectcommands && flaghavecommand) {
     if (flagforward) {			/* flagforward => forward */
       if (qmail_open(&qq,(stralloc *) 0) == -1)	/* open queue */
-	strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
+	strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
       qmail_put(&qq,mydtline.s,mydtline.len);
       if (seek_begin(0) == -1)
-	strerr_die2sys(111,FATAL,MSG("ERR_SEEK_INPUT"));
+	strerr_die2sys(111,FATAL,MSG(ERR_SEEK_INPUT));
       if (qmail_copy(&qq,&ssin2,copylines) != 0)
-	strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
+	strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
       if (!stralloc_copy(&to,&outlocal)) die_nomem();
       if (!stralloc_cats(&to,"-request@")) die_nomem();
       if (!stralloc_cat(&to,&outhost)) die_nomem();
@@ -338,9 +338,9 @@ void main(int argc,char **argv)
         strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
         strerr_die2x(99,"ezmlm-request: info: forward qp ",strnum);
       } else
-        strerr_die4x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),": ",err + 1);
+        strerr_die4x(111,FATAL,MSG(ERR_TMP_QMAIL_QUEUE),": ",err + 1);
     } else
-      strerr_die2x(100,FATAL,MSG("ERR_SUBCOMMAND"));
+      strerr_die2x(100,FATAL,MSG(ERR_SUBCOMMAND));
   }
 
   if (content.len) {			/* MIME header */
@@ -361,7 +361,7 @@ void main(int argc,char **argv)
       if ((!!constmap(&mimeremovemap,cpstart,cp-cpstart) ^ mimeremoveflag) ||
 	  constmap(&mimerejectmap,cpstart,cp-cpstart)) {
 	*(cp) = (char) 0;
-	strerr_die2x(100,FATAL,MSG1("ERR_BAD_TYPE",cpstart));
+	strerr_die2x(100,FATAL,MSG1(ERR_BAD_TYPE,cpstart));
       }
 
     cpafter = content.s+content.len;
@@ -375,7 +375,7 @@ void main(int argc,char **argv)
           cpstart = cp;
           while (cp < cpafter && *cp != '"') ++cp;
 	  if (cp == cpafter)
-		strerr_die1x(100,MSG("ERR_MIME_QUOTE"));
+		strerr_die1x(100,MSG(ERR_MIME_QUOTE));
         } else {
           cpstart = cp;
           while (cp < cpafter &&
@@ -391,7 +391,7 @@ void main(int argc,char **argv)
 
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
+      strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (!match) break;
     if (line.len == 1) {
       flagcheck = 0;
@@ -413,7 +413,7 @@ void main(int argc,char **argv)
         }
 	if (flagparsemime && constmap(&mimerejectmap,cpstart,cp-cpstart)) {
           *cp = '\0';
-          strerr_die2x(100,FATAL,MSG1("ERR_BAD_PART",cpstart));
+          strerr_die2x(100,FATAL,MSG1(ERR_BAD_PART,cpstart));
         }
     } else if (boundary.len && *line.s == '-' && line.len > boundary.len &&
 	!str_diffn(line.s,boundary.s,boundary.len)) {
@@ -422,19 +422,19 @@ void main(int argc,char **argv)
       if (!msgsize && flagbody)
 	if (case_startb(line.s,line.len,"subscribe") ||
 		case_startb(line.s,line.len,"unsubscribe"))
-	  strerr_die2x(100,FATAL,MSG("ERR_BODYCOMMAND"));
+	  strerr_die2x(100,FATAL,MSG(ERR_BODYCOMMAND));
       if (!flagcheck) {
 	  msgsize += line.len;
 	  if (maxmsgsize && msgsize > maxmsgsize) {
 	    strnum[fmt_ulong(strnum,maxmsgsize)] = 0;
-	    strerr_die2x(100,FATAL,MSG1("ERR_MAX_SIZE",strnum));
+	    strerr_die2x(100,FATAL,MSG1(ERR_MAX_SIZE,strnum));
 	  }
       }
     }
   }
   if (msgsize < minmsgsize) {
     strnum[fmt_ulong(strnum,minmsgsize)] = 0;
-        strerr_die2x(100,FATAL,MSG1("ERR_MIN_SIZE",strnum));
+        strerr_die2x(100,FATAL,MSG1(ERR_MIN_SIZE,strnum));
   }
   _exit(0);
 }

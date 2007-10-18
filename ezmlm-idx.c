@@ -92,7 +92,7 @@ unsigned int pos,pos1;
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
-      strerr_die2x(111,FATAL,MSG("ERR_READ_INPUT"));
+      strerr_die2x(111,FATAL,MSG(ERR_READ_INPUT));
     if (match) {
       if (line.len == 1)
         break;
@@ -226,12 +226,12 @@ int main(int argc,char **argv)
 			/* May not exist, so be nice and make it */
       if (mkdir(fnadir.s,0755) == -1)
 	if (errno != error_exist)
-	  strerr_die2sys(100,FATAL,MSG1("ERR_CREATE",fnadir.s));
+	  strerr_die2sys(100,FATAL,MSG1(ERR_CREATE,fnadir.s));
 
 			/* Open index */
       fdindexn = open_trunc(fnifn.s);
       if (fdindexn == -1)
-        strerr_die2sys(100,FATAL,MSG1("ERR_WRITE",fnifn.s));
+        strerr_die2sys(100,FATAL,MSG1(ERR_WRITE,fnifn.s));
 
 			/* set up buffers for index */
       substdio_fdbuf(&ssindex,write,fdindexn,indexbuf,sizeof(indexbuf));
@@ -248,7 +248,7 @@ int main(int argc,char **argv)
     fd = open_read(fnaf.s);
     if (fd == -1) {
       if (errno != error_noent)
-        strerr_die2sys(100,FATAL,MSG1("ERR_READ",fnaf.s));
+        strerr_die2sys(100,FATAL,MSG1(ERR_READ,fnaf.s));
     } else if (fstat(fd,&st) == -1 || (!(st.st_mode & 0100)))
         close(fd);
     else {
@@ -284,26 +284,26 @@ int main(int argc,char **argv)
       if (!stralloc_cat(&line,&lines)) die_nomem();
       if (!stralloc_cats(&line,"\n")) die_nomem();
       if (substdio_put(&ssindex,line.s,line.len) == -1)
-          strerr_die2sys(100,FATAL,MSG1("ERR_WRITE",fnifn.s));
+          strerr_die2sys(100,FATAL,MSG1(ERR_WRITE,fnifn.s));
     }
 
     if (!((msgnum + 1) % 100) ||
 		(msgnum == msgmax)) {	/* last in this set */
       if (substdio_flush(&ssindex) == -1)
-        strerr_die2sys(100,FATAL,MSG1("ERR_FLUSH",fnifn.s));
+        strerr_die2sys(100,FATAL,MSG1(ERR_FLUSH,fnifn.s));
       if (fsync(fdindexn) == -1)
-        strerr_die2sys(100,FATAL,MSG1("ERR_SYNC",fnifn.s));
+        strerr_die2sys(100,FATAL,MSG1(ERR_SYNC,fnifn.s));
       if (fchmod(fdindexn,MODE_ARCHIVE | 0700) == -1)
-        strerr_die2sys(100,FATAL,MSG1("ERR_WRITE",fnifn.s));
+        strerr_die2sys(100,FATAL,MSG1(ERR_WRITE,fnifn.s));
       if (close(fdindexn) == -1)
-        strerr_die2sys(100,FATAL,MSG1("ERR_CLOSE",fnifn.s));
+        strerr_die2sys(100,FATAL,MSG1(ERR_CLOSE,fnifn.s));
       if (rename(fnifn.s,fnif.s) == -1)
-        strerr_die2x(111,FATAL,MSG2("ERR_MOVE",fnifn.s,fnif.s));
+        strerr_die2x(111,FATAL,MSG2(ERR_MOVE,fnifn.s,fnif.s));
     }
   }
   fd = open_append("indexed");
   if (fd == -1)
-    strerr_die2sys(100,FATAL,MSG1("ERR_CREATE","indexed"));
+    strerr_die2sys(100,FATAL,MSG1(ERR_CREATE,"indexed"));
   close(fd);
   close(fdlock);
   _exit(0);

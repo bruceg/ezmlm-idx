@@ -23,11 +23,11 @@ int getconf(stralloc *sa,const char *fn,int flagrequired)
     die_nomem();
   switch (alt_slurp(fn,&data,128)) {
     case -1:
-      strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn));
+      strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn));
     case 0:
       if (!flagrequired)
 	return 0;
-      strerr_die5x(100,FATAL,listdir,"/",fn,MSG("ERR_NOEXIST"));
+      strerr_die5x(100,FATAL,listdir,"/",fn,MSG(ERR_NOEXIST));
   }
   if (!stralloc_append(&data,"\n")) die_nomem();
   copy_xlate(&xdata,&data,0,'H');

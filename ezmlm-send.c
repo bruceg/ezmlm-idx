@@ -73,7 +73,7 @@ stralloc qmqpservers = {0};
 
 void die_indexn(void)
 {
-  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnifn.s));
+  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnifn.s));
 }
 
 unsigned long innum;
@@ -129,11 +129,11 @@ int subto(const char *s,unsigned int l)
 
 void die_archive(void)
 {
-  strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnaf.s));
+  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnaf.s));
 }
 void die_numnew(void)
 {
-  strerr_die2sys(111,FATAL,MSG1("ERR_CREATE","numnew"));
+  strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"numnew"));
 }
 
 void qa_put(const char *buf,unsigned int len)
@@ -189,7 +189,7 @@ void numwrite(void)
   if (fsync(fd) == -1) die_numnew();
   if (close(fd) == -1) die_numnew(); /* NFS stupidity */
   if (rename("numnew","num") == -1)
-    strerr_die2sys(111,FATAL,MSG2("ERR_MOVE","numnew","num"));
+    strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,"numnew","num"));
 }
 
 stralloc mydtline = {0};
@@ -224,12 +224,12 @@ int idx_copy_insertsubject(void)
 			/* may not exists since we run before ezmlm-send */
   if (mkdir(fnadir.s,0755) == -1)
     if (errno != error_exist)
-      strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnadir.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fnadir.s));
 
 			/* Open indexn */
   fdindexn = open_trunc(fnifn.s);
   if (fdindexn == -1)
-    strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnifn.s));
+    strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnifn.s));
 
 			/* set up buffers for indexn */
   substdio_fdbuf(&ssindexn,write,fdindexn,indexnbuf,sizeof(indexnbuf));
@@ -242,26 +242,26 @@ int idx_copy_insertsubject(void)
   fdindex = open_read(fnif.s);
   if (fdindex == -1) {
     if (errno != error_noent)
-      strerr_die2x(111,FATAL,MSG1("ERR_OPEN", fnif.s));
+      strerr_die2x(111,FATAL,MSG1(ERR_OPEN, fnif.s));
   } else {
     substdio_fdbuf(&ssin,read,fdindex,inbuf,sizeof(inbuf));
     for(;;) {
       if (getln(&ssin,&qline,&match,'\n') == -1)
-        strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnif.s));
+        strerr_die2sys(111,FATAL,MSG1(ERR_READ,fnif.s));
       if (!match)
         break;
       pos = scan_ulong(qline.s,&idx);
       if (!idx)				/* "impossible!" */
-        strerr_die2x(111,FATAL,MSG("ERR_BAD_INDEX"));
+        strerr_die2x(111,FATAL,MSG(ERR_BAD_INDEX));
       if (idx >= outnum)
         break;				/* messages always come in order */
       if (substdio_put(&ssindexn,qline.s,qline.len) == -1)
         die_indexn();
       if (qline.s[pos] == ':') {	/* has author line */
         if (getln(&ssin,&qline,&match,'\n') == -1)
-          strerr_die2sys(111,FATAL,MSG1("ERR_READ",fnif.s));
+          strerr_die2sys(111,FATAL,MSG1(ERR_READ,fnif.s));
         if (!match && qline.s[0] != '\t')	/* "impossible! */
-          strerr_die2x(111,FATAL,MSG("ERR_BAD_INDEX"));
+          strerr_die2x(111,FATAL,MSG(ERR_BAD_INDEX));
         if (substdio_put(&ssindexn,qline.s,qline.len) == -1)
           die_indexn();
       }
@@ -299,7 +299,7 @@ int idx_copy_insertsubject(void)
   if (fchmod(fdindexn,MODE_ARCHIVE | 0700) == -1) die_indexn();
   if (close(fdindexn) == -1) die_indexn(); /* NFS stupidity */
   if (rename(fnifn.s,fnif.s) == -1)
-    strerr_die2sys(111,FATAL,MSG2("ERR_MOVE",fnifn.s,fnif.s));
+    strerr_die2sys(111,FATAL,MSG2(ERR_MOVE,fnifn.s,fnif.s));
   return r;
 }
 
@@ -381,7 +381,7 @@ void main(int argc,char **argv)
   }
   if ((fd = open_read("text/trailer")) == -1) {	/* see if there is a trailer */
     if (errno == error_noent) flagtrailer = 0;
-    else strerr_die2sys(111,FATAL,MSG1("ERR_OPEN","text/trailer"));
+    else strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,"text/trailer"));
   } else {
     close(fd);
     flagtrailer = 1;
@@ -417,12 +417,12 @@ void main(int argc,char **argv)
 
   if (sender) {
     if (!*sender)
-      strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
+      strerr_die2x(100,FATAL,MSG(ERR_BOUNCE));
     if (str_equal(sender,"#@[]"))
-      strerr_die2x(100,FATAL,MSG("ERR_BOUNCE"));
+      strerr_die2x(100,FATAL,MSG(ERR_BOUNCE));
     if (flagsublist)
       if (!sublistmatch(sender))
-        strerr_die2x(100,FATAL,MSG("ERR_NOT_PARENT"));
+        strerr_die2x(100,FATAL,MSG(ERR_NOT_PARENT));
   }
   innum = msgnum;				/* innum = incoming */
   outnum = msgnum;				/* outnum = outgoing */
@@ -450,10 +450,10 @@ void main(int argc,char **argv)
 
     if (mkdir(fnadir.s,0755) == -1)
       if (errno != error_exist)
-	strerr_die2sys(111,FATAL,MSG1("ERR_CREATE",fnadir.s));
+	strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fnadir.s));
     fdarchive = open_trunc(fnaf.s);
     if (fdarchive == -1)
-      strerr_die2sys(111,FATAL,MSG1("ERR_WRITE",fnaf.s));
+      strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnaf.s));
 
     substdio_fdbuf(&ssarchive,write,fdarchive,archivebuf,sizeof(archivebuf));
 						/* return-path to archive */
@@ -468,7 +468,7 @@ void main(int argc,char **argv)
   }
 
     if (qmail_open(&qq,&qmqpservers) == -1)		/* open qmqp */
-      strerr_die2sys(111,FATAL,MSG("ERR_QMAIL_QUEUE"));
+      strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
   if (!flagsublist) {
     qa_puts("Mailing-List: ");
@@ -496,7 +496,7 @@ void main(int argc,char **argv)
   flagarchiveonly = 0;
   for (;;) {
     if (getln(subfdin,&line,&match,'\n') == -1)
-      strerr_die2sys(111,FATAL,MSG("ERR_READ_INPUT"));
+      strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (flaginheader && match) {
       if (line.len == 1) {		/* end of header */
 	flaginheader = 0;
@@ -547,7 +547,7 @@ void main(int argc,char **argv)
                  cpstart = cp;
                  while (cp < cpafter && *cp != '"') ++cp;
 		 if (cp == cpafter)
-			strerr_die1x(100,MSG("ERR_MIME_QUOTE"));
+			strerr_die1x(100,MSG(ERR_MIME_QUOTE));
                } else {			/* non-quoted boundary */
                  cpstart = cp;		/* find terminator of boundary */
                  while (cp < cpafter && *cp != ';' &&
@@ -614,7 +614,7 @@ void main(int argc,char **argv)
           }
         } else if (line.len == mydtline.len)
 	  if (!byte_diff(line.s,line.len,mydtline.s))
-            strerr_die2x(100,FATAL,MSG("ERR_LOOPING"));
+            strerr_die2x(100,FATAL,MSG(ERR_LOOPING));
       } else {			/* continuation lines */
         if (flagsubline) {
 	  if (!stralloc_cat(&subject,&line)) die_nomem();
@@ -693,15 +693,15 @@ void main(int argc,char **argv)
     if (flaglog)
       if ((ret = checktag(innum,hash_lo+1L,"m",(char *) 0,hashout))) {
         if (*ret) strerr_die2x(111,FATAL,ret);
-        else strerr_die2x(100,FATAL,MSG("ERR_NOT_PARENT"));
+        else strerr_die2x(100,FATAL,MSG(ERR_NOT_PARENT));
       }
     if (!flagmlwasthere)		/* sublists need ML header */
-      strerr_die2x(100,FATAL,MSG("ERR_SUBLIST"));
+      strerr_die2x(100,FATAL,MSG(ERR_SUBLIST));
   } else				/* others are not allowed to have one */
     if (flagmlwasthere)
-      strerr_die2x(100,FATAL,MSG("ERR_MAILING_LIST"));
+      strerr_die2x(100,FATAL,MSG(ERR_MAILING_LIST));
   if (!flagfoundokpart)			/* all parts were on the strip list */
-      strerr_die2x(100,FATAL,MSG("ERR_BAD_ALL"));
+      strerr_die2x(100,FATAL,MSG(ERR_BAD_ALL));
 
   if (flagarchived) {
     if (substdio_flush(&ssarchive) == -1) die_archive();
@@ -737,6 +737,6 @@ void main(int argc,char **argv)
       --msgnum;
       cumsize -= (msgsize + 128L) >> 8;
       numwrite();
-      strerr_die4x(111,FATAL,MSG("ERR_TMP_QMAIL_QUEUE"),": ",err + 1);
+      strerr_die4x(111,FATAL,MSG(ERR_TMP_QMAIL_QUEUE),": ",err + 1);
   }
 }
