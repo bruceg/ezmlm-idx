@@ -121,7 +121,7 @@ static void execute(const char *fn,const char *def)
   else
     env_unset("DEFAULT");
   if (slurp(fn,&file,256) != 1)
-    strerr_die6sys(111,FATAL,MSG("ERR_READ_INPUT"),basedir.s,"/",fn,": ");
+    strerr_die2sys(111,FATAL,MSG1("ERR_READ",fn));
   code = execute_file(fn,&file);
   substdio_puts(subfderr,"did 0+");
   substdio_put(subfderr,strnum,fmt_ulong(strnum,did_forward));

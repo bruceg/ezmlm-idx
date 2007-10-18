@@ -44,6 +44,7 @@ ERR_CHILD_FATAL:fatal error from child
 ERR_CHILD_TEMP:temporary error from child
 ERR_CHILD_UNKNOWN:unknown error from child
 ERR_CHMOD:unable to chmod <#1#>
+ERR_CHROOT:failed to chroot to <#1#>
 ERR_CLOSE:unable to close <#1#>
 ERR_COOKIE:message does not have valid authentication token
 ERR_CREATE:unable to create <#1#>
