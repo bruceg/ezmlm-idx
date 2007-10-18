@@ -265,7 +265,7 @@ int read_old_config(void)
 	  if (usecfg && popt[ch - '0'].len == 0)
 	    if (!stralloc_copys(&popt[ch-'0'],line.s+2)) die_nomem();
 	} else
-	  strerr_die5x(111,FATAL,dirplus.s,MSG("ERR_SYNTAX"),": ",line.s+2);
+	  strerr_die4x(111,FATAL,MSG1("ERR_SYNTAX",dirplus.s),": ",line.s+2);
 	break;
       }
     }

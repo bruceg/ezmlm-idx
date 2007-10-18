@@ -131,7 +131,7 @@ ERR_SUBST_UNSAFE:Sorry, substitution of target addresses into headers with #A# o
 ERR_SUB_NOP:target is already a subscriber
 ERR_SUID:Sorry, I won't run as root
 ERR_SYNC:unable to sync <#1#>
-ERR_SYNTAX: syntax error
+ERR_SYNTAX:syntax error in <#1#>
 ERR_SYNTAX_CONFIG:syntax error in config file <#1#>
 ERR_SYNTAX_MISSING_SEPARATOR: syntax error: <#1#>: missing subject separator
 ERR_SYNTAX_MISSING_SUBJHASH: syntax error: <#1#>: missing subject hash
