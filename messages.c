@@ -11,12 +11,15 @@
 
 #define SPLIT '|'
 
-static stralloc msg_local = {0};
-static stralloc msg_alt = {0};
-static stralloc msg_default = {0};
-static struct constmap map_local = {0};
-static struct constmap map_alt = {0};
-static struct constmap map_default = {0};
+struct messages
+{
+  stralloc text;
+  struct constmap map;
+};
+
+static struct messages msg_local;
+static struct messages msg_alt;
+static struct messages msg_default;
 static int initialized = 0;
 
 static stralloc data = {0};
@@ -56,18 +59,18 @@ void messages_init(void)
   if (initialized)
     return;
 
-  readit(&msg_local,"text/messages");
-  if (!constmap_init(&map_local,msg_local.s,msg_local.len,SPLIT))
+  readit(&msg_local.text,"text/messages");
+  if (!constmap_init(&msg_local.map,msg_local.text.s,msg_local.text.len,SPLIT))
     die_nomem();
 
   altpath(&xdata,"text/messages");
-  readit(&msg_alt,xdata.s);
-  if (!constmap_init(&map_alt,msg_alt.s,msg_alt.len,SPLIT))
+  readit(&msg_alt.text,xdata.s);
+  if (!constmap_init(&msg_alt.map,msg_alt.text.s,msg_alt.text.len,SPLIT))
     die_nomem();
 
   altdefaultpath(&xdata,"text/messages");
-  readit(&msg_default,xdata.s);
-  if (!constmap_init(&map_default,msg_default.s,msg_default.len,SPLIT))
+  readit(&msg_default.text,xdata.s);
+  if (!constmap_init(&msg_default.map,msg_default.text.s,msg_default.text.len,SPLIT))
     die_nomem();
 
   initialized = 1;
@@ -83,9 +86,9 @@ static const char *MSGn(const char *msg,const char *params[10])
     return msg;
 
   msg_len = str_len(msg);
-  if ((xmsg = constmap(&map_local,msg,msg_len)) == 0)
-    if ((xmsg = constmap(&map_alt,msg,msg_len)) == 0)
-      if ((xmsg = constmap(&map_default,msg,msg_len)) == 0)
+  if ((xmsg = constmap(&msg_local.map,msg,msg_len)) == 0)
+    if ((xmsg = constmap(&msg_alt.map,msg,msg_len)) == 0)
+      if ((xmsg = constmap(&msg_default.map,msg,msg_len)) == 0)
 	xmsg = msg;
 
   if (!stralloc_copys(&data,xmsg)) die_nomem();
