@@ -1,4 +1,3 @@
-$Id$
 STANDARD EZMLM DATABASE INTERFACE
 
 The sub-std.c file comprises the ezmlm subscriber database interface. issub and

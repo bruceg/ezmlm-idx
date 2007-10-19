@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "fmt.h"
 #include "yyyymm.h"
 #include "stralloc.h"

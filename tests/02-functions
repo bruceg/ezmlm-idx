@@ -1,5 +1,3 @@
-# $Id$
-
 fatal() {
   for line in "$@"; do
     ${ECHO} "$line" >&2

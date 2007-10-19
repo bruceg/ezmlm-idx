@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include <unistd.h>
 #include "substdio.h"
 #include "readwrite.h"

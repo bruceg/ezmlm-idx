@@ -1,3 +1,2 @@
-# $Id$
 s/@REJECTPOSTS@/Jag tillåter inte dina meddelanden. Kontakta <#L#>-owner@<#H#> ifall du har några frågor angående det./
 s/@ONLYSUBSCRIBERS@/Tyvärr, endast prenumeranter får posta. Ifall du är en prenumerant, skicka detta meddelande vidare till <#L#>-owner@<#H#> för att få din nya adress inkluderad i listan./

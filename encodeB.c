@@ -1,5 +1,3 @@
-/* $Id$*/
-
 #include "stralloc.h"
 #include "uint32.h"
 #include "mime.h"

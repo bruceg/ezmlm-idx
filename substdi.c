@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "substdio.h"
 #include "byte.h"
 #include "error.h"

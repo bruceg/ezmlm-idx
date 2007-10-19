@@ -1,5 +1,4 @@
 #!/bin/sh
-#$Id$
 
 t=makemake.targets
 T=makemake.TARGETS

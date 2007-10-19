@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "stralloc.h"
 #include "slurp.h"
 #include "slurpclose.h"

@@ -1,5 +1,3 @@
-$Id$
-
 BUGS:	-ezmlm-idx does not implement a full rfc822 parser. Comments can be
 	 inserted to defeat the MIME parsing mechanism, such as:
 	 Content-Type: (comment) test/plain

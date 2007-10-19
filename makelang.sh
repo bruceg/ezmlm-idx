@@ -1,4 +1,3 @@
-# $Id$
 test x"$1" = x && {
   echo "usage: $0 language"
   exit 1

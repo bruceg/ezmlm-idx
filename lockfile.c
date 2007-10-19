@@ -1,4 +1,3 @@
-/*$Id$*/
 #include "lock.h"
 #include "errtxt.h"
 #include "strerr.h"

@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include <unistd.h>
 #include "stralloc.h"
 #include "str.h"

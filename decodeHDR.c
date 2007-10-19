@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "stralloc.h"
 #include "strerr.h"
 #include "error.h"

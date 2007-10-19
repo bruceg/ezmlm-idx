@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "fork.h"
 #include "errtxt.h"
 #include "strerr.h"

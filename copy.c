@@ -1,5 +1,3 @@
-/*$Id$*/
-
 /* Copies a file relative the current directory and substitutes    */
 /* !A at the beginning of a line for the target,                   */
 /* !R at the beginning of a line for the confirm reply address,    */

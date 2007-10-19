@@ -1,4 +1,3 @@
-/*$Id$*/
 #include "hdr.h"
 #include "qmail.h"
 #include "stralloc.h"

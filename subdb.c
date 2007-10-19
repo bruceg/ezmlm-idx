@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include <dlfcn.h>
 #include "case.h"
 #include "config.h"

@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include <unistd.h>
 #include "byte.h"
 #include "config.h"

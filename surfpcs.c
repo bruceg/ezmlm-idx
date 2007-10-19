@@ -1,5 +1,3 @@
-/*$Id$*/
-
 /* XXX: this needs testing */
 
 #include "surf.h"

@@ -1,5 +1,3 @@
-/*$Id$*/
-
 unsigned int author_name(char **sout,char *s,unsigned int l)
 /* s is a string that contains a from: line argument\n. We parse */
 /* s as follows: If there is an unquoted '<' we eliminate everything after */

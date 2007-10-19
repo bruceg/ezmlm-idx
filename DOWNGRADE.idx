@@ -1,5 +1,3 @@
-$Id$
-
 MODIFYING ezmlm-idx lists to work with "virgin" ezmlm-0.53
 
 With ezmlm-idx-0.22, the routines issub.c and subscribe.c are modified to

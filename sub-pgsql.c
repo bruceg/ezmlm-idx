@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "byte.h"
 #include "case.h"
 #include "cookie.h"

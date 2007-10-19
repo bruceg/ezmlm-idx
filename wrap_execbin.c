@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "auto_bin.h"
 #include "stralloc.h"
 #include "wrap.h"

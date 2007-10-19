@@ -1,4 +1,3 @@
-/*$Id$*/
 #ifndef CGI_H
 #define CGI_H
 

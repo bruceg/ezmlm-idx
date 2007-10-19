@@ -1,5 +1,3 @@
-# $Id$
-
   prompt "subscribe probe:      "
 
   DEFAULT="subscribe"

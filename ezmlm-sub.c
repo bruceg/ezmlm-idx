@@ -1,5 +1,3 @@
-/*$Id$*/
-
 const char FATAL[] = "ezmlm-sub: fatal: ";
 const char USAGE[] =
 "ezmlm-sub: usage: ezmlm-sub [-mMvV] [-h hash] [-n] dir [subdir] [box@domain [name]] ...";

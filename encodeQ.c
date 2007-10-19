@@ -1,5 +1,3 @@
-/* $Id$*/
-
 #include "errtxt.h"
 #include "mime.h"
 #include "stralloc.h"

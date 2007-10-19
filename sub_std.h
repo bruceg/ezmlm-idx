@@ -1,4 +1,3 @@
-/*$Id$*/
 #ifndef SUB_STD_H
 #define SUB_STD_H
 

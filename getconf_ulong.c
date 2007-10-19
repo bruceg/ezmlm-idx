@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "stralloc.h"
 #include "getconf.h"
 #include "die.h"

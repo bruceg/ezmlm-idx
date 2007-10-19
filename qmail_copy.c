@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "qmail.h"
 #include "substdio.h"
 

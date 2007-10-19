@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "substdio.h"
 
 int substdio_copy(substdio *ssout,substdio *ssin)

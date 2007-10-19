@@ -1,5 +1,3 @@
-# $Id$
-
   prompt "ezmlm-send:           "
 
   cat >"$TMP" <<EOF

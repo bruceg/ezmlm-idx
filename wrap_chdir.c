@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include <unistd.h>
 #include "errtxt.h"
 #include "strerr.h"

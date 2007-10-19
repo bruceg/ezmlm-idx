@@ -1,4 +1,3 @@
-/*$Id$*/
 /* Handles receipts and bounces from sublists at the main list */
 /* Set up instead of ezmlm-return in DIR/bouncer of main list */
 

@@ -1,4 +1,3 @@
-/*$Id$*/
 #ifndef SUBSCRIBE_H
 #define SUBSCRIBE_H
 

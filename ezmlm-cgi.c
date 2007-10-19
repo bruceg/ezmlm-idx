@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include <sys/types.h>
 #include <unistd.h>
 #include "alloc.h"

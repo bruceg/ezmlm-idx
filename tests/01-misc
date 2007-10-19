@@ -1,5 +1,3 @@
-# $Id$
-
 if ${ECHO} -n | grep n > /dev/null 2>&1; then
 	prompt() {
 		${ECHO} "$*\c"

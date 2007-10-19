@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "wait.h"
 #include "errtxt.h"
 #include "strerr.h"

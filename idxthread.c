@@ -1,5 +1,3 @@
-/*$Id$*/
-
 /* idxthread.c contains routines to from the ezmlm-idx subject index build */
 /* a structure of unique subjects as well as a table of messages with      */
 /* pointers to the subject. This leads to information on message threads   */

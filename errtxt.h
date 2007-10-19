@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #ifndef ERRTXT_H
 #define ERRTXT_H
 

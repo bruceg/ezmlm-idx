@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "subhash.h"
 #include "str.h"
 

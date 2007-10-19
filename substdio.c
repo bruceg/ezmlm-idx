@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "substdio.h"
 
 void substdio_fdbuf(substdio *s,int (*op)(),int fd,char *buf,int len)

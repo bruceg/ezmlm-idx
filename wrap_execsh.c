@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "wrap.h"
 
 void wrap_execsh(const char *command)

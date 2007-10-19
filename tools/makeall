@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id$
 set -e
 if ! [ -s conf-cc ]; then
   echo "$0: must be in compile directory"

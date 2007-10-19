@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "yyyymm.h"
 
 unsigned int date2yyyymm(const char *s)

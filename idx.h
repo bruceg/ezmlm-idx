@@ -1,4 +1,3 @@
-/*$Id$*/
 #ifndef IDX_H
 #define IDX_H
 
