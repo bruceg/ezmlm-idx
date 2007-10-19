@@ -1,0 +1,26 @@
+#!/bin/sh
+{
+
+  cat <<EOF
+# ezmlm-idx messages
+# Copyright (C) $(date +%Y) Bruce Guenter
+# This file is distributed under the same license as the ezmlm-idx package.
+# Bruce Guenter <bruce@untroubled.org>, $(date +%Y).
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: $(head -n 1 VERSION)\n"
+"POT-Creation-Date: $(date +'%Y-%m-%d %H:%M%z')\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+EOF
+
+  cat "$@" \
+  | sed -ne '
+	s/^#define \([^ ]*\) "\(.*\)"/\n# \1\nmsgid "\2"\nmsgstr ""/p;
+  '
+}
