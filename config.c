@@ -92,5 +92,4 @@ void startup(const char *dir)
   listdir = dir;
   wrap_chdir(dir);
   load_config();
-  messages_init();
 }

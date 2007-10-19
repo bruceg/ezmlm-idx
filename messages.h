@@ -1,7 +1,6 @@
 #ifndef MESSAGES_H
 #define MESSAGES_H
 
-extern void messages_init(void);
 extern const char *MSG(const char* name);
 extern const char *MSG1(const char *name,const char *p1);
 extern const char *MSG2(const char *name,const char *p1,const char *p2);

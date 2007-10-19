@@ -55,7 +55,6 @@ static void dummyNoticeProcessor(void *arg, const char *message)
 /* open connection to the SQL server, if it isn't already open. */
 static const char *_opensub(struct subdbinfo *info)
 {
-  messages_init();
   if (info->conn == 0) {
     /* Make connection to database */
     strnum[fmt_ulong(strnum,info->port)] = 0;

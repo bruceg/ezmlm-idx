@@ -54,10 +54,11 @@ static int readit(stralloc *sa,const char *fn)
   return 1;
 }
 
-void messages_init(void)
+static void init(void)
 {
   if (initialized)
     return;
+  initialized = 1;
 
   readit(&msg_local.text,"text/messages");
   if (!constmap_init(&msg_local.map,msg_local.text.s,msg_local.text.len,SPLIT))
@@ -72,8 +73,6 @@ void messages_init(void)
   readit(&msg_default.text,xdata.s);
   if (!constmap_init(&msg_default.map,msg_default.text.s,msg_default.text.len,SPLIT))
     die_nomem();
-
-  initialized = 1;
 }
 
 static const char *MSGn(const char *msg,const char *params[10])
@@ -82,8 +81,7 @@ static const char *MSGn(const char *msg,const char *params[10])
   int msg_len;
   params[0] = msg;
 
-  if (!initialized)
-    return msg;
+  init();
 
   msg_len = str_len(msg);
   if ((xmsg = constmap(&msg_local.map,msg,msg_len)) == 0)

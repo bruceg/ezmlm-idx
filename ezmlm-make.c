@@ -363,7 +363,6 @@ void main(int argc,char **argv)
   if (dir.s[0] != '/') die_relative();
   if (byte_chr(dir.s,dir.len,'\'') < dir.len) die_quote();
   if (byte_chr(dir.s,dir.len,'\n') < dir.len) die_newline();
-  messages_init();
 
   if (flags['e' - 'a'] & 1) {
     /* lock for edit */
