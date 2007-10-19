@@ -13,7 +13,5 @@ echo "==================== Testing subdb = $db ===================="
 if [ $db != 'std' ]; then
   `dirname $0`/makerrors $db
 fi
-test -e lang/default \
-|| ln -s en_US lang/default
 
 exec ${0}-$db
