@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include "hdr.h"
 #include "qmail.h"
 

@@ -1,5 +1,3 @@
-/*$Id$*/
-
 #include <stdio.h>
 #include "die.h"
 #include "messages.h"
