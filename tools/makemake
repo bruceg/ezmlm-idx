@@ -56,6 +56,10 @@ depend() {
 
 target() {
     target=$1
+    if [ -e $target ]; then
+	echo $target >>$S
+	return
+    fi
     if [ -e $t/$target.deps ]; then
     	return
     fi
