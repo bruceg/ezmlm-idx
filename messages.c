@@ -9,7 +9,7 @@
 #include "str.h"
 #include "strerr.h"
 
-#define SPLIT '|'
+#define SPLIT ':'
 
 struct messages
 {
@@ -17,6 +17,14 @@ struct messages
   struct constmap map;
 };
 
+static const char internal[] =
+#include "messages-txt.c"
+;
+
+static struct messages msg_internal = {
+  { (char*)internal, sizeof internal, sizeof internal },
+  {0}
+};
 static struct messages msg_local;
 static struct messages msg_alt;
 static struct messages msg_default;
@@ -54,28 +62,32 @@ static int readit(stralloc *sa,const char *fn)
   return 1;
 }
 
+static void init_map(struct messages *m)
+{
+  if (!constmap_init(&m->map,m->text.s,m->text.len,SPLIT))
+    die_nomem();
+}
+
 static void init(void)
 {
   if (initialized)
     return;
+  init_map(&msg_internal);
   initialized = 1;
 
   readit(&msg_local.text,"text/messages");
-  if (!constmap_init(&msg_local.map,msg_local.text.s,msg_local.text.len,SPLIT))
-    die_nomem();
+  init_map(&msg_local);
 
   altpath(&xdata,"text/messages");
   readit(&msg_alt.text,xdata.s);
-  if (!constmap_init(&msg_alt.map,msg_alt.text.s,msg_alt.text.len,SPLIT))
-    die_nomem();
+  init_map(&msg_alt);
 
   altdefaultpath(&xdata,"text/messages");
   readit(&msg_default.text,xdata.s);
-  if (!constmap_init(&msg_default.map,msg_default.text.s,msg_default.text.len,SPLIT))
-    die_nomem();
+  init_map(&msg_default);
 }
 
-static const char *MSGn(const char *msg,const char *params[10])
+const char *messages_getn(const char *msg,const char *params[10])
 {
   const char *xmsg;
   int msg_len;
@@ -84,10 +96,14 @@ static const char *MSGn(const char *msg,const char *params[10])
   init();
 
   msg_len = str_len(msg);
-  if ((xmsg = constmap(&msg_local.map,msg,msg_len)) == 0)
-    if ((xmsg = constmap(&msg_alt.map,msg,msg_len)) == 0)
-      if ((xmsg = constmap(&msg_default.map,msg,msg_len)) == 0)
-	xmsg = msg;
+  if ((xmsg = constmap(&msg_internal.map,msg,msg_len)) == 0)
+    if (msg_local.map.num == 0
+	|| (xmsg = constmap(&msg_local.map,msg,msg_len)) == 0)
+      if (msg_alt.map.num == 0
+	  || (xmsg = constmap(&msg_alt.map,msg,msg_len)) == 0)
+	if (msg_default.map.num == 0
+	    || (xmsg = constmap(&msg_default.map,msg,msg_len)) == 0)
+	  xmsg = msg;
 
   if (!stralloc_copys(&data,xmsg)) die_nomem();
   copy_xlate(&xdata,&data,params,'H');
@@ -95,23 +111,10 @@ static const char *MSGn(const char *msg,const char *params[10])
   return xdata.s;
 }
 
-const char *MSG(const char *msg)
-{
-  const char *params[10] = {0};
-  return MSGn(msg,params);
-}
-
-const char *MSG1(const char *msg,const char *p1)
-{
-  const char *params[10] = {0};
-  params[1] = p1;
-  return MSGn(msg,params);
-}
-
-const char *MSG2(const char *msg,const char *p1,const char *p2)
+const char *messages_get(const char *msg,const char *p1,const char *p2)
 {
   const char *params[10] = {0};
   params[1] = p1;
   params[2] = p2;
-  return MSGn(msg,params);
+  return messages_getn(msg,params);
 }
