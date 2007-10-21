@@ -1,29 +1,41 @@
-# Revision: 1
+# Revision: 3
 <=n=>
 Durch Remote-Administratoren kann das <#L#>-edit.file
 Kommando benutzt werden, um die Textdateien zu verändern, die die
-Hauptmenge der Antworten von der Liste
-    <#L#>@<#h#>
-ausmachen.
+Hauptmenge der Antworten von der Liste <#L#>@<#h#> ausmachen.
 
 Hier finden Sie eine Aufstellung der Dateinamen und eine kurze
 Beschreibung ihres Inhalts bzw. ihrer Funktion.
 Um den Inhalt einer Datei zu ändern, senden Sie einfach eine
-Mail an
-   <#L#>-edit.file@<#h#>
-wobei Sie 'file' durch den konkreten Dateinamen ersetzen.
-Die Instruktionen zur Bearbeitung erhalten Sie zusammen mit dem
-Text.
+Mail an <#L#>-edit.file@<#h#>, wobei Sie 'file' durch den konkreten
+Dateinamen ersetzen. Die Instruktionen zur Bearbeitung erhalten Sie
+zusammen mit dem Text.
 
 Datei               Inhalt / Funktion
 
 bottom              an alle Antworten angehängt, allgemeine
                     Information zu Kommandos
+bounce_bottom       an alle Fehlermails (bounces) angehängt
+bounce_num          Einleitungstext für die Liste der nicht zugestellten Mails
+bounce_probe        Text für Mails, die zur Prüfung der Zustellbarkeit
+                    versandt werden
+bounce_warn         Warnmeldung bezüglich fehlgeschlagener Zustellungen
+<=dn=>
+dig_bounce_num      Einleitungstext für fehlgeschlagene Zustellungen von
+                    Zusammenfassungsmails (Digests)
 digest              Steuerungsinformationen für Digests
+<=n=>
+edit_do             Einleitungstext zum Ändern von Texten per Mail
+edit_done           Erfolgsmeldung nach einer Textänderung
+edit_list           das ist die Aufstellung, die du gerade liest ...
 faq                 oft gestellte Fragen und die Antworten zur Liste
+<=Bn=>
 get_bad             anstelle nicht im Archiv vorhandener Nachrichten
+<=n=>
 help                allg. Hilfe (zwischen 'top' und 'bottom').
 info                Listenbeschreibung. Die erste Zeile ist Kurzbeschreibung.
+<=mn=>
+messages            Betreff-Zeilen und interne Fehlermeldungen
 mod_help            Hilfe für Listenmoderatoren
 mod_reject          an den Absender abgewiesener Nachrichten
 mod_request         an Moderatoren, zusammen mit der Nachricht
@@ -31,6 +43,9 @@ mod_sub             an Neu-Abonnenten, nach Moderator-Bestätigung
 mod_sub_confirm     Abonnement-Anforderung, an Moderatoren
 mod_timeout         Zeitüberschreitung, an Absender
 mod_unsub_confirm   Abbestellung, an Remote-Administrator
+<=yn=>
+post-confirm        Bestätigungsanfrage nach der Einsendung einer Mail
+<=n=>
 sub_bad             Abonnement-Ablehnung, an Abonnent
 sub_confirm         an Neu-Abonnenten, zur Bestätigung des Abonnements
 sub_nop             an Abonnenten, falls er schon Abonnent ist
