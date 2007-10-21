@@ -43,7 +43,7 @@ case "$1" in
     formake "( cat warn-auto.sh; ./make-$1 "'"`cat systype`"'" ) > $1"
     formake "chmod 755 $1"
     ;;
-  make-compile|make-libcompile|make-load|make-makelib|make-makeso)
+  make-*)
     dependon $1.sh auto-ccld.sh
     formake "cat auto-ccld.sh $1.sh > $1"
     formake "chmod 755 $1"
