@@ -1,2 +1,2 @@
-dependon messages.txt make-messages-c Makefile
-formake "./make-messages-c <messages.txt >messages-txt.c"
+dependon make-messages-c conf-lang Makefile lang/*/text/messages
+formake './make-messages-c < lang/$$(head -n 1 conf-lang)/text/messages >messages-txt.c'
