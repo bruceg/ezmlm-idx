@@ -96,13 +96,13 @@ const char *messages_getn(const char *msg,const char *params[10])
   init();
 
   msg_len = str_len(msg);
-  if ((xmsg = constmap(&msg_internal.map,msg,msg_len)) == 0)
-    if (msg_local.map.num == 0
-	|| (xmsg = constmap(&msg_local.map,msg,msg_len)) == 0)
-      if (msg_alt.map.num == 0
-	  || (xmsg = constmap(&msg_alt.map,msg,msg_len)) == 0)
-	if (msg_default.map.num == 0
-	    || (xmsg = constmap(&msg_default.map,msg,msg_len)) == 0)
+  if (msg_local.map.num == 0
+      || (xmsg = constmap(&msg_local.map,msg,msg_len)) == 0)
+    if (msg_alt.map.num == 0
+	|| (xmsg = constmap(&msg_alt.map,msg,msg_len)) == 0)
+      if (msg_default.map.num == 0
+	  || (xmsg = constmap(&msg_default.map,msg,msg_len)) == 0)
+	if ((xmsg = constmap(&msg_internal.map,msg,msg_len)) == 0)
 	  xmsg = msg;
 
   if (!stralloc_copys(&data,xmsg)) die_nomem();
