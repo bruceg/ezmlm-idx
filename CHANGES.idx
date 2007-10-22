@@ -21,16 +21,10 @@ release.
 ezmlm-idx-6.1.0, ????-??-??
 ===========================
 
-This version moves the creation of subscriber tables out of
-ezmlm-mktab-* and into ezmlm-make by adding some additional hooks to the
-subdb plugins.  A ezmlm-rmtab program is also added to remove subscriber
-tables, also with hooks in the subdb plugins.  The ezmlm-mktab-*
-programs have been obsoleted by these changes and have been removed.
-
-Also, all error messages, all subject lines, and a few other messages
-are now configured in a file named "text/messages" that is read at run
-time.  Messages in this file will undergo header-style substitution
-before they are output.
+This version adds support for internationalized messages.  All error
+messages, all subject lines, and a few other messages are now configured
+in a file named "text/messages" that is read at run time.  Messages in
+this file will undergo header-style substitution before they are output.
 
 Unlike other text files, all 3 of the files (DIR/text/messages,
 /etc/ezmlm/LANG/text/messages, and /etc/ezmlm/default/text/messages) are
@@ -39,14 +33,21 @@ given message.  This allows for creation of partial files to override
 just select messages.  If no match is found, the internal English text
 is used.
 
-Also:
+This version also moves the creation of subscriber tables out of
+ezmlm-mktab-* and into ezmlm-make by adding some additional hooks to the
+subdb plugins.  A ezmlm-rmtab program is also added to remove subscriber
+tables, also with hooks in the subdb plugins.  The ezmlm-mktab-*
+programs have been obsoleted by these changes and have been removed.
+
+Smaller changes:
 
 - Fixed a bug in ezmlm-request that caused a segfault when attempting to
   execute the "which" command.
 
 - Added new program ezmlm-checksub to replace the
 	ezmlm-issubn ... || { echo error; exit 100; }
-  lines in the ezmlmrc files.
+  lines in the ezmlmrc files.  ezmlm-issubn is now deprecated for use in
+  .qmail files, but still exists for backwards compatibility.
 
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
