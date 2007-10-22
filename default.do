@@ -51,7 +51,7 @@ case "$1" in
   lang/*/ezmlmrc)
     lang=${1#lang/}
     lang=${lang%/ezmlmrc}
-    dependon makelang VERSION ezmlmrc.template lang/$lang/sed
+    dependon makelang VERSION ezmlmrc.template
     formake "./makelang $lang"
     ;;
   auto_version.c)

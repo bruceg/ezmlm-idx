@@ -44,7 +44,9 @@ Also:
 - Fixed a bug in ezmlm-request that caused a segfault when attempting to
   execute the "which" command.
 
-- Added new program ezmlm-checksub.
+- Added new program ezmlm-checksub to replace the
+	ezmlm-issubn ... || { echo error; exit 100; }
+  lines in the ezmlmrc files.
 
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the

@@ -251,11 +251,11 @@
 # -k => reject posts from blacklisted addresses. Done for moderated
 # lists as well - allows removal of unwanted noise.
 </#k^0/>
-|<#B#>/ezmlm-issubn -n '<#D#>' deny || { echo "@REJECTPOSTS@ (#5.7.2)"; exit 100 ; }
+|<#B#>/ezmlm-checksub -n '<#D#>' deny
 # switch -u=> restrict to subs of list & digest. If not m
-# do it with ezmlm-issubn, if 'm' do it with ezmlm-gate
+# do it with ezmlm-checksub, if 'm' do it with ezmlm-gate
 </#uM/>
-|<#B#>/ezmlm-issubn '<#D#>' . digest allow mod || { echo "@ONLYSUBSCRIBERS@ (#5.7.2)"; exit 100 ; }
+|<#B#>/ezmlm-checksub '<#D#>' . digest allow mod
 </#um/>
 |<#B#>/ezmlm-gate '<#D#>' . digest allow mod
 # For message moderation or confirmation, editor has store/clean
