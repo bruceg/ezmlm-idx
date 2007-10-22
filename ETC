@@ -55,6 +55,7 @@ c:::644:/cs/text/:faq:lang/cs/text/faq
 c:::644:/cs/text/:get-bad:lang/cs/text/get-bad
 c:::644:/cs/text/:help:lang/cs/text/help
 c:::644:/cs/text/:info:lang/cs/text/info
+c:::644:/cs/text/:messages:lang/cs/text/messages
 c:::644:/cs/text/:mod-help:lang/cs/text/mod-help
 c:::644:/cs/text/:mod-reject:lang/cs/text/mod-reject
 c:::644:/cs/text/:mod-request:lang/cs/text/mod-request
@@ -91,6 +92,7 @@ c:::644:/da/text/:faq:lang/da/text/faq
 c:::644:/da/text/:get-bad:lang/da/text/get-bad
 c:::644:/da/text/:help:lang/da/text/help
 c:::644:/da/text/:info:lang/da/text/info
+c:::644:/da/text/:messages:lang/da/text/messages
 c:::644:/da/text/:mod-help:lang/da/text/mod-help
 c:::644:/da/text/:mod-reject:lang/da/text/mod-reject
 c:::644:/da/text/:mod-request:lang/da/text/mod-request
@@ -127,6 +129,7 @@ c:::644:/de/text/:faq:lang/de/text/faq
 c:::644:/de/text/:get-bad:lang/de/text/get-bad
 c:::644:/de/text/:help:lang/de/text/help
 c:::644:/de/text/:info:lang/de/text/info
+c:::644:/de/text/:messages:lang/de/text/messages
 c:::644:/de/text/:mod-help:lang/de/text/mod-help
 c:::644:/de/text/:mod-reject:lang/de/text/mod-reject
 c:::644:/de/text/:mod-request:lang/de/text/mod-request
@@ -163,6 +166,7 @@ c:::644:/en_US/text/:faq:lang/en_US/text/faq
 c:::644:/en_US/text/:get-bad:lang/en_US/text/get-bad
 c:::644:/en_US/text/:help:lang/en_US/text/help
 c:::644:/en_US/text/:info:lang/en_US/text/info
+c:::644:/en_US/text/:messages:lang/en_US/text/messages
 c:::644:/en_US/text/:mod-help:lang/en_US/text/mod-help
 c:::644:/en_US/text/:mod-reject:lang/en_US/text/mod-reject
 c:::644:/en_US/text/:mod-request:lang/en_US/text/mod-request
@@ -234,6 +238,7 @@ c:::644:/fr/text/:faq:lang/fr/text/faq
 c:::644:/fr/text/:get-bad:lang/fr/text/get-bad
 c:::644:/fr/text/:help:lang/fr/text/help
 c:::644:/fr/text/:info:lang/fr/text/info
+c:::644:/fr/text/:messages:lang/fr/text/messages
 c:::644:/fr/text/:mod-help:lang/fr/text/mod-help
 c:::644:/fr/text/:mod-reject:lang/fr/text/mod-reject
 c:::644:/fr/text/:mod-request:lang/fr/text/mod-request
@@ -269,6 +274,7 @@ c:::644:/hu/text/:faq:lang/hu/text/faq
 c:::644:/hu/text/:get-bad:lang/hu/text/get-bad
 c:::644:/hu/text/:help:lang/hu/text/help
 c:::644:/hu/text/:info:lang/hu/text/info
+c:::644:/hu/text/:messages:lang/hu/text/messages
 c:::644:/hu/text/:mod-help:lang/hu/text/mod-help
 c:::644:/hu/text/:mod-reject:lang/hu/text/mod-reject
 c:::644:/hu/text/:mod-request:lang/hu/text/mod-request
@@ -304,6 +310,7 @@ c:::644:/id/text/:faq:lang/id/text/faq
 c:::644:/id/text/:get-bad:lang/id/text/get-bad
 c:::644:/id/text/:help:lang/id/text/help
 c:::644:/id/text/:info:lang/id/text/info
+c:::644:/id/text/:messages:lang/id/text/messages
 c:::644:/id/text/:mod-help:lang/id/text/mod-help
 c:::644:/id/text/:mod-reject:lang/id/text/mod-reject
 c:::644:/id/text/:mod-request:lang/id/text/mod-request
@@ -410,6 +417,7 @@ c:::644:/nl/text/:faq:lang/nl/text/faq
 c:::644:/nl/text/:get-bad:lang/nl/text/get-bad
 c:::644:/nl/text/:help:lang/nl/text/help
 c:::644:/nl/text/:info:lang/nl/text/info
+c:::644:/nl/text/:messages:lang/nl/text/messages
 c:::644:/nl/text/:mod-help:lang/nl/text/mod-help
 c:::644:/nl/text/:mod-reject:lang/nl/text/mod-reject
 c:::644:/nl/text/:mod-request:lang/nl/text/mod-request
@@ -445,6 +453,7 @@ c:::644:/pl/text/:faq:lang/pl/text/faq
 c:::644:/pl/text/:get-bad:lang/pl/text/get-bad
 c:::644:/pl/text/:help:lang/pl/text/help
 c:::644:/pl/text/:info:lang/pl/text/info
+c:::644:/pl/text/:messages:lang/pl/text/messages
 c:::644:/pl/text/:mod-help:lang/pl/text/mod-help
 c:::644:/pl/text/:mod-reject:lang/pl/text/mod-reject
 c:::644:/pl/text/:mod-request:lang/pl/text/mod-request
@@ -481,6 +490,7 @@ c:::644:/pt/text/:faq:lang/pt/text/faq
 c:::644:/pt/text/:get-bad:lang/pt/text/get-bad
 c:::644:/pt/text/:help:lang/pt/text/help
 c:::644:/pt/text/:info:lang/pt/text/info
+c:::644:/pt/text/:messages:lang/pt/text/messages
 c:::644:/pt/text/:mod-help:lang/pt/text/mod-help
 c:::644:/pt/text/:mod-reject:lang/pt/text/mod-reject
 c:::644:/pt/text/:mod-request:lang/pt/text/mod-request
@@ -517,6 +527,7 @@ c:::644:/pt_BR/text/:faq:lang/pt_BR/text/faq
 c:::644:/pt_BR/text/:get-bad:lang/pt_BR/text/get-bad
 c:::644:/pt_BR/text/:help:lang/pt_BR/text/help
 c:::644:/pt_BR/text/:info:lang/pt_BR/text/info
+c:::644:/pt_BR/text/:messages:lang/pt_BR/text/messages
 c:::644:/pt_BR/text/:mod-help:lang/pt_BR/text/mod-help
 c:::644:/pt_BR/text/:mod-reject:lang/pt_BR/text/mod-reject
 c:::644:/pt_BR/text/:mod-request:lang/pt_BR/text/mod-request
@@ -588,6 +599,7 @@ c:::644:/sv/text/:faq:lang/sv/text/faq
 c:::644:/sv/text/:get-bad:lang/sv/text/get-bad
 c:::644:/sv/text/:help:lang/sv/text/help
 c:::644:/sv/text/:info:lang/sv/text/info
+c:::644:/sv/text/:messages:lang/sv/text/messages
 c:::644:/sv/text/:mod-help:lang/sv/text/mod-help
 c:::644:/sv/text/:mod-reject:lang/sv/text/mod-reject
 c:::644:/sv/text/:mod-request:lang/sv/text/mod-request
