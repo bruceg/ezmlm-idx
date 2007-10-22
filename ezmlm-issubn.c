@@ -20,6 +20,7 @@ void main(int argc,char **argv)
   const char *addr;
   int flagsub = 0;
   int opt;
+  int senderissub;
 
   addr = env_get("SENDER");
   if (!addr) die_sender();	/* REQUIRE sender */
@@ -37,20 +38,18 @@ void main(int argc,char **argv)
   startup(dir = argv[optind++]);
   initsub(0);
 
-  if (optind >= argc) {
-    if (issub(0,addr,0)) {
-      closesub();
-      _exit(flagsub);
-    }
-  }
+  if (optind >= argc)
+    senderissub = !!issub(0,addr,0);
   else {
+    senderissub = 0;
     while ((subdir = argv[optind++]) != 0) {
       if (issub(subdir,addr,0)) {
-	closesub();
-	_exit(flagsub);
+	senderissub = 1;
+	break;
       }
     }
   }
   closesub();
-  _exit(flagsub ? 0 : 99);		/* not subscriber anywhere */
+  _exit(senderissub ? flagsub	/* is a subscriber */
+	: flagsub ? 0 : 99);	/* not subscriber anywhere */
 }
