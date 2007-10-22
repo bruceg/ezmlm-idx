@@ -4,6 +4,7 @@ ezmlm-accept.0 \
 ezmlm-archive.0 \
 ezmlm-cgi.0 \
 ezmlm-check.0 \
+ezmlm-checksub.0 \
 ezmlm-clean.0 \
 ezmlm-confirm.0 \
 ezmlm-cron.0 \

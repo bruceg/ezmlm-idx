@@ -1,0 +1,34 @@
+##################
+# ezmlm-checksub #
+##################
+
+  prompt "ezmlm-checksub:       "
+
+  SENDER="XYZZY@HOst"
+
+  ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
+  ${EZBIN}/ezmlm-unsub "$DIR" allow "$SENDER"
+
+# not subscriber. Test default
+  ${EZBIN}/ezmlm-checksub "$DIR" . allow >/dev/null && \
+	fatal "ezmlm-checksub: failed: exit 0 on non-subscriber"
+  ${EZBIN}/ezmlm-checksub -N "$DIR" . allow >/dev/null && \
+	fatal "ezmlm-checksub: failed: exit 0 on non-subscriber with -N"
+  ${EZBIN}/ezmlm-checksub -n "$DIR" . allow >/dev/null || \
+	fatal "ezmlm-checksub: -n failed for non-subscriber"
+
+# add subscriber
+  ${EZBIN}/ezmlm-sub "$DIR" "xyZZy@hoSt" || \
+	fatal "ezmlm-sub: failed to add subscriber"
+
+  ${EZBIN}/ezmlm-checksub "$DIR" . allow >/dev/null || \
+	fatal "ezmlm-checksub: failed: exit false for subscriber"
+  ${EZBIN}/ezmlm-checksub -N "$DIR" . allow >/dev/null || \
+	fatal "ezmlm-checksub: failed: exit false for subscriber with -N"
+  ${EZBIN}/ezmlm-checksub -n "$DIR" . allow >/dev/null && \
+	fatal "ezmlm-checksub: -n failed for subscriber"
+
+# clean up
+  ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
+
+  ${ECHO} "OK"

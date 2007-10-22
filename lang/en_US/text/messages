@@ -172,5 +172,7 @@ TXT_EDIT_END:%%% END OF TEXT FILE
 TXT_EDIT_START:%%% START OF TEXT FILE
 TXT_LISTMEMBERS:Subscribers to this list are:
 TXT_NOINDEX:aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->
+TXT_ONLY_SUBSCRIBERS:Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.
+TXT_REJECT_POSTS:Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this.
 TXT_SUPPRESSED:<suppressed>
 TXT_TOP_TOPICS:Topics (messages <#1#> through <#2#>)

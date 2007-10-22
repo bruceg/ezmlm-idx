@@ -2,6 +2,7 @@ dependon \
 ezmlm-accept \
 ezmlm-archive \
 ezmlm-check \
+ezmlm-checksub \
 ezmlm-cgi \
 ezmlm-clean \
 ezmlm-confirm \

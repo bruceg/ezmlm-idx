@@ -1,0 +1,86 @@
+.TH ezmlm-issubn 1
+.SH NAME
+ezmlm-checksub \- reject senders not subscribed to a mailing list
+.SH SYNOPSIS
+.B ezmlm-checksub
+[
+.B \-nN
+]
+.I dir
+.I [ subdir1 ... ]
+.SH DESCRIPTION
+.B ezmlm-checksub
+checks to see if the address obtained from the environment variable
+.I SENDER
+is subscribed to the mailing list stored in
+.I dir/subdir1
+or the mailing list in
+.I dir/subdir2
+or ...
+
+If
+.I SENDER
+is not defined
+.B ezmlm-checksub
+exits with an error.
+
+If
+.B \-N
+is set (the default) and
+.I SENDER
+is not on any of the mailing lists,
+.B ezmlm-checksub
+outputs the message named
+.I TXT_ONLY_SUBSCRIBERS
+and exits 100, indicating a permanent failure to qmail.
+
+If
+.B \-n
+is set and
+.I SENDER
+is on any of the mailing lists,
+.B ezmlm-checksub
+outputs the message named
+.I TXT_REJECT_POSTS
+and exits 100.
+
+Otherwise,
+.B ezmlm-checksub
+exits with a zero exit code (success).
+
+If
+.I subdir1
+(or more) are present on the command line and are relative paths,
+.B ezmlm-checksub
+only examines the named subdirectories within the absolute path
+.IR dir .
+
+.B ezmlm-checksub
+exits 111 on errors.
+.SH OPTIONS
+.TP
+.B \-m \fIMESSAGE
+Use
+.I MESSAGE
+in place of either the message named
+.I TXT_ONLY_SUBSCRIBERS
+or
+.I TXT_REJECT_POSTS
+in rejections.
+.TP
+.B \-n
+Negative operation: ensure the sender is not a subscriber.  This is
+useful when trying to exclude SENDERs.
+.TP
+.B \-N
+(Default.)
+Normal operation: ensure if the sender is a subscriber.
+.SH "SEE ALSO"
+ezmlm-issubn(1),
+ezmlm-list(1),
+ezmlm-manage(1),
+ezmlm-make(1),
+ezmlm-send(1),
+ezmlm-sub(1),
+ezmlm-unsub(1),
+ezmlm(5)
