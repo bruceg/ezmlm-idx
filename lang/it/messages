@@ -1,0 +1,162 @@
+ERR_ADDR_AT|address does not contain @|l'indirizzo non ha @
+ERR_ADDR_LONG|address is too long|l'indirizzo è troppo lungo
+ERR_ADDR_NL|address contains newline|l'indirizzo ha un a capo
+ERR_ANONYMOUS|I do not reply to senders without host names (#5.7.2)|non rispondo a mittenti senza nome host (#5.7.2)
+ERR_BADHOST|list host not allowed|host della lista non consentito
+ERR_BADLOCAL|list local not allowed|nome della lista non consentito
+ERR_BADUSER|user not allowed|utente non consentito
+ERR_BAD_ADDRESS|I don't accept messages at this address (local doesn't match) (#5.1.1)|non accetto messaggi a questo indirizzo (il nome della lista non corrisponde) (#5.1.1)
+ERR_BAD_ALL|Sorry, after removing unacceptable MIME parts from your message I was left with nothing (#5.7.0)|Mi dispiace, ma dopo aver tolto dal tuo messaggio le parti MIME non consentite non è rimasto nulla (#5.7.0)
+ERR_BAD_DIGCODE|incorrect digest code (#5.7.1)|Codice digest non corretto (#5.7.1)
+ERR_BAD_INDEX|Old format or corrupted index. Run ezmlm-idx! (#5.3.0)|L'indice è corrotto o non supportato. Esegui ezmlm-idx! (#5.3.0)
+ERR_BAD_NAME|only letters and underscore allowed in file name (#5.6.0)|nel nome del file sono consentiti solo lettere e l'underscore (#5.6.0)
+ERR_BAD_PART|Sorry, a message part has an unacceptable MIME Content-Type: '<#1#>' (#5.2.3)|Mi dispiace, una parte del messaggio ha un MIME Content-Type non ammesso: '<#1#>' (#5.2.3)
+ERR_BAD_REQUEST|Illegal request format (#5.7.1)|Formato della richiesta illegale (#5.7.1)
+ERR_BAD_RETURN_ADDRESS|Invalid bounce or receipt address format (#5.1.1)|Formato dell'indirizzo di ritorno invalido (#5.7.1)
+ERR_BAD_TYPE|Sorry, I don't accept messages of MIME Content-Type '<#1#>' (#5.2.3)|Mi dispiace, ma non accetto messaggi con MIME Content-Type '<#1#>' (#5.2.3)
+ERR_BODYCOMMAND|Sorry, as the message starts with ``[un]subscribe'' it looks like an adminstrative request. Please send a message to the -help address shown in the ``Mailing-List:'' header for [un]subscribe info (#5.7.0)|Mi dispiace, ma visto che il messaggio incomincia con "[un]subscribe" sembra essere un comando amministrativo. Manda un messaggio all'indirizzo -help mostrato nell'header \"Mailing-List:\" per ulteriori informazioni (#5.7.0)
+ERR_BOUNCE|I do not reply to bounce messages (#5.7.2)|Non rispondo ai messaggi di errore (#5.7.2)
+ERR_CFHOST|bounce-host required on first line of <#1#>|nella prima linea di <#1#> è necessario il bounce-host
+ERR_CHDIR|Unable to change directory to <#1#>|Non posso spostarmi nella cartella <#1#>
+ERR_CHILD_CRASHED|child crashed|il programma figlio è terminato inaspettatamente
+ERR_CHILD_FATAL|fatal error from child|errore fatale dal programma figlio
+ERR_CHILD_TEMP|temporary error from child|errore temporaneo dal programma figlio
+ERR_CHILD_UNKNOWN|unknown error from child|errore sconosciuto dal programma figlio
+ERR_CHMOD|unable to chmod <#1#>|non posso eseguire chmod <#1#>
+ERR_CHROOT|failed to chroot to <#1#>|non posso eseguire chroot <#1#>
+ERR_CLOSE|unable to close <#1#>|non posso chiudere <#1#>
+ERR_COOKIE|message does not have valid authentication token|il messaggio non ha un valido codice di autenticazione
+ERR_CREATE|unable to create <#1#>|non posso creare <#1#>
+ERR_CRONTAB|crontab update failed. Contact your sysadmin with the above error information|aggiornamento di crontab fallito. Contatta l'amministratore di sistema con le informazioni di errore precedenti
+ERR_DELETE|unable to delete <#1#>|non posso cancellare <#1#>
+ERR_DONE|message already successfully processed by this list|il messaggio è già stato processato da questa lista
+ERR_DOW|single comma-separated digits only for day-of-week|per i giorni della settimana usa solo singole cifre separate da virgola
+ERR_EDSIZE|Maximum edit file size exceeded (#5.6.0)|Superata la massima dimensione per un file da modificare (#5.6.0)
+ERR_EMPTY_DIGEST|nothing to digest|non ho nulla da mettere nella raccolta
+ERR_EMPTY_LIST|no messages in archive|non ci sono messaggi in archivio
+ERR_ENDTAG|tag lacks /> end marker|il tag manca del terminatore />
+ERR_EUID|effective user id not found|non ho trovato l'user id effettivo
+ERR_EXCESS_DEFER|excess traffic: deferring|troppo traffico: pospongo
+ERR_EXCESS_MOD|excess traffic: moderating|troppo traffico: modero
+ERR_EXCLUSIVE|action-controlling switches are mutually exclusive|le opzioni di controllo delle azioni sono mutualmente esclusive
+ERR_EXECUTE|unable to execute <#1#>|non posso eseguire <#1#>
+ERR_EXTRA_SUB|Processed SENDER check addition request for: <#1#>|Processata la richiesta di aggiunta del controllo del SENDER per: <#1#>
+ERR_EXTRA_UNSUB|Processed SENDER check removal request for: <#1#>|Processata la richiesta di rimozione del controllo del SENDER per: <#1#>
+ERR_FILENAME|continuation tag without defined file name: <#1#>|tag di continuazione senza che il file name sia definito: <#1#>
+ERR_FLUSH|unable to flush <#1#>|flush di <#1#> fallito
+ERR_FLUSH_STDOUT|unable to flush standard output|flush dello standard output fallito
+ERR_FORK|unable to fork|fork fallita
+ERR_JUNK|Precedence: junk - message ignored|Precedence: junk - messaggio ignorato
+ERR_LINKDIR|linktag lacks /dir: <#1#>|il tag di link non ha /dir: <#1#>
+ERR_LISTNO|max number of list entries exceeded|superato il massimo numero di elementi della lista
+ERR_LOOPING|this message is looping: it already has my Delivered-To line (#5.4.6)|questo messaggio è in loop: ha già la mia linea Delivered-To: (#5.4.6)
+ERR_MAILING_LIST|message already has a Mailing-List header (maybe I should be a sublist) (#5.7.2)|il messaggio ha già l'intestazone Mailing-List (forse questa dovrebbe essere una sottolista) (#5.7.2)
+ERR_MAX_BOUNCE|max bounces exceeded: bounce will not be saved|superato il massimo numero di messaggi di errore: il messaggio di errore non verrà salvato
+ERR_MAX_SIZE|Sorry, I don't accept messages larger than <#1#> bytes (#5.2.3)|Mi dispiace, non accetto messaggi con più di <#1#> caratteri
+ERR_MIME_QUOTE|MIME boundary lacks end quote|Il delimitatore MIME non ha le virgolette finali
+ERR_MIN_SIZE|Sorry, I don't accept messages shorter than <#1#> bytes (#5.2.3)|Mi dispiace, non accetto messaggi più corti di <#1#> caratteri (#5.2.3)
+ERR_MKTAB|creating subscriber tables failed|creazione delle tabelle degli iscritti fallita
+ERR_MOD_ACCEPTED|I'm sorry, I've already accepted this message|Mi dispiace, ho già accettato questo messaggio
+ERR_MOD_COOKIE|Illegal or outdated moderator request (#5.7.1)|Richiesta di moderazione illegale o scaduta (#5.7.1)
+ERR_MOD_REJECTED|I'm sorry, I've already rejected this message|Mi dispiace, ho già rigettato questo messaggio
+ERR_MOD_TIMEOUT|I'm sorry, I no longer have this message|Mi dispiace, non ho più questo messaggio
+ERR_MOVE|unable to move <#1#> to <#2#>|non riesco a spostare <#1#> su <#2#>
+ERR_NEWLINE|newlines not allowed in dir|a capo non consentito in dir
+ERR_NOCMD|command not available|comando non disponibile
+ERR_NODEFAULT|DEFAULT not set|manca DEFAULT
+ERR_NODTLINE|DTLINE not set|manca DTLINE
+ERR_NOEXIST| does not exist|non esiste
+ERR_NOINDEX|Sorry, I can't find the index for this message|Mi dispiace, non trovo l'indice di questo messaggio
+ERR_NOLOCAL|LOCAL not set|manca LOCAL
+ERR_NOMEM|out of memory|memoria esaurita
+ERR_NOSENDER|SENDER not set|manca SENDER
+ERR_NOT_ACTIVE|this sublist is not active|la sottolista non è attiva
+ERR_NOT_ALLOWED|Command allowed only to moderators (#5.7.1)|Il comando è ammesso solo dai moderatori (#5.7.1)
+ERR_NOT_ARCHIVED|Sorry, this list is not archived (#5.1.1)|Mi dispiace, questa lista non ha un archivio (#5.1.1)
+ERR_NOT_AVAILABLE|Command not available (#5.1.1)|Comando non disponibile (#5.1.1)
+ERR_NOT_CLEAN|Bad character in address components|Carattere non consentito nelle componenti dell'indirizzo
+ERR_NOT_INDEXED|Sorry, this list is not indexed (#5.1.1)|Mi dispiace, questa lista non ha un indice (#5.1.1)
+ERR_NOT_PARENT|this message is not from my parent list (#5.7.2)|questo messaggio non arriva dalla mia lista padre (#5.7.2)
+ERR_NOT_PUBLIC|Sorry, I've been told to reject all requests (#5.7.2)|Mi dispiace, mi è stato chiesto di rigettare tutte le richieste (#5.7.2)
+ERR_NO_ABSOLUTE|absolute directory names outside of the list directory are no longer supported|i nomi di cartelle assolute al di fuori della cartella della lista non sono più supportati
+ERR_NO_ADDRESS|List address must be in To: or Cc: (#5.7.0)|L'indirizzo della lista dev'essere in To: o Cc: (#5.7.0)
+ERR_NO_LEVELS|subscriber table names may not contain slashes|i nomi delle tabelle degli iscritti non possono contenere la barra '/'
+ERR_NO_MARK|missing start-of-text or end-of-text mark (#5.6.0)|mancano gli indicatori di inizio-testo o fine-testo (#5.6.0)
+ERR_NO_MATCH|no matching entry found|non ho trovato un'entry corrispondente
+ERR_NO_PLUGIN|no plugin specified in database connect data|nessun plugin specificato nei dati di connessione al database
+ERR_NO_POST|I'm sorry, you are not allowed to post messages to this list (#5.7.2)|Mi dispiace, non sei autorizzato a spedire messaggi a questa lista (#5.7.2)
+ERR_NO_SUBJECT|Sorry, I don't accept message with empty Subject (#5.7.0)|Mi dispiace, non accetto messaggi senza oggetto (#5.7.0)
+ERR_OBTAIN_LOCK|unable to obtain lock on <#1#>|non posso mettere un lock su <#1#>
+ERR_OPEN|unable to open <#1#>|non posso aprire <#1#>
+ERR_OPEN_LISTMSGS|unable to open <#1#> in listmsgs. Rerun ezmlm-archive!|non posso aprire <#1#> in listmsgs. Riesegui ezmlm-archive!
+ERR_PERIOD|periods not allowed in tags|i punti non sono ammessi nei tag
+ERR_QMAIL_QUEUE|unable to run qmail-queue|non posso eseguire qmail-queue
+ERR_QUOTE|quotes not allowed in dir|le virgolette non sono consentite in dir
+ERR_READ|unable to read <#1#>|non posso leggere <#1#>
+ERR_READ_INPUT|unable to read input|non posso leggere l'input
+ERR_READ_NOTHING|unable to read <#1#>: nothing there|non posso leggere <#1#>: non c'è nulla
+ERR_READ_STDIN|unable to read standard input|non posso leggere lo standard input
+ERR_REJECT|Sorry, I've been told to reject this message (#5.7.0)|Mi dispiace, mi è stato chiesto di rigettare questo messaggio (#5.7.0)
+ERR_REQ_LISTNAME|This command requires a mailing list name (#5.1.1)|Questo comando richiede il nome di una mailing list (#5.1.1)
+ERR_REQ_LOCAL|the local part of the command string does not match this list (#5.1.1)|la parte locale della stringa del comando non corrisponde a questa lista (#5.1.1)
+ERR_SEEK|unable to seek <#1#>|non posso eseguire seek su <#1#>
+ERR_SEEK_INPUT|unable to seek input|non posso eseguire seek sull'input
+ERR_SETUID|unable to set uid|non posso impostare lo user id
+ERR_SLASH|dir and dot must start with slash|dir e dot devono cominciare con una barra '/'
+ERR_STAT|unable to stat <#1#>|non posso eseguire stat su <#1#>
+ERR_SUBCOMMAND|Sorry, I don't accept commands in the subject line. Please send a message to the -help address shown in the the ``Mailing-List:'' header for command info (#5.7.0)|Mi dispiace, non accetto comandi nell'oggetto. Manda un messaggio all'indirizzo -help mostrato nell'intestazione \"Mailing-List:\" per informazioni sui comandi (#5.7.0)
+ERR_SUBLIST|sublist messages must have a Mailing-List header (#5.7.2)|i messaggi della sottolista devono avere l'intestazione Mailing-List (#5.7.2)
+ERR_SUBSCRIBER_CAN|only subscribers can <#1#> (#5.7.1)|solo gli iscritti possono <#1#> (#5.7.1)
+ERR_SUBST_UNSAFE|Sorry, substitution of target addresses into headers with #A# or #t# is unsafe and not permitted.|Mi dispiace, la sostituzione degli indirizzi di destinazione nelle intestazioni con #A# o #t# non è permessa perchè insicura.
+ERR_SUB_NOP|target is already a subscriber|il destinatario è già un iscritto
+ERR_SUID|Sorry, I won't run as root|Mi dispiace, non posso essere eseguito con i permessi di root
+ERR_SYNC|unable to sync <#1#>|non posso eseguire il sync di <#1#>
+ERR_SYNTAX|syntax error in <#1#>|errore di sintassi in <#1#>
+ERR_SYNTAX_CONFIG|syntax error in config file <#1#>|errore di sintassi nel file di configurazione <#1#>
+ERR_SYNTAX_MISSING_AUTHHASH| syntax error: <#1#>: missing author hash|errore di sintassi: <#1#>: manca l'hash dell'autore
+ERR_SYNTAX_MISSING_AUTHOR| syntax error: <#1#>: author info missing.|errore di sintassi: <#1#>: mancano le informazioni dell'autore.
+ERR_SYNTAX_MISSING_FIRST| syntax error: <#1#>: first line missing|errore di sintassi: <#1#>: manca la prima linea
+ERR_SYNTAX_MISSING_SEMIDATE| syntax error: <#1#>: missing \";\" after date|errore di sintassi: <#1#>: manca ';' dopo la data
+ERR_SYNTAX_MISSING_SEPARATOR| syntax error: <#1#>: missing subject separator|errore di sintassi: <#1#>: manca il separatore dell'oggetto
+ERR_SYNTAX_MISSING_SUBJHASH| syntax error: <#1#>: missing subject hash|errore di sintassi: <#1#>: manca l'hash dell'oggetto
+ERR_TMP_QMAIL_QUEUE|temporary qmail-queue error|errore temporaneop di qmail-queue
+ERR_UID|user id not found|user id non trovato
+ERR_UNIQUE|unable to create unique message file name|non posso creare un nome univoco per il file del messaggio
+ERR_UNSUB_NOP|target is not a subscriber|il destinatario non è un iscritto
+ERR_VERSION|ezmlmrc version mismatch. Behavior may not match docs.|la versione di ezmlmrc non corrisponde. Il comportamento potrebbe essere diverso da quello indicato nella documentazione.
+ERR_WRITE|unable to write <#1#>|non posso scrivere <#1#>
+ERR_WRITE_STDOUT|unable to write to standard output|non posso scrivere sullo standard output
+SUB_CONFIRM_POST|Confirm post to <#L#>@<#H#>|Conferma l'invio a <#L#>@<#H#>
+SUB_EDIT_LIST|List of editable text files for <#L#>@<#H#>|Elenco dei testi modificabili per <#L#>@<#H#>
+SUB_EDIT_REQUEST|EDIT <#1#> for <#L#>@<#H#>|MODIFICA di <#1#> per <#L#>@<#H#>
+SUB_EDIT_SUCCESS|Success editing <#1#> for <#L#>@<#H#>|La modifica di <#1#> per <#L#>@<#H#> ha avuto successo
+SUB_FAQ|FAQ for <#L#>@<#H#>|FAQ su <#L#>@<#H#>
+SUB_GET_MSG|Archive retrieval from <#L#>@<#H#>|Estrazione dall'archivio di <#L#>@<#H#>
+SUB_GOODBYE|GOODBYE from <#L#>@<#H#>|ARRIVEDERCI da <#L#>@<#H#>
+SUB_HELP|Help for <#L#>@<#H#>|Aiuto per <#L#>@<#H#>
+SUB_INFO|Information for <#L#>@<#H#>|Informazioni su <#L#>@<#H#>
+SUB_LIST|Subscriber list for <#L#>@<#H#>|Elenco degli iscritti a <#L#>@<#H#>
+SUB_LOG|Subscriber log for <#L#>@<#H#>|Log delle iscrizioni di <#L#>@<#H#>
+SUB_LOG_SEARCH|Log search results for <#L#>@<#H#>|Risultato della ricerca nei log di <#L#>@<#H#>
+SUB_MODERATE|MODERATE for <#L#>@<#H#>|MODERA per <#L#>@<#H#>
+SUB_MOD_HELP|Moderator help for <#L#>@<#H#>|Aiuto per i moderatori di <#L#>@<#H#>
+SUB_MOD_SUBSCRIBE|CONFIRM subscribe to <#L#>@<#H#>|CONFERMA dell'iscrizione a <#L#>@<#H#>
+SUB_MOD_UNSUBSCRIBE|CONFIRM unsubscribe from <#L#>@<#H#>|CONFERMA della cancellazione da <#L#>@<#H#>
+SUB_PROBE|Probe from <#L#>@<#H#>|Verifica da <#L#>@<#H#>
+SUB_RESULTS|<#L#> results|Risultati per <#L#>
+SUB_RETURNED_POST|Returned post for <#L#>@<#H#>|Messaggio rigettato da <#L#>@<#H#>
+SUB_STATUS|Subscription status on <#L#>@<#H#>|Stato dell'iscrizione a <#L#>@<#H#>
+SUB_SUBSCRIBE_NOP|Already subscribed to <#L#>@<#H#>|Sei già iscritto a <#L#>@<#H#>
+SUB_UNSUBSCRIBE_NOP|Not subscribed to <#L#>@<#H#>|Non sei iscritto a <#L#>@<#H#>
+SUB_USR_SUBSCRIBE|confirm subscribe to <#L#>@<#H#>|conferma l'iscrizione a <#L#>@<#H#>
+SUB_USR_UNSUBSCRIBE|confirm unsubscribe from <#L#>@<#H#>|conferma la cancellazione da <#L#>@<#H#>
+SUB_WARNING|Warning from <#L#>@<#H#>|Avvertimento da <#L#>@<#H#>
+SUB_WELCOME|WELCOME to <#L#>@<#H#>|BENVENUTO in <#L#>@<#H#>
+TXT_ADMINISTRIVIA|Administrivia:|Administrivia:
+TXT_BY|by|da
+TXT_EDIT_END|%%% END OF TEXT FILE|%%% FINE DEL TESTO
+TXT_EDIT_START|%%% START OF TEXT FILE|%%% INIZIO DEL TESTO
+TXT_LISTMEMBERS|Subscribers to this list are:|Gli iscritti alla lista sono
+TXT_NOINDEX|aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->|aaaaaaaaaaaaaaaaaaaa <- indice degli oggetti non disponibile per i messaggi ->
+TXT_SUPPRESSED|<suppressed>|<soppresso>
+TXT_TOP_TOPICS|Topics (messages <#1#> through <#2#>)|Argomenti (messaggi dal <#1#> al <#2#>)
