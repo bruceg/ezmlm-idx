@@ -54,6 +54,12 @@ case "$1" in
     dependon makelang VERSION ezmlmrc.template
     formake "./makelang $lang"
     ;;
+  lang/*/text/messages)
+    lang=${1#lang/}
+    lang=${lang%%/*}
+    dependon make-messages lang/$lang/messages
+    formake "./make-messages < lang/$lang/messages > lang/$lang/text/messages"
+    ;;
   auto_version.c)
     dependon auto-str VERSION
     formake './auto-str auto_version < VERSION > auto_version.c'

@@ -1,7 +1,7 @@
 Put a real address into To: header in ezmlm-store (and others?)
 add ezmlm-receipt to build system (needs to be fixed to compile)
 add support for simultaneous multiple languages
-Eliminate DIR/mailinglist?
+Eliminate lang/*/ezmlmrc in favor of a single master ezmlmrc file?
 
 Rewrite man pages to include a separate "configuration files" section.
 
