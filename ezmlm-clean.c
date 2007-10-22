@@ -111,7 +111,7 @@ void sendnotice(const char *d)
         if (!stralloc_0(&to)) die_nomem();
       } else
         die_read();
-      hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
+      hdr_add2s("Mailing-List: ",MSG(TXT_MAILING_LIST));
       if (listid.len > 0)
 	hdr_add2("List-ID: ",listid.s,listid.len);
       hdr_datemsgid(when+msgnum++);

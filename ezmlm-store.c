@@ -264,7 +264,7 @@ void main(int argc,char **argv)
   if (qmail_open(&qq, (stralloc *) 0) == -1)		/* Open mailer */
     strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
-  hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
+  hdr_add2s("Mailing-List: ",MSG(TXT_MAILING_LIST));
   if (listid.len > 0)
     hdr_add2("List-ID: ",listid.s,listid.len);
   hdr_datemsgid(when);

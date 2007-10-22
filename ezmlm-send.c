@@ -470,14 +470,11 @@ void main(int argc,char **argv)
       strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
   if (!flagsublist) {
-    qa_puts("Mailing-List: ");
-    qa_put(mailinglist.s,mailinglist.len);
+    hdr_add2s("Mailing-List: ",MSG(TXT_MAILING_LIST));
     if (listid.len > 0) {
       flaglistid = 1;
-      qmail_puts(&qq,"\nList-ID: ");
-      qmail_put(&qq,listid.s,listid.len);
+      hdr_add2("List-ID: ",listid.s,listid.len);
     }
-    qa_puts("\n");
   }
   copy(&qq,"headeradd",'H');
   qa_put(mydtline.s,mydtline.len);

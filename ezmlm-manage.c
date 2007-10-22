@@ -339,7 +339,7 @@ void msg_headers(void)
   int flaggetfrom;
   unsigned int pos;
 
-  hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
+  hdr_add2s("Mailing-List: ",MSG(TXT_MAILING_LIST));
   if (listid.len > 0)
     hdr_add2("List-ID: ",listid.s,listid.len);
   if (!quote(&quoted,&outlocal)) die_nomem();	/* quoted has outlocal */

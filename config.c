@@ -15,7 +15,6 @@ stralloc ezmlmrc = {0};
 stralloc key = {0};
 stralloc listid = {0};
 stralloc local = {0};
-stralloc mailinglist = {0};
 stralloc outhost = {0};
 stralloc outlocal = {0};
 char flagcd = '\0';		/* No transfer encoding by default */
@@ -79,9 +78,6 @@ static void load_config(void)
   } else
     if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
   if (!stralloc_0(&charset)) die_nomem();
-
-  // FIXME: need to handle escapes in mailinglist
-  getconf_line(&mailinglist,"mailinglist",1);
 }
 
 void startup(const char *dir)

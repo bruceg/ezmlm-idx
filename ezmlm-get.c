@@ -700,7 +700,7 @@ void doheaders(void)
   if (act == AC_DIGEST)
     copy(&qq,"headeradd",'H');
 
-  hdr_add2("Mailing-List: ",mailinglist.s,mailinglist.len);
+  hdr_add2s("Mailing-List: ",MSG(TXT_MAILING_LIST));
   if (listid.len > 0)
     hdr_add2("List-ID: ",listid.s,listid.len);
   hdr_datemsgid(when);

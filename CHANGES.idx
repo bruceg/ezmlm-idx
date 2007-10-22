@@ -50,8 +50,10 @@ Also:
 
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
-messages changes also replace the confirmpost subject line hack in
-ezmlm-store.  The contents of DIR/confirmpost are now ignored.
+messages changes also replaced the confirmpost subject line hack in
+ezmlm-store and the mailinglist file.  The contents of DIR/confirmpost
+and DIR/mailinglist are now ignored in favor of the SUB_CONFIRM_POST and
+TXT_MAILING_LIST messages, respectively.
 
 ezmlm-idx-6.0.1, 2007-10-06
 ===========================
