@@ -522,10 +522,10 @@ void doconfirm(const char *act)
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"\n");
 
-  hdr_subject(MSG((*act == ACTION_SC[0]) ? SUB_USR_SUBSCRIBE
-		  : (*act == ACTION_UC[0]) ? SUB_USR_UNSUBSCRIBE
-		  : (*act == ACTION_VC[0]) ? SUB_MOD_SUBSCRIBE
-		  : /*(*act == ACTION_WC[0]) ?*/ SUB_MOD_UNSUBSCRIBE));
+  hdr_subject((*act == ACTION_SC[0]) ? MSG(SUB_USR_SUBSCRIBE)
+	      : (*act == ACTION_UC[0]) ? MSG(SUB_USR_UNSUBSCRIBE)
+	      : (*act == ACTION_VC[0]) ? MSG(SUB_MOD_SUBSCRIBE)
+	      : /*(*act == ACTION_WC[0]) ?*/ MSG(SUB_MOD_UNSUBSCRIBE));
   hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 }
@@ -927,7 +927,7 @@ int main(int argc,char **argv)
       strerr_die2x(100,FATAL,MSG(ERR_NOT_AVAILABLE));
     if (!ismod)
       strerr_die2x(100,FATAL,MSG(ERR_NOT_ALLOWED));
-    hdr_subject(MSG((*action == 0) ? SUB_LOG : SUB_LOG_SEARCH));
+    hdr_subject((*action == 0) ? MSG(SUB_LOG) : MSG(SUB_LOG_SEARCH));
     hdr_ctboundary();
     searchlog(workdir,action,code_subto);
     copybottom();

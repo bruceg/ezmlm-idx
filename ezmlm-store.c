@@ -307,7 +307,7 @@ void main(int argc,char **argv)
   }
   qmail_puts(&qq,">\n");
   /* FIXME: Drop the custom subject hack and use hdr_listsubject1 */
-  hdr_subject(MSG(flagconfirm ? SUB_CONFIRM_POST : SUB_MODERATE));
+  hdr_subject(flagconfirm ? MSG(SUB_CONFIRM_POST) : MSG(SUB_MODERATE));
   if (flagmime) {
     hdr_mime(CTYPE_MULTIPART);
     hdr_boundary(0);
