@@ -1,4 +1,5 @@
 #!/usr/bin/python2
+import glob
 import os
 import re
 import sys
@@ -8,10 +9,13 @@ try:
 except:
 	print 'Usage: %s LANG' % sys.argv[0]
 
-re_msg = re.compile('^#define\s+\S+\s+"([^"]+)"$', re.MULTILINE)
-src_msgs = re_msg.findall(file('messages.h').read())
+re_msg = re.compile('MSG\d?\(([A-Z][A-Z_]*)')
+src_msgs = { }
+for src in glob.glob('*.c'):
+	for msg in re_msg.findall(file(src).read()):
+		src_msgs[msg] = src
 
-SPLIT = '|'
+SPLIT = ':'
 lang_msgs = dict([
 	line[:-1].split(SPLIT, 1)
 	for line in file('lang/%s/text/messages' % lang).readlines()
@@ -21,12 +25,11 @@ lang_msgs = dict([
 missing = 0
 extra = 0
 
-for msg in src_msgs:
+for msg,src in src_msgs.items():
 	if not lang_msgs.has_key(msg):
-		print 'Missing:', msg
+		print 'Missing:', msg, 'in file', src
 		missing += 1
 
-src_msgs = dict(zip(src_msgs, [None]*len(src_msgs)))
 for msg in lang_msgs.keys():
 	if not src_msgs.has_key(msg):
 		print 'Extra:', msg
