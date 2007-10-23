@@ -883,7 +883,7 @@ void main(int argc,char **argv)
     if (!flagdo)			/* only do digests */
       strerr_die2x(100,FATAL,MSG(ERR_NOCMD));
     if (flagpublic == 2)
-      flagpublic = getconf_line(&line,"public",0);
+      flagpublic = getconf_isset("public");
     if (!flagpublic) {
 		/* This all to take care of non-public lists. They should*/
 		/* still do digests, but do other things only for        */
@@ -908,8 +908,8 @@ void main(int argc,char **argv)
     }
   }
 
-  flagindexed = getconf_line(&line,"indexed",0);
-  flagarchived = getconf_line(&line,"archived",0);
+  flagindexed = getconf_isset("indexed");
+  flagarchived = getconf_isset("archived");
 
   if (act == AC_DIGEST) {
     workdir = "digest";

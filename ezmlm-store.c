@@ -170,10 +170,10 @@ void main(int argc,char **argv)
   initsub(0);
 
   if (flagconfirm == -1)
-    flagconfirm = getconf_line(&line,"confirmpost",0);
+    flagconfirm = getconf_isset("confirmpost");
 
   flagmodpost = getconf_line(&moderators,"modpost",0);
-  flagremote = getconf_line(&line,"remote",0);
+  flagremote = getconf_isset("remote");
   if (!flagmodpost && !flagconfirm) {	/* not msg-mod. Pipe to ezmlm-send */
     if ((child = wrap_fork()) == 0)
       wrap_execbin("/ezmlm-send", &sendopt, dir);

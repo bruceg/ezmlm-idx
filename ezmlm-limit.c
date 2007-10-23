@@ -29,7 +29,6 @@ unsigned long deltanum = LIMMSG;	/* max no messages in interval */
 					/* see idx.h. Usually 30 msg/3600 secs*/
 int flagd = 0;				/* =0 create modpost, =1 ignore */
 					/* excess, =2 defer excess */
-int flagmod;				/* list moderated */
 int flagloop;
 const char *fn = TXT_LOOPNUM;
 
@@ -77,7 +76,7 @@ void main(int argc,char **argv)
 
   if (argv[optind])
     die_usage();	/* avoid common error of putting options after dir */
-  if ((flagmod = getconf_line(&line,"modpost",0)))
+  if (getconf_isset("modpost"))
     _exit(0);		/* already mod */
 			/* lock for num and for writing loopnum */
   fdlock = lockfile("lock");

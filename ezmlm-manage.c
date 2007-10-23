@@ -728,8 +728,7 @@ int main(int argc,char **argv)
 				/* admin and modsub lists. Since ismod   */
 				/* is false for all non-mod lists, only it   */
 				/* needs to be tested. */
-  if ((flagpublic = slurp("public",&line,1)) == -1)
-      strerr_die2sys(111,FATAL,MSG1(ERR_READ,"public"));
+  flagpublic = getconf_isset("public");
   if (!flagpublic && !(ismod && flagremote) &&
                 !case_equals(action,ACTION_HELP))
       strerr_die2x(100,FATAL,MSG(ERR_NOT_PUBLIC));

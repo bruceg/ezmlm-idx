@@ -366,8 +366,8 @@ void main(int argc,char **argv)
 
   fdlock = lockfile("lock");
 
-  flagarchived = getconf_line(&line,"archived",0);
-  flagindexed = getconf_line(&line,"indexed",0);
+  flagarchived = getconf_isset("archived");
+  flagindexed = getconf_isset("indexed");
   flagprefixed = getconf_line(&prefix,"prefix",0);
   if (prefix.len) {		/* encoding and serial # support */
 				/* no sanity checks - you put '\n' or '\0' */
