@@ -103,7 +103,7 @@ void main(int argc,char **argv)
   } else if (num >= loopnum + deltanum) {	/* excess messages */
     if (!flagd) {
       if ((fd = open_append("modpost")) == -1)	/* create dir/modpost */
-	  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,"subpost"));
+	  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,"modpost"));
       else {
         close(fd);
         unlink(fn);
