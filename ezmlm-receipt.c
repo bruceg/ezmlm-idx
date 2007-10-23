@@ -10,7 +10,6 @@
 #include "str.h"
 #include "env.h"
 #include "slurp.h"
-#include "getconf.h"
 #include "strerr.h"
 #include "byte.h"
 #include "case.h"

@@ -10,7 +10,6 @@
 #include "sig.h"
 #include "fork.h"
 #include "wait.h"
-#include "getconf.h"
 #include "strerr.h"
 #include "byte.h"
 #include "getln.h"

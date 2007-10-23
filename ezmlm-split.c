@@ -6,7 +6,6 @@
 #include "str.h"
 #include "env.h"
 #include "sig.h"
-#include "getconf.h"
 #include "open.h"
 #include "scan.h"
 #include "strerr.h"
