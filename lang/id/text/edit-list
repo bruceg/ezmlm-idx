@@ -1,4 +1,4 @@
-# Revision: 1
+# Revision: 3
 <=n=>
 Perintah <#L#>-edit.file dapat digunakan oleh administrator dari jarak
 jauh untuk mengedit file-file teks untuk kemudian membuat kumpulan dari
@@ -13,11 +13,25 @@ beserta file teksnya.
 File                Kegunaan
 
 bottom              bagian bawah dari semua tanggapan.  Informasi secara umum.
+bounce_bottom       bagian bawah dari peringatan email mental.
+bounce_num          bagian depan dari daftar nomor postingan yang mental.
+bounce_probe        posting percobaan untuk mengecek alamat email bisa dihubungi.
+bounce_warn         pesan peringatan mengenai postingan yang mental.
+<=dn=>
+dig_bounce_num      bagian depan dari daftar nomor postingan digests yang mental.
 digest              'administrivia' bagian dari digests.
+<=n=>
+edit_do             bagian depan dengan intruksi mengedit text.
+edit_done           pesan sukses mengedit text.
+edit_list           daftar ini.
 faq                 frequently asked questions khusus untuk list tersebut.
+<=Bn=>
 get_bad             pengganti posting-posting yang tidak ditemukan pada arsip.
+<=n=>
 help                panduan umum (antara 'top' dan 'bottom').
 info                info list. Baris pertama sangat berarti.
+<=mn=>
+messages            list of subject lines and internal error messages.
 mod_help            panduan khusus untuk moderator list. 
 mod_reject          untuk pengirim yang postingnya tertolak.
 mod_request         untuk moderator dengan postingnya.
@@ -25,6 +39,9 @@ mod_sub             untuk pelanggan setelah moderator menyetujui.
 mod_sub_confirm     untuk moderator untuk permohonan berlangganan.
 mod_timeout         untuk pengirim yang postingnya kadaluarsa.
 mod_unsub_confirm   untuk admin untuk permohonan berhenti.
+<=yn=>
+post-confirm        untuk pengirim untuk konfirmasi pesan.
+<=n=>
 sub_bad             untuk pelanggan jika konfirmasi berlangganan tidak sukses.
 sub_confirm         untuk pelanggan untuk permohonan berlangganan.
 sub_nop             untuk pelanggan setelah mendaftar ulang.

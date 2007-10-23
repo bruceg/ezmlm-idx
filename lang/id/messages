@@ -1,2 +1,9 @@
+ERR_ADDR_AT|address does not contain @|alamat tidak ada tanda @
+ERR_ADDR_LONG|address is too long|alamat terlalu panjang
+ERR_ADDR_NL|address contains newline|alamat terdapat barisbaru
+ERR_ANONYMOUS|I do not reply to senders without host names (#5.7.2)|Saya tidak bisa membalas ke pengirim tanpa host names (#5.7.2)
+SUB_WARNING|Warning from <#L#>@<#H#>|Peringatan dari <#L#>@<#H#>
+SUB_WELCOME|WELCOME to <#L#>@<#H#>|Selamat Datang di <#L#>@<#H#>
+TXT_BY|by|oleh
 TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Maaf, hanya pelanggan boleh mengirim posting. Jika anda seorang pelanggan, forward mail ini ke <#L#>-owner@<#H#> supaya email baru anda juga dimasukkan.
 TXT_REJECT_POSTS|Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this.|Maaf, program ini menolak posting anda. Hubungi <#L#>-owner@<#H#> jika anda mempunyai pertanyaan tentang hal ini.
