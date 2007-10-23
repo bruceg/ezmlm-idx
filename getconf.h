@@ -2,6 +2,7 @@
 #define GETCONF_H
 
 extern int getconf(stralloc *sa,const char *fn,int flagrequired);
+extern int getconf_isset(const char *fn);
 extern int getconf_line(stralloc *sa,const char *fn,int flagrequired);
 extern int getconf_ulong(unsigned long *n,const char *fn,int flagrequired);
 extern int getconf_ulong2(unsigned long *n0,unsigned long *n1,

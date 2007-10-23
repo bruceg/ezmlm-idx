@@ -1,3 +1,5 @@
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "stralloc.h"
 #include "byte.h"
 #include "slurp.h"
@@ -8,6 +10,7 @@
 #include "config.h"
 #include "copy.h"
 #include "idx.h"
+#include "wrap.h"
 #include "messages.h"
 
 static stralloc data = {0};
@@ -44,6 +47,12 @@ int getconf(stralloc *sa,const char *fn,int flagrequired)
       i = j + 1;
     }
   return 1;
+}
+
+int getconf_isset(const char *fn)
+{
+  struct stat st;
+  return wrap_stat(fn,&st) == 0;
 }
 
 int getconf_line(stralloc *sa,const char *fn,int flagrequired)
