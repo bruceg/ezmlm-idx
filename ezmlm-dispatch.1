@@ -48,6 +48,13 @@ is only examined for what file is to control the delivery.  This can be
 used to have
 .B ezmlm-dispatch
 control the operations of a single list.
+
+If
+.I dir\fB/qmqpservers
+exists,
+.B ezmlm-dispatch will use
+.B qmail-qmqp(1)
+to forward messages.
 .SH OPTIONS
 .TP
 .B -v

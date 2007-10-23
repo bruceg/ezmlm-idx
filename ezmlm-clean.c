@@ -101,7 +101,7 @@ void sendnotice(const char *d)
   unsigned int x,y;
   const char *err;
 
-      if (qmail_open(&qq, (stralloc *) 0) == -1)
+      if (qmail_open(&qq) == -1)
         strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
       fd = open_read(d);

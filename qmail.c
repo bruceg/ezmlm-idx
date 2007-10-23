@@ -2,7 +2,10 @@
 #include "substdio.h"
 #include "readwrite.h"
 #include "wait.h"
+#include "die.h"
 #include "env.h"
+#include "stralloc.h"
+#include "getconf.h"
 #include "str.h"
 #include "exit.h"
 #include "fork.h"
@@ -15,13 +18,25 @@
 
 static const char *binqqargs[2] = { PROG_QMAIL_QUEUE, 0 } ;
 
-int qmail_open(struct qmail *qq, const stralloc *sa)
+static stralloc filename;
+static stralloc qmqpservers;
+
+int qmail_open(struct qmail *qq)
 {
   int pim[2];
   int pie[2];
   unsigned i,j;
   const char *cp;
   const char **cpp;
+
+  if (!stralloc_copys(&filename,QMQPSERVERS)) die_nomem();
+  if (!stralloc_cats(&filename,"/0")) die_nomem();
+  if (!stralloc_0(&filename)) die_nomem();
+  if (!getconf(&qmqpservers,filename.s,0)) {
+    if (!stralloc_copys(&filename,QMQPSERVERS)) die_nomem();
+    if (!stralloc_0(&filename)) die_nomem();
+    getconf(&qmqpservers,filename.s,0);
+  }
 
   qq->msgbytes = 0L;
   if (pipe(pim) == -1) return -1;
@@ -42,19 +57,19 @@ int qmail_open(struct qmail *qq, const stralloc *sa)
       if (chdir(cp) == -1) _exit(61);
       if ((cp = env_get("QMAILQUEUE")) != 0)
 	binqqargs[0] = cp;
-      else if (sa && sa->len) {		/* count args */
+      else if (qmqpservers.len > 0) {	/* count args */
 	j = 2;				/* empty sa - qmqpc c control args */
-	for (i = 0; i < sa->len; i++) {
-	  if (sa->s[i] == '\0') j++;
+	for (i = 0; i < qmqpservers.len; i++) {
+	  if (qmqpservers.s[i] == '\0') j++;
 	}				/* make space */
 	if (!(cpp = (const char **) alloc(j * sizeof (char *)))) _exit(51);
 	cpp[0] = PROG_QMAIL_QMQPC;
-	cp = sa->s;
+	cp = qmqpservers.s;
 	j = 1;
-	for (i = 0; i < sa->len; i++) {
-	  if (sa->s[i]) continue;
+	for (i = 0; i < qmqpservers.len; i++) {
+	  if (qmqpservers.s[i]) continue;
 	  cpp[j++] = cp;
-	  cp = sa->s + i + 1;
+	  cp = qmqpservers.s + i + 1;
 	}
 	cpp[j] = (char *) 0;
 	execv(*cpp,(char**)cpp);

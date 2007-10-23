@@ -88,6 +88,13 @@ needs to exist or the
 .B \-R
 option needs to be specified for all invocations of
 .BR ezmlm-clean .
+
+If
+.I dir\fB/qmqpservers
+exists,
+.B ezmlm-clean will use
+.B qmail-qmqp(1)
+to send messages.
 .SH OPTIONS
 .TP
 .B \-m

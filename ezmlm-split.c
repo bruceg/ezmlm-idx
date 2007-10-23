@@ -227,7 +227,7 @@ void main(int argc,char **argv)
       dtline = env_get("DTLINE");
       if (!dtline) strerr_die2x(100,FATAL,MSG(ERR_NODTLINE));
 
-      if (qmail_open(&qq,(stralloc *) 0) == -1)
+      if (qmail_open(&qq) == -1)
         strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
       qmail_puts(&qq,dtline);				/* delivered-to */
       if (qmail_copy(&qq,subfdin,0) != 0)

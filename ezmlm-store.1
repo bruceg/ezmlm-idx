@@ -140,6 +140,13 @@ is set, and is either empty or
 .BR #@[] ,
 .B ezmlm-store
 rejects the message.
+
+If
+.I dir\fB/qmqpservers
+exists,
+.B ezmlm-store will use
+.B qmail-qmqp(1)
+to send messages.
 .SH OPTIONS
 .TP
 .B \-b

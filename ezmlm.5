@@ -959,14 +959,9 @@ This affects the behavior of
 
 If
 .I dir\fB/qmqpservers
-exists,
-.B ezmlm-send
-and
-.B ezmlm-get
-will use
+exists, all ezmlm programs will use
 .B qmail-qmqpc(1)
-to send posts and digests. Other mail will use the normal qmail mechanism.
-If
+to send messages.  If
 .B qmail-qmqpc
 is modified correctly, server IP addresses listed one per line in
 .I dir\fB/qmqpsevers

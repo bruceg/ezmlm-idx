@@ -125,6 +125,13 @@ is set, and is either empty or
 .BR #@[] ,
 .B ezmlm-moderate
 rejects the message.
+
+If
+.I dir\fB/qmqpservers
+exists,
+.B ezmlm-moderate will use
+.B qmail-qmqp(1)
+to send messages.
 .SH OPTIONS
 .TP
 .B \-cCrR

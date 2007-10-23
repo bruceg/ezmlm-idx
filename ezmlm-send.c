@@ -90,7 +90,6 @@ stralloc content = {0};
 stralloc boundary = {0};
 stralloc dcprefix = {0};
 stralloc dummy = {0};
-stralloc qmqpservers = {0};
 
 void die_indexn(void)
 {
@@ -397,11 +396,6 @@ void main(int argc,char **argv)
 
   flagsublist = getconf_line(&sublist,"sublist",0);
 
-  if (!stralloc_copys(&line,QMQPSERVERS)) die_nomem();
-  if (!stralloc_cats(&line,"/0")) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
-  (void) getconf(&qmqpservers,line.s,0);
-
   if (getconf(&headerremove,"headerkeep",0))
     headerremoveflag = 1;
   else
@@ -467,7 +461,7 @@ void main(int argc,char **argv)
     if (substdio_put(&ssarchive,line.s,line.len) == -1) die_archive();
   }
 
-    if (qmail_open(&qq,&qmqpservers) == -1)		/* open qmqp */
+    if (qmail_open(&qq) == -1)
       strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
   if (!flagsublist) {

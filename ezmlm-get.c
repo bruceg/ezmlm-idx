@@ -76,7 +76,6 @@ static struct option options[] = {
 };
 
 stralloc listname = {0};
-stralloc qmqpservers = {0};
 stralloc fn = {0};
 stralloc moddir = {0};
 stralloc mydtline = {0};
@@ -772,7 +771,6 @@ void main(int argc,char **argv)
   int fd;
   unsigned int i,j;
   int flagremote;
-  int flagqmqp = 0;
   int match;
   int goodexit = 0;			/* exit code for normal exit */
 					/* in manager this will be set to 0 */
@@ -936,11 +934,7 @@ void main(int argc,char **argv)
       else if (chunk > 52)
 	chunk = 52L;
     } else {
-      chunk = 0L;				/* maybe direct qmqp? */
-      if (!stralloc_copys(&line,QMQPSERVERS)) die_nomem();
-      if (!stralloc_cats(&line,"/0")) die_nomem();
-      if (!stralloc_0(&line)) die_nomem();
-      flagqmqp = getconf(&qmqpservers,line.s,0);
+      chunk = 0L;
     }
   } else
     workdir = ".";
@@ -949,11 +943,8 @@ void main(int argc,char **argv)
   if (!flagarchived)
     strerr_die2x(100,FATAL,MSG(ERR_NOT_ARCHIVED));
 
-  if (flagqmqp) {
-    if (qmail_open(&qq,&qmqpservers) == -1)		/* open qmail */
-      strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
-  } else if (qmail_open(&qq,(stralloc *) 0) == -1)	/* open qmail */
-      strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
+  if (qmail_open(&qq) == -1)
+    strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
   set_cpnum("");	/* default for <#n#> replacement */
 

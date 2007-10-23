@@ -464,7 +464,7 @@ void main(int argc,char **argv)
   if (cmdidx < 0 && !cfname) {
     cmdidx = EZREQ_HELP;
   }
-  if (qmail_open(&qq,(stralloc *) 0) == -1)
+  if (qmail_open(&qq) == -1)
     strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
   if (cmdidx >= 0) {

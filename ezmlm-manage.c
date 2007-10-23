@@ -747,7 +747,7 @@ int main(int argc,char **argv)
   if (!stralloc_cat(&from,&outhost)) die_nomem();
   if (!stralloc_0(&from)) die_nomem();
 
-  if (qmail_open(&qq,(stralloc *) 0) == -1)
+  if (qmail_open(&qq) == -1)
     strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
   msg_headers();
 

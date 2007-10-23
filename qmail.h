@@ -14,7 +14,7 @@ struct qmail {
   char buf[1024];
 } ;
 
-extern int qmail_open(struct qmail *, const stralloc *);
+extern int qmail_open(struct qmail *);
 extern void qmail_put(struct qmail *, const char *, int);
 extern void qmail_puts(struct qmail *, const char *);
 extern void qmail_from(struct qmail *, const char *);

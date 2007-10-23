@@ -317,7 +317,7 @@ void main(int argc,char **argv)
 
   if (flagrejectcommands && flaghavecommand) {
     if (flagforward) {			/* flagforward => forward */
-      if (qmail_open(&qq,(stralloc *) 0) == -1)	/* open queue */
+      if (qmail_open(&qq) == -1)	/* open queue */
 	strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
       qmail_put(&qq,mydtline.s,mydtline.len);
       if (seek_begin(0) == -1)

@@ -70,6 +70,13 @@ addresses matching the
 are forwarded to the respective non-SQL sublist, and non-matching addresses
 are handed by the SQL sublist.
 
+
+If
+.I dir\fB/qmqpservers
+exists,
+.B ezmlm-split will use
+.B qmail-qmqp(1)
+to send messages.
 .SH OPTIONS
 .TP
 .B \-d

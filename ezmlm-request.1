@@ -64,6 +64,13 @@ to determine how many lines of the original message to copy into the
 outgoing message.  If this file is empty or not present, a value of
 .I 0
 is presumed, meaning that only the header is copied.
+
+If
+.I dir\fB/qmqpservers
+exists,
+.B ezmlm-request will use
+.B qmail-qmqp(1)
+to send messages.
 .SH OPTIONS
 .TP
 .B \-f\fI config

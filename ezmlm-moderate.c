@@ -248,7 +248,7 @@ void main(int argc,char **argv)
 
   if (str_start(action,ACTION_REJECT)) {
 
-    if (qmail_open(&qq, (stralloc *) 0) == -1)
+    if (qmail_open(&qq) == -1)
       strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
 

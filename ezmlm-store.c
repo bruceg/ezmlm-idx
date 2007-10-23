@@ -246,7 +246,7 @@ void main(int argc,char **argv)
     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnmsg.s));
   substdio_fdbuf(&ssmsg,write,fdmsg,msgbuf,sizeof(msgbuf));
 
-  if (qmail_open(&qq, (stralloc *) 0) == -1)		/* Open mailer */
+  if (qmail_open(&qq) == -1)		/* Open mailer */
     strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
   hdr_add2s("Mailing-List: ",MSG(TXT_MAILING_LIST));

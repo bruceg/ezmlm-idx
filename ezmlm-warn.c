@@ -128,7 +128,7 @@ static void doit(int flagdig, int flagw)
   if (!stralloc_catb(&fnhash,hash+1,COOKIE-1)) die_nomem();
   if (!stralloc_0(&fnhash)) die_nomem();
 
-  if (qmail_open(&qq, (stralloc *) 0) == -1)
+  if (qmail_open(&qq) == -1)
     strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
   hdr_add2s("Mailing-List: ",MSG(TXT_MAILING_LIST));

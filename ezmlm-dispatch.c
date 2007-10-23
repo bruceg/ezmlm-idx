@@ -68,7 +68,7 @@ static void forward(const char *rcpt)
   const char *dtline;
   const char *err;
   int r;
-  if (qmail_open(&qq,0) == -1)
+  if (qmail_open(&qq) == -1)
     strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
   if ((dtline = env_get("DTLINE")) != 0)
     qmail_puts(&qq,dtline);

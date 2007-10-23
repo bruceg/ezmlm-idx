@@ -23,6 +23,8 @@ ezmlm-idx-7.1.0, ????-??-??
 
 - Added support for wildcard addresses in all address databases.
 
+- Added support for qmqpservers to all ezmlm-idx programs.
+
 - Modified the (un)subscribe procedure to not require confirmation
   before telling the sender they were already on (or off) the list.
 
