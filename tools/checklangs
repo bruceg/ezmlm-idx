@@ -10,6 +10,9 @@ getrev() {
 cd `dirname $0`/../lang
 noupdates=true
 for en in en_US/text/*; do
+  if [ $en = en_US/text/messages ]; then
+    continue
+  fi
   base=${en#en_US/text/}
   baserev=`getrev $en`
   missing=""
