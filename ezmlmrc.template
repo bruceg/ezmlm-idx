@@ -233,6 +233,7 @@
 |<#B#>/ezmlm-warn -d '<#D#>' || exit 0
 # manage message confirmations
 </confirmer#y/>
+<#B#>/ezmlm-weed
 </#my/>
 |<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-store -Y '<#D#>'"
 </#My/>

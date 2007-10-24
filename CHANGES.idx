@@ -49,6 +49,8 @@ Smaller changes:
   lines in the ezmlmrc files.  ezmlm-issubn is now deprecated for use in
   .qmail files, but still exists for backwards compatibility.
 
+- Added ezmlm-weed to the confirmer control files.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 messages changes also replaced the confirmpost subject line hack in
