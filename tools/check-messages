@@ -9,31 +9,46 @@ try:
 except:
 	print 'Usage: %s LANG' % sys.argv[0]
 
+SPLIT = '|'
+def load_lang(lang):
+	msgs = [
+		line[:-1].split(SPLIT, 2)
+		for line in file('lang/%s//messages' % lang).readlines()
+		if line[0] <> '#' and line[0] <> '\n' and SPLIT in line
+		]
+	return dict([ (msg[0],(msg[1],msg[2])) for msg in msgs ])
+
 re_msg = re.compile('MSG\d?\(([A-Z][A-Z_]*)')
 src_msgs = { }
 for src in glob.glob('*.c'):
 	for msg in re_msg.findall(file(src).read()):
 		src_msgs[msg] = src
 
-SPLIT = ':'
-lang_msgs = dict([
-	line[:-1].split(SPLIT, 1)
-	for line in file('lang/%s/text/messages' % lang).readlines()
-	if line[0] <> '#' and line[0] <> '\n' and SPLIT in line
-	])
+lang_msgs = load_lang(lang)
+master_msgs = load_lang('en_US')
 
 missing = 0
 extra = 0
+outofdate = 0
 
-for msg,src in src_msgs.items():
+for msg,src in sorted(src_msgs.items()):
 	if not lang_msgs.has_key(msg):
 		print 'Missing:', msg, 'in file', src
 		missing += 1
 
-for msg in lang_msgs.keys():
+for msg in sorted(lang_msgs.keys()):
 	if not src_msgs.has_key(msg):
 		print 'Extra:', msg
 		extra += 1
 
-if missing > 0 or extra > 0:
-	print 'Summary: %d missing, %d extra messages' % (missing, extra)
+for name,msg in sorted(master_msgs.items()):
+	try:
+		if msg[0] <> lang_msgs[name][0]:
+			print 'Out of date:', name
+			outofdate += 1
+	except KeyError:
+		pass
+
+if missing > 0 or extra > 0 or outofdate > 0:
+	print 'Summary: %d missing, %d extra, %d out of date messages' % (
+		missing, extra, outofdate)
