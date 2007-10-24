@@ -3,7 +3,25 @@ add ezmlm-receipt to build system (needs to be fixed to compile)
 add support for simultaneous multiple languages
 Eliminate lang/*/ezmlmrc in favor of a single master ezmlmrc file?
 
-Rewrite man pages to include a separate "configuration files" section.
+Fix up ezmlm(5):
+-add special section for text/messages.
+-fix Mailing-List: header documentation.
+-improve discussions about subscribers directory and list subdirs.
+-add control files:
+	archnum
+	chunk
+	digestcode
+	digheaders
+	ezmlmrc
+-programs:
+	ezmlm-archive
+	ezmlm-cgi
+	ezmlm-dispatch
+	ezmlm-import
+	ezmlm-limit
+	ezmlm-rmtab
+	ezmlm-split
+-new substitutions (in TEXT)
 
 Move confirm-related directories in "mod" to new "confirm" directory?
 
@@ -12,11 +30,6 @@ Refactor all header generation into a single module:
 -Code functions to find/add/replace/remove headers.
 -Parse a file to do above as well.
 -Dump the block to qmail and free.
-
-Missing text files:
-unsub-confirm nl
-post-confirm ch_GB cs da de es hu id ja nl pl pt pt_BR ru sv
-sub-confirm#s de en_US es fr hu id it ja nl sv
 
 Implement pre/post (un)subscribe hooks (and possibly others):
 -Set up "hooks" directory
