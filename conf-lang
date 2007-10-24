@@ -1,4 +1,7 @@
 en_US
 
 The default language to use.
-Valid choices are listed in the "text" directory.
+Valid choices are listed in the "lang" directory.
+Currently, only en_US contains a complete set of texts and messages.
+Setting this file to another language will result in operational
+problems with missing texts and broken subject lines.
