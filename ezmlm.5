@@ -549,6 +549,7 @@ does not install any of these text files into
 .IR dir .
 Instead, it relies on the use of the alternate and default paths to look
 up text messages.
+.SS "TEXT FILES"
 .TP 15
 .B top
 Introducing
@@ -690,7 +691,7 @@ command.
 Sent to the remote administrator after an edited
 .I dir\fB/text
 file has been successfully saved.
-.SH SUBSTITUTIONS
+.SS SUBSTITUTIONS
 Several tags in the text files are replaced by ezmlm programs.
 Tags may appear anywhere on a line and multiple tags may appear on the
 same line.
@@ -769,6 +770,29 @@ are replaced with the value of
 and
 .B <#R#>
 respectively.
+.SS "TEXT/MESSAGES"
+One of the
+.I text
+files,
+.BR text/messages ,
+has special handling.  It is used when creating short messages within
+the
+.B ezmlm
+programs, such as error messages, subject lines, and several others.
+Each line of this file contains a message name and the contents of that
+message, separated by a colon.  Individual messages are loaded from all
+three locations described above instead of just the first file that is
+found, allowing for partial sets of customizations.  Additionally, the
+programs have an internal table of messages as a final fallback.
+
+In addition to the substitions listed above, the tags
+.B <#1#>
+through
+.B <#9#>
+are used by certain messages for file names and other parameters
+specific to the message.  The default messages in
+.B /etc/ezmlm/default/text/messages
+should have a complete set of messages with all parameters used.
 .SH "OUTGOING MESSAGE EDITING"
 .I dir\fB/headerkeep
 is a list of good header field names, one per line, and

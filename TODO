@@ -4,7 +4,6 @@ add support for simultaneous multiple languages
 Eliminate lang/*/ezmlmrc in favor of a single master ezmlmrc file?
 
 Fix up ezmlm(5):
--add special section for text/messages.
 -fix Mailing-List: header documentation.
 -improve discussions about subscribers directory and list subdirs.
 -add control files:
