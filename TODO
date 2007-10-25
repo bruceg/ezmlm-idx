@@ -12,7 +12,6 @@ Fix up ezmlm(5):
 	chunk
 	digestcode
 	digheaders
-	ezmlmrc
 -programs:
 	ezmlm-archive
 	ezmlm-cgi

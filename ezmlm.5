@@ -992,11 +992,19 @@ is a timestamp used temporarily by
 to coordinate digesting.
 
 .I dir\fB/flags
-is a file containing the option flags that were passed to
+contains the option flags that were passed to
 .B ezmlm-make
 when the list was created or last edited.  It is used by programs that
 generate email messages to select which sections in text messages should
-be output.
+be output.  This is a new file introduced in version 5.  Prior to this,
+the flags were stored in the first line of the
+.I dir\fB/config
+file, along with other data.
+
+.I dir\fB/ezmlmrc
+contains the path to the directory in which the original
+.B ezmlmrc
+file was found.  It is used to create alternate paths for text files.
 .SH "SEE ALSO"
 ezmlm-check(1),
 ezmlm-checksub(1),
