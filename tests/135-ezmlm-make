@@ -41,6 +41,7 @@ ${EZBIN}/ezmlm-make -+ln -C${EZBIN}/lang/en_US "$DIR" || \
     echo 'local: <#l#>'
     echo 'host: <#h#>'
     echo 'Target: <#A#>'
+    echo 'TargetLocal: <#a#>'
     echo 'Confirm: <#R#>'
     echo 'Cookie: <#c#>'
     echo 'MsgNum: <#n#>'

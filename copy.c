@@ -3,10 +3,11 @@
 /* !R at the beginning of a line for the confirm reply address,    */
 /* The following substitutions are also made. If not set, ?????    */
 /* will be printed:                                                */
-/*   <#A#> target email address                                    */
+/*   <#A#> target email address (<#a#>@<#h#>)                      */
 /*   <#H#> outhost                                                 */
 /*   <#L#> outlocal (unchanged)                                    */
 /*   <#R#> confirm address (<#r#>@<#h#>)                           */
+/*   <#a#> local part of the target address                        */
 /*   <#c#> the confirm cookie                                      */
 /*   <#d#> base directory name                                     */
 /*   <#h#> outhost                                                 */
@@ -49,6 +50,7 @@ static stralloc qline = {0};
 static substdio sstext;
 static char textbuf[256];
 static const char *target = "?????";
+static unsigned int targetlocal;
 static const char *verptarget = "?????";
 static const char *confirm = "?????";
 static unsigned int confirmlocal;
@@ -58,6 +60,7 @@ static const char *szmsgnum = "?????";
 void set_cptarget(const char *tg)
 {
   target = tg;
+  targetlocal = str_chr(tg, '@');
 }
 
 void set_cpverptarget(const char *tg)
@@ -132,6 +135,9 @@ void copy_xlate(stralloc *out,
 	break;
       case 'R':
 	if (!stralloc_cats(out,confirm)) die_nomem();
+	break;
+      case 'a':
+	if (!stralloc_catb(out,target,targetlocal)) die_nomem();
 	break;
       case 'c':
 	if (!stralloc_catb(out,confirm+confirmprefix,

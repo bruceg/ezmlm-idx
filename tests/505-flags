@@ -9,6 +9,7 @@
   grepbody local: "xyzzy-__tstlist-digest"
   grepbody host: "example.com"
   grepbody Target: "test@example.org"
+  grepbody TargetLocal: "test"
   grepbody target: "test=example.org"
   grepbody Confirm: "${LOC}-digest-sc.*.*-test=example.org@example.com"
   grepbody Cookie: "sc.*.*-test=example.org"

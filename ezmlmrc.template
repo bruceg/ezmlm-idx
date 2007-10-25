@@ -61,6 +61,7 @@
 # <#H#> outhost
 # <#L#> outlocal (unchanged)
 # <#R#> confirm address (equivalent to <#r#>@<#h#>)
+# <#a#> local part of the target address
 # <#c#> the confirm cookie
 # <#d#> dir
 # <#h#> outhost
