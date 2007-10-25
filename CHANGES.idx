@@ -56,6 +56,9 @@ Smaller changes:
 - ezmlm-get can its digest code from the dir/digestcode file if it is
   not specified on the command line.
 
+- ezmlm-tstdig falls back to dir/digcount, dir/digsize, and dir/digtime
+  if -m, -k, or -t are not set.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 messages changes also replaced the confirmpost subject line hack in

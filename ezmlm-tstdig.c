@@ -83,6 +83,12 @@ void main(int argc,char **argv)
     die_usage();	/* avoid common error of putting options after dir */
   if (!getconf_ulong2(&num,&cumsize,"num",0))
     _exit(99);
+  if (!deltasize)
+    getconf_ulong(&deltasize,"digsize",0);
+  if (!deltawhen)
+    getconf_ulong(&deltawhen,"digtime",0);
+  if (!deltanum)
+    getconf_ulong(&deltanum,"digcount",0);
 
   if (getconf_line(&line,"dignum",0)) {
     if(!stralloc_0(&line)) die_nomem();

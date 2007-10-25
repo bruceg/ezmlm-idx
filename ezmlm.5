@@ -1021,9 +1021,18 @@ files in
 may contain a list of headers to include in the "m" format digests.
 Headers should be listed one per line not including the colon.
 
+.IR dir\fB/digcount ,
+.IR dir\fB/digsize ,
+and
+.I dir\fB/digtime
+control when
+.B ezmlm-tstdig
+will allow
+.B ezmlm-get
+to create a digest message.
 .I dir\fB/tstdig
 is a timestamp used temporarily by
-.B ezmlm-tstdig(1)
+.B ezmlm-tstdig
 to coordinate digesting.
 
 .I dir\fB/archnum

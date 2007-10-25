@@ -7,7 +7,17 @@
   ${EZBIN}/ezmlm-tstdig -k2 -m10 -t1 "$DIR" || \
 	fatal "-t1 failed"
   ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" && \
-	fatal "-t0 failed"
+	fatal "-t0 succeeded"
+
+  ${ECHO} 2 >"$DIR"/digsize
+  ${ECHO} 10 >"$DIR"/digcount
+  ${ECHO} 1 >"$DIR"/digtime
+  ${EZBIN}/ezmlm-tstdig "$DIR" || \
+	fatal "digtime=1 failed"
+  ${ECHO} 0 >"$DIR"/digtime
+  ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" && \
+	fatal "digtime=0 succeeded"
+  ${RM} "$DIR"/digsize "$DIR"/digcount "$DIR"/digtime
 
   LOCAL="$LOC-xx"
   DEFAULT='xx'
@@ -30,6 +40,17 @@
 	fatal "-m failed"
   ${EZBIN}/ezmlm-tstdig -k1 -m10 -t0 "$DIR" || \
 	fatal "-k failed"
+
+  ${ECHO} 2 >"$DIR"/digsize
+  ${ECHO} 4 >"$DIR"/digcount
+  ${ECHO} 1 >"$DIR"/digtime
+  ${EZBIN}/ezmlm-tstdig "$DIR" || \
+	fatal "digcount=4 failed"
+  ${ECHO} 10 >"$DIR"/digcount
+  ${EZBIN}/ezmlm-tstdig "$DIR" || \
+	fatal "digsize=2 failed"
+  ${RM} "$DIR"/digsize "$DIR"/digcount "$DIR"/digtime
+
   LOCAL="$LOC"
   ${EZBIN}/ezmlm-tstdig -k1 -m10 -t0 "$DIR" > "$ERR" 2>&1 || \
 	{

@@ -32,7 +32,7 @@ is to place it in a script so that
 .B ezmlm-get(1)
 is executed if
 .B ezmlm-tstdig
-exists 0, but skipped otherwise.
+exits 0, but skipped otherwise.
 
 .B ezmlm-tstdig
 uses LOCAL to adapt its behavior so that it
@@ -65,17 +65,25 @@ arrive while digesting is in progress.
 .B \-k
 Success if more than
 .I kbytes
-of message body has accumulated since the latest digest.
+of message body has accumulated since the latest digest.  Defaults to
+the value in
+.I dir\fB/digsize
+if it exists.
 .TP
 .B \-m
 Success if more than
 .I msg
-messages have accumulated since the latest digest.
+messages have accumulated since the latest digest.  Defaults to the
+value in
+.I dir\fB/digcount
+if it exists.
 .TP
 .B \-t
 Success if more than
 .I time
-hours have passed since the latest digest.
+hours have passed since the latest digest.  Defaults to the value in
+.I dir\fB/digtime
+if it exists.
 .SH USAGE
 This is an example script for ezmlm-tstdig usage.
 
@@ -97,7 +105,6 @@ ${EZGET} -t "'$2'" "'$1'" < /dev/null
 # improve by testing exit status
 .fi
 .RE
-.PP
 .SH BUGS
 Obviously,
 .B ezmlm-tstdig
