@@ -48,6 +48,24 @@ msgexists || \
 checkenv dig1 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 qqclean
+${RM} "$DIR"/dignum
+${ECHO} code >"$DIR"/digestcode
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1
+if [ "$?" != "99" ]; then
+	fatal "failed to exit 99 after digest in manager position with file"
+fi
+if [ ! -r "${DIR}/dignum" ]; then
+	fatal "failed to generate dignum"
+fi
+if [ ! -r "${DIR}/digissue" ]; then
+	fatal "failed to generate digissue"
+fi
+msgexists || \
+	fatal "dig1 from manager wasn't delivered"
+checkenv dig1 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
+${ECHO} >"$DIR"/digestcode
+
+qqclean
 ${EZBIN}/ezmlm-get "$DIR" 'code' < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
 	fatal "failed to exit 99 when nothing to digest in manager position"
@@ -66,6 +84,20 @@ ${EZBIN}/ezmlm-get "$DIR" 'cod' < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject -dig with bad digest code 'cod'"
 msgexists && \
 	fatal "delivered -dig with bad digest code 'code'"
+
+qqclean
+${ECHO} coden >"$DIR"/digestcode
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 && \
+	fatal "failed to reject -dig with bad digest code file 'coden'"
+msgexists && \
+	fatal "delivered -dig with bad digest code file 'coden'"
+
+qqclean
+${ECHO} cod >"$DIR"/digestcode
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 && \
+	fatal "failed to reject -dig with bad digest code file 'cod'"
+msgexists && \
+	fatal "delivered -dig with bad digest code file 'cod'"
 
 # now in the editor position:
 qqclean
@@ -87,7 +119,7 @@ checkenv dig2 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 	fatal "failed to generate dignum after digest in editor"
     fi
 
-    ${GREP} "2:" "${DIR}/digissue" >/dev/null 2>&1 || \
+    ${GREP} "^3:" "${DIR}/digissue" >/dev/null 2>&1 || \
 	fatal "failed to update digissue after digest in editor"
     ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "failed to exit 0 when nothing to digest in editor"
@@ -107,7 +139,7 @@ msgexists || \
 checkenv dig3 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 qqclean
-${GREP} "3:" "${DIR}/digissue" >/dev/null 2>&1 || \
+${GREP} "^4:" "${DIR}/digissue" >/dev/null 2>&1 || \
 	fatal "failed to update digissue after cmd line digest"
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "failed to exit 0 when nothing to digest from cmd line"

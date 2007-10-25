@@ -53,6 +53,9 @@ Smaller changes:
 
 - Added <#a#> substitution for the local part of the accept address.
 
+- ezmlm-get can its digest code from the dir/digestcode file if it is
+  not specified on the command line.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 messages changes also replaced the confirmpost subject line hack in

@@ -62,6 +62,7 @@ stralloc moddir = {0};
 stralloc mydtline = {0};
 stralloc digheaders = {0};
 stralloc seed = {0};
+stralloc digestcodefile = {0};
 struct constmap digheadersmap;
 
 char schar[] = "00_";
@@ -800,8 +801,15 @@ void main(int argc,char **argv)
   initsub(0);
   getconf_ulong(&copylines,"copylines",0);
 
-  digestcode = argv[optind];	/* code to activate digest (-digest-code)*/
-				/* ignore any extra args */
+  /* code to activate digest (-digest-code)*/
+  if ((digestcode = argv[optind]) == 0) {
+    if (getconf_line(&digestcodefile,"digestcode",0)
+	&& digestcodefile.len > 0) {
+      if (!stralloc_0(&digestcodefile)) die_nomem();
+      digestcode = digestcodefile.s;
+    }
+  }
+  /* ignore any extra args */
 
   if (!stralloc_copy(&subject,&outlocal)) die_nomem();	/* for subjects */
   if (!stralloc_copy(&listname,&outlocal)) die_nomem();	/* for content disp */

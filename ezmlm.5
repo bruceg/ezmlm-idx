@@ -183,11 +183,11 @@ and
 requests. If
 .B ezmlm-make
 is invoked with a 
-.I digcode
+.I digestcode
 command line argument, digest creation
-is enabled by putting this argument on the
-.B ezmlm-get
-command line.
+is enabled by putting this argument into the
+.I dir\fB/digestcode
+file.
 .SH BOUNCES
 .I dir\fB/bounce
 is a directory containing bounce messages.
@@ -286,16 +286,16 @@ To enable automatic digests for a mailing list, use the
 .B ezmlm-make \-d
 switch. To also enable the generation of digests at specific times dictated
 by mailed trigger messages, a
-.I digcode
-should be specified on the
-.B ezmlm-get
-command line.
+.I digestcode
+should be specified in the
+.I dir\fB/digestcode
+file.
 This can be done by specifying
-.I digcode
+.I digestcode
 as a fifth argument to
 .B ezmlm-make
 when setting up the list.
-.I digcode
+.I digestcode
 must be alphanumeric and is case-insensitive.
 
 To generate trigger messages, use
@@ -332,7 +332,7 @@ generates a digest of the list
 at 1600 every day:
 
 .EX
-  00 16 * * * /var/qmail/bin/qmail-inject list-dig.digcode
+  00 16 * * * /var/qmail/bin/qmail-inject list-dig.digestcode
 .EE
 
 Alternatively,
@@ -340,7 +340,7 @@ Alternatively,
 can be used:
 
 .EX
-  % ezmlm-cron -t 16:00 list@host digcode
+  % ezmlm-cron -t 16:00 list@host digestcode
 .EE
 
 .B ezmlm-get

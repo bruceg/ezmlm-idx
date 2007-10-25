@@ -26,13 +26,18 @@ The contents of
 .I dir\fB/headeradd
 are added to the header of outgoing messages.
 
+If
+.I digestcode
+is not specified on the command line,
+.B ezmlm-get
+will try to read it from the file
+.I dir\fB/digestcode .
+
 .B ezmlm-get
 is normally invoked from a
 .B .qmail(7)
-file.
-
-It reads a mail message from its standard input,
-and a mail envelope from the
+file.  It reads a mail message from its standard input, and a mail
+envelope from the
 .BR SENDER ,
 .BR LOCAL ,
 and
@@ -119,7 +124,9 @@ if this file exists.
 .B Note:
 Anyone who can read your
 .I dir\fB/manager
-file, digest-requesting scripts, or mail log knows the
+and
+.I dir\fB/digestcode
+files, digest-requesting scripts, or mail log knows the
 .I digestcode
 and can trigger digests.
 
