@@ -5,11 +5,7 @@ Eliminate lang/*/ezmlmrc in favor of a single master ezmlmrc file?
 
 Fix up ezmlm(5):
 -improve discussions about subscribers directory and list subdirs.
--add control files:
-	archnum
-	chunk
-	digestcode
-	digheaders
+-add "chunk" control file
 -programs:
 	ezmlm-cgi
 	ezmlm-dispatch

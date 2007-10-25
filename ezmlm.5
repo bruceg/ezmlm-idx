@@ -1017,6 +1017,24 @@ have functions for the digest list that mirror that of the corresponding
 files in
 .IR dir .
 
+.I dir\fB/digheaders
+may contain a list of headers to include in the "m" format digests.
+Headers should be listed one per line not including the colon.
+
+.I dir\fB/tstdig
+is a timestamp used temporarily by
+.B ezmlm-tstdig(1)
+to coordinate digesting.
+
+.I dir\fB/archnum
+contains the number of the last message processed by
+.BR ezmlm-archive .
+Normally,
+.B ezmlm-archive
+will process entries for messages from one above the contents of this
+file up to an including the message number in
+.IR dir\fB/num .
+
 .I dir\fB/key
 is a binary file used to create confirmation codes.  Anyone who can
 guess the contents of
@@ -1028,11 +1046,6 @@ does not put much effort into making
 difficult to guess;
 for better security, you should add some more secure random data to
 .IR dir\fB/key .
-
-.I dir\fB/tstdig
-is a timestamp used temporarily by
-.B ezmlm-tstdig(1)
-to coordinate digesting.
 
 .I dir\fB/flags
 contains the option flags that were passed to
