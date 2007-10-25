@@ -13,7 +13,6 @@ Fix up ezmlm(5):
 	digestcode
 	digheaders
 -programs:
-	ezmlm-archive
 	ezmlm-cgi
 	ezmlm-dispatch
 	ezmlm-import

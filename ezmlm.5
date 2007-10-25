@@ -38,7 +38,9 @@ weeds out useless messages;
 warns users for which messages bounce and eventually removes them from
 the subscriber list.
 .B ezmlm-idx
-can create a subject index from an existing list archive.
+can create a subject index from an existing list archive, and
+.B ezmlm-archive
+creates and updates thread and author indices for the archive.
 .B ezmlm-get
 manages message, index, and thread retrieval from the archive, as well
 as the generation of message digests;
@@ -1006,6 +1008,7 @@ contains the path to the directory in which the original
 .B ezmlmrc
 file was found.  It is used to create alternate paths for text files.
 .SH "SEE ALSO"
+ezmlm-archive(1),
 ezmlm-check(1),
 ezmlm-checksub(1),
 ezmlm-clean(1),
