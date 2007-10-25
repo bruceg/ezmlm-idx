@@ -318,9 +318,12 @@ will set up the
 .I local\fB\-digest@host
 digest list to disseminate digest of the list messages. By default, this
 is done when 30 messages, 48 hours, or 64 kbytes of message body text have
-accumulated since the last digest. Use the
-.B \-4
-switch to override these defaults. See
+accumulated since the last digest. Edit the
+.IR dir\fB/digcount ,
+.IR dir\fB/digsize ,
+or
+.I dir\fB/digtime
+files to override these defaults.  See
 .B ezmlm-tstdig(1)
 and
 .B ezmlm-get(1)
@@ -728,20 +731,6 @@ Make the list a sublist of list
 sets up the list to replace the ``From:'' header of the message with
 ``From:
 .IR fromarg ''.
-.TP 5
-.B \-4 \fItstdigopts
-.B ezmlm-make
-replaces the
-.B ezmlm-tstdig(1)
-switches used for digest generation with the text in
-.IR tstdigopts .
-This is part of a command line, NOT a specific switch. It should normally
-be placed within single quotes. This switch is mainly for programmatic
-use. For changing list defaults, it is usually easier to create a custom
-.I ~/.ezmlmrc
-file and edit it. The default is '-t24 -m30 -k64'. (See
-.B ezmlm-tstdig(1)
-for more info.)
 .TP
 .B \-5 \fIowner@host
 .B ezmlm-make
