@@ -11,13 +11,13 @@ einige Mailprogramme die Eigenschaft, sie kommentarlos zu kürzen.
 Ich habe eine neue Bestätigungsnummer generiert. Um zuzustimmen, daß
 Ihre Adresse
 
-!A
+<#A#>
 
 von der Mailingliste <#l#>@<#h#>
 gestrichen werden soll, senden Sie bitte eine leere Mail an
 folgende Adresse:
 
-!R
+<#R#>
 <=x=>
 
 oder klicken Sie hier, wenn Ihr Programm Hyperlinks unterstützt:

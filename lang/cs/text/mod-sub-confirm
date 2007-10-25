@@ -1,14 +1,14 @@
 # Revision: 1
 ®ádám zdvoøile oprávnìní pøidat adresu
 
-!A
+<#A#>
 
 do seznamu ètenáøù listu <#l#>. Po¾adavek vze¹el buïto od vás,
 nebo ji¾ byl ovìøen u potenciálního ètenáøe.
 
 Souhlasíte-li, po¹lete prázdnı mail na adresu
 
-!R
+<#R#>
 
 Toho obvykle dosáhnete pomocí tlaèítka "Odpovìï/Reply". Mù¾ete zkontrolovat
 adresu, zaèíná-li øetìzcem "<#L#>-sc". Pokud toto nefunguje, staèí

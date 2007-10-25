@@ -1,7 +1,7 @@
 # Revision: 1
 Jeg beder hermed om din tilladelse til at tilføje
 
-!A
+<#A#>
 
 som abonnent på <#l#> listen. Denne forespørgsel kom enten fra
 dig, eller den er allerede blevet godkendt af den potentielle
@@ -9,7 +9,7 @@ abonnent.
 
 Bekræft ved at sende et tomt svar til denne adresse:
 
-!R
+<#R#>
 
 Dit post program burde have en svarfunktion som automatisk bruger
 den adresse. (Ellers må man klippe/klistre).

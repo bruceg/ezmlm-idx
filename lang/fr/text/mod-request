@@ -5,7 +5,7 @@ le message ci-joint pour la liste <#L#>@<#h#>.
 Pour accepter le message et l'envoyer immediatement a tous les
 abonnes de la liste, envoyez un message a: 
 
-!A
+<#A#>
 
 En regle generale, il suffit de repondre a ce message (Reply) .
 Verifiez simplement que l'adresse debute bien par
@@ -21,7 +21,7 @@ Si votre brouteur le permet, vous pouvez aussi cliquer ici :
 Pour rejeter la contribution et le retourner a l'expediteur,
 veuillez envoyer un message a :
 
-!R
+<#R#>
 
 En pratique, il est souvent plus simple d'effectuer une reponse
 a tous et de retirer tous les adresses, en dehors de celle qui

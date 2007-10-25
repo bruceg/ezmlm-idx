@@ -12,12 +12,12 @@ respuesta, que puede ser muy larga.
 He configurado un nuevo número de confirmación. Para confirmar
 que le gustaría que
 
-!A
+<#A#>
 
 fuese dado de baja en la lista de correo <#l#>, por favor, mande
 un mensaje en blanco a esta dirección:
 
-!R
+<#R#>
 <=x=>
 
 o haga clic aquí:

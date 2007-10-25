@@ -1,12 +1,12 @@
 # Revision: 1
 Untuk memastikan bahwa anda ingin
 
-!A
+<#A#>
 
 dihapus dari milis <#l#>,
 kirim mail kosong ke alamat:
 
-!R
+<#R#>
 
 Biasanya, yang perlu anda lakukan adalah dengan menekan tombol "reply".
 Jika ini tidak berhasil, kopi alamatnya dan letakkan kembali ke dalam

@@ -7,7 +7,7 @@ weitergeleitet werden soll.
 Um die Nachricht zuzulassen und sofort an alle Listenabonnenten
 weiterzuleiten, senden Sie bitte eine Mail an:
 
-!A
+<#A#>
 
 Normalerweise sollte das über die "Beantworten"-Funktion Ihres
 Mailprogramms funktionieren. Bitte prüfen Sie aber noch einmal,
@@ -29,7 +29,7 @@ nicht durch Zeilenumbruch verstümmelt wurde!
 Um die Nachricht abzuweisen und an den Absender zurückzuschicken,
 senden Sie bitte eine Mail an:
 
-!R
+<#R#>
 
 Falls Ihr Programm das unterstützt, können Sie auch an die im
 From: Header angegebene Adresse antworten (das sollte die oben

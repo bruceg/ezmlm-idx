@@ -1,7 +1,7 @@
 # Revision: 1
 Bitte entscheiden Sie, ob
 
-!A
+<#A#>
 
 die Mailingliste
    <#l#>@<#h#>
@@ -12,7 +12,7 @@ daﬂ die Anforderung wirklich von der angegebenen Adresse kam.
 Um zuzustimmen, senden Sie einfach eine leere Mail an die
 folgende Adresse:
 
-!R
+<#R#>
 
 Die Funktion "Beantworten" in Ihrem Mailprogramm sollte diese Adresse
 automatisch benutzen.

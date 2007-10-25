@@ -3,7 +3,7 @@ Posting terlampir telah dikirim ke milis <#L#>@<#h#>.  Jika anda
 ingin menyetujuinya untuk disebarluaskan ke semua pelanggan, kirim
 e-mail ke:
 
-!A
+<#A#>
 
 Biasanya, yang perlu anda lakukan adalah dengan menekan tombol "reply".
 Anda dapat mencek untuk memastikan bahwa alamatnya dimulai dengan
@@ -18,7 +18,7 @@ Alternatif lainnya, klik di sini:
 Untuk menolak posting dan mengembalikannya ke si pengirim, kirim sebuah
 posting ke:
 
-!R
+<#R#>
 
 Biasanya, cara termudah adalah dengan menekan tombol "reply-to-all", dan
 kemudian menghapus semua alamat kecuali yang dimulai dengan

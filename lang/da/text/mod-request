@@ -3,7 +3,7 @@ Det vedlagte brev er blevet postet til <#L#>@<#h#> listen.
 Hvis du vil godkende at det kommer ud til alle abonnenterne,
 skriver du til:
 
-!A
+<#A#>
 
 Bekræftelse sker normalt blot ved at svare på dette brev. Svar adressen
 skulle gerne starte med "<#L#>-accept". Hvis det ikke er tilfældet, må
@@ -18,7 +18,7 @@ Måske virker det at klikke med musen på næste linje:
 
 Hvis du istedet vil afvise at brevet postes til listen, svar til:
 
-!R
+<#R#>
 
 Normalt er det nemmest at lave et "svar-til-alle", og fjerne alle
 adresserne undtagen den der starter med

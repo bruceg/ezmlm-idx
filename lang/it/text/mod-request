@@ -3,7 +3,7 @@ Il messaggio allegato è stato inviato alla mailing list <#L#>@<#h#>
 Se vuoi approvarlo affinchè venga spedito a tutti gli iscritti, scrivi a:
 
 
-!A
+<#A#>
 
 In genere ciò accade non appena schiacci il bottone "Rispondi". Puoi
 controllare l'indirizzo per assicurarti che inizi con "<#L#>-accept".
@@ -18,7 +18,7 @@ Oppure clicca qui:
 Per rifiutare il messaggio e fare in modo che esso venga rispedito al
 mittente, per favore spedisci un messaggio a:
 
-!R
+<#R#>
 
 Di solito è più facile cliccare sul bottone "Rispondi a tutti:", e poi
 togliere tutti gli indirizzi tranne quello che inizia con "<#L#>-reject".

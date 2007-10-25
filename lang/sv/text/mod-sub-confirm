@@ -1,7 +1,7 @@
 # Revision: 1
 Vill du lägga till
 
-!A
+<#A#>
 
 till <#l#> listan? Antingen kom detta brevet som svar på
 att du vill lägga till prenumeranten till listan eller
@@ -9,7 +9,7 @@ så har prenumeranten redan bekräftat sin prenumeration.
 
 För att bekräfta, skicka ett tomt brev till denna adress:
 
-!R
+<#R#>
 
 Vanligtvis görs det genom "svara" ("reply") knappen.
 Ifall det inte fungerar, kopiera adressen och klistra in den i

@@ -12,12 +12,12 @@ longues.
 J'ai mis en place un nouveau nombre de confirmation. Pour confirmer que
 vous souhaitez voir
 
-!A
+<#A#>
 
 parmi les abonnes de la liste <#l#>, envoyez s'il vous plait une reponse
 quelconque a cette adresse:
 
-!R
+<#R#>
 <=x=>
 
 ou suivez ce lien :

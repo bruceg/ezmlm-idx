@@ -2,7 +2,7 @@
 A mellekelt level tovabbitodott a(z) <#L#>@<#h#> listara.
 Ha engedelyezni akarod, hogy kijusson a listatagoknak, irj az alabbi cimre:
 
-!A
+<#A#>
 
 Altalaban ugyanez tortenik, ha egyszeruen valaszolsz.  Ezt ugy
 ellenorizheted, hogy a cim "<#L#>-accept"-tel kezdodik.  Ha ez
@@ -15,7 +15,7 @@ Esetleg kattints ide:
 
 Elutasitani a levelet (ami visszakuldi a feladonak) ezen a cimen lehet:
 
-!R
+<#R#>
 
 Altalaban egyszerubb, ha a "Valasz mindenkinek" gombot nyomod meg,
 majd minden mas cimet kitorolsz, ami nem "<#L#>-reject"-tel kezdodik.

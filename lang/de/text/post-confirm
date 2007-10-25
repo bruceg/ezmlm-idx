@@ -5,7 +5,7 @@ Um Missbrauch vorzubeugen, muss jeder Sender seine Einsendungen
 bestätigen. Falls Sie die Verteilung Ihrer Mail an alle Abonnenten
 der List bestätigen wollen, dann sende sie eine Mail:
 
-!A
+<#A#>
 
 Normalerweise genügt es, einfach auf "Antworten" zu wählen. Sie können
 die Zieladresse daraufhin prüfen, ob sie mit "<#L#>-confirm" beginnt.

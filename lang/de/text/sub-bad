@@ -11,13 +11,13 @@ einige Mailprogramme die Eigenschaft, diese kommentarlos zu kürzen.
 Ich habe eine neue Bestätigungsnummer generiert. Um zuzustimmen, daß
 die Adresse
 
-!A
+<#A#>
 
 in die Mailingliste
    <#l#>@<#h#>
 aufgenommen wird, senden Sie eine leere Mail an die Adresse
 
-!R
+<#R#>
 <=x=>
 
 Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:

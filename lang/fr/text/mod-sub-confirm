@@ -1,7 +1,7 @@
 # Revision: 1
 Je vous demande humblement la permission d'ajouter
 
-!A
+<#A#>
 
 aux abonnes de la liste de diffusion <#l>. Cette requete
 peut venir de vous-meme ou avoir deja ete supervisee par
@@ -10,7 +10,7 @@ l'abonne potentiel.
 Pour confirmer, veuillez envoyer une reponse a cette
 adresse :
 
-!R
+<#R#>
 
 Votre logiciel de messagerie devrait avoir une fonction "Reply"
 pour la traiter automatiquement.

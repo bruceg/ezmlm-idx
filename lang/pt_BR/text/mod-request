@@ -3,7 +3,7 @@ Esta mensagem foi submetida à lista <#L#>@<#h#>.
 Se você aprova a mensagem para distribuição a todos
 os assinantes, por favor envie mensagem para:
 
-!A
+<#A#>
 
 Na prática, você estará enviado para este endereço quando pressionar o
 botão "reply" ou "responder". Você pode confirmar se o endereço começa com
@@ -19,7 +19,7 @@ Alternativamente, clique aqui:
 Para rejeitar esta mensagem, retornando-a para o remetente,
 por favor envie uma mensagem para:
 
-!R
+<#R#>
 
 Na prática, é fácil usar o botão "reply-to-all" ou "responder
 para todos", e então remover todos os endereços, exceto o que

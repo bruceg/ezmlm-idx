@@ -2,7 +2,7 @@
 Det bifogade meddelandet skickades till <#L#>@<#h#> listan.
 Ifall du vill godkänna den för vidare distribution skicka e-mail till:
 
-!A
+<#A#>
 
 Vanligtvis händer detta automatiskt om du trycker på "svara" (reply)
 knappen. Du kan kontrollera adressen att den börjar med:
@@ -17,7 +17,7 @@ Alternativt, tryck här:
 Föra att skicka tillbaka brevet till avsändaren, skicka ett
 meddelande till:
 
-!R
+<#R#>
 
 Vanligtvis är det enklare att trycka på "svara alla" ("reply-to-all")
 knappen och ta bort alla adresser som inte börjar med:

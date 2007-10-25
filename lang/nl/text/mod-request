@@ -3,7 +3,7 @@ De bijgesloten e-mail is aangeboden aan de <#L#>@<#h#>
 mailing list. Als u dit bericht wilt accepteren voor distributie,
 stuur dan een e-mail naar:
 
-!A
+<#A#>
 
 Dit gebeurt gewoonlijk als u een "reply" geeft op dit bericht.
 Het juiste adres moet beginnen met "<#L#>-accept". Als dit niet zou werken,
@@ -15,7 +15,7 @@ U kunt ook hier klikken:
 
 Om dit bericht te weigeren stuurt u een e-mail naar:
 
-!R
+<#R#>
 
 Gewoonlijk kunt u "reply-to-all" aanklikken en dan alle adressen verwijderen,
 behalve het adres wat begint met

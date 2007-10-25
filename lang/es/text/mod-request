@@ -5,7 +5,7 @@ El mensaje adjunto fue mandado a la lista de correo <#L#>@<#h#>.
 Si desea aprobar su distribucisn a todos los suscriptores, por
 favor, escriba a:
 
-!A
+<#A#>
 
 Normalmente esto ocurre al pulsar el botón "responder". Usted
 puede comprobar la dirección para asegurarse de que empieza por
@@ -21,7 +21,7 @@ Como alternativa haga clic aquí:
 Para rechazar el mensaje y hacer que sea devuelto al remitente,
 por favor, mande un mensaje a:
 
-!R
+<#R#>
 
 Normalmente, lo más fácil es hacer clic en el botón "Responder a
 todos" y luego quitar todas las direcciones menos la que empieza

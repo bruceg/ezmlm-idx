@@ -1,7 +1,7 @@
 # Revision: 1
 Bitte entscheiden Sie, ob
 
-!A
+<#A#>
 
 von der Mailingliste
    <#l#>@<#h#>
@@ -9,7 +9,7 @@ gestrichen werden soll.
 Um zuzustimmen, senden Sie einfach eine leere Mail an die
 folgende Adresse:
 
-!R
+<#R#>
 
 Die Funktion "Beantworten" in Ihrem Mailprogramm sollte diese Adresse
 automatisch benutzen.

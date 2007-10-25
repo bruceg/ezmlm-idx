@@ -2,12 +2,12 @@
 
 Pour confirmer que vous souhaitez voir
 
-!A
+<#A#>
 
 parmi les abonnes de la liste <#l#>, veuillez renvoyer un message
 quelconque a l'adresse suivante:
 
-!R
+<#R#>
 
 En fait, inutile de la recopier: la fonction "Reply" (repondre a
 l'expediteur) de votre logiciel de messagerie doit s'en charger

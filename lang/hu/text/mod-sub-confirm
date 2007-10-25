@@ -1,7 +1,7 @@
 # Revision: 1
 Tiszteletteljesen kerem az engedelyedet
 
-!A
+<#A#>
 
 feliratasahoz a(z) <#l#> listara. Ez a keres vagy Toled,
 vagy magatol a kerelmezotol jott, es mar a cime le lett
@@ -9,7 +9,7 @@ ellenorizve.
 
 Engedelyezeshez kerlek irj egy ures valaszlevelet az alabbi cimre:
 
-!R
+<#R#>
 
 Altalaban ugyanez tortenik, ha egyszeruen a "valasz" gombot
 megnyomod. Ha ez nem megy, csak masold a fenti cimet a Cimzett:

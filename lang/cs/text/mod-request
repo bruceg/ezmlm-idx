@@ -3,7 +3,7 @@ Ní¾e citovaná zpráva byla zaslána na adresu listu <#L#>@<#h#>.
 Pokud souhlasíte s distribucí této zprávy v¹em pøihlá¹eným, po¹lete
 mail na adresu
 
-!A
+<#A#>
 
 Toho obvykle dosáhnete pomocí tlaèítka "Odpovìï/Reply". Mù¾ete zkontrolovat
 adresu, zaèíná-li øetìzcem "<#L#>-accept". Pokud toto nefunguje, staèí
@@ -17,7 +17,7 @@ Mù¾ete také zkusit kliknout zde:
 Chcete-li zprávu odmítnout a zpùsobit její vrácení odesílateli,
 po¹lete zprávu na adresu
 
-!R
+<#R#>
 
 Toto se bvykle nejsnáze udìlá pomocí tlaèítka "Odpovìz v¹em/Reply to all"
 a následného vymazání v¹ech adres kromì té, která zaèíná "<#L#>-reject".

@@ -1,12 +1,12 @@
 # Revision: 1
 Obdr¾el jsem po¾adavek na zru¹ení adresy
 
-!A
+<#A#>
 
 z listu <#l#>. Souhlasíte-li, po¹lete prázdnou odpovìï
 na tuto adresu:
 
-!R
+<#R#>
 
 Toho obvykle dosáhnete pomocí tlaèítka "Odpovìï/Reply". Mù¾ete zkontrolovat
 adresu, zaèíná-li øetìzcem "<#L#>-sc". Pokud toto nefunguje, staèí

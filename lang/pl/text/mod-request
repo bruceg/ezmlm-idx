@@ -5,7 +5,7 @@ za³±czonej przesy³ki na listê o nazwie <#L#>.
 Aby zgodziæ siê na natychmiastowe wys³anie listu do wszystkich
 prenumeratorów, wy¶lij, proszê, list na adres:
 
-!A
+<#A#>
 <=x=>
 
 mailto:<#A#>
@@ -14,7 +14,7 @@ mailto:<#A#>
 Aby odmówiæ wys³ania listu, i zwróciæ go nadawcy, proszê
 przes³aæ wiadomosæ na adres: 
 
-!R
+<#R#>
 <=x=>
 
 mailto:<#R#>

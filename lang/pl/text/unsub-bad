@@ -10,11 +10,11 @@ ucinania adresów, które wydaj± im siê zbyt d³ugie.
 Przygotowa³em nowy numer potwierdzenia. Aby ponownie potwierdziæ
 ¿e mam usun±æ adres
 
-!A
+<#A#>
 
 z listy prenumeratorów <#l#>, wy¶lij pust± odpowiedz na adres:
 
-!R
+<#R#>
 <=x=>
 
 mailto:<#R#>

@@ -11,11 +11,11 @@ longues.
 J'ai mis en place un nouveau nombre de confirmation. Pour confirmer que
 vous souhaitez voir
 
-!A
+<#A#>
 
 desabonne de la liste <#l#> , envoyez une reponse quelconque a :
 
-!R
+<#R#>
 <=x=>
 
 ou suivez ce lien :

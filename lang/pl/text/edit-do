@@ -2,7 +2,7 @@
 <=n=>
 Przerób, proszê, za³±czony tekst i wy¶lij go na adres:
 
-!R
+<#R#>
 
 Twój program powienien uczyniæ to automatycznie, je¿eli u¿yjesz
 funkcji "reply/odpowiedz".

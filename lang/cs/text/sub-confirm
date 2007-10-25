@@ -1,11 +1,11 @@
 # Revision: 1
 Chcete-li opravdu pøidat adresu
 
-!A
+<#A#>
 
 do listu <#l#>, po¹lete prázdnou zprávu na adresu
 
-!R
+<#R#>
 
 Toho obvykle dosáhnete pomocí tlaèítka "Odpovìï/Reply". Mù¾ete zkontrolovat
 adresu, zaèíná-li øetìzcem "<#L#>-sc". Pokud toto nefunguje, staèí

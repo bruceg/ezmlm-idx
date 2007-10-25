@@ -9,12 +9,12 @@ memotong sebagian dari alamat reply, yang kadang sangat panjang.
 
 Kami telah membuat sebuah nomor konfirmasi baru. Kalau anda ingin
 
-!A
+<#A#>
 
 dihapus dari milis <#l#>,
 kirim reply kosong ke alamat:
 
-!R
+<#R#>
 <=x=>
 
 atau klik di sini:
