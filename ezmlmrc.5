@@ -184,70 +184,6 @@ between the second and third hyphen (if any).
 The argument to
 .IR \-3 .. \-9 .
 .PP
-Several tags are substituted on-the-fly where appropriate.  They are:
-.TP
-.B <#A#>
-The subscriber address (in
-.IR ezmlm-manage )
-or the moderation accept address (in
-.IR ezmlm-store ).
-.TP
-.B <#H#>
-The
-.I host
-part of the list address.
-.TP
-.B <#L#>
-The
-.I local
-part of the base list address.
-.TP
-.B <#R#>
-The subscription reply address (in
-.IR ezmlm-manage )
-or moderation reject address (in
-.IR ezmlm-store ).
-.TP
-.B <#h#>
-The
-.I host
-part of the list address.
-.TP
-.B <#l#>
-The
-.I local
-part of the list address (or
-.I local\fB-digest
-as appropriate for the current action).
-.TP
-.B <#n#>
-The message number (in
-.I ezmlm-get
-or
-.IR ezmlm-send ).
-.TP
-.B <#r#>
-The
-.I local
-part of the
-.B <#R#>
-tag.
-.B <#R#> is effectively equivalent to
-.BR <#r#>@<#h#> .
-.TP
-.B <#t#>
-The target address
-.B <#A#>
-with the last
-.B @
-replaced by
-.BR = .
-.PP
-The use of
-.BR <#l#>
-is to allow the same text file to be used for requests pertaining to both
-the main list and the digest list.
-
 Before the template file is processed,
 .B ezmlm-make
 will create the list directory.
@@ -275,32 +211,6 @@ removing ``Return-Path'', ``Return-Receipt-To'', ``Content-length'',
 .I dir\fB/text/sub-ok
 with text sent after successful subscription. These files are not overwritten
 when lists are edited.
-
-Also created are the following files within
-.IR dir\fB/text/ :
-.BR bottom ,
-.BR bounce-bottom ,
-.BR bounce-num ,
-.BR dig-bounce-num ,
-.BR bounce-probe
-.BR bounce-warn ,
-.BR get-bad ,
-.BR help ,
-.BR mod-help ,
-.BR mod-request ,
-.BR mod-reject ,
-.BR mod-timeout ,
-.BR mod-sub-confirm ,
-.BR mod-unsub-confirm ,
-.BR post-confirm ,
-.BR sub-bad ,
-.BR sub-confirm ,
-.BR sub-nop
-.BR unsub-bad ,
-.BR unsub-confirm ,
-.BR unsub-nop ,
-.BR unsub-ok ,
-.BR top .
 
 .I dir\fB/bouncer
 is set up to invoke

@@ -690,64 +690,85 @@ command.
 Sent to the remote administrator after an edited
 .I dir\fB/text
 file has been successfully saved.
-.PP
+.SH SUBSTITUTIONS
 Several tags in the text files are replaced by ezmlm programs.
-All programs replace the tag
+Tags may appear anywhere on a line and multiple tags may appear on the
+same line.
+.TP
+.B <#L#>
+The unmodified name of the list, as defined by
+.I dir\fB/outlocal
+.TP
 .B <#l#>
-with the name of the list or the list-digest, as appropriate for the request,
-and
+The name of the list or the list-digest, as appropriate for the request.
+The use of
+.BR <#l#>
+is to allow the same text file to be used for requests pertaining to both
+the main list and the digest list.
+.TP
+.B <#H#>
+The hostname for the list, as defined by
+.I dir\fB/outhost
+.TP
 .B <#h#>
-with the hostname for the list.
-.B ezmlm-send
-and
-.B ezmlm-get
-replace
+The hostname for the list
+.TP
 .B <#n#>
-with the current message number in added headers from
-.I dir\fB/headeradd
-and text files.
+The current message number in
+.BR ezmlm-send ,
+and the number of the first message in the digest in
 .B ezmlm-get
-does this for digest messages, where the current message is the number of
-the first message in the digest.
-.B ezmlm-manage
-replaces the tag
+.TP
 .B <#A#>
-anywhere on a line with the subscription address, and
+The moderation accept or (un)subscription target address (described
+below)
+.TP
+.B <#a#>
+The local part of the moderation accept address
+.TP
+.B <#t#>
+The subscription target address, with "@" replaced with "="
+.TP
 .B <#R#>
-anywhere on a line
-with the address the subscriber must reply to. Only the first tag on any
-line is processed.
+The moderation reject or (un)subscription reply address (described
+below), equivalent to
+.B <#r#>@<#h#>
+.TP
+.B <#r#>
+The local part of the reject or reply address, equivalent to
+.B <#l#>-<#c#>
+.TP
+.B <#c#>
+The cryptographic "cookie" in the reject or reply address
+.TP
+.B <#d#>
+.I dir
 .PP
-For backwards compatibility,
-.B ezmlm-manage
-replaces the line
+The subscription target address is the address that has requested
+subscription to or unsubscription from the list in
+.BR ezmlm-manage .
+The same tag is used in
+.B ezmlm-store
+for the address to which a reply must be sent to accept the original
+post.
+.PP
+The subscription reply address is the address to which a reply must be
+sent to confirm a subscription in
+.BR ezmlm-manage .
+The same tag is used in
+.B ezmlm-store
+for the address to which a reply may be sent to reject the original
+post.
+.PP
+For backwards compatibility, the lines
 .B !A
-in any of these files
-with the name of the subscription address.
-It replaces the line
-.B !R
-in
-.B sub-confirm
 and
-.B unsub-confirm
-with the address that the subscriber must reply to.
-.PP
-.B ezmlm-store
-replaces the tag
-.B <#A#>
-anywhere on a line with the address for accepting the message, and
-.B <#R#>
-anywhere on a line
-with the address for rejecting the message.
-Only the first tag on any line is processed.
-.PP
-For backwards compatibility,
-.B ezmlm-store
-also replaces the line
-.B !A
-with the address for accepting the message and the line
 .B !R
-with the address for rejecting the message.
+are replaced with the value of
+.B <#A#>
+and
+.B <#R#>
+respectively.
 .SH "OUTGOING MESSAGE EDITING"
 .I dir\fB/headerkeep
 is a list of good header field names, one per line, and

@@ -56,20 +56,6 @@
 # ext1 and ext2 are useful when a single user is controlling several
 # virtual domains.
 #
-# Substitutions made at runtime are:
-# <#A#> target email address
-# <#H#> outhost
-# <#L#> outlocal (unchanged)
-# <#R#> confirm address (equivalent to <#r#>@<#h#>)
-# <#a#> local part of the target address
-# <#c#> the confirm cookie
-# <#d#> dir
-# <#h#> outhost
-# <#l#> outlocal (may contain "-digest")
-# <#n#> message number
-# <#r#> local part of the confirm address (equivalent to <#l#>-<#c#>)
-# <#t#> target address, with '@' substituted by '='
-#
 # -0 is used for the main list address when setting up sublists
 # -3 is for the new from header if we want that header replaced
 # -4 for specifying the ezmlm-tstdig switches used in dir/editor. Default
