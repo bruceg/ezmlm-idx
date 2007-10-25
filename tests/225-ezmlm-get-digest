@@ -170,7 +170,7 @@ ${ECHO} "X-num: dig6" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fv "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "-fv failed for digest"
 msgexists || \
-	fatal "dig6 format 'x' wasn't delivered"
+	fatal "dig6 format 'v' wasn't delivered"
 checkenv dig6 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 ${RM} -f "${DIR}/dignum"
@@ -178,8 +178,19 @@ ${ECHO} "X-num: dig7" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fx "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "-fx failed for digest"
 msgexists || \
-	fatal "dig7 format 'v' wasn't delivered"
+	fatal "dig7 format 'x' wasn't delivered"
 checkenv dig7 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
+
+${RM} -f "${DIR}/dignum"
+${ECHO} "X-num: dig8" > "${DIR}/headeradd"
+${ECHO} r > "$DIR"/digformat
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
+	fatal "digformat=r failed for digest"
+msgexists || \
+	fatal "dig8 format 'r' wasn't delivered"
+checkenv dig8 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
+test $(${GREP} -c Content-Type: "$QQMSG") = 1 \
+|| fatal "ezmlm-get didn't read digformat"
 
 # restore headeradd
 mv -f "${DIR}/headeradd.bak" "${DIR}/headeradd"

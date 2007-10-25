@@ -764,7 +764,7 @@ void main(int argc,char **argv)
   unsigned int pos,pos1;
   unsigned int len;
   int opt;
-  char outformat = DEFAULT_FORMAT;	/* default output format */
+  char outformat = 0;
   msgentry *msgtable;
   subentry *subtable;
   authentry *authtable;
@@ -800,6 +800,13 @@ void main(int argc,char **argv)
   startup(dir = argv[optind++]);
   initsub(0);
   getconf_ulong(&copylines,"copylines",0);
+  if (outformat == 0) {
+    outformat =
+      (getconf_line(&line,"digformat",0)
+       && FORMATS[str_chr(FORMATS,line.s[0])])
+      ? line.s[0]
+      : DEFAULT_FORMAT;
+  }
 
   /* code to activate digest (-digest-code)*/
   if ((digestcode = argv[optind]) == 0) {

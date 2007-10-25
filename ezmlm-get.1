@@ -382,10 +382,15 @@ Ignore all commands except digest.
 will use
 .I format
 as the default format for all returned message collections. The default
-is 'm' for MIME with a header subset (see below). Format specifiers
-sent with individual requests override the default set with the
+is the first character in
+.IR dir\fB/digformat ,
+or 'm' if it does not exist.  This produces MIME with a header subset
+(see above). Format specifiers sent with individual requests override
+the default set with the
 .B \-f
-switch.
+switch or the
+.I dir\fB/digformat
+file.
 .TP
 .B \-p
 \-get, \-index, and \-thread commands are available to all users,
