@@ -18,7 +18,6 @@ Fix up ezmlm(5):
 	ezmlm-limit
 	ezmlm-rmtab
 	ezmlm-split
--Fix up documentation of dir/sql file, especially in ezmlmrc.5
 
 Move confirm-related directories in "mod" to new "confirm" directory?
 

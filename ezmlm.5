@@ -110,11 +110,17 @@ inside
 .I dir\fB/subscribers
 and then moved into place.
 
-.I dir\fB/db
+.I dir\fB/subdb
 contains subscriber database access information for lists that are
 configured to use an alternate database plugin (such as mysql or pgsql)
 for storage of mailing lists.  Its format is
 .IR plugin:host:port:user:password:database:table .
+The database and table names both default to
+.IR mysql .
+If this file does not exist but
+.I dir\fB/sql
+exists, its contents are used with a plugin name of
+.IR sql .
 If no such file exists, the standard lists stored in
 .I dir\fB/subscribers
 etc are used.

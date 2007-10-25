@@ -580,7 +580,6 @@ line
 restricting posts by envelope sender is not used.
 .TP
 .B \-w
-The
 Remove the
 .B ezmlm-warn(1)
 invocations from the list setup. It is assumed that
@@ -589,16 +588,7 @@ for both
 .I local@host
 and
 .I local-digest@host
-will be run by other means, such as crond.
-If the
-.B \-6
-switch is used with this switch, the local list name will be added to the
-SQL config info for
-.I dir\fB/sql
-and
-.I dir\fB/digest/sql .
-This is to support building the main list for a distributed list using
-a SQL address database. In addition,
+will be run by other means, such as crond.  In addition,
 .B ezmlm-receipt(1)
 will be set up for bounce handling in
 .I dir\fB/bouncer
@@ -670,17 +660,10 @@ being stored in
 If the address does not start with an underscore or alphanumeric character,
 the argument must start with an ampersand.
 .TP
-.B \-6\fI\ host:port:user:password:datab:table
+.B \-6\fI\ plugin:host:port:user:password:datab:table
 .TP
 The string, followed by the list name is placed in
-.IR dir\fB/sql .
-The same string with ``table'' suffixed with ``_allow'', ``_digest'',
-and ``_mod'' is placed in
-.IR dir\fB/allow/sql ,
-.IR dir\fB/digest/sql ,
-and
-.I dir\fB/mod/sql
-respectively.
+.IR dir\fB/subdb .
 .B \-7\fI\ /msgmodPath
 .I msgmodPath
 is placed in
