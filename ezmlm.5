@@ -520,7 +520,9 @@ command is sent for a moderator and
 .IR dir\fB/modsub
 or
 .IR dir\fB/remote
-exist, and the
+exist, and either the
+.I dir\fB/modcanlist
+file exists or the
 .B ezmlm-manage \-l
 command line switch is specified, a subscriber list will be returned.
 
@@ -528,9 +530,13 @@ If an
 .I \-edit.file
 command is sent for a moderator and
 .IR dir\fB/remote
-exist, and the
+exist, and either the
+.I dir\fB/modcanedit
+file exists or the
 .B ezmlm-manage \-d
-command line switch is specified,
+or
+.B \-e
+command line switches are specified,
 .B text\fB/file
 is returned together with an
 .B ezmlm
@@ -1056,6 +1062,18 @@ If
 exists,
 .B ezmlm-clean
 will not return timed-out posts to their senders.
+
+If
+.I dir\fB/nosubconfirm
+exists,
+.B ezmlm-manage
+will not require confirmation from the subscription target before
+subscribing it.  Similarly, if
+.I dir\fB/nounsubconfirm
+exists,
+.B ezmlm-manage
+will not require confirmation from the unsubscription target before
+unsubscribing it.
 
 .I dir\fB/key
 is a binary file used to create confirmation codes.  Anyone who can

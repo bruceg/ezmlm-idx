@@ -239,8 +239,8 @@ void main(int argc,char **argv)
 
   startup(dir = argv[optind]);
   if (flagreturn < 0)
-    flagreturn = getconf_isset("noreturnposts") ? 0 : 1;
-  /* default to returning timed-out messages */
+    /* default to returning timed-out messages */
+    flagreturn = !getconf_isset("noreturnposts");
 
   getconf_line(&modtime,"modtime",0);
   if (!stralloc_0(&modtime)) die_nomem();

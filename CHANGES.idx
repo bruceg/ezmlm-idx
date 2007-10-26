@@ -62,6 +62,9 @@ Smaller changes:
 
 - Added dir/noreturnposts control file for ezmlm-clean.
 
+- Added dir/modcanedit, dir/modcanlist, dir/nosubconfirm, and
+  dir/nounsubconfirm control files to ezmlm-manage.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 messages changes also replaced the confirmpost subject line hack in

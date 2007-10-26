@@ -160,7 +160,9 @@ via E-mail.
 .TP 5
 .B \-E
 (Default.)
-Text file editing not allowed.
+Text file editing not allowed.  This is the default unless the
+.I dir\fB/modcanedit
+file exists.
 .TP 5
 .B \-f
 (Default.)
@@ -196,7 +198,9 @@ will ignore the
 .I \-list
 and
 .I \-listn
-commands.
+commands.  This is the default unless the
+.I dir\fB/modcanlist
+file exists.
 .TP 5
 .B \-m
 For lists with moderated subscription, require moderator approval also
@@ -250,7 +254,10 @@ lists.
 .B \-s
 (Default.)
 .B ezmlm-manage
-will handle subscriptions with the normal target handshake.
+will handle subscriptions with the normal target handshake.  This is the
+default unless the
+.I dir\fB/nosubconfirm
+file exists.
 .TP 5
 .B \-S
 .B ezmlm-manage
@@ -263,7 +270,9 @@ some moderated lists.
 (Default.)
 .B ezmlm-manage
 will handle unsubscribe requests with the normal target
-handshake.
+handshake.  This is the default unless the
+.I dir\fB/nounsubconfirm
+file exists.
 .TP 5
 .B \-U
 .B ezmlm-manage
@@ -401,9 +410,11 @@ If
 .I action
 is
 .BR edit ,
-the
+either the
 .B \-e
-switch is used, and the target address is that of a remote administrator,
+switch is used or the
+.I dir\fB/modcanedit
+file exists, and the target address is that of a remote administrator,
 .B ezmlm-manage
 will reply with a list of editable file in
 .I dir\fB/text/
@@ -569,7 +580,9 @@ If action is
 and target is a moderator, the list is set up for subscription moderation
 or remote administration, and the
 .I \-l
-command line switch is used,
+command line switch is used or the
+.I dir\fB/modcanlist
+file exists,
 .B ezmlm-manage
 will reply with an unsorted subscriber list. Extensions for digest subscribers
 and auxillary databases are supported (see above).

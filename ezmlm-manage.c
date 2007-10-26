@@ -48,13 +48,13 @@ int flagnotify = 1;	/* notify subscriber of completed events. 0 also */
 			/* suppresses all subscriber communication for */
 			/* [un]sub if -U/-S is used */
 int flagbottom = 1;	/* default: copy request & admin info to message */
-int flaglist = 0;	/* default: do not reply to -list */
+int flaglist = -1;	/* default: do not reply to -list */
 int flagget = 1;	/* default: service -get requests */
-int flagsubconf = 1;	/* default: require user-confirm for subscribe */
-int flagunsubconf = 1;	/* default: require user-confirm for unsubscribe */
+int flagsubconf = -1;	/* default: require user-confirm for subscribe */
+int flagunsubconf = -1;	/* default: require user-confirm for unsubscribe */
 int flagunsubismod = 0;	/* default: do not require moderator approval to */
 			/* unsubscribe from moderated list */
-int flagedit = 0;	/* default: text file edit not allowed */
+int flagedit = -1;	/* default: text file edit not allowed */
 int flagstorefrom = 1;	/* default: store from: line for subscribes */
 int flagmod;		/* subscription moderation enabled */
 char encin = '\0';	/* encoding of incoming message */
@@ -625,6 +625,14 @@ int main(int argc,char **argv)
   startup(dir = argv[optind]);
   initsub(0);
   getconf_ulong(&copylines,"copylines",0);
+  if (flagedit < 0)
+    flagedit = getconf_isset("modcanedit");
+  if (flaglist < 0)
+    flaglist = getconf_isset("modcanlist");
+  if (flagsubconf < 0)
+    flagsubconf = !getconf_isset("nosubconfirm");
+  if (flagunsubconf < 0)
+    flagunsubconf = !getconf_isset("nounsubconfirm");
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));

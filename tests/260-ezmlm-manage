@@ -19,14 +19,17 @@ ${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >/dev/null 2>&1 && \
 LOCAL="$LOC-edit.test-$MOD=$HOST"
 DEFAULT="edit.test-$MOD=$HOST"
 ${ECHO} "X-num: edit2" > "$TMP"
+${RM} "$DIR"/modcanedit
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \
 	fatal "-E failed for edit2"
 ${ECHO} "X-num: edit3" > "$TMP"
-${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >"$ERR" 2>&1 || \
-	fatal "-e failed for remote admin for edit3"
+touch "$DIR"/modcanedit
+${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
+	fatal "modcanedit failed for remote admin for edit3"
 checkenv edit3 "$LOC-return-@$HOST" "$MOD@$HOST"
 ${GREP} "^Subject: EDIT test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
 || fatal "edit3 had incorrect subject"
+${RM} "$DIR"/modcanedit
 
 # complete edit. SENDER can be any address
 SENDER="${MAN}@$HOST"
@@ -65,6 +68,7 @@ ${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >/dev/null 2>&1 && \
 LOCAL="$LOC-allow-list-$MOD=$HOST"
 DEFAULT="allow-list-$MOD=$HOST"
 ${ECHO} "X-num: list2" > "$TMP"
+${RM} "$DIR"/modcanlist
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "-L failed to reject list request"
 
@@ -78,6 +82,19 @@ ${GREP} 'list3' "$QQMSG" >/dev/null 2>&1 || \
 ${GREP} "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to get list reply to list3"
 checkenv list3 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
+
+qqclean
+${ECHO} "X-num: list4" > "$TMP"
+touch "$DIR"/modcanlist
+${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
+	fatal "modcanlist failed for remote admin for list3"
+
+${GREP} 'list4' "$QQMSG" >/dev/null 2>&1 || \
+	fatal "failed getting -list reply to list4"
+${GREP} "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
+	fatal "failed to get list reply to list4"
+checkenv list4 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
+${RM} "$DIR"/modcanlist
 
 LOCAL="$LOC-allow-log-$MOD=$HOST"
 DEFAULT="allow-log-$MOD=$HOST"
