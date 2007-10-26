@@ -1,32 +1,165 @@
 ERR_ADDR_AT|address does not contain @|adres bevat geen @
 ERR_ADDR_LONG|address is too long|adres is te lang
 ERR_ADDR_NL|address contains newline|adres bevat newline
-ERR_ANONYMOUS|I do not reply to senders without host names (#5.7.2)|Ik antwoord niet op zenders zonder host name (#5.7.2)
+ERR_ANONYMOUS|I do not reply to senders without host names (#5.7.2)|Ik antwoord niet op zenders zonder hostnaam (#5.7.2)
 ERR_BADHOST|list host not allowed|list host niet toegestaan
 ERR_BADLOCAL|list local not allowed|list local niet toegestaan
 ERR_BADUSER|user not allowed|gebruiker niet toegestaan
-ERR_BAD_ADDRESS|I don't accept messages at this address (local doesn't match) (#5.1.1)|Ik accepteer geen berichten op dit adres (local  komt niet overeen) (#5.1.1)
-ERR_BAD_ALL|Sorry, after removing unacceptable MIME parts from your message I was left with nothing (#5.7.0)|Het spijt me, na het verwijderen van onaccepteerbare MIME gedeelten bleef er niks over (#5.7.0)
-ERR_BAD_DIGCODE|incorrect digest code (#5.7.1)|incorrecte digest code (#5.7.1)
+ERR_BAD_ADDRESS|I don't accept messages at this address (local doesn't match) (#5.1.1)|Ik accepteer geen berichten op dit adres (local komt niet overeen) (#5.1.1)
+ERR_BAD_ALL|Sorry, after removing unacceptable MIME parts from your message I was left with nothing (#5.7.0)|Het spijt me, na het verwijderen van onaccepteerbare MIME delen bleef er niks over (#5.7.0)
+ERR_BAD_DIGCODE|incorrect digest code (#5.7.1)|onjuiste digest code (#5.7.1)
 ERR_BAD_INDEX|Old format or corrupted index. Run ezmlm-idx! (#5.3.0)|Oud formaat of kapotte index. Start ezmlm-idx! (#5.3.0)
 ERR_BAD_NAME|only letters and underscore allowed in file name (#5.6.0)|alleen letters en underscores toegestaan in de bestandsnaam (#5.6.0)
-ERR_BAD_PART|Sorry, a message part has an unacceptable MIME Content-Type: '<#1#>' (#5.2.3)|Het spijt me, een deel van het bericht bevat een niet geaccepteerd MIME Content-Type: '<#1#>' (#5.2.3)
-ERR_BAD_REQUEST|Illegal request format (#5.7.1)|Ongeldig verzoek formaat (#5.7.1)
-ERR_BAD_RETURN_ADDRESS|Invalid bounce or receipt address format (#5.1.1)|Foutief bounce of ontvangstbevesting formaat (#5.1.1)
+ERR_BAD_PART|Sorry, a message part has an unacceptable MIME Content-Type: '<#1#>' (#5.2.3)|Het spijt me, een deel van het bericht bevat een onaanvaardbaar MIME Content-Type: '<#1#>' (#5.2.3)
+ERR_BAD_REQUEST|Illegal request format (#5.7.1)|Ongeldige opmaak verzoek (#5.7.1)
+ERR_BAD_RETURN_ADDRESS|Invalid bounce or receipt address format (#5.1.1)|Ongeldige opmaak bounce of ontvangstbevesting (#5.1.1)
 ERR_BAD_TYPE|Sorry, I don't accept messages of MIME Content-Type '<#1#>' (#5.2.3)|Het spijt me, ik accepteer geen berichten met MIME Content-Type '<#1#>' (#5.2.3)
+ERR_BODYCOMMAND|Sorry, as the message starts with ``[un]subscribe'' it looks like an adminstrative request. Please send a message to the -help address shown in the ``Mailing-List:'' header for [un]subscribe info (#5.7.0)|Sorry, aangezien het bericht met "[un]subscribe" begint lijkt het op een adminstratief verzoek. Stuur een bericht naar het -help adres dat in de "Mailing-List:" header getoond wordt voor informatie over abonneren/opzeggen (#5.7.0)
 ERR_BOUNCE|I do not reply to bounce messages (#5.7.2)|Ik antwoord niet op bounce berichten (#5.7.2)
-SUB_FAQ|FAQ for <#L#>@<#H#>|Veel gestelde vragen (FAQ) voor <#L#>@<#H#>
+ERR_CFHOST|bounce-host required on first line of <#1#>|bounce-host moet eerste regel zijn van <#1#>
+ERR_CHDIR|Unable to change directory to <#1#>|Kan niet naar directory <#1#> wisselen
+ERR_CHILD_CRASHED|child crashed|subproces afgebroken
+ERR_CHILD_FATAL|fatal error from child|fatale fout uit subproces
+ERR_CHILD_TEMP|temporary error from child|tijdelijke fout uit subproces
+ERR_CHILD_UNKNOWN|unknown error from child|onbekende fout uit subproces
+ERR_CHMOD|unable to chmod <#1#>|kan <#1#> niet chmod'en
+ERR_CHROOT|failed to chroot to <#1#>|kon geen chroot doen naar <#1#>
+ERR_CLOSE|unable to close <#1#>|kon <#1#> niet sluiten
+ERR_COOKIE|message does not have valid authentication token|bericht bevat geen geldig autenticatie-token
+ERR_CREATE|unable to create <#1#>|kon <#1#> niet maken
+ERR_CRONTAB|crontab update failed. Contact your sysadmin with the above error information|bijwerken crontab milukt. Neem met bovenstaande fout-informatie contact op met uw systeembeheerder
+ERR_DELETE|unable to delete <#1#>|kon <#1#> niet verwijderen
+ERR_DONE|message already successfully processed by this list|bericht is al met succes door deze list verwerkt
+ERR_DOW|single comma-separated digits only for day-of-week|weekdag alleen aangeven met enkele, door komma's gescheiden cijfers
+ERR_EDSIZE|Maximum edit file size exceeded (#5.6.0)|Maximum omvang van te bewerken bestand overschreden (#5.6.0)
+ERR_EMPTY_DIGEST|nothing to digest|niets samen te vatten
+ERR_EMPTY_LIST|no messages in archive|geen berichten in archief
+ERR_ENDTAG|tag lacks /> end marker|/> einde markering ontbreekt aan tag
+ERR_EUID|effective user id not found|effectief gebruikers-id niet gevonden
+ERR_EXCESS_DEFER|excess traffic: deferring|overmatig verkeer: opgeschort
+ERR_EXCESS_MOD|excess traffic: moderating|overmatig verkeer: gemodereerd
+ERR_EXCLUSIVE|action-controlling switches are mutually exclusive|opties die de actie beheersen sluiten elkaar uit
+ERR_EXECUTE|unable to execute <#1#>|kon <#1#> niet uitvoeren
+ERR_EXTRA_SUB|Processed SENDER check addition request for: <#1#>|Toevoegen SENDER controle verwerkt voor: <#1#>
+ERR_EXTRA_UNSUB|Processed SENDER check removal request for: <#1#>|Verwijderen SENDER controle verwerkt voor: <#1#>
+ERR_FILENAME|continuation tag without defined file name: <#1#>|voortzettingstag zonder gedefinieerde bestandsnaam: <#1#>
+ERR_FLUSH_STDOUT|unable to flush standard output|kon standaard uitvoer niet legen
+ERR_FLUSH|unable to flush <#1#>|kon <#1#> niet legen
+ERR_FORK|unable to fork|kon niet aftakken
+ERR_JUNK|Precedence: junk - message ignored|bericht met Precedence: junk genegeerd
+ERR_LINKDIR|linktag lacks /dir: <#1#>|linktag heeft geen /dir: <#1#>
+ERR_LISTNO|max number of list entries exceeded|max. aantal items in lijst overschreden
+ERR_LOOPING|this message is looping: it already has my Delivered-To line (#5.4.6)|dit bericht ping-pongt: het heeft mijn Delivered-To regel al (#5.4.6)
+ERR_MAILING_LIST|message already has a Mailing-List header (maybe I should be a sublist) (#5.7.2)|bericht bevat al een Mailing-List header (misschien moet ik een sublist zijn)
+ERR_MAX_BOUNCE|max bounces exceeded: bounce will not be saved|max. aantal bounces overschreden: bounce wordt niet opgeslagen
+ERR_MAX_SIZE|Sorry, I don't accept messages larger than <#1#> bytes (#5.2.3)|Sorry, ik accepteer geen berichten die groter zijn dan <#1#> bytes
+ERR_MIME_QUOTE|MIME boundary lacks end quote|MIME boundary bevat geen aanhalingsteken sluiten
+ERR_MIN_SIZE|Sorry, I don't accept messages shorter than <#1#> bytes (#5.2.3)|Sorry, ik accepteer geen berichten die korter zijn dan <#1#> bytes
+ERR_MKTAB|creating subscriber tables failed|maken van abonnee-tabellen mislukt
+ERR_MOD_ACCEPTED|I'm sorry, I've already accepted this message|Het spijt me maar ik heb dit bericht al geaccepteerd
+ERR_MOD_COOKIE|Illegal or outdated moderator request (#5.7.1)|Ongeldig of verlopen moderatieverzoek
+ERR_MOD_REJECTED|I'm sorry, I've already rejected this message|Het spijt me maar ik heb dit bericht al afgewezen
+ERR_MOD_TIMEOUT|I'm sorry, I no longer have this message|Het spijt me maar ik heb dit bericht niet meer
+ERR_MOVE|unable to move <#1#> to <#2#>|kon <#1#> niet naar <#2#> verplaatsen
+ERR_NEWLINE|newlines not allowed in dir|dir mag geen regeleindes bevatten
+ERR_NOCMD|command not available|commando niet beschikbaar
+ERR_NODEFAULT|DEFAULT not set|DEFAULT niet ingesteld
+ERR_NODTLINE|DTLINE not set|DTLINE niet ingesteld
+ERR_NOEXIST| does not exist|bestaat niet
+ERR_NOINDEX|Sorry, I can't find the index for this message|Sorry, ik kan de index voor dit bericht niet vinden
+ERR_NOLOCAL|LOCAL not set|LOCAL niet ingesteld
+ERR_NOMEM|out of memory|te weinig geheugen
+ERR_NOSENDER|SENDER not set|SENDER niet ingesteld
+ERR_NOT_ACTIVE|this sublist is not active|deze sublist is niet actief
+ERR_NOT_ALLOWED|Command allowed only to moderators (#5.7.1)|Commando alleen toegestaan voor moderators (#5.7.1)
+ERR_NOT_ARCHIVED|Sorry, this list is not archived (#5.1.1)|Sorry, deze lijst wordt niet gearchiveerd (#5.1.1)
+ERR_NOT_AVAILABLE|Command not available (#5.1.1)|Commando niet beschikbaar (#5.1.1)
+ERR_NOT_CLEAN|Bad character in address components|Ongeldig teken in adresdeel
+ERR_NOT_INDEXED|Sorry, this list is not indexed (#5.1.1)|Sorry, deze lijst is niet geïndexeerd (#5.1.1)
+ERR_NOT_PARENT|this message is not from my parent list (#5.7.2)|dit bericht is niet afkomstig van mijn bovenliggende list ($5.7.2)
+ERR_NOT_PUBLIC|Sorry, I've been told to reject all requests (#5.7.2)|Sorry, ik heb opdracht alle verzoeken af te wijzen (#5.7.2)
+ERR_NO_ABSOLUTE|absolute directory names outside of the list directory are no longer supported|absolutie directorynamen buiten de list directory worden niet langer ondersteund
+ERR_NO_ADDRESS|List address must be in To: or Cc: (#5.7.0)|List adres moet in To: of Cc: staan (#5.7.0)
+ERR_NO_LEVELS|subscriber table names may not contain slashes|abonnee tabelnamen mogen geen schuine strepen bevatten
+ERR_NO_MARK|missing start-of-text or end-of-text mark (#5.6.0)|ontbrekende begin-van-tekst of einde-van-tekst markering (#5.6.0)
+ERR_NO_MATCH|no matching entry found|geen overeenkomend item gevonden
+ERR_NO_PLUGIN|no plugin specified in database connect data|geen plugin aangegeven in databaseverbindingsgegevens
+ERR_NO_POST|I'm sorry, you are not allowed to post messages to this list (#5.7.2)|Het spijt me maar u mag geen berichten sturen naar deze list (#5.7.2)
+ERR_NO_SUBJECT|Sorry, I don't accept message with empty Subject (#5.7.0)|Sorry, ik accepteer geen berichten met een leeg onderwerp (#5.7.0)
+ERR_OBTAIN_LOCK|unable to obtain lock on <#1#>|kon <#1#> niet vergrendelen
+ERR_OPEN_LISTMSGS|unable to open <#1#> in listmsgs. Rerun ezmlm-archive!|kon <#1#> in listberichten niet open. Draai ezmlm-archive opnieuw!
+ERR_OPEN|unable to open <#1#>|kon <#1#> niet openen
+ERR_PERIOD|periods not allowed in tags|punten zijn niet toegestaan in tags
+ERR_QMAIL_QUEUE|unable to run qmail-queue|kon qmail-queue niet uitvoeren
+ERR_QUOTE|quotes not allowed in dir|aanhalingstekens zijn niet toegestaan in dir
+ERR_READ_INPUT|unable to read input|kon invoer niet lezen
+ERR_READ_NOTHING|unable to read <#1#>: nothing there|kon <#1#> niet lezen: er staat niks
+ERR_READ_STDIN|unable to read standard input|kon standaard invoer niet lezen
+ERR_READ|unable to read <#1#>|kon <#1#> niet lezen
+ERR_REJECT|Sorry, I've been told to reject this message (#5.7.0)|Sorry, ik heb opdracht dit bericht af te wijzen
+ERR_REQ_LISTNAME|This command requires a mailing list name (#5.1.1)|Dit commando vereist de naam van een mailing list (#5.1.1)
+ERR_REQ_LOCAL|the local part of the command string does not match this list (#5.1.1)|het lokale deel van het commando komt niet overeen met deze lijst (#5.1.1)
+ERR_SEEK_INPUT|unable to seek input|kon invoer niet doorzoeken
+ERR_SEEK|unable to seek <#1#>|kon <#1#> niet doorzoeken
+ERR_SETUID|unable to set uid|kon uid niet instellen
+ERR_SLASH|dir and dot must start with slash|dir en dot moeten met een schuine streep beginnen
+ERR_STAT|unable to stat <#1#>|kon <#1#> niet statten
+ERR_SUBCOMMAND|Sorry, I don't accept commands in the subject line. Please send a message to the -help address shown in the the ``Mailing-List:'' header for command info (#5.7.0)|Sorry, ik accepteer geen commando's in het onderwerp. Stuur a.u.b. een bericht naar het -help adres dat in de "Mailing-List:" header getoond wordt voor informatie over commando's (#5.7.0)
+ERR_SUBLIST|sublist messages must have a Mailing-List header (#5.7.2)|sublist berichten moeten een Mailing-List header hebben (#5.7.2)
+ERR_SUBSCRIBER_CAN|only subscribers can <#1#> (#5.7.1)|alleen abonnees kunnen <#1#> (#5.7.1)
+ERR_SUBST_UNSAFE|Sorry, substitution of target addresses into headers with #A# or #t# is unsafe and not permitted.|Sorry, vervangen van doeladressen in headers door #A# of #t# is onveilig en niet toegestaan.
+ERR_SUB_NOP|target is already a subscriber|doel is al abonnee
+ERR_SUID|Sorry, I won't run as root|Sorry, ik weiger als root te draaien
+ERR_SYNC|unable to sync <#1#>|kon <#1#> niet synchroniseren
+ERR_SYNTAX_CONFIG|syntax error in config file <#1#>|syntaxfout in configuratiebestand <#1#>
+ERR_SYNTAX_MISSING_AUTHHASH| syntax error: <#1#>: missing author hash|syntaxfout: <#1#>: auteurhash ontbreekt
+ERR_SYNTAX_MISSING_AUTHOR| syntax error: <#1#>: author info missing.|syntaxfout: <#1#>: auteurinformatie ontbreekt
+ERR_SYNTAX_MISSING_FIRST| syntax error: <#1#>: first line missing|syntaxfout: <#1#>: eerste regel ontbreekt
+ERR_SYNTAX_MISSING_SEMIDATE| syntax error: <#1#>: missing \";\" after date|syntaxfout: <#1#>: \";\"na datum ontbreekt
+ERR_SYNTAX_MISSING_SEPARATOR| syntax error: <#1#>: missing subject separator|syntaxfout: <#1#>: onderwerpscheiding ontbreekt
+ERR_SYNTAX_MISSING_SUBJHASH| syntax error: <#1#>: missing subject hash|syntaxfout: <#1#>: onderwerphash ontbreekt
+ERR_SYNTAX|syntax error in <#1#>|syntaxfout in <#1#>
+ERR_TMP_QMAIL_QUEUE|temporary qmail-queue error|tijdelijke qmail-queue fout
+ERR_UID|user id not found|gebruikers-id niet gevonden
+ERR_UNIQUE|unable to create unique message file name|kon geen unieke bestandsnaam maken voor het bericht
+ERR_UNSUB_NOP|target is not a subscriber|doel is geen abonnee
+ERR_VERSION|ezmlmrc version mismatch. Behavior may not match docs.|versie van ezmlmrc komt niet overeen. Gedrag stemt mogelijk niet overeen met de documentatie.
+ERR_WRITE_STDOUT|unable to write to standard output|kon niet naar standaard uitvoer schrijven
+ERR_WRITE|unable to write <#1#>|kon niet naar <#1#> schrijven
+SUB_CONFIRM_POST|Confirm post to <#L#>@<#H#>|Bevestig bericht naar <#L#>@<#H#>
+SUB_EDIT_LIST|List of editable text files for <#L#>@<#H#>|Lijst van bewerkbare bestanden voor <#L#>@<#H#>
+SUB_EDIT_REQUEST|EDIT <#1#> for <#L#>@<#H#>|BEWERK <#1#> voor <#L#>@<#H#>
+SUB_EDIT_SUCCESS|Success editing <#1#> for <#L#>@<#H#>|<#1#> voor <#L#>@<#H#> met succes bewerkt
+SUB_FAQ|FAQ for <#L#>@<#H#>|Veel Voorkomende Vragen vragen (VVV) voor <#L#>@<#H#>
+SUB_GET_MSG|Archive retrieval from <#L#>@<#H#>|Archief ophalen uit <#L#>@<#H#>
+SUB_GOODBYE|GOODBYE from <#L#>@<#H#>|Tot ziens van <#L#>@<#H#>
 SUB_HELP|Help for <#L#>@<#H#>|Help voor <#L#>@<#H#>
+SUB_INFO|Information for <#L#>@<#H#>|Informatie over <#L#>@<#H#>
+SUB_LIST|Subscriber list for <#L#>@<#H#>|Abonneelijst van <#L#>@<#H#>
+SUB_LOG_SEARCH|Log search results for <#L#>@<#H#>|Zoekresultaten uit log van <#L#>@<#H#>
+SUB_LOG|Subscriber log for <#L#>@<#H#>|Abonneelog van <#L#>@<#H#>
+SUB_MODERATE|MODERATE for <#L#>@<#H#>|Moderatie voor <#L#>@<#H#>
+SUB_MOD_HELP|Moderator help for <#L#>@<#H#>|Moderatorhulp voor <#L#>@<#H#>
+SUB_MOD_SUBSCRIBE|CONFIRM subscribe to <#L#>@<#H#>|Bevestig abonneren op <#L#>@<#H#>
+SUB_MOD_UNSUBSCRIBE|CONFIRM unsubscribe from <#L#>@<#H#>|Bevestig opzeggen van <#L#>@<#H#>
+SUB_PROBE|Probe from <#L#>@<#H#>|Peiling van <#L#>@<#H#>
 SUB_RESULTS|<#L#> results|<#L#> resultaten
+SUB_RETURNED_POST|Returned post for <#L#>@<#H#>|Teruggestuurd bericht voor <#L#>@<#H#>
+SUB_STATUS|Subscription status on <#L#>@<#H#>|Abonnementsstatus op <#L#>@<#H#>
+SUB_SUBSCRIBE_NOP|Already subscribed to <#L#>@<#H#>|Al geabonneerd op <#L#>@<#H#>
+SUB_UNSUBSCRIBE_NOP|Not subscribed to <#L#>@<#H#>|Geen abonnee van <#L#>@<#H#>
+SUB_USR_SUBSCRIBE|confirm subscribe to <#L#>@<#H#>|bevestig abonneren op <#L#>@<#H#>
+SUB_USR_UNSUBSCRIBE|confirm unsubscribe from <#L#>@<#H#>|bevestig opzeggen van <#L#>@<#H#>
 SUB_WARNING|Warning from <#L#>@<#H#>|Waarschuwing van <#L#>@<#H#>
-SUB_WELCOME|WELCOME to <#L#>@<#H#>|WELKOM bij <#L#>@<#H#>
+SUB_WELCOME|WELCOME to <#L#>@<#H#>|Welkom bij <#L#>@<#H#>
+TXT_ADMINISTRIVIA|Administrivia:|Administratief:
 TXT_BY|by|door
 TXT_EDIT_END|%%% END OF TEXT FILE|%%% EINDE VAN TEKST BESTAND
 TXT_EDIT_START|%%% START OF TEXT FILE|%%% START VAN TEKST BESTAND
-TXT_LISTMEMBERS|Subscribers to this list are:|Lid van deze list zijn;
-TXT_MAILING_LIST|contact <#L#>-help@<#H#>; run by ezmlm|contact <#L#>-help@<#H#>; beheerd door ezmlm
+TXT_LISTMEMBERS|Subscribers to this list are:|Abonnees van deze list zijn:
+TXT_MAILING_LIST|contact <#L#>-help@<#H#>; run by ezmlm|neem contact op met <#L#>-help@<#H#>; beheerd door ezmlm
 TXT_NOINDEX|aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->|aaaaaaaaaaaaaaaaaaaa <- onderwerpindex niet beschikbaar voor bericht(en) ->
-TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Sorry, alleen leden mogen berichten insturen. Als u lid bent, stuur dit bericht dan door naar <#L#>-owner@<#H#> om uw adres toe te laten voegen.
+TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Sorry, alleen abonnees mogen berichten sturen. Als u abonnee bent, stuur dit bericht dan door naar <#L#>-owner@<#H#> om uw adres toe te laten voegen.
 TXT_REJECT_POSTS|Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this.|Sorry, ik heb opdracht gekregen om uw berichten te weigeren. U kunt contact opnemen met <#L#>-owner@<#H#> als u hier vragen over heeft.
 TXT_SUPPRESSED|<suppressed>|<onderdrukt>
-TXT_TOP_TOPICS|Topics (messages <#1#> through <#2#>)|Onderwerpen (berichten <#1#> tot en met <#2#>)
+TXT_TOP_TOPICS|Topics (messages <#1#> through <#2#>)|Onderwerpen (bericht <#1#> tot en met <#2#>)

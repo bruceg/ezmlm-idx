@@ -1,40 +1,57 @@
-# Revision: 1
+# Revision: 3
 <=n=>
-Het <#L#>-edit.file commando kan gebruikt worden om een administrator
-de teksten te laten wijzigen van de mailing list manager van de
-<#L#>@<#h#> mailing list.
+Het <#L#>-edit.file commando kan door een beheerder gebruikt worden
+om het grootste deel van de antwoorden van de <#L#>@<#h#> mailing list
+te bewerken.
 
-Hier volgt een overzicht van de teksten en wanneer ze gebruikt worden.
-Om een tekst te wijzigen stuurt u een email naar
-<#L#>-edit.file@<#h#>
-waarbij u 'file' verandert in de naam van de tekst die u wilt
-wijzigen. Instructies worden met de file meegestuurd.
+Hieronder staat een overzicht van de namen van de antwoord-bestanden
+en een korte omschrijving wanneer ze gebruikt worden.
+Stuur een bericht naar <#L#>-edit.file@<#h#>
+om een bestand te bewerken, waarbij u 'file' vervangt door de naam
+van de het bestand. Instructies voor het bewerken worden met het
+tekstbestand meegestuurd.
 
-File                Gebruik
+Bestand             Gebruik
 
-bottom              Staat onder ieder bericht. Bevat algemene commando's
-digest              Administratief gedeelte van digests
-faq                 Veel gestelde vragen (FAQ's) van deze list
-get_bad             In plaats van berichten die niet in het archief staan
+bottom              Staat onder ieder bericht. Algemene commando informatie.
+bounce_bottom       Staat onder bounce warschuwingen.
+bounce_num          Prefix voor de lijst van berichtnummers die gebounced zijn.
+bounce_probe        Peilbericht om te testen of een adres te bereiken is.
+bounce_warn         Waarschuwingsbericht met betrekking tot bouncende berichten.
+<=dn=>
+dig_bounce_num      Prefix voor de lijst van samenvattingsnummers die gebounced zijn.
+digest              Administratief gedeelte van samenvattingen.
+<=n=>
+edit_do             Prefix met instructies voor tekstbewerking.
+edit_done           Bericht bij succesvol bewerken.
+edit_list           Deze lijst.
+faq                 Veel Voorkomende Vragen (VVV) van deze list.
+<=Bn=>
+get_bad             In plaats van berichten die niet in het archief staan.
+<=n=>
 help                Algemene help (tussen 'top' en 'bottom').
-info                List info. De eerste regel zou betekenis moeten hebben
-mod_help            help voor list moderators
-mod_reject          bericht aan afzender van geweigerde mail
-mod_request         bericht aan moderators met oorspronkelijk bericht
-mod_sub             bericht aan gebruiker als deze toegelaten is
-mod_sub_confirm     bericht aan moderator met verzoek om toelating
-mod_timeout         aan afzender als gemodereerd bericht verlopen is
-mod_unsub_confirm   aan remote admin voor bevestiging van uitschrijven
-sub_bad             aan gebruiker als inschrijving is afgewezen
-sub_confirm         aan gebruiker als inschrijving is goedgekeurd
-sub_nop             aan gebruiker na hernieuwde inschrijving
-sub_ok              aan gebruiker na succesvolle inschrijving
-top                 staat boven ieder bericht
-<=tn=>
-trailer             staat onder aan elk uitgezonden bericht
+info                List info. De eerste regel zou betekenis moeten hebben.
+<=mn=>
+messages            Lijst van onderwerpregels en interne foutmeldingen.
+mod_help            Help voor list moderators.
+mod_reject          Bericht aan afzender van geweigerde mail.
+mod_request         Bericht aan moderators met oorspronkelijk bericht.
+mod_sub             Bericht aan gebruiker als deze toegelaten is.
+mod_sub_confirm     Bericht aan moderator met verzoek om toelating.
+mod_timeout         Aan afzender als gemodereerd bericht verlopen is.
+mod_unsub_confirm   Aan remote beheerder voor bevestiging van uitschrijven.
+<=yn=>
+post-confirm        Aan afzender voor bevestiging van bericht.
 <=n=>
-unsub_bad           aan gebruiker als uitschrijving mislukt is
-unsub_confirm       aan gebruiker om uitschrijving te bevestigen
-unsub_nop           aan niet-gebruiker na uitschrijf verzoek
-unsub_ok            aan ex-gebruiker na succesvolle uitschrijving
-
+sub_bad             Aan abonnee als bevestiging slecht was.
+sub_confirm         Aan abonnee om abonnement te bevestigen.
+sub_nop             Aan abonnee na verlenging abonnement.
+sub_ok              Aan abonnee na succesvol abonneren.
+top                 Staat boven ieder bericht.
+<=tn=>
+trailer             Staat onder aan elk uitgaand list bericht.
+<=n=>
+unsub_bad           Aan abonnee als bevestiging van opzeggen slecht was.
+unsub_confirm       Aan abonnee om opzegging te bevestigen.
+unsub_nop           Aan niet-abonnee naa verzoek tot opzeggen.
+unsub_ok            Aan ex-abonnee na succesvolle opzegging.

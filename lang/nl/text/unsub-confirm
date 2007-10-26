@@ -1,0 +1,32 @@
+# Revision: 1
+Stuur om te bevestigen dat u
+
+<#A#>
+
+van de <#l#> mailing list wilt verwijderen a.u.b. een leeg
+antwoordbericht naar dit adres:
+
+<#R#>
+
+Normaal gesproken gebeurt dit wanneer u op "beantwoorden" klikt.
+Werkt dit niet, kopieer en plak het adres dan in het "Aan:" veld
+van een nieuw bericht.
+<=x=>
+
+of klik hier:
+        mailto:<#R#>
+<==>
+
+Ik heb niet gecontroleerd of jouw adres al op de mailing list
+geabonneerd is. Om te zien welk adres je gebruikt hebt om je te
+abonneren kijk je naar berichten die je van de mailing list ontvangt.
+Elk bericht heeft jouw adres verborgen in het zgn. 'return path'. 
+Bijv, mary@example.com ontvangt berichten met als 'return path':
+<<#l#>-return-<number>-mary=example.com@<#h#>.
+
+<=q=>
+Sommige mailprogramma's zijn stuk en kunnen niet overweg met lang adressen.
+Als u niet op dit verzoek kunt antwoorden, stuur dan een bericht naar
+<<#L#>-request@<#h#>> en plaats het hele bovenstaande adres in de
+"Onderwerp:" regel.
+
