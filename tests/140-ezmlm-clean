@@ -55,4 +55,19 @@ EOF
   ${GREP} "clean4" "$QQMSG".* >/dev/null 2>&1 && \
 	fatal "-R failed: notified sender about entry 3 rejection"
 
+${ECHO} <<EOF > "${DIR}/mod/pending/5"
+Return-Path: <${DIG}@$HOST>
+X-num: clean5
+EOF
+  chmod +x "${DIR}/mod/pending/5"
+  rm -f "$QQENV"
+  ${ECHO} > "$DIR"/noreturnposts
+  ${EZBIN}/ezmlm-clean "$DIR" >"$ERR" 2>&1 ||
+	fatal "-R failed"
+  if [ -r  "${DIR}/mod/pending/5" ]; then
+	fatal "failed to remove moderation queue entry 5 with noreturnposts"
+  fi
+  exists "$QQENV" \
+  && fatal "third invocation of ezmlm-clean sent a message"
+
   ${ECHO} "OK"

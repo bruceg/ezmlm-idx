@@ -1051,6 +1051,12 @@ will process entries for messages from one above the contents of this
 file up to an including the message number in
 .IR dir\fB/num .
 
+If
+.I dir\fB/noreturnposts
+exists,
+.B ezmlm-clean
+will not return timed-out posts to their senders.
+
 .I dir\fB/key
 is a binary file used to create confirmation codes.  Anyone who can
 guess the contents of

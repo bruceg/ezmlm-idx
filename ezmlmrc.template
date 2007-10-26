@@ -154,6 +154,9 @@
 # Message confirmation
 </-confirmpost#eY/>
 </confirmpost#y/>
+# Return timed-out posts
+</-noreturnposts#eU/>
+</noreturnposts#u/>
 # List owner mail
 </owner#5/>
 <#5#>
@@ -227,10 +230,8 @@
 |<#B#>/ezmlm-confirm '<#D#>'
 </#iy/>
 |<#B#>/ezmlm-archive '<#D#>' || exit 0
-</#Uy/>
+</#y/>
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
-</#uy/>
-|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
 </editor/>
 # reject shouldn't be configured for sublist.
 </#^0/>
@@ -249,18 +250,13 @@
 # For message moderation or confirmation, editor has store/clean
 </#y/>
 |<#B#>/ezmlm-store '<#D#>'
-</#Uy/>
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
-</#uy/>
-|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
 </#mUoY/>
 |<#B#>/ezmlm-store -P '<#D#>'
 </#mUOY/>
 |<#B#>/ezmlm-store '<#D#>'
-</#mUY/>
+</#mY/>
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
-</#muY/>
-|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
 # for non-message moderated lists, it has send
 </#MY/>
 |<#B#>/ezmlm-send '<#D#>'
@@ -298,10 +294,8 @@
 |<#B#>/ezmlm-moderate '<#D#>'
 </#mi/>
 |<#B#>/ezmlm-archive '<#D#>' || exit 0
-</#mU/>
+</#m/>
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
-</#mu/>
-|<#B#>/ezmlm-clean -R '<#D#>' || exit 0
 </headerremove#E/>
 return-path
 return-receipt-to

@@ -60,6 +60,8 @@ Smaller changes:
 - ezmlm-tstdig falls back to dir/digcount, dir/digsize, and dir/digtime
   if -m, -k, or -t are not set.
 
+- Added dir/noreturnposts control file for ezmlm-clean.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 messages changes also replaced the confirmpost subject line hack in

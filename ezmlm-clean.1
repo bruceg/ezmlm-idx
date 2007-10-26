@@ -72,6 +72,22 @@ Re-delivery should be avoided by suffixing any
 line invoking
 .B ezmlm-clean
 with '|| exit 0'.
+
+By default, the timed-out post is returned to the sender.  If
+.I dir\fB/noreturnposts
+exists, it switches the default to discard the timed-out post.
+.B Note:
+.B ezmlm-clean
+is normally run from both
+.I dir\fB/editor
+and
+.IR dir\fB/moderator .
+To suppress sender notification, either
+.I dir\fB/noreturnposts
+needs to exist or the
+.B \-R
+option needs to be specified for all invocations of
+.BR ezmlm-clean .
 .SH OPTIONS
 .TP
 .B \-m
@@ -87,15 +103,6 @@ The timed-out post is returned to sender.
 .TP
 .B \-R
 The timed-out post is discarded without sender notification.
-.B Note:
-.B ezmlm-clean
-is normally run from both
-.I dir\fB/editor
-and
-.IR dir\fB/moderator .
-To suppress sender notification, the switch needs to be specified
-for all invocations of
-.BR ezmlm-clean .
 .TP
 .B \-v
 Display

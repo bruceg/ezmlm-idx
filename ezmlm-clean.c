@@ -35,7 +35,7 @@
 #include "auto_version.h"
 
 int flagmime = MOD_MIME;	/* default is message as attachment */
-int flagreturn = 1;		/* default return timed-out messages */
+int flagreturn = -1;
 stralloc fnmsg = {0};
 
 /* When ezmlm-clean is run, messages and message stubs in pending/      */
@@ -238,6 +238,9 @@ void main(int argc,char **argv)
     }
 
   startup(dir = argv[optind]);
+  if (flagreturn < 0)
+    flagreturn = getconf_isset("noreturnposts") ? 0 : 1;
+  /* default to returning timed-out messages */
 
   getconf_line(&modtime,"modtime",0);
   if (!stralloc_0(&modtime)) die_nomem();
