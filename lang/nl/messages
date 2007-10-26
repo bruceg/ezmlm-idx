@@ -1,3 +1,32 @@
+ERR_ADDR_AT|address does not contain @|adres bevat geen @
+ERR_ADDR_LONG|address is too long|adres is te lang
+ERR_ADDR_NL|address contains newline|adres bevat newline
+ERR_ANONYMOUS|I do not reply to senders without host names (#5.7.2)|Ik antwoord niet op zenders zonder host name (#5.7.2)
+ERR_BADHOST|list host not allowed|list host niet toegestaan
+ERR_BADLOCAL|list local not allowed|list local niet toegestaan
+ERR_BADUSER|user not allowed|gebruiker niet toegestaan
+ERR_BAD_ADDRESS|I don't accept messages at this address (local doesn't match) (#5.1.1)|Ik accepteer geen berichten op dit adres (local  komt niet overeen) (#5.1.1)
+ERR_BAD_ALL|Sorry, after removing unacceptable MIME parts from your message I was left with nothing (#5.7.0)|Het spijt me, na het verwijderen van onaccepteerbare MIME gedeelten bleef er niks over (#5.7.0)
+ERR_BAD_DIGCODE|incorrect digest code (#5.7.1)|incorrecte digest code (#5.7.1)
+ERR_BAD_INDEX|Old format or corrupted index. Run ezmlm-idx! (#5.3.0)|Oud formaat of kapotte index. Start ezmlm-idx! (#5.3.0)
+ERR_BAD_NAME|only letters and underscore allowed in file name (#5.6.0)|alleen letters en underscores toegestaan in de bestandsnaam (#5.6.0)
+ERR_BAD_PART|Sorry, a message part has an unacceptable MIME Content-Type: '<#1#>' (#5.2.3)|Het spijt me, een deel van het bericht bevat een niet geaccepteerd MIME Content-Type: '<#1#>' (#5.2.3)
+ERR_BAD_REQUEST|Illegal request format (#5.7.1)|Ongeldig verzoek formaat (#5.7.1)
+ERR_BAD_RETURN_ADDRESS|Invalid bounce or receipt address format (#5.1.1)|Foutief bounce of ontvangstbevesting formaat (#5.1.1)
+ERR_BAD_TYPE|Sorry, I don't accept messages of MIME Content-Type '<#1#>' (#5.2.3)|Het spijt me, ik accepteer geen berichten met MIME Content-Type '<#1#>' (#5.2.3)
+ERR_BOUNCE|I do not reply to bounce messages (#5.7.2)|Ik antwoord niet op bounce berichten (#5.7.2)
+SUB_FAQ|FAQ for <#L#>@<#H#>|Veel gestelde vragen (FAQ) voor <#L#>@<#H#>
+SUB_HELP|Help for <#L#>@<#H#>|Help voor <#L#>@<#H#>
+SUB_RESULTS|<#L#> results|<#L#> resultaten
+SUB_WARNING|Warning from <#L#>@<#H#>|Waarschuwing van <#L#>@<#H#>
+SUB_WELCOME|WELCOME to <#L#>@<#H#>|WELKOM bij <#L#>@<#H#>
+TXT_BY|by|door
+TXT_EDIT_END|%%% END OF TEXT FILE|%%% EINDE VAN TEKST BESTAND
+TXT_EDIT_START|%%% START OF TEXT FILE|%%% START VAN TEKST BESTAND
+TXT_LISTMEMBERS|Subscribers to this list are:|Lid van deze list zijn;
 TXT_MAILING_LIST|contact <#L#>-help@<#H#>; run by ezmlm|contact <#L#>-help@<#H#>; beheerd door ezmlm
+TXT_NOINDEX|aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->|aaaaaaaaaaaaaaaaaaaa <- onderwerpindex niet beschikbaar voor bericht(en) ->
 TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Sorry, alleen leden mogen berichten insturen. Als u lid bent, stuur dit bericht dan door naar <#L#>-owner@<#H#> om uw adres toe te laten voegen.
 TXT_REJECT_POSTS|Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this.|Sorry, ik heb opdracht gekregen om uw berichten te weigeren. U kunt contact opnemen met <#L#>-owner@<#H#> als u hier vragen over heeft.
+TXT_SUPPRESSED|<suppressed>|<onderdrukt>
+TXT_TOP_TOPICS|Topics (messages <#1#> through <#2#>)|Onderwerpen (berichten <#1#> tot en met <#2#>)
