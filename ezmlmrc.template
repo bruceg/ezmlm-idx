@@ -35,12 +35,6 @@
 # A set of user-defined command line switches (xX, zZ) are available for
 # customization.
 #
-# Within the text, certain tags are substituted. Other tags are copied
-# as is. <#A#>, <#R#>, and <#r#> are substituted by ezmlm-manage and
-# -store (see man pages) and <#l#> (lower case L) is replaced
-# dynamically by the list name for programs handling both 'list' and
-# 'list-digest'.
-#
 # Substitutions made by ezmlm-make (at list creation or edit time) are:
 # <#B#> ezmlm binaries path
 # <#C#> digest code
@@ -142,15 +136,15 @@
 </-confirmer#eY/>
 # We don't clean out text files to make it easier for users
 # doing manual config by e.g. touching dir/remote.
+# message moderation
+</modpost#m/>
+<#7#>
 # subscription moderation
 </modsub#s/>
 <#8#>
 # remote admin
 </remote#r/>
 <#9#>
-# message moderation
-</modpost#m/>
-<#7#>
 # Message confirmation
 </-confirmpost#eY/>
 </confirmpost#y/>
