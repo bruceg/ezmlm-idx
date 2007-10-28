@@ -63,15 +63,34 @@
 	fatal "No From: ...-accept header in mod request for mod3"
   fi
 
+  qqclean
+  touch "$DIR"/modpostonly
+  { ${ECHO} "X-num: mod4"; make_message; } > ${TMP};
+	${EZBIN}/ezmlm-store  "$DIR" >"$ERR" 2>&1 < ${TMP} || \
+	fatal "modpostonly failed to accept mods post 4"
+  checkenv mod4 "$LOC-return-@$HOST" "$SENDER"
+  ${RM} "$DIR"/modpostonly
+
   ${EZBIN}/ezmlm-unsub "$DIR" mod "$SENDER"
 
 # not from moderator, should be rejected directly with -P
   qqclean
-  { ${ECHO} "X-num: mod4"; make_message; } > ${TMP};
+  { ${ECHO} "X-num: mod5"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < ${TMP} && \
-	fatal "-P failed to reject non-mod message 4"
+	fatal "-P failed to reject non-mod message 5"
 
   test -s "$QQMSG" && \
 	fatal "ezmlm-store: -P failed to reject message from non-mod"
+
+# not from moderator, should be rejected directly with -P
+  qqclean
+  touch "$DIR"/modpostonly
+  { ${ECHO} "X-num: mod6"; make_message; } > ${TMP};
+	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} && \
+	fatal "modpostonly failed to reject non-mod message 6"
+  ${RM} "$DIR"/modpostonly
+
+  test -s "$QQMSG" && \
+	fatal "ezmlm-store: modpostonly failed to reject message from non-mod"
 
   ${ECHO} "OK"

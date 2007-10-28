@@ -446,6 +446,9 @@ stores the message in
 .IR dir\fB/mod/pending
 and sends a moderation request to all moderators stored in
 .IR mod .
+If moderation is enabled and
+.I dir\fB/modpostonly
+exists, messages from non-moderators are rejected.
 
 If neither
 .I dir\fB/confirmpost

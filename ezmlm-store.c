@@ -37,8 +37,8 @@
 #include "auto_version.h"
 
 int flagmime = MOD_MIME;	/* default is message as attachment */
-int flagpublic = 1;		/* default anyone can post */
-				/* =0 for only moderators can */
+int flagmodpostonly = -1;	/* default anyone can post */
+				/* =1 for only moderators can */
 int flagself = 0;		/* `modpost` mods approve own posts */
 				/* but mod/ is used for moderators */
 				/* of other posts. Def=no=0 */
@@ -140,8 +140,8 @@ void main(int argc,char **argv)
       case 'B': flagbody = 0; break;
       case 'm': flagmime = 1; break;
       case 'M': flagmime = 0; break;
-      case 'p': flagpublic = 1; break;	/* anyone can post (still moderated)*/
-      case 'P': flagpublic = 0; break;	/* only moderators can post */
+      case 'p': flagmodpostonly = 0; break; /* anyone can post (still mod'd)*/
+      case 'P': flagmodpostonly = 1; break; /* only moderators can post */
       case 's': flagself = 1; break;	/* modpost and DIR/mod diff fxns */
       case 'S': flagself = 0; break;	/* same fxn */
       case 'y': flagconfirm = 1; break; /* force post confirmation */
@@ -169,8 +169,10 @@ void main(int argc,char **argv)
   startup(dir = argv[optind]);
   initsub(0);
 
-  if (flagconfirm == -1)
+  if (flagconfirm < 0)
     flagconfirm = getconf_isset("confirmpost");
+  if (flagmodpostonly < 0)
+    flagmodpostonly = getconf_isset("modpostonly");
 
   flagmodpost = getconf_line(&moderators,"modpost",0);
   flagremote = getconf_isset("remote");
@@ -193,7 +195,7 @@ void main(int argc,char **argv)
   } else
     ismod = 0;
 
-  if (!ismod && !flagpublic)
+  if (!ismod && flagmodpostonly)
     strerr_die2x(100,FATAL,MSG(ERR_NO_POST));
 
   fdlock = lockfile("mod/lock");

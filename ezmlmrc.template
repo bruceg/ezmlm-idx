@@ -163,6 +163,9 @@
 # No unsubscribe confirmation
 </-nounsubconfirm#eJ/>
 </nounsubconfirm#j/>
+# Non-public: only moderators can post
+</-modpostonly#eO/>
+</modpostonly#o/>
 # List owner mail
 </owner#5/>
 <#5#>
@@ -219,9 +222,7 @@
 </#y/>
 |<#B#>/ezmlm-store '<#D#>'
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
-</#mUoY/>
-|<#B#>/ezmlm-store -P '<#D#>'
-</#mUOY/>
+</#mUY/>
 |<#B#>/ezmlm-store '<#D#>'
 </#mY/>
 |<#B#>/ezmlm-clean '<#D#>' || exit 0

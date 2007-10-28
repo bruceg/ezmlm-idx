@@ -12,19 +12,22 @@ message moderation or user confirmation.
 
 If
 .I dir\fB/confirmpost
-exists and
+exists and the
 .B \-Y
-is not set, it work in user confirmation mode.
-If
-.I dir\fB/confirmpost
-does not exists and
+option is not set, it works in user confirmation mode.  Otherwise if the
 .B \-y
-is not set and
+option is not set and
 .I dir\fB/modpost
-exists, it work in message moderation mode.
+exists, it works in message moderation mode.
 Otherwise the message is passed on to
 .BR ezmlm-send(1) .
 
+If either
+.I dir\fB/modpostonly
+exists or the
+.B \-P
+option is set, only moderators will be allowed to post.  Posts from
+other addresses are bounced.
 .SH "USER CONFIRMATION"
 .B ezmlm-store
 reads a mail message and
@@ -191,7 +194,9 @@ for the moderators for all moderator functions.
 (Default.)
 Anyone can post. Posts that are not from a moderator are sent out to
 all moderators for approval. Posts that are from a moderator are
-sent only to that moderator.
+sent only to that moderator. This is the default unless the
+.I dir\fB/modpostonly
+file exists.
 .TP
 .B \-P
 Only moderators can post. Those posts are sent to the posting moderator
