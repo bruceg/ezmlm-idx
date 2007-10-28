@@ -1,3 +1,4 @@
+#include "error.h"
 #include "messages.h"
 #include "altpath.h"
 #include "config.h"
@@ -70,8 +71,12 @@ static void init_map(struct messages *m)
 
 static void init(void)
 {
+  int errno_copy;
+
   if (initialized)
     return;
+  errno_copy = errno;
+
   init_map(&msg_internal);
   initialized = 1;
 
@@ -85,6 +90,8 @@ static void init(void)
   altdefaultpath(&xdata,"text/messages");
   readit(&msg_default.text,xdata.s);
   init_map(&msg_default);
+
+  errno = errno_copy;
 }
 
 const char *messages_getn(const char *msg,const char *params[10])
