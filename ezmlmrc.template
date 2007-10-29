@@ -179,9 +179,9 @@
 # Add flags if you want a non-default digest format.
 </manager#ab/>
 |<#B#>/ezmlm-get -P '<#D#>'
-</manager#aGB/>
+</manager#aBG/>
 |<#B#>/ezmlm-get '<#D#>'
-</manager#agB/>
+</manager#aBg/>
 |<#B#>/ezmlm-get -s '<#D#>'
 # Service subject commands to the # request address if the -q switch is given.
 </manager#q/>
