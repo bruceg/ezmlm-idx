@@ -53,6 +53,9 @@ Smaller changes:
 
 - Added <#a#> substitution for the local part of the accept address.
 
+- ezmlm-warn will now process bounces for both the main and digest lists
+  if neither the -d nor the -D options are given.
+
 - Added several control files for programs:
 	dir/digcount		ezmlm-tstdig
 	dir/digestcode		ezmlm-get

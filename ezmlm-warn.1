@@ -70,6 +70,14 @@ keeps track of the last subdirectory scanned.
 will not send a warning or probe to an address that is
 not currently a subscriber.
 
+If neither the
+.B \-d
+nor the
+.B \-D
+option is given to
+.BR ezmlm-warn ,
+it will process bounces for both the main and digest lists.
+
 .B ezmlm-warn
 reads
 .I dir\fB/copylines
@@ -86,15 +94,14 @@ exits without taking any action.
 .SH OPTIONS
 .TP
 .B \-d
-process bounces for the digest list, rather than for the main list.
+process bounces only for the digest list.
 Digest list bounces are stored in
 .I dir\fB/digest/bounce/
 rather than in
 .IR dir\fB/bounce/ .
 .TP
 .B \-D
-(Default.)
-Process bounces for the main list.
+Process bounces only for the main list.
 .TP
 .B \-l \fIlockout
 .B ezmlm-warn

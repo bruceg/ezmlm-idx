@@ -14,7 +14,7 @@
   ${RM} "$DIR"/nowarn
 
 # should send a warning
-  ${EZBIN}/ezmlm-warn -t0 "$DIR" >"$ERR" 2>&1 || \
+  ${EZBIN}/ezmlm-warn -D -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with normal bounce for warning"
   checkenv warn1 "$LOC-return-warn-.*-$BNC=$HOST@$HOST" "$BNC@$HOST"
   ${EZBIN}/ezmlm-issubn "$DIR" || \

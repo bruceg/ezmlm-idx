@@ -194,8 +194,6 @@
 </manager/>
 |<#B#>/ezmlm-manage '<#D#>'
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
-</#d/>
-|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
 # manage message confirmations
 </confirmer#y/>
 <#B#>/ezmlm-weed
@@ -240,12 +238,8 @@
 # I also for -umi lists
 </#umi/>
 |<#B#>/ezmlm-archive '<#D#>' || exit 0
-# all lists have warn unless -w.
 </#/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
-# for digest bounces
-</#d/>
-|<#B#>/ezmlm-warn -d '<#D#>' || exit 0
 </#d^4/>
 |<#B#>/ezmlm-tstdig -m30 -k64 -t48 '<#D#>' || exit 99
 </#d4/>

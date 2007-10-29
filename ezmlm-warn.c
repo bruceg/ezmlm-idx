@@ -47,7 +47,6 @@ char outbuf[16];
 unsigned long when;
 const char *dir;
 const char *workdir;
-int flagdig = 0;
 stralloc fn = {0};
 stralloc bdname = {0};
 stralloc fnlasth = {0};
@@ -56,6 +55,8 @@ stralloc lasth = {0};
 stralloc lastd = {0};
 unsigned long copylines = 0;	/* Number of lines from the message to copy */
 struct stat st;
+unsigned long lockout = 0L;
+unsigned long bouncetimeout = BOUNCE_TIMEOUT;
 
 static void die_read(void) { strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s)); }
 
@@ -81,7 +82,7 @@ stralloc qline = {0};
 
 struct qmail qq;
 
-void code_qput(const char *s,unsigned int n)
+static void code_qput(const char *s,unsigned int n)
 {
     if (!flagcd)
       qmail_put(&qq,s,n);
@@ -94,7 +95,7 @@ void code_qput(const char *s,unsigned int n)
     }
 }
 
-void doit(int flagw)
+static void doit(int flagdig, int flagw)
 {
   unsigned int i;
   int fd;
@@ -224,46 +225,16 @@ void doit(int flagw)
     strerr_die2sys(111,FATAL,MSG1(ERR_DELETE,fn.s));
 }
 
-void main(int argc,char **argv)
+static void dodir(int flagdig)
 {
   DIR *bouncedir, *bsdir, *hdir;
   direntry *d, *ds;
   unsigned long bouncedate;
-  unsigned long bouncetimeout = BOUNCE_TIMEOUT;
-  unsigned long lockout = 0L;
   unsigned long ld;
   unsigned long ddir,dfile;
   int fdlock,fd;
-  int opt;
   char ch;
 
-  (void) umask(022);
-  sig_pipeignore();
-  when = (unsigned long) now();
-  while ((opt = getopt(argc,argv,"dDl:t:vV")) != opteof)
-    switch(opt) {
-      case 'd': flagdig = 1; break;
-      case 'D': flagdig = 0; break;
-      case 'l':
-                if (optarg) {	/* lockout in seconds */
-                  (void) scan_ulong(optarg,&lockout);
-                }
-                break;
-      case 't':
-                if (optarg) {	/* bouncetimeout in days */
-                  (void) scan_ulong(optarg,&bouncetimeout);
-                  bouncetimeout *= 3600L * 24L;
-                }
-                break;
-      case 'v':
-      case 'V': strerr_die2x(0, "ezmlm-warn version: ",auto_version);
-      default:
-	die_usage();
-    }
-  startup(dir = argv[optind]);
-  if (getconf_isset("nowarn"))
-    _exit(0);
-  getconf_ulong(&copylines,"copylines",0);
   workdir = flagdig ? "digest" : ".";
 
   if (!stralloc_copys(&fnlastd,workdir)) die_nomem();
@@ -276,7 +247,7 @@ void main(int argc,char **argv)
   if (!lockout)
     lockout = bouncetimeout / 50;		/* 5.6 h for default timeout */
   if (ld + lockout > when && ld < when)
-    _exit(0);		/* exit silently. Second check is to prevent lockup */
+    return;		/* exit silently. Second check is to prevent lockup */
 			/* if lastd gets corrupted */
 
   if (!stralloc_copy(&fnlasth,&fnlastd)) die_nomem();
@@ -301,7 +272,7 @@ void main(int argc,char **argv)
     if (errno != error_noent)
       strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,line.s));
     else
-      _exit(0);		/* no bouncedir - no bounces! */
+      return;		/* no bouncedir - no bounces! */
   }
 
   initsub(0);
@@ -339,7 +310,7 @@ void main(int argc,char **argv)
 	if (!stralloc_cats(&fn,ds->d_name)) die_nomem();
 	if (!stralloc_0(&fn)) die_nomem();
 	if ((ds->d_name[0] == 'd') || (ds->d_name[0] == 'w'))
-	  doit(ds->d_name[0] == 'w');
+	  doit(flagdig, ds->d_name[0] == 'w');
         else				/* other stuff is junk */
 	  if (unlink(fn.s) == -1)
 	    strerr_die2sys(111,FATAL,MSG1(ERR_DELETE,fn.s));
@@ -378,7 +349,7 @@ void main(int argc,char **argv)
       strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fnlasth.s));
   } else if (when < (unsigned long)st.st_mtime + 100000
 	     && when > (unsigned long)st.st_mtime)
-    _exit(0);			/* 2nd comp to guard against corruption */
+    return;			/* 2nd comp to guard against corruption */
 
   if (slurp(fnlasth.s,&lasth,16) == -1)		/* last h cleaned */
       strerr_die2sys(111,FATAL,MSG1(ERR_READ,fnlasth.s));
@@ -432,5 +403,46 @@ void main(int argc,char **argv)
 				/* it being corrupted and > when */
 
   closesub();
+}
+
+void main(int argc,char **argv)
+{
+  int opt;
+  int flagdig = -1;
+
+  (void) umask(022);
+  sig_pipeignore();
+  when = (unsigned long) now();
+  while ((opt = getopt(argc,argv,"dDl:t:vV")) != opteof)
+    switch(opt) {
+      case 'd': flagdig = 1; break;
+      case 'D': flagdig = 0; break;
+      case 'l':
+                if (optarg) {	/* lockout in seconds */
+                  (void) scan_ulong(optarg,&lockout);
+                }
+                break;
+      case 't':
+                if (optarg) {	/* bouncetimeout in days */
+                  (void) scan_ulong(optarg,&bouncetimeout);
+                  bouncetimeout *= 3600L * 24L;
+                }
+                break;
+      case 'v':
+      case 'V': strerr_die2x(0, "ezmlm-warn version: ",auto_version);
+      default:
+	die_usage();
+    }
+  startup(dir = argv[optind]);
+  if (getconf_isset("nowarn"))
+    _exit(0);
+  getconf_ulong(&copylines,"copylines",0);
+  if (flagdig < 0) {
+    dodir(0);
+    if (getconf_isset("digest"))
+      dodir(1);
+  }
+  else
+    dodir(flagdig);
   _exit(0);
 }
