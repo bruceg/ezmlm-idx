@@ -14,6 +14,13 @@ ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1 && \
 msgexists && \
 	fatal "-s failed to reject -get from non-sub"
 
+touch "$DIR"/subgetonly
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 && \
+	fatal "subgetonly failed to reject -get from non-sub"
+msgexists && \
+	fatal "subgetonly failed to reject -get from non-sub"
+${RM} "$DIR"/subgetonly
+
 qqclean
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then

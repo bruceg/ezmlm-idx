@@ -1078,6 +1078,19 @@ exists,
 will not require confirmation from the unsubscription target before
 unsubscribing it.
 
+If
+.I dir\fB/modgetonly
+exists,
+.B ezmlm-get
+will only allow moderators to retrieve data from the archive, even if
+.I dir\fB/public
+exists.
+If
+.I dir\fB/subgetonly
+exists,
+.B ezmlm-get
+will only allow subscribers to retrieve data from the archive.
+
 .I dir\fB/key
 is a binary file used to create confirmation codes.  Anyone who can
 guess the contents of

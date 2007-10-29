@@ -43,9 +43,9 @@
 
 int flagdo = 1;			/* React to commands (doesn't affect -dig)*/
 int flagbottom = 1;		/* copy text/bottom + request */
-int flagpublic = 2;		/* 0 = non-public, 1 = public, 2 = respect*/
+int flagpublic = -1;		/* 0 = non-public, 1 = public, -1 = respect */
 				/* dir/public. */
-int flagsub = 0;		/* =1 subscribers only for get/index/thread */
+int flagsubonly = -1;		/* =1 subscribers only for get/index/thread */
 unsigned long copylines = 0;	/* Number of lines from the message to copy */
 const char *digsz =
 		"from\\to\\subject\\reply-to\\date\\message-id\\cc\\"
@@ -181,12 +181,12 @@ void code_qputs(const char *s)
 }
 
 void zapnonsub(const char *szerr)
-/* fatal error if flagsub is set and sender is not a subscriber */
+/* fatal error if flagsubonly is set and sender is not a subscriber */
 /* expects the current dir to be the list dir. Error is szerr */
 /* added check for undefined sender as a precaution */
 {
   if (sender && *sender) {	/* "no sender" is not a subscriber */
-    if (!flagsub)
+    if (!flagsubonly)
       return;
     if (issub(0,sender,0))
       return;		/* subscriber */
@@ -788,9 +788,9 @@ void main(int argc,char **argv)
                 break;
       case 'p': flagpublic = 1; break;	/* always public */
       case 'P': flagpublic = 0; break;	/* never public = only mods do cmd*/
-					/* def = 2: respect DIR/public */
-      case 's': flagsub = 1; break;	/* only subs have archive access */
-      case 'S': flagsub = 0; break;	/* everyone has archive access */
+					/* def = -1: respect DIR/public */
+      case 's': flagsubonly = 1; break;	/* only subs have archive access */
+      case 'S': flagsubonly = 0; break;	/* everyone has archive access */
       case 'v':
       case 'V': strerr_die2x(0,"ezmlm-get version: ",auto_version);
       default:
@@ -897,8 +897,8 @@ void main(int argc,char **argv)
   if (act != AC_DIGEST) {
     if (!flagdo)			/* only do digests */
       strerr_die2x(100,FATAL,MSG(ERR_NOCMD));
-    if (flagpublic == 2)
-      flagpublic = getconf_isset("public");
+    if (flagpublic < 0)
+      flagpublic = !getconf_isset("modgetonly") && getconf_isset("public");
     if (!flagpublic) {
 		/* This all to take care of non-public lists. They should*/
 		/* still do digests, but do other things only for        */
@@ -923,6 +923,8 @@ void main(int argc,char **argv)
     }
   }
 
+  if (flagsubonly < 0)
+    flagsubonly = getconf_isset("subgetonly");
   flagindexed = getconf_isset("indexed");
   flagarchived = getconf_isset("archived");
 
@@ -955,14 +957,17 @@ void main(int argc,char **argv)
 
   set_cpnum("");	/* default for <#n#> replacement */
 
-  if (act == AC_DIGEST) {
+  if (!flagarchived)
+    strerr_die2x(100,FATAL,MSG(ERR_NOT_ARCHIVED));
+
+  switch (act) {
+
+  case AC_DIGEST:
+
 /* -dig{.|-}'digestcode'[f] returns an rfc1153 digest                        */
 /* of messages from the archive. Messages                                    */
 /* dignum+1 through the last message received by the list are processed and  */
 /* dignum is updated to the last message processed. digissue is advanced.    */
-
-    if (!flagarchived)
-      strerr_die2x(100,FATAL,MSG(ERR_NOT_ARCHIVED));
 
     get_num();				/* max = last successful message */
     to = max;
@@ -1030,15 +1035,13 @@ void main(int argc,char **argv)
 
     write_ulong(issue,0L,0L,"digissue","digissuen");
     write_ulong(max,cumsizen, (unsigned long) when,"dignum","dignumn");
-  }
+    break;
 
-  else if (act == AC_GET) {
+  case AC_GET:
 
 /* -get[-|\.][[num].num2] copies archive num-num2. num & num2 are adjusted   */
 /* to be > 0 and <= last message, to num2 >= num and to num2-num <= MAXGET.  */
 
-    if (!flagarchived)
-      strerr_die2x(100,FATAL,MSG(ERR_NOT_ARCHIVED));
     zapnonsub(ACTION_GET);		/* restrict to subs if requested */
     tosender();
 				/* for rfc1153 */
@@ -1096,9 +1099,9 @@ void main(int argc,char **argv)
     else
       idx_mklist(&msgtable,&subtable,&authtable,u,to);
     digest(msgtable,subtable,authtable,u,to,&subject,AC_GET,outformat);
-  }
+    break;
 
-  else if (act == AC_INDEX) {
+  case AC_INDEX:
 
 /* -index[f][#|-|\.][[num][.num2] Show subject index for messages num-num2 in*/
 /* sets of 100.                                                              */
@@ -1107,7 +1110,6 @@ void main(int argc,char **argv)
 
     if (!flagindexed)
       strerr_die2x(100,FATAL,MSG(ERR_NOT_INDEXED));
-    if (flagsub)
     zapnonsub(ACTION_INDEX);	/* restrict to subs if requested */
     to = 0;
     pos = str_len(ACTION_INDEX);
@@ -1198,16 +1200,14 @@ void main(int argc,char **argv)
     }
     normal_bottom(outformat);
     postmsg(outformat);
-  }
+    break;
 
-  else if (act == AC_THREAD) {
+  case AC_THREAD:
 
 /* -thread[f][-|.]num returns messages with subject matching message        */
 /* 'num' in the subject index. If 'num' is not in[1..last_message] an error */
 /* message is returned.                                                     */
 
-    if (!flagarchived)
-      strerr_die2x(100,FATAL,MSG(ERR_NOT_ARCHIVED));
     if (!flagindexed)
       strerr_die2x(100,FATAL,MSG(ERR_NOT_INDEXED));
 
@@ -1257,16 +1257,17 @@ void main(int argc,char **argv)
 			&subject,AC_THREAD,outformat);
       }
     }
-  }
+    break;
 
-  else
+  default:
 	/* This happens if the initial check at the beginning of 'main'    */
 	/* matches something that isn't matched here. Conversely, just     */
 	/* adding an action here is not enough - it has to be added to the */
 	/* initial check as well.                                          */
 
     strerr_die2x(100,FATAL,
-      "Program error: I'm supposed to deal with this but I didn't");
+		 "Program error: I'm supposed to deal with this but I didn't");
+  }
 
   if (!stralloc_copy(&line,&outlocal)) die_nomem();
   if (act == AC_DIGEST) {

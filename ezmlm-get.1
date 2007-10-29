@@ -396,6 +396,8 @@ file.
 \-get, \-index, and \-thread commands are available to all users,
 provided other flags are permissive. This overrides normal behavior,
 which is to allow archive retrieval only to moderators, when
+.I dir\fB/modgetonly
+exists or
 .I dir\fB/public
 does not exist. This is useful to set up non-public lists that still give
 users archive access.
@@ -404,7 +406,9 @@ users archive access.
 \-get, \-index, and \-thread commands are available
 only to moderators, even if
 .I dir\fB/public
-exists. The
+exists and
+.I dir\fB/modgetonly
+does not. The
 .B \-C
 and
 .B \-s
@@ -414,10 +418,12 @@ archive retrieval restricted to a subset of users (moderators).
 .B \-s
 \-get, \-index, and \-thread requests are processed only if
 .B SENDER
-is a subscriber.
+is a subscriber.  This overrides normal behavior, which is to allow
+anyone to issue \-get, \-index, and \-thread requests unless
+.I dir\fB/subgetonly
+exists.
 .TP
 .B \-S
-(Default.)
 Anyone can issue \-get, \-index, and \-thread requests.
 .TP
 .B \-v

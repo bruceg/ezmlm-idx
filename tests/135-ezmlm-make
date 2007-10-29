@@ -11,7 +11,7 @@
 	fatal "failed to implement -k for list"
   ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 || \
 	fatal "failed to implement -q for list"
-  ${GREP} "ezmlm-get -s" "${DIR}/manager" >/dev/null 2>&1 || \
+  test -e "$DIR"/subgetonly || \
 	fatal "failed to implement -g for list"
   ${GREP} allow "${DIR}/editor" >/dev/null 2>&1 || \
 	fatal "failed to implement -u for list"
@@ -22,7 +22,7 @@
 	fatal "failed to implement -K for list"
   ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 && \
 	fatal "failed to implement -Q for list"
-  ${GREP} "ezmlm-get -s" "${DIR}/manager" >/dev/null 2>&1 && \
+  test -e "$DIR"/subgetonly && \
 	fatal "failed to implement -G for list"
   ${GREP} allow "${DIR}/editor" >/dev/null 2>&1 && \
 	fatal "failed to implement -U for list"

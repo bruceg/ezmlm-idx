@@ -166,6 +166,12 @@
 # Non-public: only moderators can post
 </-modpostonly#eO/>
 </modpostonly#o/>
+# Archive requests only available to moderators
+</-modgetonly#eB/>
+</modgetonly#b/>
+# Archive requests only available to subscribers
+</-subgetonly#eG/>
+</subgetonly#g/>
 # List owner mail
 </owner#5/>
 <#5#>
@@ -177,12 +183,8 @@
 </manager/>
 |<#B#>/ezmlm-weed
 # Add flags if you want a non-default digest format.
-</manager#ab/>
-|<#B#>/ezmlm-get -P '<#D#>'
-</manager#aBG/>
+</manager#a/>
 |<#B#>/ezmlm-get '<#D#>'
-</manager#aBg/>
-|<#B#>/ezmlm-get -s '<#D#>'
 # Service subject commands to the # request address if the -q switch is given.
 </manager#q/>
 |<#B#>/ezmlm-request '<#D#>'
