@@ -2,7 +2,7 @@
 # ezmlm-make #
 ##############
 
-  prompt "ezmlm-make (1/2):     "
+  prompt "ezmlm-make:           "
 
 # edit non-existant list
   ${EZBIN}/ezmlm-make -e -C${EZBIN}/lang/en_US "$DIR" "$DOT" \

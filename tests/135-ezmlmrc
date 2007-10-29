@@ -1,8 +1,8 @@
-##############
-# ezmlm-make #
-##############
+####################
+# ezmlmrc contents #
+####################
 
-  prompt "ezmlm-make (2/2):     "
+  prompt "ezmlmrc contents:     "
 
 # make sure a few ezmlm-make switches work
   ${EZBIN}/ezmlm-make -+qkgu -C${EZBIN}/lang/en_US "$DIR" || \
