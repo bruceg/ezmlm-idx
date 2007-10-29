@@ -172,12 +172,15 @@
 # Archive requests only available to subscribers
 </-subgetonly#eG/>
 </subgetonly#g/>
+# No ezmlm-warn
+</-nowarn#eW/>
+</nowarn#w/>
 # List owner mail
 </owner#5/>
 <#5#>
 </owner#^5/>
 <#D#>/Mailbox
-</#W/>
+</#/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
 # The "manager" handles subscription and other requests.
 </manager/>
@@ -190,9 +193,8 @@
 |<#B#>/ezmlm-request '<#D#>'
 </manager/>
 |<#B#>/ezmlm-manage '<#D#>'
-</manager#W/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
-</#dW/>
+</#d/>
 |<#B#>/ezmlm-warn -d '<#D#>' || exit 0
 # manage message confirmations
 </confirmer#y/>
@@ -239,10 +241,10 @@
 </#umi/>
 |<#B#>/ezmlm-archive '<#D#>' || exit 0
 # all lists have warn unless -w.
-</#W/>
+</#/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
 # for digest bounces
-</#dW/>
+</#d/>
 |<#B#>/ezmlm-warn -d '<#D#>' || exit 0
 </#d^4/>
 |<#B#>/ezmlm-tstdig -m30 -k64 -t48 '<#D#>' || exit 99

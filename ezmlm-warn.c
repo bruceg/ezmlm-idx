@@ -261,7 +261,8 @@ void main(int argc,char **argv)
 	die_usage();
     }
   startup(dir = argv[optind]);
-  initsub(0);
+  if (getconf_isset("nowarn"))
+    _exit(0);
   getconf_ulong(&copylines,"copylines",0);
   workdir = flagdig ? "digest" : ".";
 
@@ -302,6 +303,8 @@ void main(int argc,char **argv)
     else
       _exit(0);		/* no bouncedir - no bounces! */
   }
+
+  initsub(0);
 
   while ((d = readdir(bouncedir))) {		/* dxxx/ */
     if (str_equal(d->d_name,".")) continue;

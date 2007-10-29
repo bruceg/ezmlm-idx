@@ -4,8 +4,16 @@
 
   prompt "ezmlm-warn (1/2):     "
 
-# should send a warning
+# should not send a warning
   qqclean
+  touch "$DIR"/nowarn
+  ${EZBIN}/ezmlm-warn -t0 "$DIR" >"$ERR" 2>&1 || \
+	fatal "failed with nowarn"
+  test -e "$QQMSG" \
+  && fatal "ezmlm-warn sent a warning when nowarn was set"
+  ${RM} "$DIR"/nowarn
+
+# should send a warning
   ${EZBIN}/ezmlm-warn -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with normal bounce for warning"
   checkenv warn1 "$LOC-return-warn-.*-$BNC=$HOST@$HOST" "$BNC@$HOST"

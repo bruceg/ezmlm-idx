@@ -69,6 +69,8 @@ Smaller changes:
 
 - Added dir/modgetonly and dir/subgetonly control files for ezmlm-get.
 
+- Added dir/nowarn control file for ezmlm-warn.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 messages changes also replaced the confirmpost subject line hack in
