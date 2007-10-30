@@ -58,6 +58,33 @@ Send general comments, questions, bug reports, and patches to:
 Below, acknowledgements and a list of systems where ezmlm-idx has been reported
 to work.
 
+TRANSLATIONS (from newest to oldest)
+da:	Maurice Snellen <maurice@hypercube.demon.nl>
+da:	Arthur Muller <Arthur@FutureQuest.net>
+id:	PakOgah <pakogah@pala.bo-tak.info>
+it:	Tullio Andreatta <t.andreatta@troppoavanti.it>
+de:	Lars Kruse <lists@sumpfralle.de>
+es:	Ruben Cardenal <ruben@ruben.cn>
+sv:	Mads E. Eilertsen <mads.e.eilertsen@hist.no>
+fr:	Jean-Marc Lasgouttes
+
+Older translation credits:
+de:	Frank Tegtmeyer
+ja:	Masashi Fujita (objectx@polyphony.scei.co.jp)
+da:	Torben Fjerdingstad (unitfj@tfj.uni-c.dk)
+fr:	Frank Denis (j@industrie.capgemini.fr)
+sv:	Sebastian Andersson (sa@hogia.net)
+pl:	Sergiusz Pawlowicz (ser@arch.pwr.wroc.pl)
+pt_BR:	Wanderlei Antonio Cavassin (cavassin@connectiva.com.br)
+cs:	Jan Kasprzak (kas@informatics.muni.cz)
+ru:	Roman V Isaev (rm@techno.ru)
+id:	Aria Prima Novianto (aria@isnet.org)
+it:	Roberto De Carlo (rodeca@flashnet.it)
+es:	Vicent Mas, Francesc Alted, Sonia Lorente, and Cyndy DePoy
+cn_GB:	HaiFeng Guo (haifeng@ms.lawton.com.cn)
+hu:	Julian Severn-nek (http://js.hu/)
+nl:	Willem <willem@king-pin.nl>
+
 ACKNOWLEDGEMENTS (from Fred Lindberg)
 - Fred B. Ringel, first and foremost, for a great collaboration, ideas, testing,
   docs clarification. This makes it so much more fun.
