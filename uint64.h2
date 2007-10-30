@@ -1,0 +1,3 @@
+/* sysdep: +ulong64 */
+#define HAS_ULONG64 1
+typedef unsigned long uint64;
