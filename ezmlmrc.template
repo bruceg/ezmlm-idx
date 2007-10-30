@@ -81,6 +81,7 @@
 <#T#>
 </digestcode/>
 <#C#>
+</-sublist#e^0/>
 </sublist#0/>
 <#0#>
 </fromheader#3/>
@@ -118,33 +119,39 @@
 # for message confirmation only
 </:-confirm-default/confirmer#y/>
 </:-discard-default/confirmer#y/>
-# Get rid of configuration flags for editing mode so we can start with a
-# clean state.
-</-modpost#eM/>
-</-modsub#eS/>
-</-remote#eR/>
-</-public#eP/>
-</-indexed#eA/>
-</-archived#eA/>
-</-prefix#eF/>
+# Get rid of text/trailer when turning off the -t flag
 </-text/trailer#eT/>
-</-sublist#e^0/>
-</-mimeremove#eX/>
-# Not needed, except for message moderation.
-</-moderator#eM/>
-# Not needed, except for message confirmation.
-</-confirmer#eY/>
 # We don't clean out text files to make it easier for users
 # doing manual config by e.g. touching dir/remote.
+#
+# Subscriber database plugin specification
+</-subdb#^6e/>
+</subdb#6/>
+<#6#>
 # message moderation
+</-modpost#eM/>
 </modpost#m/>
 <#7#>
 # subscription moderation
+</-modsub#eS/>
 </modsub#s/>
 <#8#>
 # remote admin
+</-remote#eR/>
 </remote#r/>
 <#9#>
+# Allow subscriptions and access to the archive
+</-public#eP/>
+</public#p/>
+# subject line prefix
+</-prefix#eF/>
+</prefix#Ef/>
+[<#L#>]
+# Archived and indexed
+</-archived#eA/>
+</archived#a/>
+</-indexed#eA/>
+</indexed#a/>
 # Message confirmation
 </-confirmpost#eY/>
 </confirmpost#y/>
@@ -284,9 +291,6 @@ from
 </lockbounce/>
 </digest/lockbounce#d/>
 </digest/lock#d/>
-</public#p/>
-</archived#a/>
-</indexed#a/>
 </outhost/>
 <#H#>
 </outlocal/>
@@ -312,7 +316,8 @@ From: <#3#>
 </msgsize#xE/>
 30000:2
 # remove mime parts if -x
-</mimeremove#xE/>
+</-mimeremove#eX/>
+</mimeremove#Ex/>
 application/excel
 application/rtf
 application/msword
@@ -404,10 +409,3 @@ x-world/x-vrml
 # application/x-sh
 # application/x-shar
 # chemical/x-pdb
-# --------------------- Handle subscriber database info
-</-subdb#^6e/>
-</subdb#6/>
-<#6#>
-# -------------------- End sql stuff
-</prefix#fE/>
-[<#L#>]
