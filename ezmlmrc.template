@@ -148,6 +148,9 @@
 </archived#a/>
 </-indexed#eA/>
 </indexed#a/>
+# Enhanced indices created by ezmlm-archive
+</-threaded#eI/>
+</threaded#i/>
 # Message confirmation
 </-confirmpost#eY/>
 </confirmpost#y/>
@@ -206,9 +209,8 @@
 |<#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-store -Y '<#D#>'
 </#muy/>
 |<#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-gate -Y '<#D#>' . digest allow mod
-</#iy/>
-|<#B#>/ezmlm-archive '<#D#>' || exit 0
 </#y/>
+|if test -f '<#D#>/threaded'; then <#B#>/ezmlm-archive '<#D#>' || exit 0; fi
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
 </editor/>
 # reject shouldn't be configured for sublist.
@@ -242,9 +244,7 @@
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
 # ezmlm-archive here for normal lists. Put into moderator
 # for mess-mod lists / into confirmer for mess-confirm lists.
-</#i/>
-|<#B#>/ezmlm-archive '<#D#>' || exit 0
-</#/>
+|if test -f '<#D#>/threaded'; then <#B#>/ezmlm-archive '<#D#>' || exit 0; fi
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
 </#d/>
 |<#B#>/ezmlm-tstdig '<#D#>' || exit 99
@@ -262,9 +262,7 @@
 </moderator#m/>
 |<#B#>/ezmlm-weed
 |<#B#>/ezmlm-moderate '<#D#>'
-</#mi/>
-|<#B#>/ezmlm-archive '<#D#>' || exit 0
-</#m/>
+|if test -f '<#D#>/threaded'; then <#B#>/ezmlm-archive '<#D#>' || exit 0; fi
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
 </headerremove#E/>
 return-path
