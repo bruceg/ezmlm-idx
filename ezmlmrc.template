@@ -204,10 +204,14 @@
 # manage message confirmations
 </confirmer#y/>
 <#B#>/ezmlm-weed
-</#my/>
+</#MUy/>
 |<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-store -Y '<#D#>'"
-</#My/>
-|<#B#>/ezmlm-confirm '<#D#>'
+</#Muy/>
+|<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-store -Y '<#D#>'"
+</#mUy/>
+|<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-store -Y '<#D#>'"
+</#muy/>
+|<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-gate -Y '<#D#>' . digest allow mod"
 </#iy/>
 |<#B#>/ezmlm-archive '<#D#>' || exit 0
 </#y/>
@@ -221,29 +225,30 @@
 # lists as well - allows removal of unwanted noise.
 </#k^0/>
 |<#B#>/ezmlm-checksub -n '<#D#>' deny
-# switch -u=> restrict to subs of list & digest. If not m
-# do it with ezmlm-checksub, if 'm' do it with ezmlm-gate
-</#uM/>
+# 8 different combinations of the -m/u/y options:
+# -MUY -- no restrictions => store (does send)
+# -mUY -- simple moderated => store
+# -MUy -- sub confirmation => store
+# -mUy -- sub confirmation + moderation => store
+</#U/>
+|<#B#>/ezmlm-store '<#D#>'
+# -MuY -- user post only => checksub store (does send)
+# -Muy -- sub post only + confirmation => checksub store
+</#Mu/>
 |<#B#>/ezmlm-checksub '<#D#>' . digest allow mod
-</#um/>
+|<#B#>/ezmlm-store '<#D#>'
+# -muY -- sub post ok, non-sub moderated => gate
+</#muY/>
 |<#B#>/ezmlm-gate '<#D#>' . digest allow mod
-# For message moderation or confirmation, editor has store/clean
-</#y/>
+# -muy -- confirmed sender; then sub post, non-sub moderated => store
+</#muy/>
 |<#B#>/ezmlm-store '<#D#>'
+# Always run ezmlm-clean to check for old messages
+</#/>
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
-</#mUY/>
-|<#B#>/ezmlm-store '<#D#>'
-</#mY/>
-|<#B#>/ezmlm-clean '<#D#>' || exit 0
-# for non-message moderated lists, it has send
-</#MY/>
-|<#B#>/ezmlm-send '<#D#>'
 # ezmlm-archive here for normal lists. Put into moderator
 # for mess-mod lists / into confirmer for mess-confirm lists.
-</#MYi/>
-|<#B#>/ezmlm-archive '<#D#>' || exit 0
-# I also for -umi lists
-</#umi/>
+</#i/>
 |<#B#>/ezmlm-archive '<#D#>' || exit 0
 </#/>
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
