@@ -3,29 +3,29 @@ Per confermare che vuoi che
 
 <#A#>
 
-venga rimosso dalla mailing list <#l#>, per favore invia una risposta vuota a
-questo indirizzo:
+venga cancellato dalla mailing list <#l#>, invia un
+messaggio vuoto all'indirizzo:
 
 <#R#>
 
-In genere ciò accade non appena schiacci il bottone "Rispondi". 
-Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
-"A:" di un nuovo messaggio.
+Di solito è sufficiente premere il bottone "Rispondi". Se non funziona,
+puoi copiare l'indirizzo e incollarlo nel campo "A:" di un nuovo
+messaggio.
 <=x=>
 
-oppure clicca qui:
-	mailto:<#R#>
+Oppure, clicca qui:
+        mailto:<#R#>
 <==>
 
-Non ho controllato che il tuo indirizzo sia al momento nella mailing list.
-Per vedere quale indirizzo hai usato per iscriverti, guarda ai messaggi che
-stai ricevendo dalla mailing list. Ciascun messaggio ha il tuo indirizzo
-nascosto nel campo di ritorno; per esempio, mary@example.com riceve i messaggi
-con il campo di ritorno:<<#l#>-return-<numero>-mary=example.com@<#h#>.
+Non ho controllato se il tuo indirizzo è al momento iscritto lla mailing
+list. Per vedere quale indirizzo hai usato per iscriverti, guarda nei
+messaggi che stai ricevendo dalla mailing list: ogni messaggio ha il
+tuo indirizzo nascosto nell'indirizzo di ritorno; ad esempio, l'utente
+mary@example.com riceverebbe i messaggi con l'indirizzo di ritorno:
+<<#l#>-return-<numero>-mary=example.com@<#h#>.
 
 <=q=>
 Alcuni programmi di posta sono difettosi e non sono in grado di gestire
-indirizzi molto lunghi. Se non riesci a rispondere a questa richiesta
-spedisci un messaggio a <<#L#>-request@<#h#>> e metti l'indirizzo
-intero indicato sopra nel campo "Oggetto:".
-
+indirizzi molto lunghi. Se non riesci a rispondere a questa richiesta,
+spedisci un messaggio a <<#L#>-request@<#h#>>
+e metti l'intero indirizzo indicato sopra nel campo "Oggetto:".

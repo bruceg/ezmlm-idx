@@ -1,22 +1,20 @@
 # Revision: 1
 
-Ho un elenco delle raccolte dalla mailing list <#L#>-digest che sono
-tornate indietro dal tuo indirizzo. Per ogni raccolta che ti sei
-perso ho annotato il numero del primo messaggio della raccolta. 
+Ho un elenco delle raccolte dalla mailing list <#L#>-digest,
+spedite al tuo indirizzo, che sono tornate indietro. Per ogni raccolta
+che non hai ricevuto, ho annotato il numero del primo messaggio.
 
 <=a=>
-Io non archivio le raccolte stesse, ma sei in grado di prendere i
-messaggi dall'archivio  principale della mailing list.
+Le raccolte non vengono archiviate, ma puoi farti rispedire i singoli
+messaggi che le compongono dall'archivio della lista principale.
 
-Per ricevere i messaggi dal numero 123 al numero 145 (massimo 100 per ogni
-richiesta),  scrivi un messaggio vuoto a:
-
+Per ricevere i messaggi dal numero 123 al numero 145 (al massimo 100 per
+ogni richiesta), scrivi un messaggio anche vuoto a:
    <<#L#>-get.123_145@<#h#>>
 
-Per ricevere l'elenco dei soggetti e degli autori degli ultimi 100 messaggi
-scrivi a:
+Per ricevere l'elenco degli oggetti e degli autori degli ultimi 100
+messaggi, scrivi a:
    <<#L#>-index@<#h#>>
 
 <==>
-Ecco i numeri delle raccolte:
-
+Ecco i numeri dei primi messaggi delle raccolte:

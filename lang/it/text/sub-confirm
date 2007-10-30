@@ -1,34 +1,33 @@
 # Revision: 1
-Per confermare che vuoi che
+Per confermare che
 
 <#A#>
 
-venga iscritto alla mailing list <#l#>, per favore invia una risposta vuota a
-questo indirizzo:
+debba essere iscritto alla mailing list <#l#>, invia un
+messaggio anche vuoto all'indirizzo:
 
 <#R#>
 
-In genere ciò accade non appena schiacci il bottone "Rispondi". 
-Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
-"A:" di un nuovo messaggio.
+Di solito è sufficiente premere il bottone "Rispondi".  Se non funziona,
+copia l'indirizzo e incollalo nel campo "A:" di un nuovo messaggio.
 <=x=>
 
-oppure clicca qui:
-	mailto:<#R#>
+Oppure, clicca qui:
+        mailto:<#R#>
 <==>
 
-Questa conferma è necessaria per due motivi. Il primo è che verifica che io
-sia in grado  di ricevere la posta da te. Il secondo motivo è che ti protegge 
-nel caso qualcuno stia tentando di fare un'iscrizione a nome tuo.
+Questa conferma è necessaria per due motivi: il primo è che in questo
+modo viene verificato che io sia in grado di ricevere posta da te; il
+secondo è che ti protegge, nel caso qualcuno stia tentando di iscriverti
+alla lista contro la tua volontà.
 
 <=q=>
 Alcuni programmi di posta sono difettosi e non sono in grado di gestire
-indirizzi molto lunghi. Se non riesci a rispondere a questa richiesta
-spedisci un messaggio a <<#L#>-request@<#h#>> e metti l'indirizzo
-intero indicato sopra nel campo "Oggetto:".
+indirizzi molto lunghi. Se non riesci a rispondere a questa richiesta,
+spedisci un messaggio a <<#L#>-request@<#h#>>
+mettendo l'indirizzo indicato qui sopra nel campo "Oggetto:".
 
 <=s=>
-Questa mailing list è moderata. Una volta spedita questa conferma la richiesta
-verrà spedita al/i moderatore/i della lista. Ti farò sapere quando la tua
-iscrizione sarà accettata.
-
+L'iscrizione a questa mailing list è moderata. Una volta spedita questa
+conferma, la tua richiesta verrà sottoposta ai moderatori della lista.
+Ti farò sapere quando la tua iscrizione sarà stata accettata.

@@ -1,39 +1,41 @@
 # Revision: 1
-Mi dispiace, ma non sono in grado di soddisfare la tua richiesta,
-visto che l'indirizzo
+Mi dispiace, ma non sono in grado di soddisfare la tua richiesta, visto
+che l'indirizzo
 
 <#A#>
 
-non è nella mailing list <#l#> quando ho ricevuto la tua
-richiesta e non è iscritto a questa mailing list.
+non risultava iscritto nella mailing list <#l#>
+quando ho ricevuto la tua richiesta e continua a non essere iscritto.
 
 Se ti sei cancellato, ma continui a ricevere i messaggi, allora ti sei
-iscritto con un altro indirizzo diverso da quello che usi al momento. per
-favore cerca nell'intestazione:
+iscritto con un indirizzo diverso da quello che usi al momento.
+Per favore, cerca nell'intestazione un campo tipo:
 
 'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
 
-Ciò indica che l'indirizzo usato per l'iscrizione è``user@example.com''.
-L'indirizzo per cancellarsi per questo utente sarà:
-'<#l#>-unsubscribe-utente=example.cominnio@<#h#>'.
-Basta scrivere a questo indirizzo, sostituendo ai valori utente=example.cominio
-quelli corretti.
+che indica che l'indirizzo usato per l'iscrizione è <user@example.com>.
+L'indirizzo per cancellare questo utente sarà:
+    <<#l#>-unsubscribe-user=example.com@<#h#>>.
+Scrivi a questo indirizzo, sostituendo ai valori user=example.com
+l'indirizzo come appare nel campo "Return-path:".
 
-Se il messaggio ha un'intestazione con ``List-Unsubscribe:'' puoi
-spedire un messaggio all'indirizzo in quell'intestazione. Esso
-contiene l'indirizzo di iscrizione già codificato al suo interno.
+Se il messaggio ha un'intestazione ``List-Unsubscribe:'', puoi spedire
+un messaggio all'indirizzo indicato in quell'intestazione, che contiene
+l'indirizzo di iscrizione già codificato al suo interno.
 
-Per alcuni programmi di posta devi rendere le intestazioni visibili per
-leggere il percorso di ritorno:
+Con alcuni programmi di posta, per leggere il percorso di ritorno devi
+rendere visibili le intestazioni complete. Ad esempio:
 
-Con Eudora 4.0, clicca sul bottone "Blah blah ..." .
-Con PMMail, clicca su "Finestra->Mostra l'intero messaggio/intestazione". 
+- con Eudora 4.0, clicca sul bottone "Blah blah ..." .
+- con PMMail, clicca su "Finestra->Mostra l'intero messaggio/intestazione".
 
-Se tutto ciò ancora non funziona, mi dispiace dirti che non posso aiutarti.
-Per favore INOLTRA un messaggio della lista con una nota nella quale spieghi
-cosa stai cercando di ottenere insieme a un elenco di indirizzi dai quali ti
-potresti essere iscritto al mio responsabile: 
-    <#l#>-owner@<#h#>
+Se ancora non funziona, mi dispiace dirti che non posso aiutarti oltre.
+Ti conviene in quel caso INOLTRARE un messaggio della lista con una nota
+nella quale spieghi cosa stai cercando di fare, insieme a un elenco di
+indirizzi dai quali ti potresti essere iscritto, al mio responsabile:
 
-che se ne occuperà lui. Il mio responsabile è un po' più lento di quello che
-sono io, così per favore sii paziente.
+    <<#l#>-owner@<#h#>>
+
+e se ne occuperà lui. Il mio responsabile è una persona in carne ed ossa
+e quindi è un po' più lento di me che sono un programma, per cui porta
+pazienza.

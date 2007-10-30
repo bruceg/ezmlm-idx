@@ -1,11 +1,11 @@
 # Revision: 1
 <=d=>
-Per iscriversi alla lista delle raccolte scrivi a:
+Per iscriversi alla lista delle raccolte, scrivi a:
 	<#L#>-digest-subscribe@<#h#>
 
-Per rimuoverti dalla lista delle raccolte scrivi a:
-	<#L#>-digest-unsubscribe@<#h#>
+Per cancellarsi dalla lista delle raccolte, scrivi a:
+        <#L#>-digest-unsubscribe@<#h#>
 
-Per spedire un messaggio alla lista scrivi a:
-	<#L#>@<#h#>
+Per spedire un messaggio alla lista, scrivi a:
+        <#L#>@<#h#>
 

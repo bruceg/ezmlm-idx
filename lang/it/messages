@@ -157,6 +157,9 @@ TXT_BY|by|da
 TXT_EDIT_END|%%% END OF TEXT FILE|%%% FINE DEL TESTO
 TXT_EDIT_START|%%% START OF TEXT FILE|%%% INIZIO DEL TESTO
 TXT_LISTMEMBERS|Subscribers to this list are:|Gli iscritti alla lista sono
+TXT_MAILING_LIST|contact <#L#>-help@<#H#>; run by ezmlm|contatta <#L#>-help@<#H#>; gestita da ezmlm
 TXT_NOINDEX|aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->|aaaaaaaaaaaaaaaaaaaa <- indice degli oggetti non disponibile per i messaggi ->
+TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Mi dispiace, solo gli iscritti possono spedire messaggi. Se sei iscritto, invia questo messaggio a <#L#>-owner@<#H#> per far includere questo nuovo indirizzo.
+TXT_REJECT_POSTS|Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this.|Mi dispiace, mi è stato chiesto di rifiutare i tuoi messaggi. Contatta <#L#>-owner@<#H#> se desideri maggiori informazioni.
 TXT_SUPPRESSED|<suppressed>|<soppresso>
 TXT_TOP_TOPICS|Topics (messages <#1#> through <#2#>)|Argomenti (messaggi dal <#1#> al <#2#>)

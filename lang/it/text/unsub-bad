@@ -1,31 +1,33 @@
 # Revision: 1
-Spiacente, ma questo numero di conferma sembra essere non
-valido.
+Mi dispiace, il codice di conferma che ho ricevuto non risulta valido.
 
-La ragione più comune per i numeri non validi è la scadenza. Devo ricevere
-conferma di ogni richiesta entro 10 giorni. Oppure assicurati che era incluso
-tutto il numero di conferma nella risposta che mi hai inviato. 
-Alcuni programmi di posta elettronica hanno l'abitudine di eliminare qualcosa
-nell'indirizzo di risposta che può essere abbastanza lungo.
+La ragione più comune per i codici di conferma non validi è che si
+riferiscono ad una richiesta scaduta: la conferma di una richiesta deve
+essere ricevuta entro 10 giorni.
+Un altra ragione può dipendere al tuo programma di posta elettronica:
+alcuni programmi, infatti, troncano l'indirizzo di risposta perchè non
+sono in grado di gestire un indirizzo così lungo. Assicurati quindi che
+tutto l'indirizzo di conferma sia stato messo nel messaggio che hai
+inviato.
 
-Ho predisposto un altro numero di conferma. Per confermare che vuoi che
+Ti ho predisposto un altro numero di conferma. Per confermare che
 
 <#A#>
 
-venga rimosso dalla mailing list <#l#>, per favore manda una risposta vuota
-all'indirizzo:
+dev'essere cancellato dalla mailing list <#l#>,
+spedisci un messaggio anche vuoto all'indirizzo:
 
 <#R#>
 <=x=>
 
 oppure clicca qui:
-	mailto:<#R#>
+        mailto:<#R#>
 <==>
 
-Di nuovo, controlla l'indirizzo di risposta per assicurarti che sia tutto
-incluso prima di confermare la tua iscrizione.
+Prima di spedire la conferma della tua cancellazione, ti consiglio di
+controllare nuovamente l'indirizzo di risposta per assicurarti che sia
+stato copiato tutto intero.
 
-Spiacente per l'inconveniente.
+Mi dispiace per l'inconveniente.
 
-	<#l#>-Owner <<#l#>-owner@<#h#>>
-
+        <#L#>-Owner <<#l#>-owner@<#h#>>

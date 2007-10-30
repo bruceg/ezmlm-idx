@@ -1,11 +1,12 @@
 # Revision: 1
+
 Questo è un messaggio di aiuto generico. Il messaggio che ho ricevuto
 non è stato spedito ad alcuno dei miei indirizzi per i comandi.
 
-Ecco un elenco degli indirizzi per i comandi consentiti:
+Di seguito trovi un elenco degli indirizzi validi per i comandi.
 
-Scrivi una email ai seguenti indirizzi per le informazioni o le FAQ
-della lista:
+Scrivi una email ai seguenti indirizzi per ricevere le informazioni
+generali o le risposte alle domande frequenti relative alla lista:
    <<#L#>-info@<#h#>>
    <<#L#>-faq@<#h#>>
 
@@ -15,25 +16,28 @@ Indirizzi analoghi esistono per la lista delle raccolte:
    <<#L#>-digest-unsubscribe@<#h#>>
 
 <=a=>
-Per ricevere i messaggi dal numero 123 al numero 145 (massimo 100 per ogni
-richiesta), scrivi a:
+Per ricevere i messaggi dal numero 123 al numero 145 (al massimo 100 per
+ogni richiesta), scrivi a:
    <<#L#>-get.123_145@<#h#>>
 
-Per ricevere l'indice dei messaggi 123-456 con l'oggetto e l'autore, scrivi a:
+Per ricevere l'indice dei messaggi dal numero 123 al 456, con oggetto e
+autore, scrivi a:
    <<#L#>-index.123_456@<#h#>>
 
-Per ricevere tutti i messaggi con lo stesso oggetto del messaggio
-12345, spedisci un messaggio vuoto a:
+Per ricevere tutti i messaggi con lo stesso oggetto del messaggio 12345,
+spedisci un messaggio anche vuoto a:
    <<#L#>-thread.12345@<#h#>>
 
 <==>
-I messaggi in realtà non é necessario che siano vuoti, ma ignorerò
-il loro contenuto. E' importante solo l'INDIRIZZO dal quale li spedisci.
+In realtà non è necessario che i messaggi di gestione che mi invii siano
+vuoti, perchè il loro contenuto sarà ignorato. Solo l'INDIRIZZO a cui li
+spedisci è importante.
 
-Puoi iscriverti anche da un altro indirizzo,per esempio se vuoi iscrivere
-"john@example.com", basta solo aggiungere un trattino e il tuo indirizzo (con
-'=' al posto di '@') dopo i comandi: <<#L#>-subscribe-john=example.com@<#h#>>
+Puoi iscriverti anche da un altro indirizzo: ti basta aggiungere, dopo
+l'indirizzo del comando di iscrizione, un trattino seguito dall'indirizzo
+da iscrivere (mettendo '=' al posto di '@'). Ad esempio, se tu volessi
+iscrivere l'indirizzo "john@example.com", dovresti scrivere a:
+    <<#L#>-subscribe-john=example.com@<#h#>>
 
-Per cancellare l'iscrizione da questo indirizzo, scrivi a:
-<<#L#>-unsubscribe-john=example.com@<#h#>>
-
+E, per cancellare l'iscrizione di quell'indirizzo, dovresti scrivere a:
+    <<#L#>-unsubscribe-john=example.com@<#h#>>

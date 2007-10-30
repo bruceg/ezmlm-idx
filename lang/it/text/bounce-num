@@ -1,22 +1,18 @@
 # Revision: 1
 
-Ho tenuto una copia dei messaggi della lista <#L#> che sono tornati
-indietro dal tuo indirizzo.
+Ho tenuto una copia dei messaggi della lista <#L#> che
+sono tornati indietro dal tuo indirizzo.
 
 <=a=>
-Le copie di questi messaggi potrebbero essere nell'archivio.
+Le copie di questi messaggi dovrebbero essere state archiviate.
 
-
-Per ricevere l'insieme dei messaggi 123-145 (al massimo
-100 per richiesta) dall'archivio, scrivi un messaggio vuoto a:   
+Per ricevere dall'archivio i messaggi dal 123 al 145 (al massimo 100 per
+ogni richiesta), scrivi un messaggio anche vuoto a:
    <<#L#>-get.123_145@<#h#>>
-
 
 Per ricevere l'elenco dei soggetti e degli autori degli ultimi 100
 messaggi scrivi a:
-
    <<#L#>-index@<#h#>>
 
 <==>
 Ecco i numeri dei messaggi:
-

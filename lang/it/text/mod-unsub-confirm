@@ -1,23 +1,22 @@
 # Revision: 1
-E' stato richiesto di cancellare
+Mi è stato richiesto di cancellare
 
 <#A#>
 
-dalla miling list <#l#>. Se sei d'accordo, per favore spedisci una 
-risposta vuota a questo indirizzo: 
+dalla mailing list <#l#>.
+Per confermare l'operazione, spedisci un messaggio a questo indirizzo:
 
 <#R#>
 
-In genere ciò accade non appena schiacci il bottone "Rispondi". 
-Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
-"A:" di un nuovo messaggio.
+Di solito per farlo è sufficiente premere il bottone "Rispondi".
+Nel caso in cui non funzioni, basta copiare l'indirizzo e incollarlo nel
+campo "A:" di un nuovo messaggio.
 <=x=>
 
-oppure clicca qui:
-	mailto:<#R#>
+Oppure, clicca qui:
+        mailto:<#R#>
 <==>
 
-Se non sei d'accordo ti basta ignorare questo messaggio.
+Se non approvi questa operazione, ignora semplicemente questo messaggio.
 
 Grazie per il tuo aiuto!
-

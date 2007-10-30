@@ -1,17 +1,16 @@
 # Revision: 1
-Conferma: ho aggiunto l'indirizzo
+Ti confermo di aver iscritto l'indirizzo
 
 <#A#>
 
-alla mailing list <#l#> .
+alla mailing list <#l#>.
 
 Benvenuto su <#l#>@<#h#>!
 
-Per favore salva questo messaggio in modo tale da sapere con quale
-indirizzo ti sei iscritto nel caso tu voglia successivamente cancellarti o
-modificare il tuo indirizzo di iscrizione.
+Ti conviene salvare questo messaggio, che ti permetterà di sapere con
+quale indirizzo ti sei iscritto, nel caso in seguito tu voglia annullare
+la tua iscrizione o variare l'indirizzo.
 
-Per cancellare l'scrizione scrivi a:
+Per annullare l'iscrizione di questo indirizzo, scrivi a:
 
     <<#l#>-unsubscribe-<#t#>@<#h#>>
-

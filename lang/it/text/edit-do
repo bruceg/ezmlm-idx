@@ -1,17 +1,16 @@
 # Revision: 1
 <=n=>
-Per favore modifica i seguenti file di testo e inviali all'indirizzo:
+Per favore, modifica il testo seguente e invialo all'indirizzo:
 
-<#R#>
+!R
 
-Il tuo programma di posta dovrebbe avere un'opzione di Rispondi che utilizzi
-questo indirizzo automaticamente.
+Il tuo programma di posta dovrebbe avere un comando "Rispondi" che usa
+automaticamente questo indirizzo.
 
-Posso rimouvere i segni di citazione che il tuo programma aggiunge al testo, a
-meno che tu non modifichi le linee citate stesse.
+Sono in grado di togliere i segni di citazione che il tuo programma
+aggiunge al testo, a meno che tu non abbia modificato le linee a mano.
 
-Le linee segnate sono quelle che iniziano con '%%%'. Esse non devono essere
-modificate (caratteri aggiuntivi aggiunti dal tuo programma di posta
-all'inizio della linea sono tollerati).
-
+Le linee che iniziano con '%%%' sono usate come riferimento, per cui non
+vanno modificate (sono tollerati solamente i caratteri aggiunti dal tuo
+programma di posta all'inizio della linea).
 

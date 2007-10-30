@@ -1,41 +1,70 @@
-# Revision: 1
+# Revision: 3
 <=n=>
-Il comando <#L#>-edit.file può essere usato da un amministratore remoto per
-modificare il file di testo che costituiscono il corpo delle risposte dalla
-mailing list <#L#>@<#h#> .
+Un amministratore remoto può usare il comando <#L#>-edit.file
+per modificare i file di testo utilizzati per comporre il corpo delle
+risposte dalla mailing list <#L#>@<#h#> .
 
-Quello che segue è una lista dei nomi dei file delle risposte e una breve
-descrizione di quando è utilizzato il loro contenuto. Per modificare un file,
-spedisci semplicemente una e-mail a <#L#>-edit.file@<#h#>,
-sostituendo 'file' con il nome del file. Le istruzioni di modifica sono
-inviate con il file.
+Quella che segue è una lista dei file delle risposte corredate da una
+breve descrizione di come viene utilizzato il loro contenuto. Se vuoi
+modificare un file, spedisci semplicemente una e-mail all'indirizzo
+  <#L#>-edit.file@<#h#>
+(sostituendo 'file' con il nome del file da modificare).
+Insieme al testo ti verranno spedite le istruzioni per modificarlo.
 
-File                Utilizzo
+Nome del file   Utilizzo
 
-bottom        la fine di tutte le risposte. informazioni generali sui comandi
-digest        sezione "amministrativa" per le raccolte. 
-faq           domande più frequenti relative alla lista.
-get_bad       al posto dei messaggi non trovati nell'archivio.
-help          aiuto generico (tra l'inizio e la fine).
-info          informazioni sulla lista.
-mod_help      aiuto specifico per i moderatori.
-mod_reject    al mittente dei messaggi rifiutati.
-mod_request   ai moderatori insieme con il messaggio.
-mod_sub       agli iscritti dopo che il moderatore ha confermato l'iscrizione.
-mod_sub_confirm  ai moderatori per avere conferma delle iscrizioni.
-mod_timeout   al mittente del messaggio scaduto. 
-mod_unsub_confirm  all'amministratore remoto per chiedere conferma di cancellazione
-post-confirm  al mittente di un messaggio da confermare.
-sub_bad        all'iscritto se la richiesta di iscrizione è sbagliata.
-sub_confirm   all'iscritto per chiedere conferma dell'iscrizione.
-sub_nop       all'iscritto dopo una re-iscrizione.
-sub_ok        all'iscritto dopo che è stata accettata l'iscrizione.
-top           l'inizio di tutte le risposte.
+bottom          informazioni generali sui comandi, in fondo a tutte le
+                risposte
+bounce_bottom   messo in fondo a tutti i messaggi di avvertimento
+bounce_num      introduce l'elenco dei messaggi ritornati indietro
+bounce_probe    messaggio di verifica di raggiungibilità di un indirizzo
+bounce_warn     messaggio che avvisa che i messaggi tornano indietro
+<=dn=>
+dig_bounce_num  introduziona alla lista dei messaggi delle raccolte
+                tornati indietro
+digest          informazioni di amministrazione per le raccolte
+<=n=>
+edit_do         prefisso con le istruzioni per modificare il testo
+edit_done       messaggio di conferma dell'avvenuta modifica di un testo
+edit_list       questo documento
+faq             domande più frequenti relative alla lista
+<=Bn=>
+get_bad         inviato se i messaggi richiesti non sono nell'archivio
+<=n=>
+help            messaggio di aiuto generico (tra 'top' e 'bottom')
+info            informazioni sulla lista (prima riga: spiegazione breve)
+<=mn=>
+messages        elenco degli oggetti e dei messaggi di errore interni.
+mod_help        messaggio di aiuto specifico per i moderatori
+mod_reject      spedito al mittente di messaggi rifiutati dal moderatore
+mod_request     spedito ai moderatori prima del messaggio da moderare
+mod_sub         spedito all'utente che ha chiesto di iscriversi quando
+                il moderatore ha approvato l'iscrizione
+mod_sub_confirm spedito ai moderatori per chiedere l'approvazione di una
+                iscrizione
+mod_timeout     spedito al mittente di un messaggio scaduto prima che sia
+                avvenuta la moderazione
+mod_unsub_confirm      spedito all'amministratore remoto per chiedere
+                conferma di una cancellazione
+<=yn=>
+post-confirm    spedito al mittente di un messaggio da confermare
+<=n=>
+sub_bad         spedito all'utente se la risposta ad un messaggio di
+                conferma di iscrizione non risulta valida
+sub_confirm     spedito all'iscritto per chiedere conferma della
+                richiesta di iscrizione alla mailing list
+sub_nop         spedito all'utente che chiede di iscrivere un
+                indirizzo già iscritto alla mailing list
+sub_ok          spedito all'iscritto una volta accettata l'iscrizione
+top             testo introduttivo all'inizio di tutte le risposte
 <=tn=>
-trailer       aggiunto ai messaggi spediti fuori dalla lista
+trailer         testo aggiunto in fondo ai messaggi spediti dalla lista
 <=n=>
-unsub_bad     all'iscritto se la conferma di cancellazione è sbagliata.
-unsub_confirm all'iscritto per chiedere conferma di cancellazione.
-unsub_nop     al non-iscritto dopo la cancellazione.
-unsub_ok      all'ex iscritto dopo l'avvenuta cancellazione.
+unsub_bad       spedito all'utente se la risposta ad un messaggio di
+                conferma di cancellazione non risulta valida
+unsub_confirm   spedito all'iscritto per chiedere conferma della
+                richiesta di cancellazione alla mailing list
+unsub_nop       spedito all'utente che chiede di cancellare un
+                indirizzo che non risulta iscritto alla mailing list
+unsub_ok        spedito all'utente dopo l'avvenuta cancellazione
 

@@ -1,42 +1,40 @@
 # Revision: 1
-Il messaggio allegato è stato inviato alla mailing list <#L#>@<#h#>
-Se vuoi approvarlo affinchè venga spedito a tutti gli iscritti, scrivi a:
-
+Ho ricevuto il messaggio allegato, che è stato inviato alla mailing list
+<#L#>@<#h#>.
+Se vuoi approvare la sua spedizione a tutti gli iscritti, scrivi a:
 
 <#A#>
 
-In genere ciò accade non appena schiacci il bottone "Rispondi". Puoi
-controllare l'indirizzo per assicurarti che inizi con "<#L#>-accept".
-Se non funziona, allora ti basta copiare l'indirizzo e incollarlo nel campo
+Di solito è sufficiente premere il bottone "Rispondi". Puoi controllare
+l'indirizzo per assicurarti che inizi con "<#L#>-accept".
+Se non funziona, allora puoi copiare l'indirizzo e incollarlo nel campo
 "A:" di un nuovo messaggio.
 <=x=>
 
-Oppure clicca qui:
-	mailto:<#A#>
+Oppure, clicca qui:
+        mailto:<#A#>
 <==>
 
-Per rifiutare il messaggio e fare in modo che esso venga rispedito al
-mittente, per favore spedisci un messaggio a:
+Per rifiutare la spedizone del messaggio alla mailing list  e rispedirlo
+al mittente, spedisci un messaggio anche vuoto a:
 
 <#R#>
 
-Di solito è più facile cliccare sul bottone "Rispondi a tutti:", e poi
-togliere tutti gli indirizzi tranne quello che inizia con "<#L#>-reject".
+Di solito basta premere il bottone "Rispondi a tutti" e poi cancellare
+tutti gli indirizzi tranne quello che inizia con "<#L#>-reject".
 <=x=>
 
-Oppure clicca qui:
-	mailto:<#R#>
+Oppure, clicca qui:
+        mailto:<#R#>
 <==>
 
-Non è necessario copiare il messaggio nella risposta per accettarlo o
-rifiutarlo. Se desideri spedire un commento al mittente del messaggio
-rifiutato, per favore includilo tra due segnalatori di linea che iniziano
-con tre segni di percentuale ('%'):
+Nella risposta non occorre includere il messaggio accettato o rifiutato.
+Se rifiuti il messaggio e desideri spedire un commento al suo mittente,
+devi metterlo tra le due linee che iniziano con tre percento ("%%%"):
 
 %%% Start comment
 %%% End comment
 
 Grazie per il tuo aiuto!
 
---- In allegato, per favore verifica il messaggio inviato.
-
+--- In allegato, il messaggio inviato da moderare.
