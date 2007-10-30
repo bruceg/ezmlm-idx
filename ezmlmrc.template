@@ -192,8 +192,6 @@
 # The "manager" handles subscription and other requests.
 </manager/>
 |<#B#>/ezmlm-weed
-# Add flags if you want a non-default digest format.
-</manager#a/>
 |<#B#>/ezmlm-get '<#D#>'
 # Service subject commands to the # request address if the -q switch is given.
 </manager#q/>
