@@ -157,6 +157,9 @@
 # Return timed-out posts
 </-noreturnposts#eU/>
 </noreturnposts#u/>
+# Only subscribers may post
+</-subpostonly#eU/>
+</subpostonly#u/>
 # Moderator can edit text files
 </-modcanedit#eN/>
 </modcanedit#n/>
@@ -201,15 +204,7 @@
 # manage message confirmations
 </confirmer#y/>
 <#B#>/ezmlm-weed
-</#MUy/>
-|<#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-store -Y '<#D#>'
-</#Muy/>
-|<#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-store -Y '<#D#>'
-</#mUy/>
-|<#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-store -Y '<#D#>'
-</#muy/>
-|<#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-gate -Y '<#D#>' . digest allow mod
-</#y/>
+|if test -f '<#D#>/subpostonly' -a -f '<#D#>/modpost'; then <#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-gate -Y '<#D#>' . digest allow mod; else <#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-store -Y '<#D#>'; fi
 |if test -f '<#D#>/threaded'; then <#B#>/ezmlm-archive '<#D#>' || exit 0; fi
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
 </editor/>
@@ -224,21 +219,15 @@
 # -mUY -- simple moderated => store
 # -MUy -- sub confirmation => store
 # -mUy -- sub confirmation + moderation => store
-</#U/>
-|<#B#>/ezmlm-store '<#D#>'
+|if test ! -f '<#D#>/userpostonly'; then <#B#>/ezmlm-store '<#D#>'; fi
 # -MuY -- user post only => checksub store (does send)
 # -Muy -- sub post only + confirmation => checksub store
-</#Mu/>
-|<#B#>/ezmlm-checksub '<#D#>' . digest allow mod
-|<#B#>/ezmlm-store '<#D#>'
+|if test -f '<#D#>/userpostonly' -a ! -f '<#D#>/modpost'; then <#B#>/ezmlm-checksub '<#D#>' . digest allow mod && <#B#>/ezmlm-store '<#D#>'; fi
 # -muY -- sub post ok, non-sub moderated => gate
-</#muY/>
-|<#B#>/ezmlm-gate '<#D#>' . digest allow mod
+|if test -f '<#D#>/userpostonly' -a -f '<#D#>/modpost' -a ! -f '<#D#>/confirmpost'; then <#B#>/ezmlm-gate '<#D#>' . digest allow mod; fi
 # -muy -- confirmed sender; then sub post, non-sub moderated => store
-</#muy/>
-|<#B#>/ezmlm-store '<#D#>'
+|if test -f '<#D#>/userpostonly' -a -f '<#D#>/modpost' -a -f '<#D#>/confirmpost'; then <#B#>/ezmlm-store '<#D#>'; fi
 # Always run ezmlm-clean to check for old messages
-</#/>
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
 # ezmlm-archive here for normal lists. Put into moderator
 # for mess-mod lists / into confirmer for mess-confirm lists.
