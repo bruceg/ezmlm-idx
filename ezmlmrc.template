@@ -214,13 +214,11 @@
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
 </editor/>
 # reject shouldn't be configured for sublist.
-</#^0/>
 # full reject is now default, to get To/Cc: listaddress requirement
-|<#B#>/ezmlm-reject '<#D#>'
+|if test ! -f '<#D#>/sublist'; then <#B#>/ezmlm-reject '<#D#>'; fi
 # -k => reject posts from blacklisted addresses. Done for moderated
 # lists as well - allows removal of unwanted noise.
-</#k^0/>
-|<#B#>/ezmlm-checksub -n '<#D#>' deny
+|if test -d '<#D#>/deny' -a ! -f '<#D#>/sublist'; then <#B#>/ezmlm-checksub -n '<#D#>' deny; fi
 # 8 different combinations of the -m/u/y options:
 # -MUY -- no restrictions => store (does send)
 # -mUY -- simple moderated => store
@@ -246,9 +244,7 @@
 # for mess-mod lists / into confirmer for mess-confirm lists.
 |if test -f '<#D#>/threaded'; then <#B#>/ezmlm-archive '<#D#>' || exit 0; fi
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
-</#d/>
-|<#B#>/ezmlm-tstdig '<#D#>' || exit 99
-|<#B#>/ezmlm-get '<#D#>' || exit 0
+|if test -d '<#D#>/digest' && <#B#>/ezmlm-tstdig '<#D#>'; then <#B#>/ezmlm-get '<#D#>' || exit 0; fi
 # bouncer for list and digest
 </bouncer/>
 |<#B#>/ezmlm-weed
