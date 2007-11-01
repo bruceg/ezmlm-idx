@@ -74,6 +74,8 @@ Smaller changes:
 
 - Removed the ezmlm-make -4 option in favor of the above files.
 
+- Fixed handling of digest bouncer in ezmlm-dispatch.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 messages changes also replaced the confirmpost subject line hack in

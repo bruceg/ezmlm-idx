@@ -154,7 +154,7 @@ static void dispatch(const char *dir,const char *def)
   else if (str_diff(def,"digest-owner") == 0)
     execute("owner",0);
   else {
-    try_dispatch(def,"digest-return-",14,"bouncer");
+    try_dispatch(def,"digest-return-",14,"digest/bouncer");
     try_dispatch(def,"return-",7,"bouncer");
     try_dispatch(def,"confirm-",8,"confirmer");
     try_dispatch(def,"discard-",8,"confirmer");

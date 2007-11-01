@@ -14,7 +14,8 @@ prompt "ezmlm-dispatch:       "
 
 for list in list1 list2; do
   ${MKDIR} "$DIR"/$list
-  for cmd in editor owner bouncer confirmer moderator manager; do
+  ${MKDIR} "$DIR"/$list/digest
+  for cmd in editor owner bouncer digest/bouncer confirmer moderator manager; do
     ${ECHO} "|${ECHO} $list $cmd" >"$DIR"/$list/$cmd
   done
 done
@@ -22,7 +23,7 @@ done
 testdispatch '' list1 'list1 editor'
 testdispatch '' list1-owner 'list1 owner'
 testdispatch '' list1-digest-owner 'list1 owner'
-testdispatch '' list1-digest-return-xyzzy 'list1 bouncer'
+testdispatch '' list1-digest-return-xyzzy 'list1 digest/bouncer'
 testdispatch '' list1-return-xyzzy 'list1 bouncer'
 testdispatch '' list1-confirm-xyzzy 'list1 confirmer'
 testdispatch '' list1-discard-xyzzy 'list1 confirmer'
@@ -37,7 +38,7 @@ export DEFAULT
 
 testdispatch list2 owner 'list2 owner'
 testdispatch list2 digest-owner 'list2 owner'
-testdispatch list2 digest-return-xyzzy 'list2 bouncer'
+testdispatch list2 digest-return-xyzzy 'list2 digest/bouncer'
 testdispatch list2 return-xyzzy 'list2 bouncer'
 testdispatch list2 confirm-xyzzy 'list2 confirmer'
 testdispatch list2 discard-xyzzy 'list2 confirmer'
