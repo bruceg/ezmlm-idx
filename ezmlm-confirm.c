@@ -202,7 +202,9 @@ void main(int argc, char **argv)
     if ((child = wrap_fork()) == 0) {
       close(0);
       dup(fd);	/* make fnmsg.s stdin */
-      if (argc > optind)
+      if (argc > optind + 1)
+	wrap_execvp((const char **)argv + optind);
+      else if (argc > optind)
         wrap_execsh(argv[optind]);
       else
         wrap_execbin("/ezmlm-send", &sendopt, dir);

@@ -34,7 +34,7 @@ qqclean
 # ACC is set in 145-ezmlm-store, as the accept address for "mod3" message
 LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
 DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`
-${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
+${EZBIN}/ezmlm-moderate "$DIR" ${EZBIN}/ezmlm-send "$DIR" \
 	 </dev/null >"$ERR" 2>&1 || \
 		fatal "failed on acceptance"
 msgexists || \

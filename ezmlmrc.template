@@ -199,13 +199,13 @@
 </confirmer#y/>
 <#B#>/ezmlm-weed
 </#MUy/>
-|<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-store -Y '<#D#>'"
+|<#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-store -Y '<#D#>'
 </#Muy/>
-|<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-store -Y '<#D#>'"
+|<#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-store -Y '<#D#>'
 </#mUy/>
-|<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-store -Y '<#D#>'"
+|<#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-store -Y '<#D#>'
 </#muy/>
-|<#B#>/ezmlm-confirm '<#D#>' "<#B#>/ezmlm-gate -Y '<#D#>' . digest allow mod"
+|<#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-gate -Y '<#D#>' . digest allow mod
 </#iy/>
 |<#B#>/ezmlm-archive '<#D#>' || exit 0
 </#y/>

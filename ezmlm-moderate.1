@@ -5,7 +5,7 @@ acceptance and rejection
 .SH SYNOPSIS
 .B ezmlm-moderate [-cCmMrRvV]
 .B [-t\fI reply-to@host\fB]
-.I dir ['/path/program args']
+.I dir [ /path/program args ... ]
 
 .SH DESCRIPTION
 .B ezmlm-moderate
@@ -35,8 +35,8 @@ as the first argument.
 
 If the optional second argument is given,
 .B ezmlm-moderate
-pipes the message to that program, as executed by sh.
-No parameters are supplied.
+pipes the message to that program.
+No additional parameters are supplied.
 
 .I dir
 is passed as an argument to
