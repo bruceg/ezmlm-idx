@@ -190,7 +190,6 @@
 </owner#^5/>
 <#D#>/Mailbox
 </#/>
-|<#B#>/ezmlm-warn '<#D#>' || exit 0
 # The "manager" handles subscription and other requests.
 </manager/>
 |<#B#>/ezmlm-weed
@@ -200,6 +199,7 @@
 |<#B#>/ezmlm-request '<#D#>'
 </manager/>
 |<#B#>/ezmlm-manage '<#D#>'
+|<#B#>/ezmlm-clean '<#D#>' || exit 0
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
 # manage message confirmations
 </confirmer#y/>
@@ -207,6 +207,7 @@
 |if test -f '<#D#>/subpostonly' -a -f '<#D#>/modpost'; then <#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-gate -Y '<#D#>' . digest allow mod; else <#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-store -Y '<#D#>'; fi
 |if test -f '<#D#>/threaded'; then <#B#>/ezmlm-archive '<#D#>' || exit 0; fi
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
 </editor/>
 # reject shouldn't be configured for sublist.
 # full reject is now default, to get To/Cc: listaddress requirement
@@ -249,6 +250,7 @@
 |<#B#>/ezmlm-moderate '<#D#>'
 |if test -f '<#D#>/threaded'; then <#B#>/ezmlm-archive '<#D#>' || exit 0; fi
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
+|<#B#>/ezmlm-warn '<#D#>' || exit 0
 </headerremove#E/>
 return-path
 return-receipt-to
