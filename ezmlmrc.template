@@ -194,10 +194,7 @@
 </manager/>
 |<#B#>/ezmlm-weed
 |<#B#>/ezmlm-get '<#D#>'
-# Service subject commands to the # request address if the -q switch is given.
-</manager#q/>
 |<#B#>/ezmlm-request '<#D#>'
-</manager/>
 |<#B#>/ezmlm-manage '<#D#>'
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
