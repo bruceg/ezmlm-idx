@@ -1,2 +1,18 @@
+ERR_ADDR_AT|address does not contain @|die Adresse enthält kein @
+ERR_ADDR_LONG|address is too long|die Adresse ist zu lang
+ERR_ADDR_NL|address contains newline|die Adresse enthält einen Zeilenumbruch
+ERR_ANONYMOUS|I do not reply to senders without host names (#5.7.2)|ich antworte nicht an Sender ohne Host-Namen (#5.7.2)
+ERR_BADHOST|list host not allowed|unzulässiger Listen-Hostname
+ERR_BADLOCAL|list local not allowed|unzulässiger lokaler Teil der Listenadresse
+ERR_BADUSER|user not allowed|unzulässiger Nutzer
+ERR_BAD_ADDRESS|I don't accept messages at this address (local doesn't match) (#5.1.1)|I nehme keine Nachrichten für diese Adresse an (unzulässiger lokaler Teil) (#5.1.1)
+ERR_BAD_ALL|Sorry, after removing unacceptable MIME parts from your message I was left with nothing (#5.7.0)|Tut mir leid, nach dem Entfernen unzulässiger MIME-Bestandteile der Nachricht war diese leer. (#5.7.0)
+ERR_BAD_DIGCODE|incorrect digest code (#5.7.1)|ungültiger Zusammenfassungs-Code (#5.7.1)
+ERR_BAD_INDEX|Old format or corrupted index. Run ezmlm-idx! (#5.3.0)|Altes Format oder ungültiger Index. Starte ezmlm-idx! (#5.3.0)
+ERR_BAD_NAME|only letters and underscore allowed in file name (#5.6.0)|Dateinamen dürften ausschließlich Buchstaben und Unterstriche enthalten (#5.6.0)
+ERR_BAD_PART|Sorry, a message part has an unacceptable MIME Content-Type: '<#1#>' (#5.2.3)|Tut mir leid, ein Bestandteil der Nachricht hat einen unzulässigen Inhaltstyp: '<#1#>' (#5.2.3)
+ERR_BAD_REQUEST|Illegal request format (#5.7.1)|Unzulässiges Anfrage-Format (#5.7.1)
+ERR_BAD_RETURN_ADDRESS|Invalid bounce or receipt address format (#5.1.1)|Ungültiges Format der Bounce- oder Empfänger-Adresse
+ERR_BAD_TYPE|Sorry, I don't accept messages of MIME Content-Type '<#1#>' (#5.2.3)|Tut mir leid, ich akzeptiere keine Nachrichten mit folgendem MIME-Inhaltstyp: '<#1#>' (#5.2.3)
 TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Hier werden nur Nachrichten von Abonnenten der Liste akzeptiert. Falls Sie die Liste beziehen aber trotzdem nicht schreiben duerfen, schicken Sie bitte diese Nachricht an <#L#>-owner@<#H#> weiter, damit Ihre neue Adresse aufgenommen werden kann. Der Listeneigentuemer kann Sie ebenso gezielt fuer das Schreiben von Nachrichten freischalten, auch wenn Sie die Liste nicht beziehen.
 TXT_REJECT_POSTS|Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this.|Tut mir leid, ich wurde angewies en, Ihre Nachrichten nicht anzunehmen. Diesbezuegliche Fragen richten Sie bitte an <#L#>-owner@<#H#>
