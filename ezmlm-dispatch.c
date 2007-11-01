@@ -25,16 +25,35 @@ const char USAGE[] =
 
 static const char *sender;
 static stralloc basedir;
+static stralloc path;
 
 static struct qmail qq;
 static char strnum[FMT_ULONG];
 static int did_program;
 static int did_forward;
 
+static const char *makepath(const char *fn)
+{
+  if (!stralloc_copy(&path,&basedir)) die_nomem();
+  if (fn) {
+    if (!stralloc_append(&path,"/")) die_nomem();
+    if (!stralloc_cats(&path,fn)) die_nomem();
+  }
+  if (!stralloc_0(&path)) die_nomem();
+  return path.s;
+}
+
+static int is_dir(const char *fn)
+{
+  struct stat st;
+  return wrap_stat(makepath(fn),&st) == 0
+    && S_ISDIR(st.st_mode);
+}
+
 static int is_file(const char *fn)
 {
   struct stat st;
-  return wrap_stat(fn,&st) == 0
+  return wrap_stat(makepath(fn),&st) == 0
     && S_ISREG(st.st_mode);
 }
 
@@ -120,6 +139,7 @@ static void execute(const char *fn,const char *def)
     env_put2("DEFAULT",def);
   else
     env_unset("DEFAULT");
+  fn = makepath(fn);
   if (slurp(fn,&file,256) != 1)
     strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn));
   code = execute_file(fn,&file);
@@ -144,6 +164,8 @@ static void try_dispatch(const char *def,const char *prefix,unsigned int len,
 static void dispatch(const char *dir,const char *def)
      /* Hand off control to one of the command files in the list directory. */
 {
+  if (!is_dir(dir))
+    return;
   if (!stralloc_append(&basedir,"/")) die_nomem();
   if (!stralloc_cats(&basedir,dir)) die_nomem();
   /* FIXME: set up $EXT $EXT2 $EXT3 $EXT4 ?  Is it feasable? */
@@ -182,7 +204,6 @@ void main(int argc,char **argv)
 
   if (argv[optind] == 0)
     die_usage();
-  wrap_chdir(argv[optind]);
   if (!stralloc_copys(&basedir,argv[optind++])) die_nomem();
 
   sender = env_get("SENDER");
@@ -191,8 +212,8 @@ void main(int argc,char **argv)
   def = env_get("DEFAULT");
 
   if (argv[optind] != 0) {
-    wrap_chdir(argv[optind]);
     dispatch(argv[optind],def);
+    strerr_die3x(100,FATAL,"Not a directory: ",path.s);
   }
   else if (!def || !*def)
     strerr_die2x(100,FATAL,MSG(ERR_NODEFAULT));
@@ -200,8 +221,7 @@ void main(int argc,char **argv)
     if (def[str_chr(def,'/')] != 0)
       strerr_die2x(100,FATAL,"Recipient address may not contain '/'");
 
-    if (chdir(def) == 0)
-      dispatch(def,0);
+    dispatch(def,0);
 
     dash = str_len(def);
     for (;;) {
@@ -211,8 +231,7 @@ void main(int argc,char **argv)
       if (dash <= 0)
 	break;
       def[dash] = 0;
-      if (chdir(def) == 0)
-	dispatch(def,def+dash+1);
+      dispatch(def,def+dash+1);
       def[dash] = '-';
     }
     strerr_die3x(100,FATAL,"Could not match recipient name to any list: ",def);
