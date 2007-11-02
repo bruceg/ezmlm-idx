@@ -14,5 +14,22 @@ ERR_BAD_PART|Sorry, a message part has an unacceptable MIME Content-Type: '<#1#>
 ERR_BAD_REQUEST|Illegal request format (#5.7.1)|Unzulässiges Anfrage-Format (#5.7.1)
 ERR_BAD_RETURN_ADDRESS|Invalid bounce or receipt address format (#5.1.1)|Ungültiges Format der Bounce- oder Empfänger-Adresse
 ERR_BAD_TYPE|Sorry, I don't accept messages of MIME Content-Type '<#1#>' (#5.2.3)|Tut mir leid, ich akzeptiere keine Nachrichten mit folgendem MIME-Inhaltstyp: '<#1#>' (#5.2.3)
+ERR_BODYCOMMAND|Sorry, as the message starts with ``[un]subscribe'' it looks like an adminstrative request. Please send a message to the -help address shown in the ``Mailing-List:'' header for [un]subscribe info (#5.7.0)|Tut mir leid, da die Nachricht mit "[un]subscribe" beginnt, sieht sie wie eine Konfigurationsanfrage aus. Bitte sende eine Nachricht an die "-help"-Adresse (siehe "Mailing-List:"-Kopfzeile) für Infos zur Ein-/Austragung (#5.7.0)
+ERR_BOUNCE|I do not reply to bounce messages (#5.7.2)|Ich reagiere nicht auf Bounce-Nachrichten (#5.7.2)
+ERR_CFHOST|bounce-host required on first line of <#1#>|Bounce-Quelle erforderlich als erste Zeile von <#1#>
+ERR_CHDIR|Unable to change directory to <#1#>|konnte nicht in das Verzeichnis <#1#>wechseln
+ERR_CHILD_CRASHED|child crashed|ein Unterprozess ist abgestürzt
+ERR_CHILD_FATAL|fatal error from child|ein Unterprozess meldet einen schweren Fehler
+ERR_CHILD_TEMP|temporary error from child|ein Unterprozess meldet einen vorübergehenden Fehler
+ERR_CHILD_UNKNOWN|unknown error from child|ein Unterprozess meldet einen unbekannten Fehler
+ERR_CHMOD|unable to chmod <#1#>|chmod für <#1#> schlug fehl
+ERR_CHROOT|failed to chroot to <#1#>|chroot nach <#1#> schlug fehl
+ERR_CLOSE|unable to close <#1#>|das Schließen von <#1#> schlug fehl
+ERR_COOKIE|message does not have valid authentication token|die Nachricht enthält keinen gültigen Authentifikations-Code
+ERR_CREATE|unable to create <#1#>|die Erstellung von <#1#> schlug fehl
+ERR_CRONTAB|crontab update failed. Contact your sysadmin with the above error information|crontab-Aktualisierung schlug fehl. Bitte wenden sie sich mit den o.g. Informationen an ihren Systemadministrator
+ERR_DELETE|unable to delete <#1#>|das Löschen von <#1#> schlug fehl
+ERR_DONE|message already successfully processed by this list|die Nachricht wurde bereits erfolgreich von dieser Liste verarbeitet
+ERR_DOW|single comma-separated digits only for day-of-week|für die "Tag-in-derWoche"-Einstellung sind nur einzelne, durch Komma getrennte, Ziffern zulässig
 TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Hier werden nur Nachrichten von Abonnenten der Liste akzeptiert. Falls Sie die Liste beziehen aber trotzdem nicht schreiben duerfen, schicken Sie bitte diese Nachricht an <#L#>-owner@<#H#> weiter, damit Ihre neue Adresse aufgenommen werden kann. Der Listeneigentuemer kann Sie ebenso gezielt fuer das Schreiben von Nachrichten freischalten, auch wenn Sie die Liste nicht beziehen.
 TXT_REJECT_POSTS|Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this.|Tut mir leid, ich wurde angewies en, Ihre Nachrichten nicht anzunehmen. Diesbezuegliche Fragen richten Sie bitte an <#L#>-owner@<#H#>
