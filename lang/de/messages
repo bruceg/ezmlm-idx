@@ -31,5 +31,24 @@ ERR_CRONTAB|crontab update failed. Contact your sysadmin with the above error in
 ERR_DELETE|unable to delete <#1#>|das Löschen von <#1#> schlug fehl
 ERR_DONE|message already successfully processed by this list|die Nachricht wurde bereits erfolgreich von dieser Liste verarbeitet
 ERR_DOW|single comma-separated digits only for day-of-week|für die "Tag-in-derWoche"-Einstellung sind nur einzelne, durch Komma getrennte, Ziffern zulässig
+ERR_EDSIZE|Maximum edit file size exceeded (#5.6.0)|Maximale Größe der Änderungsdatei überschritten (#5.6.0)
+ERR_EMPTY_DIGEST|nothing to digest|keine Inhalte für eine Zusammenfassung vorhanden
+ERR_EMPTY_LIST|no messages in archive|es befinden sich keine Nachrichten im Archiv
+ERR_ENDTAG|tag lacks /> end marker|der Abschluss der Markierung ("/>") fehlt
+ERR_EUID|effective user id not found|die effektive Nutzer-ID existiert nicht
+ERR_EXCESS_DEFER|excess traffic: deferring|überhöhter Verkehr: zurückgestellt
+ERR_EXCESS_MOD|excess traffic: moderating|überhöhter Verkehr: moderiert
+ERR_EXCLUSIVE|action-controlling switches are mutually exclusive|Aktionsbeieinflussende Schalter schließen sich gegenseitig aus
+ERR_EXECUTE|unable to execute <#1#>|Ausführung schlug fehl <#1#>
+ERR_EXTRA_SUB|Processed SENDER check addition request for: <#1#>|Die Aktivierung einer Sender-Überprüfung wurde erbeten für: <#1#>
+ERR_EXTRA_UNSUB|Processed SENDER check removal request for: <#1#>|Eine Sender-Überprüfung wurde entfernt für: <#1#>
+ERR_FILENAME|continuation tag without defined file name: <#1#>|Fortsetzungsmarkierung ohne Dateinamen: <#1#>
+ERR_FLUSH_STDOUT|unable to flush standard output|Ausleerung der Standarausgabe schlug fehl
+ERR_FLUSH|unable to flush <#1#>|Ausleerung schlug fehl
+ERR_FORK|unable to fork|Ein Prozess-Fork schlug fehl
+ERR_JUNK|Precedence: junk - message ignored|Vorrang: unerwünschte Mail - Nachricht ignoriert
+ERR_LINKDIR|linktag lacks /dir: <#1#>|Link-Markierung ohne /dir: <#1#>
+ERR_LISTNO|max number of list entries exceeded|maximale Anzahl von Listen-Einträgen überschritten
+ERR_LOOPING|this message is looping: it already has my Delivered-To line (#5.4.6)|die Nachricht hängt in einer Endlosschleife: sie enthält bereits meine "Delivered-To"-Kopfzeile (#5.4.6)
 TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Hier werden nur Nachrichten von Abonnenten der Liste akzeptiert. Falls Sie die Liste beziehen aber trotzdem nicht schreiben duerfen, schicken Sie bitte diese Nachricht an <#L#>-owner@<#H#> weiter, damit Ihre neue Adresse aufgenommen werden kann. Der Listeneigentuemer kann Sie ebenso gezielt fuer das Schreiben von Nachrichten freischalten, auch wenn Sie die Liste nicht beziehen.
 TXT_REJECT_POSTS|Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this.|Tut mir leid, ich wurde angewies en, Ihre Nachrichten nicht anzunehmen. Diesbezuegliche Fragen richten Sie bitte an <#L#>-owner@<#H#>
