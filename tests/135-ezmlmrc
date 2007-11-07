@@ -18,14 +18,10 @@
 
   ${EZBIN}/ezmlm-make -+QKGU -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "failed to edit test list to +QKGU"
-  ${GREP} deny "${DIR}/editor" >/dev/null 2>&1 && \
-	fatal "failed to implement -K for list"
   ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 && \
 	fatal "failed to implement -Q for list"
   test -e "$DIR"/subgetonly && \
 	fatal "failed to implement -G for list"
-  ${GREP} allow "${DIR}/editor" >/dev/null 2>&1 && \
-	fatal "failed to implement -U for list"
 
 # edit the list (add moderation and remove admin)
   ${EZBIN}/ezmlm-make -+rsm -C${EZBIN}/lang/en_US "$DIR" || \
