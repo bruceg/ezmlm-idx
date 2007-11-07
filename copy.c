@@ -235,14 +235,10 @@ void copy(struct qmail *qqp,
 	  && line.s[1] == '='
 	  && line.s[line.len-3] == '='
 	  && line.s[line.len-2] == '>') {
-	for (flagsmatched = 1, pos = 2; pos < line.len - 3; ++pos) {
-	  const char ch = line.s[pos];
-	  if ((ch >= 'A' && ch <= 'Z' && flags[ch - 'A'])
-	      || (ch >= 'a' && ch <= 'z' && !flags[ch - 'a'])) {
-	    flagsmatched = 0;
-	    break;
-	  }
-	}
+	for (flagsmatched = 1, pos = 2;
+	     flagsmatched && pos < line.len - 3;
+	     ++pos)
+	  flagsmatched = flagsmatched && flag_isset(line.s[pos]);
 	continue;
       }
       if (!flagsmatched) continue;

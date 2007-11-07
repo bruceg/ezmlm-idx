@@ -3,8 +3,6 @@
 
 #include "stralloc.h"
 
-#define NO_FLAGS ('z' - 'a' + 1)
-
 extern const char *listdir;
 extern stralloc charset;
 extern stralloc ezmlmrc;
@@ -14,7 +12,7 @@ extern stralloc local;
 extern stralloc outhost;
 extern stralloc outlocal;
 extern char flagcd;
-extern int flags[NO_FLAGS];
+extern int flag_isset(char flag);
 
 extern void startup(const char *dir);
 

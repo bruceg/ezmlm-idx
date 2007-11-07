@@ -9,6 +9,8 @@
 #include "strerr.h"
 #include "wrap.h"
 
+#define NO_FLAGS ('z' - 'a' + 1)
+
 const char *listdir = 0;
 stralloc charset = {0};
 stralloc ezmlmrc = {0};
@@ -18,7 +20,7 @@ stralloc local = {0};
 stralloc outhost = {0};
 stralloc outlocal = {0};
 char flagcd = '\0';		/* No transfer encoding by default */
-int flags[NO_FLAGS] = {0};
+static int flags[NO_FLAGS] = {0};
 
 static void load_flags(void)
 {
@@ -88,4 +90,12 @@ void startup(const char *dir)
   listdir = dir;
   wrap_chdir(dir);
   load_config();
+}
+
+int flag_isset(char flag)
+{
+  return
+    (flag >= 'A' && flag <= 'Z') ? !flags[flag - 'A']
+    : (flag >= 'a' && flag <= 'z') ? flags[flag - 'a']
+    : 0;
 }
