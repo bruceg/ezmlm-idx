@@ -186,6 +186,18 @@ void frm(const char *slash)
     strerr_die2sys(111,FATAL,MSG1(ERR_DELETE,dirplus.s));
 }
 
+int exists(const char *dpm)
+{
+  struct stat st;
+  dirplusmake(dpm);
+  if (stat(dirplus.s,&st) == -1) {
+    if (errno == error_noent)
+      return 0;
+    strerr_die2sys(111,FATAL,MSG1(ERR_STAT,dirplus.s));
+  }
+  return 1;
+}
+
 int read_line(const char *dpm,stralloc *sa)
 {
   int fdin;
@@ -205,9 +217,8 @@ int read_line(const char *dpm,stralloc *sa)
   }
 }
 
-int read_new_config(void)
+void read_files(void)
 {
-  if (read_line("/flags",&oldflags) != 0) return 0;
   if (euid > 0 && !flags['c' - 'a'])
     read_line("/ezmlmrc",&cfname);
   read_line("/dot",&dot);
@@ -226,6 +237,45 @@ int read_new_config(void)
   read_line("/modpost",&popt[7]);
   read_line("/modsub",&popt[8]);
   read_line("/remote",&popt[9]);
+}
+
+int read_file_config(void)
+{
+  if (!stralloc_copys(&oldflags,"-ABCDEFGHIJKLMNOPqRSTUVWXYZ")) die_nomem();
+  oldflags.s[1] = "Aa"[exists("/archived")];
+  oldflags.s[2] = "Bb"[exists("/modgetonly")];
+  //oldflags.s[3] = "Cc"[exists("/ezmlmrc")]; /* Should always end up set */
+  oldflags.s[4] = "Dd"[exists("/digest")];
+  /* -e is not applicable */
+  oldflags.s[6] = "Ff"[exists("/prefix")];
+  oldflags.s[7] = "Gg"[exists("/subgetonly")];
+  oldflags.s[8] = "Hh"[exists("/nosubconfirm")];
+  oldflags.s[9] = "Ii"[exists("/threaded")];
+  oldflags.s[10] = "Jj"[exists("/nounsubconfirm")];
+  oldflags.s[11] = "Kk"[exists("/deny")];
+  oldflags.s[12] = "Ll"[exists("/modcanlist")];
+  oldflags.s[13] = "Mm"[exists("/modpost")];
+  oldflags.s[14] = "Nn"[exists("/modcanedit")];
+  oldflags.s[15] = "Oo"[exists("/modpostonly")];
+  oldflags.s[16] = "Pp"[exists("/public")];
+  oldflags.s[18] = "Rr"[exists("/remote")];
+  oldflags.s[19] = "Ss"[exists("/modsub")];
+  oldflags.s[20] = "Tt"[exists("/addtrailer")];
+  oldflags.s[21] = "Uu"[exists("/userpostonly")];
+  /* -v is not applicable */
+  oldflags.s[23] = "Ww"[exists("/nowarn")];
+  oldflags.s[24] = "Xx"[exists("/mimeremove")];
+  oldflags.s[25] = "Yy"[exists("/confirmpost")];
+  /* -z is unused */
+  read_files();
+  return 1;
+}
+
+int read_flags_config(void)
+{
+  if (read_line("/flags",&oldflags) != 0)
+    return 0;
+  read_files();
   return 1;
 }
 
@@ -368,8 +418,9 @@ void main(int argc,char **argv)
     /* lock for edit */
     dirplusmake("/lock");
     fdlock = lockfile(dirplus.s);
-    if (!read_new_config())
-      read_old_config();
+    if (!read_flags_config())
+      if (!read_old_config())
+	read_file_config();
   }
 
   if ((p = *argv++) != 0) {

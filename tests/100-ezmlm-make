@@ -24,13 +24,11 @@
 	fatal "ezmlm-make failed to edit test list"
 
 # edit the list (add digest)
-  ${MV} "${DIR}/flags" "${DIR}/flags~"
   ${EZBIN}/ezmlm-make -ed -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" \
 	>/dev/null 2>&1 || \
-	{ ${ECHO} "failed without DIR/flags"
+	{ ${ECHO} "failed to edit"
 	  prompt "ezmlm-make ......     "
 	}
-  ${MV} "${DIR}/flags~" "${DIR}/flags"
 
   ${GREP} "ezmlm-weed" "${DIR}/bouncer" >/dev/null 2>&1 || \
 	fatal "no ezmlm-weed in bouncer"

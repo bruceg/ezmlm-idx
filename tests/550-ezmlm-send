@@ -18,7 +18,7 @@ EOF
   grephdr x-no-archive: yes
   grephdr delivered-to: "mailing list ${LOC}@${HOST}"
   grephdr from: test@example.org
-  grephdr subject: test post
+  grephdr subject: '\[PFX\] test post'
   grephdr x-test-header: one
   grephdr sender: "<${LOC}@${HOST}>"
   grephdr_empty
@@ -27,5 +27,10 @@ EOF
   grepbody local: "$LOCAL"
   grepbody host: "$HOST"
   grepbody num: `cut -d: -f1 "${DIR}/num"`
+
+  rm -f "$DIR"/prefix
+  ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce post"
+  grephdr subject: 'test post'
 
   ${ECHO} OK

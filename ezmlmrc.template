@@ -67,14 +67,11 @@
 # in a FATAL error. Attempts to open files that have already been closed
 # or already exits, will cause the old file to be overwritten.
 #
-# config to support future editing without giving ezmlm-make command line
-# arguments other than dir. Useful for GUI/WWW editing tools
-</flags/>
-<#F#>
+# Remove the old config files, as its presence causes complications.
+</-config/>
+</-flags/>
 </ezmlmrc/>
 <#X#>
-#</dir/>
-#<#D#>
 </dot/>
 <#T#>
 </digestcode/>
