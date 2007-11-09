@@ -11,6 +11,12 @@
 
 #define NO_FLAGS ('z' - 'a' + 1)
 
+struct flag
+{
+  int state;
+  const char *filename;
+};
+
 const char *listdir = 0;
 stralloc charset = {0};
 stralloc ezmlmrc = {0};
@@ -20,24 +26,47 @@ stralloc local = {0};
 stralloc outhost = {0};
 stralloc outlocal = {0};
 char flagcd = '\0';		/* No transfer encoding by default */
-static int flags[NO_FLAGS] = {0};
+static struct flag flags[NO_FLAGS] = {
+  { 1, "archived" },		/* a By default, list is archived */
+  { -1, "modgetonly" },		/* b */
+  { -1, "ezmlmrc" },		/* c */
+  { -1, "digest" },		/* d */
+  { -1, "FIXME" },		/* e */
+  { -1, "prefix" },		/* f */
+  { -1, "subgetonly" },		/* g */
+  { -1, "nosubconfirm" },	/* h */
+  { -1, "threaded" },		/* i */
+  { -1, "nounsubconfirm" },	/* j */
+  { -1, "deny" },		/* k */
+  { -1, "modcanlist" },		/* l */
+  { -1, "modpost" },		/* m */
+  { -1, "modcanedit" },		/* n */
+  { -1, "modpostonly" },	/* o */
+  { 1, "public" },		/* p By default, list is public */
+  { -1, 0 },			/* q FIXME */
+  { -1, "remote" },		/* r */
+  { -1, "modsub" },		/* s */
+  { -1, 0 },			/* t FIXME */
+  { -1, "userpostonly" },	/* u */
+  { -1, 0 },			/* v unused */
+  { -1, "nowarn" },		/* w */
+  { -1, 0 },			/* x FIXME */
+  { -1, "confirmpost" },	/* y */
+  { -1, 0 }			/* z unused */
+};
 
 static void load_flags(void)
 {
   unsigned int i;
 
-  byte_zero((char*)flags,sizeof flags);
-  flags['a' - 'a'] = 1;		/* By default, list is archived (-a) */
-  flags['p' - 'a'] = 1;		/* By default, list is public (-p) */
-  
   /* Use "key" for temporary storage */
   if (getconf_line(&key,"flags",0)) {
     for (i = 0; i < key.len; ++i) {
       const char ch = key.s[i++];
       if (ch >= 'A' && ch <= 'Z')
-	flags[ch - 'A'] = 0;
+	flags[ch - 'A'].state = 0;
       else if (ch >= 'a' && ch <= 'z')
-	flags[ch - 'a'] = 1;
+	flags[ch - 'a'].state = 1;
     }
   }
 }
@@ -92,10 +121,18 @@ void startup(const char *dir)
   load_config();
 }
 
+static int getflag(int flagno)
+{
+  struct flag *flag = &flags[flagno];
+  if (flag->state < 0)
+    flag->state = (flag->filename == 0) || getconf_isset(flag->filename);
+  return flag->state;
+}
+
 int flag_isset(char flag)
 {
   return
-    (flag >= 'A' && flag <= 'Z') ? !flags[flag - 'A']
-    : (flag >= 'a' && flag <= 'z') ? flags[flag - 'a']
+    (flag >= 'A' && flag <= 'Z') ? getflag(flag - 'A')
+    : (flag >= 'a' && flag <= 'z') ? getflag(flag - 'a')
     : 0;
 }
