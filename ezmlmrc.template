@@ -184,6 +184,9 @@
 # No ezmlm-warn
 </-nowarn#eW/>
 </nowarn#w/>
+# Add the trailer to posts
+</-addtrailer#eT/>
+</addtrailer#t/>
 # List owner mail
 </owner#5/>
 <#5#>

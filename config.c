@@ -31,7 +31,7 @@ static struct flag flags[NO_FLAGS] = {
   { -1, "modgetonly" },		/* b */
   { -1, "ezmlmrc" },		/* c */
   { -1, "digest" },		/* d */
-  { -1, "FIXME" },		/* e */
+  { -1, 0 },			/* e N/A */
   { -1, "prefix" },		/* f */
   { -1, "subgetonly" },		/* g */
   { -1, "nosubconfirm" },	/* h */
@@ -43,14 +43,14 @@ static struct flag flags[NO_FLAGS] = {
   { -1, "modcanedit" },		/* n */
   { -1, "modpostonly" },	/* o */
   { 1, "public" },		/* p By default, list is public */
-  { -1, 0 },			/* q FIXME */
+  { 1, 0 },			/* q */
   { -1, "remote" },		/* r */
   { -1, "modsub" },		/* s */
-  { -1, 0 },			/* t FIXME */
+  { -1, "addtrailer" },		/* t */
   { -1, "userpostonly" },	/* u */
   { -1, 0 },			/* v unused */
   { -1, "nowarn" },		/* w */
-  { -1, 0 },			/* x FIXME */
+  { -1, "mimeremove" },		/* x */
   { -1, "confirmpost" },	/* y */
   { -1, 0 }			/* z unused */
 };
