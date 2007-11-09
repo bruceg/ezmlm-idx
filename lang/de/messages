@@ -50,5 +50,26 @@ ERR_JUNK|Precedence: junk - message ignored|Vorrang: unerwünschte Mail - Nachric
 ERR_LINKDIR|linktag lacks /dir: <#1#>|Link-Markierung ohne /dir: <#1#>
 ERR_LISTNO|max number of list entries exceeded|maximale Anzahl von Listen-Einträgen überschritten
 ERR_LOOPING|this message is looping: it already has my Delivered-To line (#5.4.6)|die Nachricht hängt in einer Endlosschleife: sie enthält bereits meine "Delivered-To"-Kopfzeile (#5.4.6)
+ERR_MAILING_LIST|message already has a Mailing-List header (maybe I should be a sublist) (#5.7.2)|die Nachricht hat bereits eine Mailinglisten-Kopfzeile (vielleicht sollte ich eine eine Unter-Liste sein?) (#5.7.2)
+ERR_MAX_BOUNCE|max bounces exceeded: bounce will not be saved|maximale Bounce-Anzahl überschritten: dieses Bounce wird nicht gespeichert
+ERR_MAX_SIZE|Sorry, I don't accept messages larger than <#1#> bytes (#5.2.3)|Tut mir leid, ich akzeptiere keine Nachrichten, die größer sind, als <#1#> Bytes (#5.2.3)
+ERR_MIME_QUOTE|MIME boundary lacks end quote|fehlende Abschliussmarkierung des MIME-Bereichs
+ERR_MIN_SIZE|Sorry, I don't accept messages shorter than <#1#> bytes (#5.2.3)|Tut mir leid, ich akzeptiere keine Nachrichten, die kleiner sind, als <#1#> Bytes (#5.2.3)
+ERR_MKTAB|creating subscriber tables failed|Fehler beim Anlegen der Abonnententabelle
+ERR_MOD_ACCEPTED|I'm sorry, I've already accepted this message|Tut mir leid, ich habe diese Nachricht bereits akzeptiert
+ERR_MOD_COOKIE|Illegal or outdated moderator request (#5.7.1)|Ungültige oder veraltete Moderationsanfrage (#5.7.1)
+ERR_MOD_REJECTED|I'm sorry, I've already rejected this message|Tut mir leid, ich habe diese Nachricht bereits abgewiesen
+ERR_MOD_TIMEOUT|I'm sorry, I no longer have this message|Tut mir leid, diese Nachricht ist nicht mehr vorhanden
+ERR_MOVE|unable to move <#1#> to <#2#>|Fehler beim Bewegen von <#1#> nach <#2#>
+ERR_NEWLINE|newlines not allowed in dir|Verzeichnisnamen dürfen keine Zeilenumbrüche enthalten
+TXT_ADMINISTRIVIA|Administrivia:|Administration:
+TXT_BY|by|von
+TXT_EDIT_END|%%% END OF TEXT FILE|%%% ENDE DER TEXT DATEI
+TXT_EDIT_START|%%% START OF TEXT FILE|%%% ANFANG DER TEXT DATEI
+TXT_LISTMEMBERS|Subscribers to this list are:|Abonnenten dieser Liste sind:
+TXT_MAILING_LIST|contact <#L#>-help@<#H#>; run by ezmlm|wende dich an <#L#>-help@<#H#>; basierend auf ezmlm
+TXT_NOINDEX|aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->|aaaaaaaaaaaaaaaaaaaa <- Betreff-Index ist nicht verfügbar für Nachricht(en) ->
 TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Hier werden nur Nachrichten von Abonnenten der Liste akzeptiert. Falls Sie die Liste beziehen aber trotzdem nicht schreiben duerfen, schicken Sie bitte diese Nachricht an <#L#>-owner@<#H#> weiter, damit Ihre neue Adresse aufgenommen werden kann. Der Listeneigentuemer kann Sie ebenso gezielt fuer das Schreiben von Nachrichten freischalten, auch wenn Sie die Liste nicht beziehen.
 TXT_REJECT_POSTS|Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this.|Tut mir leid, ich wurde angewies en, Ihre Nachrichten nicht anzunehmen. Diesbezuegliche Fragen richten Sie bitte an <#L#>-owner@<#H#>
+TXT_SUPPRESSED|<suppressed>|<unterdrückt>
+TXT_TOP_TOPICS|Topics (messages <#1#> through <#2#>)|Themen (Nachrichten <#1#> bis <#2#>)
