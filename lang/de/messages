@@ -62,6 +62,30 @@ ERR_MOD_REJECTED|I'm sorry, I've already rejected this message|Tut mir leid, ich
 ERR_MOD_TIMEOUT|I'm sorry, I no longer have this message|Tut mir leid, diese Nachricht ist nicht mehr vorhanden
 ERR_MOVE|unable to move <#1#> to <#2#>|Fehler beim Bewegen von <#1#> nach <#2#>
 ERR_NEWLINE|newlines not allowed in dir|Verzeichnisnamen dürfen keine Zeilenumbrüche enthalten
+ERR_NOCMD|command not available|Befehl nicht verfügbar
+ERR_NODEFAULT|DEFAULT not set|DEFAULT (Standardwert) ist nicht gesetzt
+ERR_NODTLINE|DTLINE not set|DTLINE ist nicht gesetzt
+ERR_NOEXIST| does not exist|existiert nicht
+ERR_NOINDEX|Sorry, I can't find the index for this message|Tut mir leid, ich kann den Index dieser Nachricht nicht finden
+ERR_NOLOCAL|LOCAL not set|LOCAL ist nicht gesetzt
+ERR_NOMEM|out of memory|kein Speicher verfügbar
+ERR_NOSENDER|SENDER not set|SENDER ist nicht gesetzt
+ERR_NOT_ACTIVE|this sublist is not active|diese Unter-Liste ist nicht aktiviert
+ERR_NOT_ALLOWED|Command allowed only to moderators (#5.7.1)|diese Anfrage ist nur ModeratorInnen gestattet (#5.7.1)
+ERR_NOT_ARCHIVED|Sorry, this list is not archived (#5.1.1)|Tut mir leid, diese Liste wird nicht archiviert (#5.1.1)
+ERR_NOT_AVAILABLE|Command not available (#5.1.1)|Befehl nicht verfügbar (#5.1.1)
+ERR_NOT_CLEAN|Bad character in address components|Unzulässiges Zeichen in Adressen-Komponente
+ERR_NOT_INDEXED|Sorry, this list is not indexed (#5.1.1)|Tut mir leid, diese Liste wird nicht indiziert (#5.1.1)
+ERR_NOT_PARENT|this message is not from my parent list (#5.7.2)|diese Nachricht kommt nicht von meiner übergeordneten Liste (#5.7.2)
+ERR_NOT_PUBLIC|Sorry, I've been told to reject all requests (#5.7.2)|Tut mir leid, ich wurde angewiesen, alle Anfragen abzulehnen (#5.7.2)
+ERR_NO_ABSOLUTE|absolute directory names outside of the list directory are no longer supported|absolute Verzeichnisangaben außerhalb des Listenverzeichnisses werden nicht mehr unterstützt
+ERR_NO_ADDRESS|List address must be in To: or Cc: (#5.7.0)|Die Listen-Adresse muss im Empfänger (TO:) oder als Kopienempfänger (Cc:) auftauchen
+ERR_NO_LEVELS|subscriber table names may not contain slashes|die Namen von Abonnenten-Tabellen dürfen keine Schrägstriche enthalten
+ERR_NO_MARK|missing start-of-text or end-of-text mark (#5.6.0)|fehlende Start-des-Texts- oder Ende-des-Texts-Markierung (#5.6.0)
+ERR_NO_MATCH|no matching entry found|keine passenden Einträge gefunden
+ERR_NO_PLUGIN|no plugin specified in database connect data|kein Plugin in der Datenbank-Verbindungseinstellung angegeben
+ERR_NO_POST|I'm sorry, you are not allowed to post messages to this list (#5.7.2)|Tut mir leid, Sie dürfen keine Nachrichten an diese Listen senden (#5.7.2)
+ERR_NO_SUBJECT|Sorry, I don't accept message with empty Subject (#5.7.0)|Tut mir leid, ich akzeptiere keine Nachrichten ohne Betreff-Zeile
 TXT_ADMINISTRIVIA|Administrivia:|Administration:
 TXT_BY|by|von
 TXT_EDIT_END|%%% END OF TEXT FILE|%%% ENDE DER TEXT DATEI
