@@ -22,7 +22,7 @@
 #include "fmt.h"
 #include "now.h"
 #include "cookie.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "subdb.h"
 #include "messages.h"
 #include "die.h"
@@ -35,6 +35,14 @@ const char FATAL[] = "ezmlm-return: fatal: ";
 const char INFO[] = "ezmlm-return: info: ";
 const char USAGE[] =
 "ezmlm-return: usage: ezmlm-return [-dD] dir";
+
+static int flagdig = 0;
+
+static struct option options[] = {
+  OPT_FLAG(flagdig,'d',1,0),
+  OPT_FLAG(flagdig,'D',0,0),
+  OPT_END
+};
 
 void die_badretaddr(void)
 {
@@ -251,36 +259,22 @@ void main(int argc,char **argv)
   unsigned long listno = 0L;
   int match;
   unsigned int i;
-  int flagdig = 0;
   int flagmaster = 0;
   int flagreceipt = 0;
   int fdlock;
   char ch;
-  int opt;
-
 
   umask(022);
   sig_pipeignore();
   when = (unsigned long) now();
 
-  while ((opt = getopt(argc,argv,"dDvV")) != opteof) {
-    switch (opt) {
-    case 'd': flagdig = 1; break;
-    case 'D': flagdig = 0; break;
-    case 'v':
-    case 'V':
-      strerr_die2x(0, "ezmlm-return version: ",auto_version);
-    default:
-      die_usage();
-    }
-  }
+  getconfopt(argc,argv,options,1,0);
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
   action = env_get("DEFAULT");
   if (!action) strerr_die2x(100,FATAL,MSG(ERR_NODEFAULT));
 
-  startup(dir = argv[optind]);
   initsub(0);
 
     if (str_start(action,"receipt-")) {

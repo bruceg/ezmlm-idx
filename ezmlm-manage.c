@@ -23,7 +23,7 @@
 #include "fmt.h"
 #include "subdb.h"
 #include "cookie.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "copy.h"
 #include "messages.h"
 #include "open.h"
@@ -56,10 +56,42 @@ int flagunsubismod = 0;	/* default: do not require moderator approval to */
 			/* unsubscribe from moderated list */
 int flagedit = -1;	/* default: text file edit not allowed */
 int flagstorefrom = 1;	/* default: store from: line for subscribes */
-int flagmod;		/* subscription moderation enabled */
 char encin = '\0';	/* encoding of incoming message */
 int flagdig = 0;	/* request is not for digest list */
 unsigned long copylines = 0;	/* Number of lines from the message to copy */
+int flagpublic = 0;
+stralloc modsub = {0};
+stralloc remote = {0};
+
+static struct option options[] = {
+  OPT_FLAG(flagbottom,'b',1,0),
+  OPT_FLAG(flagbottom,'B',0,0),
+  OPT_FLAG(flagget,'c',1,0),
+  OPT_FLAG(flagget,'C',0,0),
+  OPT_FLAG(flagedit,'d',1,0),
+  OPT_FLAG(flagedit,'D',0,0),
+  OPT_FLAG(flagedit,'e',1,"modcanedit"),
+  OPT_FLAG(flagedit,'E',0,0),
+  OPT_FLAG(flagstorefrom,'f',1,0),
+  OPT_FLAG(flagstorefrom,'F',0,0),
+  OPT_FLAG(flaglist,'l',1,"modcanlist"),
+  OPT_FLAG(flaglist,'L',0,0),
+  OPT_FLAG(flagunsubismod,'m',1,0),
+  OPT_FLAG(flagunsubismod,'M',0,0),
+  OPT_FLAG(flagnotify,'n',1,0),
+  OPT_FLAG(flagnotify,'N',0,0),
+  OPT_FLAG(flagsubconf,'s',1,0),
+  OPT_FLAG(flagsubconf,'S',0,"nosubconfirm"),
+  OPT_FLAG(flagverbose,'q',0,0),
+  OPT_FLAG(flagverbose,'Q',1,0), /* FIXME, should set flagverbose+1 */
+  OPT_FLAG(flagunsubconf,'u',1,0),
+  OPT_FLAG(flagunsubconf,'U',0,"nounsubconfirm"),
+  OPT_ULONG(copylines,0,"copylines"),
+  OPT_FLAG(flagpublic,0,1,"public"),
+  OPT_STR(modsub,0,"modsub"),
+  OPT_STR(remote,0,"remote"),
+  OPT_END
+};
 
 static const char hex[]="0123456789ABCDEF";
 char urlstr[] = "%00";	/* to build a url-encoded version of a char */
@@ -83,8 +115,6 @@ stralloc line = {0};
 stralloc qline = {0};
 stralloc quoted = {0};
 stralloc moddir = {0};
-stralloc modsub = {0};
-stralloc remote = {0};
 stralloc from = {0};
 stralloc to = {0};
 stralloc owner = {0};
@@ -579,9 +609,7 @@ int main(int argc,char **argv)
   stralloc mod = {0};
   const char *err;
   char *cp,*cpfirst,*cplast,*cpnext,*cpafter;
-  int flagremote;
-  int flagpublic;
-  int opt,r;
+  int r;
   unsigned int i;
   unsigned int len;
   int fd;
@@ -592,47 +620,8 @@ int main(int argc,char **argv)
   sig_pipeignore();
   when = now();
 
-  while ((opt = getopt(argc,argv,"bBcCdDeEfFlLmMnNqQsSuUvV")) != opteof)
-    switch(opt) {
-      case 'b': flagbottom = 1; break;
-      case 'B': flagbottom = 0; break;
-      case 'c': flagget = 1; break;
-      case 'C': flagget = 0; break;
-      case 'd':
-      case 'e': flagedit = 1; break;
-      case 'D':
-      case 'E': flagedit = 0; break;
-      case 'f': flagstorefrom = 1; break;
-      case 'F': flagstorefrom = 0; break;
-      case 'l': flaglist = 1; break;
-      case 'L': flaglist = 0; break;
-      case 'm': flagunsubismod = 1; break;
-      case 'M': flagunsubismod = 0; break;
-      case 'n': flagnotify = 1; break;
-      case 'N': flagnotify = 0; break;
-      case 's': flagsubconf = 1; break;
-      case 'S': flagsubconf = 0; break;
-      case 'q': flagverbose = 0; break;
-      case 'Q': flagverbose++; break;
-      case 'u': flagunsubconf = 1; break;
-      case 'U': flagunsubconf = 0; break;
-      case 'v':
-      case 'V': strerr_die2x(0, "ezmlm-manage version: ",auto_version);
-      default:
-	die_usage();
-    }
-
-  startup(dir = argv[optind]);
+  getconfopt(argc,argv,options,1,&dir);
   initsub(0);
-  getconf_ulong(&copylines,"copylines",0);
-  if (flagedit < 0)
-    flagedit = getconf_isset("modcanedit");
-  if (flaglist < 0)
-    flaglist = getconf_isset("modcanlist");
-  if (flagsubconf < 0)
-    flagsubconf = !getconf_isset("nosubconfirm");
-  if (flagunsubconf < 0)
-    flagunsubconf = !getconf_isset("nounsubconfirm");
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
@@ -685,9 +674,6 @@ int main(int argc,char **argv)
   set_cptarget(target.s);	/* for copy() */
   make_verptarget();
 
-  flagmod = getconf_line(&modsub,"modsub",0);
-  flagremote = getconf_line(&remote,"remote",0);
-
   if (case_equals(action,ACTION_LISTN) ||
 		case_equals(action,ALT_LISTN))
     act = AC_LISTN;
@@ -711,7 +697,7 @@ int main(int argc,char **argv)
 			/* NOTE: act is needed in msg_headers(). */
 			/* Yes, this needs to be cleaned up! */
 
-  if (flagmod || flagremote) {
+  if (modsub.s != 0 || remote.s != 0) {
     if (modsub.len) {
       if (!stralloc_copy(&moddir,&modsub)) die_nomem();
     } else if (remote.len) {
@@ -736,13 +722,12 @@ int main(int argc,char **argv)
 				/* admin and modsub lists. Since ismod   */
 				/* is false for all non-mod lists, only it   */
 				/* needs to be tested. */
-  flagpublic = getconf_isset("public");
-  if (!flagpublic && !(ismod && flagremote) &&
+  if (!flagpublic && !(ismod && remote.s != 0) &&
                 !case_equals(action,ACTION_HELP))
       strerr_die2x(100,FATAL,MSG(ERR_NOT_PUBLIC));
 
   if (flagdig == FLD_DENY)
-    if (!ismod || !flagremote)	/* only mods can do */
+    if (!ismod || remote.s == 0)	/* only mods can do */
       strerr_die1x(100,MSG(ERR_NOT_ALLOWED));
 
   if (act == AC_NONE) {		/* none of the above */
@@ -765,7 +750,7 @@ int main(int argc,char **argv)
   msg_headers();
 
   if (act == AC_SUBSCRIBE) {
-    if (ismod && flagremote) {
+    if (ismod && remote.s != 0) {
       doconfirm(ACTION_RC);
       copy(&qq,"text/mod-sub-confirm",flagcd);
       copybottom();
@@ -775,7 +760,7 @@ int main(int argc,char **argv)
       copy(&qq,"text/sub-confirm",flagcd);
       copybottom();
       qmail_to(&qq,target.s);
-    } else if (flagmod) {
+    } else if (modsub.s != 0) {
       store_from(&fromline,target.s);
       doconfirm(ACTION_TC);
       copy(&qq,"text/mod-sub-confirm",flagcd);
@@ -790,7 +775,7 @@ int main(int argc,char **argv)
 
   } else if (act == AC_SC) {
     if (hashok(action,ACTION_SC)) {
-      if (flagmod && !(ismod && str_equal(sender,target.s))) {
+      if (modsub.s != 0 && !(ismod && str_equal(sender,target.s))) {
         store_from(&fromline,target.s);	/* save from line, if requested */
 					/* since transaction not complete */
         doconfirm(ACTION_TC);
@@ -821,7 +806,7 @@ int main(int argc,char **argv)
       if (flagnotify) qmail_to(&qq,target.s);	/* unless suppressed */
       if (r && flagverbose > 1) to_owner();
     } else {
-      if (!ismod || !flagremote)	/* else anyone can get a good -tc. */
+      if (!ismod || remote.s == 0)	/* else anyone can get a good -tc. */
         die_cookie();
       doconfirm(ac);
       copy(&qq,"text/sub-bad",flagcd);
@@ -831,7 +816,7 @@ int main(int argc,char **argv)
 
   } else if (act == AC_UNSUBSCRIBE) {
     if (flagunsubconf) {
-      if (ismod && flagremote) {
+      if (ismod && remote.s != 0) {
         doconfirm(ACTION_WC);
         copy(&qq,"text/mod-unsub-confirm",flagcd);
         copybottom();
@@ -842,7 +827,7 @@ int main(int argc,char **argv)
         copybottom();
         qmail_to(&qq,target.s);
       }
-    } else if (flagunsubismod && flagmod) {
+    } else if (flagunsubismod && modsub.s != 0) {
         doconfirm(ACTION_VC);
         copy(&qq,"text/mod-unsub-confirm",flagcd);
         copybottom();
@@ -859,7 +844,7 @@ int main(int argc,char **argv)
     if (hashok(action,ACTION_UC)) {
 	/* unsub is moderated only on moderated list if -m unless the */
 	/* target == sender == a moderator */
-      if (flagunsubismod && flagmod) {
+      if (flagunsubismod && modsub.s != 0) {
         doconfirm(ACTION_VC);
         copy(&qq,"text/mod-unsub-confirm",flagcd);
         copybottom();
@@ -885,7 +870,7 @@ int main(int argc,char **argv)
 	     : 0) {
     if (hashok(action,ac)) {
       r = getoff(action);
-      if (!r && flagmod)
+      if (!r && modsub.s != 0)
         strerr_die2x(0,INFO,MSG(ERR_UNSUB_NOP));
       mod_bottom();
       if (r) {				/* success to target */
@@ -895,7 +880,7 @@ int main(int argc,char **argv)
         qmail_to(&qq,sender);		/* care of it. No need to tell owner */
 		/* if list is moderated skip - otherwise bad with > 1 mod */
     } else {
-      if (!ismod || !flagremote)	/* else anyone can get a good -vc. */
+      if (!ismod || remote.s == 0)	/* else anyone can get a good -vc. */
         die_cookie();
       doconfirm(ac);
       copy(&qq,"text/unsub-bad",flagcd);
@@ -905,7 +890,7 @@ int main(int argc,char **argv)
 
   } else if (act == AC_LIST || act == AC_LISTN) {
 
-    if (!flaglist || (!flagmod && !flagremote))
+    if (!flaglist || (modsub.s == 0 && remote.s == 0))
       strerr_die2x(100,FATAL,MSG(ERR_NOT_AVAILABLE));
     if (!ismod)
       strerr_die2x(100,FATAL,MSG(ERR_NOT_ALLOWED));
@@ -930,7 +915,7 @@ int main(int argc,char **argv)
   } else if (act == AC_LOG) {
     action += actlen;
     if (*action == '.' || *action == '_') ++action;
-    if (!flaglist || !flagremote)
+    if (!flaglist || remote.s == 0)
       strerr_die2x(100,FATAL,MSG(ERR_NOT_AVAILABLE));
     if (!ismod)
       strerr_die2x(100,FATAL,MSG(ERR_NOT_ALLOWED));
@@ -942,7 +927,7 @@ int main(int argc,char **argv)
 
   } else if (act == AC_EDIT) {
 	/* only remote admins and only if -e is specified may edit */
-    if (!flagedit || !flagremote)
+    if (!flagedit || remote.s == 0)
       strerr_die2x(100,FATAL,MSG(ERR_NOT_AVAILABLE));
     if (!ismod)
       strerr_die2x(100,FATAL,MSG(ERR_NOT_ALLOWED));

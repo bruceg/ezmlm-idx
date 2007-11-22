@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include "env.h"
 #include "strerr.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "substdio.h"
 #include "subfd.h"
 #include "messages.h"
@@ -22,6 +22,10 @@
 const char FATAL[] = "ezmlm-dispatch: fatal: ";
 const char USAGE[] =
 "ezmlm-dispatch: usage: ezmlm-dispatch dir [list]";
+
+static struct option options[] = {
+  OPT_END
+};
 
 static const char *sender;
 static stralloc basedir;
@@ -190,18 +194,9 @@ static void dispatch(const char *dir,const char *def)
 void main(int argc,char **argv)
 {
   char *def;
-  int opt;
   int dash;
   
-  while ((opt = getopt(argc,argv,"vV")) != opteof)
-    switch (opt) {
-    case 'v':
-    case 'V':
-      strerr_die2x(0, "ezmlm-dispatch version: ",auto_version);
-    default:
-      die_usage();
-    }
-
+  optind = getconfopt(argc,argv,options,0,0);
   if (argv[optind] == 0)
     die_usage();
   if (!stralloc_copys(&basedir,argv[optind++])) die_nomem();

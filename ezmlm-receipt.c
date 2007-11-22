@@ -15,7 +15,7 @@
 #include "case.h"
 #include "quote.h"
 #include "getln.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "substdio.h"
 #include "error.h"
 #include "readwrite.h"
@@ -32,6 +32,14 @@ const char FATAL[] = "ezmlm-receipt: fatal: ";
 const char INFO[] = "ezmlm-receipt: info: ";
 const char USAGE[] =
 "ezmlm-receipt: usage: ezmlm-receipt [-dD] dir";
+
+static int flagdig = 1;
+
+static struct option options[] = {
+  OPT_FLAG(flagdig,'d',2,0),
+  OPT_FLAG(flagdig,'d',0,0),
+  OPT_END
+};
 
 void die_trash(void)
 {
@@ -67,9 +75,9 @@ substdio ssout;
 unsigned long when;
 unsigned long addrno = 0L;
 
-char *sender;
-char *dir;
-char *workdir;
+const char *sender;
+const char *dir;
+const char *workdir;
 stralloc listno = {0};
 
 
@@ -149,7 +157,6 @@ void main(int argc,char **argv)
   char *local;
   char *host;
   char *action;
-  int flagdig = 1;
   int flaghaveintro;
   int flaghaveheader;
   int match;
@@ -157,26 +164,13 @@ void main(int argc,char **argv)
   unsigned int i;
   unsigned int len;
   char *cp;
-  int opt;
 
   umask(022);
   sig_pipeignore();
 
   when = (unsigned long) now();
 
-  while ((opt = getopt(argc,argv,"dDvV")) != opteof) {
-    switch (opt) {
-    case 'd': flagdig = 2; break;
-    case 'D': flagdig = 0; break;
-    case 'v':
-    case 'V':
-      strerr_die2x(0, "ezmlm-receipt version: ",auto_version);
-    default:
-      die_usage();
-    }
-  }
-
-  startup(dir = argv[optind]);
+  getconfopt(argc,argv,options,1,&dir);
 
   sender = env_get("SENDER");
   action = env_get("DEFAULT");

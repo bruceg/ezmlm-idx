@@ -21,7 +21,7 @@
 #include "getconf.h"
 #include "constmap.h"
 #include "fmt.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "byte.h"
 #include "seek.h"
 #include "messages.h"
@@ -40,13 +40,21 @@ const char INFO[] = "ezmlm-request: info: ";
 const char USAGE[] =
 "ezmlm-request: usage: ezmlm-request [-f lists.cfg] dir";
 
+static const char *cfname = (char *) 0;
+static unsigned long copylines = 0; /* Number of lines from the message to copy */
+static struct option options[] = {
+  OPT_CSTR(cfname,'f',0),
+  OPT_CSTR(cfname,'F',0),
+  OPT_ULONG(copylines,0,"copylines"),
+  OPT_END
+};
+
 char strnum[FMT_ULONG];
 
 char *userlocal = (char *) 0;
 char *userhost = (char *) 0;
 char *listlocal = (char *) 0;
 char *listhost = (char *) 0;
-const char *cfname = (char *) 0;
 char *command = (char*)"help";
 stralloc line = {0};
 stralloc qline = {0};
@@ -60,7 +68,6 @@ stralloc cmds = {0};
 stralloc from = {0};
 stralloc to = {0};
 stralloc quoted = {0};
-unsigned long copylines = 0;	/* Number of lines from the message to copy */
 char boundary[COOKIE] = "zxcaeedrqcrtrvthbdty";	/* cheap "rnd" MIME boundary */
 
 struct constmap headerremovemap;
@@ -257,7 +264,6 @@ void parseline(char *cp)
 
 void main(int argc,char **argv)
 {
-  char *dir;
   char *local;
   char *action;
   char *def;
@@ -273,24 +279,12 @@ void main(int argc,char **argv)
   int flagbadfield;
   int flagmultipart = 0;
   int fd;
-  int opt;
   unsigned int pos,pos1,len,last;
 
   (void)umask(022);
   sig_pipeignore();
 
-  while ((opt = getopt(argc,argv,"f:F:vV")) != opteof)
-    switch(opt) {
-      case 'F':
-      case 'f': if (optarg) cfname = optarg; break;
-      case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-request version: ",auto_version);
-      default:
-	die_usage();
-    }
-
-  startup(dir = argv[optind]);
-  getconf_ulong(&copylines,"copylines",0);
+  getconfopt(argc,argv,options,1,0);
 
 	/* do minimum to identify request for this program in case */
 	/* it's invoked in line with e.g. ezmlm-manage */

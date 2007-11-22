@@ -7,6 +7,7 @@
 #include "env.h"
 #include "sig.h"
 #include "getconf.h"
+#include "getconfopt.h"
 #include "strerr.h"
 #include "byte.h"
 #include "getln.h"
@@ -20,7 +21,6 @@
 #include "now.h"
 #include "direntry.h"
 #include "cookie.h"
-#include "sgetopt.h"
 #include "fmt.h"
 #include "messages.h"
 #include "copy.h"
@@ -55,6 +55,14 @@ const char FATAL[] = "ezmlm-clean: fatal: ";
 const char USAGE[] =
 "ezmlm-clean: usage: ezmlm-clean [-mMrRvV] dir";
 
+static struct option options[] = {
+  OPT_FLAG(flagmime,'m',1,0),
+  OPT_FLAG(flagmime,'M',0,0),
+  OPT_FLAG(flagreturn,'r',1,0),
+  OPT_FLAG(flagreturn,'R',0,"noreturnposts"),
+  OPT_END
+};
+
 void die_read(void)
 {
   strerr_die2x(111,FATAL,MSG1(ERR_READ,fnmsg.s));
@@ -68,7 +76,6 @@ substdio sstext;
 
 struct qmail qq;
 
-char *dir;
 char strnum[FMT_ULONG];
 char boundary[COOKIE];
 datetime_sec hashdate;
@@ -214,30 +221,15 @@ void dodir(const char *dirname,int reply)
   closedir(moddir);
 }
 
-
 void main(int argc,char **argv)
 {
   int fdlock;
   unsigned long delay;
-  int opt;
   (void) umask(022);
   sig_pipeignore();
   when = now();
 
-  while ((opt = getopt(argc,argv,"mMrRvV")) != opteof)
-    switch(opt) {
-      case 'm': flagmime = 1; break;
-      case 'M': flagmime = 0; break;
-      case 'r': flagreturn = 1; break;
-      case 'R': flagreturn = 0; break;
-      case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-clean version: ", auto_version);
-                /* not reached */
-      default:
-	die_usage();
-    }
-
-  startup(dir = argv[optind]);
+  getconfopt(argc,argv,options,1,0);
   if (flagreturn < 0)
     /* default to returning timed-out messages */
     flagreturn = !getconf_isset("noreturnposts");

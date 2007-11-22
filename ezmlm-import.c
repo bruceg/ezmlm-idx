@@ -17,12 +17,16 @@
 #include "getln.h"
 #include "byte.h"
 #include "idx.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "auto_version.h"
 
 const char FATAL[] = "ezmlm-import: fatal: ";
 const char USAGE[] =
 "ezmlm-import: usage: ezmlm-import dir mbox";
+
+static struct option options[] = {
+  OPT_END
+};
 
 stralloc fnadir = {0};
 stralloc fnaf = {0};
@@ -79,30 +83,19 @@ void numwrite(void)
 
 int main(int argc,char *argv[])
 {
-  const char* dir;
   int fd;
   int match;
   unsigned long msgsize = 0L;
   int opt;
-  
-  while ((opt = getopt(argc,argv,"vV")) != opteof) {
-    switch(opt) {
-    case 'v':
-    case 'V':
-      strerr_die2x(0, "ezmlm-import version: ",auto_version);
-    default:
-      die_usage();
-    }
-  }
 
-  if (argc - optind != 2)
+  opt = getconfopt(argc,argv,options,1,0);
+  if (argc - opt != 1)
     die_usage();
 
-  if ((fd = open_read(argv[optind+1])) == -1)
-    strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,argv[optind+1]));
+  if ((fd = open_read(argv[opt])) == -1)
+    strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,argv[opt]));
   substdio_fdbuf(&ssin,read,fd,inputbuf,sizeof inputbuf);
 
-  startup(dir = argv[optind]);
   lockfile("lock");
 
   getconf_ulong2(&msgnum,&cumsize,"num",0);

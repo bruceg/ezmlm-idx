@@ -12,7 +12,7 @@
 #include "fmt.h"
 #include "now.h"
 #include "lock.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "messages.h"
 #include "scan.h"
 #include "case.h"
@@ -22,11 +22,20 @@
 #include "wrap.h"
 #include "idx.h"
 #include "config.h"
-#include "auto_version.h"
 
 const char FATAL[] = "ezmlm-tstdig: fatal: ";
 const char USAGE[] =
 "ezmlm-tstdig: usage: ezmlm-tstdig [-k kbytes] [-m messages] [-t hours] dir";
+
+static unsigned long deltanum;
+static unsigned long deltawhen;
+static unsigned long deltasize;
+static struct option options[] = {
+  OPT_ULONG(deltasize,'k',"digsize"),
+  OPT_ULONG(deltanum,'m',"digcount"),
+  OPT_ULONG(deltawhen,'t',"digtime"),
+  OPT_END
+};
 
 stralloc line = {0};
 
@@ -39,56 +48,22 @@ int flaglocal = 0;
 
 void main(int argc,char **argv)
 {
-  char *dir;
   char *local;
   char *def;
-  int opt;
   unsigned int pos;
   unsigned long num, digsize, dignum;
   unsigned long cumsize = 0L;
-  unsigned long deltanum = 0L;
-  unsigned long deltawhen = 0L;
-  unsigned long deltasize = 0L;
   unsigned long when, tsttime, digwhen;
   int fd,fdlock;
 
   (void) umask(022);
   sig_pipeignore();
   when = (unsigned long) now();
-
-  while ((opt = getopt(argc,argv,"k:t:m:vV")) != opteof)
-    switch(opt) {
-      case 'k':
-                if (optarg)
-                  scan_ulong(optarg,&deltasize);
-                break;
-      case 't':
-                if (optarg)	/* hours */
-                  scan_ulong(optarg,&deltawhen);
-                break;
-      case 'm':
-                if (optarg)
-                  scan_ulong(optarg,&deltanum);
-                break;
-      case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-tstdig version: ",auto_version);
-      default:
-	die_usage();
-    }
-
-
-  startup(dir = argv[optind++]);
-
+  optind = getconfopt(argc,argv,options,1,0);
   if (argv[optind])
     die_usage();	/* avoid common error of putting options after dir */
   if (!getconf_ulong2(&num,&cumsize,"num",0))
     _exit(99);
-  if (!deltasize)
-    getconf_ulong(&deltasize,"digsize",0);
-  if (!deltawhen)
-    getconf_ulong(&deltawhen,"digtime",0);
-  if (!deltanum)
-    getconf_ulong(&deltanum,"digcount",0);
 
   if (getconf_line(&line,"dignum",0)) {
     if(!stralloc_0(&line)) die_nomem();

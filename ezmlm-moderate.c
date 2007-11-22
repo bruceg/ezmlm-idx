@@ -21,7 +21,7 @@
 #include "datetime.h"
 #include "now.h"
 #include "fmt.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "cookie.h"
 #include "messages.h"
 #include "copy.h"
@@ -35,19 +35,33 @@
 #include "config.h"
 #include "auto_version.h"
 
-int flagmime = MOD_MIME;	/* default is message as attachment */
-
 const char FATAL[] = "ezmlm-moderate: fatal: ";
 const char INFO[] = "ezmlm-moderate: info: ";
 const char USAGE[] =
 "ezmlm-moderate: usage: ezmlm-moderate [-cCmMrRvV] [-t replyto] dir [/path/ezmlm-send]";
+
+static const char *replyto = (char *) 0;
+static int flagmime = MOD_MIME;	/* default is message as attachment */
+
+static stralloc sendopt = {0};
+
+static struct option options[] = {
+  OPT_COPY_FLAG(sendopt,'c'),
+  OPT_COPY_FLAG(sendopt,'C'),
+  OPT_COPY_FLAG(sendopt,'r'),
+  OPT_COPY_FLAG(sendopt,'R'),
+  OPT_FLAG(flagmime,'m',1,0),
+  OPT_FLAG(flagmime,'M',0,0),
+  OPT_CSTR(replyto,'t',0),
+  OPT_CSTR(replyto,'T',0),
+  OPT_END
+};
 
 stralloc mydtline = {0};
 stralloc accept = {0};
 stralloc reject = {0};
 stralloc to = {0};
 stralloc send = {0};
-stralloc sendopt = {0};
 stralloc comment = {0};
 datetime_sec when;
 
@@ -65,7 +79,7 @@ stralloc fnsub = {0};
 char subbuf[256];
 substdio sssub;
 
-char *dir;
+const char *dir;
 
 struct stat st;
 
@@ -161,8 +175,6 @@ void main(int argc,char **argv)
   int match;
   const char *err;
   char encin = '\0';
-  char szchar[2] = "-";
-  const char *replyto = (char *) 0;
   unsigned int start,confnum;
   unsigned int pos,i;
   int child;
@@ -174,26 +186,7 @@ void main(int argc,char **argv)
   when = now();
 
   if (!stralloc_copys(&sendopt,"-")) die_nomem();
-  while ((opt = getopt(argc,argv,"cCmMrRt:T:vV")) != opteof)
-    switch(opt) {	/* pass on ezmlm-send options */
-      case 'c':			/* ezmlm-send flags */
-      case 'C':
-      case 'r':
-      case 'R':
-        szchar[0] = (char) opt & 0xff;
-        if (!stralloc_append(&sendopt,szchar)) die_nomem();
-        break;
-      case 'm': flagmime = 1; break;
-      case 'M': flagmime = 0; break;
-      case 't':
-      case 'T': if (optarg) replyto = optarg; break;
-      case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-moderate version: ",auto_version);
-      default:
-	die_usage();
-    }
-
-  startup(dir = argv[optind++]);
+  opt = getconfopt(argc,argv,options,1,0);
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
@@ -434,10 +427,10 @@ void main(int argc,char **argv)
     if ((child = wrap_fork()) == 0) {
       close(0);
       dup(fd);	/* make fnmsg.s stdin */
-      if (argc > optind + 1)
-	wrap_execvp((const char **)argv + optind);
-      else if (argc > optind)
-        wrap_execsh(argv[optind]);
+      if (argc > opt + 1)
+	wrap_execvp((const char **)argv + opt);
+      else if (argc > opt)
+        wrap_execsh(argv[opt]);
       else
         wrap_execbin("/ezmlm-send", &sendopt, dir);
     }

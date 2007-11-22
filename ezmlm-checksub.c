@@ -5,7 +5,7 @@
 #include "subdb.h"
 #include "subfd.h"
 #include "substdio.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "messages.h"
 #include "die.h"
 #include "idx.h"
@@ -16,40 +16,36 @@ const char FATAL[] = "ezmlm-checksub: fatal: ";
 const char USAGE[] =
 "ezmlm-checksub: usage: ezmlm-checksub [-m MESSAGE] [-nN] dir [subdir ...]";
 
+static const char *message = 0;
+static int flagsub = 1;
+
+static struct option options[] = {
+  OPT_CSTR(message,'m',0),
+  OPT_FLAG(flagsub,'n',0,0),
+  OPT_FLAG(flagsub,'N',1,0),
+  OPT_END
+};
+
 void main(int argc,char **argv)
 {
-  const char *dir;
   const char *subdir;
   const char *addr;
-  const char *message = 0;
-  int flagsub = 1;
-  int opt;
   int senderissub;
+  int i;
 
   addr = env_get("SENDER");
   if (!addr) die_sender();	/* REQUIRE sender */
 
-  while ((opt = getopt(argc,argv,"m:nNvV")) != opteof)
-    switch(opt) {
-    case 'm': message = optarg; break;
-    case 'n': flagsub = 0; break;
-    case 'N': flagsub = 1; break;
-    case 'v':
-    case 'V': strerr_die2x(0, "ezmlm-checksub version: ",auto_version);
-    default:
-      die_usage();
-    }
-
-  startup(dir = argv[optind++]);
+  i = getconfopt(argc,argv,options,1,0);
   initsub(0);
   if (message == 0)
     message = flagsub ? MSG(TXT_ONLY_SUBSCRIBERS) : MSG(TXT_REJECT_POSTS);
 
-  if (optind >= argc)
+  if (i >= argc)
     senderissub = !!issub(0,addr,0);
   else {
     senderissub = 0;
-    while ((subdir = argv[optind++]) != 0) {
+    while ((subdir = argv[i++]) != 0) {
       if (issub(subdir,addr,0)) {
 	senderissub = 1;
 	break;

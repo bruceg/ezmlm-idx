@@ -13,7 +13,7 @@
 #include "getln.h"
 #include "case.h"
 #include "qmail.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "subfd.h"
 #include "substdio.h"
 #include "readwrite.h"
@@ -33,7 +33,13 @@ const char INFO[] = "ezmlm-split: info: ";
 const char USAGE[] =
 "ezmlm-split: usage: ezmlm-split [-dD] dir [splitfile]";
 
-int flagdo = 1;		/* default is manager function */
+static int flagdo = 1;		/* default is manager function */
+
+static struct option options[] = {
+  OPT_FLAG(flagdo,'d',1,0),
+  OPT_FLAG(flagdo,'D',0,0),
+  OPT_END
+};
 
 const char *sender;
 const char *split;
@@ -154,7 +160,6 @@ int findname(void)
 
 void main(int argc,char **argv)
 {
-  char *dir;
   char *action;
   char *dtline;
   char *nhost;
@@ -165,20 +170,8 @@ void main(int argc,char **argv)
 
   sig_pipeignore();
 
-  while ((opt = getopt(argc,argv,"dDvV")) != opteof) {
-    switch (opt) {
-    case 'd': flagdo = 1; break;
-    case 'D': flagdo = 0; break;
-    case 'v':
-    case 'V':
-      strerr_die2x(0, "ezmlm-split version: ",auto_version);
-    default:
-      die_usage();
-    }
-  }
-
-  startup(dir = argv[optind++]);
-  if (!(split = argv[optind]))
+  opt = getconfopt(argc,argv,options,1,0);
+  if (!(split = argv[opt]))
     split = "split";
 
   if (flagdo) {

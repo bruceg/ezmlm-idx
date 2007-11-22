@@ -21,7 +21,7 @@
 #include "datetime.h"
 #include "now.h"
 #include "cookie.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "messages.h"
 #include "byte.h"
 #include "case.h"
@@ -50,6 +50,26 @@ const char FATAL[] = "ezmlm-store: fatal: ";
 const char USAGE[] =
 "ezmlm-store: usage: ezmlm-store [-cCmMpPrRsSvV] dir";
 
+static stralloc sendopt = {0};
+
+static struct option options[] = {
+  OPT_FLAG(flagbody,'b',1,0),
+  OPT_FLAG(flagbody,'B',0,0),
+  OPT_FLAG(flagmime,'m',1,0),
+  OPT_FLAG(flagmime,'M',0,0),
+  OPT_FLAG(flagmodpostonly,'p',0,0), /* anyone can post (still mod'd) */
+  OPT_FLAG(flagmodpostonly,'P',1,"modpostonly"), /* only moderators can post */
+  OPT_FLAG(flagself,'s',1,0),	     /* modpost and DIR/mod diff fxns */
+  OPT_FLAG(flagself,'S',0,0),	     /* same fxn */
+  OPT_FLAG(flagconfirm,'y',1,"confirmpost"), /* force post confirmation */
+  OPT_FLAG(flagconfirm,'Y',0,0),     /* disable post confirmation */
+  OPT_COPY_FLAG(sendopt,'c'),
+  OPT_COPY_FLAG(sendopt,'C'),
+  OPT_COPY_FLAG(sendopt,'r'),
+  OPT_COPY_FLAG(sendopt,'R'),
+  OPT_END
+};
+
 stralloc fnmsg = {0};
 
 void die_msg(void) { strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnmsg.s)); }
@@ -74,7 +94,6 @@ stralloc action = {0};
 stralloc reject = {0};
 stralloc quoted = {0};
 stralloc moderators = {0};
-stralloc sendopt = {0};
 
 struct qmail qq;
 
@@ -115,7 +134,7 @@ void makeacthash(stralloc *act)
 
 void main(int argc,char **argv)
 {
-  char *dir;
+  const char *dir;
   int fdlock;
   char *sender;
   int match;
@@ -125,39 +144,11 @@ void main(int argc,char **argv)
   int ismod;
   stralloc mod = {0};
   const char *err;
-  int opt;
   unsigned int i;
-  char szchar[2] = "-";
   int child;
 
   (void) umask(022);
   sig_pipeignore();
-
-  if (!stralloc_copys(&sendopt,"-")) die_nomem();
-  while ((opt = getopt(argc,argv,"bBcCmMpPrRsSvVyY")) != opteof)
-    switch(opt) {
-      case 'b': flagbody = 1; break;
-      case 'B': flagbody = 0; break;
-      case 'm': flagmime = 1; break;
-      case 'M': flagmime = 0; break;
-      case 'p': flagmodpostonly = 0; break; /* anyone can post (still mod'd)*/
-      case 'P': flagmodpostonly = 1; break; /* only moderators can post */
-      case 's': flagself = 1; break;	/* modpost and DIR/mod diff fxns */
-      case 'S': flagself = 0; break;	/* same fxn */
-      case 'y': flagconfirm = 1; break; /* force post confirmation */
-      case 'Y': flagconfirm = 0; break; /* disable post confirmation */
-      case 'c':				/* ezmlm-send flags */
-      case 'C':
-      case 'r':
-      case 'R':
-        szchar[0] = (char) opt & 0xff;
-        if (!stralloc_append(&sendopt,szchar)) die_nomem();
-        break;
-      case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-store version: ",auto_version);
-      default:
-	die_usage();
-    }
 
   sender = env_get("SENDER");
 
@@ -166,13 +157,9 @@ void main(int argc,char **argv)
       strerr_die2x(100,FATAL,MSG(ERR_BOUNCE));
   }
 
-  startup(dir = argv[optind]);
+  if (!stralloc_copys(&sendopt,"-")) die_nomem();
+  getconfopt(argc,argv,options,1,&dir);
   initsub(0);
-
-  if (flagconfirm < 0)
-    flagconfirm = getconf_isset("confirmpost");
-  if (flagmodpostonly < 0)
-    flagmodpostonly = getconf_isset("modpostonly");
 
   flagmodpost = getconf_line(&moderators,"modpost",0);
   flagremote = getconf_isset("remote");

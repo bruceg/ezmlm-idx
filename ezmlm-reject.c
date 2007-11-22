@@ -7,7 +7,7 @@
 #include "readwrite.h"
 #include "stralloc.h"
 #include "getln.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "getconf.h"
 #include "constmap.h"
 #include "fmt.h"
@@ -41,6 +41,24 @@ int flaghavecommand = 0;
 int flagcheck = 0;		/* set after boundary is found in body, */
 				/* until blank line */
 unsigned long copylines = 0;	/* Number of lines from the message to copy */
+
+static struct option options[] = {
+  OPT_FLAG(flagbody,'b',1,0),
+  OPT_FLAG(flagbody,'B',0,0),
+  OPT_FLAG(flagrejectcommands,'c',1,0),
+  OPT_FLAG(flagrejectcommands,'C',0,0),
+  OPT_FLAG(flagforward,'f',1,0),
+  OPT_FLAG(flagforward,'F',0,0),
+  OPT_FLAG(flagheaderreject,'h',1,0),
+  OPT_FLAG(flagheaderreject,'H',0,0),
+  OPT_FLAG(exitquiet,'q',99,0),
+  OPT_FLAG(exitquiet,'Q',100,0),
+  OPT_FLAG(flagneedsubject,'s',1,0),
+  OPT_FLAG(flagneedsubject,'S',0,0),
+  OPT_FLAG(flagtook,'t',0,0),
+  OPT_FLAG(flagtook,'T',1,0),
+  OPT_END
+};
 
 stralloc mimeremove = {0};
 stralloc mimereject = {0};
@@ -163,7 +181,6 @@ void main(int argc,char **argv)
   unsigned long maxmsgsize = 0L;
   unsigned long minmsgsize = 0L;
   unsigned long msgsize = 0L;
-  int opt;
   char linetype = ' ';
   char *cp, *cpstart, *cpafter;
   const char *dir;
@@ -172,28 +189,7 @@ void main(int argc,char **argv)
   unsigned int len;
   int match;
 
-  while ((opt = getopt(argc,argv,"bBcCfFhHqQsStT")) != opteof)
-    switch(opt) {
-      case 'b': flagbody = 1; break;
-      case 'B': flagbody = 0; break;
-      case 'c': flagrejectcommands = 1; break;
-      case 'C': flagrejectcommands = 0; break;
-      case 'f': flagforward = 1; break;
-      case 'F': flagforward = 0; break;
-      case 'h': flagheaderreject = 1; break;
-      case 'H': flagheaderreject = 0; break;
-      case 'q': exitquiet = 99; break;
-      case 'Q': exitquiet = 100; break;
-      case 's': flagneedsubject = 1; break;
-      case 'S': flagneedsubject = 0; break;
-      case 't': flagtook = 0; break;
-      case 'T': flagtook = 1; break;
-      case 'v':
-      case 'V': strerr_die2x(0, "ezmlm-reject version: ",auto_version);
-
-      default: die_usage();
-    }
-  dir = argv[optind];
+  getconfopt(argc,argv,options,-1,&dir);
   if (dir) {
     startup(dir);
     flagparsemime = 1;		/* only if dir do we have mimeremove/reject */

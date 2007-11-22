@@ -53,6 +53,15 @@ getconf.lo
 getconf_ulong.lo
 getln.lo
 getln2.lo
+getconfopt.lo
+getconfopt_copy.lo
+getconfopt_cstr.lo
+getconfopt_cstr_flag.lo
+getconfopt_flag.lo
+getconfopt_str.lo
+getconfopt_ulong.lo
+getconfopt_ulong_flag.lo
+getconfopt_version.lo
 hdr_add.lo
 hdr_boundary.lo
 hdr_ctboundary.lo

@@ -21,7 +21,7 @@
 #include "datetime.h"
 #include "now.h"
 #include "fmt.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "cookie.h"
 #include "messages.h"
 #include "copy.h"
@@ -41,8 +41,22 @@ const char INFO[] = "ezmlm-confirm: info: ";
 const char USAGE[] =
 "ezmlm-confirm: usage: ezmlm-confirm [-cCmMrRvV] dir [/path/ezmlm-send]";
 
-static stralloc to = {0};
+static const char *replyto = (char *) 0;
 static stralloc sendopt = {0};
+
+static struct option options[] = {
+  OPT_COPY_FLAG(sendopt,'c'),
+  OPT_COPY_FLAG(sendopt,'C'),
+  OPT_COPY_FLAG(sendopt,'r'),
+  OPT_COPY_FLAG(sendopt,'R'),
+  OPT_FLAG(flagmime,'m',1,0),
+  OPT_FLAG(flagmime,'M',0,0),
+  OPT_CSTR(replyto,'t',0),
+  OPT_CSTR(replyto,'T',0),
+  OPT_END
+};
+
+static stralloc to = {0};
 static datetime_sec when;
 
 static char hash[COOKIE];
@@ -103,8 +117,6 @@ void main(int argc, char **argv)
   const char *action;
   int fd;
   int match;
-  char szchar[2] = "-";
-  const char *replyto = (char *) 0;
   unsigned int start,confnum;
   int child;
   int opt;
@@ -115,26 +127,7 @@ void main(int argc, char **argv)
   when = now();
 
   if (!stralloc_copys(&sendopt,"-")) die_nomem();
-  while ((opt = getopt(argc,argv,"cCmMrRt:T:vV")) != opteof)
-    switch(opt) {	/* pass on ezmlm-send options */
-      case 'c':			/* ezmlm-send flags */
-      case 'C':
-      case 'r':
-      case 'R':
-        szchar[0] = (char) opt & 0xff;
-        if (!stralloc_append(&sendopt,szchar)) die_nomem();
-        break;
-      case 'm': flagmime = 1; break;
-      case 'M': flagmime = 0; break;
-      case 't':
-      case 'T': if (optarg) replyto = optarg; break;
-      case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-moderate version: ",auto_version);
-      default:
-	die_usage();
-    }
-
-  startup(dir = argv[optind++]);
+  opt = getconfopt(argc,argv,options,1,&dir);
 
   sender = env_get("SENDER");
   if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
@@ -202,10 +195,10 @@ void main(int argc, char **argv)
     if ((child = wrap_fork()) == 0) {
       close(0);
       dup(fd);	/* make fnmsg.s stdin */
-      if (argc > optind + 1)
-	wrap_execvp((const char **)argv + optind);
-      else if (argc > optind)
-        wrap_execsh(argv[optind]);
+      if (argc > opt + 1)
+	wrap_execvp((const char **)argv + opt);
+      else if (argc > opt)
+        wrap_execsh(argv[opt]);
       else
         wrap_execbin("/ezmlm-send", &sendopt, dir);
     }

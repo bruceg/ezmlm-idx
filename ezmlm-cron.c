@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include "strerr.h"
 #include "stralloc.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "substdio.h"
 #include "error.h"
 #include "str.h"
@@ -31,7 +31,26 @@ const char FATAL[] = "ezmlm-cron: fatal: ";
 const char USAGE[] =
 "ezmlm-cron: usage: ezmlm-cron [-cCdDlLvV] [-w dow] [-t hh:mm] [-i hrs] listadr code";
 
+static const char *flagt = 0;
+static const char *flagw = 0;
 static unsigned long deltah = 24L;	/* default interval 24h */
+static int flagconfig = 0;
+static int flagdelete = 0;
+static int flaglist = 0;
+
+static struct option options[] = {
+  OPT_FLAG(flagconfig,'c',1,0),
+  OPT_FLAG(flagconfig,'C',0,0),
+  OPT_FLAG(flagdelete,'d',1,0),
+  OPT_FLAG(flagdelete,'D',0,0),
+  OPT_ULONG(deltah,'i',0),
+  OPT_FLAG(flaglist,'l',1,0),
+  OPT_FLAG(flaglist,'L',0,0),
+  OPT_CSTR(flagt,'t',0),
+  OPT_CSTR(flagw,'w',0),
+  OPT_END
+};
+
 static unsigned long hh = 4L;		/* default time 04:12 */
 static unsigned long mm = 12L;
 static const char *dow = "*";		/* day of week */
@@ -49,15 +68,12 @@ static stralloc listaddr = {0};
 
 static struct passwd *ppasswd;
 
-static int opt,match;
+static int match;
 static int hostmatch;
 static int localmatch;
 static unsigned long dh,t;
 static int founduser = 0;
 static int listmatch = 0;
-static int flagconfig = 0;
-static int flagdelete = 0;
-static int flaglist = 0;
 static int flagdigit = 0;
 static int flagours;
 static int foundlocal;
@@ -131,39 +147,27 @@ void main(int argc,char **argv)
   (void) umask(077);
   sig_pipeignore();
 
-  while ((opt = getopt(argc,argv,"cCdDi:lLt:w:vV")) != opteof)
-    switch (opt) {
-      case 'c': flagconfig = 1; break;
-      case 'C': flagconfig = 0; break;
-      case 'd': flagdelete = 1; break;
-      case 'D': flagdelete = 0; break;
-      case 'i': scan_ulong(optarg,&deltah); break;
-      case 'l': flaglist = 1; break;
-      case 'L': flaglist = 0; break;
-      case 't':
-                pos = scan_ulong(optarg,&hh);
-                if (!optarg[pos++] == ':') die_usage();
-                pos = scan_ulong(optarg + pos,&mm);
-                break;
-      case 'w':
-                dow = optarg;
-                cp = optarg - 1;
-                while (*(++cp)) {
-                  if (*cp >= '0' && *cp <= '7') {
-                    if (flagdigit) die_dow();
-                    flagdigit = 1;
-                  } else if (*cp == ',') {
-                    if (!flagdigit) die_dow();
-                    flagdigit = 0;
-                  } else
-                    die_dow();
-                }
-                break;
-      case 'v':
-      case 'V': strerr_die2x(100,"ezmlm-cron version: ",auto_version);
-      default:
-                die_usage();
+  optind = getconfopt(argc,argv,options,0,0);
+  if (flagt != 0) {
+    pos = scan_ulong(flagt,&hh);
+    if (flagt[pos++] != ':') die_usage();
+    (void) scan_ulong(flagt + pos,&mm);
+  }
+  if (flagw != 0) {
+    dow = flagw;
+    cp = flagw - 1;
+    while (*(++cp)) {
+      if (*cp >= '0' && *cp <= '7') {
+	if (flagdigit) die_dow();
+	flagdigit = 1;
+      } else if (*cp == ',') {
+	if (!flagdigit) die_dow();
+	flagdigit = 0;
+      } else
+	die_dow();
     }
+  }
+
   if (flaglist + flagdelete + flagconfig > 1)
     strerr_die2x(100,FATAL,MSG(ERR_EXCLUSIVE));
   uid = getuid();

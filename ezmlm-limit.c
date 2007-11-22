@@ -10,7 +10,7 @@
 #include "getconf.h"
 #include "fmt.h"
 #include "now.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "error.h"
 #include "scan.h"
 #include "open.h"
@@ -32,6 +32,16 @@ int flagd = 0;				/* =0 create modpost, =1 ignore */
 int flagloop;
 const char *fn = TXT_LOOPNUM;
 
+static struct option options[] = {
+  OPT_FLAG(flagd,'d',1,0),
+  OPT_FLAG(flagd,'D',0,0),
+  OPT_CSTR(fn,'f',0),
+  OPT_CSTR_FLAG(fn,'F',TXT_LOOPNUM,0),
+  OPT_ULONG(deltanum,'n',0),
+  OPT_ULONG(deltasecs,'t',0),
+  OPT_END
+};
+
 void die_new(void) { strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fn)); }
 
 stralloc line = {0};
@@ -43,7 +53,6 @@ char strnum[FMT_ULONG];
 
 void main(int argc,char **argv)
 {
-  char *dir;
   int opt;
   unsigned int pos;
   unsigned long num, loopnum, when;
@@ -54,27 +63,9 @@ void main(int argc,char **argv)
   sig_pipeignore();
   when = (unsigned long) now();
 
-  while ((opt = getopt(argc,argv,"dDf:Fn:t:")) != opteof)
-    switch(opt) {
-      case 'd': flagd = 1; break;
-      case 'D': flagd = 0; break;
-      case 'f': if (optarg && *optarg) fn = optarg; break;
-      case 'F': fn = TXT_LOOPNUM;
-      case 'n':
-                if (optarg)
-                  scan_ulong(optarg,&deltanum);
-                break;
-      case 't':
-                if (optarg)
-                  scan_ulong(optarg,&deltasecs);
-                break;
-      default:
-	die_usage();
-  }
+  opt = getconfopt(argc,argv,options,1,0);
 
-  startup(dir = argv[optind++]);
-
-  if (argv[optind])
+  if (argv[opt])
     die_usage();	/* avoid common error of putting options after dir */
   if (getconf_isset("modpost"))
     _exit(0);		/* already mod */

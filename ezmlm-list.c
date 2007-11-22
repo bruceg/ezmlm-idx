@@ -6,7 +6,7 @@
 #include "subdb.h"
 #include "exit.h"
 #include "fmt.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "messages.h"
 #include "die.h"
 #include "idx.h"
@@ -17,7 +17,17 @@ const char FATAL[] = "ezmlm-list: fatal: ";
 const char USAGE[] =
 "ezmlm-list: usage: ezmlm-list [-mMnNvV] dir [subdir]";
 
-int flagnumber = 0;	/* default list subscribers, not number of */
+static int flagnumber = 0; /* default list subscribers, not number of */
+static const char *flagsubdb = 0;
+
+static struct option options[] = {
+  OPT_CSTR_FLAG(flagsubdb,'m',0,0),
+  OPT_CSTR_FLAG(flagsubdb,'M',"std",0),
+  OPT_CSTR(flagsubdb,'S',0),
+  OPT_FLAG(flagnumber,'n',1,0),
+  OPT_FLAG(flagnumber,'N',0,0),
+  OPT_END
+};
 
 char strnum[FMT_ULONG];
 
@@ -39,28 +49,13 @@ int dummywrite(const char *s,unsigned int l)
 
 void main(int argc,char **argv)
 {
-  const char *dir;
   const char *subdir;
-  const char *flagsubdb = 0;
   unsigned long n;
-  int opt;
+  int i;
 
-  while ((opt = getopt(argc,argv,"mMnNS:vV")) != opteof)
-    switch(opt) {
-      case 'm': flagsubdb = 0; break;
-      case 'M': flagsubdb = "std"; break;
-      case 'n': flagnumber = 1; break;
-      case 'N': flagnumber = 0; break;
-      case 'S': flagsubdb = optarg; break;
-      case 'v':
-      case 'V': strerr_die2x(0, "ezmlm-list version: ",auto_version);
-      default:
-	die_usage();
-    }
-
-  startup(dir = argv[optind++]);
+  i = getconfopt(argc,argv,options,1,0);
   initsub(flagsubdb);
-  subdir = argv[optind];
+  subdir = argv[i];
 
   if (flagnumber) {
     n = putsubs(subdir,0L,52L,dummywrite);

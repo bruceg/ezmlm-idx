@@ -2,7 +2,7 @@
 #include "strerr.h"
 #include "env.h"
 #include "subdb.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "messages.h"
 #include "die.h"
 #include "idx.h"
@@ -13,36 +13,32 @@ const char FATAL[] = "ezmlm-issubn: fatal: ";
 const char USAGE[] =
 "ezmlm-issubn: usage: ezmlm-issubn [-nN] dir [subdir ...]";
 
+static int flagsub = 0;
+
+static struct option options[] = {
+  OPT_FLAG(flagsub,'n',99,0),
+  OPT_FLAG(flagsub,'N',0,0),
+  OPT_END
+};
+
 void main(int argc,char **argv)
 {
-  const char *dir;
   const char *subdir;
   const char *addr;
-  int flagsub = 0;
   int opt;
   int senderissub;
 
   addr = env_get("SENDER");
   if (!addr) die_sender();	/* REQUIRE sender */
 
-  while ((opt = getopt(argc,argv,"nNvV")) != opteof)
-    switch(opt) {
-      case 'n': flagsub = 99; break;
-      case 'N': flagsub = 0; break;
-      case 'v':
-      case 'V': strerr_die2x(0, "ezmlm-issubn version: ",auto_version);
-      default:
-	die_usage();
-    }
-
-  startup(dir = argv[optind++]);
+  opt = getconfopt(argc,argv,options,1,0);
   initsub(0);
 
-  if (optind >= argc)
+  if (opt >= argc)
     senderissub = !!issub(0,addr,0);
   else {
     senderissub = 0;
-    while ((subdir = argv[optind++]) != 0) {
+    while ((subdir = argv[opt++]) != 0) {
       if (issub(subdir,addr,0)) {
 	senderissub = 1;
 	break;

@@ -8,7 +8,7 @@
 #include "substdio.h"
 #include "stralloc.h"
 #include "slurp.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "getconf.h"
 #include "byte.h"
 #include "error.h"
@@ -27,7 +27,6 @@
 #include "lock.h"
 #include "copy.h"
 #include "mime.h"
-#include "auto_version.h"
 #include "hdr.h"
 #include "die.h"
 #include "wrap.h"
@@ -39,13 +38,27 @@ const char FATAL[] = "ezmlm-warn: fatal: ";
 const char USAGE[] =
 "ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir";
 
+static int flagdig = -1;
+static unsigned long lockout = 0L;
+static unsigned long bouncetimeout = BOUNCE_TIMEOUT;
+static int nowarn = 0;
+unsigned long copylines = 0;	/* Number of lines from the message to copy */
+static struct option options[] = {
+  OPT_FLAG(flagdig,'d',1,0),
+  OPT_FLAG(flagdig,'D',0,0),
+  OPT_ULONG(lockout,'l',0),
+  OPT_ULONG(bouncetimeout,'t',0),
+  OPT_ULONG(copylines,0,"copylines"),
+  OPT_FLAG(nowarn,0,1,"nowarn"),
+  OPT_END
+};
+
 char boundary[COOKIE];
 
 substdio ssout;
 char outbuf[16];
 
 unsigned long when;
-const char *dir;
 const char *workdir;
 stralloc fn = {0};
 stralloc bdname = {0};
@@ -53,10 +66,7 @@ stralloc fnlasth = {0};
 stralloc fnlastd = {0};
 stralloc lasth = {0};
 stralloc lastd = {0};
-unsigned long copylines = 0;	/* Number of lines from the message to copy */
 struct stat st;
-unsigned long lockout = 0L;
-unsigned long bouncetimeout = BOUNCE_TIMEOUT;
 
 static void die_read(void) { strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s)); }
 
@@ -407,36 +417,13 @@ static void dodir(int flagdig)
 
 void main(int argc,char **argv)
 {
-  int opt;
-  int flagdig = -1;
-
   (void) umask(022);
   sig_pipeignore();
   when = (unsigned long) now();
-  while ((opt = getopt(argc,argv,"dDl:t:vV")) != opteof)
-    switch(opt) {
-      case 'd': flagdig = 1; break;
-      case 'D': flagdig = 0; break;
-      case 'l':
-                if (optarg) {	/* lockout in seconds */
-                  (void) scan_ulong(optarg,&lockout);
-                }
-                break;
-      case 't':
-                if (optarg) {	/* bouncetimeout in days */
-                  (void) scan_ulong(optarg,&bouncetimeout);
-                  bouncetimeout *= 3600L * 24L;
-                }
-                break;
-      case 'v':
-      case 'V': strerr_die2x(0, "ezmlm-warn version: ",auto_version);
-      default:
-	die_usage();
-    }
-  startup(dir = argv[optind]);
-  if (getconf_isset("nowarn"))
+  getconfopt(argc,argv,options,1,0);
+  bouncetimeout *= 3600L * 24L;
+  if (nowarn)
     _exit(0);
-  getconf_ulong(&copylines,"copylines",0);
   if (flagdig < 0) {
     dodir(0);
     if (getconf_isset("digest"))

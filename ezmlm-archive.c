@@ -13,7 +13,7 @@
 #include "substdio.h"
 #include "readwrite.h"
 #include "fmt.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "idxthread.h"
 #include "makehash.h"
 #include "lock.h"
@@ -31,6 +31,23 @@ const char USAGE[] =
 "ezmlm-archive: usage: ezmlm-archive [-cCFsSTvV] [-f min_msg] [-t max_msg] dir";
 const char WARNING[] = "ezmlm-archive: warning: inconsistent index: ";
 
+static int flagcreate = 0;
+static unsigned long archnum = 0L;
+static int flagsyncall = 0;
+static unsigned long to = 0L;
+
+static struct option options[] = {
+  OPT_FLAG(flagcreate,'c',1,0),
+  OPT_FLAG(flagcreate,'C',0,0),
+  OPT_ULONG(archnum,'f',0),
+  OPT_ULONG_FLAG(archnum,'F',0,0),
+  OPT_FLAG(flagsyncall,'s',1,0),
+  OPT_FLAG(flagsyncall,'S',0,0),
+  OPT_ULONG(to,'t',0),
+  OPT_ULONG_FLAG(to,'T',0,0),
+  OPT_END
+};
+
 substdio ssin;
 char inbuf[1024];
 substdio ssout;
@@ -46,7 +63,6 @@ stralloc fnn = {0};
 char strnum[FMT_ULONG];
 int flagerror = 0;
 int flagsync = 1;	/* sync() by default, not for -c or -f or -t */
-char *dir;
 
 struct ca {
   char *s;		/* start */
@@ -348,14 +364,9 @@ void write_threads(const msgentry *msgtable,
 
 int main(int argc,char **argv)
 {
-  unsigned long archnum = 0L;
-  unsigned long to = 0L;
   unsigned long max;
   int fd;
   int fdlock;
-  int flagcreate = 0;
-  int flagsyncall = 0;
-  int opt;
   msgentry *msgtable;
   subentry *subtable;
   authentry *authtable;
@@ -364,36 +375,12 @@ int main(int argc,char **argv)
   (void) umask(022);
   sig_pipeignore();
 
-  while ((opt = getopt(argc,argv,"cCf:FsSt:TvV")) != opteof)
-    switch (opt) {
-      case 'c':	flagcreate = 1;
-		flagsync = 0;
-		break;			/* start at beginning of archive */
-      case 'C': flagcreate = 0;
-		break;	/* Do only archnum+1 => num */
-      case 'f': if (optarg) {
-		  (void) scan_ulong(optarg,&archnum);
-		  archnum = (archnum / 100) * 100;
-	        }
-		flagsync = 0;
-		break;
-      case 'F': archnum = 0; break;
-      case 's': flagsyncall = 1; break;
-      case 'S': flagsyncall = 0; break;
-      case 't': if (optarg) {
-		  (void) scan_ulong(optarg,&to);
-		}
-		flagsync = 0;
-		break;
-      case 'T': to = 0; break;
-      case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-archive version: ",auto_version);
-      default:
-        die_usage();
-    }
-
-  if (flagsyncall) flagsync = 1;	/* overrides */
-  startup(dir = argv[optind++]);
+  getconfopt(argc,argv,options,1,0);
+  if (flagsyncall)
+    flagsync = 1;
+  else if (flagcreate)
+    flagsync = 0;
+  archnum = (archnum / 100) * 100;
 
   if (mkdir("archive/threads",0755) == -1)
     if (errno != error_exist)

@@ -10,7 +10,7 @@
 #include "slurp.h"
 #include "open.h"
 #include "getln.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "case.h"
 #include "scan.h"
 #include "str.h"
@@ -34,6 +34,19 @@ const char FATAL[] = "ezmlm-idx: fatal: ";
 const char USAGE[] =
 "ezmlm-idx: usage: ezmlm-idx [-dDF] [-f msg] dir";
 
+static int flagdate = 0; /* use 'Received:' header by default, =1 -> 'Date:' */
+static unsigned long msgnum = 0L;
+static unsigned long msgmax;
+
+static struct option options[] = {
+  OPT_FLAG(flagdate,'d',1,0),
+  OPT_FLAG(flagdate,'D',0,0),
+  OPT_ULONG(msgnum,'f',0),
+  OPT_ULONG_FLAG(msgnum,'F',0,0),
+  OPT_ULONG(msgmax,0,"num"),
+  OPT_END
+};
+
 char strnum[FMT_ULONG];
 char hash[HASHLEN];
 
@@ -49,7 +62,6 @@ stralloc dummy = {0};
 int fdindexn;
 int fdlock;
 int fd;
-int flagdate = 0;	/* use 'Received:' header by default, =1 -> 'Date:' */
 
 	/* for reading index and in ezmlm-idx for reading message */
 static substdio ssin;
@@ -177,22 +189,10 @@ unsigned int pos,pos1;
 
 int main(int argc,char **argv)
 {
-  char *dir,*cp;
-  unsigned long msgnum = 0L;
-  unsigned long msgmax;
-  int opt,r;
+  char *cp;
+  int r;
 
-  while ((opt = getopt(argc,argv,"dDf:FvV")) != opteof)
-    switch (opt) {
-      case 'd': flagdate = 1; break;
-      case 'D': flagdate = 0; break;
-      case 'f': if (optarg) (void) scan_ulong(optarg,&msgnum); break;
-      case 'F': msgnum = 0L;
-      case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-archive version: ",auto_version);
-      default: die_usage();
-  }
-  startup(dir = argv[optind]);
+  getconfopt(argc,argv,options,1,0);
 
   (void) umask(022);
   sig_pipeignore();
@@ -205,8 +205,6 @@ int main(int argc,char **argv)
   unfoldHDR(line.s,line.len,&prefix,charset.s,&dummy,0);
 					/* need only decoded one */
 
-			/* Get message number */
-  getconf_ulong(&msgmax,"num",1);
   if (msgnum > msgmax) _exit(0);
   if (msgnum) {
     msgnum = (msgnum / 100) * 100 - 1;

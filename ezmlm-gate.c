@@ -14,7 +14,7 @@
 #include "exit.h"
 #include "getconf.h"
 #include "auto_bin.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "messages.h"
 #include "die.h"
 #include "idx.h"
@@ -27,10 +27,32 @@ const char FATAL[] = "ezmlm-gate: fatal: ";
 const char USAGE[] =
 "ezmlm-gate: usage: ezmlm-gate [-cCmMpPqrRsSvV] dir [moddir [...]]";
 
+static const char *queryext = (char *) 0;
+static int dontact = 0;
+static stralloc sendopt = {0};
+static stralloc storeopt = {0};
+
+static struct option options[] = {
+  OPT_COPY_FLAG(sendopt,'c'),
+  OPT_COPY_FLAG(sendopt,'C'),
+  OPT_COPY_FLAG(sendopt,'r'),
+  OPT_COPY_FLAG(sendopt,'R'),
+  OPT_COPY_FLAG(sendopt,'Q'),
+  OPT_COPY_FLAG(storeopt,'m'),
+  OPT_COPY_FLAG(storeopt,'M'),
+  OPT_COPY_FLAG(storeopt,'p'),
+  OPT_COPY_FLAG(storeopt,'P'),
+  OPT_COPY_FLAG(storeopt,'s'),
+  OPT_COPY_FLAG(storeopt,'S'),
+  OPT_COPY_FLAG(storeopt,'y'),
+  OPT_COPY_FLAG(storeopt,'Y'),
+  OPT_CSTR(queryext,'q',0),
+  OPT_FLAG(dontact,'0',1,0),
+  OPT_END
+};
+
 stralloc line = {0};
 stralloc cmds = {0};
-stralloc sendopt = {0};
-stralloc storeopt = {0};
 
 char szchar[2] = "-";
   int child;
@@ -59,56 +81,26 @@ int mailprog(const char *s)
 
 void main(int argc,char **argv)
 {
-  char *dir;
+  const char *dir;
   char *sender;
   char *moddir;
-  const char *queryext = (char *) 0;
   int opt;
   int ret = 0;
-  int dontact = 0;
   unsigned int i,j;
   const char *program;
   stralloc *opts;
 
   umask(022);
   sig_pipeignore();
-	/* storeopts to ezmlm-store only. Others to both (ezmlm-store may */
-	/* pass them on to ezmlm-send. */
+
   if (!stralloc_copys(&sendopt,"-")) die_nomem();
   if (!stralloc_copys(&storeopt,"-")) die_nomem();
+  opt = getconfopt(argc,argv,options,1,&dir);
 
-  while ((opt = getopt(argc,argv,
-      "0cCmMpPq:Q:sSrRt:T:vVyY")) != opteof)
-    switch(opt) {	/* pass on unrecognized options */
-      case 'c':			/* ezmlm-send flags */
-      case 'C':
-      case 'r':
-      case 'Q':
-      case 'R':
-        szchar[0] = opt;
-        if (!stralloc_append(&sendopt,szchar)) die_nomem();
-        if (!stralloc_append(&storeopt,szchar)) die_nomem();
-        break;
-      case 'm':			/* ezmlm-store flags */
-      case 'M':
-      case 'p':
-      case 'P':
-      case 's':
-      case 'S':
-      case 'y':
-      case 'Y':
-        szchar[0] = opt;
-        if (!stralloc_append(&storeopt,szchar)) die_nomem();
-        break;
-      case 'q': if (optarg) queryext = optarg; break;
-      case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-gate version: ",auto_version);
-      case '0': dontact = 1; break;
-      default:			/* ezmlm-store flags */
-        die_usage();
-    }
+	/* storeopts to ezmlm-store only. Others to both (ezmlm-store may */
+	/* pass them on to ezmlm-send. */
+  if (!stralloc_catb(&storeopt,sendopt.s+1,sendopt.len-1)) die_nomem();
 
-  startup(dir = argv[optind++]);
   initsub(0);
 
   sender = env_get("SENDER");
@@ -134,13 +126,13 @@ void main(int argc,char **argv)
       ismod = 1;			/* 0, 99 => post */
 					/* other => moderate */
   }
-  moddir = argv[optind++];
+  moddir = argv[opt++];
   if (moddir && !ret) {			/* if exit 0 and moddir, add issub */
     ismod = 0;
     while (moddir && !ismod && sender) {
       ismod = issub(moddir,sender,0);
       closesub();
-      moddir = argv[optind++];
+      moddir = argv[opt++];
     }
   }
 

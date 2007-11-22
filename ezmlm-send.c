@@ -22,7 +22,7 @@
 #include "getconf.h"
 #include "constmap.h"
 #include "byte.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "quote.h"
 #include "subdb.h"
 #include "mime.h"
@@ -45,6 +45,25 @@ int flaglog = 1;		/* for lists with mysql support, use tags */
 const char FATAL[] = "ezmlm-send: fatal: ";
 const char USAGE[] =
 "ezmlm-send: usage: ezmlm-send [-cClLqQrR] [-h header] dir";
+
+static int ignoredflag;
+static const char *hash_str = 0;
+static char *mlheader = 0;
+
+static struct option options[] = {
+  OPT_FLAG(ignoredflag,'c',0,0), /* ignore for backwards compat */
+  OPT_FLAG(ignoredflag,'C',0,0),
+  OPT_CSTR(mlheader,'H',0),	/* Alternative sublist check header */
+  OPT_FLAG(flaglog,'l',1,0),
+  OPT_FLAG(flaglog,'L',0,0),
+  OPT_FLAG(flagnoreceived,'r',0,0),
+  OPT_FLAG(flagnoreceived,'R',1,0),
+  OPT_CSTR(hash_str,'s',0),
+  OPT_CSTR(hash_str,'S',0),
+  OPT_FLAG(ignoredflag,'q',0,0),
+  OPT_FLAG(ignoredflag,'Q',0,0),
+  OPT_END
+};
 
 	/* for writing new index file indexn later moved to index. */
 substdio ssindexn;
@@ -109,7 +128,6 @@ int headerremoveflag = 0;
 stralloc mimeremove = {0};
 struct constmap mimeremovemap;
 int mimeremoveflag = 0;
-char *dir;
 
 struct qmail qq;
 substdio ssin;
@@ -307,7 +325,6 @@ void main(int argc,char **argv)
   unsigned long subs;
   int fdlock;
   char *sender;
-  char *mlheader = (char *) 0;
   const char *ret;
   const char *err;
   int flagmlwasthere;
@@ -326,40 +343,25 @@ void main(int argc,char **argv)
   int flagarchiveonly;
   int flagtrailer;
   unsigned int pos;
-  int opt;
   char *cp, *cpstart, *cpafter;
 
   umask(022);
   sig_pipeignore();
 
-  while ((opt = getopt(argc,argv,"cCh:H:lLrRqQs:S:vV")) != opteof)
-    switch(opt) {
-      case 'c': case 'C': break;	/* ignore for backwards compat */
-      case 'h':
-      case 'H': mlheader = (char*)optarg;/* Alternative sublist check header */
-                mlheader[str_chr(mlheader,':')] = '\0';
-                break;
-      case 'l': flaglog = 1; break;
-      case 'L': flaglog = 0; break;
-      case 'r': flagnoreceived = 0; break;
-      case 'R': flagnoreceived = 1; break;
-      case 's':
-      case 'S':	pos = scan_ulong(optarg,&hash_lo);
-		if (!optarg[pos++]) break;
-		(void) scan_ulong(optarg+pos,&hash_hi);
-		if (hash_hi > 52L) hash_hi = 52L;
-		if (hash_lo > hash_hi) hash_lo = hash_hi;
-		break;
-      case 'q': break;
-      case 'Q': break;
-      case 'v':
-      case 'V': strerr_die2x(0, "ezmlm-send version: ",auto_version);
-      default:
-	die_usage();
+  getconfopt(argc,argv,options,1,0);
+  /* Fix up some command-line arguments. */
+  if (mlheader != 0)
+    mlheader[str_chr(mlheader,':')] = '\0';
+  if (hash_str != 0) {
+    pos = scan_ulong(hash_str,&hash_lo);
+    if (hash_str[pos++]) {
+      (void) scan_ulong(hash_str+pos,&hash_hi);
+      if (hash_hi > 52L)
+	hash_hi = 52L;
+      if (hash_lo > hash_hi)
+	hash_lo = hash_hi;
     }
-
-
-  startup(dir = argv[optind++]);
+  }
   initsub(0);
 
   sender = env_get("SENDER");

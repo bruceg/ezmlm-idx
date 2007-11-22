@@ -22,7 +22,7 @@
 #include "now.h"
 #include "date822fmt.h"
 #include "fmt.h"
-#include "sgetopt.h"
+#include "getconfopt.h"
 #include "cookie.h"
 #include "makehash.h"
 #include "copy.h"
@@ -50,10 +50,29 @@ unsigned long copylines = 0;	/* Number of lines from the message to copy */
 const char *digsz =
 		"from\\to\\subject\\reply-to\\date\\message-id\\cc\\"
 		"mime-version\\content-type\\content-transfer-encoding";
+int flagarchived;		/* if list is archived */
+int flagindexed;		/* if list is indexed */
+const char *flagformat = 0;
 
 const char FATAL[] = "ezmlm-get: fatal: ";
 const char USAGE[] =
 "ezmlm-get: usage: ezmlm-get [-bBcClLpPsSvV] [-f fmt] [digestcode]";
+
+static struct option options[] = {
+  OPT_FLAG(flagbottom,'b',1,0),	/* add text/bottom (default) */
+  OPT_FLAG(flagbottom,'B',0,0),	/* suppress text/bottom */
+  OPT_FLAG(flagdo,'c',1,0),	/* do commands */
+  OPT_FLAG(flagdo,'C',0,0),	/* ignore commands X dig */
+  OPT_CSTR(flagformat,'f',"digformat"),
+  OPT_FLAG(flagpublic,'p',1,0), /* always public */
+  OPT_FLAG(flagpublic,'P',0,0),	/* never public = only mods do cmd */
+  OPT_FLAG(flagsubonly,'s',1,"subgetonly"), /* only subs have archive access */
+  OPT_FLAG(flagsubonly,'S',0,0), /* everyone has archive access */
+  OPT_FLAG(flagindexed,0,1,"indexed"),
+  OPT_FLAG(flagarchived,0,1,"archived"),
+  OPT_ULONG(copylines,0,"copylines"),
+  OPT_END
+};
 
 stralloc listname = {0};
 stralloc qmqpservers = {0};
@@ -108,11 +127,8 @@ int flageditor = 0;		/* if we're invoked for within dir/editor */
 struct stat st;
 
 int flaglocked = 0;		/* if directory is locked */
-int flagarchived;		/* if list is archived */
-int flagindexed;		/* if list is indexed */
 int flagq = 0;			/* don't use 'quoted-printable' */
 
-const char *dir;
 const char *workdir;
 const char *sender;
 const char *digestcode;
@@ -777,29 +793,12 @@ void main(int argc,char **argv)
   when = now();
   datetime_tai(&dt,when);
 
-  while ((opt = getopt(argc,argv,"bBcCf:pPsSt:vV")) != opteof)
-    switch (opt) {
-      case 'b': flagbottom = 1; break;	/* add text/bottom (default) */
-      case 'B': flagbottom = 0; break;	/* suppress text/bottom */
-      case 'c': flagdo = 1; break;	/* do commands */
-      case 'C': flagdo = 0; break;	/* ignore commands X dig */
-      case 'f': if (FORMATS[str_chr(FORMATS,optarg[0])])
-                   outformat = optarg[0];
-                break;
-      case 'p': flagpublic = 1; break;	/* always public */
-      case 'P': flagpublic = 0; break;	/* never public = only mods do cmd*/
-					/* def = -1: respect DIR/public */
-      case 's': flagsubonly = 1; break;	/* only subs have archive access */
-      case 'S': flagsubonly = 0; break;	/* everyone has archive access */
-      case 'v':
-      case 'V': strerr_die2x(0,"ezmlm-get version: ",auto_version);
-      default:
-        die_usage();
-    }
+  opt = getconfopt(argc,argv,options,1,0);
 
-  startup(dir = argv[optind++]);
   initsub(0);
-  getconf_ulong(&copylines,"copylines",0);
+  if (flagformat != 0)
+    if (FORMATS[str_chr(FORMATS,flagformat[0])])
+      outformat = flagformat[0];
   if (outformat == 0) {
     outformat =
       (getconf_line(&line,"digformat",0)
@@ -809,7 +808,7 @@ void main(int argc,char **argv)
   }
 
   /* code to activate digest (-digest-code)*/
-  if ((digestcode = argv[optind]) == 0) {
+  if ((digestcode = argv[opt]) == 0) {
     if (getconf_line(&digestcodefile,"digestcode",0)
 	&& digestcodefile.len > 0) {
       if (!stralloc_0(&digestcodefile)) die_nomem();
@@ -923,11 +922,6 @@ void main(int argc,char **argv)
     }
   }
 
-  if (flagsubonly < 0)
-    flagsubonly = getconf_isset("subgetonly");
-  flagindexed = getconf_isset("indexed");
-  flagarchived = getconf_isset("archived");
-
   if (act == AC_DIGEST) {
     workdir = "digest";
     if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
@@ -949,6 +943,9 @@ void main(int argc,char **argv)
     workdir = ".";
 
 
+  if (!flagarchived)
+    strerr_die2x(100,FATAL,MSG(ERR_NOT_ARCHIVED));
+
   if (flagqmqp) {
     if (qmail_open(&qq,&qmqpservers) == -1)		/* open qmail */
       strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
@@ -956,9 +953,6 @@ void main(int argc,char **argv)
       strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
 
   set_cpnum("");	/* default for <#n#> replacement */
-
-  if (!flagarchived)
-    strerr_die2x(100,FATAL,MSG(ERR_NOT_ARCHIVED));
 
   switch (act) {
 
