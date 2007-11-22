@@ -86,6 +86,32 @@ ERR_NO_MATCH|no matching entry found|keine passenden Einträge gefunden
 ERR_NO_PLUGIN|no plugin specified in database connect data|kein Plugin in der Datenbank-Verbindungseinstellung angegeben
 ERR_NO_POST|I'm sorry, you are not allowed to post messages to this list (#5.7.2)|Tut mir leid, Sie dürfen keine Nachrichten an diese Listen senden (#5.7.2)
 ERR_NO_SUBJECT|Sorry, I don't accept message with empty Subject (#5.7.0)|Tut mir leid, ich akzeptiere keine Nachrichten ohne Betreff-Zeile
+SUB_CONFIRM_POST|Confirm post to <#L#>@<#H#>|Bestätige die Einsendung für <#L#>@<#H#>
+SUB_EDIT_LIST|List of editable text files for <#L#>@<#H#>|Liste der veränderbaren Text-Dateien für <#L#>@<#H#>
+SUB_EDIT_REQUEST|EDIT <#1#> for <#L#>@<#H#>|Änderung von <#1#> für <#L#>@<#H#>
+SUB_EDIT_SUCCESS|Success editing <#1#> for <#L#>@<#H#>|Die Datei <#1#> wurde erfolgreich geändert für <#L#>@<#H#>
+SUB_FAQ|FAQ for <#L#>@<#H#>|FAQ (häufig gestellte Fragen) für <#L#>@<#H#>
+SUB_GET_MSG|Archive retrieval from <#L#>@<#H#>|Archiv-Abfrage für <#L#>@<#H#>
+SUB_GOODBYE|GOODBYE from <#L#>@<#H#>|Auf Wiedersehen von <#L#>@<#H#>
+SUB_HELP|Help for <#L#>@<#H#>|Hilfe für <#L#>@<#H#>
+SUB_INFO|Information for <#L#>@<#H#>|Informationen über <#L#>@<#H#>
+SUB_LIST|Subscriber list for <#L#>@<#H#>|AbonnentInnen-Aufstellung für <#L#>@<#H#>
+SUB_LOG_SEARCH|Log search results for <#L#>@<#H#>|Suchergebnisse für das Protokoll von <#L#>@<#H#>
+SUB_LOG|Subscriber log for <#L#>@<#H#>|AbonnentInnen-Protokoll für <#L#>@<#H#>
+SUB_MODERATE|MODERATE for <#L#>@<#H#>|Moderation von <#L#>@<#H#>
+SUB_MOD_HELP|Moderator help for <#L#>@<#H#>|Moderationshilfe für <#L#>@<#H#>
+SUB_MOD_SUBSCRIBE|CONFIRM subscribe to <#L#>@<#H#>|Bestätigung der Einschreibung in <#L#>@<#H#>
+SUB_MOD_UNSUBSCRIBE|CONFIRM unsubscribe from <#L#>@<#H#>|Bestätigung der Austragung aus <#L#>@<#H#>
+SUB_PROBE|Probe from <#L#>@<#H#>|Test-Mail von <#L#>@<#H#>
+SUB_RESULTS|<#L#> results|Ergebniss von <#L#>
+SUB_RETURNED_POST|Returned post for <#L#>@<#H#>|Rückkehrende Einsundung für <#L#>@<#H#>
+SUB_STATUS|Subscription status on <#L#>@<#H#>|Einschreibungsstatus für <#L#>@<#H#>
+SUB_SUBSCRIBE_NOP|Already subscribed to <#L#>@<#H#>|Bereits eingeschrieben in <#L#>@<#H#>
+SUB_UNSUBSCRIBE_NOP|Not subscribed to <#L#>@<#H#>|Nicht eingeschrieben in <#L#>@<#H#>
+SUB_USR_SUBSCRIBE|confirm subscribe to <#L#>@<#H#>|bestätige die Einschreibung in <#L#>@<#H#>
+SUB_USR_UNSUBSCRIBE|confirm unsubscribe from <#L#>@<#H#>|bestätige die Austragung aus <#L#>@<#H#>
+SUB_WARNING|Warning from <#L#>@<#H#>|Warnung von <#L#>@<#H#>
+SUB_WELCOME|WELCOME to <#L#>@<#H#>|Willkommen zu <#L#>@<#H#>
 TXT_ADMINISTRIVIA|Administrivia:|Administration:
 TXT_BY|by|von
 TXT_EDIT_END|%%% END OF TEXT FILE|%%% ENDE DER TEXT DATEI
