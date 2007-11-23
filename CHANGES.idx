@@ -18,10 +18,12 @@ Some ezmlmrc are not updated and may not work right.  If you fix them,
 please send them to ezmlm@list.cr.yp.to for inclusion in the next
 release.
 
-ezmlm-idx-6.1.0, ????-??-??
+ezmlm-idx-7.0.0, ????-??-??
 ===========================
 
-This version adds support for internationalized messages.  All error
+This version has three major architectural changes:
+
+1. There is now support for internationalized messages.  All error
 messages, all subject lines, and a few other messages are now configured
 in a file named "text/messages" that is read at run time.  Messages in
 this file will undergo header-style substitution before they are output.
@@ -33,11 +35,19 @@ given message.  This allows for creation of partial files to override
 just select messages.  If no match is found, the internal English text
 is used.
 
-This version also moves the creation of subscriber tables out of
-ezmlm-mktab-* and into ezmlm-make by adding some additional hooks to the
-subdb plugins.  A ezmlm-rmtab program is also added to remove subscriber
-tables, also with hooks in the subdb plugins.  The ezmlm-mktab-*
-programs have been obsoleted by these changes and have been removed.
+2. The use of the "flags" file has been deprecated completely by
+individual flag files accessed by the appropriate programs.  This, along
+with corresponding changes to the ezmlmrc template, allows for lists to
+be reconfigured without invoking ezmlm-make.  To upgrade a list to the
+new setup, simply run "ezmlm-make -+ DIR".  Note that this will delete
+the "config" and "flags" files, as they have been superceded by other
+files.
+
+3. Creation of subscriber tables has been moved out of ezmlm-mktab-* and
+into ezmlm-make by adding some additional hooks to the subdb plugins.  A
+ezmlm-rmtab program is also added to remove subscriber tables, also with
+hooks in the subdb plugins.  The ezmlm-mktab-* programs have been
+obsoleted by these changes and have been removed.
 
 Smaller changes:
 
