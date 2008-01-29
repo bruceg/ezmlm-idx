@@ -23,6 +23,8 @@ release.
 ezmlm-idx-5.1.3, ????-??-??
 ===========================
 
+- Eliminated the use of vfork for portability.
+
 ezmlm-idx-5.1.2, 2007-10-05
 ===========================
 

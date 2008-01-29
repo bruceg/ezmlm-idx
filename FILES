@@ -86,10 +86,7 @@ make-load.sh
 make-makelib.sh
 trycpp.c
 warn-auto.sh
-fork.h.do
-fork.h1
-fork.h2
-tryvfork.c
+fork.h
 wait.3
 wait=0
 wait=l
