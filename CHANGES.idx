@@ -76,6 +76,8 @@ Smaller changes:
 
 - Fixed handling of digest bouncer in ezmlm-dispatch.
 
+- Eliminated the use of vfork for portability.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 messages changes also replaced the confirmpost subject line hack in

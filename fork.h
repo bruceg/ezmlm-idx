@@ -3,6 +3,5 @@
 
 #include <sys/types.h>
 extern pid_t fork();
-#define vfork fork
 
 #endif
