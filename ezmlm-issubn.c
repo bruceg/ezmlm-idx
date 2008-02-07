@@ -46,6 +46,15 @@ void main(int argc,char **argv)
     }
   }
   else {
+    /* If all the options are absolute, scan each one; else treat the
+     * first option as the base directory and the rest as database
+     * names. */
+    for (opt = --optind; opt < argc; ++opt) {
+      if (argv[opt][0] != '/') {
+	++optind;
+	break;
+      }
+    }
     while ((subdir = argv[optind++]) != 0) {
       if (issub(subdir,addr,0)) {
 	closesub();
