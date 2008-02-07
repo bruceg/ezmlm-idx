@@ -27,6 +27,7 @@ void main(int argc,char **argv)
   const char *addr;
   int opt;
   int senderissub;
+  int i;
 
   addr = env_get("SENDER");
   if (!addr) die_sender();	/* REQUIRE sender */
@@ -37,6 +38,15 @@ void main(int argc,char **argv)
   if (opt >= argc)
     senderissub = !!issub(0,addr,0);
   else {
+    /* If all the options are absolute, scan each one; else treat the
+     * first option as the base directory and the rest as database
+     * names. */
+    for (i = --opt; i < argc; ++i) {
+      if (argv[opt][0] != '/') {
+        ++opt;
+	break;
+      }
+    }
     senderissub = 0;
     while ((subdir = argv[opt++]) != 0) {
       if (issub(subdir,addr,0)) {

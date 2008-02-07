@@ -21,13 +21,13 @@
 	fatal "already addresses in table - please remove and start again"
 
 # not subscriber. Test default
-  ${EZBIN}/ezmlm-issubn "$DIR" . allow && \
+  ${EZBIN}/ezmlm-issubn "$DIR" "$DIR"/allow && \
 	fatal "ezmlm-issubn: failed: exit 0 on non-subscriber (absolute)"
   ${EZBIN}/ezmlm-issubn "$DIR" . allow && \
 	fatal "ezmlm-issubn: failed: exit 0 on non-subscriber (relative)"
 
 # not subscriber. Test -n
-  ${EZBIN}/ezmlm-issubn -n "$DIR" . allow || \
+  ${EZBIN}/ezmlm-issubn -n "$DIR" "$DIR"/allow || \
 	fatal "ezmlm-issubn: -n failed for non-subscriber (absolute)"
   ${EZBIN}/ezmlm-issubn -n "$DIR" . allow || \
 	fatal "ezmlm-issubn: -n failed for non-subscriber (relative)"
@@ -65,7 +65,7 @@
   SENDER="zztop@HOst"
 
 # check for address in allow
-  ${EZBIN}/ezmlm-issubn "$DIR" . allow || \
+  ${EZBIN}/ezmlm-issubn "$DIR" "$DIR"/allow || \
 	fatal "ezmlm-sub/issubn: failed to add/look in 2nd db (absolute)"
   ${EZBIN}/ezmlm-issubn "$DIR" . allow || \
 	fatal "ezmlm-sub/issubn: failed to add/look in 2nd db (relative)"
