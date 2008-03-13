@@ -3,7 +3,6 @@ c:::644:/:ezmlmglrc:
 c:::644:/:ezmlmsubrc:
 d:::755:/ch_GB::
 c:::644:/ch_GB/:ezmlmrc:lang/ch_GB/ezmlmrc
-c:::644:/ch_GB/:mailinglist:lang/ch_GB/mailinglist
 d:::755:/ch_GB/text::
 c:::644:/ch_GB/text/:bottom:lang/ch_GB/text/bottom
 c:::644:/ch_GB/text/:bounce-bottom:lang/ch_GB/text/bounce-bottom
@@ -39,7 +38,6 @@ c:::644:/ch_GB/text/:unsub-ok:lang/ch_GB/text/unsub-ok
 d:::755:/cs::
 c:::644:/cs/:charset:lang/cs/charset
 c:::644:/cs/:ezmlmrc:lang/cs/ezmlmrc
-c:::644:/cs/:mailinglist:lang/cs/mailinglist
 d:::755:/cs/text::
 c:::644:/cs/text/:bottom:lang/cs/text/bottom
 c:::644:/cs/text/:bounce-bottom:lang/cs/text/bounce-bottom
@@ -76,7 +74,6 @@ c:::644:/cs/text/:unsub-ok:lang/cs/text/unsub-ok
 d:::755:/da::
 c:::644:/da/:charset:lang/da/charset
 c:::644:/da/:ezmlmrc:lang/da/ezmlmrc
-c:::644:/da/:mailinglist:lang/da/mailinglist
 d:::755:/da/text::
 c:::644:/da/text/:bottom:lang/da/text/bottom
 c:::644:/da/text/:bounce-bottom:lang/da/text/bounce-bottom
@@ -113,7 +110,6 @@ c:::644:/da/text/:unsub-ok:lang/da/text/unsub-ok
 d:::755:/de::
 c:::644:/de/:charset:lang/de/charset
 c:::644:/de/:ezmlmrc:lang/de/ezmlmrc
-c:::644:/de/:mailinglist:lang/de/mailinglist
 d:::755:/de/text::
 c:::644:/de/text/:bottom:lang/de/text/bottom
 c:::644:/de/text/:bounce-bottom:lang/de/text/bounce-bottom
@@ -150,7 +146,6 @@ c:::644:/de/text/:unsub-nop:lang/de/text/unsub-nop
 c:::644:/de/text/:unsub-ok:lang/de/text/unsub-ok
 d:::755:/en_US::
 c:::644:/en_US/:ezmlmrc:lang/en_US/ezmlmrc
-c:::644:/en_US/:mailinglist:lang/en_US/mailinglist
 d:::755:/en_US/text::
 c:::644:/en_US/text/:bottom:lang/en_US/text/bottom
 c:::644:/en_US/text/:bounce-bottom:lang/en_US/text/bounce-bottom
@@ -187,7 +182,6 @@ c:::644:/en_US/text/:unsub-nop:lang/en_US/text/unsub-nop
 c:::644:/en_US/text/:unsub-ok:lang/en_US/text/unsub-ok
 d:::755:/es::
 c:::644:/es/:ezmlmrc:lang/es/ezmlmrc
-c:::644:/es/:mailinglist:lang/es/mailinglist
 d:::755:/es/text::
 c:::644:/es/text/:bottom:lang/es/text/bottom
 c:::644:/es/text/:bounce-bottom:lang/es/text/bounce-bottom
@@ -222,7 +216,6 @@ c:::644:/es/text/:unsub-nop:lang/es/text/unsub-nop
 c:::644:/es/text/:unsub-ok:lang/es/text/unsub-ok
 d:::755:/fr::
 c:::644:/fr/:ezmlmrc:lang/fr/ezmlmrc
-c:::644:/fr/:mailinglist:lang/fr/mailinglist
 d:::755:/fr/text::
 c:::644:/fr/text/:bottom:lang/fr/text/bottom
 c:::644:/fr/text/:bounce-bottom:lang/fr/text/bounce-bottom
@@ -258,7 +251,6 @@ c:::644:/fr/text/:unsub-nop:lang/fr/text/unsub-nop
 c:::644:/fr/text/:unsub-ok:lang/fr/text/unsub-ok
 d:::755:/hu::
 c:::644:/hu/:ezmlmrc:lang/hu/ezmlmrc
-c:::644:/hu/:mailinglist:lang/hu/mailinglist
 d:::755:/hu/text::
 c:::644:/hu/text/:bottom:lang/hu/text/bottom
 c:::644:/hu/text/:bounce-bottom:lang/hu/text/bounce-bottom
@@ -294,7 +286,6 @@ c:::644:/hu/text/:unsub-nop:lang/hu/text/unsub-nop
 c:::644:/hu/text/:unsub-ok:lang/hu/text/unsub-ok
 d:::755:/id::
 c:::644:/id/:ezmlmrc:lang/id/ezmlmrc
-c:::644:/id/:mailinglist:lang/id/mailinglist
 d:::755:/id/text::
 c:::644:/id/text/:bottom:lang/id/text/bottom
 c:::644:/id/text/:bounce-bottom:lang/id/text/bounce-bottom
@@ -330,7 +321,6 @@ c:::644:/id/text/:unsub-nop:lang/id/text/unsub-nop
 c:::644:/id/text/:unsub-ok:lang/id/text/unsub-ok
 d:::755:/it::
 c:::644:/it/:ezmlmrc:lang/it/ezmlmrc
-c:::644:/it/:mailinglist:lang/it/mailinglist
 d:::755:/it/text::
 c:::644:/it/text/:bottom:lang/it/text/bottom
 c:::644:/it/text/:bounce-bottom:lang/it/text/bounce-bottom
@@ -366,7 +356,6 @@ c:::644:/it/text/:unsub-nop:lang/it/text/unsub-nop
 c:::644:/it/text/:unsub-ok:lang/it/text/unsub-ok
 d:::755:/ja::
 c:::644:/ja/:ezmlmrc:lang/ja/ezmlmrc
-c:::644:/ja/:mailinglist:lang/ja/mailinglist
 d:::755:/ja/text::
 c:::644:/ja/text/:bottom:lang/ja/text/bottom
 c:::644:/ja/text/:bounce-bottom:lang/ja/text/bounce-bottom
@@ -401,7 +390,6 @@ c:::644:/ja/text/:unsub-nop:lang/ja/text/unsub-nop
 c:::644:/ja/text/:unsub-ok:lang/ja/text/unsub-ok
 d:::755:/nl::
 c:::644:/nl/:ezmlmrc:lang/nl/ezmlmrc
-c:::644:/nl/:mailinglist:lang/nl/mailinglist
 d:::755:/nl/text::
 c:::644:/nl/text/:bottom:lang/nl/text/bottom
 c:::644:/nl/text/:bounce-bottom:lang/nl/text/bounce-bottom
@@ -437,7 +425,6 @@ c:::644:/nl/text/:unsub-ok:lang/nl/text/unsub-ok
 d:::755:/pl::
 c:::644:/pl/:charset:lang/pl/charset
 c:::644:/pl/:ezmlmrc:lang/pl/ezmlmrc
-c:::644:/pl/:mailinglist:lang/pl/mailinglist
 d:::755:/pl/text::
 c:::644:/pl/text/:bottom:lang/pl/text/bottom
 c:::644:/pl/text/:bounce-bottom:lang/pl/text/bounce-bottom
@@ -474,7 +461,6 @@ c:::644:/pl/text/:unsub-ok:lang/pl/text/unsub-ok
 d:::755:/pt::
 c:::644:/pt/:charset:lang/pt/charset
 c:::644:/pt/:ezmlmrc:lang/pt/ezmlmrc
-c:::644:/pt/:mailinglist:lang/pt/mailinglist
 d:::755:/pt/text::
 c:::644:/pt/text/:bottom:lang/pt/text/bottom
 c:::644:/pt/text/:bounce-bottom:lang/pt/text/bounce-bottom
@@ -511,7 +497,6 @@ c:::644:/pt/text/:unsub-ok:lang/pt/text/unsub-ok
 d:::755:/pt_BR::
 c:::644:/pt_BR/:charset:lang/pt_BR/charset
 c:::644:/pt_BR/:ezmlmrc:lang/pt_BR/ezmlmrc
-c:::644:/pt_BR/:mailinglist:lang/pt_BR/mailinglist
 d:::755:/pt_BR/text::
 c:::644:/pt_BR/text/:bottom:lang/pt_BR/text/bottom
 c:::644:/pt_BR/text/:bounce-bottom:lang/pt_BR/text/bounce-bottom
@@ -548,7 +533,6 @@ c:::644:/pt_BR/text/:unsub-ok:lang/pt_BR/text/unsub-ok
 d:::755:/ru::
 c:::644:/ru/:charset:lang/ru/charset
 c:::644:/ru/:ezmlmrc:lang/ru/ezmlmrc
-c:::644:/ru/:mailinglist:lang/ru/mailinglist
 d:::755:/ru/text::
 c:::644:/ru/text/:bottom:lang/ru/text/bottom
 c:::644:/ru/text/:bounce-bottom:lang/ru/text/bounce-bottom
@@ -583,7 +567,6 @@ c:::644:/ru/text/:unsub-nop:lang/ru/text/unsub-nop
 c:::644:/ru/text/:unsub-ok:lang/ru/text/unsub-ok
 d:::755:/sv::
 c:::644:/sv/:ezmlmrc:lang/sv/ezmlmrc
-c:::644:/sv/:mailinglist:lang/sv/mailinglist
 d:::755:/sv/text::
 c:::644:/sv/text/:bottom:lang/sv/text/bottom
 c:::644:/sv/text/:bounce-bottom:lang/sv/text/bounce-bottom
