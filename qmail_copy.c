@@ -13,8 +13,7 @@ static int qqwrite(int fd,const char *buf,unsigned int len)
 
 int qmail_copy(struct qmail *qq,substdio *ss)
 {
-  char qqbuf[1];
-  substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,qqbuf,sizeof(qqbuf));
+  substdio ssqq = SUBSTDIO_FDBUF(qqwrite,-1,0,0);
   qqptr = qq;
   return substdio_copy(&ssqq,ss);
 }

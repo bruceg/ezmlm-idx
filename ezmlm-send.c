@@ -117,8 +117,6 @@ char *dir;
 struct qmail qq;
 substdio ssin;
 char inbuf[1024];
-substdio ssout;
-char outbuf[1];
 
 char textbuf[512];
 substdio sstext;

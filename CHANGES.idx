@@ -33,6 +33,8 @@ ezmlm-idx-0.445, ????????
 
 - Fixed ezmlmrc files to not overwrite text files when editing a list.
 
+- Fixed an extremely rare bug with single-byte buffers.
+
 ezmlm-idx-0.444, 20061123
 =========================
 
