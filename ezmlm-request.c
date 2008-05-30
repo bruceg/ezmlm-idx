@@ -122,9 +122,6 @@ char inbuf[1024];
 substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
 substdio ssin2 = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
 
-substdio ssout;
-char outbuf[1];
-
 stralloc mydtline = {0};
 
 int code_qput(const char *s,unsigned int n)
