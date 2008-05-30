@@ -13,7 +13,6 @@
 /* Unprintable chars are changed to '?'. Comment may have spaces */
 
 static substdio ss;
-static char buf[1];
 static char num[FMT_ULONG];
 static stralloc line = {0};
 static stralloc fn = {0};
@@ -47,7 +46,7 @@ void logaddr(const char *subdir,const char *event,
   makepath(&fn,subdir,"/Log",0);
   fd = open_append(fn.s);
   if (fd == -1) return;
-  substdio_fdbuf(&ss,write,fd,buf,sizeof(buf));
+  substdio_fdbuf(&ss,write,fd,NULL,0);
   substdio_putflush(&ss,line.s,line.len);
   close(fd);
   return;
