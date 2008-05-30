@@ -7,6 +7,7 @@
 #include "error.h"
 #include "qmail.h"
 #include "env.h"
+#include "sender.h"
 #include "lock.h"
 #include "sig.h"
 #include "open.h"
@@ -150,7 +151,7 @@ void main(int argc,char **argv)
   (void) umask(022);
   sig_pipeignore();
 
-  sender = env_get("SENDER");
+  sender = get_sender();
 
   if (sender) {
     if (!*sender || str_equal(sender,"#@[]"))

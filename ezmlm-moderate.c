@@ -6,6 +6,7 @@
 #include "stralloc.h"
 #include "str.h"
 #include "env.h"
+#include "sender.h"
 #include "error.h"
 #include "sig.h"
 #include "wait.h"
@@ -188,7 +189,7 @@ void main(int argc,char **argv)
   if (!stralloc_copys(&sendopt,"-")) die_nomem();
   opt = getconfopt(argc,argv,options,1,0);
 
-  sender = env_get("SENDER");
+  sender = get_sender();
   if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
   local = env_get("LOCAL");
   if (!local) strerr_die2x(100,FATAL,MSG(ERR_NOLOCAL));

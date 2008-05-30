@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include "strerr.h"
 #include "env.h"
+#include "sender.h"
 #include "subdb.h"
 #include "getconfopt.h"
 #include "messages.h"
@@ -29,7 +30,7 @@ void main(int argc,char **argv)
   int senderissub;
   int i;
 
-  addr = env_get("SENDER");
+  addr = get_sender();
   if (!addr) die_sender();	/* REQUIRE sender */
 
   opt = getconfopt(argc,argv,options,1,0);

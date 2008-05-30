@@ -6,6 +6,7 @@
 #include "stralloc.h"
 #include "str.h"
 #include "env.h"
+#include "sender.h"
 #include "sig.h"
 #include "slurp.h"
 #include "getconf.h"
@@ -623,7 +624,7 @@ int main(int argc,char **argv)
   getconfopt(argc,argv,options,1,&dir);
   initsub(0);
 
-  sender = env_get("SENDER");
+  sender = get_sender();
   if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
   action = env_get("DEFAULT");
   if (!action) strerr_die2x(100,FATAL,MSG(ERR_NODEFAULT));

@@ -7,6 +7,7 @@
 #include "stralloc.h"
 #include "str.h"
 #include "env.h"
+#include "sender.h"
 #include "sig.h"
 #include "getconf.h"
 #include "strerr.h"
@@ -822,7 +823,7 @@ void main(int argc,char **argv)
 
   local = env_get("LOCAL");
   def = env_get("DEFAULT");
-  sender = env_get("SENDER");
+  sender = get_sender();
   if (local && *local) {	/* in editor local = outlocal */
     if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
     if (!*sender)

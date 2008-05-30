@@ -2,6 +2,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "env.h"
+#include "sender.h"
 #include "strerr.h"
 #include "getconfopt.h"
 #include "substdio.h"
@@ -201,7 +202,7 @@ void main(int argc,char **argv)
     die_usage();
   if (!stralloc_copys(&basedir,argv[optind++])) die_nomem();
 
-  sender = env_get("SENDER");
+  sender = get_sender();
   if (!sender)
     strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
   def = env_get("DEFAULT");

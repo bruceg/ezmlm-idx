@@ -5,6 +5,7 @@
 #include "stralloc.h"
 #include "str.h"
 #include "env.h"
+#include "sender.h"
 #include "sig.h"
 #include "open.h"
 #include "scan.h"
@@ -175,7 +176,7 @@ void main(int argc,char **argv)
     split = "split";
 
   if (flagdo) {
-    sender = env_get("SENDER");
+    sender = get_sender();
     if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
     if (!*sender)
       strerr_die2x(100,FATAL,MSG(ERR_BOUNCE));

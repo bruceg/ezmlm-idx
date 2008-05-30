@@ -9,6 +9,7 @@
 #include "stralloc.h"
 #include "str.h"
 #include "env.h"
+#include "sender.h"
 #include "slurp.h"
 #include "strerr.h"
 #include "byte.h"
@@ -172,7 +173,7 @@ void main(int argc,char **argv)
 
   getconfopt(argc,argv,options,1,&dir);
 
-  sender = env_get("SENDER");
+  sender = get_sender();
   action = env_get("DEFAULT");
   local = env_get("LOCAL");
   if (!action) strerr_die2x(100,FATAL,MSG(ERR_NODEFAULT));

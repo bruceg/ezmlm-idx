@@ -15,6 +15,7 @@
 #include "seek.h"
 #include "scan.h"
 #include "env.h"
+#include "sender.h"
 #include "messages.h"
 #include "die.h"
 #include "idx.h"
@@ -212,7 +213,7 @@ void main(int argc,char **argv)
     flagforward = 0;		/* nor forward requests */
   }
 
-  sender = env_get("SENDER");
+  sender = get_sender();
   if (!sender)
     strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
   if (!*sender)

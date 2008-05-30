@@ -8,6 +8,7 @@
 #include "error.h"
 #include "qmail.h"
 #include "env.h"
+#include "sender.h"
 #include "lock.h"
 #include "sig.h"
 #include "open.h"
@@ -364,7 +365,7 @@ void main(int argc,char **argv)
   }
   initsub(0);
 
-  sender = env_get("SENDER");
+  sender = get_sender();
 
   fdlock = lockfile("lock");
 

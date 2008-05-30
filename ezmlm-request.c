@@ -7,6 +7,7 @@
 #include "error.h"
 #include "qmail.h"
 #include "env.h"
+#include "sender.h"
 #include "sig.h"
 #include "open.h"
 #include "getln.h"
@@ -318,7 +319,7 @@ void main(int argc,char **argv)
   if (!stralloc_0(&listname)) die_nomem();
   if (!stralloc_0(&hostname)) die_nomem();
 
-  sender = env_get("SENDER");
+  sender = get_sender();
   if (!sender) strerr_die2x(99,INFO,MSG(ERR_NOSENDER));
   if (!*sender)
     strerr_die2x(99,INFO,MSG(ERR_BOUNCE));

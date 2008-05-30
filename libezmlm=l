@@ -89,6 +89,7 @@ quote.lo
 scan_8long.lo
 scan_ulong.lo
 seek_set.lo
+sender.lo
 sgetopt.lo
 sig_catch.lo
 sig_pipe.lo

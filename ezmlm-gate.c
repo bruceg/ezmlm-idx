@@ -7,6 +7,7 @@
 #include "strerr.h"
 #include "error.h"
 #include "env.h"
+#include "sender.h"
 #include "sig.h"
 #include "str.h"
 #include "seek.h"
@@ -103,7 +104,7 @@ void main(int argc,char **argv)
 
   initsub(0);
 
-  sender = env_get("SENDER");
+  sender = get_sender();
 
   ismod = 0;
 

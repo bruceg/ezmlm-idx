@@ -1,0 +1,20 @@
+#####################################
+# decoding wrapped sender addresses #
+#####################################
+
+prompt "decode sender:        "
+
+LOCAL="$LOC-help"
+DEFAULT='help'
+
+SENDER="SRS0=HrNdli=BZ=host=xyzzy@otherhost.com"
+${EZBIN}/ezmlm-manage "$DIR" </dev/null >"$ERR" 2>&1 || \
+	fatal "ezmlm-manage failed"
+checkenv decode-SRS0 "$LOC-return-@$HOST" "xyzzy@host"
+
+SENDER="SRS1=123456=brightmail.com==654321=abcd=host=xyzzy@earthlink.net"
+${EZBIN}/ezmlm-manage "$DIR" </dev/null >"$ERR" 2>&1 || \
+	fatal "ezmlm-manage failed"
+checkenv decode-SRS1 "$LOC-return-@$HOST" "xyzzy@host"
+
+${ECHO} "OK"
