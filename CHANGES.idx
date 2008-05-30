@@ -80,6 +80,8 @@ Smaller changes:
 
 - Added support for decoding sender addresses mangled by SRS.
 
+- Fixed bug when running ezmlm-archive on a newly-created list.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 messages changes also replaced the confirmpost subject line hack in
