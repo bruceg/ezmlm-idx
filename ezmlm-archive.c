@@ -382,16 +382,6 @@ int main(int argc,char **argv)
     flagsync = 0;
   archnum = (archnum / 100) * 100;
 
-  if (mkdir("archive/threads",0755) == -1)
-    if (errno != error_exist)
-      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archive/threads"));
-  if (mkdir("archive/subjects",0755) == -1)
-    if (errno != error_exist)
-      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archive/subjects"));
-  if (mkdir("archive/authors",0755) == -1)
-    if (errno != error_exist)
-      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archive/authors"));
-
 	/* Lock list to assure that no ezmlm-send is working on it */
 	/* and that the "num" message is final */
   fdlock = lockfile("lock");
@@ -413,6 +403,16 @@ int main(int argc,char **argv)
 
   if (archnum > to)
     _exit(0);				/* nothing to do */
+
+  if (mkdir("archive/threads",0755) == -1)
+    if (errno != error_exist)
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archive/threads"));
+  if (mkdir("archive/subjects",0755) == -1)
+    if (errno != error_exist)
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archive/subjects"));
+  if (mkdir("archive/authors",0755) == -1)
+    if (errno != error_exist)
+      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archive/authors"));
 
 					/* do the subject threading */
   idx_mkthreads(&msgtable,&subtable,&authtable,&datetable,archnum,to,max,0);
