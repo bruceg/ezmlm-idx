@@ -80,7 +80,7 @@ stralloc fnsub = {0};
 char subbuf[256];
 substdio sssub;
 
-const char *dir;
+static const char *dir;
 
 struct stat st;
 
@@ -187,7 +187,7 @@ void main(int argc,char **argv)
   when = now();
 
   if (!stralloc_copys(&sendopt,"-")) die_nomem();
-  opt = getconfopt(argc,argv,options,1,0);
+  opt = getconfopt(argc,argv,options,1,&dir);
 
   sender = get_sender();
   if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
