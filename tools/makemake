@@ -56,7 +56,7 @@ depend() {
 
 target() {
     target=$1
-    if [ -e $target ]; then
+    if [ -e $target -a ! -e ${target}.do ]; then
 	echo $target >>$S
 	return
     fi
