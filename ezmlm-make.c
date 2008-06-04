@@ -741,9 +741,12 @@ void main(int argc,char **argv)
 
   if (!stralloc_0(&dir)) die_nomem();
   wrap_chdir(dir.s);
-  if (popt[6].len > 0)
+  if (popt[6].len > 0) {
     if (!stralloc_0(&popt[6])) die_nomem();
-  initsub(popt[6].s);
+    initsub(popt[6].s);
+  }
+  else
+    initsub(0);
   if ((p = mktab()) != NULL)
     strerr_die4x(100,FATAL,MSG(ERR_MKTAB),": ",p);
   _exit(0);
