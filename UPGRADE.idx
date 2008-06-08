@@ -151,7 +151,7 @@ Migrating customized ezmlmrc files
 ezmlmrc is upgraded from ezmlm-idx-0.31x/32x, but the changes are not required
 for using the list.
 
-The changes from ezmlm-0.30x are minimal, but fix a couple of bugs, see
+The changes from ezmlm-idx-0.30x are minimal, but fix a couple of bugs, see
 CHANGES.idx). If you have custom ezmlmrc files and wish to update them,
 do the following:
 
