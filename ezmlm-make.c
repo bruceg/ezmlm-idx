@@ -245,7 +245,7 @@ int read_file_config(void)
   oldflags.s[1] = "Aa"[exists("/archived")];
   oldflags.s[2] = "Bb"[exists("/modgetonly")];
   //oldflags.s[3] = "Cc"[exists("/ezmlmrc")]; /* Should always end up set */
-  oldflags.s[4] = "Dd"[exists("/digest")];
+  oldflags.s[4] = "Dd"[exists("/digested")];
   /* -e is not applicable */
   oldflags.s[6] = "Ff"[exists("/prefix")];
   oldflags.s[7] = "Gg"[exists("/subgetonly")];

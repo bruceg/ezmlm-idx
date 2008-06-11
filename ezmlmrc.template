@@ -86,8 +86,8 @@
 # dir for editing text files
 </+text#n/>
 # dirs for digests
-</+digest#d/>
-</+digest/bounce#d/>
+</+digest/>
+</+digest/bounce/>
 # for extra address db
 </+allow/>
 # for blacklist
@@ -102,9 +102,9 @@
 # links: dot -> dir/editor
 </:/editor/>
 </:-owner/owner/>
-</:-digest-owner/owner#d/>
+</:-digest-owner/owner/>
 </:-return-default/bouncer/>
-</:-digest-return-default/digest/bouncer#d/>
+</:-digest-return-default/digest/bouncer/>
 </:-default/manager/>
 # for message moderation only
 </:-accept-default/moderator#m/>
@@ -136,6 +136,9 @@
 # Allow subscriptions and access to the archive
 </-public#eP/>
 </public#p/>
+# Message digests
+</-digested#eD/>
+</digested#d/>
 # subject line prefix
 </-prefix#eF/>
 </prefix#Ef/>
@@ -231,12 +234,12 @@
 # for mess-mod lists / into confirmer for mess-confirm lists.
 |if test -f '<#D#>/threaded'; then <#B#>/ezmlm-archive '<#D#>' || exit 0; fi
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
-|if test -d '<#D#>/digest' && <#B#>/ezmlm-tstdig '<#D#>'; then <#B#>/ezmlm-get '<#D#>' || exit 0; fi
+|if test -e '<#D#>/digested' && <#B#>/ezmlm-tstdig '<#D#>'; then <#B#>/ezmlm-get '<#D#>' || exit 0; fi
 # bouncer for list and digest
 </bouncer/>
 |<#B#>/ezmlm-weed
 |<#B#>/ezmlm-return -D '<#D#>'
-</digest/bouncer#d/>
+</digest/bouncer/>
 |<#B#>/ezmlm-weed
 |<#B#>/ezmlm-return -d '<#D#>'
 # moderator is set up only for message moderated lists. However, '-e' does
@@ -267,8 +270,8 @@ sender
 from
 </lock/>
 </lockbounce/>
-</digest/lockbounce#d/>
-</digest/lock#d/>
+</digest/lockbounce/>
+</digest/lock/>
 </outhost/>
 <#H#>
 </outlocal/>
