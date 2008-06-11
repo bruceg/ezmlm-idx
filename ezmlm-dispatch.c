@@ -174,7 +174,7 @@ static void dispatch(const char *dir,const char *def)
   if (!stralloc_append(&basedir,"/")) die_nomem();
   if (!stralloc_cats(&basedir,dir)) die_nomem();
   /* FIXME: set up $EXT $EXT2 $EXT3 $EXT4 ?  Is it feasable? */
-  if (def == 0)
+  if (def == 0 || *def == 0)
     execute("editor",0);
   else if (str_diff(def,"owner") == 0)
     execute("owner",0);
