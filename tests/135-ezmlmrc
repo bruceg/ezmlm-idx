@@ -18,8 +18,6 @@
 
   ${EZBIN}/ezmlm-make -+QKGU -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "failed to edit test list to +QKGU"
-  ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 && \
-	fatal "failed to implement -Q for list"
   test -e "$DIR"/subgetonly && \
 	fatal "failed to implement -G for list"
 
