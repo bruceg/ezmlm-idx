@@ -94,6 +94,9 @@ Smaller changes:
 
 - Always enable ezmlm-request in manager.
 
+- Fixed a long standing bug in ezmlm-store that caused both posting and
+  moderating to happen when both modpost and confirmpost were disabled.
+
 Note: The subdb API was modified in this version.  You will need to
 reinstall all sub-* modules along with the main package.  Also, the
 messages changes also replaced the confirmpost subject line hack in

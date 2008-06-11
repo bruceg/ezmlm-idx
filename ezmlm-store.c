@@ -146,7 +146,6 @@ void main(int argc,char **argv)
   stralloc mod = {0};
   const char *err;
   unsigned int i;
-  int child;
 
   (void) umask(022);
   sig_pipeignore();
@@ -164,12 +163,8 @@ void main(int argc,char **argv)
 
   flagmodpost = getconf_line(&moderators,"modpost",0);
   flagremote = getconf_isset("remote");
-  if (!flagmodpost && !flagconfirm) {	/* not msg-mod. Pipe to ezmlm-send */
-    if ((child = wrap_fork()) == 0)
-      wrap_execbin("/ezmlm-send", &sendopt, dir);
-    /* parent */
-    wrap_exitcode(child);
-  }
+  if (!flagmodpost && !flagconfirm) /* not msg-mod. Exec ezmlm-send */
+    wrap_execbin("/ezmlm-send", &sendopt, dir);
 
   if (!moderators.len) {
     if (!stralloc_copys(&moderators,"mod")) die_nomem();

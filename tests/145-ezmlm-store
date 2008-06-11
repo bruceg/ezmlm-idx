@@ -6,6 +6,7 @@
 
   SENDER="${SND}@$HOST"
   ${EZBIN}/ezmlm-sub "$DIR" mod "$SENDER"
+  ${EZBIN}/ezmlm-sub "$DIR" "subscriber@$HOST"
 
 # message from mod, normal use -> should queue
   qqclean
@@ -36,7 +37,7 @@
 	    EZFORK='no'
 	  fi
 	}
-  checkenv mod2 "$LOC-return-@$HOST" "$SENDER"
+  checkenv mod2 "$LOC-return-.*@$HOST-@\\[\\]" "subscriber@$HOST"
 
   cat ${DIR}/mod/pending/* | ${GREP} "mod2" > /dev/null && \
 	fatal "queued message 2 despite non-modpost"
@@ -92,5 +93,7 @@
 
   test -s "$QQMSG" && \
 	fatal "ezmlm-store: modpostonly failed to reject message from non-mod"
+
+  ${EZBIN}/ezmlm-unsub "$DIR" "subscriber@$HOST"
 
   ${ECHO} "OK"
