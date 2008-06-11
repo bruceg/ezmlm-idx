@@ -1,4 +1,4 @@
-(c) 1997, 1998, 1999, 2004, 2005, 2006
+(c) 1997, 1998, 1999, 2004, 2005, 2006, 2008
   Fred Lindberg, lindberg@id.wustl.edu (code+docs+faq)
   Fred B. Ringel, fredr@rivertown.net (faq)
   Bruce Guenter, bruce@untroubled.org (code+docs)
@@ -10,11 +10,10 @@ the conditions under which this software is made available.
 Like any other piece of software (and information generally), ezmlm-idx
 comes with NO WARRANTY.
 
-This is an addition and patch to ezmlm-0.53 [(c) Dan J. Bernstein].
-Ezmlm-idx uses Dan's libraries and heavily relies on ezmlm-0.53 code.
-ezmlm-idx does not function without ezmlm-0.53.
+This software originated from ezmlm-0.53 (written by Dan J. Bernstein
+and placed into the public domain).
 
-ezmlm-0.53 provides basic message distribution, subscriber address handling,
+ezmlm provided basic message distribution, subscriber address handling,
 message archiving (single quoted message retrieval only), and bounce
 handling. ezmlm-idx adds multi-message threaded archive retrieval, digests,
 remote administration, message and subscription moderation, subscriber-only
@@ -22,7 +21,8 @@ restrictions, message trailer, subject prefix, subscriber name storage,
 customizable setup, multi-language and MIME support and more. In addition,
 improved bounce handling, case-insensitive subscriber address storage,
 and support for distributed lists (main + sublist transparent to the
-subscriber). Ezmlm-idx can now be compiled with MySQL or Postgres support.
+subscriber). Ezmlm-idx now includes optional support for MySQL or
+PostgreSQL subscriber databases.
 
 See INSTALL.idx for installation instructions.
 See UPGRADE.idx to upgrade from a previous version of ezmlm-idx.
@@ -50,7 +50,7 @@ as on-line versions of the FAQ and docs.
 
 Mail ``ezmlm-subscribe@list.cr.yp.to'' to join the ezmlm mailing
 list (averages 3 messages per day). This list is run by Dan J. Bernstein
-using ezmlm-0.53.
+using ezmlm.
 
 Send general comments, questions, bug reports, and patches to:
 	ezmlm@list.cr.yp.to
