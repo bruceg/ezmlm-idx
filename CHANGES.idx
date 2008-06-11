@@ -94,6 +94,8 @@ Smaller changes:
 
 - Always enable ezmlm-request in manager.
 
+- Always enable the "deny" blacklist.
+
 - Fixed a long standing bug in ezmlm-store that caused both posting and
   moderating to happen when both modpost and confirmpost were disabled.
 

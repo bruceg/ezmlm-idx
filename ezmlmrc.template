@@ -91,7 +91,7 @@
 # for extra address db
 </+allow/>
 # for blacklist
-</+deny#k/>
+</+deny/>
 # moderator db & mod queue dirs. Needed for -m, -r -s, so we just
 # make them by default.
 </+mod/>
@@ -212,7 +212,7 @@
 # reject shouldn't be configured for sublist.
 # full reject is now default, to get To/Cc: listaddress requirement
 |if test ! -f '<#D#>/sublist'; then <#B#>/ezmlm-reject '<#D#>'; fi
-# -k => reject posts from blacklisted addresses. Done for moderated
+# reject posts from blacklisted addresses. Done for moderated
 # lists as well - allows removal of unwanted noise.
 |if test -d '<#D#>/deny' -a ! -f '<#D#>/sublist'; then <#B#>/ezmlm-checksub -n '<#D#>' deny; fi
 # 8 different combinations of the -m/u/y options:

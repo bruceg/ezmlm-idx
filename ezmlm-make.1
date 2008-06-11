@@ -170,7 +170,7 @@ then turn it off again (see
 Moderator addresses are added with
 
 .EX
-  ezmlm-sub ~joe/SOS/mod mod1@host1 mod2@host2 ...
+  ezmlm-sub ~joe/SOS mod mod1@host1 mod2@host2 ...
 .EE
 
 .B ezmlm-make
@@ -440,13 +440,12 @@ Unsubscribe requires confirmation by a reply to a message sent to the
 subscription address.
 .TP 5
 .B \-k
-kill.
-.B ezmlm-make
-sets up
-.IR dir\fB/deny/ .
-It sets up the list so that posts from addresses in
-.I dir\fB/deny/
-are rejected. This is useful in combination with the
+.TP 5
+.B \-K
+Ignored for backwards compatibility.  The
+.IR dir\fB/deny/
+subscribers directory is always created to allow denying messages from
+selected addresses.  This is useful in combination with the
 .B \-u
 switch to temporarily restrain offenders, such as misconfigured auto-responders
 or automatic spammers.
@@ -459,19 +458,13 @@ re-mailers and spammers come to mind).
 To add/remove blacklisted addresses:
 
 .EX
-.B ezmlm-sub \fIdir\fB/deny \fIbad@host
+.B ezmlm-sub \fIdir \fBdeny \fIbad@host
 .EE
 
 .EX
-.B ezmlm-unsub \fIdir\fB/deny \fIbad@host
+.B ezmlm-unsub \fIdir \fBdeny \fIbad@host
 .EE
 
-.TP 5
-.B \-K
-(Default.)
-Not kill.
-.I dir\fB/deny/
-is not created, and even if it exists, the contents will be ignored.
 .TP 5
 .B \-l
 List subscribers.
@@ -519,11 +512,11 @@ requests.
 To add/remove moderators:
 
 .EX
-.B ezmlm-sub \fIdir\fB/mod \fImoderator@host
+.B ezmlm-sub \fIdir \fBmod \fImoderator@host
 .EE
 
 .EX
-.B ezmlm-unsub \fIdir\fB/mod \fImoderator@host
+.B ezmlm-unsub \fIdir \fBmod \fImoderator@host
 .EE
 
 .TP 5
@@ -575,6 +568,15 @@ and
 will allow only digest creation, remote administration, and archive
 retrieval by remote administrators, (if the list is configured with these
 options).
+.TP
+.B \-q
+.TP
+.B \-Q
+Ignored for backwards compatibility.  The request address is always
+serviced.  Commands sent in the subject to
+.IR local\fB-request@\fIhost
+are processed by
+.BR ezmlm-request(1) .
 .TP
 .B \-r
 Remote admin.
