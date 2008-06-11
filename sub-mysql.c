@@ -579,35 +579,20 @@ static const char *create_table_set(struct subdbinfo *info,
   return 0;
 }
 
-static int isdir(const char *path)
-{
-  struct stat st;
-  return wrap_stat(path, &st) == 0
-    && S_ISDIR(st.st_mode);
-}
-
 static const char *_mktab(struct subdbinfo *info)
 {
   const char *r;
 
   if ((r = create_table_set(info,"",1)) != 0)
     return r;
-  if (isdir("allow")) {
-    if ((r = create_table_set(info,"_allow",0)) != 0)
-      return r;
-  }
-  if (isdir("deny")) {
-    if ((r = create_table_set(info,"_deny",0)) != 0)
-      return r;
-  }
-  if (isdir("digest")) {
-    if ((r = create_table_set(info,"_digest",1)) != 0)
-      return r;
-  }
-  if (isdir("mod")) {
-    if ((r = create_table_set(info,"_mod",0)) != 0)
-      return r;
-  }
+  if ((r = create_table_set(info,"_allow",0)) != 0)
+    return r;
+  if ((r = create_table_set(info,"_deny",0)) != 0)
+    return r;
+  if ((r = create_table_set(info,"_digest",1)) != 0)
+    return r;
+  if ((r = create_table_set(info,"_mod",0)) != 0)
+    return r;
   return 0;
 }
 
