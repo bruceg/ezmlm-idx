@@ -117,76 +117,83 @@
 # We don't clean out text files to make it easier for users
 # doing manual config by e.g. touching dir/remote.
 #
-# Subscriber database plugin specification
+# -6 Subscriber database plugin specification
 </-subdb#^6e/>
 </subdb#6/>
 <#6#>
-# message moderation
-</-modpost#eM/>
-</modpost#m/>
-<#7#>
-# subscription moderation
-</-modsub#eS/>
-</modsub#s/>
-<#8#>
-# remote admin
-</-remote#eR/>
-</remote#r/>
-<#9#>
-# Allow subscriptions and access to the archive
-</-public#eP/>
-</public#p/>
-# Message digests
-</-digested#eD/>
-</digested#d/>
-# subject line prefix
-</-prefix#eF/>
-</prefix#Ef/>
-[<#L#>]
-# Archived and indexed
+# -a Archived and indexed
 </-archived#eA/>
 </archived#a/>
 </-indexed#eA/>
 </indexed#a/>
-# Enhanced indices created by ezmlm-archive
-</-threaded#eI/>
-</threaded#i/>
-# Message confirmation
-</-confirmpost#eY/>
-</confirmpost#y/>
-# Return timed-out posts
-</-noreturnposts#eU/>
-</noreturnposts#u/>
-# Only subscribers may post
-</-subpostonly#eU/>
-</subpostonly#u/>
-# Moderator can edit text files
-</-modcanedit#eN/>
-</modcanedit#n/>
-# Moderator can list subscribers
-</-modcanlist#eL/>
-</modcanlist#l/>
-# No subscribe confirmation
-</-nosubconfirm#eH/>
-</nosubconfirm#h/>
-# No unsubscribe confirmation
-</-nounsubconfirm#eJ/>
-</nounsubconfirm#j/>
-# Non-public: only moderators can post
-</-modpostonly#eO/>
-</modpostonly#o/>
-# Archive requests only available to moderators
+# -b Archive requests only available to moderators
 </-modgetonly#eB/>
 </modgetonly#b/>
-# Archive requests only available to subscribers
+# -c N/A
+# -d Message digests
+</-digested#eD/>
+</digested#d/>
+# -e N/A
+# -f subject line prefix
+</-prefix#eF/>
+</prefix#Ef/>
+[<#L#>]
+# -g Archive requests only available to subscribers
 </-subgetonly#eG/>
 </subgetonly#g/>
-# No ezmlm-warn
-</-nowarn#eW/>
-</nowarn#w/>
-# Add the trailer to posts
+# -h No subscribe confirmation
+</-nosubconfirm#eH/>
+</nosubconfirm#h/>
+# -i Enhanced indices created by ezmlm-archive
+</-threaded#eI/>
+</threaded#i/>
+# -j No unsubscribe confirmation
+</-nounsubconfirm#eJ/>
+</nounsubconfirm#j/>
+# -k is always on
+# -l Moderator can list subscribers
+</-modcanlist#eL/>
+</modcanlist#l/>
+# -m message moderation
+</-modpost#eM/>
+</modpost#m/>
+<#7#>
+# -mu Do not return timed-out posts
+</-noreturnposts#eM/>
+</-noreturnposts#eU/>
+</noreturnposts#mu/>
+# -n Moderator can edit text files
+</-modcanedit#eN/>
+</modcanedit#n/>
+# -o Non-public: only moderators can post
+</-modpostonly#eO/>
+</modpostonly#o/>
+# -p Allow subscriptions and access to the archive
+</-public#eP/>
+</public#p/>
+# -q is always on
+# -r remote admin
+</-remote#eR/>
+</remote#r/>
+<#9#>
+# -s subscription moderation
+</-modsub#eS/>
+</modsub#s/>
+<#8#>
+# -t Add the trailer to posts
 </-addtrailer#eT/>
 </addtrailer#t/>
+# -u Only subscribers may post
+</-subpostonly#eU/>
+</subpostonly#u/>
+# -v N/A
+# -w No ezmlm-warn
+</-nowarn#eW/>
+</nowarn#w/>
+# -x See below
+# -y Sender confirmation
+</-confirmpost#eY/>
+</confirmpost#y/>
 # List owner mail
 </owner#5/>
 <#5#>
