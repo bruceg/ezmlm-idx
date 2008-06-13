@@ -198,22 +198,19 @@ switches to produce the results as described in the
 man page.
 A number of files are created via
 .B ezmlmrc
-independently of any switched. These are
-.I dir\fB/text/info
-with a short description of the list,
-.I dir\fB/text/faq
-with frequently asked questions about the list,
+independently of any switches. These are
 .I dir\fB/headeradd
-adding ``Precedence: bulk'' and ``X-No-Archive: yes'' to outgoing messages,
+adding ``Precedence: bulk'' and ``X-No-Archive: yes'' to outgoing
+messages, and
 .I dir\fB/headerremove
-removing ``Return-Path'', ``Return-Receipt-To'', ``Content-length'',
- and ``Precedence'' from list messages, and
-.I dir\fB/text/sub-ok
-with text sent after successful subscription. These files are not overwritten
-when lists are edited.
+removing ``Return-Path'', ``Return-Receipt-To'', ``Content-length'', and
+``Precedence'' from list messages.  These files are not overwritten when
+lists are edited.
 
 .I dir\fB/bouncer
-is set up to invoke
+and
+.I dir\fB/digest/bouncer
+are set up to invoke
 .B ezmlm-weed(1)
 and
 .B ezmlm-return(1)
@@ -258,56 +255,21 @@ and
 are removed.
 .TP
 .B \-b
-Block archive. The list set up with
-.B ezmlm-get -P
-to allow only moderators archive access.
+Block archive.
+.I dir\fB/modgetonly
+is created to allow only moderators archive access.
 .TP
 .B \-B
-The
-.B ezmlm-get -P
-switch is not used.
+.I dir\fB/modgetonly
+is removed.
 .TP
 .B \-d
-.I dir\fB/digest/
-is created.
-.I dir\fB/digest/lock
-is created.
-.I dir\fB/digest/lockbounce
-is created.
-.I dir\fB/digest/bounce/
-is created.
-.I dir\fB/digest/subscribers/
-is created.
-.I dot\fB-digest-owner
-is linked to
-.IR dir\fB/owner .
-.I dot\fB-digest-return-default
-is linked to
-.IR dir\fB/bouncer .
-An invocation of
-.B ezmlm-warn(1) -d
-is added to
-.I dir\fB/editor
-and
-.IR dir\fB/manager .
-Invocations of
-.B ezmlm-tstdig(1)
-and
-.B ezmlm-get(1)
-are added with default arguments to
-.IR dir\fB/editor .
-A note on digest (un)subscription is added to
-.I dir\fB/text/bottom
-and to
-.IR dir\fB/text/mod-help .
-.I dir\fB/text/digest
-is created for the ``Administrivia'' section of the digest.
+.I dir\fB/digested
+is created, signalling to programs to send digests.
 .TP
 .B \-D
-The items mentioned under switch
-.B \-d
-are not done. The result is that the references to the digest
-in the text files is removed.
+.I dir\fB/digested
+is removed, signalling to not send digests.
 .TP
 .B \-f
 The text ``[\fIlocal\fR]'' is placed in
@@ -319,17 +281,17 @@ resulting in the text being used as the list's subject index.
 is removed.
 .TP
 .B \-g
-The -s switch is added to the
+.I dir\fB/subgetonly
+is created, signalling
 .B ezmlm-get(1)
-line in
-.I dir\fB/manager
-so that only subscribers can access the archive.
+to only allow subscribers to access the archive.
 .TP
 .B \-G
-The -s switch for
+.I dir\fB/subgetonly
+is removed, signalling
 .B ezmlm-get(1)
-is not used. Anyone can access the archive if archive (access) in general
-is enabled (see
+That anyone can access the archive if archive (access) in general is
+enabled (see
 .B \-p
 for ``public'',
 .B \-a
@@ -338,95 +300,55 @@ for ``archived'', and
 for ``indexed''.
 .TP
 .B \-i
-.I dir\fB/editor
-(for normal lists)
-or
-.I dir\fB/moderator
-(for moderated lists)
-are set up to run
+.I dir\fB/threaded
+is created to signal
 .B ezmlm-archive(1)
-after messages are posted. This sets up the cross-reference for
+to run as appropriate after messages are posted.  This sets up the
+cross-reference for
 .B ezmlm-cgi(1)
 WWW access.
 .TP
 .B \-I
-.B ezmlm-archive(1)
-is not configured.
+.I dir\fB/threaded
+is removed.
 .TP
 .B \-j
-.I dir\fB/manager
-uses
-.B ezmlm-manage -U
-to allow unconfirmed unsubscribe.
+.I dir\fB/nounsubconfirm
+is created to signal
+.B ezmlm-manage(1)
+to not require confirmation after unsubscription requests.
+.TP
 .B \-J
-The
-.B ezmlm-manage -U
-switch is not used.
-.TP
-.B \-k
-Blacklist. A
-.B ezmlm-issubn(1)
-line that tests the envelope sender against the address database in
-.I dir\fB/deny
-is inserted into
-.IR dir\fB/editor .
-As a consequence, posts from such senders are rejected. This switch is ignored
-for sublists (i.e. if the
-.B \-0\ mainlist@mainhost
-switch is used).
-.TP
-.B \-K
-The
-.B ezmlm-issubn(1)
-line testing the envelope sender against the ``blacklist'' in
-.I dir\fB/deny
-is not used.
+.I dir\fB/nounsubconfirm
+is removed.
 .TP
 .B \-l
-The -l switch is added to the
+.I dir\fB/modcanlist
+is created to signal
 .B ezmlm-manage(1)
-command line in
-.I dir\fB/manager
 to allow retrieval of subscriber list and list log by remote administrators.
 .BR NOTE :
 This is pointless, unless the list is also set up for remote administration
 with the
 .B \-r
 switch.
-.I dir\fB/text/mod-help
-is adjusted.
 .TP
 .B \-L
-Do not allow access to the subscriber list under any circumstances. The
-.B ezmlm-manage(1)
-\-l switch is not specified.
+.I dir\fB/modcanlist
+is removed, disallowing access to the subscriber list under any
+circumstances.
 .TP
 .B \-m
 Message moderation.
 .I dir\fB/modpost
-is created.
-.I dir\fB/editor
-is set up with
+is created, which signals
 .B ezmlm-store(1)
-instead of
-.BR ezmlm-send(1) .a
-.I dir\fB/moderator
-is set up with
-.BR ezmlm-moderate(1) ,
-and
-.BR ezmlm-clean(1) .
-.I dot\fB/\-accept-default
-and
-.I dot\fB/-reject-default
-are linked to
-.IR dir\fB/moderator .
-.I dir\fB/text/mod-help
-is adjusted.
+to store messages and forward confirmation requests to the moderators.
 Special action is taken when the
 .B \-m
 switch is combined with
 .BR \-u .
-In this case, the setup is as for the
+In this case, the handling is as for the
 .B \-m
 switch alone, but
 .I dir\fB/editor
@@ -442,77 +364,58 @@ subscribers (with the usual caveats for SENDER checks) are posted directly,
 whereas other posts are sent for moderation.
 .TP
 .B \-M
-No message moderation.
-.I dir\fB/editor
-is set up with
-.B ezmlm-send(1)
-as usual.
-.I dir\fB/moderator
-is removed.
+.I dir\fB/modpost
+is removed, undoing the changes above.
 .TP
 .B \-n
 Allow text file editing.
+.I dir\fB/modcanedit
+is created to signal
 .ezmlm-manage(1)
-in
-.I dir\fB/manager
-is set up with the \-e switch to allow remote admins to via E-mail edit
-the files in
+to allow remote admins to via E-mail edit the files in
 .IR dir\fB/text/ .
 .BR NOTE :
 This is pointless, unless the list is also set up for remote administration
 with the
 .B \-r
 switch.
-.I dir\fB/text/mod-help
-is adjusted.
 .TP
 .B \-N
-Remote editing of files in
-.I dir\fB/text
-is not allowed.
-The -e switch for
-.B ezmlm-manage
-will not be used. 
+.I dir\fB/modcanedit
+is removed to disallow editing of files in
+.IR dir\fB/text .
 .TP
 .B \-o
-For moderated lists, the
-.B ezmlm-store -P
-switch is used so that posts from non-moderators are rejected rather than
-sent for moderation. This is for some announcement lists.
+.I dir\fB/modpostonly
+is created to signal
+.B ezmlm-store(1)
+ro reject posts from non-moderators on moderated lists rather than
+sending them for moderation. This is for some announcement lists.
 .TP
 .B \-O
-The
-.B ezmlm-store -P
-switch is not used.
+.I dir\fB/modpostonly
+is removed.
 .TP
 .B \-p
 Public.
 .I dir\fB/public
-is created.
+is created, signaling
+.B ezmlm-get(1)
+to allow archive retrieval attempts, and
+.B ezmlm-manage(1)
+to allow subscription and unsubscription attempts.
 .TP
 .B \-P
 Not public.
 .I dir\fB/public
 is removed.
 .TP
-.B \-q
-A line with
-.B ezmlm-request(1)
-is added to
-.I dir\manager
-to service commands in the ``Subject'' line of messages sent to the
-``list-request'' address.
-.TP
-.B \-Q
-.B ezmlm-request(1)
-is not used.
-.TP
 .B \-r
 Remote admin.
 .I dir\fB/remote
-is created.
-.I dir\fB/text/mod-help
-is adjusted.
+is created to signal
+.B ezmlm-manage(1)
+to allow remote administration of mailing lists.
 .TP
 .B \-R
 .I dir\fB/remote
@@ -521,30 +424,33 @@ is removed.
 .B \-s
 Subscription moderation.
 .I dir\fB/modsub
-is created.
-.I dir\fB/text/mod-help
-is adjusted.
-.I dir\fB/text/sub-confirm
-is adjusted.
+is created to signal
+.B ezmlm-manage(1)
+to forward confirmed subscription requests to the moderators for
+approval.  The unsubscription process is unchanged.
 .TP
 .B \-S
 .I dir\fB/modsub
 is removed.
 .TP
 .B \-t
+.I dir\fB/addtrailer
+is created to signal
+.B ezmlm-send(1)
+to include the trailer portions in
 .I dir\fB/text/trailer
-is created with instructions on how to unsubscribe.
+in messages posted to the list.
 .TP
 .B \-T
-.I dir\fB/text/trailer
+.I dir\fB/addtrailer
 is removed.
 .TP
 .B \-u
-User-only posts.
-.I dir\fB/editor
-is set up with an
-.B ezmlm-issubn(1)
-line to check the envelope sender against the subscriber address databases.
+Subscriber-only posts.
+.I dir\fB/subpostonly
+is created to allow posts only from subscribers.
+.B ezmlm-checksub(1)
+is checks the envelope sender against the subscriber address databases.
 If the sender is not found, the post is rejected. This results in
 subscriber-only posts, with the usual caveats for SENDER checks.
 Special action is taken when the
@@ -554,70 +460,58 @@ switch is combined with
 In this case, the setup is as for the
 .B \-m
 switch alone, but
-.I dir\fB/editor
-is set up with
 .B ezmlm-gate(1)
-which will fork
+will execute
 .B ezmlm-send(1)
-for posts with an envelope sender that is a subscriber or a moderator, and
-for
-.B ezmlm-store(1)
-for posts with other envelope senders.
-.B ezmlm-clean(1)
-is set up with the \-R switch.
-The consequence is that posts from
-subscribers (with the usual caveats for SENDER checks) are posted directly,
-whereas other posts are sent for moderation.
-.B ezmlm-clean(1)
-is set up with the \-R switch.
-Thus, ignored posts are silently
-removed rather than returned to sender.
+for posts with an envelope sender that is a subscriber or a moderator,
+and will otherwise moderate the message.  The consequence is that posts
+from subscribers (with the usual caveats for SENDER checks) are posted
+directly, whereas other posts are sent for moderation.  Also,
+.I dir\fB/noreturnposts
+is created to silently drop ignored posts rather than returning them to
+their senders.
 .TP
 .B \-U
-The
-.B ezmlm-issubn(1)
-line
-restricting posts by envelope sender is not used.
+.I dir\fB/subpostonly is removed.
 .TP
 .B \-w
-Remove the
+.I dir\fB/nowarn
+is created to signal
 .B ezmlm-warn(1)
-invocations from the list setup. It is assumed that
-.B ezmlm-warn(1)
-for both
-.I local@host
-and
-.I local-digest@host
-will be run by other means, such as crond.  In addition,
-.B ezmlm-receipt(1)
-will be set up for bounce handling in
-.I dir\fB/bouncer
-instead of
-.BR ezmlm-return(1).
+to do no work.
 .TP
 .B \-W
-No action taken.
+.I dir\fB/nowarn
+is removed.
 .TP
-.B \-xyzXYZ
-User configurable. By default, if the
 .B \-x
-switch is specified,
 .I dir\fB/mimeremove 
-is created. This file contains many MIME types not routinely supported.
+is created containing many MIME types not routinely supported.
 MIME types in
 .I dir\fB/mimeremove are stripped from multipart posts before archiving
 and distribution.
 To view the list of
 MIME types, see
 .B ezmlmrc
-or create a list and list
+or create a list and view
 .IR dir\fB/mimeremove .
 In addition
 .I dir\fB/msgsize
-is created containing ``40000:2'' causing
+is created containing ``30000:2'' causing
 .B ezmlm-reject(1)
 to reject all posts that have a body of less than 2 bytes (empty) or
-more than 40000 bytes (too large).
+more than 30000 bytes (too large).
+.TP
+.B \-y
+Confirm postings.
+.I dir\fB/confirmpost
+is created to signal
+.B ezmlm-store(1)
+to send a confirmation probe to the sender of each post.
+.TP
+.B \-Y
+.I dir\fB/confirmpost
+is removed.
 .TP
 .B \-0\fI\ mainlist@mainhost
 .I dir\fB/sublist
@@ -661,9 +555,10 @@ If the address does not start with an underscore or alphanumeric character,
 the argument must start with an ampersand.
 .TP
 .B \-6\fI\ plugin:host:port:user:password:datab:table
-.TP
 The string, followed by the list name is placed in
-.IR dir\fB/subdb .
+.IR dir\fB/subdb ,
+indicating what subscriber database plugin and parameters to use.
+.TP
 .B \-7\fI\ /msgmodPath
 .I msgmodPath
 is placed in
@@ -689,6 +584,7 @@ is the list is set up for remote administration with the
 switch.
 .SH "SEE ALSO"
 ezmlm(5),
+ezmlm-checksub(1),
 ezmlm-clean(1),
 ezmlm-gate(1),
 ezmlm-get(1),

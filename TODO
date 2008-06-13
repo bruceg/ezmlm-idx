@@ -1,4 +1,3 @@
-Fix ezmlmrc.5, as it still references old conditionally created items
 Document the new flag files used in ezmlmrc/ezmlm-make
 Fix all remaining hard-coded error messages, especially in subdb.c
 Put a real address into To: header in ezmlm-store (and others?)
