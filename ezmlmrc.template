@@ -213,7 +213,7 @@
 |<#B#>/ezmlm-warn '<#D#>' || exit 0
 # manage message confirmations
 </confirmer/>
-<#B#>/ezmlm-weed
+|<#B#>/ezmlm-weed
 |if test -f '<#D#>/subpostonly' -a -f '<#D#>/modpost'; then <#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-gate -Y '<#D#>' . digest allow mod; else <#B#>/ezmlm-confirm '<#D#>' <#B#>/ezmlm-store -Y '<#D#>'; fi
 |if test -f '<#D#>/threaded'; then <#B#>/ezmlm-archive '<#D#>' || exit 0; fi
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
