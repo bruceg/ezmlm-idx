@@ -214,7 +214,7 @@
 |if test ! -f '<#D#>/sublist'; then <#B#>/ezmlm-reject '<#D#>'; fi
 # reject posts from blacklisted addresses. Done for moderated
 # lists as well - allows removal of unwanted noise.
-|if test -d '<#D#>/deny' -a ! -f '<#D#>/sublist'; then <#B#>/ezmlm-checksub -n '<#D#>' deny; fi
+|if test ! -f '<#D#>/sublist'; then <#B#>/ezmlm-checksub -n '<#D#>' deny; fi
 # 8 different combinations of the -m/u/y options:
 # -MUY -- no restrictions => store (does send)
 # -mUY -- simple moderated => store
