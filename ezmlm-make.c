@@ -252,12 +252,13 @@ int read_file_config(void)
   oldflags.s[8] = "Hh"[exists("/nosubconfirm")];
   oldflags.s[9] = "Ii"[exists("/threaded")];
   oldflags.s[10] = "Jj"[exists("/nounsubconfirm")];
-  oldflags.s[11] = "Kk"[exists("/deny")];
+  oldflags.s[11] = 'k';		/* -k is always enabled */
   oldflags.s[12] = "Ll"[exists("/modcanlist")];
   oldflags.s[13] = "Mm"[exists("/modpost")];
   oldflags.s[14] = "Nn"[exists("/modcanedit")];
   oldflags.s[15] = "Oo"[exists("/modpostonly")];
   oldflags.s[16] = "Pp"[exists("/public")];
+  oldflags.s[17] = 'q';		/* -q is always enabled */
   oldflags.s[18] = "Rr"[exists("/remote")];
   oldflags.s[19] = "Ss"[exists("/modsub")];
   oldflags.s[20] = "Tt"[exists("/addtrailer")];
