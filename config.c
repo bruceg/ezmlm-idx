@@ -47,7 +47,7 @@ static struct flag flags[NO_FLAGS] = {
   { -1, "remote" },		/* r */
   { -1, "modsub" },		/* s */
   { -1, "addtrailer" },		/* t */
-  { -1, "userpostonly" },	/* u */
+  { -1, "subpostonly" },	/* u */
   { -1, 0 },			/* v unused */
   { -1, "nowarn" },		/* w */
   { -1, "mimeremove" },		/* x */

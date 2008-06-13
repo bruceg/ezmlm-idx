@@ -261,7 +261,7 @@ int read_file_config(void)
   oldflags.s[18] = "Rr"[exists("/remote")];
   oldflags.s[19] = "Ss"[exists("/modsub")];
   oldflags.s[20] = "Tt"[exists("/addtrailer")];
-  oldflags.s[21] = "Uu"[exists("/userpostonly")];
+  oldflags.s[21] = "Uu"[exists("/subpostonly")];
   /* -v is not applicable */
   oldflags.s[23] = "Ww"[exists("/nowarn")];
   oldflags.s[24] = "Xx"[exists("/mimeremove")];

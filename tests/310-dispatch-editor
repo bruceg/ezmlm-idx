@@ -9,7 +9,7 @@ make_message > "$TMP"
 
 post() {
     qqclean
-    rm -f "$DIR"/confirmpost "$DIR"/modpost "$DIR"/userpostonly
+    rm -f "$DIR"/confirmpost "$DIR"/modpost "$DIR"/subpostonly
     SENDER="$1@$HOST"
     shift
     for flag in $*; do
@@ -51,29 +51,29 @@ post sender confirmpost \
 checkenv confirmpost2 "$LOC-discard-.*@$HOST" "sender@$HOST"
 
 # User post only from non-subscriber, is rejected
-post sender userpostonly \
+post sender subpostonly \
 && fatal "Did not reject post from non-subscriber"
 
 # User post only from subscriber, is accepted
-post subscriber userpostonly \
+post subscriber subpostonly \
 || fatal "Error delivering normal post from subscriber"
 checkenv post2 "$LOC-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
 
 # User post only with confirmation, is confirmed
-post subscriber confirmpost userpostonly \
+post subscriber confirmpost subpostonly \
 || fatal "Error delivering confirmed post from subscriber"
 checkenv confirmpost3 "$LOC-discard-.*@$HOST" "subscriber@$HOST"
 
-post subscriber confirmpost modpost userpostonly \
+post subscriber confirmpost modpost subpostonly \
 || fatal "Error delivering confirmed post from subscriber"
 checkenv confirmpost4 "$LOC-discard-.*@$HOST" "subscriber@$HOST"
 
 # Subscribers post OK, non-subscribers are moderated
-post subscriber modpost userpostonly \
+post subscriber modpost subpostonly \
 || fatal "Error delivering normal post from subscriber"
 checkenv post3 "$LOC-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
 
-post sender modpost userpostonly \
+post sender modpost subpostonly \
 || fatal "Error delivering moderated post from non-subscriber"
 checkenv modpost2 "$LOC-return-@$HOST" "moderator@$HOST"
 

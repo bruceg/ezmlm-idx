@@ -227,14 +227,14 @@
 # -mUY -- simple moderated => store
 # -MUy -- sub confirmation => store
 # -mUy -- sub confirmation + moderation => store
-|if test ! -f '<#D#>/userpostonly'; then <#B#>/ezmlm-store '<#D#>'; fi
+|if test ! -f '<#D#>/subpostonly'; then <#B#>/ezmlm-store '<#D#>'; fi
 # -MuY -- user post only => checksub store (does send)
 # -Muy -- sub post only + confirmation => checksub store
-|if test -f '<#D#>/userpostonly' -a ! -f '<#D#>/modpost'; then <#B#>/ezmlm-checksub '<#D#>' . digest allow mod && <#B#>/ezmlm-store '<#D#>'; fi
+|if test -f '<#D#>/subpostonly' -a ! -f '<#D#>/modpost'; then <#B#>/ezmlm-checksub '<#D#>' . digest allow mod && <#B#>/ezmlm-store '<#D#>'; fi
 # -muY -- sub post ok, non-sub moderated => gate
-|if test -f '<#D#>/userpostonly' -a -f '<#D#>/modpost' -a ! -f '<#D#>/confirmpost'; then <#B#>/ezmlm-gate '<#D#>' . digest allow mod; fi
+|if test -f '<#D#>/subpostonly' -a -f '<#D#>/modpost' -a ! -f '<#D#>/confirmpost'; then <#B#>/ezmlm-gate '<#D#>' . digest allow mod; fi
 # -muy -- confirmed sender; then sub post, non-sub moderated => store
-|if test -f '<#D#>/userpostonly' -a -f '<#D#>/modpost' -a -f '<#D#>/confirmpost'; then <#B#>/ezmlm-store '<#D#>'; fi
+|if test -f '<#D#>/subpostonly' -a -f '<#D#>/modpost' -a -f '<#D#>/confirmpost'; then <#B#>/ezmlm-store '<#D#>'; fi
 # Always run ezmlm-clean to check for old messages
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
 # ezmlm-archive here for normal lists. Put into moderator
