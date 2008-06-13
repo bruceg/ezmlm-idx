@@ -1,0 +1,82 @@
+######################
+# dispatch to editor #
+######################
+
+prompt "dispatch editor:      "
+
+DEFAULT=
+make_message > "$TMP"
+
+post() {
+    qqclean
+    rm -f "$DIR"/confirmpost "$DIR"/modpost "$DIR"/userpostonly
+    SENDER="$1@$HOST"
+    shift
+    for flag in $*; do
+	touch "$DIR"/$flag
+    done
+    ${EZBIN}/ezmlm-dispatch "$DIR" . <"$TMP" >"$ERR" 2>&1 
+}
+
+# Drop most of the options to start, will add them back manually later
+${EZBIN}/ezmlm-make -+ -BDGHJKLMNORSTUWY "$DIR"
+
+# Unsubscribe everybody but "subscriber"
+${EZBIN}/ezmlm-list "$DIR" | ${EZBIN}/ezmlm-unsub "$DIR"
+${EZBIN}/ezmlm-sub "$DIR" subscriber@"$HOST"
+
+${EZBIN}/ezmlm-sub "$DIR" deny denied@"$HOST"
+
+# Post from denied sender, is rejected
+post denied \
+&& fatal "Failed to reject message from denied sender"
+
+# Normal post, goes to subscribers
+post sender \
+|| fatal "Error delivering normal post"
+checkenv post1 "$LOC-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
+
+# Moderated post, goes to moderator
+post sender modpost \
+|| fatal "Error delivering moderated post"
+checkenv modpost1 "$LOC-return-@$HOST" "moderator@$HOST"
+
+# Confirmed post, goes to sender
+post sender confirmpost modpost \
+|| fatal "Error delivering confirmed post"
+checkenv confirmpost1 "$LOC-discard-.*@$HOST" "sender@$HOST"
+
+post sender confirmpost \
+|| fatal "Error delivering confirmed post"
+checkenv confirmpost2 "$LOC-discard-.*@$HOST" "sender@$HOST"
+
+# User post only from non-subscriber, is rejected
+post sender userpostonly \
+&& fatal "Did not reject post from non-subscriber"
+
+# User post only from subscriber, is accepted
+post subscriber userpostonly \
+|| fatal "Error delivering normal post from subscriber"
+checkenv post2 "$LOC-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
+
+# User post only with confirmation, is confirmed
+post subscriber confirmpost userpostonly \
+|| fatal "Error delivering confirmed post from subscriber"
+checkenv confirmpost3 "$LOC-discard-.*@$HOST" "subscriber@$HOST"
+
+post subscriber confirmpost modpost userpostonly \
+|| fatal "Error delivering confirmed post from subscriber"
+checkenv confirmpost4 "$LOC-discard-.*@$HOST" "subscriber@$HOST"
+
+# Subscribers post OK, non-subscribers are moderated
+post subscriber modpost userpostonly \
+|| fatal "Error delivering normal post from subscriber"
+checkenv post3 "$LOC-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
+
+post sender modpost userpostonly \
+|| fatal "Error delivering moderated post from non-subscriber"
+checkenv modpost2 "$LOC-return-@$HOST" "moderator@$HOST"
+
+unset post
+
+${ECHO} "OK"
