@@ -400,7 +400,7 @@ static int _subscribe(struct subdbinfo *info,
 	while (mysql_fetch_row(result));			/* use'm up */
 	mysql_free_result(result);
 	if (mysql_query((MYSQL*)info->conn,"UNLOCK TABLES"))
-	  strerr_die2x(111,"FATAL",mysql_error((MYSQL*)info->conn));
+	  strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
         return 0;						/* there */
       } else {							/* not there */
 	mysql_free_result(result);
