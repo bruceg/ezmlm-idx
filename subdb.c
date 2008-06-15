@@ -271,9 +271,11 @@ void initsub(const char *subdbline)
   if (!stralloc_cats(&path,".so")) die_nomem();
   if (!stralloc_0(&path)) die_nomem();
   if ((handle = dlopen(path.s, RTLD_NOW | RTLD_LOCAL)) == 0)
+    /* FIXME: should use MSG functions */
     strerr_die5x(111,FATAL,"Could not load plugin ",path.s,": ",
 		 dlerror());
   else if ((plugin = dlsym(handle,"sub_plugin")) == 0)
+    /* FIXME: should use MSG functions */
     strerr_die5x(111,FATAL,"Plugin ",path.s," is missing symbols: ",
 		 dlerror());
 }
