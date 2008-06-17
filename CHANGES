@@ -1,4 +1,1232 @@
-19970629 ezmlm 0.53, alpha.
-19970406 ezmlm 0.52, alpha.
-19970222 ezmlm 0.51, alpha.
-19970203 ezmlm 0.50, alpha.
+BUGS:	-ezmlm-idx does not implement a full rfc822 parser. Comments can be
+	 inserted to defeat the MIME parsing mechanism, such as:
+	 Content-Type: (comment) test/plain
+	 This type of comment, while legal, does not occur in normal messages.
+	 Guiding info past ezmlm-idx MIME parsing is easier done by enclosing
+	 a message within a message. The mechanism isn't intended as a
+	 "secure" way of preventing e.g. "application/ms-tnef" from being
+	 disseminated.
+	 If you think this is a problem, E-mail ezmlm@list.cr.yp.to.
+	 Mimeremove/reject work only at the outer MIME layer.
+	-ezmlm-request requires addresses to be user@host. While rfc822
+	 compliant, addresses like ``"the man" @ host'' are not accepted.
+	-ezmlm-cgi doesn't deal optimally with holes in the archive.
+	-ezmlm-cgi seems not to work with Chinese. The problem has been to
+	 find someone willing/able to participate in debugging.
+
+Some ezmlmrc are not updated and may not work right.  If you fix them,
+please send them to ezmlm@list.cr.yp.to for inclusion in the next
+release.
+
+ezmlm-idx-7.0.0, 2008-06-16
+===========================
+
+This version has three major architectural changes:
+
+1. There is now support for internationalized messages.  All error
+messages, all subject lines, and a few other messages are now configured
+in a file named "text/messages" that is read at run time.  Messages in
+this file will undergo header-style substitution before they are output.
+
+Unlike other text files, all 3 of the files (DIR/text/messages,
+/etc/ezmlm/LANG/text/messages, and /etc/ezmlm/default/text/messages) are
+read, and only the first match (in the above order) is used for any
+given message.  This allows for creation of partial files to override
+just select messages.  If no match is found, the internal English text
+is used.
+
+2. The use of the "flags" file has been deprecated completely by
+individual flag files accessed by the appropriate programs.  This, along
+with corresponding changes to the ezmlmrc template, allows for lists to
+be reconfigured without invoking ezmlm-make.  To upgrade a list to the
+new setup, simply run "ezmlm-make -+ DIR".  Note that this will delete
+the "config" and "flags" files, as they have been superceded by other
+files.
+
+3. Creation of subscriber tables has been moved out of ezmlm-mktab-* and
+into ezmlm-make by adding some additional hooks to the subdb plugins.  A
+ezmlm-rmtab program is also added to remove subscriber tables, also with
+hooks in the subdb plugins.  The ezmlm-mktab-* programs have been
+obsoleted by these changes and have been removed.
+
+Smaller changes:
+
+- Fixed a bug in ezmlm-request that caused a segfault when attempting to
+  execute the "which" command.
+
+- Added new program ezmlm-checksub to replace the
+	ezmlm-issubn ... || { echo error; exit 100; }
+  lines in the ezmlmrc files.  ezmlm-issubn is now deprecated for use in
+  .qmail files, but still exists for backwards compatibility.
+
+- Added ezmlm-weed to the confirmer control files.
+
+- Added <#a#> substitution for the local part of the accept address.
+
+- ezmlm-warn will now process bounces for both the main and digest lists
+  if neither the -d nor the -D options are given.
+
+- Added several control files for programs:
+	dir/digcount		ezmlm-tstdig
+	dir/digestcode		ezmlm-get
+	dir/digformat		ezmlm-get
+	dir/digsize		ezmlm-tstdig
+	dir/digtime		ezmlm-tstdig
+	dir/modcanedit		ezmlm-manage
+	dir/modcanlist		ezmlm-manage
+	dir/modgetonly		ezmlm-get
+	dir/modpostonly		ezmlm-store
+	dir/nosubconfirm	ezmlm-manage
+	dir/nounsubconfirm	ezmlm-manage
+	dir/nowarn		ezmlm-warn
+	dir/subgetonly		ezmlm-get
+	dir/noreturnposts	ezmlm-clean
+
+- Removed the ezmlm-make -4 option in favor of the above files.
+
+- Fixed handling of digest bouncer in ezmlm-dispatch.
+
+- Eliminated the use of vfork for portability.
+
+- Added support for decoding sender addresses mangled by SRS.
+
+- Fixed bug when running ezmlm-archive on a newly-created list.
+
+- Always enable ezmlm-request in manager.
+
+- Always enable the "deny" blacklist.
+
+- Fixed a long standing bug in ezmlm-store that caused both posting and
+  moderating to happen when both modpost and confirmpost were disabled.
+
+Note: The subdb API was modified in this version.  You will need to
+reinstall all sub-* modules along with the main package.  Also, the
+messages changes also replaced the confirmpost subject line hack in
+ezmlm-store and the mailinglist file.  The contents of DIR/confirmpost
+and DIR/mailinglist are now ignored in favor of the SUB_CONFIRM_POST and
+TXT_MAILING_LIST messages, respectively.
+
+ezmlm-idx-6.0.1, 2007-10-06
+===========================
+
+- Fixed all of the subdb plugins to correct a problem that prevented
+  ezmlm-manage from working properly.
+
+- Fixed ezmlm-weed to handle MIME Delivery Status Notification messages
+  better.
+
+- Fixed ezmlm-send to insert the proper value for the List-ID: header.
+  Thanks Bill Nugent.
+
+- Added the necessary Sender: header to make DomainKeys work into the
+  ezmlmrc template.
+
+- ezmlm-mktab-mysql and ezmlm-mktab-pgsql will now only be installed if
+  they were built (with "make mysql" or "make pgsql" respectively).
+
+Note: The subdb API was modified in this version.  You will need to
+reinstall all sub-* modules along with the main package.
+
+ezmlm-idx-6.0.0, 2006-11-30
+===========================
+
+This version introduces two major changes in how ezmlm-idx operates.
+
+First, the naming of subscriber lists has been revamped.  In previous
+versions, the subscriber list would be identified by a full path to the
+list directory.  In this version, the lists are identified by their
+subdirectory name within the list base directory.  Full paths are
+supported in some places for backwards compatibility, but only where
+they fall within the list directory.  This coincidentally removes the
+absolute path requirement in all places except ezmlm-make, and
+eliminates the need for (and use of) all the "sql" files not in the list
+base directory.
+
+Second, all three subscriber database libraries (standard, MySQL, and
+PostgreSQL) have been moved into dynamically loaded plugins.  If you
+were previously using MySQL or PgSQL support, please follow the
+instructions in UPGRADE.idx.  After this configuration, this version is
+backwards configurable with previous versions.
+
+The plugin support also adds support for an optional DIR/subdb file
+which supercedes DIR/sql.  The file should contain the subscriber
+database plugin name followed by the content that would have gone into
+DIR/sql.  If it is not found, DIR/sql is used instead with an assumed
+plugin name of "sql".  ezmlm-make will read in and convert DIR/sql if
+DIR/subdb does not exist, but it writes out DIR/subdb.
+
+Make sure to read the UPGRADE.idx file for more information on what
+steps may be necessary to use this version.
+
+ezmlm-idx-5.1.2, 2007-10-05
+===========================
+
+- Fixed ezmlm-send to insert the proper value for the List-ID: header.
+  Thanks Bill Nugent.
+
+- Added the necessary Sender: header to make DomainKeys work into the
+  ezmlmrc template.
+
+ezmlm-idx-5.1.1, 2006-11-23
+===========================
+
+- (Un)subscribe requests initiated and confirmed by a moderator are now
+  marked in the Log as "+mod" or "-mod".  This is accomplished by the
+  addition of another pair of subscribe/unsubscribe confirmation
+  commands ("rc.cookie" and "wc.cookie") to ezmlm-manage to
+  differentiate between moderated (un)subscribe requests and
+  (un)subscribe requests iniated and confirmed by a moderator.
+
+- Updated the embeded qmail-verh patch to version 0.07
+
+ezmlm-idx-5.1.0, 2006-08-08
+===========================
+
+- Added a new configuration files "headerkeep" and "mimekeep" which
+  override "headerremove" and "mimeremove" respectively if either of the
+  former are present.  Instead of removing bad headers, the "headerkeep"
+  file controls which ones *not* to remove.  The "mimekeep" file works
+  similarly for MIME parts.
+
+- Added a new program, ezmlm-import, which imports messages from a mbox
+  file into ezmlm-idx's message archive.
+
+- Modified ezmlm-gate, ezmlm-issubn, ezmlm-list, ezmlm-sub, and
+  ezmlm-unsub to accept relative subscriber database names.  The changes
+  take into account backwards compatibility.
+
+- Added ezmlm-weed to both the moderator and manager control files.
+
+- Added several more autoresponder signatures to ezmlm-weed.
+
+- Modified the vfork test to use pid_t instead of int, to fix
+  portability issues on Solaris.
+
+- Fixed handling of missing ezmlmrc config file.
+
+- Fixed ezmlm-dispatch to handle working in a non-default .qmail file.
+
+ezmlm-idx-5.0.2, 2006-01-16
+===========================
+
+- All programs that copy the input message (ezmlm-get, ezmlm-manage,
+  ezmlm-reject, ezmlm-request, and ezmlm-warn) will now copy the whole
+  header but only a limited number of lines of the message body,
+  configured by putting a number into "copylines".  If this control file
+  is not present, no body lines are copied (to avoid spam complaints).
+
+- Fixed ezmlm-make to override settings in the config files with command
+  line options instead of the other way around.
+
+- Updated Spanish translation for post-confirm.  Thanks Ruben Cardenal.
+
+- Fixed bug in generation of a (currently unused) email address in the
+  subscription confirmation message.
+
+- Substitute <#c#> in (un)subscribe confirm messages with just the
+  confirmation cookie (ie <#r#> without the <#l#>- prefix).
+
+ezmlm-idx-5.0.1, 2005-12-16
+===========================
+
+- If files cannot be found in either the list directory or the
+  language-specific directory, try to pull them from the default
+  directory (/etc/ezmlm/default).
+
+- Added a proper charset for Japanese texts.
+
+- Added a Spanish translation for post-confirm.  Thanks Ruben Cardenal.
+
+- Fixed a bug in ezmlm-cgi caused by the use of "char" type for array
+  index calculations.
+
+- Fixed ezmlm-gate failing to exit 0 on success.  Thanks Ian Charnas and
+  Sami Farin.
+
+ezmlm-idx-5.0.0, 2005-10-03
+===========================
+
+- Moved all the language-specific files (that is, all the "text" files
+  plus "charset" and "mailinglist") out of the ezmlmrc files into
+  individual files installed in a common location (/etc/ezmlm/LANG by
+  default).
+
+- Modified the programs to try to pull files that are not present in the
+  list directory from the common location above.
+
+- Replaced the use of the "config" file in ezmlm-make with individual
+  files containing one setting each.  ezmlm-make will still read the
+  config file for now, but it is considered depricated.  Running
+  "ezmlm-make -+" on an existing list will upgrade it.
+
+- Added a "conf-etc" config file to allow changing the path to
+  configuration files (defaults to "/etc/ezmlm").
+
+- Added a "conf-lang" config file to replace the "make ISO" mechanism.
+
+- Modified the "copy" function, which translates from "text" files into
+  output emails, to also select sections at run time based on the list's
+  configured flags.
+
+ezmlm-idx-0.444, 20061123
+=========================
+
+- Fixed text files to not overwrite the "text/top" and "text/bottom"
+  files unconditionally.  Also rewrote places where the filename was
+  duplicated in the tags.
+
+- (Un)subscribe requests initiated and confirmed by a moderator are now
+  marked in the Log as "+mod" or "-mod".  This is accomplished by the
+  addition of another pair of subscribe/unsubscribe confirmation
+  commands ("rc.cookie" and "wc.cookie") to ezmlm-manage to
+  differentiate between moderated (un)subscribe requests and
+  (un)subscribe requests iniated and confirmed by a moderator.
+
+ezmlm-idx-0.443, 2005-09-01
+===========================
+
+- Fixed the marker logic in ezmlm-moderate to allow comments between any
+  two lines containing "%%%", not just lines 8 characters or longer.
+
+- Some internal changes in ezmlm-test and the subdb API.
+
+ezmlm-idx-0.442, 2005-07-12
+===========================
+
+-Added a "sql" file in the "LIST/mod" directory on creation of lists.
+ This fixes a long-standing bug where moderator addresses are not stored
+ in SQL.
+
+ NOTE: Running ezmlm-make -e or -+ on a moderated list that has SQL
+ enabled will cause moderation to fail due to the moderator subscriber
+ list now being accessed in SQL.  You will need to run the following
+ command:
+
+	ezmlm-list -M $DIR/mod | ezmlm-sub $DIR/mod
+
+-Fixed bug in pgsql searchlog query.
+
+-Fixed bug in ezmlm-request handling of multi-line subjects.
+
+ezmlm-idx-0.441, 2005-07-04
+===========================
+-Fixed critical one-off bug in both *SQL configuration parsers.
+ Thanks Jim Winstead.
+-Fixed lack of quoting in PgSQL subscribe code.  Thanks Dan O'Neill.
+-Updated ezmlm-cgi to generate valid XHTML/CSS output.
+ Thanks Brian Ghidinelli
+-Fixed readwrite.h to work on LP64 systems.  Thanks Amitai Schlair
+-Don't clobber msgsize file on re-make.  Thanks Stephen Quinney.
+-ezmlm-test can now be run by any user, in any writeable directory.
+-Put a valid recipient into the To: header in moderation messages.
+
+ezmlm-idx-0.440, 2005-04-15
+===========================
+-Wrote a script to automatically generate the Makefile and TARGETS.
+-Fixed a problem with handling text files with no final newline.
+-Added a new program, ezmlm-dispatch, to be run from a global
+ .qmail-default file
+-Removed support for qmail older than version 1.02.
+-Removed all references to "inhost" and "inlocal" which were completely
+ unused but still referenced in documentation and tests.
+
+ezmlm-idx-0.435, 2005-03-08
+===========================
+-Fixed string realocation bug in ezmlm-manage.  Thanks Tom Moertel.
+-Tweaked the subscriber log search subject to differentiate it from the
+ complete subscriber log.
+
+ezmlm-idx-0.434, 2005-02-07
+===========================
+-Replaced the generic "ezmlm response" subject with unique subjects.
+-Fixed failure to build/link ezmlm-mktab in the Makefile.
+-Fixed a typo in the ezmlm-manage man page.  Thanks Charles Cazabon.
+-Updated the pt_BR language texts.  Thanks Glen Stewart.
+-Fixed broken invocation of ezmlm-confirm in ezmlmrc.  Thanks SATOH
+ Fumiyasu.
+-Fixed ezmlmrc template problem with moderated lists.
+-Fixed a deadlock between ezmlm-confirm and ezmlm-store.
+
+ezmlm-idx-0.433, 2005-01-09
+===========================
+-Fixed a problem in passing options to ezmlm-send in ezmlm-confirm,
+ ezmlm-moderate, and ezmlm-store.  Thanks Ueli Heuer.
+-Fixed the Japanese language code from "jp" to "ja" as per ISO 639.
+
+ezmlm-idx-0.432, 2005-01-01
+===========================
+-Un-fixed the Swedish and Danish translation names, as they should match
+ ISO 639 language codes, not ISO 3166 country codes.
+
+ezmlm-idx-0.431, 2004-12-29
+===========================
+-Make ezmlm-idx obey $QMAILQUEUE.
+-Added missing ezmlm-confirm.0 target.
+-Auto-generate all version strings from the VERSION file.
+-Fixed up the broken Swedish translation.  Thanks Mads E. Eilertsen.
+-Fixed naming of translations to match their ISO 3166 country codes:
+ sv => se (Sweden) and da => dk (Denmark)
+-Internal reorganization of ezmlm-test
+-Internal reorganization of email header generation.
+
+ezmlm-idx-0.43, 2004-11-25
+==========================
+-Added per-post sender confirmation patch from Tullio Andreatta.
+ See the documentation for ezmlm-make -y for details.
+-Changed all example domain names in text files to the RFC 2606 mandated
+ example.com domain name.
+-Several documentation and comment fixes.  Thanks Tullio Andreatta.
+-Added conf-sub control file, used to choose which subscriber
+ mechanism to use.  This replaces the "make std/mysql/pgsql" mechanism.
+ Adapted from patch by Tullio Andreatta.
+-Got rid of the frivolous uses of /bin/sh to exec ezmlm-send.
+-Always reject bounce messages in ezmlm-reject.
+-Substitute <#r#> in (un)subscribe confirm messages with just the local
+part of the reply address (for web-based confirmation).
+
+ezmlm-idx-0.421, 2004-06-02
+===========================
+-Updated ezmlmrc.fr.  Thanks Jean-Marc Lasgouttes.
+-Fixed bug in ezmlm-request when dealing with continuation lines.
+ Thanks Sami Farin.
+-Replaced many library with public-domain sources.
+-Fixed "log" function conflicting with built-in math function.
+-Fixed problem with "test -e" in makelang.sh for Solaris.
+-Fixed typo bug in ezmlm-cron.
+-Fixed uses of "head -#" and "tail -#" to "head -n #" and "tail -n #".
+
+ezmlm-idx-0.42, 2004-01-14 (New maintainer: Bruce Guenter <bruceg@em.ca>)
+=========================================================================
+-The ezmlmrc.* files were broken into two parts, to make them easier to
+ write and maintain.  The language specific parts are stored in the
+ "lang" subdirectory.
+-Updated ezmlm-cgi to version 1.18, which includes the no banner
+ security fix.
+-Added ezmlmrc.hu.  Thanks Julian Severn-nek http://js.hu/
+-Added ezmlmrc.nl.  Thanks Willem
+-Fixed problem in ezmlm-send munging MIME attachments using implicit
+ content types.  Thanks Ed
+-Fixed typo in ezmlm-unsub -- manual unsubscriptions would be
+ erroneously logged as "+manual"
+-Fixed ezmlm-gate to handle the -Q option.  Thanks Bjoern Hansen.
+-Fixed internal bug calling decodeHDR.
+-Fix ezmlm-manage to properly send subscription confirmation to
+moderators.  Thanks Mate Wierdl.
+-Portability and bug fixes to ezmlm-test.
+-Added a "dry-run" option to ezmlm-gate.
+-Fixed ezmlm-send to fully handle QMQP relaying.  Thanks Bernhard Graf.
+-Fixed ezmlm-gate to use "/bin/sh" consistently.  Thanks Bernhard Graf.
+-Fixed ezmlm-cgi's output of non-standard port numbers.
+-Fixed message archiving in subscribe-only moderated lists.
+
+ezmlm-idx-0.40, 1999-12-20
+==========================
+-Fixed bug in sub_mysql/issub.c that caused return of undef pointer for
+ non-subs. Security problem for sender checks, but not for moderation. Of
+ course only mysql version affected.
+-Updated ezmlmrc translations. Thanks all who worked on this.
+-added ezmlmrc.es. Thanks Vicent Mas/Francesc Alted/Sonia Lorente/Cyndy DePoy.
+-added ezmlmrc.cn_GB. Thanks HG.
+-ezmlm-weed: Groupwise garbage filter added. Thanks, SA.
+-mysql: include files now don't have a dir. This is so that one can have
+ them in e.g. /usr/include. conf-sqlcc adjusted.
+-Removed utils/. Not updated - add when done.
+-Full PostgresSQL support. Thanks, MS.
+-Corrected ordering of searchlog output for MySQL version to match default.
+ Thanks, MS.
+-ezmlm-moderate/store: Fork /bin/sh ... instead of sh for people with unset
+ PATH. Thanks, TM.
+-ezmlm-manage: rfc2369 headers added where possible also to admin
+ messages. Main finesse is that the WELCOME message has a custom
+ List-Unsubscribe header. -U/-S logic deconvoluted. -nN added.
+-ezmlm-store: -B to send only header of message to moderate, rather than
+ the entire message. Used for send-only list with very large posts.
+-ezmlm-reject: -b to reject messages with body or subject starting with
+ ``subscribe'' or ``unsubscribe''.
+-support for List-ID (draft). Added to all list messages if DIR/listid is
+ present. The first line of that file is added after "List-ID: ".
+-ezmlmrc: Added List-Subscribe header. Rewrite some texts, move some info
+ from bottom to help. Add ezmlm-archive (-i), add some switches to make
+ announcement lists easier.
+-ezmlm-make: Modifed to make -I default since -i now controls ezmlm-archive
+ with all lists configured with ezmlm-get. Also, ezmlm-make will not overwrite
+ files tagged with #E in ezmlmrc when in edit mode (-+ or -e). This preserves
+ manual customization. The behavior can be overridden with -++ or -ee to
+ reset the list texts (old behavior). Added version check for ezmlmrc Tx, SA.
+-ezmlm-archive and ezmlm-cgi added: Very easy to set up WWW access to list
+ archive. Support for various charsets incl iso-2022-*. For Russian,
+ one would need to do substitutions when making entries in archive/n/index.
+ This is not supported yet, so summary view entries may be incorrect if
+ the messages use Russian text in a charset different from the one the list
+ uses. Probably doesn't work for Chinese - lack of willing/able testers.
+-qmail-qmqp support via idx.h and DIR/qmqpservers. If your bandwidth is
+ limited, look at this (see ezmlm-send(1)/ezmlm-get(1)/ezmlm(5)). If you
+ have large lists, sublist them locally and specify different QMQP servers
+ for each sublist via DIR/qmqpservers. Added qmail-qmqpc.tar.gz patch to
+ allow specifying QMQP server on command line. With this, DIR/qmqpservers can
+ be used to specify different servers for different lists for busy servers.
+-ezmlm-gate: added -q file. Each line in "file" is processed as per
+ dot-qmail(5). 111 => temp_err, 99 => post, 100 => moderate, 0 => check sub.
+ Any other exit code will result in a bounce.
+ NOTE: This changes the behavior of ezmlm-gate used with only one DIR
+ argument (not used in any std listsetup for previous versions). Before,
+ this tested for subscriber status, now messages will
+ be moderated. This use is not set up by any ezmlm-make option and should
+ be _extremely_ rate. To obtain the old behavior, simply specify the
+ list directory twice.
+-Made conf-sqlcc and conf-sqlld to support both phases of the build. Adjusted
+ mysql includes to not assume they're in a "mysql" subdir.
+ 
+
+ezmlm-idx-0.324, 1999-09-05 (PostgresSQL)
+=========================================
+-Minor typo in ezmlmrc.fr fixed.
+-Added [partial] PostgresSQL interface by Magnus Stalaker. See INSTALL.idx.
+-Added ezmlm-store Cc: docs mistakenly missed in 0.323.
+-Fixed problem with "it/itall" target (Thanks MW).
+
+
+ezmlm-idx-0.323, 1999-08-15 (bug fix)
+=====================================
+-ezmlm-store: Cc: list-accept-subscribe remote admin conf added to mod
+ requests. For lists using ezmlm-gate, this allows adding poster as allowed
+ alias. Thanks RVI for suggesting.
+-Added qmail-verh.tar.gz (0.03). This is the 0.02 qmail patch and a patch
+ to change ezmlmrc to take advantage of it. See docs inside.
+-conf-sqlcc/conf-sqlld instead of conf-sql to allow include file additions
+ (conf-cc) and libraries (conf-ld) for RDBMS interfaces.
+-Added ezmlmrc.id and ezmlmrc.it. Thanks APN and RDC.
+-ezmlm-manage: Mime boundary was missing for subscribe notifications for
+ moderated lists using QP/base64 encoding. Thanks TF.
+-ezmlm-get: Logic to prevent digest triggering from list-@host.
+-ezmlm-get: Digest parts have file names list_msgnum.txt instead of
+ list.msgnum to work around a MS Outlook bug. Thanks, MH.
+-ezmlm-request: Support for multipart MIME when used as a majordomo emulator.
+ Thanks, Johannes Ehrfeldt for reporting the bug.
+-ezmlm-send: trailer was added to mutipart/non-alternative. Problems with
+ multipart/signed. Now, trailer for multipart is added only to mixed,
+ digest, and parallel. Thanks BPF.
+-ezmlm-reject.1: typo.
+-ezmlm-test.sh multiple minor changes to work on more platforms. Still, if
+ it doesn't work, the problem is most likely here, and not in ezmlm(idx)
+ itself. Thanks RM DM and others.
+-ezmlm-moderate: added missing newline at beginning of MIME reject message.
+ Thanks, XXX.
+-idx.h fixed ALT_XX alternative command names which erroneously started '-'.
+ Looks bad, but was of no consequence.
+
+
+ezmlm-idx-0.322, 1999-05-05 (bug fix)
+=====================================
+-ezmlmrc.*: Added x-confirm-reading-to and x-pmrqc. Thanks JK.
+-ezmlmrc.ru: Added Russian version contributed by RVI. Thanks.
+-ezmlmrc: Czech version of ezmlmrc is ezmlmrc.cz. Should be ezmlmrc.cs. Fixed.
+-searchlog.c: Made the MySQL version also match in address field to make
+ the records returned the same as for std version.
+-ezmlm-store: -allow-subscribe confirm address in Cc: header to make it easier
+ for the moderator to add the poster to the allow database. (Thanks, RVI.)
+-ezmlm-manage: -query from remote admin for subscriber failed due to use of
+ static storage within issub(). Fixed.
+-ezmlm-manage: Made remote admin unsub failure return error. For sub it's
+ important to be silent for multi-moderator setups, but since unsub is never
+ moderated, it's ok to return negative feedback, since it may be needed by
+ remote admins. As a consequence it was trivial to add -Q[Q] not quiet to
+ provide [un]subscribe feedback to the owner.
+-ezmlm-send/reject: "boundary" in Content-type can be delimited by ';'.
+ Without, some messages could be erroneously rejected when using mimeremove.
+ New error text added to errtxt.h.
+
+
+ezmlm-idx-0.321, 1999-03-22 (bug fix)
+=====================================
+-added ezmlm-limit to limit list traffic. As this is a bug fix release,
+ ezmlm-limit should be considered experimental and is not built/installed
+ by default. (Thanks, TM for suggesting.)
+-subscribe.c: in some cases a ``T'' was incorrectly added before the address
+ in the DIR/Log subscription log. Corrected (Thanks, PH.).
+-ezmlm-test: reordered some tests to avoid timing problems on some
+ platforms. Tested hostname output since it may return a non-FQDN host name.
+ Added tests for most of the fixed bugs.
+-ezmlm-tstdig: improved DEFAULT logic. Failed with existing incorrect inlocal
+ in virtual domains.
+-ezmlm-manage bug: deny access control fixed.
+-ezmlm-request/ezmlm-tstdig: qmail>=1.02 doesn't set DEFAULT when there is
+ nothing matching. Unable to detect qmail version here. Changed logic to
+ always be correct with qmail>=1.02 and virtually always for earlier versions.
+ Missing inlocal is taken as meaning qmail>=1.02.
+-ezmlm-request: mdomo emulator: Corrected address listed for WHICH.
+-ezmlm-request: Silent exit on bounces (NULL sender). Fake SENDER spam to the
+ majordomo address otherwise causes double bounces to postmaster who has
+ better things to do.
+-ezmlmrc: corrected missing ezmlm-return in bouncer for normal (^6W) lists.
+ (Thanks Matt McGlynn.)
+-opensql.c: psql needs to be destroyed for ezmlm-reqest WHICH which may open
+ connections to several servers.
+-searchlog.c: made inbuf/ssin static. Was incorrect and generated linker
+ warning on some systems, but had no functional consequences. Thanks, SOH.
+-ezmlm-test: converted "export ENVIRON=value" to "ENVIRON=value; export ENVIRON"
+ to work with Solaris sh. Also, moved final ezmlm-warn section to the end
+ to avoid timing issue on some systems. "ps" test for qmail made non-fatal,
+ as differing options on different ps make it more likely that ps use is
+ the problem than that qmail is not running. (Thanks, SOH.)
+
+
+ezmlm-idx-0.32, 1999-02-22
+==========================
+-updated ezmlm-test. It tests most functions, and for important new features
+ or bugs discovered we'll add new tests in future. Thanks ME for patient
+ testing, suggestions, and "de-bashing".
+-added a rfc2369 headers for list-help, list-post, and list-unsubscribe.
+ It takes little space, and may promote support in MUAs.
+-ezmlm-get: list-get.9999999_x now always returns at least HISTGET messages
+ (default 30) provided that "9999999" is larger that the latest message number.
+ This allows embedding of an address for new subscribers to get at least what
+ has transpired since the latest digest and usually 30 messages before that,
+ to quickly see what's going on.
+-ezmlm-get: list-get for non-digested lists now returns the latest HISTGET
+ (default 30) messages instead of the latest message. To get the latest message,
+ mail list-get-9999999, where "9999999" is larger than the latest message
+ number.
+-Added ezmlm-manage/get -B switch to suppress text/bottom + request addition to
+ ezmlm-manage messages (except of course -help).
+-ezmlm-send uses copy() for trailer and headeradd. <#h#>, <#l#>, and <#n#>
+ in these texts are substituted with outhost, outlocal, and message number,
+ respectively. Now you can add ``To receive this thread, mail
+ <#l#>-get.<#n#>@<#h#>'' to the trailer. Removed dir/sequence feature, since
+ this can now be done with headeradd. copy() modified to suppress blank
+ lines when copying headers. extern decl in copy.h fixed. A consequence
+ is that headeradd isn't added to the archive copy which is good. <#n#>
+ for ezmlm-get is the latest message processed, except for the digest, where
+ it is the first message in the digest (which is also the digest msg #).
+-Added ezmlm-split (previously separate). Modified to use the same split
+ mechanisms as the SQL routines. -D switch to support easier reorganisation,
+ with extensive docs in man page. Interconversion between ezmlm-split and SQL
+ use is now relatively easy.
+-Reorganized files. The subscriber db sources are now in sub_std/ for the
+ standard ezmlm db, sub_mysql/ for the mysql version. Normally, there are
+ symlinks to the std version. ``make mysql'' changes the symlinks to sub_mysql
+ and ``make std'' can be used to set them back.
+-Replaced ezmlm-glmake with ``ezmlm-make -Cezmlmglrc''. See ezmlmglrc.5.
+-Added status.pl for status monitoring of ``list trees'' via httpd. In utils/.
+-Added feedback logging support with ezmlm-receipt and ezmlm-make -w. ezmlm-send
+ and ezmlm-get for the SQL version log info to the db.
+-Added support for setting up a minimal (SQL-enabled) sublist:
+ ezmlm-make -Cezmlmsubrc. See ezmlmsubrc.5.
+-Added ezmlm-make -w to remove ezmlm-warn invocation and if used with -6 to
+ configure ezmlm-receipt in place of ezmlm-return. Used for main list in
+ SQL-enabled list clusters for feedback and bounce logging.
+-Added MySQL support. ezmlm-make -6. This is a _major_ change and makes it
+ trivial to do sublisting and dynamically redistribute load. see ezmlm.5.
+-Modified ezmlm-return to add -dD switches. Previous design decision to have
+ ezmlm-return autodetect digest vs normal bounces cause problems when
+ sublisting a digest list. -dD force non-digest vs digest function and we'll
+ set uyp new lists with that, but keep autodetection for compatibility with
+ existing lists. ezmlmrc files modified appropriately. German version
+ updated and improved by Frank Tegtmeyer. Thanks!
+-Modified ezmlm-warn/return bounce handling. DIR/bounce now has a ``h''
+ subdir, further subdivided a-p for storage of h... files, where the first
+ character of the hash is used for the subdir, and a ``d'' subdir, containing
+ subdirs, each holding bounce (d... files) for a 10,000 s interval. This way,
+ only ``ripe'' bounce files are processed by ezmlm-warn. Also, ``lastd'' to
+ prevent unnecessary reparsing of bounces and ``lasth'' to keep track for
+ ``h'' subdir cleaning of remaining files older than 3x time out.
+-Modified all programs to use DEFAULT if available. With qmail>=1.02, this
+ allows one to ignore inhost/inlocal so that special adjustment for virtual
+ domain lists is no longer required. Works the old way with qmail<1.02.
+-DIR/extra and DIR/blacklist for extra allowed SENDERs and SENDER blacklisting
+ have been renamed DIR/allow and DIR/deny. This is used sparingly and the old
+ nomenclature was confusing. ``mkdir DIR/allow; mv DIR/extra/* DIR/allow''
+ and the corresponding move for DIR/deny will take care of it.
+-Extended the remote admin -log command. Now, -log.xxx will return only
+ Log lines matching 'xxx'. '.' matches '.' and '_' matches any character.
+-The ``From:'' line of subscribers confirmation message will be logged to
+ ``Log''. This allows the administrator to use the Log to by name locate the
+ subscription address of a user.
+
+
+ezmlm-idx-0.316, 1999-08-15 (bug fixes only)
+============================================
+-Migrated back fixes for 0.322 -> 0.323 that are applicable to 0.31x:
+-ezmlm-get: Made filename extension constant for digest parts to work around
+ Outlook bug.
+-ezmlm-manage: Mime boundary added for mod-sub-ok message when QP/base64 is
+ used.
+-ezmlm-manage.1: Typo.
+-ezmlm-moderate: Missing newline for non-MIME reject message.
+-ezmlm-request: Support by global interface of multipart/alternative messages.
+-ezmlm-send: Trailer only for some types of multipart messages.
+-ezmlm-reject.1: Typo.
+
+
+ezmlm-idx-0.315, 1999-05-05 (bug fixes only)
+============================================
+-Bug fixes fed back from up to 0.322.
+-ezmlm-send/reject: "boundary" in Content-type can be delimited by ';'.
+ Without, some messages could be erroneously rejected when using mimeremove.
+ New error text added to errtxt.h.
+-ezmlm-manage: -query from remote admin for subscriber failed due to use of
+ static storage within issub(). Fixed.
+-ezmlm-manage bug: deny access control fixed.
+
+
+ezmlm-idx-0.314, 1999-02-16 (bug fixes only)
+============================================
+-Added ezmlm-test, a script that tests [most] ezmlm + idx program functions.
+-added ezmlmrc.cz (Thanks, Jan Kasprzak).
+-ezmlm-make -e failed if DIR/config didn't exist. Fixed. (Thanks, SOH.)
+-ezmlm-make man page bug for virtual domain (Thanks, XX).
+-ezmlm-get segfaulted when run from the command line with LOCAL undefined.
+ Fixed. (Thanks, ME.)
+
+ezmlm-idx-0.313, 1998-11-21 (bug fixes almost only)
+===================================================
+-ezmlm-get returns 0 for success in editor and command line use, rather than
+ 99. No impact on current lists, but makes more sense.
+-ezmlm-warn tests >= for timeout rather than >. No impact other than easier
+ use with future test script.
+-ezmlm-manage -get function was broken - fixed. Needed for backwards compat
+ with ezmlm-0.53. (Thanks, KS.)
+-Reorganized INSTALL.idx, UPGRADE.idx, README.idx and introduced FILES.idx
+ to simplify. Made corrections to FAQ.idx, but no additions.
+-ezmlm-send no longer adds trailer to multipart/mixed messages. Also, multipart
+ messages consisting of only "mimeremove" parts will be bounced. (Thanks, BE.)
+ The trailer is suppressed for base64-encoded messages. In both cases,
+ trailer addition might corrupt the message. Default charset is added if none
+ specified (was left empty).
+-The US version of ezmlmrc is now ``ezmlmrc.en_US'' and ``make'' by default
+ copies it to ezmlmrc. Added support to Makefile and docs to copy in other
+ versions via e.g. ``make jp''. Target ezmlmrc is there to not overwrite with
+ ezmlmrc.en_US on ``make setup''.
+-Changed ezmlmrc so that headeradd/headerremove/sub-ok/mod-sub are not rewritten
+ when editing lists. (Thanks, GS.)
+-In ezmlm-idx and ezmlm-send, made dirs without trailing slash (mkdir with
+ it bombs on Ultrix). (Thanks, BW.)
+-added check for NULL sender is zapnosub() in ezmlm-get. Fixed NULL pointer
+ use when the command is -dig- and no digest code was given on the command
+ line.
+-added 'x' to FORMATS in idx.h. (Thanks, MMcL.)
+-ezmlm-reject changed to honor subject continuation lines. Eudora likes to
+ break right after "Subject:" which caused rejection for empty subject.
+ (Thanks, SOH.) Same for To:. Also deals with quoted content types. Error
+ message now always states the offending MIME type.
+-Added "(null)", "(none)", and "(no subject)" to rejected subjects. What are
+ these MUA authors thinking??
+-ezmlm-reject bug fixed to reject commands in subjects. (Thanks, JH.)
+-ezmlm-request bug fixed to allow correct processing of complete command
+ addresses in the subject, even for virtual domains. (Thanks, EC.)
+-ezmlmrc.de corrected (Thanks, FT).
+-Made local check in ezmlm-tstdig case-insensitive (Thanks, Rick Myers).
+-Fixed ezmlm-glconf to work with 'sh', not only 'bash' (missing ';' before '}')
+ (Thanks, MS).
+-ezmlm-manage: text/bottom added also when moderated subscription is
+ completed (Thanks, SOH). Added -log command to ezmlm-manage. Allows remote
+ admins to retrieve Log if -l switch is set. Added -log into to mod-help via
+ ezmlmrc.
+-Made character defines sun4 cc compliant in decode{Q|B}.c and unfoldHDR.c.
+-Added support for "Sv:" and "Rv:" reply indicators (Nordic, Spanish).
+-Improved/expanded ezmlm-check.
+-Added -+ switch to ezmlm-make. Makes letter switches sticky (not -cC).
+ <#F#> is all letter switches, not only the ones set. (Thanks, SOH). Also,
+ added virtual domain info to ezmlm-make.1.
+
+ezmlm-idx-0.312, 1998-08-05 (bug fixes only and support scripts added)
+======================================================================
+-Fixed declaration of char16table[] in decodeQ.c to get clean mips64 compile
+ (Thanks, MF).
+-Fixed ezmlm-request so that <#l#> and <#h#> are substituted correctly.
+-Added ezmlm-glmake to create a global list setup. Left ezdomo.tar.gz since that
+ is what's documented in the FAQ.
+-Fixed inconsistencies/errors in the ezdomo.tar.gz example files (Thanks, PN).
+-Changed ezmlm-return.c to understand qmail preVERP error messages even if
+ qmail is patched to use MIME error messages.
+-Added ezmlm-glconf and man page to the package. The program creates a config
+ file for the "majordomo-style" interface from a user's existing lists.
+-Updated ezmlmrc and translations to not overwrite text/faq|info when editing
+ the list and add a note on -faq/-info to text/bottom and on -list/-edit
+ to text/mod-help. Thanks to the "usual suspects" for the translations!
+-Corrected small bug in ezmlmrc.de and ezmlmrc.da.
+-Corrected small bug in ezmlm-check -s switch handling (Thanks, DS).
+-Fixed bug in unfoldHDR.c affecting handling of subject prefixes without
+ message number (Thanks, LL).
+
+ezmlm-idx-0.311, 1998-07-01 (bug fix only)
+==========================================
+-Restored the mistakenly amputated ezmlmrc (English only, others were ok).
+-Fixed ezmlm-gate to tolerate unset $SENDER (Thanks, AP).
+
+ezmlm-idx-0.31, 1998-06-30
+==========================
+-Added ezmlm-manage -m switch for moderated unsubscription, pre request.
+ (Thanks, FT).
+-made cookie for accept/reject the same: ezmlm-moderate/ezmlm-store.
+-ezmlmrc.da (Thanks, TF). Other ezmlmrc updated (Thanks: see README.idx).
+-copy.c modified to allow NUL, multiple tags per line, and <#h#> => outhost.
+ (Thanks, TM).
+-ezmlm-manage sends replies to "-help" from "list-return-@". This will break
+ all autoresponder loops for admin messages after 1 round. Otherwise,
+ ezmlm-warn and a broken responder can start an endless manage<->responder
+ exchange. (Thanks, MM.)
+-Simplified tosubs(). Slightly less efficient with qmail, but avoids a lot
+ of problems.
+-Added umask(022) to ezmlm-unsub.c and ezmlm-sub.c, in case they 
+ are the ones to create dir/lock.
+-ezmlm-moderate and ezmlm-gate changed to pass on switches for exec'd
+ programs. ezmlm-moderate sets sender for ezmlm-send so that -C switch
+ works also for moderated lists.
+-ezmlm-accept now autoconfigured with ezmlm bin path and installed.
+-ezmlm-manage allows remote access to the ``extra'' db (-allow-subscribe)
+ with same restrictions as for the main list. Access to the ``blacklist''
+ db for remote admins only (-deny-subscribe).
+-ezmlmrc changed to skip ezmlm-reject in editor of sublists.
+-ezmlm-reject now rejects messages that do not contain the list
+ address in To:/Cc: (Thanks, DJB). ezmlmrc modified, since it requires
+ the ezmlm-reject line to have the list dir on the command line. Not full
+ rfc822 parser (see BUGS in ezmlm-reject.1!).
+-made missing file in copy.c a permanent error. This way, it's discovered
+ sooner, as the list owner may not have access to maillog.
+-docs updates, including adding terminal '/' to directories to make them
+ clearly distinct from files.
+-Safer storage of return-path by ezmlm-store.
+-ezmlm-send now adds a "Return-Path:" header to the archive copy. This way,
+ listowners without maillog access can get all the info (together with
+ "received:" and "delivered-to: lines).
+-ezmlm-send -R switch to remove "Received:" headers that cause bounces to users
+ (due to too low sendmail hopcount) that can subscribe and are reached by
+ probes just fine. "received:" headers still go to the archive (Thanks, TM).
+-Fixed minor bug in "reply-indicator" trimming (unfoldHDR.c).
+-Make default behavior of -get command to send the messages that have arrived
+ since the last digest (up to MAXGET) if there has ever been a digest (only
+ last message otherwise).
+-"prefix" number substitution changed to LAST '#'. Support for rfc2047 encoded
+ prefix. With iso-2022-* this will work only if characters after '#' are
+ ascii only, due to the removal of redundant ESC sequences from subjects before
+ comparison, and the need for any line to end in ascii. Improved robustness
+ of unfoldHDR.c (could be crashed with some illegal encoded words).
+-Make reject messages come From: list-owner@listhost in ezmlm-moderate. A
+ "Reply-To: address" is added if "-t address" is on the command
+  line (Thanks, YG).
+-ezmlm-get digesting now orders headers only for rfc1153 (mandated), otherwise
+ displays them as they come. The default headers included are the same, but
+ this can be overridden with dir/digheaders containing a list of the headers
+ to include.
+-ezmlm-request takes the first line starting with a letter and interprets it
+ as a command, if the subject is empty or does not start with a letter.
+ Only one line is interpreted.
+-ezmlm-request if used with "-f config" interprets "config" as a config file
+ of lists and list info. When used with this switch, it ignores the subject and
+ expects a command on the first body line. This is to service e.g. the
+ majordomo@host address. See man page.
+-ezmlm-request understands a number of command synonyms to make it easier for
+ users familiar to other MLMs. These are just translated into regular ezmlm
+ commands for use with the list.
+-ezmlm-manage services -faq, -info, and -query commands (see man page). Stubs
+for faq/info added to ezmlmrc and to edit-list via ezmlmrc.
+-ezmlm-check fixes for grep not understanding '-q' and a ezmlm-check -S switch
+ to avoid subscriber listing (Thanks, TEE).
+
+ezmlm-idx-0.302, 1998-06-17 (bug fixes only)
+============================================
+-Removed args from copy_insertsubject() call in ezmlm-send.c
+-made ezmlm-make enforce absolute "dot".
+-Fixed MIME newline bug in ezmlm-moderate/store/clean. (Thanks, JS).
+-Fixed missing arg in postmsg() call from previous fix (Thanks, MF).
+
+ezmlm-idx-0.301, 1998-05-08 (bug fixes only)
+============================================
+-Digest format is multipart/digest again. The new format MIXED/'x' is
+ identical, except that it is multipart/mixed. The former works well for
+ most MUA. The latter is better for Pine when ezmlm texts are content-
+ transfer-encoded.
+-RFC1153 format ignores content-transfer-encoding. This works fine with
+ us-ascii. For non-us-ascii it works if the mail path is 8-bit clean. RFC1153
+ is really a us-ascii format, since the messages are dependent on the
+ encoding of the main message. This way is as good as it can get.
+-Added many content-types to mimeremove in ezmlmrc (Thanks, SP).
+-Removed most of the -x stuff in ezmlmrc. Now, -x only adds MIME content-type
+ stripping (extensive) and limits message body size to 2-40000 bytes. If you
+ want "Reply-To:" munging, edit ezmlmrc. The "mailto:" stuff was bad, and 
+ the references to list-owner@host for intractable problems are now standard.
+-Changed ezmlmrc extensions to iso 639: SV - Swedish.
+-Added ezmlmrc files for DE, PL (Thanks, FT, SP).
+-Fixed ezmlm-get: -index reply lacked MIME end boundary (Thanks, KI).
+-Fixed bug in ezmlm-get: outformat error when using digest trigger messages
+ in dir/editor. (Thanks YG).
+-Fixed bug in ezmlm-clean: cp_setlocal wasn't called.
+-Improved ezmlmrc files so that digest links and dirs are not created for
+ on-digested lists. Decreases number of .qmail files.
+-Fixed bug in ezmlm-get: Headers from trigger message are no longer copied
+ to digest (but are still copied to -index/-get/-thread reply). (Thanks STH.)
+-Fixed ezmlm-0.53 bug in ezmlm-return. The "d..." file was the same for all
+ addresses of a pre-VERP bounce, resulting in only the first one being
+ processed correctly (sent to DJB).
+-Changed ezmlm-get to include dir/headeradd headers for digest. (Thanks PH.)
+-Changed ezmlm-get to send digest "To: list@list" from "list-digest@host".
+ This way, the list address is one of the "reply-to-all" addresses, just
+ as for list messages. (Thanks PH.)
+-Corrected ezmlmrc: in some places "d" was used for "n" switch resuling in
+ missing dir/text files for editing if editing was enabled and digest
+ were not. (Thanks JS.)
+-Corrected ezmlmrc/se/jp to add terminal ';' to list in ezmlm-issubn
+ lines. Caused trouble with strict /bin/sh as on FreeBSD. (Thanks STH.)
+-Corrected ezmlm-make man page to show that "digestcode" is optional.
+
+
+ezmlm-idx-0.30, 1998-03-25
+==========================
+-Fixed bug in continuation line handling for digest. In some circumstances,
+ continuations ended up with the wrong header. (Thanks SA).
+-Changed digest format to multipart/mixed as pine has trouble with an
+ encoded text/plain part first in multipart/digest (although this is
+ rfc2046-ok). (Thanks SA).
+-Updated FAQ, *.idx, and man pages for new functionality.
+-Changed subdb.a folding qputsubs.c into putsubs.c and passing a pointer
+ to the write function. Better and necessary to allow QP/base64 output by
+ the ezmlm-manage -list command.
+-Added ezmlm-warn -t switch to modify bounce time-out as well as moved the
+ compile-time default to idx.h (Thanks Mark Delany).
+-Added note on "make clean" to INSTALL/UPGRADE.idx (Thanks Peter Hunter).
+-Added support for message numbers in the prefix. This violates mail standards,
+ but is very popular in Japan. (Thanks KI for inspiring this.) ezmlm-idx-0.30
+ does prefix differently, so that it modifies the subject as little as possible
+ for compliance with IETF recs and rfcs. ezmlm-idx-0.23 when prefix was used,
+ used a processed and unfolded subject, which was less correct, and could cause
+ problems with very long subjects.
+-Changed MAXEDIT to 10k. This should accomodate all reasonable dir/text files.
+ A limit _is_ required (see FAQ: SECURITY).
+-Made any _user-generated_ commands case-insensitive throughout (ezmlm-get,
+ -manage, -request). Note: ezmlm-generated ones, such as "list-accept" are
+ still case-sensitive. (Thanks GS for reminding me.)
+-Separated ezmlm-make switches for SENDER checks. -u for posts, -g for archive.
+ Also changed names of other switches. -n for text file editing, -d for
+ digest list. ezmlm-manage edit is now -eE, but the old -dD is still accepted.
+-Modified most programs to service requests for both list and digest list,
+ depending on LOCAL. For ezmlm-warn a command line -d switch is used to
+ process digest bounces. Created copy.h/c as a general routine that
+ does encoding and on-the-fly substitution of <#l#> to the name of the list
+ being serviced. ezmlmrc modified to set up list appropriately and create
+ a digest list for switch -d. The very rudimentary digest list is always
+ called 'list-digest' for the list 'list' and lives as a subscriber and a
+ bounce dir in dir/digest. log.c modified to take the dir as an argument.
+ copy.c introduced. Can deal with encoding and substitution for <#l#>,
+ <#B#>, <#R#>.
+-Made dir/extra standard. All subscriber restriction (ezmlm-make -u) is
+ to accept addresses that are subscribers of either list or in dir/extra.
+-Added REMOVE as a forbidden subject in ezmlm-reject.
+-Added support for rejection based on message and message part MIME
+ Content-type. ezmlm-send can from composite MIME messages filter out
+ body parts based on content-type. Trailers are added as MIME parts
+ to composite MIME messages and in the Content-transfer-encoding of the
+ message for single body messages.
+-min and max message size restrictions moved from ezmlm-send/store to
+ ezmlm-reject.
+-Added support for optional base64 and quoted-printable encoding of trailer
+ and all outgoing ezmlm messages. The same encodings are accepted as input
+ for moderator comments and edited text files.
+-Added hash for threading due to inconsistent/incorrect handling of LWSP
+ by iso-2022-jp MUAs. Now threading works for rfc2047 encoded subjects.
+-Added support for rfc2047 encoded From: lines and continuation for From:
+ lines.
+-Moved relevant parts of idxsub.c into ezmlm-send and ezmlm-idx.
+-Added MIME en/decoding routines to support rfc2047 encoded subject lines.
+ Also, added code to remove redundant ESC sequences when unfolding headers
+ in iso-2022-jp* and iso-2022-cn* and iso-2022-kr. Only iso-2022-jp has been
+ tested.
+-Added ezmlm-idx -d switch to use date from 'Date:' header instead of the
+ qmail received line. For old archives processed through ezmlm-send to
+ re-archive. Remove (GMT), (PST), and DOW, and make 2-digit years xx where
+ xx >= 70 19xx and others 20xx.
+
+
+ezmlm-idx-0.231, 1998-03-02
+===========================
+-ezmlm-check.sh elsif -> elif.
+-Allowed ezmlm-make -a switch (was missing; Thanks MF).
+-Removed subject truncation for index: for prefixed lists it is used and
+rfc2047-encoded subjects are often longer.
+-Fixed idxsub.c bug (subject continuation lines skipped by ezmlm-idx if
+ 'Subject:' is after 'From:'). (Thanks, SOH.)
+
+
+ezmlm-idx-0.23, 1998-01-20
+==========================
+-ezmlm-check fixed to remove bash-specific pattern matching. (Thanks, VV).
+-ezmlm-both now makes completely functional list & digest list with digest
+ creation from dir/editor. If address is given, it becomes the owner, remote
+ admin, and a subscriber of both lists. By default, the remote admin is allowed
+ to get a subscriber list.
+-updated ezmlmrc.fr.
+-ezmlm commands now have alternates defined via idx.h, allowing aliases, rather
+ than replacement of command names in non-English domain.
+-Modified ezmlm-tstdig to run easily from within dir/editor and dir/manager.
+ Had to add dir/tstdig timestamp when run from dir/editor, to prevent triggering
+ a new digest while one is being made. Now no new request is issued within one
+ hour after the last one.
+ Changed ezmlmrc to make this default for digested lists.
+-New switches for ezmlm-make.
+-Added ezmlm-get -f and -t switches for easier use on the command line and
+ in dir/editor. Made it "context-sensitive" by testing LOCAL.
+-Via ezmlmrc added -q switch for processing commands to list-request,
+ a -3 hrs switch to configure ezmlm-tstdig in dir/manager, and some cleanup
+ in texts.
+-Modified ezmlm-make to fall back to system ezmlmrc files (with warning)
+ if the -c switch is used by no custom ezmlmrc file is found. This makes
+ it possible for a GUI to rely more on ezmlm-make.
+-Added ezmlm-request to redirect 'Subject:' line requests.
+-Added ezmlm-cron, a very restrictive crond interface enabling users
+ without direct cron access to generate digest trigger messages. Suitable
+ to be run from scripts for non-shell users as well. See ezmlm-cron.1.
+-modified ezmlmrc to set up sublists (-0 sublist@subhost), directories in
+ dir/modpost|modsub|remote with -789, and SENDER restriction on posts and
+ archive retrieval (-6 digest_dir). Doc'd in ezmlm-make.1.
+-modified ezmlm-make to allow </file#^5/> meaning -5 not defined/empty.
+-ezmlm-issubn -n[egate] switch to make 'blacklisting' of SENDERs easier.
+-ezmlm-get TOC loop starts at first message with the given subject, rather
+ than first message in range.
+-Added time and author to the subject index. The TOC now has author info.
+ Changes made so that the programs run fine with old or mixed old/new subject
+ index files.
+-removed == n == from rfc1153 digest messages.
+-Allowed for -dig.code[range]-targetlocal=targethost in ezmlm-get. Makes
+ it easier to trigger digests since SENDER "faking" is no longer required.
+-ezmlmrc changed to add 'Precedence: bulk' to dir/headeradd. For "vacation".
+-Added ezmlm-manage -edit and -edit.file actions. If the -d switch is
+ used, they allow remote admins to edit dir/text files.
+-Modified ezmlm-send to use the main list message number if the message
+ sender has the correct format and if the list is a non-archived sublist.
+-Added tosubs.c, putsubs.c, qputsubs.c for subscriber address output,
+ modified issub.c and subscribe.c, and put all into subdb.a. subscribe.h
+ modified to become the general header file for subscriber database interface.
+ issub() returns (char *)matching_address for compatibility with later packages.
+ Modified all programs interfacing with subscriber databases to use these
+ routines. In all a consistent interface. Using ezmlm with a different
+ subscriber database manager requires changes to these routines only.
+-Modified ezmlm-make and ezmlmrc to store all config info in dir/config, and
+ also read it from there if ezmlm-make is invoked in edit mode with the 
+ 'dir' argument only.
+-Fixed ezmlm-manage to make all output MIME using dir/charset (Thanks, SK).
+
+
+ezmlm-idx-0.221, 1998-01-01
+===========================
+-Fixed ezmlm-send bug causing problems with undefined SENDER.
+ (Thanks, Sadhu, TR).
+-Fixed ezmlm-make lock file name bug (Thanks, SOH).
+
+
+ezmlm-idx-0.22, 1997-12-10
+==========================
+-Added 'make clean' and TARGETS. (Thanks, TF).
+-man page and FAQ updates. Some of FAQ info moved into a 'USAGE' section
+ of the man pages.
+-Bug fixed: caused ezmlm-make to ignore the -c switch.
+-Added -3456-78-90 switches to ezmlm-make. They take a command line argument
+ and substitute it for <#3#>, <#4#>, etc, in ezmlmrc.
+-Added code to ezmlm-gate to enable it to pass switches to both ezmlm-send
+ and ezmlm-store (which have and need to keep non-overlapping switches).
+-Added multi-moddir capability to ezmlm-gate, which now becomes the
+ standard tool for SENDER-restricting posts. ezmlm-store does this the
+ slightly more involved but much more secure way.
+-Added -C no copy to sender switch to ezmlm-send. Useful for small lists.
+-Added -d digdir switch to ezmlm-get. When specified, SENDER is accepted
+ for -get/thread/index only if a subscriber of the main list or the list
+ based in digdir.
+-ezmlm-manage sends help in reply to a specific list-help request, even if
+ the list is not public.
+-Added ezmlm-send -cC switches controlling post to self (Thanks TF, JS).
+-Modified ezmlmrc to add a few switches: -t (trailer), -f (prefix),
+ -l (subscriber list to remote admins, if any).
+-Added ezmlm-tstdig which tests if a specified number of messages, message
+ body bytes, or time have passed since the last digest creation. Added
+ support for this in ezmlm-send and ezmlm-get.
+-Added ezmlm-issub, and ezmlm-issubn (tests if SENDER is in any of a number
+ of subscriber databases). Thanks Mark Delany for the original ezmlm-issub.
+-Modified issub.c and subscribe.c to make subscriber database storage
+ and comparisons case-insensitive (backwards compatible).
+-Removed ezmlm-warn from ezmlmrc setup of DIR/bouncer. This helps big
+ lists with lots of bounces.
+-Added locking of list dir to ezmlm-make when used in -e [edit] mode.
+-Bug: ezmlm-send would make all subjects 'Re: something' even if they were
+ not replies for non-indexed lists with a subject prefix. Thanks, Ximenes
+ Zalteca (ximenes@mythic.net) for reporting this.
+
+
+ezmlm-idx-0.21, 1997-11-15
+==========================
+-Slightly improved ezmlm-both (now works even for non-remote admin setups).
+ It's still very pedestrian.
+-Added a few rfc1893 error codes.
+-Added -rR option to ezmlm-clean to control sender notification of time-out.
+-Bug: in ezmlm-idx missing message->continue (was break). Caused abort if
+ archive messages are missing (uncommon, but possible if user decides to
+ delete a few). (Tanks MF).
+-More strict on Re[...]: in idxsub: '...' has to be digits and ']' is
+ required. ':' is optional for broken MUAs. Swedish 'Ang:' accommodated.
+-Added 'Content-Disposition:' header to digest messages from ezmlm-get per
+ rfc2183 (Thanks, SK). Removed Content-Type: message/rfc822 txt, since it
+ is the default.
+-Updated man pages and FAQ for new features.
+-ezmlm-send no longer requires DIR/num. If it's not there, it's assumed to
+ be zero and created. This helps ezmlm-make -e.
+-Added ezmlm-make '-e' 'edit' switch. Modified ezmlmrc accordingly.
+-Added ezmlm-check script to help diagnose ezmlm list setup errors. Need to
+ add checks for DIR/text messages.
+-ezmlm-store now pipes the message to ezmlm-send if DIR/modpost is not present.
+ Removing DIR/modpost will make a message moderated list non-moderated.
+-Added ezmlm-gate which pipes to ezmlm-send/ezmlm-mode depending on membership
+ in an address database. This is now a installed C program.
+-ezmlm-get no longer requires index to be executable. Also, improved handling
+ of missing index files in indexed archive (no FATAL error, except for master
+ subject in 'thread' and that should be fixable ...). Added new format specifier
+ 'n' for 'not threaded'. Affects -get and -dig.
+-Bug: Fixed ezmlm-idx to create index via temp file (indexn) and chmod to 700.
+ (Thanks Toshinori Maeno).
+-Removed charset from multipart/digest header (Thanks SK).
+-Bug: Added <#D#> to ezmlm-warn line under </owner/> in ezmlmrc.
+
+
+ezmlm-idx-0.20, 1997-10-30
+==========================
+-Requests to ezmlm-moderate to accept/reject already processed messages
+ returns an error ONLY if the requested action is different from the actual
+ fate of the message. Keeps moderators happier in multi-moderator lists,
+ without info loss, with less traffic.
+-A moderator's (un)subscribe CONFIRM reply results in target notification,
+ only if the target's status changed. Multiple moderators confirming no
+ longer yields multiple messages to target.
+-ezmlm-manage copy() takes 2 arguments, the file name and a fall-back file
+ name in case the first file does not exist. CONFIRM requests to moderators
+ use text/mod-(un)sub-confirm (fall back: text/(un)sub-confirm). ezmlmrc
+ changed to set these up.
+-Added MIME header to ezmlm-get -index response (to get DIR/charset effect).
+-Updated docs and FAQ.idx.
+-Pre-release compile testing on several platforms. (Thanks YG, ARB, MF, SK).
+-Added DIR/msgsize. If it exists and is not 0, ezmlm-send and ezmlm-store will
+ bounce posts in excess of 'msgsize' bytes body size.
+-Fixed ezmlm-clean to that when multiple messages time out, the message-id:s
+ are different.
+-ezmlm-clean and ezmlm-moderate now by default return the post as a
+ MIME attachment. Use '-M' for old format.
+-Rewrote ezmlm-make to work from the ezmlmrc template file for better
+ and easier customization. Changed moderator rejection comment tag to '%%%'
+ from '###' to support '#' as a comment character in ezmlmrc. '###' still
+ works.
+-Added DIR/sequence for optional message number header, and DIR/charset for
+ character set. Thanks, SK. Default Compiled is now US-ASCII, as per rfc2046.
+-Added TEST.idx, SECURITY.idx.
+-ezmlm-get allows remote admins archive access even for non-public lists. The
+ ezmlm-get -pP switches override DIR/public effects.
+-ezmlm-manage still does moderator-initiated (un)sub when DIR/public is absent.
+-Fixed bug: Updated MIME to rfc2046. With this the ezmlm-get 'm' format is no
+ longer rfc1153-like. 'r' still gives rfc1153. Moderation attachments are now
+ message/rfc822. Hopefully, the pine attachment viewer will catch up.
+ Thanks, YG [and Mutt developers] for teaching me the errors of my ways. Also,
+ see ezmlm-get.1(BUGS).
+-ezmlm-manage gives moderator help and does list if target is moderator,
+ rather than sender. Allows moderator to access from secondary account (to
+ which mail sent to the primary account is forwarded).
+-ezmlm-store checks DIR/modpost for leading '/' and if found assumes that the
+ first line is the base directory for message moderators.
+-ezmlm-manage checks DIR/modsub and DIR/remote contents for a leading '/'.
+ If found, it is assumed to be the base-dir for moderators. NB: if both
+ DIR/modsub and DIR/remote have entries, only DIR/modsub is used, i.e. it
+ is not possible to have different dbs for remote admin and (un)sub mods.
+-Modified ezmlm-manage to add separate moderator confirm commands (tc/vc)
+ to allow also subscription moderator via forwarded mail. This is essentially
+ a total rewrite of ezmlm-manage. Also, the -S and -U switches were added to
+ allow optional omission of the user confirm phase for (un)subscribe.
+ USE OF THESE SWITCHES DRASTICALLY DECREASES SECURITY, except for
+ moderated lists. Since there have been many request for this (and it
+ seems reasonable in some circumstances) these options have been added.
+ Make sure you understand the consequences if you use them.
+-Fixed bug: Added exit code to ezmlm-moderate. Thanks BG.
+-Added include for sys/types.h to ezmlm-clean.c and ezmlm-store.c, changed
+ ulong/uint to unsigned long/int, removed void from empty parameter lists for
+ two functions, all to compile on BSDI 2.1 and Sun. Thanks, ARB and TE.
+-Combined ezmlm-mod with ezmlm-idx and fused mod.h into idx.h.
+
+ezmlm-idx-0.12, 1997-09-10
+==========================
+-Cleanups to allow compile on SGI.  Thanks MF.
+
+ezmlm-idx-0.11, 1997-09-07
+==========================
+-Fixed bug: ezmlm-idx failed to check for error return from issub.c.
+-Fixed bug: ezmlm-idx would crash on empty subjects.
+-Moved out command names and lengths to idx.h making changing to other
+ languages easier. Please use this only for totally local lists.
+-Added -cC switches to ezmlm-get to disable all but -dig. Useful for secret
+ lists that are archived and digested.
+-Fixed bug: -dig would give "nothing to digest" with only 1 new message. Now
+ it sends that message out (previously, this message would have been in the
+ next digest as soon as more messages had arrived).
+-Added DIR/prefix. If it exists, it is prefixed to outgoing subjects. Not
+ added to archive/index. ezmlm-idx deals with it. 'Re: ' is prefixed for
+ replies, since we use reply-parsed subject in ezmlm-send. A lot of pain for
+ little gain, but for some reason this seems to be a 'must'.
+-Changed idxsub routines to return 1 if reply indicators were fund, 0 else.
+-Changed idxthread routines from int to void (don't return anything).
+-Split out errtxt.h from idx.h in anticipation of ezmlm-mod.
+-changed ezmlm-send to honor 'mailing-list' in headerremove.
+-fixed ezmlm-make to deal with non-archived and non-indexed lists and to
+ point out that -index works in sets of 100.
+-ezmlm-get error msg on non-sub -thread request fixed.
+-Added DIR/text/trailer. If it exists, it is added to all messages, as
+ suggested by Fred B. Ringel. It is not copied to the archive.
+-ezmlm-make changed to adapt text/bottom to archived/indexed status of list.
+-Fixed usage text for ezmlm-send.
+-'Reply-To:' header from messages is included in standard MIME digests
+ (after reading Dan's comments on Reply-To munging). rfc1153 doesn't allow it.
+-Changed ezmlm-get.c default to NOT restrict get/index/thread to subscribers.
+-Fixed ezmlm-get.1 to correctly reflect effect of -s/-S switches.
+-Fixed FAQ and added more info.
+
+ezmlm-idx-0.10, 1997-08-01
+==========================
+-Added several items to FAQ.
+-Made digestcode case-insensitive.
+-Fixed format bugs causing trouble with PINE (Thanks Fred B. Ringel).
+-Improved handling of missing index file in indexed archives.
+-Added info on -get and -index restrictions to text/bottom.
+-Added FAQ.idx (a little silly at the moment ;-).
+-Added CHANGES.idx.
+ Updated README.idx, UPDATE.idx, ezmlm.5 and other man pages.
+-Added text/digest to allow standard info to be added to the list. A place
+ holder is put in by ezmlm-manage, since the exact info depends on the
+ digest list.
+-Moved all error messages into defines in idx.h to support alternative
+ languages.
+-folded subject indexing into ezmlm-send.
+-ezmlm-get.c: Added -s (default) restricting -get, -index, -thread to
+ subscribers. -S on the command line removes this restriction.
+-Added support for the horrid German 'Aw:' and 'Aw[..]:' replies.
+-All linear white space is converted to a single ' ' in subject indexing.
+ Existing archives should be re-indexed using the new ezmlm-idx. Probably rarely
+ needed, but it's more correct.
+-Added support for subject continuation lines (rfc822). Probably very rarely
+ needed.
+-Limited '-thread' to +/- 2000 messages (defines in ezmlm-get.c) from the
+ "master message" to limit resource use on large archives.
+-Changed limit for '-get' to 50 messages, '-index' to 20 sets (2000 subjects).
+-Added digestcode support to ezmlm-make as a 5th argument. Default=blank.
+-Added arguments to digest option. If one is given, digesting starts with that
+ message and dignum/digissue are used/updated. If both are given, dignum and
+ digissue are not updated and the issue number is the number of the first
+ message in the archive.
+-Added digest support. Enabled by specifying a 'digestcode'last on the
+ ezmlm-get command line.
+-Removed the now redundant -fF (filter) and -qQ (quote) options.
+-Changed message format for returned messages allowing rfc1153, MIME
+ multipart/digest, or MIME multipart/digest ordering and retaining only headers
+ as per rfc1153, with the addition of 'Content-Type:' to better support
+ alternative character sets. The latter format is the default.
+-Fixed bug in -thread: search for messages was set to start at the beginning
+ of the index containing the "master message", rather than at the beginning of
+ the archive.
+-Fixed bug: A few stralloc* were incorrectly stdio* in sindex.c.
+
+ezmlm-idx-0.02, 1997-07-02
+==========================
+-Adapted to changes in ezmlm-0.52 => ezmlm-0.53.
+
+ezmlm-idx-0.01, 1997-06-15
+==========================

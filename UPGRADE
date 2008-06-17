@@ -3,9 +3,9 @@ comes with NO WARRANTY.
 
 This file is for upgrading from earlier version of ezmlm-idx/mod. If you use
 ezmlm-0.53 but have not installed a previous version of ezmlm-idx,
-see INSTALL.idx. For details on what's new in this version, see CHANGES.idx.
+see INSTALL. For details on what's new in this version, see CHANGES.
 
-1. Proceed as per INSTALL.idx.
+1. Proceed as per INSTALL.
    NOTE: If you follow the test instructions in INSTALL of ezmlm-0.53 after
    adding ezmlm-idx, step 6 will fail. Before this step, edit
    ~/testlist/editor and remove the ezmlm-reject line. 
@@ -50,7 +50,7 @@ to use ezmlm-gate (sender check/moderation combination) using only a single
 directory, add the same directory to the command line a second time. If you
 do not do this, all messages will be moderated, i.e. no major problem. No
 other changes are required, but you may want to use some of the new features
-(see CHANGES.idx).
+(see CHANGES).
 
 See below to migrate customized ezmlmrc files.
 
@@ -59,7 +59,7 @@ format will still work, but only the new format can be used with WWW archive
 access.
 
 To enable WWW archive access for your list(s) see the "Optional" section in
-INSTALL.idx.
+INSTALL.
 
 If you used MySQL support, you need to update the tables. A few new fields
 have been added for performance moitoring and billing. sub_mysql/to40x will
@@ -152,7 +152,7 @@ ezmlmrc is upgraded from ezmlm-idx-0.31x/32x, but the changes are not required
 for using the list.
 
 The changes from ezmlm-idx-0.30x are minimal, but fix a couple of bugs, see
-CHANGES.idx). If you have custom ezmlmrc files and wish to update them,
+CHANGES). If you have custom ezmlmrc files and wish to update them,
 do the following:
 
     First create a diff between the old ezmlmrc distribution and the

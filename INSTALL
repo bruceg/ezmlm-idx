@@ -1,52 +1,235 @@
-Like any other piece of software (and information generally), ezmlm
+Like any other piece of software (and information generally), ezmlm-idx
 comes with NO WARRANTY.
 
+This file is for installing ezmlm-idx for the first time on a system
+that may have ezmlm-0.53. If you're already using ezmlm-idx, see
+UPGRADE as well.
 
-Things you have to decide before starting:
+HOW TO BUILD, TEST, AND INSTALL:
 
-* Where programs will be installed, normally /usr/local/bin/ezmlm. To
-change this directory, edit conf-bin now.
+ 1. Expand the ezmlm-idx-x.y.z.tar.gz archive:
+	% zcat ezmlm-idx-x.y.z.tar.gz | tar -xvf
+	% cd ezmlm-idx-x.y.z
 
-* Where man pages will be installed, normally /usr/local/man. To change
-this directory, edit conf-man now.
+ 2. Check all the settings in the conf-* files.  In particular:
+ 
+    Put the desired ezmlm bin path into conf-bin. Default
+    "/usr/local/bin/ezmlm", but for e.g. rpm packages it's "/usr/bin".
+    Adjust conf-man accordingly.  For installations (e.g. Debian) where
+    qmail is not in "/var/qmail", adjust conf-qmail.
 
-* Where the qmail home directory is, normally /var/qmail. To change this
-directory, edit conf-qmail now.
+    Put the desired configuration path into conf-etc.  Default "/etc/ezmlm".
+
+    Put the desired path for plugins into conf-lib.  Default
+    "/usr/local/lib/ezmlm".
+
+    If your 'crontab' binary does not live in '/usr/bin' edit 'conf-cron'
+    now to reflect the correct path.
+
+ 3. RDBM Support.
+
+    MySQL:
+    If you want to compile ezmlm with MySQL support (http://www.mysql.com),
+    edit conf-cc (include files) and conf-ld (library paths) to reflect
+    your MySQL installation (see MySQL documentation).  The package
+    should work with MySQL version 3.22 and up.
+
+    PostgresSQL:
+    If you want to compile ezmlm with PostgreSQL support
+    (http://www.postgreSQL.org), edit conf-cc (include files) and
+    conf-ld (library paths) to reflect your PostgreSQL installation (see
+    PostgreSQL documentation).
+
+    Others:
+    If you're familiar with C programming for the particular RDBMS, it will
+    take you no more than a few hours to adapt the files in sub-mysql.c (see
+    docs there). Create a new sub-????.c and send it to
+    bruce@untroubled.org for inclusion into the package.
+
+ 4. Compile the programs and man pages:
+       % make clean
+       % make; make man
+    If you want to add MySQL support, run:
+       % make mysql
+    If you want to add PostgreSQL support, run:
+       % make pgsql
+
+ 5. To use a language other than US English as the default for list
+    texts, edit the ``conf-lang'' file and change the first line to one
+    of the ISO language designations found in the ``text'' subdirectory.
+
+    NOTE: A normal ``make'' sets up the en_US version (as before).  All
+    known language files are included with ezmlm-idx.  If your language
+    is not present, please feel free to contribute one (translate the
+    files in text/en_US and lang/en_US.*).
+
+ 6. Test the programs:
+	From the build directory, execute ezmlm-test:
+		% ./ezmlm-test
+
+	ezmlm-test will set up a test list, execute the various programs, and
+	test most functions of most programs.
+
+	Occasionally, ezmlm-test fails. This is usually due to problems with
+	ezmlm-test on your particular platform/installation and not due to
+	problems in ezmlm-idx. Please report problems with ezmlm-test, and if
+	you can, patches for correcting it.
+
+ 7. To test the SQL functions, set up a mysql database ``ezmlm'' accessible
+    to a user at this host (see MySQL/PostgreSQL docs).  The ezmlm-make
+    program will create the necessary tables (see man page) but you must
+    first create a database and a user with sufficient access.  Running
+    ezmlm-mktab-mysql or ezmlm-mktab-pgsql is no longer necessary.
+
+    Now execute:
+	% ./ezmlm-test -s mysql -l user -p passwd -h host
+    or:
+	% ./ezmlm-test -s pgsql -l user -p passwd -h host
+
+    This will test the SQL part of the binaries. ``host'' defaults to
+    ``localhost'' and ``user'' defaults to ``ezmlm''. There is no
+    default for the SQL type or password and indeed ezmlm-test uses
+    these switch to know to work with SQL support. Note that -p has to
+    be specified even if the database has no password. In this case, use
+    -p ''.
+
+ 8. Copy binaries, man pages, and modules to the correct locations.
+	# make setup
+	(or copy manually).
+    If you'd like to retest the installation, run ezmlm-test as before.
 
 
-How to install:
+ 9. Your lists will run as before. To enable ezmlm-idx features like
+    threaded archive access, digest, etc, use:
 
- 1. Compile the programs:
-       % make
- 2. Format the man pages:
-       % make man
- 3. Install the programs and man pages:
-       # make setup
+	% ezmlm-make -e [switches] DIR dot local host
+
+    where ``DIR dot local host'' are the arguments used to create the list,
+    and ``switches'' are desired options (see ezmlm-make man page). Future
+    adjustments can be made with:
+
+	% ezmlm-make -+ [switches] DIR
+
+    where ``switches'' are desired _changes_ from the previous configuration.
+
+------ OPTIONAL ------
+
+10. If you want qmail to add a subscriber-adapted List-Unsubscribe header to
+    outgoing messages, apply the enclosed qmail-verh-0.07.tar.gz patch to
+    qmail-1.03 and follow the documentation in that archive. This is a
+    failsafe way in which to unsubscribe, even if subscriber or list have
+    changed address.
+
+11. If you want to use large lists with custom QMQP servers, apply the
+    qmail-qmqp.tar.gz patch per instructions in the archive. You need this
+    only if you want per-[sub]list control over the QMQP servers used.
+ 
+12. (This can be done later if you decide to use ezmlm-cron(1). It is not
+    needed for normal lists and mainly for ``legacy installations''.)
+    The ezmlm-cron(1) program can be run SUID/SGID a special user with crond
+    access. This allows your users to use ezmlm-cron to generate digest
+    trigger messages, without being able to directly use crond. To enable
+    this feature create a special user, e.g. "ezmlm". Then:
+
+	# chown ezmlm /usr/local/bin/ezmlm-cron
+        # chmod 4555 /usr/local/bin/ezmlm-cron
+
+    and create ~ezmlm/ezcronrc as described in the ezmlm-cron(1) man
+    page. You may need to modify the path in the commands above if
+    you have installed ezmlm in a non-default location. ezmlm-cron refuses
+    to run SUID root.
+
+    This user can read its crontab file which may contain digest codes from
+    other users. Thus, this should be a reserved user name, not one of an 
+    ordinary user.
 
 
-How to test:
+13. If you would like to make your archived lists available via the World
+    Wide Web, you must install the ezmlm-cgi program which comes with
+    ezmlm-idx versions starting with ezmlm-idx-0.40. When ezmlm-idx is compiled
+    with the 'make' command, ezmlm-cgi is compiled also, however, it is not
+    installed. Installation of the program allows one to view the archives by
+    date, thread and author.  See, ezmlm-cgi.1 for more details.
 
- 4. Make sure ezmlm-make is in your path. Create a mailing list:
-       % ezmlm-make ~/testlist ~/.qmail-testlist me-testlist host
-    Replace ``me'' and ``host'' with your e-mail address.
- 5. Subscribe yourself to the list manually:
-       % ezmlm-sub ~/testlist me@host
- 6. Send a message to the list:
-       % echo subject:testing | qmail-inject me-testlist@host
-    You should receive a copy of the message at me@host.
- 7. View the list membership:
-       % ezmlm-list ~/testlist
-    You should see just one line, containing your address.
- 8. Unsubscribe yourself through e-mail:
-       % qmail-inject me-testlist-unsubscribe@host < /dev/null
-    When you receive the confirmation number, reply to complete your
-    unsubscription. Use ezmlm-list to check that the list is empty.
- 9. Retrieve the first message from the archive:
-       % qmail-inject me-testlist-get.1@host < /dev/null
-    You should receive a copy of your subject:testing message.
+14. ezmlm-cgi must be installed where all other common gateway interface
+    ("CGI") programs are installed on your system. For most Un*x based system,
+    this will be in a directory titled 'cgi-bin' which is also, generally
+    speaking, in the root directory for your web server. For example, for apache
+    installations where /usr/local/apache is the root directory for the web
+    server, the directory /usr/local/apache/cgi-bin is where globally availably
+    CGI programs are located. You must copy the ezmlm-cgi program to this
+    location:
 
+	% cp /ezmlm-0.53/ezmlm-cgi /usr/local/apache/cgi-bin
 
-That's it! To report success:
+15. ezmlm-cgi should be installed SUID root. Examine the source code to make
+    yourself comfortable that the program is safe. After copying the program to
+    the 'cgi-bin' directory, change the ownerships and permissions as follows:
+
+	% chown root.root ezmlm-cgi
+	% chmod 4755 ezmlm-cgi
+
+    If you are using ezmlm-cgi for a single user, you can install it SUID that
+    user and place the config file (see below) as .ezcgirc in the same directory
+    as the program. If the list archive is readable to the httpd user, you do
+    not have to install it SUID at all (see man page for details).
+
+16. ezmlm-cgi uses a configuration files called 'ezcgirc' which must reside
+    in the /etc/ezmlm directory. First create the directory:
+
+	% mkdir /etc/ezmlm
+
+    Then use your favorite text editor to create the ezcgirc file. 
+
+    The file parameters are set forth on the first line. Comments are
+    allowed if preceded by the '#' in position 1. Lists are input by number
+    which is an arbitrary identifier with the exception of list '0' which is the
+    default list shown on the web page. As an example, the following utilizes a
+    list 'test@example.com' which is owned by the 'alias' user with a UID of
+    7827. The list resides in the directory '/var/qmail/alias/test' and its home
+    page is at 'http://www.example.com/test'. With the foregoing setup, the
+    ezcgirc file's contents are as follows:
+
+# Format for ezcgirc file
+#listno;uid;listdir;listaddr;buttonbar;charset;style;bannerprog
+0;7827;/var/qmail/alias/test;test@example.com;[Home]=http://www.example.com/test
+
+    Note there are no entries for 'charset', 'style' and 'bannerprog' Where
+    no entries are made, the default variables are assumed. The above
+    configuration assumes that the character set 'iso-8859-1' and that no
+    style sheet is used. Since formatting is largely controlled by the
+    style sheet, the output doesn't look exciting on a GUI browser. Start with
+    ezcgi.css in the distribution, and modify to taste. See www.ezmlm.org
+    for URLs to archives using different style sheets/banners.
+
+17. Finally, before accessing the list via the web, you must archive any
+    existing list and add an entry to listdir/editor to archive future posts.
+    You must also run ezmlm-idx (first see man pages for both programs):
+	
+	% ezmlm-idx DIR
+	% ezmlm-archive -c DIR
+
+18. For any existing lists which you would like to archive,
+    add the following line after the call to ezmlm-send in listdir/editor:
+
+	| /usr/local/bin/ezmlm/ezmlm-archive listdir/DIR || exit 0
+
+    This is automatically done when running:
+
+	% ezmlm-make -+i DIR
+
+19. To display your web based archive, open your browser as follows:
+
+	% lynx http://localhost/cgi-bin/ezmlm-cgi
+
+ ------------- End Optional items -----------   
+
+20. That's it! To report success (helps to track platform-specific problems):
+
        % ( echo 'First M. Last'; cat `cat SYSDEPS` ) \
-         | mail djb-qst@koobera.math.uic.edu
+         | mail idxtracker@ezmlm.org
+
 Replace First M. Last with your name.
+
+Send bugs reports, ideally with patch, to 'ezmlm@list.cr.yp.to'.
+

@@ -19,7 +19,7 @@ logging is not supported, and central admin of list clusters is not
 supported. Still, the current support covers the functionality used in
 99% of lists.
 
-Most of this information is available in FAQ.idx.
+Most of this information is available in FAQ.
 
 If you are interested in contributing/testing a subscriber db interface
 for another SQL server, please see README.std and the routines here,

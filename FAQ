@@ -643,7 +643,7 @@
         ezmlm-idx releases are numbered ``ezmlm-idx-0.xy[z]''.  Versions
         with the same ``x'' are backwards compatible. A change in ``x''
         signifies major changes, some of which _m_a_y require list changes
-        (see UPGRADE.idx). However, backwards compatibility with
+        (see UPGRADE). However, backwards compatibility with
         ezmlm-0.53 list will be maintained. Thus, this is an issue only
         if you are already using an older version of ezmlm-idx.
 
@@ -661,7 +661,7 @@
 
         To get the most solid version, get the highest 3-digit number,
         i.e. a bug fix. If you already run a version in that series and
-        a new bug fix is released, see CHANGES.idx to determine if it is
+        a new bug fix is released, see CHANGES to determine if it is
         worthwhile to upgrade. Most bugs so far have been relevant only
         when using lists in very unusual ways or with rarely used
         options.
@@ -692,7 +692,7 @@
         ezmlmrc(5) files contain some release-specific configurations.
         Do not use a later file (other than from bug fix releases) with
         an earlier version of the programs. It is usually OK to use a
-        version from an earlier package (see UPGRADE.idx), but some new
+        version from an earlier package (see UPGRADE), but some new
         functionality may nor be available.
 
         To contribute an ezmlmrc(5) file in a new language, start with
