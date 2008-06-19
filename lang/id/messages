@@ -32,7 +32,7 @@ ERR_DELETE|unable to delete <#1#>|tidak bisa menghapus <#1#>
 ERR_DONE|message already successfully processed by this list|pesan sudah diproses oleh system
 ERR_DOW|single comma-separated digits only for day-of-week|sebuah separasi-koma hanya untuk hari-dalam-seminggu
 ERR_EDSIZE|Maximum edit file size exceeded (#5.6.0)|Editing melewati batas maksimum file size (#5.6.0)
-ERR_EMPTY_DIGEST|nothing to digest|tidak yang untuk dirangkum
+ERR_EMPTY_DIGEST|nothing to digest|tidak ada yang dirangkum
 ERR_EMPTY_LIST|no messages in archive|tidak ada pesan di archive
 ERR_ENDTAG|tag lacks /> end marker|tag kurang tanda akhir />
 ERR_EUID|effective user id not found|user id efektif tidak ditemukan
@@ -106,7 +106,7 @@ ERR_SLASH|dir and dot must start with slash|dir dan dot harus dimulai dengan gar
 ERR_STAT|unable to stat <#1#>|tidak bisa untuk stat <#1#>
 ERR_SUBCOMMAND|Sorry, I don't accept commands in the subject line. Please send a message to the -help address shown in the the ``Mailing-List:'' header for command info (#5.7.0)|Maaf, Saya tidak menerima perintah di baris Subjek. Harap kirim pesan ke alamat -help yang ditampilkan diheader ``Mailing-List:'' untuk keterangan perintah (#5.7.0)
 ERR_SUBLIST|sublist messages must have a Mailing-List header (#5.7.2)|pesan sublist harus punya Mailing-List header (#5.7.2)
-ERR_SUBSCRIBER_CAN|only subscribers can <#1#> (#5.7.1)|hanya pelanggan bisa <#1#> (#5.7.1)
+ERR_SUBSCRIBER_CAN|only subscribers can <#1#> (#5.7.1)|hanya pelanggan yang bisa <#1#> (#5.7.1)
 ERR_SUBST_UNSAFE|Sorry, substitution of target addresses into headers with #A# or #t# is unsafe and not permitted.|Maaf, penggantian alamat target menjadi header dengan #A# atau #t# tidak aman dan tidak diijinkan.
 ERR_SUB_NOP|target is already a subscriber|target sudah menjadi pelanggan
 ERR_SUID|Sorry, I won't run as root|Maaf, Saya tidak akan berjalan sebagai root
