@@ -21,6 +21,8 @@ release.
 ezmlm-idx-7.0.1, ????-??-??
 ===========================
 
+- Added support for decoding sender addresses mangled by BATV prvs.
+
 ezmlm-idx-7.0.0, 2008-06-16
 ===========================
 

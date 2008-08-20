@@ -17,4 +17,24 @@ ${EZBIN}/ezmlm-manage "$DIR" </dev/null >"$ERR" 2>&1 || \
 	fatal "ezmlm-manage failed"
 checkenv decode-SRS1 "$LOC-return-@$HOST" "xyzzy@host"
 
+SENDER="prvs=110def123=xyzzy@host"
+${EZBIN}/ezmlm-manage "$DIR" </dev/null >"$ERR" 2>&1 || \
+	fatal "ezmlm-manage failed"
+checkenv decode-prvs1 "$LOC-return-@$HOST" "xyzzy@host"
+
+SENDER="prvs=2110def123=xyzzy@host"
+${EZBIN}/ezmlm-manage "$DIR" </dev/null >"$ERR" 2>&1 || \
+	fatal "ezmlm-manage failed"
+checkenv decode-prvs2 "$LOC-return-@$HOST" "xyzzy@host"
+
+SENDER="prvs=xyzzy=110def123@host"
+${EZBIN}/ezmlm-manage "$DIR" </dev/null >"$ERR" 2>&1 || \
+	fatal "ezmlm-manage failed"
+checkenv decode-prvs3 "$LOC-return-@$HOST" "xyzzy@host"
+
+SENDER="prvs=xyzzy=2110def123@host"
+${EZBIN}/ezmlm-manage "$DIR" </dev/null >"$ERR" 2>&1 || \
+	fatal "ezmlm-manage failed"
+checkenv decode-prvs4 "$LOC-return-@$HOST" "xyzzy@host"
+
 ${ECHO} "OK"
