@@ -56,12 +56,12 @@ HOW TO BUILD, TEST, AND INSTALL:
 
  5. To use a language other than US English as the default for list
     texts, edit the ``conf-lang'' file and change the first line to one
-    of the ISO language designations found in the ``text'' subdirectory.
+    of the ISO language designations found in the ``lang'' subdirectory.
 
     NOTE: A normal ``make'' sets up the en_US version (as before).  All
     known language files are included with ezmlm-idx.  If your language
     is not present, please feel free to contribute one (translate the
-    files in text/en_US and lang/en_US.*).
+    files in lang/en_US).
 
  6. Test the programs:
 	From the build directory, execute ezmlm-test:
