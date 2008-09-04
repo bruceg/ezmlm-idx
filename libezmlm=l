@@ -73,7 +73,6 @@ hdr_subject.lo
 hdr_transferenc.lo
 idxthread.lo
 lock_ex.lo
-lock_exnb.lo
 lockfile.lo
 log.lo
 makehash.lo
