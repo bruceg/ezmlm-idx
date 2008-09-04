@@ -107,6 +107,7 @@ stralloc quoted = {0};
 stralloc msgnum = {0};
 stralloc num = {0};
 stralloc subject = {0};
+stralloc author = {0};
 
 /* for copy archive */
 stralloc archdate = {0};
@@ -675,18 +676,19 @@ void digest(msgentry *msgtable,
           if (!stralloc_cats(&line,"\t")) die_nomem();
           if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msg))) die_nomem();
           if (!stralloc_append(&line," ")) die_nomem();
-          if (!stralloc_cats(&line,MSG(TXT_BY))) die_nomem();
-          if (!stralloc_cats(&line,": ")) die_nomem();
           if (pmsgt->authnum) {
+	    author.len = 0;
 	    cp = authtable[pmsgt->authnum - 1].auth;
-	    len = authtable[pmsgt->authnum - 1].authlen;
+	    len = authtable[pmsgt->authnum - 1].authlen - 1;
 	    if (len > HASHLEN) {
-              if (!stralloc_catb(&line,cp + HASHLEN + 1,
+              if (!stralloc_catb(&author,cp + HASHLEN + 1,
 		len - HASHLEN - 1)) die_nomem();
 	    } else
-	      if (!stralloc_catb(&line,cp,len)) die_nomem();
-	  } else
-            if (!stralloc_cats(&line,"\n")) die_nomem();
+	      if (!stralloc_catb(&author,cp,len)) die_nomem();
+	    if (!stralloc_0(&author)) die_nomem();
+	  }
+          if (!stralloc_cats(&line,MSG1(TXT_BY,author.s))) die_nomem();
+	  if (!stralloc_append(&line,"\n")) die_nomem();
           code_qput(line.s,line.len);
         }
         pmsgt++;

@@ -153,7 +153,7 @@ SUB_USR_UNSUBSCRIBE|confirm unsubscribe from <#L#>@<#H#>|konfirm unsubscribe dar
 SUB_WARNING|Warning from <#L#>@<#H#>|Peringatan dari <#L#>@<#H#>
 SUB_WELCOME|WELCOME to <#L#>@<#H#>|Selamat Datang di <#L#>@<#H#>
 TXT_ADMINISTRIVIA|Administrivia:|Administratif:
-TXT_BY|by|oleh
+TXT_BY|by: <#1#>|oleh: <#1#>
 TXT_EDIT_END|%%% END OF TEXT FILE|%%% AKHIR DARI TEXT FILE
 TXT_EDIT_START|%%% START OF TEXT FILE|%%% AWAL DARI TEXT FILE
 TXT_LISTMEMBERS|Subscribers to this list are:|Pelanggan list ini adalah:

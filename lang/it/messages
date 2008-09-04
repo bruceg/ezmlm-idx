@@ -153,7 +153,7 @@ SUB_USR_UNSUBSCRIBE|confirm unsubscribe from <#L#>@<#H#>|conferma la cancellazio
 SUB_WARNING|Warning from <#L#>@<#H#>|Avvertimento da <#L#>@<#H#>
 SUB_WELCOME|WELCOME to <#L#>@<#H#>|BENVENUTO in <#L#>@<#H#>
 TXT_ADMINISTRIVIA|Administrivia:|Administrivia:
-TXT_BY|by|da
+TXT_BY|by: <#1#>|da: <#1#>
 TXT_EDIT_END|%%% END OF TEXT FILE|%%% FINE DEL TESTO
 TXT_EDIT_START|%%% START OF TEXT FILE|%%% INIZIO DEL TESTO
 TXT_LISTMEMBERS|Subscribers to this list are:|Gli iscritti alla lista sono

@@ -153,7 +153,7 @@ SUB_USR_UNSUBSCRIBE|confirm unsubscribe from <#L#>@<#H#>|bevestig opzeggen van <
 SUB_WARNING|Warning from <#L#>@<#H#>|Waarschuwing van <#L#>@<#H#>
 SUB_WELCOME|WELCOME to <#L#>@<#H#>|Welkom bij <#L#>@<#H#>
 TXT_ADMINISTRIVIA|Administrivia:|Administratief:
-TXT_BY|by|door
+TXT_BY|by: <#1#>|door: <#1#>
 TXT_EDIT_END|%%% END OF TEXT FILE|%%% EINDE VAN TEKST BESTAND
 TXT_EDIT_START|%%% START OF TEXT FILE|%%% START VAN TEKST BESTAND
 TXT_LISTMEMBERS|Subscribers to this list are:|Abonnees van deze list zijn:
