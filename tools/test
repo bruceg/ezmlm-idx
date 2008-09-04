@@ -2,7 +2,7 @@
 set -e
 
 if [ $# -ne 1 ]; then
-  echo "usage: $0 [std|mysql|pgsql]"
+  echo "usage: $0 [std|mysql|pgsql|sqlite3]"
   exit 1
 fi
 db=$1
