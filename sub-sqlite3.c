@@ -62,8 +62,6 @@ static sqlite3_stmt *_sqlquery(const struct subdbinfo *info, const stralloc *str
 {
 	sqlite3_stmt *stmt;
 
-/*	fprintf(stderr, "SQL: %s\n", str->s); */
-
 	if (sqlite3_prepare_v2((sqlite3*)info->conn, str->s, str->len, &stmt, NULL) != SQLITE_OK)
 		return NULL;
 
@@ -218,15 +216,15 @@ static const char *_checktag (struct subdbinfo *info,
 /* succeeds only is everything correct. 'hash' is quoted since it is  */
 /*  potentially hostile. */
     if (listno) {			/* only for slaves */
-      if (!stralloc_copys(&line,"SELECT listno FROM ")) return MSG(ERR_NOMEM);
-      if (!stralloc_cats(&line,info->base_table)) return MSG(ERR_NOMEM);
-      if (!stralloc_cats(&line,"_mlog WHERE listno=")) return MSG(ERR_NOMEM);
+      if (!stralloc_copys(&line,"SELECT listno FROM ")) die_nomem();
+      if (!stralloc_cats(&line,info->base_table)) die_nomem();
+      if (!stralloc_cats(&line,"_mlog WHERE listno=")) die_nomem();
       if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,listno)))
-	return MSG(ERR_NOMEM);
-      if (!stralloc_cats(&line," AND msgnum=")) return MSG(ERR_NOMEM);
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return MSG(ERR_NOMEM);
-      if (!stralloc_cats(&line," AND done > 3")) return MSG(ERR_NOMEM);
-	  if (!stralloc_0(&line)) return MSG(ERR_NOMEM);
+	die_nomem();
+      if (!stralloc_cats(&line," AND msgnum=")) die_nomem();
+      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) die_nomem();
+      if (!stralloc_cats(&line," AND done > 3")) die_nomem();
+	  if (!stralloc_0(&line)) die_nomem();
 
 	  if ((stmt = _sqlquery(info, &line)) == NULL)
 		return sqlite3_errmsg((sqlite3*)info->conn);			/* query */
@@ -238,14 +236,14 @@ static const char *_checktag (struct subdbinfo *info,
 		return sqlite3_errmsg((sqlite3*)info->conn);
     }
 
-    if (!stralloc_copys(&line,"SELECT msgnum FROM ")) return MSG(ERR_NOMEM);
-    if (!stralloc_cats(&line,info->base_table)) return MSG(ERR_NOMEM);
-    if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) return MSG(ERR_NOMEM);
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return MSG(ERR_NOMEM);
-    if (!stralloc_cats(&line," and cookie='")) return MSG(ERR_NOMEM);
-	if (!stralloc_catb(&line,strnum,fmt_str(strnum,hash))) return MSG(ERR_NOMEM);
-    if (!stralloc_cats(&line,"'")) return MSG(ERR_NOMEM);
-	if (!stralloc_0(&line)) return MSG(ERR_NOMEM);
+    if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
+    if (!stralloc_cats(&line,info->base_table)) die_nomem();
+    if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) die_nomem();
+    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) die_nomem();
+    if (!stralloc_cats(&line," and cookie='")) die_nomem();
+	if (!stralloc_catb(&line,strnum,fmt_str(strnum,hash))) die_nomem();
+    if (!stralloc_cats(&line,"'")) die_nomem();
+	if (!stralloc_0(&line)) die_nomem();
 
 	if ((stmt = _sqlquery(info, &line)) == NULL)	/* select */
 		return sqlite3_errmsg((sqlite3*)info->conn);
@@ -323,24 +321,24 @@ static const char *_logmsg(struct subdbinfo *info,
   sqlite3_stmt *stmt;
   int res;
 
-  if (!stralloc_copys(&logline,"INSERT INTO ")) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&logline,info->base_table)) return MSG(ERR_NOMEM);
+  if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
+  if (!stralloc_cats(&logline,info->base_table)) die_nomem();
   if (!stralloc_cats(&logline,"_mlog (msgnum,listno,tai,subs,done) VALUES ("))
-	return MSG(ERR_NOMEM);
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&logline,",")) return MSG(ERR_NOMEM);
+	die_nomem();
+  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) die_nomem();
+  if (!stralloc_cats(&logline,",")) die_nomem();
   if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,listno)))
-	return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&logline,",NOW(),")) return MSG(ERR_NOMEM);
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&logline,",")) return MSG(ERR_NOMEM);
+	die_nomem();
+  if (!stralloc_cats(&logline,",NOW(),")) die_nomem();
+  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) die_nomem();
+  if (!stralloc_cats(&logline,",")) die_nomem();
   if (done < 0) {
     done = - done;
-    if (!stralloc_append(&logline,"-")) return MSG(ERR_NOMEM);
+    if (!stralloc_append(&logline,"-")) die_nomem();
   }
-  if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) return MSG(ERR_NOMEM);
-  if (!stralloc_append(&logline,")")) return MSG(ERR_NOMEM);
-  if (!stralloc_0(&logline)) return MSG(ERR_NOMEM);
+  if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) die_nomem();
+  if (!stralloc_append(&logline,")")) die_nomem();
+  if (!stralloc_0(&logline)) die_nomem();
 
   if ((stmt = _sqlquery(info, &logline)) == NULL)	/* log query */
 	  return sqlite3_errmsg((sqlite3*)info->conn);
@@ -694,12 +692,12 @@ static const char *create_table(struct subdbinfo *info,
   if (table_exists(info,suffix1,suffix2) > 0)
     return 0;
 
-  if (!stralloc_copys(&line,"CREATE TABLE ")) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,info->base_table)) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,suffix1)) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,suffix2)) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,definition)) return MSG(ERR_NOMEM);
-  if (!stralloc_0(&line)) return MSG(ERR_NOMEM);
+  if (!stralloc_copys(&line,"CREATE TABLE ")) die_nomem();
+  if (!stralloc_cats(&line,info->base_table)) die_nomem();
+  if (!stralloc_cats(&line,suffix1)) die_nomem();
+  if (!stralloc_cats(&line,suffix2)) die_nomem();
+  if (!stralloc_cats(&line,definition)) die_nomem();
+  if (!stralloc_0(&line)) die_nomem();
 
   if ((stmt = _sqlquery(info, &line)) == NULL)
 	  return sqlite3_errmsg((sqlite3*)info->conn);
@@ -796,11 +794,11 @@ static const char *remove_table(struct subdbinfo *info,
   if (table_exists(info,suffix1,suffix2) == 0)
     return 0;
 
-  if (!stralloc_copys(&line,"DROP TABLE ")) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,info->base_table)) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,suffix1)) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,suffix2)) return MSG(ERR_NOMEM);
-  if (!stralloc_0(&line)) return MSG(ERR_NOMEM);
+  if (!stralloc_copys(&line,"DROP TABLE ")) die_nomem();
+  if (!stralloc_cats(&line,info->base_table)) die_nomem();
+  if (!stralloc_cats(&line,suffix1)) die_nomem();
+  if (!stralloc_cats(&line,suffix2)) die_nomem();
+  if (!stralloc_0(&line)) die_nomem();
 
   if ((stmt = _sqlquery(info, &line)) == NULL)
 	  return sqlite3_errmsg((sqlite3*)info->conn);
