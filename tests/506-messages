@@ -1,3 +1,5 @@
+if ! [ -n "$SUBDB" ]; then
+  # These tests only work for the std plugin
   prompt "messages:             "
 
   echo 'ERR_OPEN:My message ' >"$DIR"/text/messages
@@ -11,3 +13,4 @@
   && fatal "did not read default text/messages"
 
   ${ECHO} OK
+fi
