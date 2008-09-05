@@ -143,7 +143,7 @@ static int _issub(struct subdbinfo *info,
 	    close(fd);
 	    if (recorded)
 	      if (!stralloc_copyb(recorded,line.s+1,line.len-1))
-		strerr_die2x(111,FATAL,MSG(ERR_NOMEM));
+		die_nomem();
 	    return 1;
 	  }
       }
@@ -173,7 +173,7 @@ static int _issub(struct subdbinfo *info,
 	  close(fd);
 	  if (recorded)
 	    if (!stralloc_copyb(recorded,line.s+1,line.len-1))
-	      strerr_die2x(111,FATAL,MSG(ERR_NOMEM));
+	      die_nomem();
 	  return 1;
 	}
     }

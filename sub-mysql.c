@@ -71,7 +71,7 @@ static const char *_opensub(struct subdbinfo *info)
 {
   if (!(MYSQL*)info->conn) {
     if (!(info->conn = mysql_init((MYSQL *) 0)))
-	 return MSG(ERR_NOMEM);					/* init */
+	 die_nomem();					/* init */
     if (!(mysql_real_connect((MYSQL*)info->conn,info->host,info->user,info->pw,
 			     info->db,info->port,0,0)))
 		return mysql_error((MYSQL*)info->conn);
@@ -110,14 +110,14 @@ static const char *_checktag (struct subdbinfo *info,
 /* succeeds only is everything correct. 'hash' is quoted since it is  */
 /*  potentially hostile. */
     if (listno) {			/* only for slaves */
-      if (!stralloc_copys(&line,"SELECT listno FROM ")) return MSG(ERR_NOMEM);
-      if (!stralloc_cats(&line,info->base_table)) return MSG(ERR_NOMEM);
-      if (!stralloc_cats(&line,"_mlog WHERE listno=")) return MSG(ERR_NOMEM);
+      if (!stralloc_copys(&line,"SELECT listno FROM ")) die_nomem();
+      if (!stralloc_cats(&line,info->base_table)) die_nomem();
+      if (!stralloc_cats(&line,"_mlog WHERE listno=")) die_nomem();
       if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,listno)))
-	return MSG(ERR_NOMEM);
-      if (!stralloc_cats(&line," AND msgnum=")) return MSG(ERR_NOMEM);
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return MSG(ERR_NOMEM);
-      if (!stralloc_cats(&line," AND done > 3")) return MSG(ERR_NOMEM);
+	die_nomem();
+      if (!stralloc_cats(&line," AND msgnum=")) die_nomem();
+      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) die_nomem();
+      if (!stralloc_cats(&line," AND done > 3")) die_nomem();
       if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)
 	return mysql_error((MYSQL*)info->conn);			/* query */
       if (!(result = mysql_use_result((MYSQL*)info->conn)))		/* use result */
@@ -130,15 +130,15 @@ static const char *_checktag (struct subdbinfo *info,
       mysql_free_result(result);			/* free res */
     }
 
-    if (!stralloc_copys(&line,"SELECT msgnum FROM ")) return MSG(ERR_NOMEM);
-    if (!stralloc_cats(&line,info->base_table)) return MSG(ERR_NOMEM);
-    if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) return MSG(ERR_NOMEM);
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) return MSG(ERR_NOMEM);
-    if (!stralloc_cats(&line," and cookie='")) return MSG(ERR_NOMEM);
-    if (!stralloc_ready(&quoted,COOKIE * 2 + 1)) return MSG(ERR_NOMEM);
+    if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
+    if (!stralloc_cats(&line,info->base_table)) die_nomem();
+    if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) die_nomem();
+    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) die_nomem();
+    if (!stralloc_cats(&line," and cookie='")) die_nomem();
+    if (!stralloc_ready(&quoted,COOKIE * 2 + 1)) die_nomem();
     quoted.len = mysql_escape_string(quoted.s,hash,COOKIE);
-    if (!stralloc_cat(&line,&quoted)) return MSG(ERR_NOMEM);
-    if (!stralloc_cats(&line,"'")) return MSG(ERR_NOMEM);
+    if (!stralloc_cat(&line,&quoted)) die_nomem();
+    if (!stralloc_cats(&line,"'")) die_nomem();
 
     if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)	/* select */
 	return mysql_error((MYSQL*)info->conn);
@@ -218,23 +218,23 @@ static const char *_logmsg(struct subdbinfo *info,
 			   unsigned long subs,
 			   int done)
 {
-  if (!stralloc_copys(&logline,"INSERT INTO ")) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&logline,info->base_table)) return MSG(ERR_NOMEM);
+  if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
+  if (!stralloc_cats(&logline,info->base_table)) die_nomem();
   if (!stralloc_cats(&logline,"_mlog (msgnum,listno,subs,done) VALUES ("))
-	return MSG(ERR_NOMEM);
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&logline,",")) return MSG(ERR_NOMEM);
+	die_nomem();
+  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) die_nomem();
+  if (!stralloc_cats(&logline,",")) die_nomem();
   if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,listno)))
-	return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&logline,",")) return MSG(ERR_NOMEM);
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&logline,",")) return MSG(ERR_NOMEM);
+	die_nomem();
+  if (!stralloc_cats(&logline,",")) die_nomem();
+  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) die_nomem();
+  if (!stralloc_cats(&logline,",")) die_nomem();
   if (done < 0) {
     done = - done;
-    if (!stralloc_append(&logline,"-")) return MSG(ERR_NOMEM);
+    if (!stralloc_append(&logline,"-")) die_nomem();
   }
-  if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) return MSG(ERR_NOMEM);
-  if (!stralloc_append(&logline,")")) return MSG(ERR_NOMEM);
+  if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) die_nomem();
+  if (!stralloc_append(&logline,")")) die_nomem();
 
   if (mysql_real_query((MYSQL*)info->conn,logline.s,logline.len))	/* log query */
     if (mysql_errno((MYSQL*)info->conn) != ER_DUP_ENTRY)	/* ignore dups */
@@ -508,10 +508,10 @@ static const char *create_table(struct subdbinfo *info,
 				const char *suffix1,
 				const char *suffix2)
 {
-  if (!stralloc_copys(&line,"CREATE TABLE ")) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,info->base_table)) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,suffix1)) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,suffix2)) return MSG(ERR_NOMEM);
+  if (!stralloc_copys(&line,"CREATE TABLE ")) die_nomem();
+  if (!stralloc_cats(&line,info->base_table)) die_nomem();
+  if (!stralloc_cats(&line,suffix1)) die_nomem();
+  if (!stralloc_cats(&line,suffix2)) die_nomem();
   if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)
     if (mysql_errno((MYSQL*)info->conn) != ER_TABLE_EXISTS_ERROR)
       return mysql_error((MYSQL*)info->conn);
@@ -600,10 +600,10 @@ static const char *remove_table(struct subdbinfo *info,
 				const char *suffix1,
 				const char *suffix2)
 {
-  if (!stralloc_copys(&line,"DROP TABLE ")) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,info->base_table)) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,suffix1)) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&line,suffix2)) return MSG(ERR_NOMEM);
+  if (!stralloc_copys(&line,"DROP TABLE ")) die_nomem();
+  if (!stralloc_cats(&line,info->base_table)) die_nomem();
+  if (!stralloc_cats(&line,suffix1)) die_nomem();
+  if (!stralloc_cats(&line,suffix2)) die_nomem();
   if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)
     if (mysql_errno((MYSQL*)info->conn) != ER_BAD_TABLE_ERROR)
       return mysql_error((MYSQL*)info->conn);
