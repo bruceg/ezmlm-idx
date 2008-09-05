@@ -70,6 +70,25 @@ static sqlite3_stmt *_sqlquery(const struct subdbinfo *info, const stralloc *str
 	return stmt;
 }
 
+static void _nowFunc(sqlite3_context *ctx, int argc, sqlite3_value **argv)
+{
+	time_t t;
+	struct tm *tmptr;
+	static char tmp[20];		/* enough to store 'YYYY-MM-DD HH:MM:SS' plus a null */
+
+	/* get current time in seconds */
+	time(&t);
+
+	/* convert unix seconds to local time */
+	tmptr = localtime(&t);
+
+	/* format the time string appropriately */
+	strftime(tmp, sizeof(tmp), "%Y-%m-%d %H:%M:%S", tmptr);
+
+	/* and return the result */
+	sqlite3_result_text(ctx, tmp, -1, SQLITE_STATIC);
+}
+
 static void _concatFunc(sqlite3_context *ctx, int argc, sqlite3_value **argv)
 {
 	int t;
@@ -99,7 +118,7 @@ static void _fromUnixtimeFunc(sqlite3_context *ctx, int argc, sqlite3_value **ar
 {
 	time_t t;
 	struct tm *tmptr;
-	static char tmp[20];		/* enough to store 'YYYY-MM-DD HH:MM:SS' plus a null
+	static char tmp[20];		/* enough to store 'YYYY-MM-DD HH:MM:SS' plus a null */
 
 	/* ensure one argument */
 	if (argc != 1)
@@ -165,6 +184,10 @@ static const char *_opensub(struct subdbinfo *info)
 	return sqlite3_errmsg((sqlite3*)info->conn);					/* init */
 
 	/* register functions to sqlite */
+	if (sqlite3_create_function((sqlite3*)info->conn, "NOW", 0, SQLITE_UTF8, NULL, _nowFunc, NULL, NULL) != SQLITE_OK)
+		return sqlite3_errmsg((sqlite3*)info->conn);
+
+	/* CONCAT function takes variable parameters */
 	if (sqlite3_create_function((sqlite3*)info->conn, "CONCAT", -1, SQLITE_UTF8, NULL, _concatFunc, NULL, NULL) != SQLITE_OK)
 		return sqlite3_errmsg((sqlite3*)info->conn);
 
@@ -246,8 +269,6 @@ static int _issub(struct subdbinfo *info,
   unsigned int j;
   int res;
 
-/*  fprintf(stderr, "*** issub: table=[%s]\n", table); */
-
 	/* SELECT address FROM list WHERE address = 'userhost' AND hash */
 	/* BETWEEN 0 AND 52. Without the hash restriction, we'd make it */
 	/* even easier to defeat. Just faking sender to the list name would*/
@@ -259,7 +280,7 @@ static int _issub(struct subdbinfo *info,
     if (j == addr.len) return 0;
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
 
-    if (!stralloc_copys(&line,"SelecT address FROM ")) die_nomem();
+    if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
     if (!stralloc_cat_table(&line,info,table)) die_nomem();
     if (!stralloc_cats(&line," WHERE address LIKE '")) die_nomem();
 	if (!stralloc_cat(&line,&addr)) die_nomem();
@@ -285,8 +306,6 @@ static int _issub(struct subdbinfo *info,
 		if (!stralloc_copyb(recorded, sqlite3_column_text(stmt, 0), sqlite3_column_bytes(stmt, 0)))
 			die_nomem();
 		if (!stralloc_0(recorded)) die_nomem();
-
-		fprintf(stderr, "*** issub: recorded=[%s]\n", recorded->s);
 	}
 
     sqlite3_finalize(stmt);
@@ -306,13 +325,13 @@ static const char *_logmsg(struct subdbinfo *info,
 
   if (!stralloc_copys(&logline,"INSERT INTO ")) return MSG(ERR_NOMEM);
   if (!stralloc_cats(&logline,info->base_table)) return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&logline,"_mlog (msgnum,listno,subs,done) VALUES ("))
+  if (!stralloc_cats(&logline,"_mlog (msgnum,listno,tai,subs,done) VALUES ("))
 	return MSG(ERR_NOMEM);
   if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) return MSG(ERR_NOMEM);
   if (!stralloc_cats(&logline,",")) return MSG(ERR_NOMEM);
   if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,listno)))
 	return MSG(ERR_NOMEM);
-  if (!stralloc_cats(&logline,",")) return MSG(ERR_NOMEM);
+  if (!stralloc_cats(&logline,",NOW(),")) return MSG(ERR_NOMEM);
   if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) return MSG(ERR_NOMEM);
   if (!stralloc_cats(&logline,",")) return MSG(ERR_NOMEM);
   if (done < 0) {
@@ -408,9 +427,9 @@ static void _searchlog(struct subdbinfo *info,
 	"'-0000: ',UNIX_TIMESTAMP(tai),' ',edir,etype,' ',address,' ',"
 	"fromline) FROM ")) die_nomem();
     if (!stralloc_cat_table(&line,info,table)) die_nomem();
-    if (!stralloc_cats(&line,"_slog ")) die_nomem();
+    if (!stralloc_cats(&line,"_slog")) die_nomem();
     if (*search) {	/* We can afford to wait for LIKE '%xx%' */
-      if (!stralloc_cats(&line,"WHERE fromline LIKE '%")) die_nomem();
+      if (!stralloc_cats(&line," WHERE fromline LIKE '%")) die_nomem();
       if (!stralloc_cats(&line,search)) die_nomem();
       if (!stralloc_cats(&line,"%' OR address LIKE '%")) die_nomem();
       if (!stralloc_cats(&line,search)) die_nomem();
@@ -427,6 +446,7 @@ static void _searchlog(struct subdbinfo *info,
 			strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
 		length = sqlite3_column_bytes(stmt, 0);
 		row = sqlite3_column_text(stmt, 0);
+
       if (subwrite(row,length) == -1) die_write();
     }
 
@@ -560,7 +580,7 @@ static int _subscribe(struct subdbinfo *info,
     if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
     if (!stralloc_cat_table(&logline,info,table)) die_nomem();
     if (!stralloc_cats(&logline,
-	"_slog (address,edir,etype,fromline) VALUES ('")) die_nomem();
+	"_slog (tai,address,edir,etype,fromline) VALUES (NOW(),'")) die_nomem();
     if (!stralloc_cat(&logline,&quoted)) die_nomem();
     if (flagadd) {						/* edir */
       if (!stralloc_cats(&logline,"','+','")) die_nomem();
@@ -609,10 +629,10 @@ static void _tagmsg(struct subdbinfo *info,
 	/* ER_DUP_ENTRY is ok) */
     if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
     if (!stralloc_cats(&line,info->base_table)) die_nomem();
-    if (!stralloc_cats(&line,"_cookie (msgnum,cookie,bodysize,chunk) VALUES ("))
+    if (!stralloc_cats(&line,"_cookie (msgnum,tai,cookie,bodysize,chunk) VALUES ("))
 		die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgnum))) die_nomem();
-    if (!stralloc_cats(&line,",'")) die_nomem();
+    if (!stralloc_cats(&line,",NOW(),'")) die_nomem();
     if (!stralloc_catb(&line,hashout,COOKIE)) die_nomem();
     if (!stralloc_cats(&line,"',")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,bodysize)))
