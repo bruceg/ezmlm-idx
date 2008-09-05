@@ -12,7 +12,7 @@
   ${EZBIN}/ezmlm-manage -U "$DIR" </dev/null >"$ERR" 2>&1 || \
 	fatal "failed with -U"
   checkenv unsubscribe-U "$LOC-return-@$HOST" "$SENDER"
-  ${EZBIN}/ezmlm-issubn "$DIR" "$SENDER" && \
+  ${EZBIN}/ezmlm-issubn "$DIR" && \
 	fatal "unsubscribe with -U failed"
 
   ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
@@ -20,7 +20,7 @@
   ${EZBIN}/ezmlm-manage "$DIR" </dev/null >"$ERR" 2>&1 || \
 	fatal "failed with nounsubconfirm"
   checkenv unsubscribe-nounsubconfirm "$LOC-return-@$HOST" "$SENDER"
-  ${EZBIN}/ezmlm-issubn "$DIR" "$SENDER" && \
+  ${EZBIN}/ezmlm-issubn "$DIR" && \
 	fatal "unsubscribe with nounsubconfirm failed"
   ${RM} "$DIR"/nounsubconfirm
 
