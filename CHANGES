@@ -26,6 +26,8 @@ ezmlm-idx-7.0.1, ????-??-??
 - Improved the TXT_BY message used in digests to work better with
   non-English languages.
 
+- Fixed out-of-memory resulting in a permanent error.
+
 ezmlm-idx-7.0.0, 2008-06-16
 ===========================
 

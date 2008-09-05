@@ -4,5 +4,5 @@
 
 void die_nomem(void)
 {
-  strerr_die2x(100,FATAL,"out of memory");
+  strerr_die2x(111,FATAL,"out of memory");
 }
