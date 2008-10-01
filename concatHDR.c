@@ -27,7 +27,8 @@ void concatHDR(char *indata,
   if (n == 0) return;
   cplast = indata + n - 1;
   cp = cplast;
-  while (*cplast == '\0' || *cplast == '\n') --cplast;
+  while (cplast >= indata && (*cplast == '\0' || *cplast == '\n'))
+    --cplast;
   if (cp == cplast) die_nomem();		/* just in case */
   *(++cplast) = '\n';				/* have terminal '\n' */
   cp = indata;
@@ -36,7 +37,8 @@ void concatHDR(char *indata,
     while (*cp != '\n') *(cpout++) = *(cp++);	/* text */
     ++cp;					/* skip \n */ 
     --cpout;					/* last char */
-    while (*cpout == ' ' || *cpout == '\t') --cpout;	/* LWSP after */
+    while (cpout >= outdata->s && (*cpout == ' ' || *cpout == '\t'))
+      --cpout;	/* LWSP after */
     *(++cpout) = ' ';				/* replace with single ' ' */
     ++cpout;					/* point to free byte */
   }

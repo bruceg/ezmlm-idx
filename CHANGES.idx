@@ -35,6 +35,8 @@ ezmlm-idx-0.445, ????????
 
 - Fixed an extremely rare bug with single-byte buffers.
 
+- Fixed a buffer underflow bug in concatHDR.
+
 ezmlm-idx-0.444, 20061123
 =========================
 
