@@ -28,6 +28,8 @@ ezmlm-idx-7.0.1, ????-??-??
 
 - Fixed out-of-memory resulting in a permanent error.
 
+- Fixed a buffer underflow bug in concatHDR.
+
 ezmlm-idx-7.0.0, 2008-06-16
 ===========================
 
