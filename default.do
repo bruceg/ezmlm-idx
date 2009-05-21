@@ -37,6 +37,13 @@ then
   exit 0
 fi
 
+if test -r $1.template
+then
+  dependon $1.template VERSION fill-template
+  formake "./fill-template $1"
+  exit 0
+fi
+
 case "$1" in
   compile|libcompile|load|makelib|makeso)
     dependon make-$1 warn-auto.sh systype
@@ -51,7 +58,7 @@ case "$1" in
   lang/*/ezmlmrc)
     lang=${1#lang/}
     lang=${lang%/ezmlmrc}
-    dependon makelang VERSION ezmlmrc.template
+    dependon makelang ezmlmrc
     formake "./makelang $lang"
     ;;
   lang/*/text/messages)

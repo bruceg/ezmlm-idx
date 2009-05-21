@@ -8,7 +8,4 @@ test -d lang/"$1" -a -d lang/"$1"/text || {
   exit 1
 }
 
-(
-  echo `sed -e 's/^.*-//' -e q VERSION` - This version identifier must be on line 1 and start in pos 1.
-  cat ezmlmrc.template
-) > lang/$1/ezmlmrc
+cp ezmlmrc lang/$1/ezmlmrc
