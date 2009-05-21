@@ -34,4 +34,5 @@ ezmlm-weed \
 ezmlm-test \
 sub-std.so \
 ezmlmrc.all \
-messages.all
+messages.all \
+ezmlm-idx.spec
