@@ -1,15 +1,15 @@
 #!/bin/bash
 set -e
 
-if ! [ -s CHANGES.idx -a -s README.idx -a -s VERSION ]; then
+if ! [ -s CHANGES -a -s README -a -s VERSION ]; then
   echo "Run this script from in the ezmlm-idx source directory."
   exit 1
 fi
 
 base=`sed -e q VERSION`
 
-if ! grep -q "^${base}, " CHANGES.idx; then
-  echo "$0: CHANGES.idx is missing release stamp."
+if ! grep -q "^${base}, " CHANGES; then
+  echo "$0: CHANGES is missing release stamp."
   exit 1
 fi
 
@@ -22,23 +22,29 @@ git checkout conf-*
 
 tools/makemake
 
-echo "Setting up the temporary directory"
-trap 'rm -r $base' EXIT
-mkdir $base
-cp --parents `cat SOURCES EXTRADIST` $base/
-find sub_* lang -type f -print \
-| xargs cp --parents --target-directory=$base/
-sed -e 's/ -W[^ ]*//g' conf-cc >$base/conf-cc
-chmod -R +r $base
+# Need to regenerate the spec before copying
+make ezmlm-idx.spec
 
-#echo "Building symlinks"
-#make -C $base symlinks
+echo "Setting up the temporary directory"
+mkdir $base
+trap 'rm -r $base' EXIT
+
+# Copy the base set of files
+cp --parents `cat SOURCES EXTRADIST` $base/
+find lang -type f -print \
+| xargs cp --parents --target-directory=$base/
+
+# Strip out the warnings options from conf-cc
+sed -e 's/ -W[^ ]*//g' conf-cc >$base/conf-cc
+
+# Make sure all files are at least readable, just in case
+chmod -R +r $base
 
 echo "Generating ChangeLog"
 git log >$base/ChangeLog
 
-echo "Generating FILES.idx"
-( cd $base && find * -type f >FILES.idx )
+echo "Generating FILES"
+( cd $base && find * -type f >FILES )
 
 echo "Creating final tarball"
 tar -czf $base.tar.gz $base
