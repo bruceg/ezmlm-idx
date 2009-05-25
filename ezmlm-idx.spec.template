@@ -159,7 +159,7 @@ SUID root.  So do
 
 chmod 4755 %ezcgi/ezmlm-cgi
 
-Please see INSTALL.idx 16-22) in this package's doc directory and the
+Please see INSTALL 16-22) in this package's doc directory and the
 man page ezmlm-cgi.1 for more details on setting up and using ezmlm-cgi.
 
 EOF
@@ -169,7 +169,7 @@ echo To create an ezmlmrc file for a language other than US English
 echo go to this package\'s doc directory, and type 
 echo "    make iso"
 echo 'where "iso" is the ISO language designation.' 
-echo For currently supported languages, see the INSTALL.idx
+echo For currently supported languages, see the INSTALL
 echo file, section 7.
 
 %clean
@@ -179,15 +179,15 @@ echo file, section 7.
 %defattr(-,root,root)
 %dir %rcdir
 %config(noreplace) %rcdir/*
-%doc BLURB CHANGES* FAQ.idx INSTALL INSTALL.idx  README*
-%doc THANKS TODO UPGRADE.idx ChangeLog
-%doc DOWNGRADE.idx ezmlmrc.template
+%doc BLURB CHANGES* FAQ INSTALL README*
+%doc THANKS TODO UPGRADE ChangeLog
+%doc DOWNGRADE ezmlmrc.template
 %_bindir/*
 %_libdir/ezmlm/sub-std.so
 
 %files cgi
 %defattr(-,root,root)
-%doc INSTALL.idx INSTALL.cgi ezcgirc ezcgi.css
+%doc INSTALL.cgi ezcgirc ezcgi.css
 %attr(0444,root,root) %ezcgi/*
 %_mandir/man1/ezmlm-cgi.1*
 
