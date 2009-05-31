@@ -35,12 +35,12 @@ If
 is not on the mailing list,
 .B ezmlm-issubn
 exits 99. This exit code is non-success from a shell point of view, but to
-qmail it means "success and skip remaining lines in the .qmail file). Thus,
+qmail it means "success" and skip remaining lines in the .qmail file. Thus,
 a simple way to execute a delivery if the
 .ezmlm-issubn
 criteria are met is to place the
 .B ezmlm-issubn
-line first, followed by the action line. If SENDER is a subscriber, the
+line first, followed by the action line(s). If SENDER is a subscriber, the
 action line is executed, if not, the line is ignored without the generation
 of an error condition. To generate a fatal error, just:
 
@@ -65,6 +65,12 @@ This is useful when trying to exclude SENDERs.
 (Default.)
 Normal exit codes: 0 is the address is in any of the lists, 99 if not.
 .SH NOTES
+The use of
+.B ezmlm-issubn
+is deprecated.  Use
+.B ezmlm-checksub
+instead.
+
 To maintain backwards compatibility, if
 .I dir1
 (or more) are present on the command line and are all absolute paths,
@@ -73,6 +79,7 @@ examines each of the directories for the sender.  Otherwise, it only
 examines the named subdirectories within
 .IR dir .
 .SH "SEE ALSO"
+ezmlm-checksub(1),
 ezmlm-list(1),
 ezmlm-manage(1),
 ezmlm-make(1),
