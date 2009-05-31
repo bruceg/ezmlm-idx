@@ -3,6 +3,7 @@ d:::755:/man1::
 c:::644:/man1/:ezmlm-accept.1:
 c:::644:/man1/:ezmlm-archive.1:
 c:::644:/man1/:ezmlm-check.1:
+c:::644:/man1/:ezmlm-checksub.1:
 c:::644:/man1/:ezmlm-clean.1:
 c:::644:/man1/:ezmlm-confirm.1:
 c:::644:/man1/:ezmlm-cron.1:
@@ -37,6 +38,7 @@ d:::755:/cat1::
 c:::644:/cat1/:ezmlm-accept.0:
 c:::644:/cat1/:ezmlm-archive.0:
 c:::644:/cat1/:ezmlm-check.0:
+c:::644:/cat1/:ezmlm-checksub.0:
 c:::644:/cat1/:ezmlm-clean.0:
 c:::644:/cat1/:ezmlm-confirm.0:
 c:::644:/cat1/:ezmlm-cron.0:
