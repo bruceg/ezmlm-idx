@@ -44,6 +44,12 @@
   ${EZBIN}/ezmlm-issubn -n "$DIR" . allow && \
 	fatal "ezmlm-issubn: -n failed for subscriber"
 
+# is subscriber, but not in alternate lists
+  ${EZBIN}/ezmlm-issubn "$DIR" deny && \
+	fatal "ezmlm-issubn: exit true for non-subscriber (alt absolute+relative)"
+  ${EZBIN}/ezmlm-issubn "$SUBDIR" deny && \
+	fatal "ezmlm-issubn: exit true for non-subscriber (alt relative+relative)"
+
 # add to allow
   ${EZBIN}/ezmlm-sub "$DIR" allow "ZZtop@hoSt" || \
 	fatal "ezmlm-sub: failed to add address to ${DIR}/allow"
@@ -66,9 +72,11 @@
 
 # check for address in allow
   ${EZBIN}/ezmlm-issubn "$DIR" "$DIR"/allow || \
-	fatal "ezmlm-sub/issubn: failed to add/look in 2nd db (absolute)"
-  ${EZBIN}/ezmlm-issubn "$DIR" . allow || \
-	fatal "ezmlm-sub/issubn: failed to add/look in 2nd db (relative)"
+	fatal "ezmlm-sub/issubn: failed to add/look in 2nd db (absolute+absolute)"
+  ${EZBIN}/ezmlm-issubn "$DIR" allow || \
+	fatal "ezmlm-sub/issubn: failed to add/look in 2nd db (absolute+relative)"
+  ${EZBIN}/ezmlm-issubn "$SUBDIR" allow || \
+	fatal "ezmlm-sub/issubn: failed to add/look in 2nd db (relative+relative)"
 
 # remove (multiple) (non)existing addresses from allow
   ${EZBIN}/ezmlm-unsub "$DIR" allow "xYzZy@hOst" "zZToP@HOSt" || \

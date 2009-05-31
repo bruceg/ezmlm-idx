@@ -43,7 +43,7 @@ void main(int argc,char **argv)
      * first option as the base directory and the rest as database
      * names. */
     for (i = --opt; i < argc; ++i) {
-      if (argv[opt][0] != '/') {
+      if (argv[i][0] != '/') {
         ++opt;
 	break;
       }

@@ -30,6 +30,9 @@ ezmlm-idx-7.0.1, ????-??-??
 
 - Fixed a buffer underflow bug in concatHDR.
 
+- Fixed a bug in ezmlm-issubn.c that was causing it to scan the main
+  list when it shouldn't.
+
 ezmlm-idx-7.0.0, 2008-06-16
 ===========================
 

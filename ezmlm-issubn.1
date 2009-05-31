@@ -53,14 +53,6 @@ of an error condition. To generate a fatal error, just:
 |/path/more_for_subscribers
 .EE
 
-If
-.I dir1
-(or more) are present on the command line and are relative paths,
-.B ezmlm-issubn
-only examines the named subdirectories within the preceding absolute
-path
-.IR dir .
-
 .B ezmlm-issubn
 exits 100 on permanent and 111 on temporary errors.
 .SH OPTIONS
@@ -72,6 +64,14 @@ This is useful when trying to exclude SENDERs.
 .B \-N
 (Default.)
 Normal exit codes: 0 is the address is in any of the lists, 99 if not.
+.SH NOTES
+To maintain backwards compatibility, if
+.I dir1
+(or more) are present on the command line and are all absolute paths,
+.B ezmlm-issubn
+examines each of the directories for the sender.  Otherwise, it only
+examines the named subdirectories within
+.IR dir .
 .SH "SEE ALSO"
 ezmlm-list(1),
 ezmlm-manage(1),

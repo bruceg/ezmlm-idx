@@ -14,7 +14,8 @@ OLD_VER='ezmlm-idx-031'		# ezmlm-idx-0.31x
 
 # basedir for test list. It and all files therein are destroyed by
 # the script
-DIR="$PWD/__TSTDIR"
+SUBDIR=__TSTDIR
+DIR="$PWD/$SUBDIR"
 
 # part that follows user name of local name of the list
 LIST='__tstlist'
