@@ -48,5 +48,4 @@ echo "Generating FILES"
 
 echo "Creating final tarball"
 tar -czf $base.tar.gz $base
-chmod 444 $base.tar.gz
 ls -l $base.tar.gz
