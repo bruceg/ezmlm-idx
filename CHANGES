@@ -23,6 +23,8 @@ ezmlm-idx-7.0.1, ????-??-??
 
 - Added support for decoding sender addresses mangled by BATV prvs.
 
+- Added missing ezmlm-checksub to the installed programs.
+
 - Improved the TXT_BY message used in digests to work better with
   non-English languages.
 
