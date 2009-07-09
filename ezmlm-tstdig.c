@@ -27,9 +27,9 @@ const char FATAL[] = "ezmlm-tstdig: fatal: ";
 const char USAGE[] =
 "ezmlm-tstdig: usage: ezmlm-tstdig [-k kbytes] [-m messages] [-t hours] dir";
 
-static unsigned long deltanum;
-static unsigned long deltawhen;
-static unsigned long deltasize;
+static unsigned long deltanum = ~0UL;
+static unsigned long deltawhen = ~0UL;
+static unsigned long deltasize = ~0UL;
 static struct option options[] = {
   OPT_ULONG(deltasize,'k',"digsize"),
   OPT_ULONG(deltanum,'m',"digcount"),
@@ -90,7 +90,12 @@ void main(int argc,char **argv)
     }
   }
 
-  if (!deltawhen && !deltasize && !deltanum) _exit(0);
+  if (deltawhen == ~0UL)
+    deltawhen = 48;
+  if (deltasize == ~0UL)
+    deltasize = 64;
+  if (deltanum == ~0UL)
+    deltanum = 30;
   if ((deltawhen && ((digwhen + deltawhen * 3600L) <= when)) ||
       (deltasize && ((digsize + (deltasize << 2)) <= cumsize)) ||
       (deltanum && ((dignum + deltanum) <= num))) {	/* digest! */

@@ -35,6 +35,9 @@ ezmlm-idx-7.0.1, ????-??-??
 - Fixed a bug in ezmlm-issubn.c that was causing it to scan the main
   list when it shouldn't.
 
+- Fixed missing defaults in ezmlm-tstdig when digsize, digcount, or
+  digtime were not created.
+
 ezmlm-idx-7.0.0, 2008-06-16
 ===========================
 

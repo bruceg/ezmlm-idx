@@ -68,7 +68,9 @@ Success if more than
 of message body has accumulated since the latest digest.  Defaults to
 the value in
 .I dir\fB/digsize
-if it exists.
+if it exists or
+.I 64
+otherwise.
 .TP
 .B \-m
 Success if more than
@@ -76,14 +78,18 @@ Success if more than
 messages have accumulated since the latest digest.  Defaults to the
 value in
 .I dir\fB/digcount
-if it exists.
+if it exists or
+.I 30
+otherwise.
 .TP
 .B \-t
 Success if more than
 .I time
 hours have passed since the latest digest.  Defaults to the value in
 .I dir\fB/digtime
-if it exists.
+if it exists or
+.I 48
+otherwise.
 .SH USAGE
 This is an example script for ezmlm-tstdig usage.
 
