@@ -13,24 +13,35 @@ see INSTALL. For details on what's new in this version, see CHANGES.
 Steps required for upgrading from ezmlm-idx-5.x.x and earlier
 -------------------------------------------------------------
 
-The usage of ezmlm-issubn, ezmlm-gate, ezmlm-list, ezmlm-sub, and
+1. The usage of ezmlm-issubn, ezmlm-gate, ezmlm-list, ezmlm-sub, and
 ezmlm-unsub has changed.  Where previously the commands would have used
 multiple full paths, they now use relative paths for all tables.  Read
 the manual pages for more details.  The changes have been made so that
 most uses of these tools will still work as before, but some usages may
-break, particularly on new lists or lists that have been edited after
-upgrading.  You may need to upgrade your lists by running:
+break.
+
+In particular, if you had set up your lists with ezmlm-make -k, one
+invocation of ezmlm-issubn in the "editor" file will break.  You need to
+rewrite it from:
+
+	|BIN/ezmlm-issubn -n 'DIR/deny' || ....
+
+to:
+
+	|BIN/ezmlm-issubn -n 'DIR' deny || ....
+
+Alternately, you may upgrade the list entirely by running:
 
 	ezmlm-make -+ DIR
 
-All lists with paths in their DIR/modsub or DIR/remote files need to
+2. All lists with paths in their DIR/modsub or DIR/remote files need to
 have those paths checked and possibly modified to ensure that they are
 either single-level relative paths or absolute paths within DIR.
 
-If you were previously using an install of ezmlm-idx that was compiled
-with MySQL or PgSQL support and have set up lists that use this SQL
-support, you will need to build and install the apropriate plugin and
-make it the default.
+3. If you were previously using an install of ezmlm-idx that was
+compiled with MySQL or PgSQL support and have set up lists that use this
+SQL support, you will need to build and install the apropriate plugin
+and make it the default.
 
 The database plugins will get installed in the directory named by
 conf-lib.  To make one of these the default (necessary to let old lists
@@ -41,6 +52,12 @@ continue to operate), run:
 where "NAME" is either "mysql" or "pgsql" depending on which needs to
 become the default.  Replace /usr/local/lib/ezmlm with the appropriate
 path if the modules were installed elsewhere.
+
+4. Upgrading digested lists will erase their digest creation thresholds.
+Make note of the values for -k, -m, and -t in the "4:" line in "config"
+or on the ezmlm-tstdig command line in the "editor" file.  Save the
+three numbers into files named "digsize", "digcount", and "digwhen"
+respectively.
 
 Steps required for upgrading from ezmlm-idx-0.31x/32x
 -----------------------------------------------------

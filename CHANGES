@@ -38,6 +38,8 @@ ezmlm-idx-7.0.1, ????-??-??
 - Fixed missing defaults in ezmlm-tstdig when digsize, digcount, or
   digtime were not created.
 
+- Clarified the steps necessary when upgrading in UPGRADE.
+
 ezmlm-idx-7.0.0, 2008-06-16
 ===========================
 
