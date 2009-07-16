@@ -26,7 +26,7 @@ maximal einhundert Nachrichten bekommen.
 <<#L#>-index.123_456@<#h#>>
 Fordern Sie auf diese Weise die Betreff-Zeilen (Subjects)
 der Nachrichten von 123 bis 456 (inklusive) vom Archiv an.
-Pro Anforderung werden maximal 2000 Betreff-Zeilen zugestellt. 
+Pro Anforderung werden maximal 2000 Betreff-Zeilen zugestellt.
 Die Zustellung erfolgt in Gruppen zu je einhundert Betreff-Zeilen,
 so daﬂ Sie mit dieser Anforderung real die Betreff-Zeilen
 der Nachrichten 100 bis 499 erhalten.

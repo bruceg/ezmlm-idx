@@ -2,19 +2,19 @@
 
 --- Aqui estão os endereços de comando do ezmlm.
 
-Eu, O Sistema, posso cuidar automaticamente das tarefas administrativas. 
-Favor não enviar mensagens administrativas à própria lista. Basta enviar 
+Eu, O Sistema, posso cuidar automaticamente das tarefas administrativas.
+Favor não enviar mensagens administrativas à própria lista. Basta enviar
 uma mensagem vazia para qualquer destes endereços:
 
-   Para assinar a lista <#L#> e receber as mensagens a ela enviadas, 
+   Para assinar a lista <#L#> e receber as mensagens a ela enviadas,
    envie email para:
    <<#L#>-subscribe@<#h#>>:
 
    Para cancelar a assinatura, envie mensagem para:
    <<#L#>-unsubscribe@<#h#>>:
-   Caso tenha mudado de endereço de email depois de ter assinado, pode 
-   ainda cancelar a assinatura pelo envio de uma mensagem ao endereço no 
-   campo: "List-Unsubscribe" encontrado nos cabeçalhos de qualquer mensagem 
+   Caso tenha mudado de endereço de email depois de ter assinado, pode
+   ainda cancelar a assinatura pelo envio de uma mensagem ao endereço no
+   campo: "List-Unsubscribe" encontrado nos cabeçalhos de qualquer mensagem
    que tenha sido enviada à lista.
 
    Para receber mais informações ou o FAQ desta lista,

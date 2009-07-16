@@ -7,19 +7,19 @@
 
    * mailing list <#l#> の説明を取り出します。
      <<#L#>-info@<#h#>>
-     (Get information) 
+     (Get information)
    * mailing list <#l#> の『よく尋ねられる質問とその答え』を取り出します。
      <<#L#>-faq@<#h#>>
-     (Get FAQ) 
+     (Get FAQ)
 
 <=d=>
    * digest list <#L#>-digest の購読を開始する
      <<#L#>-digest-subscribe@<#h#>>
-     (Start digest subscription) 
+     (Start digest subscription)
 
    * digest list <#L#>-digest の購読を中止する
      <<#L#>-digest-unsubscribe@<#h#>>
-     (Stop digest subscription) 
+     (Stop digest subscription)
 
 <=a=>
    * 123 番から 145 番迄の message を取り出す

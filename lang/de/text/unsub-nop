@@ -23,7 +23,7 @@ Die Nummer wechselt natürlich, also sieht das zum Beispiel so aus:
 
 Das zeigt, daß die Adresse, über die die Nachrichten bezogen werden,
 ich@example.com ist. Die Adresse zum Abbestellen der Liste wäre in
-diesem Fall 
+diesem Fall
    <#l#>-unsubscribe-ich=example.com@<#h#>
 Benutzen Sie einfach die so ermittelte Adresse.
 

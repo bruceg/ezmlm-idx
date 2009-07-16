@@ -19,15 +19,15 @@ ou clique aqui:
 
 Eu não verifiquei se o seu endereço está atualmente na lista.
 Para ver qual endereço você usou ao se subscrever, olhe as mensagens
-que você está recebendo da lista. Cada mensagem tem seu endereço 
-oculto dentro do caminho de retorno; por exemplo, mary@example.com 
+que você está recebendo da lista. Cada mensagem tem seu endereço
+oculto dentro do caminho de retorno; por exemplo, mary@example.com
 recebe mensagens com caminho de retorno:
 <<#l#>-return-<number>-mary=example.com@<#h#>.
 
 <=q=>
 Alguns programas de correio eletrônico não conseguem manipular endereços
 muito longos. Se você não está conseguindo responder esta requisição por
-causa disto, envie uma mensagem para <<#L#>-request@<#h#>> 
+causa disto, envie uma mensagem para <<#L#>-request@<#h#>>
 e coloque o endereço inteiro listado abaixo na linha "Subject:" ou
 "Assunto:".
 

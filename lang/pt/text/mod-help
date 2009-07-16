@@ -63,7 +63,7 @@ Para a lista "digest":
 <#L#>-digest-unsubscribe@<#h#>
 
 <==>
-O usuário receberá um pedido de confirmação para eu ter 
+O usuário receberá um pedido de confirmação para eu ter
 certeza que ele controla o endereço de subscrição. Quando este
 endereço for verificado, ele será descadastrado.
 
@@ -116,7 +116,7 @@ mensagem para:
 <=m=>
 Postagens Moderadas
 -------------------
-Quando as postagens são moderadas, eu colocarei as mensagens em 
+Quando as postagens são moderadas, eu colocarei as mensagens em
 uma fila, e enviarei a você uma cópia junto com instruções. A
 mensagem terá "MODERATE for ..." como assunto.
 
@@ -147,16 +147,16 @@ sejam simplesmente removidas, ao invés de retornar para o remetente.
 
 Férias
 ------
-Se você está temporariamente em um endereço diferente, basta repassar 
+Se você está temporariamente em um endereço diferente, basta repassar
 todas as mensagens que têm o cabeçalho correto 'Mailing-List:' (ou todas
 as mensagens que têm assuntos começando com 'MODERATE for <#L#>@<#h#>'
 ou 'CONFIRM subscribe to <#L#>@<#h#>') para o novo endereço.
 Você pode então moderar a partir do novo endereço. Alternativamente,
-você pode repassar as mensagens para um amigo, assim ele pode moderar 
+você pode repassar as mensagens para um amigo, assim ele pode moderar
 para você. Por favor, avise e confirme este procedimento com o dono da lista.
 
 Se você quiser aprovar automaticamente todas as mensagens enquanto
-está fora, configure o seu programa de correio eletrônico para responder 
+está fora, configure o seu programa de correio eletrônico para responder
 automaticamente as mensagens que têm os assuntos com os critérios acima.
 
 <=r=>
@@ -164,7 +164,7 @@ Se você tentar administrar remotamente a partir de um endereço que
 não é seu, o assinante, não você, será questionado para confirmar.
 Depois disto, um pedido de confirmação é enviado para todos os
 moderadores. Estou fazendo isto, porque eu não tenho como saber que
-foi você quem enviou o pedido original. 
+foi você quem enviou o pedido original.
 
 Por favor note que o seu pedido original (e seu endereço) é enviado
 para o assinante neste caso!

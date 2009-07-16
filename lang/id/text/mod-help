@@ -2,7 +2,7 @@
 Terima kasih atas kesediaan anda untuk memoderatori
 milis <#L#>@<#h#>.
 
-Perintah-perintah yang kami punya agak sedikit berbeda dari milis-milis 
+Perintah-perintah yang kami punya agak sedikit berbeda dari milis-milis
 yang lain, tapi kami harap anda dapat menggunakannya dengan mudah.
 
 Berikut adalah beberapa perintah untuk tugas-tugas yang mungkin harus
@@ -81,7 +81,7 @@ Si fulan dapat juga mengirim mail ke:
    <<#L#>-subscribe-mary=example.com@<#h#>>
    <<#L#>-unsubscribe-mary=example.com@<#h#>>
 
-untuk mendapatkan mailnya terkirim ke "mary@example.com".  Hanya jika 
+untuk mendapatkan mailnya terkirim ke "mary@example.com".  Hanya jika
 yang bersangkutan menerima mail pada alamat tersebut, dia akan menerima
 permohonan konfirmasi tersebut dan dapat mereplynya.
 

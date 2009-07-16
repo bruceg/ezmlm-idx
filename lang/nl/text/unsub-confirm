@@ -20,7 +20,7 @@ of klik hier:
 Ik heb niet gecontroleerd of jouw adres al op de mailing list
 geabonneerd is. Om te zien welk adres je gebruikt hebt om je te
 abonneren kijk je naar berichten die je van de mailing list ontvangt.
-Elk bericht heeft jouw adres verborgen in het zgn. 'return path'. 
+Elk bericht heeft jouw adres verborgen in het zgn. 'return path'.
 Bijv, mary@example.com ontvangt berichten met als 'return path':
 <<#l#>-return-<number>-mary=example.com@<#h#>.
 

@@ -21,7 +21,7 @@ info                lista informações.
 mod_help            ajuda específica para moderadores.
 mod_reject          para o remetente de uma mensagem rejeitada.
 mod_request         para os moderadores junto com a mensagem.
-mod_sub             para o assinante depois que o moderador confirma a 
+mod_sub             para o assinante depois que o moderador confirma a
                     sua subscrição.
 mod_sub_confirm     para o moderador de subscrição requerendo a confirmação.
 mod_timeout         para o remetente de uma mensagem expirada.

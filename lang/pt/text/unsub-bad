@@ -1,8 +1,8 @@
 # Revision: 1
 O número de confirmação perece ser inválido.
 
-A maioria dos casos de números inválidos é devida a expiração. Eu 
-tenho que receber uma confirmação de cada requisição dentro de 10 dias. 
+A maioria dos casos de números inválidos é devida a expiração. Eu
+tenho que receber uma confirmação de cada requisição dentro de 10 dias.
 Certifique-se também que o número de confirmação está inteiro na
 resposta que você me enviou. Alguns programas de correio eletrônico têm
 o hábito de cortar parte do endereço de retorno, o qual pode ser

@@ -17,7 +17,7 @@ Framelding: send et tomt brev til:
 Send email til følgende for at få info eller FAQ for denne liste:
    <<#L#>-info@<#h#>>
    <<#L#>-faq@<#h#>>
-  
+
 
 <=d=>
 Lignende adresser findes for udtræks listen:
@@ -47,7 +47,7 @@ Hent alle breve med samme emne som brev 123:
 
 Dine administrative breve behøver ikke at være tomme, men deres
 indhold vil blive ignoreret. Kommandoen ligger alene i
-modtageradressen 
+modtageradressen
 
 Hvis du vil tilmelde dig med en anden adresse end den du skriver
 fra, f.eks. jens@example.com, skal du skrive til:

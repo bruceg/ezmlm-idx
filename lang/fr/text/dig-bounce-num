@@ -10,7 +10,7 @@ Aucune archive des bulletins eux-memes n'est conservee, mais vous pouvez
 toujours recuperer les messages a partir de la liste principale.
 
 Ainsi, pour obtenir les messages situes entre le numero 123 et le numero 145
-(avec un maximum de 100 par requete), il suffit d'envoyer un message 
+(avec un maximum de 100 par requete), il suffit d'envoyer un message
 a l'adresse :
    <<#L#>-get.123_145@<#h#>>
 

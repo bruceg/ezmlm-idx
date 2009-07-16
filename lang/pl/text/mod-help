@@ -7,7 +7,7 @@ pocztowe listy dyskusyjne. Mo¿esz nawet na pocz±tku stwierdziæ, ¿e s±
 niezwyk³e, ale jak tylko zaczniesz ich u¿ywaæ, docenisz prostotê systemu
 oraz szybko¶æ, z jak± obs³ugujê twoje ¿yczenia.
 
-Poni¿ej kilka s³ów o tym, jak dzia³a moderowanie: 
+Poni¿ej kilka s³ów o tym, jak dzia³a moderowanie:
 
 Zdalne wpisanie na listê prenumeratorów
 ---------------------------------------
@@ -28,7 +28,7 @@ To wszystko. Nie musisz nadawaæ listowi tytu³u, nie musisz
 równie¿ pisaæ nic w jego tre¶ci!
 
 <=r=>
-Wy¶lê Ci pro¶bê o potwierdzenie 
+Wy¶lê Ci pro¶bê o potwierdzenie
 Co zrobiæ z moim listem?
 Po prostu odpowiedz na niego i gotowe.
 <=R=>
@@ -57,7 +57,7 @@ Obs³uga przegl±du listy:
 
 Chêtny otrzyma pro¶be o potwierdzenie ¿yczenia wypisania siê z listy,
 aby siê upewniæ czy ¿yczenie to zosta³o rzeczywiscie przez niego
-wys³ane. Je¿eli zostanie to potwierdzone, zostanie usuniêty 
+wys³ane. Je¿eli zostanie to potwierdzone, zostanie usuniêty
 z listy prenumeratorów.
 Podobna procedura obowi±zuje podczas zapisywania siê na listê.
 
@@ -88,7 +88,7 @@ Twój rzeczywisty adres pocztowy nie bêdzie ujawniony prenumaratorowi.
 Pozwoli to zachowaæ Ci anonimowo¶æ.
 
 <=rl=>
-Aby uzyskaæ listê prenumeratorów <#L#>@<#h#>, 
+Aby uzyskaæ listê prenumeratorów <#L#>@<#h#>,
 wy¶lij list na adres:
    <<#L#>-list@<#h#>>
 
@@ -116,12 +116,12 @@ w kolejce pocztowej i wysy³am ¿yczenie przyjrzenia sie listowi do
 moderatora.
 
 Wystarczy, aby¶ odpowiedzia³ na adres zwrotny tego listu, u¿ywaj±c
-funkcji "odpowiedz (reply)", aby zaakceptowaæ tre¶æ listu. 
+funkcji "odpowiedz (reply)", aby zaakceptowaæ tre¶æ listu.
 
 Je¿eli natomiast chcesz odmówiæ zgody na wys³anie listu, wy¶lij
 pocztê na adres wziêty z nag³ówka "From:" (mo¿na zwykle tego
 dokonaæ poprzez u¿ycie opcji "reply-to-all/odpowiedz-na-wszystkie-
--adresy" i skasowanie z tej listy w³asnego adresu oraz adresu 
+-adresy" i skasowanie z tej listy w³asnego adresu oraz adresu
 akceptuj±cego). Mo¿esz równie¿ dodaæ jak±¶ notkê do wysy³aj±cego
 odrzucony przez Ciebie list, aby wyt³umaczyæ mu, dlaczego to
 uczyni³e¶. Notkê dodajesz umieszczaj±c j± w tre¶ci powy¿szego listu

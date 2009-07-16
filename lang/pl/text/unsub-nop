@@ -4,7 +4,7 @@ Powiadomienie: Adresu pocztowego
 <#A#>
 
 nie ma na li¶cie prenumeratorów <#l#>. Nie by³o go równie¿
-przed dosteniem Twojego ¿yczenia wykre¶lenia z listy.. 
+przed dosteniem Twojego ¿yczenia wykre¶lenia z listy..
 
 Je¿eli wypisa³e¶(a¶) siê, lecz nadal dostajesz listy, jeste¶ po prostu
 zapisany(a) z innego adresu, ni¿ ten, którego w³a¶nie u¿ywasz.
@@ -16,7 +16,7 @@ znajdziesz tam frazê:
 W³a¶ciwy adres, na który powinno wiêc trafiæ twoje ¿yczenie wypisania to:
 '<#l#>-unsubscribe-user=example.com@<#h#>'.
 Po prostu napisz na powy¿szy adres, zamieniaj±c user=example.com na twoje
-prawdziwe dane, odpowiedz po¼niej na pro¶bê potwierdzenia, 
+prawdziwe dane, odpowiedz po¼niej na pro¶bê potwierdzenia,
 powieniene¶(a¶) wówczas dostaæ list, ¿e jeste¶ wykre¶lony(a)
 z listy prenumeratorów.
 

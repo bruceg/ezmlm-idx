@@ -96,7 +96,7 @@ a moins que vous ne lui ecriviez directement.
 
 <=rl=>
 Pour obtenir la liste des abonnees a <#L#>@<#h#>, envoyez un
-message a : 
+message a :
    <<#L#>-list@<#h#>>
 
 Pour obtenir un historique des transactions de la liste

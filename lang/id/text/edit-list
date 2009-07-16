@@ -32,7 +32,7 @@ help                panduan umum (antara 'top' dan 'bottom').
 info                info list. Baris pertama sangat berarti.
 <=mn=>
 messages            list of subject lines and internal error messages.
-mod_help            panduan khusus untuk moderator list. 
+mod_help            panduan khusus untuk moderator list.
 mod_reject          untuk pengirim yang postingnya tertolak.
 mod_request         untuk moderator dengan postingnya.
 mod_sub             untuk pelanggan setelah moderator menyetujui.

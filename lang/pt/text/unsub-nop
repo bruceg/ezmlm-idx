@@ -7,7 +7,7 @@ não está na lista <#l#>. Ele não foi encontrado quando
 o seu pedido foi recebido.
 
 Se você cancelou a subscrição, mas continua recebendo mensagens,
-você está incluído com um endereço diferente do que está usando 
+você está incluído com um endereço diferente do que está usando
 agora. Por favor, olhe o cabeçalho da mensagem, procurando por:
 
 'Return-Path: <<#l#>-return-1234-user=example.com@<#h#>>'
@@ -22,7 +22,7 @@ Para alguns programas de correio, você precisará tornar os cabeçalhos
 visíveis para ver o caminho de retorno (return-path):
 
 Para o Eudora 4.0, clique no botão "Blah blah ...".
-Para o PMMail, clique em "Window->Show entire message/header". 
+Para o PMMail, clique em "Window->Show entire message/header".
 
 Se isto ainda não funcionar, eu sinto muito em dizer que eu não posso
 ajudar você. Por favor, REPASSE uma mensagem da lista junto com uma
