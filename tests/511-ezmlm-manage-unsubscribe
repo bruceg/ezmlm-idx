@@ -6,7 +6,7 @@
   fatal "failed to produce unsubscribe confirmation"
 
   grephdr_manage
-  grephdr subject: "goodbye from ${LOC}@${HOST}"
+  grephdr Subject: "GOODBYE from ${LOC}@${HOST}"
   grephdr_empty
 
   ${ECHO} OK

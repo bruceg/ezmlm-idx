@@ -14,13 +14,13 @@ EOF
   fatal "failed to produce post"
 
   grephdr_list 1
-  grephdr precedence: bulk
-  grephdr x-no-archive: yes
-  grephdr delivered-to: "mailing list ${LOC}@${HOST}"
-  grephdr from: test@example.org
-  grephdr subject: '\[PFX\] test post'
-  grephdr x-test-header: one
-  grephdr sender: "<${LOC}@${HOST}>"
+  grephdr Precedence: bulk
+  grephdr X-No-Archive: yes
+  grephdr Delivered-To: "mailing list ${LOC}@${HOST}"
+  grephdr From: test@example.org
+  grephdr Subject: '\[PFX\] test post'
+  grephdr X-Test-Header: one
+  grephdr Sender: "<${LOC}@${HOST}>"
   grephdr_empty
 
   grepbody Local: "$LOCAL"
@@ -31,6 +31,6 @@ EOF
   rm -f "$DIR"/prefix
   ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce post"
-  grephdr subject: 'test post'
+  grephdr Subject: 'test post'
 
   ${ECHO} OK

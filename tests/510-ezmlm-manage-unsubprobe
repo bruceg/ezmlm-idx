@@ -6,8 +6,8 @@
   fatal "failed to produce unsubscribe probe"
 
   grephdr_manage
-  grephdr reply-to: "${LOC}-uc\\..*\\..*-test=example.org@${HOST}"
-  grephdr subject: "confirm unsubscribe from ${LOC}@${HOST}"
+  grephdr Reply-To: "${LOC}-uc\\..*\\..*-test=example.org@${HOST}"
+  grephdr Subject: "confirm unsubscribe from ${LOC}@${HOST}"
   grephdr_empty
 
   ${ECHO} OK

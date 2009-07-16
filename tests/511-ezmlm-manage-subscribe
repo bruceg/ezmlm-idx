@@ -6,8 +6,8 @@
   fatal "failed to produce subscribe confirmation"
 
   grephdr_manage
-  grephdr list-unsubscribe: "<mailto:${LOC}-unsubscribe-test=example.org@${HOST}>"
-  grephdr subject: "welcome to ${LOC}@${HOST}"
+  grephdr List-Unsubscribe: "<mailto:${LOC}-unsubscribe-test=example.org@${HOST}>"
+  grephdr Subject: "WELCOME to ${LOC}@${HOST}"
   grephdr_empty
 
   ${ECHO} OK
