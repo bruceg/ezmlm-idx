@@ -555,8 +555,9 @@ void doconfirm(const char *act)
 
   hdr_subject((*act == ACTION_SC[0]) ? MSG(SUB_USR_SUBSCRIBE)
 	      : (*act == ACTION_UC[0]) ? MSG(SUB_USR_UNSUBSCRIBE)
-	      : (*act == ACTION_VC[0]) ? MSG(SUB_MOD_SUBSCRIBE)
-	      : /*(*act == ACTION_WC[0]) ?*/ MSG(SUB_MOD_UNSUBSCRIBE));
+	      : (*act == ACTION_TC[0] || *act == ACTION_RC[0])
+	      ? MSG(SUB_MOD_SUBSCRIBE)
+	      : MSG(SUB_MOD_UNSUBSCRIBE));
   hdr_ctboundary();
     copy(&qq,"text/top",flagcd);
 }
