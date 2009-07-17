@@ -1,0 +1,20 @@
+  prompt "moderated subscribe:  "
+
+  ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
+  touch "$DIR"/modsub
+
+  LOCAL=${SUBCOOKIE}
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
+  ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce subscribe confirmation"
+
+  MODSUBCOOKIE=`gethdr Reply-To | cut -d@ -f1`
+  grephdr_manage
+  grephdr Reply-To: "${LOC}-tc\\..*\\..*-test=example.org@${HOST}"
+  grephdr Subject: "CONFIRM subscribe to ${LOC}@${HOST}"
+  grephdr_empty
+  grepbody I respectfully request your permission to add
+  grepbody test@example.org
+  grepbody to the subscribers of the ${LOC} mailing list. This request
+
+  ${ECHO} OK
