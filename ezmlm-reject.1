@@ -13,7 +13,8 @@ ezmlm-reject \- reject messages unsuitable for distribution
 reads a mail message from its standard input.
 It rejects the message if it sees something it doesn't like.
 
-If the message has a ``Precedence: junk'' header,
+If the message has either a ``Precedence: junk'' or a ``Precedence:
+bulk'' header,
 .B ezmlm-reject
 exits 99 causing the message to be ignored. This causes replies from (some)
 vacation programs to be ignored.

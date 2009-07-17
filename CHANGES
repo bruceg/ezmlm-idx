@@ -24,6 +24,9 @@ ezmlm-idx-7.0.2, ????-??-??
 - Fixed selection of [un]subscribe subject line for moderated
   subscriptions.
 
+- Clarified ezmlm-reject man page to note that Precedence: bulk is also
+  rejected.
+
 ezmlm-idx-7.0.1, 2009-07-09
 ===========================
 
