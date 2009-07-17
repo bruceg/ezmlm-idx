@@ -9,5 +9,8 @@
   grephdr Reply-To: "${LOC}-uc\\..*\\..*-test=example.org@${HOST}"
   grephdr Subject: "confirm unsubscribe from ${LOC}@${HOST}"
   grephdr_empty
+  grepbody To confirm that you would like
+  grepbody test@example.org
+  grepbody removed from the ${LOC} mailing list, please send an empty reply
 
   ${ECHO} OK

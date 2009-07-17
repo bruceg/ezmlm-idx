@@ -8,5 +8,8 @@
   grephdr_manage
   grephdr Subject: "GOODBYE from ${LOC}@${HOST}"
   grephdr_empty
+  grepbody Acknowledgment: I have removed the address
+  grepbody test@example.org
+  grepbody from the ${LOC} mailing list. This address
 
   ${ECHO} OK

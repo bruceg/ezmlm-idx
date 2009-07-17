@@ -9,5 +9,8 @@
   grephdr List-Unsubscribe: "<mailto:${LOC}-unsubscribe-test=example.org@${HOST}>"
   grephdr Subject: "WELCOME to ${LOC}@${HOST}"
   grephdr_empty
+  grepbody Acknowledgment: I have added the address
+  grepbody test@example.org
+  grepbody to the ${LOC} mailing list.
 
   ${ECHO} OK

@@ -9,5 +9,9 @@
   grephdr Reply-To: "${LOC}-sc\\..*\\..*-test=example.org@${HOST}"
   grephdr Subject: "confirm subscribe to ${LOC}@${HOST}"
   grephdr_empty
+  grepbody To confirm that you would like
+  grepbody test@example.org
+  grepbody added to the ${LOC} mailing list, please send
+
 
   ${ECHO} OK
