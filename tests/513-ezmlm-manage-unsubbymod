@@ -1,0 +1,22 @@
+  prompt "unsubscribe by mod:   "
+
+  ${EZBIN}/ezmlm-sub "$DIR" test@example.org
+  touch "$DIR"/modsub
+  touch "$DIR"/remote
+  SENDER="moderator@$HOST"
+
+  DEFAULT="unsubscribe-test=example.org"
+  LOCAL="${LOC}-unsubscribe-test=example.org"
+  ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce unsubscribe confirmation"
+
+  MODUNSUBCOOKIE=`gethdr Reply-To | cut -d@ -f1`
+  grephdr_manage
+  grephdr Reply-To: "${LOC}-wc\\..*\\..*-test=example.org@${HOST}"
+  grephdr Subject: "CONFIRM unsubscribe from ${LOC}@${HOST}"
+  grephdr_empty
+  grepbody A request has been made to remove
+  grepbody test@example.org
+  grepbody from the ${LOC} mailing list. If you agree, please send
+
+  ${ECHO} OK
