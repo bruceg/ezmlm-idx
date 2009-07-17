@@ -5,6 +5,7 @@
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce subscribe probe"
 
+  SUBCOOKIE=`gethdr Reply-To | cut -d@ -f1`
   grephdr_manage
   grephdr Reply-To: "${LOC}-sc\\..*\\..*-test=example.org@${HOST}"
   grephdr Subject: "confirm subscribe to ${LOC}@${HOST}"

@@ -148,3 +148,10 @@ exists() {
 msgexists() {
   ${TEST} -s "$QQMSG" -a -s "${QQENV}"
 }
+
+#######################################
+# Extract parts of the message header #
+#######################################
+gethdr() {
+    ${SED} -e "/^$1:/!d; s/[^ ]* *//;" "$QQHDR"
+}

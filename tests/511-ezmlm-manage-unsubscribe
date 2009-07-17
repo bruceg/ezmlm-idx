@@ -1,8 +1,8 @@
   prompt "unsubscribe:          "
 
-  DEFAULT="unsubscribe"
-  LOCAL="${LOC}-${DEFAULT}"
-  ${EZBIN}/ezmlm-manage -U "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  LOCAL=${UNSUBCOOKIE}
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
+  ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce unsubscribe confirmation"
 
   grephdr_manage

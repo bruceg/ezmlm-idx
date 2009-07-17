@@ -5,6 +5,7 @@
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce unsubscribe probe"
 
+  UNSUBCOOKIE=`gethdr Reply-To | cut -d@ -f1`
   grephdr_manage
   grephdr Reply-To: "${LOC}-uc\\..*\\..*-test=example.org@${HOST}"
   grephdr Subject: "confirm unsubscribe from ${LOC}@${HOST}"

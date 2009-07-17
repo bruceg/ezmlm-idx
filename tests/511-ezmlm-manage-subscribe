@@ -1,8 +1,8 @@
   prompt "subscribe:            "
 
-  DEFAULT="subscribe"
-  LOCAL="${LOC}-${DEFAULT}"
-  ${EZBIN}/ezmlm-manage -S "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  LOCAL=${SUBCOOKIE}
+  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
+  ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce subscribe confirmation"
 
   grephdr_manage
