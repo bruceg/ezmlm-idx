@@ -27,6 +27,9 @@ ezmlm-idx-7.0.2, ????-??-??
 - Clarified ezmlm-reject man page to note that Precedence: bulk is also
   rejected.
 
+- Added a proper charset for ch_GB (Chinese GuoBiao), and added an
+  explicit charset for the other languages that were missing them.
+
 ezmlm-idx-7.0.1, 2009-07-09
 ===========================
 
