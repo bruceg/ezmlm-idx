@@ -21,6 +21,8 @@ release.
 ezmlm-idx-7.1.0, ????-??-??
 ===========================
 
+- Added support for wildcard addresses in all address databases.
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 

@@ -158,10 +158,16 @@ int issub(const char *subdir,
 	  stralloc *recorded)
 {
   const char *r = 0;
+  int result;
   subdir = fixsubdir(subdir);
   if ((r = opensub()) != 0)
     strerr_die2x(111,FATAL,r);
-  return plugin->issub(&info,subdir,userhost,recorded);
+  if ((result = plugin->issub(&info,subdir,userhost,recorded)) == 0) {
+    userhost += str_rchr(userhost,'@');
+    if (*userhost)
+      result = plugin->issub(&info,subdir,userhost,recorded);
+  }
+  return result;
 }
 
 const char *logmsg(unsigned long num,
