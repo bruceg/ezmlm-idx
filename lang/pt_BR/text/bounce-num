@@ -1,14 +1,14 @@
-# Revision: 1
+# Revision: 2
 
 Eu, O sistema, mantenho um controle das mensagens da lista <#L> que não
 foram entregues para o seu endereço.
+
 <=a=>
 Cópias destas mensagens podem estar no arquivo.
-<=aI=>
+
 Para pegar a mensagem 12345 do arquivo, envie uma mensagem vazia para
   <<#L#>-get.12345@<#h#>>
 
-<=ia=>
 Para recuperar uma lista de assuntos e autores das últimas 100
 mensagens, envie uma mensagem vazia para:
    <<#L#>-index@<#h#>>

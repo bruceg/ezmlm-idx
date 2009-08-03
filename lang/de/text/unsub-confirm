@@ -18,16 +18,16 @@ als Empfänger einsetzen.
 <=x=>
 Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
    mailto:<#R#>
-<=q=>
-
-Manche Mailprogramme sind nicht in der Lage, lange Adressen zu
-verarbeiten. Falls Sie die angegebene Adresse nicht anschreiben
-können, benutzen Sie bitte die Adresse
-<<#L#>-request@<#h#>> und tragen die
-obengenannte Adresse in die Betreff-Zeile (Subject:) ein.
 <==>
 
 Ich habe nicht überprüft, ob Ihre Adresse wirklich die Mailingliste
 bezieht. Sollte die Adresse nicht zu den Abonnenten der Mailingliste
 gehören erhalten Sie erst nach Ihrer Bestätigung eine Fehlermeldung.
+
+<=q=>
+Manche Mailprogramme sind nicht in der Lage, lange Adressen zu
+verarbeiten. Falls Sie die angegebene Adresse nicht anschreiben
+können, benutzen Sie bitte die Adresse
+<<#L#>-request@<#h#>> und tragen die
+obengenannte Adresse in die Betreff-Zeile (Subject:) ein.
 

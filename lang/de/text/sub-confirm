@@ -1,4 +1,4 @@
-# Revision: 1
+# Revision: 0
 Um zu bestätigen, daß Sie unter der Adresse
 
 <#A#>
@@ -17,19 +17,19 @@ als Empfänger einsetzen.
 <=x=>
 Falls Ihr Programm Hyperlinks unterstützt, klicken Sie hier:
    mailto:<#R#>
-<=q=>
-
-Manche Mailprogramme sind nicht in der Lage, lange Adressen zu
-verarbeiten. Falls Sie die angegebene Adresse nicht anschreiben
-können, benutzen Sie bitte die Adresse
-<<#L#>-request@<#h#>> und tragen die
-obengenannte Adresse in die Betreff-Zeile (Subject:) ein.
 <==>
 
 Diese Bestätigung dient zwei Zwecken. Zum einen wird dadurch sicher-
 gestellt, daß ich Mails an Ihre Adresse zustellen kann.
 Zum anderen dient die Bestätigung als Schutz gegen gefälschte
 Mailinglisten-Abonnements.
+
+<=q=>
+Manche Mailprogramme sind nicht in der Lage, lange Adressen zu
+verarbeiten. Falls Sie die angegebene Adresse nicht anschreiben
+können, benutzen Sie bitte die Adresse
+<<#L#>-request@<#h#>> und tragen die
+obengenannte Adresse in die Betreff-Zeile (Subject:) ein.
 
 <=s=>
 Diese Mailingliste ist moderiert. Sobald Sie die Bestätigung

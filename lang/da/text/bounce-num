@@ -1,16 +1,15 @@
-# Revision: 1
+# Revision: 2
 
 Jeg har hold øje med hvilke breve fra <#L> listen der er
 kommet retur fordi de ikke kunne afleveres til dig.
 
 <=a=>
 Kopier af disse brev er muligvis i arkivet.
-<=aI=>
+
 Du kan f.eks. hente brev 123 fra arkivet ved at send et tomt
 brev til:
    <<#L#>-get.123@<#h#>>
 
-<=ia=>
 Du kan f.eks. hente brev 123-145 (max. 100 ad gangen), ved at
 sende et tomt brev til:
    <<#L#>-get.123_145@<#h#>>

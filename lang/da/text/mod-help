@@ -54,6 +54,7 @@ For udtrækslisterne:
 <#L#>-digest-subscribe@<#h#>
 <#L#>-digest-unsubscribe@<#h#>
 
+<==>
 Brugeren vil modtage et brev som skal bekræftes med et tomt
 svar for at sikre at vedkommende råder over den pågældende
 postadresse.

@@ -1,4 +1,4 @@
-# Revision: 1
+# Revision: 2
 Oops, that confirmation number appears to be invalid.
 
 The most common reason for invalid numbers is expiration. I have to
@@ -19,6 +19,14 @@ to this address:
 
 or click here:
 	mailto:<#R#>
+<=q=>
+
+Some email programs contain bugs and can't handle long addresses.
+If you cannot reply to this message, send a message to:
+
+<<#L#>-request@<#h#>>
+
+and paste the complete address found above into the Subject line.
 <==>
 
 Again, check the reply address carefully to make sure it is all included

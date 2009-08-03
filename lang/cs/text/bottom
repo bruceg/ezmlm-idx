@@ -1,4 +1,4 @@
-# Revision: 1
+# Revision: 0
 
 --- Administrativní pøíkazy pro list <#l#> ---
 
@@ -21,27 +21,7 @@ Podobné adresy existují i pro list digestù:
    <<#L#>-digest-subscribe@<#h#>>
    <<#L#>-digest-unsubscribe@<#h#>>
 
-<=ai=>
-Zprávy èíslo 123 a¾ 145 z archívu (maximálnì 100 zpráv na jeden mail)
-získáte zasláním zprávy na následující adresu:
-   <<#L#>-get.123_145@<#h#>>
-
-<=aI=>
-Zprávu èíslo 12 získáte pomocí následující adresy:
-   <<#L#>-get.12@<#h#>>
-
-<=i=>
-Seznam zpráv se subjectem a autorem zpráv 123-456 - e-mail:
-   <<#L#>-index.123_456@<#h#>>
-
-Tyto adresy v¾dy vrací seznam 100 zpráv, maximálnì 2000 na jeden po¾adavek.
-Tak¾e ve vý¹e uvedeném pøíkladì ve skuteènosti dostanete seznam zpráv 100-499.
-
-<=ai=>
-Pro získání zpráv se stejným subjectem jako zpráva 12345 po¹lete
-prázdný mail na adresu:
-   <<#L#>-thread.12345@<#h#>>
-
+<==>
 Zprávy ve skuteènosti nemusí být prázdné - budu jejich obsah ignorovat.
 Jediná dùle¾itá vìc je ADRESA na kterou mail posíláte.
 

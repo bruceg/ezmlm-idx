@@ -1,4 +1,4 @@
-# Revision: 1
+# Revision: 0
 
 --- Poni¿ej znajduj± siê komendy menad¿era list dyskusyjnych "ezmlm".
 
@@ -22,26 +22,7 @@ I odpowiadaj±ce powy¿szemu adresy, je¶li chodzi ci o przegl±d listy:
    <<#L#>-digest-subscribe@<#h#>>
    <<#L#>-digest-unsubscribe@<#h#>>
 
-<=ai=>
-   <<#L#>-get.12_45@<#h#>>:
-   Chêæ otrzymania kopii listów od nr 12 do 45 z archiwum.
-   Jednym listem mo¿esz otrzymaæ maksymalnie 100 listów.
-
-<=aI=>
-   <<#L#>-get.12@<#h#>>:
-   Chêæ otrzymania kopii listu nr 12 z archiwum.
-<=i=>
-   <<#L#>-index.123_456@<#h#>>:
-   Chêæ otrzymania tytu³ów listów od nr 123 do 456 z archiwum.
-   Tytu³y s± wysy³ane do Ciebie w paczkach po sto na jeden list.
-   Mo¿esz maksymalnie zamówiæ 2000 tytu³ów na jeden raz.
-
-<=ai=>
-   <<#L#>-thread.12345@<#h#>>:
-   Chêæ otrzymania wszystkich kopii listów z tym samym tytu³em
-   jaki posiada list o numerze 12345.
-
-
+<==>
 NIE WYSY£AJ POLECEÑ ADMINISTRACYJNYCH NA LISTÊ DYSKUSYJN¡!
 Jesli to zrobisz, administrator listy ich nie zobaczy, natomiast
 wszyscy prenumeratorzy nie¼le siê na Ciebie wkurz± i zostaniesz

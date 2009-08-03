@@ -1,10 +1,13 @@
-# Revision: 1
+# Revision: 2
 
 I've kept a list of which messages from the <#L#> mailing list have
 bounced from your address.
 
 <=a=>
 Copies of these messages may be in the archive.
+
+To retrieve message number 123 from the archive, send a blank mail to:
+   <<#L#>-get.123@<#h#>>
 
 To retrieve a set of messages 123-145 (a maximum of 100 per request),
 send an empty message to:

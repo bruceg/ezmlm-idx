@@ -1,4 +1,4 @@
-# Revision: 1
+# Revision: 2
 Sorry, het bevestigingsnummer lijkt ongeldig.
 
 Dit gebeurt meestal doordat ik het antwoord te laat heb gekregen. Ik moet
@@ -18,6 +18,13 @@ een reply naar dit adres:
 
 U kunt ook hier klikken:
 	mailto:<#R#>
+<=q=>
+
+Sommige emailprogramma's bevatten fouten en kunnen niet overweg met lange
+adressen. Als u geen reply kunt sturen op dit verzoek, kunt u een bericht
+sturen naar:
+<<#L#>-request@<#h#>>
+en plak het volledige adres wat hierboven staat in de "Subject:" regel.
 <==>
 
 Ik heb niet gecontroleerd of uw adres op dit moment op de mailing list
@@ -26,11 +33,4 @@ kijkt u naar een bericht dat u van de mailing list hebt ontvangen.
 Ieder bericht bevat uw email adres in het "return path";
 Bijvoorbeeld,  mary@example.com ontvangt berichten met het "return-path":
 <<#l#>-return-<number>-mary=example.com@<#h#>.
-
-<=q=>
-Sommige emailprogramma's bevatten fouten en kunnen niet overweg met lange
-adressen. Als u geen reply kunt sturen op dit verzoek, kunt u een bericht
-sturen naar:
-<<#L#>-request@<#h#>>
-en plak het volledige adres wat hierboven staat in de "Subject:" regel.
 

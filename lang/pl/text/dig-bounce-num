@@ -5,10 +5,10 @@ pod Twój adres z listy <#L#>-digest. Mam zachowany numer pierwszego
 listu ka¿dego przegl±du, z którym mia³e¶ k³opoty. Mo¿esz wiêc
 spróbowaæ dostaæ listy z archiwum g³ównego.
 
+<=a=>
 Aby dostaæ list nr 12345 z archiwum, wy¶lij pusty list na
 adres: <#L#>-get.12345@<#h#>.
 
-<=ia=>
 Aby dostaæ listê tytu³ów i autorów ostatnich stu listów, wy¶lij
 pust± wiadomosc na adres: <#L#>-index@<#h#>.
 

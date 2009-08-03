@@ -1,4 +1,4 @@
-# Revision: 1
+# Revision: 0
 
 --- Aqui estão os endereços de comando do ezmlm.
 
@@ -27,27 +27,7 @@ Existem também estes endereços similares para a lista "digest":
    <<#L#>-digest-subscribe@<#h#>>
    <<#L#>-digest-unsubscribe@<#h#>>
 
-<=ai=>
-   <<#L#>-get.12_45@<#h#>>:
-   Recupera uma cópia das mensagens 12 a 45 do arquivo.
-   No máximo 100 mensagens serão retornadas por requisição.
-
-<=aI=>
-   <<#L#>-get.12@<#h#>>:
-   Recupera uma cópia da mensagem 12 do arquivo.
-
-<=i=>
-   <<#L#>-index.123_456@<#h#>>:
-   Recupera os assuntos das mensagens número 123 a 456.
-   Assuntos são retornados em grupos de 100, ou seja você receberá
-   os assuntos das mensagens 100 a 499.
-   Um máximo de 2000 assuntos são retornados por requisição.
-
-<=ai=>
-   <<#L#>-thread.12345@<#h#>>:
-   Recupera uma cópia de todas as mensagens com o mesmo assunto
-   da mensagem 12345.
-
+<==>
 Na verdade as mensagens não precisam ser vazias, mas eu irei
 ignorar o seu conteúdo. Somente o ENDEREÇO é importante.
 
