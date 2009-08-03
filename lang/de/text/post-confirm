@@ -11,12 +11,9 @@ Normalerweise genügt es, einfach auf "Antworten" zu wählen. Sie können
 die Zieladresse daraufhin prüfen, ob sie mit "<#L#>-confirm" beginnt.
 Falls dies nicht der Fall sein sollte, dann kopieren Sie die Adresse in
 das "Empfänger"-Feld einer neuen Mail.
-<=x=>
 
 Alternativ können Sie auch folgenden Link anklicken:
        mailto:<#A#>
-
-<==>
 
 Um die Einsendung nicht zu bestätigen, können Sie diese Nachricht einfach
 ignorieren.
