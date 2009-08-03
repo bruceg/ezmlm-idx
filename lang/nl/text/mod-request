@@ -9,11 +9,9 @@ Dit gebeurt gewoonlijk als u een "reply" geeft op dit bericht.
 Het juiste adres moet beginnen met "<#L#>-accept". Als dit niet zou werken,
 kunt u het adres kopieeren en plakken naar de "To:" regel van een nieuw
 bericht.
-<=x=>
 
 U kunt ook hier klikken:
 	mailto:<#A#>
-<==>
 
 Om dit bericht te weigeren stuurt u een e-mail naar:
 
@@ -22,11 +20,9 @@ Om dit bericht te weigeren stuurt u een e-mail naar:
 Gewoonlijk kunt u "reply-to-all" aanklikken en dan alle adressen verwijderen,
 behalve het adres wat begint met
 "<#L#>-reject".
-<=x=>
 
 Om te weigeren, kunt u ook hier klikken:
 	mailto:<#R#>
-<==>
 
 U hoeft het hele bericht niet bij te sluiten in uw antwoord.
 Als u opmerkingen naar de afzender van het geweigerde bericht wilt sturen,

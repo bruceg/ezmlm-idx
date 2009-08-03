@@ -9,11 +9,9 @@ Di solito è sufficiente premere il bottone "Rispondi". Puoi controllare
 l'indirizzo per assicurarti che inizi con "<#L#>-accept".
 Se non funziona, allora puoi copiare l'indirizzo e incollarlo nel campo
 "A:" di un nuovo messaggio.
-<=x=>
 
 Oppure, clicca qui:
         mailto:<#A#>
-<==>
 
 Per rifiutare la spedizone del messaggio alla mailing list  e rispedirlo
 al mittente, spedisci un messaggio anche vuoto a:
@@ -22,11 +20,9 @@ al mittente, spedisci un messaggio anche vuoto a:
 
 Di solito basta premere il bottone "Rispondi a tutti" e poi cancellare
 tutti gli indirizzi tranne quello che inizia con "<#L#>-reject".
-<=x=>
 
 Oppure, clicca qui:
         mailto:<#R#>
-<==>
 
 Nella risposta non occorre includere il messaggio accettato o rifiutato.
 Se rifiuti il messaggio e desideri spedire un commento al suo mittente,

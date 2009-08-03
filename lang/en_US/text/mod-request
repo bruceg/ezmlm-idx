@@ -9,11 +9,9 @@ Usually, this happens when you just hit the "reply" button. You can
 check the address to make sure that it starts with
 "<#L#>-accept". If this does not work, simply copy the
 address and paste it into the "To:" field of a new message.
-<=x=>
 
 Alternatively, click here:
 	mailto:<#A#>
-<==>
 
 To reject the post and cause it to be returned to the
 sender, please send a message to:
@@ -23,11 +21,9 @@ sender, please send a message to:
 Usually, it is easiest to hit the "reply-to-all" button, and then
 remove all the addresses except the one starting with
 "<#L#>-reject".
-<=x=>
 
 Alternatively, click here:
 	mailto:<#R#>
-<==>
 
 You do not need to copy the post in your response to accept or
 reject it. If you wish to send a comment to the sender of a rejected
