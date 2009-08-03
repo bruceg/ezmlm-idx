@@ -10,11 +10,9 @@ adderad till <#l#> listan, skicka ett brev till denna adress:
 Enklast görs det genom att trycka på "svara" ("reply") knappen.
 Ifall det inte fungerar, kopiera adressen och klistra in den i
 "Till" ("To:") fältet i ett nytt brev.
-<=x=>
 
 eller tryck här:
 	<mailto:<#R#>>
-<==>
 
 Denna bekräftelse tjänar två syften. Dels säkerställer den att det går
 att skicka brev till dig och dels skyddar den dig mot att andra försöker
