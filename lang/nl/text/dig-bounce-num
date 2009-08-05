@@ -1,13 +1,16 @@
-# Revision: 1
-
+# Revision: 2
 Ik heb een lijst met digests bewaard van de <#L#>-digest mailing list
-die ge-bounced werden op uw adres.
-Van iedere digest die u gemist hebt, heb ik het nummer bewaard van
+die geweigerd werden op uw adres.
+Van iedere digest die u gemist heeft, heb ik het nummer bewaard van
 het eerste bericht in de digest.
 
 <=a=>
-Ik bewaar de digests niet, maar u kunt de berichten uit het
+Ik bewaar de digests zelf niet, maar u kunt de berichten uit het
 archief ophalen.
+
+Om het bericht met nummer 123 uit het archief op te halen,
+stuur een lege email naar:
+   <<#L#>-get.123@<#h#>>
 
 Om berichten 123-145 op te halen (maximaal 100 per verzoek),
 stuurt u een e-mail naar:

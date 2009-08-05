@@ -1,17 +1,21 @@
-# Revision: 1
+# Revision: 2
 
 Ik heb een lijst bewaard met berichten van de <#L#> mailing list die
-ge-bounced werden op uw adres.
+geweigerd werden op uw adres.
 
 <=a=>
 Deze berichten kunnen nog in het archief staan.
 
+Om het bericht met nummer 123 uit het archief op te vragen,
+stuurt u een lege email naar:
+   <<#L#>-get.123@<#h#>>
+
 Om de berichten 123-145 op te vragen (maximaal 100 per verzoek),
-stuurt u een e-mail naar:
+stuurt u een lege e-mail naar:
    <<#L#>-get.123_145@<#h#>>
 
-Om een overzicht van onderwerpen en schrijver te ontvangen van de
-laatste 100 berichten, stuurt u een e-mail naar:
+Om een overzicht van onderwerpen en schrijvers te ontvangen van de
+laatste 100 berichten, stuurt u een lege e-mail naar:
    <<#L#>-index@<#h#>>
 
 <==>
