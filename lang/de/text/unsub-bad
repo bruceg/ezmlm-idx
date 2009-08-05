@@ -1,4 +1,4 @@
-# Revision: 1
+# Revision: 2
 Es scheint, daß diese Bestätigungsnummer nicht gültig ist.
 
 Der Grund dafür ist in den meisten Fällen eine Zeitüberschreitung.
@@ -13,14 +13,23 @@ Ihre Adresse
 
 <#A#>
 
-von der Mailingliste <#l#>@<#h#>
-gestrichen werden soll, senden Sie bitte eine leere Mail an
-folgende Adresse:
+von der Mailingliste <#l#> gestrichen werden soll, senden Sie bitte
+eine leere Mail an folgende Adresse:
 
 <#R#>
 
 oder klicken Sie hier, wenn Ihr Programm Hyperlinks unterstützt:
    mailto:<#R#>
+
+<=q=>
+Normalerweise genügt es, einfach auf "Antworten" zu wählen. Falls
+dies nicht der Fall sein sollte, dann kopieren Sie die Adresse in
+das "Empfänger"-Feld einer neuen Mail.
+Schicken Sie diese Mail an folgende Adress:
+
+<<#L#>-request@<#h#>>
+
+<==>
 
 Bitte prüfen Sie noch einmal genau, daß Sie an die richtige Adresse
 schreiben und diese nicht von Ihrem Mailprogramm verstümmelt wurde.
