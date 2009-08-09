@@ -1,4 +1,4 @@
-(c) 1997, 1998, 1999, 2004, 2005, 2006, 2008
+(c) 1997, 1998, 1999, 2004, 2005, 2006, 2008, 2009
   Fred Lindberg, lindberg@id.wustl.edu (code+docs+faq)
   Fred B. Ringel, fredr@rivertown.net (faq)
   Bruce Guenter, bruce@untroubled.org (code+docs)
@@ -10,8 +10,8 @@ the conditions under which this software is made available.
 Like any other piece of software (and information generally), ezmlm-idx
 comes with NO WARRANTY.
 
-This software originated from ezmlm-0.53 (written by Dan J. Bernstein
-and placed into the public domain).
+This software originated from ezmlm-0.53, written by Dan J. Bernstein,
+which has now been placed into the public domain.
 
 ezmlm provided basic message distribution, subscriber address handling,
 message archiving (single quoted message retrieval only), and bounce
@@ -27,19 +27,15 @@ PostgreSQL subscriber databases.
 See INSTALL for installation instructions.
 See UPGRADE to upgrade from a previous version of ezmlm-idx.
 See CHANGES to see what's new in this version.
+See FAQ for more info on ezmlm(-idx) functions and setup.
 See FILES for a list of files in this package.
-See FAQ for more info on ezmlm(-idx) functions and setup (see below on
-	    how to get the latest version).
-See ezman-0.xx* for a user's/administrator's manual to ezmlm/idx. Available
-	    on line at http://www.ezmlm.org/ and for download at
-	    ftp://ftp.ezmlm.org/pub/patches/ezman/ and mirrors.
 
-NOTE: Some ezmlmrc translations may not be up-to-date. ezmlm-make will
-complain and the results may not match the documentation. Changes required
-are small. If you correct a translation, please submit it for inclusion
-in the next ezmlm-idx version.
+NOTE: Some ezmlmrc translations are not up to date.  Please check the
+status of the translations at http://www.ezmlm.org/lang/ and if your
+language is out of date, consider submitting corrections.  Your
+contribution will be acknowledged below in the next ezmlm-idx release.
 
-*.rpm will put ezmlm-cgi in the bin directory. To use it, you must manually
+The RPM will put ezmlm-cgi in the bin directory. To use it, you must manually
 move it to a cgi-bin directory, set ownership and SUID (if needed), and
 set up /ezmlm/ezcgirc.
 
@@ -48,22 +44,23 @@ See http://cr.yp.to/ezmlm.html for the latest information about ezmlm.
 See http://www.ezmlm.org/ for the latest version of ezmlm-idx, as well
 as on-line versions of the FAQ and docs.
 
-Mail ``ezmlm-subscribe@list.cr.yp.to'' to join the ezmlm mailing
-list (averages 3 messages per day). This list is run by Dan J. Bernstein
-using ezmlm.
+Mail ``ezmlm-subscribe@lists.untroubled.org'' to join the ezmlm mailing
+list (low traffic). This list is run by Bruce Guenter using ezmlm-idx.
+The archive is viewable at http://lists.untroubled.org/?list=ezmlm
 
 Send general comments, questions, bug reports, and patches to:
-	ezmlm@list.cr.yp.to
+	ezmlm@lists.untroubled.org
 
-Below, acknowledgements and a list of systems where ezmlm-idx has been reported
-to work.
+ACKNOWLEDGEMENTS
+
+Translations have been provided by:
 
 TRANSLATIONS (from newest to oldest)
+nl:	Arthur Muller <Arthur@FutureQuest.net>
 it:	Tullio Andreatta <t.andreatta@troppoavanti.it>
-da:	Maurice Snellen <maurice@hypercube.demon.nl>
-da:	Arthur Muller <Arthur@FutureQuest.net>
-id:	PakOgah <pakogah@pala.bo-tak.info>
+nl:	Maurice Snellen <maurice@hypercube.demon.nl>
 de:	Lars Kruse <lists@sumpfralle.de>
+id:	PakOgah <pakogah@pala.bo-tak.info>
 es:	Ruben Cardenal <ruben@ruben.cn>
 sv:	Mads E. Eilertsen <mads.e.eilertsen@hist.no>
 fr:	Jean-Marc Lasgouttes
