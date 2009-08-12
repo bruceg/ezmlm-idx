@@ -1,5 +1,7 @@
   prompt "subscribe probe:      "
 
+  ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
+
   DEFAULT="subscribe"
   LOCAL="${LOC}-${DEFAULT}"
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \

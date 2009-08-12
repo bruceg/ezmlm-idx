@@ -752,7 +752,11 @@ int main(int argc,char **argv)
   msg_headers();
 
   if (act == AC_SUBSCRIBE) {
-    if (ismod && remote.s != 0) {
+    if (issub(workdir,target.s,0)) {
+      geton(ACTION_SC);
+      copybottom();
+      qmail_to(&qq,target.s);
+    } else if (ismod && remote.s != 0) {
       doconfirm(ACTION_RC);
       copy(&qq,"text/mod-sub-confirm",flagcd);
       copybottom();
@@ -817,7 +821,11 @@ int main(int argc,char **argv)
     }
 
   } else if (act == AC_UNSUBSCRIBE) {
-    if (flagunsubconf) {
+    if (!issub(workdir,target.s,0)) {
+      getoff(ACTION_UC);
+      copybottom();
+      qmail_to(&qq,target.s);
+    } else if (flagunsubconf) {
       if (ismod && remote.s != 0) {
         doconfirm(ACTION_WC);
         copy(&qq,"text/mod-unsub-confirm",flagcd);

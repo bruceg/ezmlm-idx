@@ -1,0 +1,18 @@
+  prompt "unsubscribe nop:      "
+
+  ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
+
+  DEFAULT="unsubscribe"
+  LOCAL="${LOC}-${DEFAULT}"
+  ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce unsubscribe nop"
+
+  grephdr_manage
+  grephdr Subject: "Not subscribed to ${LOC}@${HOST}"
+  grephdr_empty
+  grepbody I\'m sorry, I\'ve been unable to carry out your request,
+  grepbody since the address
+  grepbody test@example.org
+  grepbody was not on the ${LOC} mailing list when I received
+
+  ${ECHO} OK

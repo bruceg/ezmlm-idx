@@ -1,5 +1,7 @@
   prompt "subscribe:            "
 
+  ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
+
   LOCAL=${SUBCOOKIE}
   DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
