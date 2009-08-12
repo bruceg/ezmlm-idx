@@ -99,7 +99,7 @@
 
   ${EZBIN}/ezmlm-unsub "$DIR" deny @badexample.com || \
 	fatal "ezmlm-unsub: failed to remove wildcard"
-  ${EZBIN}/ezmlm-issubn "$DIR" deny @badexample.com && \
+  ${EZBIN}/ezmlm-issubn "$DIR" deny && \
 	fatal "ezmlm-sub/issubn: failed to remove wildcard address"
 
 # clean up
