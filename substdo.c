@@ -3,7 +3,7 @@
 #include "byte.h"
 #include "error.h"
 
-static int allwrite(int (*op)(),int fd,const char *buf,int len)
+static int allwrite(substdio_fn op,int fd,const char *buf,int len)
 {
   int w;
 

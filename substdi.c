@@ -2,7 +2,7 @@
 #include "byte.h"
 #include "error.h"
 
-static int oneread(int (*op)(),int fd,char *buf,int len)
+static int oneread(substdio_fn op,int fd,char *buf,int len)
 {
   int r;
 

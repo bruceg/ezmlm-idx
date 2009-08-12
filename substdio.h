@@ -1,17 +1,20 @@
 #ifndef SUBSTDIO_H
 #define SUBSTDIO_H
 
+#include <sys/types.h>
+typedef ssize_t (*substdio_fn)();
+
 typedef struct substdio {
   char *x;
   int p;
   int n;
   int fd;
-  int (*op)();
+  substdio_fn op;
 } substdio;
 
 #define SUBSTDIO_FDBUF(op,fd,buf,len) { (buf), 0, (len), (fd), (op) }
 
-extern void substdio_fdbuf(substdio *s,int (*op)(),int fd,char *buf,int len);
+extern void substdio_fdbuf(substdio *s,substdio_fn op,int fd,char *buf,int len);
 
 extern int substdio_flush(substdio *s);
 extern int substdio_put(substdio *s,const char *buf,int len);
