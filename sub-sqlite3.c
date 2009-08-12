@@ -329,7 +329,9 @@ static const char *_logmsg(struct subdbinfo *info,
   if (!stralloc_cats(&logline,",")) die_nomem();
   if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,listno)))
 	die_nomem();
-  if (!stralloc_cats(&logline,",NOW(),")) die_nomem();
+  if (!stralloc_cats(&line,",")) die_nomem();
+  if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,now()))) die_nomem();
+  if (!stralloc_cats(&line,",'")) die_nomem();
   if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) die_nomem();
   if (!stralloc_cats(&logline,",")) die_nomem();
   if (done < 0) {
@@ -412,8 +414,9 @@ static void _searchlog(struct subdbinfo *info,
 {
   sqlite3_stmt *stmt;
   int res;
-  int length;
-  const char *row;
+  datetime_sec when;
+  struct datetime dt;
+  char date[DATE822FMT];
 
 /* SELECT (*) FROM list_slog WHERE fromline LIKE '%search%' OR address   */
 /* LIKE '%search%' ORDER BY tai; */
@@ -421,9 +424,8 @@ static void _searchlog(struct subdbinfo *info,
 /* This requires reading the entire table, since search fields are not   */
 /* indexed, but this is a rare query and time is not of the essence.     */
 
-    if (!stralloc_copys(&line,"SELECT CONCAT(FROM_UNIXTIME(UNIX_TIMESTAMP(tai)),"
-	"'-0000: ',UNIX_TIMESTAMP(tai),' ',edir,etype,' ',address,' ',"
-	"fromline) FROM ")) die_nomem();
+    if (!stralloc_copys(&line,"SELECT tai, edir||etype||' '||address||' '||fromline"
+			" FROM ")) die_nomem();
     if (!stralloc_cat_table(&line,info,table)) die_nomem();
     if (!stralloc_cats(&line,"_slog")) die_nomem();
     if (*search) {	/* We can afford to wait for LIKE '%xx%' */
@@ -440,12 +442,20 @@ static void _searchlog(struct subdbinfo *info,
 		strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
 
     while ((res = sqlite3_step(stmt)) != SQLITE_DONE) {
-		if (res != SQLITE_ROW)
-			strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
-		length = sqlite3_column_bytes(stmt, 0);
-		row = sqlite3_column_text(stmt, 0);
+      if (res != SQLITE_ROW)
+	strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
 
-      if (subwrite(row,length) == -1) die_write();
+      (void)scan_ulong((const char*)sqlite3_column_text(stmt,0),&when);
+      datetime_tai(&dt,when);
+      if (!stralloc_copyb(&line,date,date822fmt(date,&dt)-1)) die_nomem();
+      if (!stralloc_cats(&line,": ")) die_nomem();
+      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,when))) die_nomem();
+      if (!stralloc_cats(&line," ")) die_nomem();
+      if (!stralloc_catb(&line,
+			 (const char*)sqlite3_column_text(stmt,1),
+			 sqlite3_column_bytes(stmt,1)))
+	die_nomem();
+      if (subwrite(line.s,line.len) == -1) die_write();
     }
 
 	sqlite3_finalize(stmt);
@@ -578,7 +588,10 @@ static int _subscribe(struct subdbinfo *info,
     if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
     if (!stralloc_cat_table(&logline,info,table)) die_nomem();
     if (!stralloc_cats(&logline,
-	"_slog (tai,address,edir,etype,fromline) VALUES (NOW(),'")) die_nomem();
+		       "_slog (tai,address,edir,etype,fromline) VALUES ("))
+      die_nomem();
+    if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,now()))) die_nomem();
+    if (!stralloc_cats(&logline,",'")) die_nomem();
     if (!stralloc_cat(&logline,&quoted)) die_nomem();
     if (flagadd) {						/* edir */
       if (!stralloc_cats(&logline,"','+','")) die_nomem();
@@ -630,7 +643,9 @@ static void _tagmsg(struct subdbinfo *info,
     if (!stralloc_cats(&line,"_cookie (msgnum,tai,cookie,bodysize,chunk) VALUES ("))
 		die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgnum))) die_nomem();
-    if (!stralloc_cats(&line,",NOW(),'")) die_nomem();
+    if (!stralloc_cats(&line,",")) die_nomem();
+    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,now()))) die_nomem();
+    if (!stralloc_cats(&line,",'")) die_nomem();
     if (!stralloc_catb(&line,hashout,COOKIE)) die_nomem();
     if (!stralloc_cats(&line,"',")) die_nomem();
     if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,bodysize)))
@@ -731,7 +746,7 @@ static const char *create_table_set(struct subdbinfo *info,
   /* Subscription log table. No addr idx to make insertion fast, since
    * that is almost the only thing we do with this table */
   if ((r = create_table(info,suffix,"_slog","("
-			"  tai		TIMESTAMP,"
+			"  tai		INTEGER,"
 			"  address	VARCHAR(255) NOT NULL,"
 			"  fromline	VARCHAR(255) NOT NULL,"
 			"  edir		CHAR NOT NULL,"
@@ -743,7 +758,7 @@ static const char *create_table_set(struct subdbinfo *info,
     /* main list inserts a cookie here. Sublists check it */
     if ((r = create_table(info,suffix,"_cookie","("
 			  "  msgnum		INT4 NOT NULL PRIMARY KEY,"
-			  "  tai		TIMESTAMP NOT NULL,"
+			  "  tai		INTEGER NOT NULL,"
 			  "  cookie		CHAR(20) NOT NULL,"
 			  "  chunk		INT4 NOT NULL DEFAULT 0,"
 			  "  bodysize	INT4 NOT NULL DEFAULT 0"
