@@ -323,7 +323,7 @@ void main(int argc,char **argv)
 {
   unsigned long subs;
   int fdlock;
-  char *sender;
+  const char *sender;
   const char *ret;
   const char *err;
   int flagmlwasthere;

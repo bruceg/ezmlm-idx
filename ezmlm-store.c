@@ -137,7 +137,7 @@ void main(int argc,char **argv)
 {
   const char *dir;
   int fdlock;
-  char *sender;
+  const char *sender;
   int match;
   int flaginheader;
   int flagmodpost;

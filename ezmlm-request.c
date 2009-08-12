@@ -262,10 +262,10 @@ void parseline(char *cp)
 
 void main(int argc,char **argv)
 {
-  char *local;
+  const char *local;
   char *action;
   char *def;
-  char *sender;
+  const char *sender;
   char *psz;
   const char *err;
   int cmdidx;

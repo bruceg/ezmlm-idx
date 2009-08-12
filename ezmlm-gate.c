@@ -83,8 +83,8 @@ int mailprog(const char *s)
 void main(int argc,char **argv)
 {
   const char *dir;
-  char *sender;
-  char *moddir;
+  const char *sender;
+  const char *moddir;
   int opt;
   int ret = 0;
   unsigned int i,j;

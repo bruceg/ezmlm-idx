@@ -164,10 +164,10 @@ void maketo(void)
 
 void main(int argc,char **argv)
 {
-  char *sender;
-  char *def;
+  const char *sender;
+  const char *def;
   char *local;
-  char *action;
+  const char *action;
   int flaginheader;
   int flagcomment;
   int flaggoodfield;
