@@ -21,6 +21,9 @@ release.
 ezmlm-idx-7.1.0, ????-??-??
 ===========================
 
+- Added support for SQLite3 subscriber databases.
+  Thanks to Mike Tedder.
+
 - Added support for wildcard addresses in all address databases.
 
 - Added support for qmqpservers to all ezmlm-idx programs.

@@ -53,6 +53,8 @@ HOW TO BUILD, TEST, AND INSTALL:
        % make mysql
     If you want to add PostgreSQL support, run:
        % make pgsql
+    If you want to add SQLite3 support, run:
+       % make sqlite3
 
  5. To use a language other than US English as the default for list
     texts, edit the ``conf-lang'' file and change the first line to one
@@ -85,6 +87,8 @@ HOW TO BUILD, TEST, AND INSTALL:
 	% ./ezmlm-test -s mysql -l user -p passwd -h host
     or:
 	% ./ezmlm-test -s pgsql -l user -p passwd -h host
+    or:
+	% ./ezmlm-test -s sqlite3
 
     This will test the SQL part of the binaries. ``host'' defaults to
     ``localhost'' and ``user'' defaults to ``ezmlm''. There is no
