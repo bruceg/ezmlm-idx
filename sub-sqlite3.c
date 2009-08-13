@@ -178,7 +178,10 @@ static void _closesub(struct subdbinfo *info)
 static const char *_opensub(struct subdbinfo *info)
 {
   if (!(sqlite3*)info->conn) {
-    if (sqlite3_open_v2(info->host, (sqlite3**)&info->conn, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL) != SQLITE_OK)
+    if (!stralloc_copys(&line,info->db)) die_nomem();
+    if (!stralloc_cats(&line,".db")) die_nomem();
+    if (!stralloc_0(&line)) die_nomem();
+    if (sqlite3_open_v2(line.s, (sqlite3**)&info->conn, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL) != SQLITE_OK)
 	return sqlite3_errmsg((sqlite3*)info->conn);					/* init */
 
 	/* register functions to sqlite */
