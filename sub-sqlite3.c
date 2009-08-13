@@ -12,6 +12,7 @@
 #include "lock.h"
 #include "log.h"
 #include "makehash.h"
+#include "now.h"
 #include "open.h"
 #include "qmail.h"
 #include "readwrite.h"
@@ -28,10 +29,7 @@
 #include "wrap.h"
 #include <sys/types.h>
 #include <sqlite3.h>
-#include <stdio.h>
-#include <sys/stat.h>
 #include <unistd.h>
-#include <time.h>
 
 static char strnum[FMT_ULONG];
 static stralloc addr = {0};
@@ -68,104 +66,6 @@ static sqlite3_stmt *_sqlquery(const struct subdbinfo *info, const stralloc *str
 	return stmt;
 }
 
-static void _nowFunc(sqlite3_context *ctx, int argc, sqlite3_value **argv)
-{
-	time_t t;
-	struct tm *tmptr;
-	static char tmp[20];		/* enough to store 'YYYY-MM-DD HH:MM:SS' plus a null */
-
-	/* get current time in seconds */
-	time(&t);
-
-	/* convert unix seconds to local time */
-	tmptr = localtime(&t);
-
-	/* format the time string appropriately */
-	strftime(tmp, sizeof(tmp), "%Y-%m-%d %H:%M:%S", tmptr);
-
-	/* and return the result */
-	sqlite3_result_text(ctx, tmp, -1, SQLITE_STATIC);
-}
-
-static void _concatFunc(sqlite3_context *ctx, int argc, sqlite3_value **argv)
-{
-	int t;
-	static stralloc tmp = { 0 };
-	const char *str;
-
-	/* initialize string */
-	if (!stralloc_copys(&tmp, "")) return sqlite3_result_error_nomem(ctx);
-
-	/* iterate through each parameter */
-	for (t = 0; t < argc; t++)
-	{
-		/* check for a null parameter */
-		if (sqlite3_value_type(argv[t]) == SQLITE_NULL)
-			return sqlite3_result_null(ctx);
-
-		/* append parameter as string */
-		str = sqlite3_value_text(argv[t]);
-		if (!stralloc_cats(&tmp, str)) return sqlite3_result_error_nomem(ctx);
-	}
-
-	/* set result string */
-	sqlite3_result_text(ctx, tmp.s, tmp.len, SQLITE_STATIC);
-}
-
-static void _fromUnixtimeFunc(sqlite3_context *ctx, int argc, sqlite3_value **argv)
-{
-	time_t t;
-	struct tm *tmptr;
-	static char tmp[20];		/* enough to store 'YYYY-MM-DD HH:MM:SS' plus a null */
-
-	/* ensure one argument */
-	if (argc != 1)
-		return sqlite3_result_null(ctx);
-
-	/* ensure argument is an integer */
-	if (sqlite3_value_type(argv[0]) != SQLITE_INTEGER)
-		return sqlite3_result_null(ctx);
-
-	/* read time in seconds */
-	t = sqlite3_value_int(argv[0]);
-
-	/* convert unix seconds to local time */
-	tmptr = localtime(&t);
-
-	/* format the time string appropriately */
-	strftime(tmp, sizeof(tmp), "%Y-%m-%d %H:%M:%S", tmptr);
-
-	/* and return the result */
-	sqlite3_result_text(ctx, tmp, -1, SQLITE_STATIC);
-}
-
-static void _unixTimestampFunc(sqlite3_context *ctx, int argc, sqlite3_value **argv)
-{
-	time_t t;
-	struct tm tim = { 0 };
-
-	/* ensure one argument */
-	if (argc != 1)
-		return sqlite3_result_null(ctx);
-
-	/* ensure argument is a string */
-	if (sqlite3_value_type(argv[0]) != SQLITE_TEXT)
-		return sqlite3_result_null(ctx);
-
-	/* parse the incoming timestamp */
-	sscanf(sqlite3_value_text(argv[0]), "%d-%d-%d %d:%d:%d", &tim.tm_year, &tim.tm_mon, &tim.tm_mday, &tim.tm_hour, &tim.tm_min, &tim.tm_sec);
-
-	/* fixup the date so it is valid within the control structure */
-	tim.tm_year -= 1900;
-	tim.tm_mon--;
-
-	/* convert to unix seconds */
-	t = mktime(&tim);
-
-	/* and return the result */
-	sqlite3_result_int(ctx, t);
-}
-
 /* close connection to SQL server, if open */
 static void _closesub(struct subdbinfo *info)
 {
@@ -182,23 +82,7 @@ static const char *_opensub(struct subdbinfo *info)
     if (!stralloc_cats(&line,".db")) die_nomem();
     if (!stralloc_0(&line)) die_nomem();
     if (sqlite3_open_v2(line.s, (sqlite3**)&info->conn, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL) != SQLITE_OK)
-	return sqlite3_errmsg((sqlite3*)info->conn);					/* init */
-
-	/* register functions to sqlite */
-	if (sqlite3_create_function((sqlite3*)info->conn, "NOW", 0, SQLITE_UTF8, NULL, _nowFunc, NULL, NULL) != SQLITE_OK)
-		return sqlite3_errmsg((sqlite3*)info->conn);
-
-	/* CONCAT function takes variable parameters */
-	if (sqlite3_create_function((sqlite3*)info->conn, "CONCAT", -1, SQLITE_UTF8, NULL, _concatFunc, NULL, NULL) != SQLITE_OK)
-		return sqlite3_errmsg((sqlite3*)info->conn);
-
-	/* FROM_UNIXTIME can take an extra format parameter, but we don't use it here, so it's not implemented */
-	if (sqlite3_create_function((sqlite3*)info->conn, "FROM_UNIXTIME", 1, SQLITE_UTF8, NULL, _fromUnixtimeFunc, NULL, NULL) != SQLITE_OK)
-		return sqlite3_errmsg((sqlite3*)info->conn);
-
-	/* UNIX_TIMESTAMP can take no parameters, but we don't use that here either, so again it's only implemented to take one parameter */
-	if (sqlite3_create_function((sqlite3*)info->conn, "UNIX_TIMESTAMP", 1, SQLITE_UTF8, NULL, _unixTimestampFunc, NULL, NULL) != SQLITE_OK)
-		return sqlite3_errmsg((sqlite3*)info->conn);
+	return sqlite3_errmsg((sqlite3*)info->conn); /* init */
   }
   return (char *) 0;
 }
