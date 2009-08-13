@@ -188,7 +188,7 @@ static int _issub(struct subdbinfo *info,
 
 	if (recorded)
 	{
-		if (!stralloc_copyb(recorded, sqlite3_column_text(stmt, 0), sqlite3_column_bytes(stmt, 0)))
+		if (!stralloc_copyb(recorded, (const char*)sqlite3_column_text(stmt, 0), sqlite3_column_bytes(stmt, 0)))
 			die_nomem();
 		if (!stralloc_0(recorded)) die_nomem();
 	}
@@ -282,7 +282,7 @@ static unsigned long _putsubs(struct subdbinfo *info,
 			strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
 	/* this is safe even if someone messes with the address field def */
 		length = sqlite3_column_bytes(stmt, 0);
-		row = sqlite3_column_text(stmt, 0);
+		row = (const char*)sqlite3_column_text(stmt, 0);
       if (subwrite(row,length) == -1) die_write();
       no++;					/* count for list-list fxn */
     }
