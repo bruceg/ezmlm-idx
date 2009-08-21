@@ -15,7 +15,7 @@
 stralloc target = {0};
 char *to;
 
-const char FATAL[] = "install: fatal: ";
+const char FATAL[] = "installer: fatal: ";
 void nomem() { strerr_die2x(111,FATAL,"out of memory"); }
 
 char inbuf[SUBSTDIO_INSIZE];
@@ -141,7 +141,7 @@ char **argv;
   umask(077);
 
   to = argv[1];
-  if (!to) strerr_die2x(100,FATAL,"install: usage: install dir");
+  if (!to) strerr_die2x(100,FATAL,"installer: usage: install dir");
 
   for (;;) {
     if (getln(&in,&line,&match,'\n') == -1)

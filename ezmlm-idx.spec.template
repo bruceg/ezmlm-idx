@@ -128,7 +128,7 @@ echo %_libdir/ezmlm >conf-lib
 echo gcc %optflags -I%_includedir/mysql -I%_includedir/pgsql >conf-cc
 echo gcc %optflags -s -L/usr/lib/mysql >conf-ld
 
-make it man install mysql pgsql sqlite3
+make all
 
 %install
 /bin/rm -rf %buildroot
@@ -146,10 +146,10 @@ mv MAN.tmp MAN
 %else
 %endif
 
-./install %buildroot/%rcdir < ETC
-./install %buildroot/%_bindir < BIN
-./install %buildroot/%_mandir < MAN
-./install %buildroot/%_libdir/ezmlm < LIB
+./installer %buildroot/%rcdir < ETC
+./installer %buildroot/%_bindir < BIN
+./installer %buildroot/%_mandir < MAN
+./installer %buildroot/%_libdir/ezmlm < LIB
 ln -s `head -n 1 conf-lang` %buildroot/%rcdir/default
 
 cp ezmlm-cgi %buildroot/%ezcgi
