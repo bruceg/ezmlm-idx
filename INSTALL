@@ -98,7 +98,7 @@ HOW TO BUILD, TEST, AND INSTALL:
     -p ''.
 
  8. Copy binaries, man pages, and modules to the correct locations.
-	# make setup
+	# make install
 	(or copy manually).
     If you'd like to retest the installation, run ezmlm-test as before.
 

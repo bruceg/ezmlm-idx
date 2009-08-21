@@ -926,7 +926,7 @@
   dir, you also have to:
 
 
-               % make setup
+               % make install
 
 
 
@@ -970,7 +970,7 @@
                # su eztest
                % ./ezmlm-test
                % exit
-               # make setup
+               # make install
                # exit
 
 
@@ -5583,7 +5583,7 @@
   before
 
 
-               # make setup
+               # make install
 
 
 

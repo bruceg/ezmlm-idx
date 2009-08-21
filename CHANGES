@@ -31,6 +31,8 @@ ezmlm-idx-7.1.0, ????-??-??
 - Modified the (un)subscribe procedure to not require confirmation
   before telling the sender they were already on (or off) the list.
 
+- Renamed to "setup" target to the more standard "install".
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 
