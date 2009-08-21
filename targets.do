@@ -1,2 +1,1 @@
-dependon it man setup conf-bin conf-man
-dependon mysql pgsql sqlite3
+dependon all setup conf-bin conf-man
