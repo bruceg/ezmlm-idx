@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+check=${1:-:}
+
 if ! [ -s CHANGES -a -s README -a -s VERSION ]; then
   echo "Run this script from in the ezmlm-idx source directory."
   exit 1
@@ -8,12 +10,12 @@ fi
 
 base=`sed -e q VERSION`
 
-if ! grep -q "^${base}, " CHANGES; then
+if $check && ! grep -q "^${base}, " CHANGES; then
   echo "$0: CHANGES is missing release stamp."
   exit 1
 fi
 
-if ! grep -q " ${base}, " HISTORY; then
+if $check && ! grep -q " ${base}, " HISTORY; then
   echo "$0: HISTORY is missing release stamp."
   exit 1
 fi
