@@ -40,5 +40,10 @@
   ${ECHO} "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to exit 0 after failing to match"
   checkenv spl1 "$LOC-return-@$HOST" "$LOC-subscribe-$SND=$HOST@$HOST"
+# if no split file, should exit 0
+  ${RM} "${DIR}/split"
+  ${ECHO} "X-num: spl2" | ${EZBIN}/ezmlm-split "$DIR" >"$ERR" 2>&1 || \
+	fatal "failed to exit 0 with no split file"
+  checkenv spl2 "$LOC-return-@$HOST" "$LOC-subscribe-$SND=$HOST@$HOST"
 
   ${ECHO} "OK"

@@ -33,6 +33,8 @@ ezmlm-idx-7.1.0, ????-??-??
 
 - Renamed to "setup" target to the more standard "install".
 
+- Modified ezmlm-split to exit silently if there is not "split" file.
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 

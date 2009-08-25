@@ -102,8 +102,12 @@ int findname(void)
     if (!stralloc_copyb(&domain,cpat + 1,cplast - cpat)) die_nomem();
   if (!stralloc_0(&domain)) die_nomem();
 
-  if ((fd = open_read(split)) == -1)
-    strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,split));
+  if ((fd = open_read(split)) == -1) {
+    if (errno == error_noent)
+      _exit(0);
+    else
+      strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,split));
+  }
   substdio_fdbuf(&sssp,read,fd,spbuf,(int) sizeof(spbuf));
   lineno = 0;
   for (;;) {	/* dom:hash_lo:hash_hi:listaddress */

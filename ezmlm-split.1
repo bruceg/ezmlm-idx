@@ -39,7 +39,9 @@ The hash and domain parts are then tested against successive lines of
 If a match is found, the request is forwarded to the corresponding
 sublist, and
 .B ezmlm-split
-exits 99. If a match is not found or action is not
+exits 99. If
+.I splitfile
+does not exist, a match is not found, or action is not
 .I \-subscribe
 or
 .IR \-unsubscribe ,
