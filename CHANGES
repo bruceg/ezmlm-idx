@@ -33,7 +33,9 @@ ezmlm-idx-7.1.0, ????-??-??
 
 - Renamed to "setup" target to the more standard "install".
 
-- Modified ezmlm-split to exit silently if there is not "split" file.
+- Modified ezmlm-split to exit silently if there is not "split" file,
+  and added it back into the "manager" file to properly handle subscribe
+  and unsubscribe requests destined for sublists.
 
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================

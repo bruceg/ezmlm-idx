@@ -208,6 +208,7 @@
 </manager/>
 |<#B#>/ezmlm-weed
 |<#B#>/ezmlm-get '<#D#>'
+|<#B#>/ezmlm-split '<#D#>'
 |<#B#>/ezmlm-request '<#D#>'
 |<#B#>/ezmlm-manage '<#D#>'
 |<#B#>/ezmlm-clean '<#D#>' || exit 0
