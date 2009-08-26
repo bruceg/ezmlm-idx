@@ -172,12 +172,12 @@ SUBJECT='test'
   ${ECHO} "Content-TYPE" > "$DIR"/headerreject
   { make_message | ${EZBIN}/ezmlm-reject -H "$DIR"; } > /dev/null || \
 	fatal "headerreject -H failed with dir"
+  { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null 2>&1 && \
+	fatal "headerreject failed to reject with dir"
   { make_message | ${EZBIN}/ezmlm-reject -h "$DIR"; } > /dev/null 2>&1 && \
-	fatal "headerreject failed with dir"
+	fatal "headerreject failed to reject with dir and -h"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	fatal "headerreject failed without dir"
-  { make_message | ${EZBIN}/ezmlm-reject -h; }  > /dev/null 2>&1  && \
-	fatal "-h was accepted without dir"
 
 # Suppress content-type header
   CONTENT=''
@@ -185,5 +185,7 @@ SUBJECT='test'
 	fatal "headerreject rejected even though header isn't there"
 
   CONTENT='multIpart/mIXed'
+
+  ${RM} "$DIR"/headerreject
 
   ${ECHO} "OK"

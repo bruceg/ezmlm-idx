@@ -117,11 +117,15 @@ is also set.
 Do not forward command messages.
 .TP
 .B \-h
-Reject message if any of the headers in
+(Default).
+Reject message if
+.I dir
+is set,
 .I dir\fB/headerreject
-occur in the header. Mailing-List headers of other mailing list managers
-can be put into this file, one per line, to prevent processing of messages
-from other mailing lists.
+exists, and any of the headers in that file occur in the
+header. Mailing-List headers of other mailing list managers can be put
+into this file, one per line, to prevent processing of messages from
+other mailing lists.
 .I dir
 must be specified.
 
@@ -130,9 +134,9 @@ A reasonable set of headers would be: ``Mailing-List'', ``X-ml-name'',
 is not important.
 .TP
 .B \-H
-(Default.)
 Ignore
 .IR dir\fB/headerreject .
+.TP
 .B \-q
 Quiet. If the message due to the lack of the list address (see
 .BR \-t )

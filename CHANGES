@@ -37,6 +37,8 @@ ezmlm-idx-7.1.0, ????-??-??
   and added it back into the "manager" file to properly handle subscribe
   and unsubscribe requests destined for sublists.
 
+- Made the ezmlm-reject -h (obey headerreject) option the default.
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 

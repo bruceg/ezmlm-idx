@@ -31,8 +31,8 @@ int flagneedsubject = 1;	/* reject if subject is missing */
 int flagtook = 0;		/* reject unless listaddress in To: or Cc: */
 int exitquiet = 100;		/* reject with error (100) rather than exit */
 				/* quietly (99) if listaddress missing */
-int flagheaderreject = 0;	/* don't reject messages with headers from */
-				/* other mailing lists. */
+int flagheaderreject = 1;	/* reject messages with headers listed in */
+				/* DIR/headerreject. */
 int flagbody = 0;		/* =1 => reject if subject or body starts with*/
 				/* "subscribe" or "unsubscribe" */
 int flagforward = 0;		/* =1 => forward commands to list-request */
@@ -228,16 +228,15 @@ void main(int argc,char **argv)
     getconf(&mimereject,"mimereject",0);
     constmap_init(&mimerejectmap,mimereject.s,mimereject.len,0);
   }
-  if (flagheaderreject) {
-    if (!dir) die_usage();
-    getconf(&headerreject,"headerreject",1);
+  if (flagheaderreject && dir) {
+    getconf(&headerreject,"headerreject",0);
     constmap_init(&headerrejectmap,headerreject.s,headerreject.len,0);
   }
   for (;;) {
     if (getln(&ssin,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (!match) break;
-    if (flagheaderreject)
+    if (flagheaderreject && dir)
       if (constmap(&headerrejectmap,line.s,byte_chr(line.s,line.len,':')))
         strerr_die2x(100,FATAL,MSG(ERR_MAILING_LIST));
 
