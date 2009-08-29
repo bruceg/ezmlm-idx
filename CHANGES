@@ -39,6 +39,9 @@ ezmlm-idx-7.1.0, ????-??-??
 
 - Made the ezmlm-reject -h (obey headerreject) option the default.
 
+- Fixed ezmlm-send to obey the "addtrailer" setting instead of looking
+  for a "text/trailer" file.
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 

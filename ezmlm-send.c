@@ -330,7 +330,6 @@ void main(int argc,char **argv)
   int match;
   unsigned int i;
   int r = 0;
-  int fd;
   int flaginheader;
   int flagbadfield;
   int flagbadpart;
@@ -378,13 +377,7 @@ void main(int argc,char **argv)
     if (!stralloc_copy(&dcprefix,&line)) die_nomem();
     serial = byte_rchr(prefix.s,prefix.len,'#');
   }
-  if ((fd = open_read("text/trailer")) == -1) {	/* see if there is a trailer */
-    if (errno == error_noent) flagtrailer = 0;
-    else strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,"text/trailer"));
-  } else {
-    close(fd);
-    flagtrailer = 1;
-  }
+  flagtrailer = getconf_isset("addtrailer");
 
   if (getconf(&mimeremove,"mimekeep",0))
     mimeremoveflag = 1;
