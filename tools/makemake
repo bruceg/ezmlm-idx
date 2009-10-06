@@ -70,11 +70,11 @@ target() {
 	ext=${target##*.}
 	base=${target%%.*}
 	if [ -f $target.do ]; then
-	    . $target.do
+	    . ./$target.do
 	elif [ -f default.$ext.do ]; then
-	    . default.$ext.do $target $base $tmp
+	    . ./default.$ext.do $target $base $tmp
 	else
-	    . default.do $target $base $tmp
+	    . ./default.do $target $base $tmp
 	fi
     ) 3>$t/$starget.deps 4>$t/$starget.cmds
 #    if [ -s $tmp ]; then
