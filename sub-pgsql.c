@@ -20,6 +20,7 @@
 #include "str.h"
 #include "stralloc.h"
 #include "strerr.h"
+#include "sub_sql.h"
 #include "sub_std.h"
 #include "subhash.h"
 #include "subdb.h"
@@ -568,18 +569,15 @@ static void _tagmsg(struct subdbinfo *info,
     if (*ret) strerr_die2x(111,FATAL,ret);
 }
 
-static int table_exists(struct subdbinfo *info,
-			const char *suffix1,
-			const char *suffix2)
+int sql_table_exists(struct subdbinfo *info,
+		     const char *name)
 {
   PGresult *result;
 
   /* This is a very crude cross-version portable kludge to test if a
    * table exists by testing if a select from the table succeeds.  */
-  if (!stralloc_copys(&line,"SELECT TRUE FROM ")) return -1;
-  if (!stralloc_cats(&line,info->base_table)) return -1;
-  if (!stralloc_cats(&line,suffix1)) return -1;
-  if (!stralloc_cats(&line,suffix2)) return -1;
+  if (!stralloc_copys(&line,"SELECT 0 FROM ")) return -1;
+  if (!stralloc_cats(&line,name)) return -1;
   if (!stralloc_cats(&line," LIMIT 1")) return -1;
   if (!stralloc_0(&line)) return -1;
   result = PQexec((PGconn*)info->conn,line.s);
@@ -593,23 +591,12 @@ static int table_exists(struct subdbinfo *info,
   return 0;
 }
 
-static const char *create_table(struct subdbinfo *info,
-				const char *suffix1,
-				const char *suffix2,
-				const char *definition)
+const char *sql_create_table(struct subdbinfo *info,
+			     const char *definition)
 {
   PGresult *result;
 
-  if (table_exists(info,suffix1,suffix2) > 0)
-    return 0;
-  
-  if (!stralloc_copys(&line,"CREATE TABLE ")) die_nomem();
-  if (!stralloc_cats(&line,info->base_table)) die_nomem();
-  if (!stralloc_cats(&line,suffix1)) die_nomem();
-  if (!stralloc_cats(&line,suffix2)) die_nomem();
-  if (!stralloc_cats(&line,definition)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
-  result = PQexec((PGconn*)info->conn,line.s);
+  result = PQexec((PGconn*)info->conn,definition);
   if (result == NULL)
     return PQerrorMessage((PGconn*)info->conn);
   if (PQresultStatus(result) != PGRES_COMMAND_OK)
@@ -618,93 +605,51 @@ static const char *create_table(struct subdbinfo *info,
   return 0;
 }
 
-static const char *create_table_set(struct subdbinfo *info,
-				    const char *suffix,
-				    int do_mlog)
-{
-  const char *r;
-  
-  /* Address table */
-  /* Need varchar. Domain = 3 chars => fixed length, as opposed to
-   * varchar Always select on domain and hash, so that one index should
-   * do primary key(address) is very inefficient for MySQL.  MySQL
-   * tables do not need a primary key. Other RDBMS require one. For the
-   * log tables, just add an INT AUTO_INCREMENT. For the address table,
-   * do that or use address as a primary key. */
-  if ((r = create_table(info,suffix,""," ("
-			"  hash    INT4 NOT NULL,"
-			"  address VARCHAR(255) NOT NULL PRIMARY KEY"
-			")")) != 0)
-    return r;
-  /* Subscription log table. No addr idx to make insertion fast, since
-   * that is almost the only thing we do with this table */
-  if ((r = create_table(info,suffix,"_slog","("
-			"  tai		TIMESTAMP DEFAULT now(),"
-			"  address	VARCHAR(255) NOT NULL,"
-			"  fromline	VARCHAR(255) NOT NULL,"
-			"  edir		CHAR NOT NULL,"
-			"  etype	CHAR NOT NULL"
-			")")) != 0)
-    return r;
+/* Address table */
+/* Need varchar. Domain = 3 chars => fixed length, as opposed to varchar
+ * Always select on domain and hash, so that one index should do primary
+ * key(address) is very inefficient for MySQL.  MySQL tables do not need
+ * a primary key. Other RDBMS require one. For the log tables, just add
+ * an INT AUTO_INCREMENT. For the address table, do that or use address
+ * as a primary key. */
+const char sql_sub_table_defn[] =
+  "  hash    INT4 NOT NULL,"
+  "  address VARCHAR(255) NOT NULL PRIMARY KEY";
 
-  if (do_mlog) {
-    /* main list inserts a cookie here. Sublists check it */
-    if ((r = create_table(info,suffix,"_cookie","("
-			  "  msgnum	INT4 NOT NULL PRIMARY KEY,"
-			  "  tai	TIMESTAMP NOT NULL DEFAULT now(),"
-			  "  cookie	CHAR(20) NOT NULL,"
-			  "  chunk	INT4 NOT NULL DEFAULT 0,"
-			  "  bodysize	INT4 NOT NULL DEFAULT 0"
-			  ")")) != 0)
-      return r;
+/* Subscription log table. No addr idx to make insertion fast, since
+ * that is almost the only thing we do with this table */
+const char sql_slog_table_defn[] =
+  "  tai	TIMESTAMP DEFAULT now(),"
+  "  address	VARCHAR(255) NOT NULL,"
+  "  fromline	VARCHAR(255) NOT NULL,"
+  "  edir	CHAR NOT NULL,"
+  "  etype	CHAR NOT NULL";
 
-    /* main and sublist log here when the message is done done=0 for
-     * arrived, done=4 for sent, 5 for receit.  tai reflects last
-     * change */
-    if ((r = create_table(info,suffix,"_mlog","("
-			  "msgnum	INT4 NOT NULL,"
-			  "listno	INT4 NOT NULL,"
-			  "tai		TIMESTAMP DEFAULT now(),"
-			  "subs		INT4 NOT NULL DEFAULT 0,"
-			  "done		INT4 NOT NULL DEFAULT 0,"
-			  "PRIMARY KEY (listno,msgnum,done)"
-			  ")")) != 0)
-      return r;
-  }
-  
-  return 0;
-}
+/* main list inserts a cookie here. Sublists check it */
+const char sql_cookie_table_defn[] =
+  "  msgnum	INT4 NOT NULL PRIMARY KEY,"
+  "  tai	TIMESTAMP NOT NULL DEFAULT now(),"
+  "  cookie	CHAR(20) NOT NULL,"
+  "  chunk	INT4 NOT NULL DEFAULT 0,"
+  "  bodysize	INT4 NOT NULL DEFAULT 0";
 
-static const char *_mktab(struct subdbinfo *info)
-{
-  const char *r;
+/* main and sublist log here when the message is done done=0 for
+ * arrived, done=4 for sent, 5 for receit.  tai reflects last change */
+const char sql_mlog_table_defn[] =
+  "msgnum	INT4 NOT NULL,"
+  "listno	INT4 NOT NULL,"
+  "tai		TIMESTAMP DEFAULT now(),"
+  "subs		INT4 NOT NULL DEFAULT 0,"
+  "done		INT4 NOT NULL DEFAULT 0,"
+  "PRIMARY KEY (listno,msgnum,done)";
 
-  if ((r = create_table_set(info,"",1)) != 0)
-    return r;
-  if ((r = create_table_set(info,"_allow",0)) != 0)
-    return r;
-  if ((r = create_table_set(info,"_deny",0)) != 0)
-    return r;
-  if ((r = create_table_set(info,"_digest",1)) != 0)
-    return r;
-  if ((r = create_table_set(info,"_mod",0)) != 0)
-    return r;
-  return 0;
-}
-
-static const char *remove_table(struct subdbinfo *info,
-				const char *suffix1,
-				const char *suffix2)
+const char *sql_drop_table(struct subdbinfo *info,
+			   const char *name)
 {
   PGresult *result;
 
-  if (table_exists(info,suffix1,suffix2) == 0)
-    return 0;
-  
   if (!stralloc_copys(&line,"DROP TABLE ")) die_nomem();
-  if (!stralloc_cats(&line,info->base_table)) die_nomem();
-  if (!stralloc_cats(&line,suffix1)) die_nomem();
-  if (!stralloc_cats(&line,suffix2)) die_nomem();
+  if (!stralloc_cats(&line,name)) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   result = PQexec((PGconn*)info->conn,line.s);
   if (result == NULL)
@@ -712,30 +657,6 @@ static const char *remove_table(struct subdbinfo *info,
   if (PQresultStatus(result) != PGRES_COMMAND_OK)
     return PQresultErrorMessage(result);
   PQclear(result);
-  return 0;
-}
-
-static const char *remove_table_set(struct subdbinfo *info,
-				    const char *suffix)
-{
-  const char *r;
-  if ((r = remove_table(info,suffix,"_mlog")) != 0
-      || (r = remove_table(info,suffix,"_cookie")) != 0
-      || (r = remove_table(info,suffix,"_slog")) != 0
-      || (r = remove_table(info,suffix,"")) != 0)
-    return r;
-  return 0;
-}
-
-static const char *_rmtab(struct subdbinfo *info)
-{
-  const char *r;
-  if ((r = remove_table_set(info,"")) != 0
-      || (r = remove_table_set(info,"_allow")) != 0
-      || (r = remove_table_set(info,"_deny")) != 0
-      || (r = remove_table_set(info,"_digest")) != 0
-      || (r = remove_table_set(info,"_mod")) != 0)
-    return r;
   return 0;
 }
 
@@ -745,10 +666,10 @@ struct sub_plugin sub_plugin = {
   _closesub,
   _issub,
   _logmsg,
-  _mktab,
+  sub_sql_mktab,
   _opensub,
   _putsubs,
-  _rmtab,
+  sub_sql_rmtab,
   _searchlog,
   _subscribe,
   _tagmsg,
