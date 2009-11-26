@@ -118,10 +118,20 @@ const char *messages_getn(const char *msg,const char *params[10])
   return xdata.s;
 }
 
-const char *messages_get(const char *msg,const char *p1,const char *p2)
+const char *messages_get0(const char *msg)
 {
   const char *params[10] = {0};
-  params[1] = p1;
-  params[2] = p2;
+  return messages_getn(msg, params);
+}
+
+const char *messages_get1(const char *msg,const char *p1)
+{
+  const char *params[10] = {0,p1,0};
+  return messages_getn(msg,params);
+}
+
+const char *messages_get2(const char *msg,const char *p1,const char *p2)
+{
+  const char *params[10] = {0,p1,p2,0};
   return messages_getn(msg,params);
 }
