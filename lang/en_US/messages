@@ -127,6 +127,8 @@ ERR_VERSION|ezmlmrc version mismatch. Behavior may not match docs.|ezmlmrc versi
 ERR_WRITE|unable to write <#1#>|unable to write <#1#>
 ERR_WRITE_STDOUT|unable to write to standard output|unable to write to standard output
 SUB_CONFIRM_POST|Confirm post to <#L#>@<#H#>|Confirm post to <#L#>@<#H#>
+SUB_DIGEST_ISSUE|<#L#> Digest <#1#> Issue <#2#>|<#L#> Digest <#1#> Issue <#2#>
+SUB_DIGEST_OF|<#L#> Digest of: <#1#>|<#L#> Digest of: <#1#>
 SUB_EDIT_LIST|List of editable text files for <#L#>@<#H#>|List of editable text files for <#L#>@<#H#>
 SUB_EDIT_REQUEST|EDIT <#1#> for <#L#>@<#H#>|EDIT <#1#> for <#L#>@<#H#>
 SUB_EDIT_SUCCESS|Success editing <#1#> for <#L#>@<#H#>|Success editing <#1#> for <#L#>@<#H#>
@@ -143,6 +145,7 @@ SUB_MOD_HELP|Moderator help for <#L#>@<#H#>|Moderator help for <#L#>@<#H#>
 SUB_MOD_SUBSCRIBE|CONFIRM subscribe to <#L#>@<#H#>|CONFIRM subscribe to <#L#>@<#H#>
 SUB_MOD_UNSUBSCRIBE|CONFIRM unsubscribe from <#L#>@<#H#>|CONFIRM unsubscribe from <#L#>@<#H#>
 SUB_PROBE|Probe from <#L#>@<#H#>|Probe from <#L#>@<#H#>
+SUB_RESULT_OF|<#L#> Result of: <#1#>|<#L#> Result of: <#1#>
 SUB_RESULTS|<#L#> results|<#L#> results
 SUB_RETURNED_POST|Returned post for <#L#>@<#H#>|Returned post for <#L#>@<#H#>
 SUB_STATUS|Subscription status on <#L#>@<#H#>|Subscription status on <#L#>@<#H#>

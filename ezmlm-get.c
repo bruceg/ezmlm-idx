@@ -818,7 +818,6 @@ void main(int argc,char **argv)
   }
   /* ignore any extra args */
 
-  if (!stralloc_copy(&subject,&outlocal)) die_nomem();	/* for subjects */
   if (!stralloc_copy(&listname,&outlocal)) die_nomem();	/* for content disp */
 
   local = env_get("LOCAL");
@@ -980,10 +979,7 @@ void main(int argc,char **argv)
     szmsgnum[fmt_ulong(szmsgnum,mno)] = '\0';
     set_cpnum(szmsgnum);	/* for copy */
 				/* prepare subject to get entropy for tagmsg*/
-    if (!stralloc_cats(&subject," Digest ")) die_nomem();
-    if (!stralloc_catb(&subject,date,date822fmt(date,&dt)-1))
-          die_nomem();		/* skip trailing in date '\n' */
-    if (!stralloc_cats(&subject," Issue ")) die_nomem();
+    date[date822fmt(date,&dt)-1] = 0; /* skip trailing '\n' in date */
     if (getconf_line(&num,"digissue",0)) {
       if(!stralloc_0(&num)) die_nomem();
       scan_ulong(num.s,&issue);
@@ -991,7 +987,8 @@ void main(int argc,char **argv)
     } else {
       issue = 1;
     }
-    if (!stralloc_catb(&subject,strnum,fmt_ulong(strnum,issue)))
+    strnum[fmt_ulong(strnum,issue)] = 0;
+    if (!stralloc_copys(&subject,MSG2(SUB_DIGEST_ISSUE,date,strnum)))
       die_nomem();
 					/* use the subject as entropy */
     if (!stralloc_copy(&line,&subject)) die_nomem();
@@ -1033,8 +1030,7 @@ void main(int argc,char **argv)
     zapnonsub(ACTION_GET);		/* restrict to subs if requested */
     tosender();
 				/* for rfc1153 */
-    if (!stralloc_cats(&subject," Digest of: ")) die_nomem();
-    if (!stralloc_cats(&subject,action)) die_nomem();
+    if (!stralloc_copys(&subject,MSG1(SUB_DIGEST_OF,action))) die_nomem();
 
     to = 0;
     pos = str_len(ACTION_GET);
@@ -1115,8 +1111,7 @@ void main(int argc,char **argv)
 
     doheaders();
     tosender();
-    if (!stralloc_cats(&subject," Result of: ")) die_nomem();
-    if (!stralloc_cats(&subject,action)) die_nomem();
+    if (!stralloc_copys(&subject,MSG1(SUB_RESULT_OF,action))) die_nomem();
     presub(1,1,&subject,AC_INDEX,outformat);
 
     if (action[pos] == '-' || action[pos] == '.') pos++;
@@ -1210,8 +1205,7 @@ void main(int argc,char **argv)
     doheaders();
     tosender();
 				/* for rfc1153 */
-    if (!stralloc_cats(&subject," Digest of: ")) die_nomem();
-    if (!stralloc_cats(&subject,action)) die_nomem();
+    if (!stralloc_copys(&subject,MSG1(SUB_DIGEST_OF,action))) die_nomem();
 
     to = 0;
     pos = str_len(ACTION_THREAD);

@@ -42,6 +42,8 @@ ezmlm-idx-7.1.0, ????-??-??
 - Fixed ezmlm-send to obey the "addtrailer" setting instead of looking
   for a "text/trailer" file.
 
+- Added support for custom subject lines to ezmlm-get (for digests).
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 
