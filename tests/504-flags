@@ -1,0 +1,37 @@
+prompt "flags:                "
+
+DEFAULT="digest-subscribe"
+LOCAL="${LOC}-${DEFAULT}"
+
+# Check loading flags from "flags"
+
+echo aBcdefGHIJkLmNOpqRSTuvWxYz > "$DIR"/flags
+${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+fatal "failed to produce subscribe probe"
+grepbodynot Flag: t
+
+echo aBcdefGHIJkLmNOpqRStuvWxYz > "$DIR"/flags
+${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+fatal "failed to produce subscribe probe"
+grepbody Flag: t
+
+${RM} "$DIR"/flags
+
+echo F:aBcdefGHIJkLmNOpqRSTuvWxYz > "$DIR"/config
+${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+fatal "failed to produce subscribe probe"
+grepbodynot Flag: t
+
+echo F:aBcdefGHIJkLmNOpqRStuvWxYz > "$DIR"/config
+${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+fatal "failed to produce subscribe probe"
+grepbody Flag: t
+
+echo X: > "$DIR"/config
+echo F:aBcdefGHIJkLmNOpqRStuvWxYz >> "$DIR"/config
+echo 0:zerogoeshere >> "$DIR"/config
+${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+fatal "failed to produce subscribe probe"
+grepbody Flag: t
+
+${ECHO} OK

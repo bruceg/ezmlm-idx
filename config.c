@@ -55,18 +55,35 @@ static struct flag flags[NO_FLAGS] = {
   { -1, 0 }			/* z unused */
 };
 
+static void parse_flags(const char* start,int len)
+{
+  while (len > 0) {
+    const char ch = *start;
+    if (ch >= 'A' && ch <= 'Z')
+      flags[ch - 'A'].state = 0;
+    else if (ch >= 'a' && ch <= 'z')
+      flags[ch - 'a'].state = 1;
+    ++start;
+    --len;
+  }
+}
+
 static void load_flags(void)
 {
-  unsigned int i;
-
+  unsigned int i, j;
   /* Use "key" for temporary storage */
   if (getconf_line(&key,"flags",0)) {
+    parse_flags(key.s,key.len);
+  }
+  else if (getconf(&key,"config",0)) {
     for (i = 0; i < key.len; ++i) {
-      const char ch = key.s[i++];
-      if (ch >= 'A' && ch <= 'Z')
-	flags[ch - 'A'].state = 0;
-      else if (ch >= 'a' && ch <= 'z')
-	flags[ch - 'a'].state = 1;
+      for (j = i; j < key.len && key.s[j] != 0; ++j)
+	;
+      if (key.s[i] == 'F' && key.s[i+1] == ':') {
+	parse_flags(key.s+i+2,j-i-2);
+	return;
+      }
+      i = j;
     }
   }
 }

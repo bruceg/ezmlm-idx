@@ -44,6 +44,8 @@ ezmlm-idx-7.1.0, ????-??-??
 
 - Added support for custom subject lines to ezmlm-get (for digests).
 
+- Fixed handling of adding the trailer on old lists.
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 

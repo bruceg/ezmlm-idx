@@ -1,4 +1,4 @@
-  prompt "flags and substs:     "
+  prompt "substitutions:        "
 
   DEFAULT="digest-subscribe"
   LOCAL="${LOC}-${DEFAULT}"
