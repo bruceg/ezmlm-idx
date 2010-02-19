@@ -5,11 +5,13 @@ LOCAL="${LOC}-${DEFAULT}"
 
 # Check loading flags from "flags"
 
+touch "$DIR"/addtrailer
 echo aBcdefGHIJkLmNOpqRSTuvWxYz > "$DIR"/flags
 ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
 fatal "failed to produce subscribe probe"
 grepbodynot Flag: t
 
+${RM} "$DIR"/addtrailer
 echo aBcdefGHIJkLmNOpqRStuvWxYz > "$DIR"/flags
 ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
 fatal "failed to produce subscribe probe"
@@ -17,11 +19,13 @@ grepbody Flag: t
 
 ${RM} "$DIR"/flags
 
+touch "$DIR"/addtrailer
 echo F:aBcdefGHIJkLmNOpqRSTuvWxYz > "$DIR"/config
 ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
 fatal "failed to produce subscribe probe"
 grepbodynot Flag: t
 
+${RM} "$DIR"/addtrailer
 echo F:aBcdefGHIJkLmNOpqRStuvWxYz > "$DIR"/config
 ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
 fatal "failed to produce subscribe probe"
