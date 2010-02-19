@@ -32,7 +32,7 @@ grepbody() {
 grepbodynot() {
   ${GREP} "^$*" "$QQBODY" >/dev/null 2>&1 && \
   {
-    ${ECHO} "Body is contains extraneous $1 line:";
+    ${ECHO} "Body contains extraneous $1 line:";
     ${GREP} -i "^$1" "$QQBODY"
     BUG="${BUG} body"
     prompt "..............: "
