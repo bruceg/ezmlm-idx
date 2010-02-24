@@ -13,6 +13,7 @@ extern stralloc outhost;
 extern stralloc outlocal;
 extern char flagcd;
 extern int flag_isset(char flag);
+extern int flag_isnameset(const char *name);
 
 extern void startup(const char *dir);
 

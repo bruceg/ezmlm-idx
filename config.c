@@ -6,6 +6,7 @@
 #include "getconf.h"
 #include "idx.h"
 #include "slurp.h"
+#include "str.h"
 #include "strerr.h"
 #include "wrap.h"
 
@@ -27,7 +28,7 @@ stralloc outhost = {0};
 stralloc outlocal = {0};
 char flagcd = '\0';		/* No transfer encoding by default */
 static struct flag flags[NO_FLAGS] = {
-  { 1, "archived" },		/* a By default, list is archived */
+  { -1, "archived" },		/* a By default, list is archived */
   { -1, "modgetonly" },		/* b */
   { -1, "ezmlmrc" },		/* c */
   { -1, "digest" },		/* d */
@@ -42,7 +43,7 @@ static struct flag flags[NO_FLAGS] = {
   { -1, "modpost" },		/* m */
   { -1, "modcanedit" },		/* n */
   { -1, "modpostonly" },	/* o */
-  { 1, "public" },		/* p By default, list is public */
+  { -1, "public" },		/* p By default, list is public */
   { 1, 0 },			/* q */
   { -1, "remote" },		/* r */
   { -1, "modsub" },		/* s */
@@ -152,4 +153,15 @@ int flag_isset(char flag)
     (flag >= 'A' && flag <= 'Z') ? getflag(flag - 'A')
     : (flag >= 'a' && flag <= 'z') ? getflag(flag - 'a')
     : 0;
+}
+
+int flag_isnameset(const char *name)
+{
+  int i;
+  for (i = 0; i < NO_FLAGS; ++i) {
+    if (flags[i].filename != 0
+	&& str_diff(name, flags[i].filename) == 0)
+      return flags[i].state;
+  }
+  return -1;
 }

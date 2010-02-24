@@ -52,6 +52,9 @@ int getconf(stralloc *sa,const char *fn,int flagrequired)
 int getconf_isset(const char *fn)
 {
   struct stat st;
+  int i;
+  if ((i = flag_isnameset(fn)) >= 0)
+    return i;
   return wrap_stat(fn,&st) == 0;
 }
 

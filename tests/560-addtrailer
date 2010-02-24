@@ -1,0 +1,41 @@
+prompt "ezmlm-send trailer:   "
+
+echo "trailer is present" > "$DIR"/text/trailer
+LOCAL="$LOC"
+
+cat >"$TMP" <<EOF
+From: test@example.org
+Subject: test post
+X-Test-Header: one
+Content-Length: zip
+
+message goes here
+EOF
+
+touch "$DIR"/addtrailer
+${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce post"
+grepbody trailer is present
+
+${RM} "$DIR"/addtrailer
+${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce post"
+grepbodynot trailer is present
+
+# Check loading flags from "flags"
+
+touch "$DIR"/addtrailer
+echo aBcdefGHIJkLmNOpqRSTuvWxYz > "$DIR"/flags
+${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce post"
+grepbodynot trailer is present
+
+${RM} "$DIR"/addtrailer
+echo aBcdefGHIJkLmNOpqRStuvWxYz > "$DIR"/flags
+${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "failed to produce post"
+grepbody trailer is present
+
+${RM} "$DIR"/flags
+
+${ECHO} OK
