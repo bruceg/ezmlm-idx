@@ -3,6 +3,8 @@
 
 struct qmail;
 
+extern void codeput(struct qmail *qq,const char *l,unsigned int n,char code);
+extern void codeputs(struct qmail *qq,const char *l,char code);
 extern void copy_xlate(stralloc *out,const stralloc *in,
 		       const char *params[10],char q);
 extern void copy(struct qmail *qq,const char *fn,char q);

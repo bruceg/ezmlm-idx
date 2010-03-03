@@ -80,7 +80,7 @@ void set_cpnum(const char *cf)
   szmsgnum = cf;
 }
 
-static void codeput(struct qmail *qq,const char *l,unsigned int n,char code)
+void codeput(struct qmail *qq,const char *l,unsigned int n,char code)
 {
   if (!code || code == 'H')
     qmail_put(qq,l,n);
@@ -93,7 +93,7 @@ static void codeput(struct qmail *qq,const char *l,unsigned int n,char code)
   }
 }
 
-static void codeputs(struct qmail *qq,const char *l,char code)
+void codeputs(struct qmail *qq,const char *l,char code)
 {
   codeput(qq,l,str_len(l),code);
 }
