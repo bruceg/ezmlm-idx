@@ -38,4 +38,6 @@ ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
 fatal "failed to produce subscribe probe"
 grepbody Flag: t
 
+${RM} "$DIR"/config
+
 ${ECHO} OK
