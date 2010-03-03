@@ -80,9 +80,7 @@ void set_cpnum(const char *cf)
   szmsgnum = cf;
 }
 
-static struct qmail *qq;
-
-static void codeput(const char *l,unsigned int n,char code)
+static void codeput(struct qmail *qq,const char *l,unsigned int n,char code)
 {
   if (!code || code == 'H')
     qmail_put(qq,l,n);
@@ -95,9 +93,9 @@ static void codeput(const char *l,unsigned int n,char code)
   }
 }
 
-static void codeputs(const char *l,char code)
+static void codeputs(struct qmail *qq,const char *l,char code)
 {
-  codeput(l,str_len(l),code);
+  codeput(qq,l,str_len(l),code);
 }
 
 /* Find tags <#x#>. Replace with for x=R confirm, for x=A */
@@ -192,7 +190,7 @@ void copy_xlate(stralloc *out,
     die_nomem();		/* remainder */
 }
 
-void copy(struct qmail *qqp,
+void copy(struct qmail *qq,
 	  const char *fn,	/* text file name */
 	  char q)		/* '\0' for regular output, 'B' for base64, */
 				/* 'Q' for quoted printable,'H' for header  */
@@ -202,7 +200,6 @@ void copy(struct qmail *qqp,
   int match;
   unsigned int pos;
 
-  qq = qqp;
   if ((fd = alt_open_read(fn)) == -1)
     strerr_die2sys((errno == error_noent) ? 100 : 111,
 		   FATAL,MSG1(ERR_OPEN,fn));
@@ -216,15 +213,15 @@ void copy(struct qmail *qqp,
       if (line.len == 1 && q == 'H') continue;
       if (line.s[0] == '!') {
 	if (line.s[1] == 'R') {
-	  codeput("   ",3,q);
-	  codeputs(confirm,q);
-	  codeput("\n",1,q);
+	  codeput(qq,"   ",3,q);
+	  codeputs(qq,confirm,q);
+	  codeput(qq,"\n",1,q);
 	  continue;
 	}
 	if (line.s[1] == 'A') {
-	  codeput("   ",3,q);
-	  codeputs(target,q);
-	  codeput("\n",1,q);
+	  codeput(qq,"   ",3,q);
+	  codeputs(qq,target,q);
+	  codeput(qq,"\n",1,q);
 	  continue;
 	}
       }
@@ -244,11 +241,11 @@ void copy(struct qmail *qqp,
       if (!flagsmatched) continue;
 
       copy_xlate(&outline,&line,0,q);
-      codeput(outline.s,outline.len,q);
+      codeput(qq,outline.s,outline.len,q);
 
       /* Last line is missing its trailing newline, add one on output. */
       if (!match)
-	codeput("\n",1,q);
+	codeput(qq,"\n",1,q);
     } else
       break;
   }
