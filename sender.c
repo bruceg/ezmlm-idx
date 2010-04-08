@@ -35,20 +35,15 @@ static int decode_srs(const char *s)
   return 1;
 }
 
-static int is_prvs_tag(const char *s, int len)
+static int is_batv_tag(const char *s, int len)
 {
   /* The BATV standard says the PRVS tag is KDDDSSSSSS, where K and D
    * are decimal digits, and S is hexadecimal.  However most tags found
-   * in the wild only contain DDDSSSSSS. */
-  if (len == 10 && *s >= '0' && *s <= '9') {
-    --len;
-    ++s;
-  }
-  if (len == 9) {
-    for (; len > 6; --len, ++s) {
-      if (!(*s >= '0' && *s <= '9'))
-	return 0;
-    }
+   * in the wild only contain DDDSSSSSS.  There is also appears to be an
+   * alternate format of DDDSSSSSSSS.  This routine handles all of them
+   * simply by looking for a string of hexadecimal characters at least 9
+   * characters long. */
+  if (len >= 9) {
     for (; len > 0; --len, ++s) {
       if (!(*s >= '0' && *s <= '9')
 	  && !(*s >= 'a' && *s <= 'f'))
@@ -76,7 +71,7 @@ static int decode_prvs(const char *s)
     ;
   if (sep >= at)
     return 0;
-  if (is_prvs_tag(s+5,sep-5)) {
+  if (is_batv_tag(s+5,sep-5)) {
     if (!stralloc_copys(&realsender,s+sep+1)) die_nomem();
     if (!stralloc_0(&realsender)) die_nomem();
     return 1;
@@ -84,11 +79,35 @@ static int decode_prvs(const char *s)
   /* Format: prvs=USER=TAG@example.com */
   for (sep = at - 1; sep > 5 && s[sep] != '='; --sep)
     ;
-  if (is_prvs_tag(s + sep + 1, at - sep - 1)) {
+  if (is_batv_tag(s + sep + 1, at - sep - 1)) {
     if (!stralloc_copyb(&realsender,s+5,sep-5)) die_nomem();
     if (!stralloc_cats(&realsender,s+at)) die_nomem();
     if (!stralloc_0(&realsender)) die_nomem();
     return 1;
+  }
+  return 0;
+}
+
+static int decode_btv1(const char* s)
+{
+  /* Other implementations of BATV use "btv1" instead of "prvs" and two
+   * equal signs instead of one as a delimiter, and a different tag value. */
+  int at;
+  int sep;
+  if (s[at = str_rchr(s,'@')] == 0)
+    return 0;
+  /* Format: btv1==DDDSSSSSSSS==USER@example.com */
+  if (s[4] == '=' && s[5] == '=') {
+    for (sep = at - 1; sep > 6; --sep) {
+      if (s[sep] == '=' && s[sep+1] == '=') {
+	if (is_batv_tag(s+6,sep-6)) {
+	  if (!stralloc_copys(&realsender,s+sep+2)) die_nomem();
+	  if (!stralloc_0(&realsender)) die_nomem();
+	  return 1;
+	}
+	break;
+      }
+    }
   }
   return 0;
 }
@@ -103,6 +122,9 @@ const char *get_sender(void)
       s = realsender.s;
     else if (str_start(s, "prvs=")
 	     && decode_prvs(s))
+      s = realsender.s;
+    else if (str_start(s, "btv1=")
+	     && decode_btv1(s))
       s = realsender.s;
   }
   return s;

@@ -28,6 +28,8 @@ ezmlm-idx-7.1.0, ????-??-??
 
 - Added support for qmqpservers to all ezmlm-idx programs.
 
+- Added support for decoding sender addresses mangled with a BATV "btv1" tag.
+
 - Modified the (un)subscribe procedure to not require confirmation
   before telling the sender they were already on (or off) the list.
 
