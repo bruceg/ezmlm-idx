@@ -93,6 +93,7 @@ static void load_config(void)
 {
   load_flags();
 
+  key.len = 0;
   switch(slurp("key",&key,512)) {
     case -1:
       strerr_die2sys(111,FATAL,MSG1(ERR_READ,"key"));
