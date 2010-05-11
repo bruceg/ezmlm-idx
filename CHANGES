@@ -48,6 +48,8 @@ ezmlm-idx-7.1.0, ????-??-??
 
 - Fixed handling of adding the trailer on old lists.
 
+- Fixed adding the trailer to posts encoded with base64.
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 

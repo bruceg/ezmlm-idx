@@ -664,11 +664,11 @@ void main(int argc,char **argv)
       break;
   }
   if (!boundary.len && flagtrailer) {
-    qmail_puts(&qq,"\n");		/* trailer for non-multipart message */
-    if (!encin || encin == 'Q') {	/* can add for QP, but not for base64 */
-      copy(&qq,"text/trailer",encin);
-      qmail_puts(&qq,"\n");		/* no need to flush for plain/QP */
-    }
+    codeput(&qq,"\n",1,encin);		/* trailer for non-multipart message */
+    copy(&qq,"text/trailer",encin);
+    codeput(&qq,"\n",1,encin);		/* no need to flush for plain/QP */
+    if (encin == 'B')
+      qmail_put(&qq,"\n",1); /* Need an actual newline after the base64 data */
   }
 
   cumsize += (msgsize + 128L) >> 8;	/* round to 256 byte 'records' */
