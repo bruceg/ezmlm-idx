@@ -50,6 +50,8 @@ ezmlm-idx-7.1.0, ????-??-??
 
 - Fixed adding the trailer to posts encoded with base64.
 
+- Fixed handling Received: headers with the date stamp on a separate line.
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 

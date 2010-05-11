@@ -108,6 +108,7 @@ int flagindexed;
 int flagfoundokpart;		/* Found something to pass on. If multipart */
 				/* we set to 0 and then set to 1 for any */
 				/* acceptable mime part. If 0 -> reject */
+int flagsawreceived;
 int flagreceived;
 int flagprefixed;
 unsigned int serial = 0;
@@ -475,7 +476,7 @@ void main(int argc,char **argv)
   flagseenext = 0;
   flagsubline = 0;
   flagfromline = 0;
-  flagreceived = 0;
+  flagsawreceived = 0;
   flagcontline = 0;
   flagarchiveonly = 0;
   for (;;) {
@@ -554,16 +555,22 @@ void main(int argc,char **argv)
         flagbadfield = headerremoveflag;
         flagarchiveonly = 0;
         flagcontline = 0;
+        flagreceived = 0;
 	if (constmap(&headerremovemap,line.s,byte_chr(line.s,line.len,':')))
 	  flagbadfield = !headerremoveflag;
-        if ((flagnoreceived || !flagreceived) &&
+        if ((flagnoreceived || !flagsawreceived) &&
 		case_startb(line.s,line.len,"Received:")) {
-            if (!flagreceived) {		/* get date from first rec'd */
-              flagreceived = 1;			/* line (done by qmail) */
+            if (!flagsawreceived) {		/* get date from first rec'd */
+              flagsawreceived = 1;		/* line (done by qmail) */
               pos = byte_chr(line.s,line.len,';');
-              if (pos != line.len)		/* has '\n' */
-                if (!stralloc_copyb(&received,line.s+pos+2,line.len - pos - 3))
+              if (pos != line.len) {		/* has '\n' */
+		for (++pos; pos < line.len; ++pos)
+		  if (line.s[pos] != ' ' && line.s[pos] != '\t')
+		    break;
+                if (!stralloc_copyb(&received,line.s+pos,line.len-pos-1))
                   die_nomem();
+		flagreceived = 1;
+	      }
             } else {				/* suppress, but archive */
               flagarchiveonly = 1;		/* but do not suppress the */
               flagbadfield = 1;			/* top one added by qmail */
@@ -606,7 +613,13 @@ void main(int argc,char **argv)
 	  if (!stralloc_cat(&from,&line)) die_nomem();
         } else if (flagcontline) {
           if (!stralloc_cat(&content,&line)) die_nomem();
-        }
+        } else if (flagreceived) {
+	  for (pos = 1; pos < line.len; ++pos)
+	    if (line.s[pos] != ' ' && line.s[pos] != '\t')
+	      break;
+	  if (!stralloc_catb(&received,line.s+pos,line.len-pos-1))
+	    break;
+	}
       }
     } else				/* body */
       msgsize += line.len;		/* always for tstdig support */
