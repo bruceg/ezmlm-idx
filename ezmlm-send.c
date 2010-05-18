@@ -109,7 +109,6 @@ int flagfoundokpart;		/* Found something to pass on. If multipart */
 				/* we set to 0 and then set to 1 for any */
 				/* acceptable mime part. If 0 -> reject */
 int flagsawreceived;
-int flagreceived;
 int flagprefixed;
 unsigned int serial = 0;
 int flagarchived;
@@ -335,11 +334,9 @@ void main(int argc,char **argv)
   int flagbadfield;
   int flagbadpart;
   int flagseenext;
-  int flagsubline;
-  int flagfromline;
-  int flagcontline;
   int flagarchiveonly;
   int flagtrailer;
+  enum { no_prev_line, subject_line, from_line, content_line, received_line } prevline;
   unsigned int pos;
   char *cp, *cpstart, *cpafter;
 
@@ -474,11 +471,9 @@ void main(int argc,char **argv)
   flagbadfield = headerremoveflag;
   flagbadpart = 0;
   flagseenext = 0;
-  flagsubline = 0;
-  flagfromline = 0;
   flagsawreceived = 0;
-  flagcontline = 0;
   flagarchiveonly = 0;
+  prevline = no_prev_line;
   for (;;) {
     if (getln(subfdin,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
@@ -550,12 +545,9 @@ void main(int argc,char **argv)
           }
         }
       } else if ((*line.s != ' ') && (*line.s != '\t')) {
-        flagsubline = 0;
-        flagfromline = 0;
         flagbadfield = headerremoveflag;
         flagarchiveonly = 0;
-        flagcontline = 0;
-        flagreceived = 0;
+	prevline = no_prev_line;
 	if (constmap(&headerremovemap,line.s,byte_chr(line.s,line.len,':')))
 	  flagbadfield = !headerremoveflag;
         if ((flagnoreceived || !flagsawreceived) &&
@@ -569,7 +561,7 @@ void main(int argc,char **argv)
 		    break;
                 if (!stralloc_copyb(&received,line.s+pos,line.len-pos-1))
                   die_nomem();
-		flagreceived = 1;
+		prevline = received_line;
 	      }
             } else {				/* suppress, but archive */
               flagarchiveonly = 1;		/* but do not suppress the */
@@ -582,10 +574,10 @@ void main(int argc,char **argv)
         else if ((mimeremove.len || flagtrailer) &&	/* else no MIME need*/
 		case_startb(line.s,line.len,"Content-Type:")) {
           if (!stralloc_copyb(&content,line.s+13,line.len-13)) die_nomem();
-          flagcontline = 1;
+          prevline = content_line;
 	} else if (case_startb(line.s,line.len,"Subject:")) {
           if (!stralloc_copyb(&subject,line.s+8,line.len-8)) die_nomem();
-	  flagsubline = 1;
+	  prevline = subject_line;
           if (flagprefixed && !flagsublist)	/* don't prefix for sublists */
 	    flagbadfield = 1;			/* we'll print our own */
         } else if (flagtrailer &&
@@ -600,25 +592,29 @@ void main(int argc,char **argv)
 	else if (flagindexed) {
 
           if (case_startb(line.s,line.len,"From:")) {
-            flagfromline = 1;
+            prevline = from_line;
             if (!stralloc_copyb(&from,line.s+5,line.len-5)) die_nomem();
           }
         } else if (line.len == mydtline.len)
 	  if (!byte_diff(line.s,line.len,mydtline.s))
             strerr_die2x(100,FATAL,MSG(ERR_LOOPING));
       } else {			/* continuation lines */
-        if (flagsubline) {
+	switch (prevline) {
+	case subject_line:
 	  if (!stralloc_cat(&subject,&line)) die_nomem();
-        } else if (flagfromline) {
+	  break;
+	case from_line:
 	  if (!stralloc_cat(&from,&line)) die_nomem();
-        } else if (flagcontline) {
+	  break;
+	case content_line:
           if (!stralloc_cat(&content,&line)) die_nomem();
-        } else if (flagreceived) {
+	  break;
+	case received_line:
 	  for (pos = 1; pos < line.len; ++pos)
 	    if (line.s[pos] != ' ' && line.s[pos] != '\t')
 	      break;
-	  if (!stralloc_catb(&received,line.s+pos,line.len-pos-1))
-	    break;
+	  if (!stralloc_catb(&received,line.s+pos,line.len-pos-1)) die_nomem();
+	  break;
 	}
       }
     } else				/* body */
