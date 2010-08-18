@@ -43,7 +43,7 @@
 #include "auto_version.h"
 
 int flagdo = 1;			/* React to commands (doesn't affect -dig)*/
-int flagbottom = 1;		/* copy text/bottom + request */
+int omitbottom = 0;		/* copy text/bottom + request */
 int flagpublic = -1;		/* 0 = non-public, 1 = public, -1 = respect */
 				/* dir/public. */
 int flagsubonly = -1;		/* =1 subscribers only for get/index/thread */
@@ -60,8 +60,8 @@ const char USAGE[] =
 "ezmlm-get: usage: ezmlm-get [-bBcClLpPsSvV] [-f fmt] [digestcode]";
 
 static struct option options[] = {
-  OPT_FLAG(flagbottom,'b',1,0),	/* add text/bottom (default) */
-  OPT_FLAG(flagbottom,'B',0,0),	/* suppress text/bottom */
+  OPT_FLAG(omitbottom,'b',0,0),	/* add text/bottom (default) */
+  OPT_FLAG(omitbottom,'B',1,0),	/* suppress text/bottom */
   OPT_FLAG(flagdo,'c',1,0),	/* do commands */
   OPT_FLAG(flagdo,'C',0,0),	/* ignore commands X dig */
   OPT_CSTR(flagformat,'f',"digformat"),
@@ -273,7 +273,7 @@ void write_ulong(unsigned long num,unsigned long cum,unsigned long dat,
 void normal_bottom(char format)
 /* Copies bottom text and the original message to the new message */
 {
-  if (flagbottom) {
+  if (!omitbottom) {
     copy(&qq,"text/bottom",flagcd);
     if (flagcd && format != RFC1153) {
       if (flagcd == 'B') {

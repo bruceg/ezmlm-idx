@@ -48,7 +48,7 @@ int flagverbose = 0;	/* default: Owner not informed about subdb changes */
 int flagnotify = 1;	/* notify subscriber of completed events. 0 also */
 			/* suppresses all subscriber communication for */
 			/* [un]sub if -U/-S is used */
-int flagbottom = 1;	/* default: copy request & admin info to message */
+int omitbottom = 0;	/* default: copy request & admin info to message */
 int flaglist = -1;	/* default: do not reply to -list */
 int flagget = 1;	/* default: service -get requests */
 int flagsubconf = -1;	/* default: require user-confirm for subscribe */
@@ -65,8 +65,8 @@ stralloc modsub = {0};
 stralloc remote = {0};
 
 static struct option options[] = {
-  OPT_FLAG(flagbottom,'b',1,0),
-  OPT_FLAG(flagbottom,'B',0,0),
+  OPT_FLAG(omitbottom,'b',0,0),
+  OPT_FLAG(omitbottom,'B',1,"omitbottom"),
   OPT_FLAG(flagget,'c',1,0),
   OPT_FLAG(flagget,'C',0,0),
   OPT_FLAG(flagedit,'d',1,0),
@@ -569,7 +569,7 @@ void sendtomods(void)
 
 void copybottom(void)
 {
-  if (flagbottom || act == AC_HELP) {
+  if (!omitbottom || act == AC_HELP) {
     copy(&qq,"text/bottom",flagcd);
     if (flagcd) {
       if (flagcd == 'B') {

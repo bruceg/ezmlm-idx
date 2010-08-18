@@ -118,7 +118,8 @@ is presumed, meaning that only the header is copied.
 If
 .I dir\fB/qmqpservers
 exists,
-.B ezmlm-manage will use
+.B ezmlm-manage
+will use
 .B qmail-qmqp(1)
 to send messages.
 .SH OPTIONS
@@ -127,6 +128,9 @@ to send messages.
 (Default.)
 .B ezmlm-manage
 will add general instructions and the request to the outgoing message.
+This is the default unless the
+.I dir\fB/omitbottom
+file exists.
 .TP 5
 .B \-B
 .B ezmlm-manage

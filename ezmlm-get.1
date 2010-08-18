@@ -364,7 +364,10 @@ is presumed, meaning that only the header is copied.
 (Default.)
 Copy administrative information and the request to the bottom of replies.
 This informs the recipient of other commands, and allows some error tracking
-in case the recipient did not originate the request.
+in case the recipient did not originate the request.  This is the
+default unless the
+.I dir\fB/omitbottom
+file exists.
 .TP
 .B \-B
 Suppress the normal administrative information and request copy. This may make

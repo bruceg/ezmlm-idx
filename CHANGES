@@ -52,6 +52,9 @@ ezmlm-idx-7.1.0, ????-??-??
 
 - Fixed handling Received: headers with the date stamp on a separate line.
 
+- Added a new "omitbottom" control file, equivalent to the -B option for
+  both ezmlm-get and ezmlm-manage.
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 
