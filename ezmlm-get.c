@@ -558,7 +558,7 @@ void mime_getbad(unsigned long msg)
    qmail_put(&qq,listname.s,listname.len);
    qmail_puts(&qq,"_");
    qmail_put(&qq,strnum,fmt_ulong(strnum,msg));
-   qmail_puts(&qq,".ezm\"\n");
+   qmail_puts(&qq,".eml\"\n");
    hdr_transferenc();
    copy(&qq,"text/get-bad",flagcd);
 }
@@ -599,7 +599,7 @@ void msgout(unsigned long msg,char format)
 	  qmail_put(&qq,listname.s,listname.len);
 	  qmail_puts(&qq,"_");
 	  qmail_put(&qq,strnum,fmt_ulong(strnum,msg));
-	  qmail_puts(&qq,".ezm\"\n\n");
+	  qmail_puts(&qq,".eml\"\n\n");
           copymsg(fd,format);
 	  close(fd);
         }
