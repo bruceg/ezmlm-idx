@@ -9,13 +9,8 @@ static int copy_flag(struct option *o,const char *arg)
   (void)arg;
 }
 
-static void fetch(struct option *o)
-{
-  (void)o;
-}
-
 const struct option_type opt_copy_flag = {
   0,
   copy_flag,
-  fetch
+  0
 };

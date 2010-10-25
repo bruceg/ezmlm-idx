@@ -60,7 +60,7 @@ static void post(struct option *options)
 {
   struct option *o;
   for (o = options; o->type != 0; ++o)
-    if (o->filename && !o->isset)
+    if (o->filename && !o->isset && o->type->fetch)
       o->type->fetch(o);
 }
 
