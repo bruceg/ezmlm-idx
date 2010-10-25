@@ -29,9 +29,9 @@ struct option
     const char **cstr;
     struct stralloc *str;
   } var;
-  char ch;
+  const char ch;
   const struct option_type *type;
-  union
+  const union
   {
     int flag;
     unsigned long ulong;
