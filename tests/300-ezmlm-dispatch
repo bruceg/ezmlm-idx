@@ -5,8 +5,8 @@
 make_message >"$TMP"
 testdispatch() {
   DEFAULT="$2"
-  ${EZBIN}/ezmlm-dispatch "$DIR" $1 <"$TMP" 2>&1 \
-  | grep "^$3$" >/dev/null \
+  ${EZBIN}/ezmlm-dispatch "$DIR" $1 <"$TMP" >"$ERR" 2>&1
+  grep "^$3$" "$ERR" >/dev/null \
   || fatal "did not dispatch DEFAULT='$2' from '$1' to '$3'"
 }
 
