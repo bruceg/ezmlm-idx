@@ -35,4 +35,5 @@ ezmlm-test \
 sub-std.so \
 ezmlmrc.all \
 messages.all \
-ezmlm-idx.spec
+ezmlm-idx.spec \
+test-getconfopt

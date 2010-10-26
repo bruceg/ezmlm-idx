@@ -1,0 +1,105 @@
+#######################
+# library: getconfopt #
+#######################
+
+prompt "getconfopt library:   "
+
+t() {
+    ${EZBIN}/test-getconfopt $1 | ${GREP} $2 >/dev/null \
+	|| fatal "$3"
+}
+
+t '          ' '^dir=NULL'   'dir not NULL without a parameter'
+t '      dir1' '^dir="dir1"' 'dir1 not found'
+t '    - dir2' '^dir="dir2"' 'dir2 not found'
+t '   -- dir3' '^dir="dir3"' 'dir3 not found'
+t '-a    dir4' '^dir="dir4"' 'dir4 not found'
+t '-a  - dir5' '^dir="dir5"' 'dir5 not found'
+t '-a -- dir6' '^dir="dir6"' 'dir6 not found'
+
+t '-c s    dir11' '^dir="dir11"' 'dir11 not found'
+t '-cs     dir12' '^dir="dir12"' 'dir12 not found'
+t '-c s  - dir13' '^dir="dir13"' 'dir13 not found'
+t '-cs   - dir14' '^dir="dir14"' 'dir14 not found'
+t '-c s -- dir15' '^dir="dir15"' 'dir15 not found'
+t '-cs  -- dir16' '^dir="dir16"' 'dir16 not found'
+
+mkdir "$DIR" || fatal "Could not create temporary directory"
+cd "$DIR"
+
+# Normally off flag
+t '  ' '^a=0' 'a is not 0 with nothing'
+t '-A' '^a=0' 'a is not 0 with -A'
+t '-a' '^a=1' 'a is not 1 with -a'
+touch option_a
+t '  ' '^a=1' 'a is not 1 with file'
+t '-A' '^a=0' 'a is not 0 with file and -A'
+t '-a' '^a=1' 'a is not 1 with file and -a'
+
+# Normally on flag
+t '  ' '^b=1' 'b is not 1 with nothing'
+t '-B' '^b=0' 'b is not 0 with -B'
+t '-b' '^b=1' 'b is not 1 with -b'
+touch option_b
+t '  ' '^b=0' 'b is not 0 with file'
+t '-B' '^b=0' 'b is not 0 with file and -B'
+t '-b' '^b=1' 'b is not 1 with file and -b'
+
+# Order matters
+t '-Aa' '^a=1' 'a is not 1 with -Aa'
+t '-aA' '^a=0' 'a is not 0 with -aA'
+t '-Bb' '^b=1' 'b is not 1 with -Bb'
+t '-bB' '^b=0' 'b is not 0 with -bB'
+
+# C String option
+t '    ' '^c=NULL' 'c is not NULL with nothing'
+t '-c f' '^c="f"'  'c is not set with -c'
+echo d > option_c
+t '    ' '^c="d"'  'c is not set with file'
+t '-c f' '^c="f"'  'c is not set with file and -c'
+
+# C String flag
+t '  ' '^d=NULL'  'd is not NULL with nothing'
+t '-D' '^d="off"' 'd is not off with -D'
+t '-d' '^d="on"'  'd is not on with -d'
+touch option_d
+t '  ' '^d="on"'  'd is not on with file'
+t '-D' '^d="off"' 'd is not off with file and -D'
+t '-d' '^d="on"'  'd is not on with file and -d'
+
+# Copy flag
+t '     ' '^e=NULL' 'e is not NULL with nothing'
+t '-e   ' '^e="e" ' 'e is not set with -e'
+t '-E   ' '^e="E" ' 'e is not set with -E'
+t '-e -E' '^e="eE"' 'e is not set with -e -E'
+t '-E -e' '^e="Ee"' 'e is not set with -E -e'
+
+# Stralloc option
+t '    ' '^f=NULL' 'f is not NULL with nothing'
+t '-f a' '^f="a" ' 'f is not set with -f (gap)'
+t '-fa'  '^f="a" ' 'f is not set with -f (no gap)'
+echo b >option_f
+t '    ' '^f="b" ' 'f is not set with file'
+t '-f a' '^f="a" ' 'f is not set with file and -f'
+
+# Unsigned long option
+t '    ' '^g=1' 'g is not 1 with nothing'
+t '-g 2' '^g=2' 'g is not set with -g'
+echo 3 >option_g
+t '    ' '^g=3' 'g is not set with file'
+t '-g 4' '^g=4' 'g is not set with file and -g'
+
+# Unsigned long flag option
+t '  ' '^h=0' 'h is not 0 with nothing'
+t '-H' '^h=0' 'h is not 0 with -H'
+t '-h' '^h=1' 'h is not 1 with -h'
+touch option_h
+t '  ' '^h=1' 'h is not 1 with file'
+t '-H' '^h=0' 'h is not 0 with file and -H'
+t '-h' '^h=1' 'h is not 1 with file and -h'
+
+cd ..
+rm -f "$DIR"/*
+rmdir "$DIR" || fatal "Could not create temporary directory"
+
+${ECHO} "OK"
