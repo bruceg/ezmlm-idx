@@ -42,4 +42,9 @@ ${EZBIN}/ezmlm-manage "$DIR" </dev/null >"$ERR" 2>&1 || \
 	fatal "ezmlm-manage failed"
 checkenv decode-btv1 "$LOC-return-@$HOST" "xyzzy@host"
 
+SENDER="btv1==714C5C5Acad==xyzzy@host"
+${EZBIN}/ezmlm-manage "$DIR" </dev/null >"$ERR" 2>&1 || \
+	fatal "ezmlm-manage failed"
+checkenv decode-btv1 "$LOC-return-@$HOST" "xyzzy@host"
+
 ${ECHO} "OK"

@@ -35,6 +35,13 @@ static int decode_srs(const char *s)
   return 1;
 }
 
+static int is_hex(int ch)
+{
+  return (ch >= '0' && ch <= '9')
+    || (ch >= 'a' && ch <= 'f')
+    || (ch >= 'A' && ch <= 'F');
+}
+
 static int is_batv_tag(const char *s, int len)
 {
   /* The BATV standard says the PRVS tag is KDDDSSSSSS, where K and D
@@ -45,8 +52,7 @@ static int is_batv_tag(const char *s, int len)
    * characters long. */
   if (len >= 9) {
     for (; len > 0; --len, ++s) {
-      if (!(*s >= '0' && *s <= '9')
-	  && !(*s >= 'a' && *s <= 'f'))
+      if (!is_hex(*s))
 	return 0;
     }
     return 1;
