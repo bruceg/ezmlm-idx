@@ -38,20 +38,19 @@ struct option
     const char *cstr;
   } value;
   const char *filename;
-  int isset;
 };
 
-#define OPT_COPY_FLAG(VAR,CH) {{.str=&VAR},CH,&opt_copy_flag,{0},0,0}
-#define OPT_CSTR(VAR,CH,FILENAME) {{.cstr=&VAR},CH,&opt_cstr,{0},FILENAME,0}
-#define OPT_CSTR_FLAG(VAR,CH,VALUE,FILENAME) {{.cstr=&VAR},CH,&opt_cstr_flag,{.cstr=VALUE},FILENAME,0}
-#define OPT_FLAG(VAR,CH,VALUE,FILENAME) {{.flag=&VAR},CH,&opt_flag,{.flag=VALUE},FILENAME,0}
-#define OPT_STR(VAR,CH,FILENAME) {{.str=&VAR},CH,&opt_str,{0},FILENAME,0}
-#define OPT_ULONG(VAR,CH,FILENAME) {{.ulong=&VAR},CH,&opt_ulong,{0},FILENAME,0}
-#define OPT_ULONG_FLAG(VAR,CH,VALUE,FILENAME) {{.ulong=&VAR},CH,&opt_ulong_flag,{.ulong=VALUE},FILENAME,0}
+#define OPT_COPY_FLAG(VAR,CH) {{.str=&VAR},CH,&opt_copy_flag,{0},0}
+#define OPT_CSTR(VAR,CH,FILENAME) {{.cstr=&VAR},CH,&opt_cstr,{0},FILENAME}
+#define OPT_CSTR_FLAG(VAR,CH,VALUE,FILENAME) {{.cstr=&VAR},CH,&opt_cstr_flag,{.cstr=VALUE},FILENAME}
+#define OPT_FLAG(VAR,CH,VALUE,FILENAME) {{.flag=&VAR},CH,&opt_flag,{.flag=VALUE},FILENAME}
+#define OPT_STR(VAR,CH,FILENAME) {{.str=&VAR},CH,&opt_str,{0},FILENAME}
+#define OPT_ULONG(VAR,CH,FILENAME) {{.ulong=&VAR},CH,&opt_ulong,{0},FILENAME}
+#define OPT_ULONG_FLAG(VAR,CH,VALUE,FILENAME) {{.ulong=&VAR},CH,&opt_ulong_flag,{.ulong=VALUE},FILENAME}
 #define OPT_END \
-	{{0},'v',&opt_version,{0},0,0},\
-	{{0},'V',&opt_version,{0},0,0},\
-	{{0},0,0,{0},0,0}
+	{{0},'v',&opt_version,{0},0},\
+	{{0},'V',&opt_version,{0},0},\
+	{{0},0,0,{0},0}
 
 extern int getconfopt(int argc, char *argv[], struct option *options,
 		      int dochdir,const char **dir);

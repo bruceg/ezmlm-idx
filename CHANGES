@@ -58,6 +58,9 @@ ezmlm-idx-7.1.0, ????-??-??
 - Adjusted filename in digest attachments to fix problem with Outlook.
   Thanks to Glen Stewart
 
+- Fixed bug in command-line option processing which caused sender-
+  confirmed posting to fail.
+
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
 
