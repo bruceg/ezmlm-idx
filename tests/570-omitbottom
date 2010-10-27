@@ -1,0 +1,36 @@
+prompt "omitbottom (-manage): "
+
+echo "bottom is present" > "$DIR"/text/bottom
+make_message >"$TMP"
+
+DEFAULT="subscribe"
+LOCAL="${LOC}-${DEFAULT}"
+
+touch "$DIR"/omitbottom
+${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "ezmlm-manage failed"
+grepbodynot bottom is present
+
+${RM} -f "$DIR"/omitbottom
+${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+  fatal "ezmlm-manage failed"
+grepbody bottom is present
+
+${ECHO} OK
+
+prompt "omitbottom (-get):    "
+
+DEFAULT='get.2_4'
+LOCAL="${LOC}-${DEFAULT}"
+
+touch "$DIR"/omitbottom
+${EZBIN}/ezmlm-get "$DIR" <"$TMP" >"$ERR" 2>&1 && \
+  fatal "ezmlm-get failed"
+grepbodynot bottom is present
+
+${RM} -f "$DIR"/omitbottom
+${EZBIN}/ezmlm-get "$DIR" <"$TMP" >"$ERR" 2>&1 && \
+  fatal "ezmlm-get failed"
+grepbody bottom is present
+
+${ECHO} OK
