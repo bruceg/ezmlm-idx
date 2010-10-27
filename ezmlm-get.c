@@ -60,8 +60,8 @@ const char USAGE[] =
 "ezmlm-get: usage: ezmlm-get [-bBcClLpPsSvV] [-f fmt] [digestcode]";
 
 static struct option options[] = {
-  OPT_FLAG(omitbottom,'b',0,0),	/* add text/bottom (default) */
-  OPT_FLAG(omitbottom,'B',1,0),	/* suppress text/bottom */
+  OPT_FLAG(omitbottom,'b',0,0),		   /* add text/bottom (default) */
+  OPT_FLAG(omitbottom,'B',1,"omitbottom"), /* suppress text/bottom */
   OPT_FLAG(flagdo,'c',1,0),	/* do commands */
   OPT_FLAG(flagdo,'C',0,0),	/* ignore commands X dig */
   OPT_CSTR(flagformat,'f',"digformat"),
