@@ -1009,6 +1009,15 @@ for digest subscribers is
 If enabled, these logs can be retrieved by remote administrators (see
 .BR ezmlm-manage(1) ).
 
+If
+.I dir\fB/omitbottom
+exists,
+will suppress the administrative information found in
+.I dir\fB/text/bottom
+and the copy of the request that is normally copied into outgoing
+automatic responses.  This may make it harder for the recipient to
+diagnose problems and learn commands.
+
 .I dir\fB/copylines
 specifies how many lines from the body of the original request to copy
 into outgoing automatic responses.  If this file is not present or is
