@@ -190,7 +190,7 @@ void main(int argc,char **argv)
   opt = getconfopt(argc,argv,options,1,&dir);
 
   sender = get_sender();
-  if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
+  if (!sender) die_sender();
   local = env_get("LOCAL");
   if (!local) strerr_die2x(100,FATAL,MSG(ERR_NOLOCAL));
   def = env_get("DEFAULT");

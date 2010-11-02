@@ -626,7 +626,7 @@ int main(int argc,char **argv)
   initsub(0);
 
   sender = get_sender();
-  if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
+  if (!sender) die_sender();
   action = env_get("DEFAULT");
   if (!action) strerr_die2x(100,FATAL,MSG(ERR_NODEFAULT));
 

@@ -824,7 +824,7 @@ void main(int argc,char **argv)
   def = env_get("DEFAULT");
   sender = get_sender();
   if (local && *local) {	/* in editor local = outlocal */
-    if (!sender) strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
+    if (!sender) die_sender();
     if (!*sender)
       strerr_die2x(100,FATAL,MSG(ERR_BOUNCE));
     if (str_equal(sender,"#@[]"))

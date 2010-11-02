@@ -215,7 +215,7 @@ void main(int argc,char **argv)
 
   sender = get_sender();
   if (!sender)
-    strerr_die2x(100,FATAL,MSG(ERR_NOSENDER));
+    die_sender();
   if (!*sender)
     strerr_die2x(100,FATAL,MSG(ERR_BOUNCE));
 
