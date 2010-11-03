@@ -907,6 +907,18 @@ is a message trailer. If this file exists, it's contents are copied to the
 end of outgoing messages. Only lines terminated with new-line are copied.
 No trailer is copied to the archived version of the message.
 .SH MISCELLANY
+If the
+.B allow
+address list exists, ezmlm will allow any sender found in that list to
+post even if they are not subscribers.  If the
+.B deny
+address list exists, ezmlm will block all senders found in that list
+from posting to the list.  Addresses in either list that start with a
+.B @
+will allow or deny all senders at the following domain name.  Addresses
+can be added and removed from these lists similarly to the moderator
+examples above.
+
 If
 .I dir\fB/listid
 exists,
