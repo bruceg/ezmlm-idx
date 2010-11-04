@@ -43,8 +43,8 @@ ERR_EXECUTE|unable to execute <#1#>|Ausführung schlug fehl <#1#>
 ERR_EXTRA_SUB|Processed SENDER check addition request for: <#1#>|Die Aktivierung einer Sender-Überprüfung wurde erbeten für: <#1#>
 ERR_EXTRA_UNSUB|Processed SENDER check removal request for: <#1#>|Eine Sender-Überprüfung wurde entfernt für: <#1#>
 ERR_FILENAME|continuation tag without defined file name: <#1#>|Fortsetzungsmarkierung ohne Dateinamen: <#1#>
-ERR_FLUSH_STDOUT|unable to flush standard output|Ausleerung der Standarausgabe schlug fehl
 ERR_FLUSH|unable to flush <#1#>|Ausleerung schlug fehl
+ERR_FLUSH_STDOUT|unable to flush standard output|Ausleerung der Standarausgabe schlug fehl
 ERR_FORK|unable to fork|Ein Prozess-Fork schlug fehl
 ERR_JUNK|Precedence: junk - message ignored|Vorrang: unerwünschte Mail - Nachricht ignoriert
 ERR_LINKDIR|linktag lacks /dir: <#1#>|Link-Markierung ohne /dir: <#1#>
@@ -87,20 +87,20 @@ ERR_NO_PLUGIN|no plugin specified in database connect data|kein Plugin in der Da
 ERR_NO_POST|I'm sorry, you are not allowed to post messages to this list (#5.7.2)|Tut mir leid, Sie dürfen keine Nachrichten an diese Listen senden (#5.7.2)
 ERR_NO_SUBJECT|Sorry, I don't accept message with empty Subject (#5.7.0)|Tut mir leid, ich akzeptiere keine Nachrichten ohne Betreff-Zeile
 ERR_OBTAIN_LOCK|unable to obtain lock on <#1#>|Fehler beim exklusiven Sperren von <#1#>
-ERR_OPEN_LISTMSGS|unable to open <#1#> in listmsgs. Rerun ezmlm-archive!|Fehler beim Öffnen von <#1#> in listmsgs. Versuche, ezmlm-archive erneut zu starten!
 ERR_OPEN|unable to open <#1#>|Fehler beim Öffnen von <#1#>
+ERR_OPEN_LISTMSGS|unable to open <#1#> in listmsgs. Rerun ezmlm-archive!|Fehler beim Öffnen von <#1#> in listmsgs. Versuche, ezmlm-archive erneut zu starten!
 ERR_PERIOD|periods not allowed in tags|Punkte sind in Markern (tags) nicht erlaubt
 ERR_QMAIL_QUEUE|unable to run qmail-queue|Fehler beim Starten von qmail-queue
 ERR_QUOTE|quotes not allowed in dir|Anführungsstriche im Verzeichnisnamen sind nicht zulässig
+ERR_READ|unable to read <#1#>|Fehler beim Lesen von <#1#>
 ERR_READ_INPUT|unable to read input|Fehler beim Lesen der Eingabe
 ERR_READ_NOTHING|unable to read <#1#>: nothing there|Fehler beim Lesen von <#1#>: nicht gefunden
 ERR_READ_STDIN|unable to read standard input|Fehler beim Lesen deer Standardeingabe
-ERR_READ|unable to read <#1#>|Fehler beim Lesen von <#1#>
 ERR_REJECT|Sorry, I've been told to reject this message (#5.7.0)|Tut mir leid, ich wurde angewiesen, diese Nachricht zurückzuweisen (#5.7.0)
 ERR_REQ_LISTNAME|This command requires a mailing list name (#5.1.1)|Dieser Befehl erfordert den Namen einer Mailingliste (#5.1.1)
 ERR_REQ_LOCAL|the local part of the command string does not match this list (#5.1.1)|der lokale Teil der Befehlszeichenkette passt nicht zu dieser Liste (#5.1.1)
-ERR_SEEK_INPUT|unable to seek input|Fehler beim Positionieren in der Eingabe
 ERR_SEEK|unable to seek <#1#>|Fehler beim Positionieren <#1#>
+ERR_SEEK_INPUT|unable to seek input|Fehler beim Positionieren in der Eingabe
 ERR_SETUID|unable to set uid|Fehler beim Setzen der UID
 ERR_SLASH|dir and dot must start with slash|Verzeichnis (dir) und die Qmail-Dateien (dot) müssen mit einem Schrägstrich beginnen
 ERR_STAT|unable to stat <#1#>|Fehler beim Zugriff auf <#1#>
@@ -111,6 +111,7 @@ ERR_SUBST_UNSAFE|Sorry, substitution of target addresses into headers with #A# o
 ERR_SUB_NOP|target is already a subscriber|das Ziel ist bereits eingeschrieben
 ERR_SUID|Sorry, I won't run as root|Tut mir leid, I werde nicht als root starten
 ERR_SYNC|unable to sync <#1#>|Fehler beim Synchronisieren <#1#>
+ERR_SYNTAX|syntax error in <#1#>|Syntax-Fehler in <#1#>
 ERR_SYNTAX_CONFIG|syntax error in config file <#1#>|Syntax-Fehler in der Konfigurationsdatei <#1#>
 ERR_SYNTAX_MISSING_AUTHHASH| syntax error: <#1#>: missing author hash|Syntax-Fehler: <#1#>: fehlender Hash des Autors
 ERR_SYNTAX_MISSING_AUTHOR| syntax error: <#1#>: author info missing.|Syntax-Fehler: <#1#>: Autoren-Info fehlt
@@ -118,15 +119,16 @@ ERR_SYNTAX_MISSING_FIRST| syntax error: <#1#>: first line missing|Syntax-Fehler:
 ERR_SYNTAX_MISSING_SEMIDATE| syntax error: <#1#>: missing \";\" after date|Syntax-Fehler: <#1#>: das Semikolon nach dem Datum fehlt
 ERR_SYNTAX_MISSING_SEPARATOR| syntax error: <#1#>: missing subject separator|Syntax-Fehler: <#1#>: fehlendes Trennzeichen im Betreff
 ERR_SYNTAX_MISSING_SUBJHASH| syntax error: <#1#>: missing subject hash|Syntax-Fehler: <#1#>: fehlender Hash des Betreffs
-ERR_SYNTAX|syntax error in <#1#>|Syntax-Fehler in <#1#>
 ERR_TMP_QMAIL_QUEUE|temporary qmail-queue error|zeitweiliger qmail-queue-Fehler
 ERR_UID|user id not found|Nutzer-ID nicht gefunden
 ERR_UNIQUE|unable to create unique message file name|Fehler beim Erzeugen eines einmaligen Nachrichten-Dateinamens
 ERR_UNSUB_NOP|target is not a subscriber|das Ziel ist nicht eingeschrieben
 ERR_VERSION|ezmlmrc version mismatch. Behavior may not match docs.|ezmlmrc-Versionskonflikt. Das Verhalten kann von der Spezifikation abweichen.
-ERR_WRITE_STDOUT|unable to write to standard output|Fehler beim Schreiben in die Standardausgabe
 ERR_WRITE|unable to write <#1#>|Fehler beim Schreiben von <#1#>
+ERR_WRITE_STDOUT|unable to write to standard output|Fehler beim Schreiben in die Standardausgabe
 SUB_CONFIRM_POST|Confirm post to <#L#>@<#H#>|Bestätige die Einsendung für <#L#>@<#H#>
+SUB_DIGEST_ISSUE|<#L#> Digest <#1#> Issue <#2#>|<#L#> Zusammenfassung <#1#> Ausgabe <#2#>
+SUB_DIGEST_OF|<#L#> Digest of: <#1#>|<#L#> Zusammenfassung von: <#1#>
 SUB_EDIT_LIST|List of editable text files for <#L#>@<#H#>|Liste der veränderbaren Text-Dateien für <#L#>@<#H#>
 SUB_EDIT_REQUEST|EDIT <#1#> for <#L#>@<#H#>|Änderung von <#1#> für <#L#>@<#H#>
 SUB_EDIT_SUCCESS|Success editing <#1#> for <#L#>@<#H#>|Die Datei <#1#> wurde erfolgreich geändert für <#L#>@<#H#>
@@ -135,14 +137,15 @@ SUB_GET_MSG|Archive retrieval from <#L#>@<#H#>|Archiv-Abfrage für <#L#>@<#H#>
 SUB_GOODBYE|GOODBYE from <#L#>@<#H#>|Auf Wiedersehen von <#L#>@<#H#>
 SUB_HELP|Help for <#L#>@<#H#>|Hilfe für <#L#>@<#H#>
 SUB_INFO|Information for <#L#>@<#H#>|Informationen über <#L#>@<#H#>
-SUB_LIST|Subscriber list for <#L#>@<#H#>|AbonnentInnen-Aufstellung für <#L#>@<#H#>
-SUB_LOG_SEARCH|Log search results for <#L#>@<#H#>|Suchergebnisse für das Protokoll von <#L#>@<#H#>
+SUB_LIST|Subscriber list for <#L#>@<#H#>|AbonnentInnen-Liste für <#L#>@<#H#>
 SUB_LOG|Subscriber log for <#L#>@<#H#>|AbonnentInnen-Protokoll für <#L#>@<#H#>
+SUB_LOG_SEARCH|Log search results for <#L#>@<#H#>|Suchergebnisse für das Protokoll von <#L#>@<#H#>
 SUB_MODERATE|MODERATE for <#L#>@<#H#>|Moderation von <#L#>@<#H#>
 SUB_MOD_HELP|Moderator help for <#L#>@<#H#>|Moderationshilfe für <#L#>@<#H#>
 SUB_MOD_SUBSCRIBE|CONFIRM subscribe to <#L#>@<#H#>|Bestätigung der Einschreibung in <#L#>@<#H#>
 SUB_MOD_UNSUBSCRIBE|CONFIRM unsubscribe from <#L#>@<#H#>|Bestätigung der Austragung aus <#L#>@<#H#>
 SUB_PROBE|Probe from <#L#>@<#H#>|Test-Mail von <#L#>@<#H#>
+SUB_RESULT_OF|<#L#> Result of: <#1#>|<#L#> Ergebnis von: <#1#>
 SUB_RESULTS|<#L#> results|Ergebniss von <#L#>
 SUB_RETURNED_POST|Returned post for <#L#>@<#H#>|Rückkehrende Einsundung für <#L#>@<#H#>
 SUB_STATUS|Subscription status on <#L#>@<#H#>|Einschreibungsstatus für <#L#>@<#H#>
@@ -159,7 +162,7 @@ TXT_EDIT_START|%%% START OF TEXT FILE|%%% ANFANG DER TEXT DATEI
 TXT_LISTMEMBERS|Subscribers to this list are:|Abonnenten dieser Liste sind:
 TXT_MAILING_LIST|contact <#L#>-help@<#H#>; run by ezmlm|wende dich an <#L#>-help@<#H#>; basierend auf ezmlm
 TXT_NOINDEX|aaaaaaaaaaaaaaaaaaaa <- subject index not available for message(s) ->|aaaaaaaaaaaaaaaaaaaa <- Betreff-Index ist nicht verfügbar für Nachricht(en) ->
-TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Hier werden nur Nachrichten von Abonnenten der Liste akzeptiert. Falls Sie die Liste beziehen aber trotzdem nicht schreiben duerfen, schicken Sie bitte diese Nachricht an <#L#>-owner@<#H#> weiter, damit Ihre neue Adresse aufgenommen werden kann. Der Listeneigentuemer kann Sie ebenso gezielt fuer das Schreiben von Nachrichten freischalten, auch wenn Sie die Liste nicht beziehen.
+TXT_ONLY_SUBSCRIBERS|Sorry, only subscribers may post. If you are a subscriber, please forward this message to <#L#>-owner@<#H#> to get your new address included.|Es werden nur Nachrichten von Abonnenten der Liste akzeptiert. Falls Sie die Liste beziehen aber trotzdem nicht schreiben duerfen, schicken Sie bitte diese Nachricht an <#L#>-owner@<#H#> weiter, damit Ihre neue Adresse aufgenommen werden kann. Der Listeneigentuemer kann Sie ebenso gezielt fuer das Schreiben von Nachrichten freischalten, auch wenn Sie die Liste nicht beziehen.
 TXT_REJECT_POSTS|Sorry, I've been told to reject your posts. Contact <#L#>-owner@<#H#> if you have questions about this.|Tut mir leid, ich wurde angewies en, Ihre Nachrichten nicht anzunehmen. Diesbezuegliche Fragen richten Sie bitte an <#L#>-owner@<#H#>
 TXT_SUPPRESSED|<suppressed>|<unterdrückt>
 TXT_TOP_TOPICS|Topics (messages <#1#> through <#2#>)|Themen (Nachrichten <#1#> bis <#2#>)
