@@ -18,7 +18,7 @@ Some ezmlmrc are not updated and may not work right.  If you fix them,
 please send them to ezmlm@list.cr.yp.to for inclusion in the next
 release.
 
-ezmlm-idx-7.1.0, ????-??-??
+ezmlm-idx-7.1.0, 2010-11-03
 ===========================
 
 - Added support for SQLite3 subscriber databases.
@@ -30,10 +30,15 @@ ezmlm-idx-7.1.0, ????-??-??
 
 - Added support for decoding sender addresses mangled with a BATV "btv1" tag.
 
+- Added support for custom subject lines to ezmlm-get (for digests).
+
+- Added a new "omitbottom" control file, equivalent to the -B option for
+  both ezmlm-get and ezmlm-manage.
+
 - Modified the (un)subscribe procedure to not require confirmation
   before telling the sender they were already on (or off) the list.
 
-- Renamed to "setup" target to the more standard "install".
+- Renamed to "setup" makefile target to the more standard "install".
 
 - Modified ezmlm-split to exit silently if there is not "split" file,
   and added it back into the "manager" file to properly handle subscribe
@@ -44,25 +49,20 @@ ezmlm-idx-7.1.0, ????-??-??
 - Fixed ezmlm-send to obey the "addtrailer" setting instead of looking
   for a "text/trailer" file.
 
-- Added support for custom subject lines to ezmlm-get (for digests).
-
 - Fixed handling of adding the trailer on old lists.
 
 - Fixed adding the trailer to posts encoded with base64.
 
 - Fixed handling Received: headers with the date stamp on a separate line.
 
-- Added a new "omitbottom" control file, equivalent to the -B option for
-  both ezmlm-get and ezmlm-manage.
-
-- Adjusted filename in digest attachments to fix problem with Outlook.
-  Thanks to Glen Stewart
-
 - Fixed bug in command-line option processing which caused sender-
   confirmed posting to fail.
 
 - Fixed handling BATV sender addresses with upper-case hex tags.
   Thanks to Kyle Wheeler for pointing this out.
+
+- Adjusted filename in digest attachments to fix problem with Outlook.
+  Thanks to Glen Stewart
 
 ezmlm-idx-7.0.2, 2009-08-09
 ===========================
