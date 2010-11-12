@@ -25,6 +25,8 @@ ezmlm-idx-7.1.1, ????-??-??
 
 - Fixed bug in ezmlm-cron that prevented parsing of spaces.
 
+- Fixed unclosed file descriptor on error path in ezmlm-cgi.
+
 ezmlm-idx-7.1.0, 2010-11-03
 ===========================
 

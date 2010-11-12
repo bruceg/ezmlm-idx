@@ -1684,7 +1684,7 @@ int msg2hash(struct msginfo *infop)
         if (getln(&ssin,&line,&match,'\n') == -1)
           strerr_die2sys(111,FATAL,MSG1(ERR_READ,"index"));
         if (!match)
-	  return 0;				/* didn't find message */
+	  break;				/* didn't find message */
 	if (*line.s == '\t') continue;		/* author line */
         pos = scan_ulong(line.s,&tmpmsg);
 	if (tmpmsg == infop->source) {
