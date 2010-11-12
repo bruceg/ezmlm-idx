@@ -225,6 +225,7 @@ int unfoldHDR(char *indata,
     state = SI;		/* us-ascii */
     --cp;		/* set up for loop */
 
+    cset = 0;
     while (++cp <= cpend) {
       if (*cp == SI || *cp == SO) {
         if (state == *cp) {		 /* already in state. Skip shift seq */
@@ -237,7 +238,7 @@ int unfoldHDR(char *indata,
       }
       if (*cp != ESC) continue;
       if (cp + 3 > cpend) break;	/* not space for full SO-designation */
-      cpesc = cp;
+      cpesc = cp++;
       if (*cp != '$') continue;
       if (++cp > cpend) break;
       if (*cp != ')') continue;
