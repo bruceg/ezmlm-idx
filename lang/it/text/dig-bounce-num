@@ -1,4 +1,4 @@
-# Revision: 1
+# Revision: 2
 
 Ho un elenco delle raccolte dalla mailing list <#L#>-digest,
 spedite al tuo indirizzo, che sono tornate indietro. Per ogni raccolta
@@ -7,6 +7,10 @@ che non hai ricevuto, ho annotato il numero del primo messaggio.
 <=a=>
 Le raccolte non vengono archiviate, ma puoi farti rispedire i singoli
 messaggi che le compongono dall'archivio della lista principale.
+
+Per ricevere dall'archivio il messaggio numero 123, invia un messaggio
+anche vuoto a:
+   <<#L#>-get.123@<#h#>>
 
 Per ricevere i messaggi dal numero 123 al numero 145 (al massimo 100 per
 ogni richiesta), scrivi un messaggio anche vuoto a:

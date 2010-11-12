@@ -1,10 +1,14 @@
-# Revision: 1
+# Revision: 2
 
 Ho tenuto una copia dei messaggi della lista <#L#> che
 sono tornati indietro dal tuo indirizzo.
 
 <=a=>
 Le copie di questi messaggi dovrebbero essere state archiviate.
+
+Per ricevere dall'archivio il messaggio numero 123, scrivi un messaggio
+anche vuoto a:
+   <<#L#>-get.123@<#h#>>
 
 Per ricevere dall'archivio i messaggi dal 123 al 145 (al massimo 100 per
 ogni richiesta), scrivi un messaggio anche vuoto a:
