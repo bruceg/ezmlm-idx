@@ -392,7 +392,7 @@ void main(int argc,char **argv)
       foundlocal = 0;
       line.s[line.len - 1] = '\0';	/* match so at least 1 char */
       pos = 0;
-      while (line.s[pos] == ' ' && line.s[pos] == '\t') ++pos;
+      while (line.s[pos] == ' ' || line.s[pos] == '\t') ++pos;
       if (line.s[pos] == '#')
         continue;			/* cron comment */
       pos = str_chr(line.s,'/');
