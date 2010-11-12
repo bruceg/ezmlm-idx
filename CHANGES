@@ -21,6 +21,8 @@ release.
 ezmlm-idx-7.1.1, ????-??-??
 ===========================
 
+- Fixed bug in getln2 function that prevented error handling.
+
 ezmlm-idx-7.1.0, 2010-11-03
 ===========================
 
