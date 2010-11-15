@@ -1597,7 +1597,7 @@ int decode_item(char ch)
 	default: cgierr("Navigation command contains ",
 		"illegal item code","");
   }
-  return 0;	/* never reached */
+  /* never reached */
 }
 
 int decode_direction(char ch)
@@ -1609,7 +1609,7 @@ int decode_direction(char ch)
 	default: cgierr("Navigation command contains ",
 		"illegal direction code","");
   }
-  return 0;	/* never reached */
+  /* never reached */
 }
 
 int decode_cmd(char *s,struct msginfo *infop)

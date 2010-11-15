@@ -5,7 +5,6 @@
 static int parse(struct option *o,const char *arg)
 {
   strerr_die2x(0,"ezmlm version: ",auto_version);
-  return 0;
   (void)o;
   (void)arg;
 }
