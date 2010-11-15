@@ -71,7 +71,7 @@ static void put_u(const char *prefix,unsigned long u)
   substdio_puts(&ssout,"\n");
 }
 
-void main(int argc,char *argv[])
+int main(int argc,char *argv[])
 {
   const char *dir;
   int i;

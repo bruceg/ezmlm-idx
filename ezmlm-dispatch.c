@@ -191,7 +191,7 @@ static void dispatch(const char *dir,const char *def)
   }
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   char *def;
   int dash;

@@ -221,7 +221,7 @@ void dodir(const char *dirname,int reply)
   closedir(moddir);
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   int fdlock;
   unsigned long delay;

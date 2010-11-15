@@ -318,7 +318,7 @@ int idx_copy_insertsubject(void)
   return r;
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   unsigned long subs;
   int fdlock;

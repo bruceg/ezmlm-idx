@@ -163,7 +163,7 @@ int findname(void)
   }
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   char *action;
   char *dtline;

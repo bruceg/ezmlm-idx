@@ -139,7 +139,7 @@ substdio ssin;
 char outbuf[512];
 substdio ssout;
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   int child;
   const char *sendargs[4];

@@ -260,7 +260,7 @@ void parseline(char *cp)
   checkarg(listlocal); checkarg(listhost);
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   const char *local;
   char *action;

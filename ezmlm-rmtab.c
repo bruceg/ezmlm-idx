@@ -26,7 +26,7 @@ static struct option options[] = {
   OPT_END
 };
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   const char *dir;
   const char *r;

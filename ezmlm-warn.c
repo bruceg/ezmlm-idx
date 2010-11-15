@@ -415,7 +415,7 @@ static void dodir(int flagdig)
   closesub();
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   (void) umask(022);
   sig_pipeignore();

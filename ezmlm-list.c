@@ -47,7 +47,7 @@ int dummywrite(const char *s,unsigned int l)
   (void)s;
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   const char *subdir;
   unsigned long n;

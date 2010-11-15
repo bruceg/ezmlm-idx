@@ -177,7 +177,7 @@ int getto(const stralloc *sa)
   return 0;
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   unsigned long maxmsgsize = 0L;
   unsigned long minmsgsize = 0L;

@@ -80,7 +80,7 @@ int mailprog(const char *s)
     return r;
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   const char *dir;
   const char *sender;

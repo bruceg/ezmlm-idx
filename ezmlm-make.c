@@ -346,7 +346,7 @@ static int open_template(stralloc *fn)
   return fd;
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   int opt;
   int flagdo;

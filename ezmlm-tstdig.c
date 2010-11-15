@@ -46,7 +46,7 @@ char strnum[FMT_ULONG];
 
 int flaglocal = 0;
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   char *local;
   char *def;

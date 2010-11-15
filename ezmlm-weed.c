@@ -57,7 +57,7 @@ int isboundary(void)
     return 0;
 }
 
-void main(void)
+int main(void)
 {
   unsigned int i,j;
 

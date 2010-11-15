@@ -51,7 +51,7 @@ char newbuf[16];
 
 char strnum[FMT_ULONG];
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   int opt;
   unsigned int pos;

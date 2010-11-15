@@ -110,7 +110,7 @@ static void maketo(void)
   }
 }
 
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   const char *sender;
   const char *def;
@@ -208,6 +208,6 @@ void main(int argc, char **argv)
     wrap_exitcode(child);
 
     unlink(fnmsg.s);
-    _exit(0);
   }
+  _exit(0);
 }

@@ -133,7 +133,7 @@ void makeacthash(stralloc *act)
   if (!stralloc_cat(act,&outhost)) die_nomem();
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   const char *dir;
   int fdlock;

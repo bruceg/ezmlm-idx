@@ -162,7 +162,7 @@ void maketo(void)
     }
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   const char *sender;
   const char *def;
@@ -447,6 +447,6 @@ void main(int argc,char **argv)
       if (fd != -1)
         close(fd);
       unlink(fnmsg.s);
-      _exit(0);
    }
+  _exit(0);
 }

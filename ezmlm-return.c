@@ -249,7 +249,7 @@ int flaghaveintro;
 char msginbuf[1024];
 substdio ssmsgin;
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   char *action;
   const char *ret;

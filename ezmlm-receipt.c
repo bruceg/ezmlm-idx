@@ -153,7 +153,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   wrap_rename(fndatenew.s,fndate.s);
 }
 
-void main(int argc,char **argv)
+int main(int argc,char **argv)
 {
   char *local;
   char *host;

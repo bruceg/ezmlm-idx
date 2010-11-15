@@ -132,7 +132,7 @@ char buf[256];
 substdio in = SUBSTDIO_FDBUF(read,0,buf,sizeof(buf));
 stralloc line = {0};
 
-void main(argc,argv)
+int main(argc,argv)
 int argc;
 char **argv;
 {
