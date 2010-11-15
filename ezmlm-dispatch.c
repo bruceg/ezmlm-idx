@@ -110,7 +110,6 @@ static int execute_line(const char *fn,const char *line)
   case '/':
   case '.':
     strerr_die5x(100,FATAL,basedir.s,"/",fn,": Delivery to files is not supported.");
-    return 100;
   default:
     if (*line == '&')
       ++line;
