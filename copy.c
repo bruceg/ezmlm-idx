@@ -156,7 +156,7 @@ void copy_xlate(stralloc *out,
 	if (!stralloc_catb(out,hash,COOKIE)) die_nomem();
 	break;
       case 'L':
-	if (!quote(&qline,&local)) die_nomem();
+	if (!quote(&qline,&mainlocal)) die_nomem();
 	if (!stralloc_cat(out,&qline)) die_nomem();
 	break;
       case 'R':

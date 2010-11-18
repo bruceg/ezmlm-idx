@@ -23,7 +23,7 @@ stralloc charset = {0};
 stralloc ezmlmrc = {0};
 stralloc key = {0};
 stralloc listid = {0};
-stralloc local = {0};
+stralloc mainlocal = {0};
 stralloc outhost = {0};
 stralloc outlocal = {0};
 char flagcd = '\0';		/* No transfer encoding by default */
@@ -127,7 +127,7 @@ static void load_config(void)
 
   getconf_line(&outhost,"outhost",1);
   getconf_line(&outlocal,"outlocal",1);
-  if (!stralloc_copy(&local,&outlocal)) die_nomem();
+  if (!stralloc_copy(&mainlocal,&outlocal)) die_nomem();
 
   getconf_line(&listid,"listid",0);
   if (getconf_line(&charset,"charset",0)) {

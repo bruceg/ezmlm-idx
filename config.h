@@ -8,7 +8,7 @@ extern stralloc charset;
 extern stralloc ezmlmrc;
 extern stralloc key;
 extern stralloc listid;
-extern stralloc local;
+extern stralloc mainlocal;
 extern stralloc outhost;
 extern stralloc outlocal;
 extern char flagcd;
