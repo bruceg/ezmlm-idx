@@ -39,12 +39,12 @@ static struct option options[] = {
 static substdio ssout;
 static char buf[SUBSTDIO_OUTSIZE];
 
-static void put_s(const char *prefix,const char *buf)
+static void put_s(const char *prefix,const char *s)
 {
   substdio_puts(&ssout,prefix);
-  if (buf) {
+  if (s) {
     substdio_puts(&ssout,"\"");
-    substdio_puts(&ssout,buf);
+    substdio_puts(&ssout,s);
     substdio_puts(&ssout,"\"\n");
   }
   else

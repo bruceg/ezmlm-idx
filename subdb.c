@@ -19,12 +19,12 @@ static stralloc path = {0};
 static struct sub_plugin *plugin = 0;
 static struct subdbinfo info;
 
-static void parsesubdb(const char *plugin)
+static void parsesubdb(const char *plugin_name)
 /* Parses line into the components. The string in "line" should be
  * plugin[:host[:port[:user[:pw[:db[:base_table]]]]]]. On success
  * returns NULL. On error returns error string for temporary error. If
- * the "plugin" parameter is not NULL, it is used as the plugin name,
- * and the info line is assumed to start at host. */
+ * the "plugin_name" parameter is not NULL, it is used as the plugin
+ * name, and the info line is assumed to start at host. */
 {
   unsigned int j;
   const char *port;
@@ -40,8 +40,8 @@ static void parsesubdb(const char *plugin)
   if (line.s[j = str_chr(line.s,'\n')])
     line.s[j] = '\0';
 						/* get connection parameters */
-  if (plugin != 0) {
-    info.plugin = plugin;
+  if (plugin_name != 0) {
+    info.plugin = plugin_name;
     j = 0;
   }
   else {
@@ -86,7 +86,7 @@ static void parsesubdb(const char *plugin)
     info.base_table = "ezmlm";
 }
 
-static int loadsubdb(const char *filename, const char *plugin)
+static int loadsubdb(const char *filename, const char *plugin_name)
 {
   line.len = 0;
   switch (slurp(filename,&line,128)) {
@@ -95,7 +95,7 @@ static int loadsubdb(const char *filename, const char *plugin)
   case 0:
     return 0;
   default:
-    parsesubdb(plugin);
+    parsesubdb(plugin_name);
     return 1;
   }
 }

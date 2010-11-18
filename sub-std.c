@@ -50,7 +50,6 @@ static substdio ss;
 static substdio ssin;
 static substdio ssnew;
 
-static int fd;
 static int fdnew;
 
 static void die_read(void)
@@ -364,6 +363,7 @@ static int _subscribe(struct subdbinfo *info,
   unsigned char ch,lcch;
   int match;
   int flagwasthere;
+  int fd;
 
   if (userhost[str_chr(userhost,'\n')])
     strerr_die2x(100,FATAL,MSG(ERR_ADDR_NL));
