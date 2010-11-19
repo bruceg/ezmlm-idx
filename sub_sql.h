@@ -9,6 +9,7 @@ extern const char sql_slog_table_defn[];
 extern const char sql_cookie_table_defn[];
 extern const char sql_mlog_table_defn[];
 extern const char sql_issub_where_defn[];
+extern const char sql_putsubs_where_defn[];
 
 extern int sql_table_exists(struct subdbinfo *info,
 			    const char *name);
@@ -28,10 +29,15 @@ extern void sql_free_result(struct subdbinfo *info,
 			    void *result);
 
 /* Common functions provided by sub_sql */
-int sub_sql_issub(struct subdbinfo *info,
-		  const char *table,
-		  const char *userhost,
-		  stralloc *recorded);
+extern int sub_sql_issub(struct subdbinfo *info,
+			 const char *table,
+			 const char *userhost,
+			 stralloc *recorded);
+extern unsigned long sub_sql_putsubs(struct subdbinfo *info,
+				     const char *table,
+				     unsigned long hash_lo,
+				     unsigned long hash_hi,
+				     int subwrite());
 extern const char *sub_sql_mktab(struct subdbinfo *info);
 extern const char *sub_sql_rmtab(struct subdbinfo *info);
 

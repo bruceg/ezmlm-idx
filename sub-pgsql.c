@@ -220,52 +220,6 @@ static const char *_logmsg(struct subdbinfo *info,
   return 0;
 }
 
-/* Outputs all addresses in the table through subwrite. subwrite must be
- * a function returning >=0 on success, -1 on error, and taking
- * arguments (char* string, unsigned int length). It will be called once
- * per address and should take care of newline or whatever needed for
- * the output form. */
-static unsigned long _putsubs(struct subdbinfo *info,
-			      const char *table,
-			      unsigned long hash_lo,
-			      unsigned long hash_hi,
-			      int subwrite())		/* write function. */
-{
-  PGresult *result;
-  int row_nr;
-  int length;
-  char *row;
-  unsigned long no = 0L;
-
-						/* main query */
-    if (!stralloc_copys(&line,"SELECT address FROM "))
-		die_nomem();
-    if (!stralloc_cat_table(&line,info,table)) die_nomem();
-    if (!stralloc_cats(&line," WHERE hash BETWEEN ")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_lo)))
-		die_nomem();
-    if (!stralloc_cats(&line," AND ")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_hi)))
-      die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
-    result = PQexec((PGconn*)info->conn,line.s);
-    if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
-    if (PQresultStatus(result) != PGRES_TUPLES_OK)
-      strerr_die2x(111,FATAL,PQresultErrorMessage(result));
-
-    no = 0;
-    for (row_nr=0;row_nr<PQntuples(result);row_nr++) {
-      /* this is safe even if someone messes with the address field def */
-      length = PQgetlength(result,row_nr,0);
-      row = PQgetvalue(result,row_nr,0);
-      if (subwrite(row,length) == -1) die_write();
-      no++;					/* count for list-list fxn */
-    }
-    PQclear(result);
-    return no;
-}
-
 /* Searches the subscriber log and outputs via subwrite(s,len) any entry
  * that matches search. A '_' is search is a wildcard. Any other
  * non-alphanum/'.' char is replaced by a '_'. */
@@ -674,6 +628,9 @@ const char sql_mlog_table_defn[] =
 /* Definition of WHERE clause for selecting addresses in issub */
 const char sql_issub_where_defn[] = "address ~* ('^' || $1 || '$')::text";
 
+/* Definition of WHERE clause for selecting addresses in putsubs */
+const char sql_putsubs_where_defn[] = "hash BETWEEN $1 AND $2";
+
 const char *sql_drop_table(struct subdbinfo *info,
 			   const char *name)
 {
@@ -699,7 +656,7 @@ struct sub_plugin sub_plugin = {
   _logmsg,
   sub_sql_mktab,
   _opensub,
-  _putsubs,
+  sub_sql_putsubs,
   sub_sql_rmtab,
   _searchlog,
   _subscribe,

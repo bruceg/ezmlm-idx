@@ -189,48 +189,6 @@ static const char *_logmsg(struct subdbinfo *info,
   return 0;
 }
 
-/* Outputs all addresses in the table through subwrite. subwrite must be
- * a function returning >=0 on success, -1 on error, and taking
- * arguments (char* string, unsigned int length). It will be called once
- * per address and should take care of newline or whatever needed for
- * the output form. */
-static unsigned long _putsubs(struct subdbinfo *info,
-			      const char *table,
-			      unsigned long hash_lo,
-			      unsigned long hash_hi,
-			      int subwrite())		/* write function. */
-{
-  MYSQL_RES *result;
-  MYSQL_ROW row;
-  unsigned long *lengths;
-
-  unsigned long no = 0L;
-
-						/* main query */
-    if (!stralloc_copys(&line,"SELECT address FROM "))
-		die_nomem();
-    if (!stralloc_cat_table(&line,info,table)) die_nomem();
-    if (!stralloc_cats(&line," WHERE hash BETWEEN ")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_lo)))
-		die_nomem();
-    if (!stralloc_cats(&line," AND ")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_hi)))
-		die_nomem();
-    result = safe_select(info,&line);
-    no = 0;
-    while ((row = mysql_fetch_row(result))) {
-	/* this is safe even if someone messes with the address field def */
-    if (!(lengths = mysql_fetch_lengths(result)))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
-      if (subwrite(row[0],lengths[0]) == -1) die_write();
-      no++;					/* count for list-list fxn */
-    }
-    if (!mysql_eof(result))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
-    mysql_free_result(result);
-    return no;
-}
-
 /* Searches the subscriber log and outputs via subwrite(s,len) any entry
  * that matches search. A '_' is search is a wildcard. Any other
  * non-alphanum/'.' char is replaced by a '_'. */
@@ -584,6 +542,9 @@ const char sql_mlog_table_defn[] =
 /* Definition of WHERE clause for selecting addresses in issub */
 const char sql_issub_where_defn[] = "address LIKE ?";
 
+/* Definition of WHERE clause for selecting addresses in putsubs */
+const char sql_putsubs_where_defn[] = "hash BETWEEN ? AND ?";
+
 int sql_table_exists(struct subdbinfo *info,
 		     const char *name)
 {
@@ -620,7 +581,7 @@ struct sub_plugin sub_plugin = {
   _logmsg,
   sub_sql_mktab,
   _opensub,
-  _putsubs,
+  sub_sql_putsubs,
   sub_sql_rmtab,
   _searchlog,
   _subscribe,

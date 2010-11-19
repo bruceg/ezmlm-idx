@@ -193,53 +193,6 @@ static const char *_logmsg(struct subdbinfo *info,
   return 0;
 }
 
-/* Outputs all addresses in the table through subwrite. subwrite must be
- * a function returning >=0 on success, -1 on error, and taking
- * arguments (char* string, unsigned int length). It will be called once
- * per address and should take care of newline or whatever needed for
- * the output form. */
-static unsigned long _putsubs(struct subdbinfo *info,
-			      const char *table,
-			      unsigned long hash_lo,
-			      unsigned long hash_hi,
-			      int subwrite())		/* write function. */
-{
-  unsigned long no = 0L;
-  sqlite3_stmt *stmt;
-  int res;
-  int length;
-  const char *row;
-
-						/* main query */
-    if (!stralloc_copys(&line,"SELECT address FROM "))
-		die_nomem();
-    if (!stralloc_cat_table(&line,info,table)) die_nomem();
-    if (!stralloc_cats(&line," WHERE hash BETWEEN ")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_lo)))
-		die_nomem();
-    if (!stralloc_cats(&line," AND ")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,hash_hi)))
-		die_nomem();
-	if (!stralloc_0(&line)) die_nomem();
-
-	if ((stmt = _sqlquery(info, &line)) == NULL)
-		strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
-
-    no = 0;
-    while ((res = sqlite3_step(stmt)) != SQLITE_DONE) {
-		if (res != SQLITE_ROW)
-			strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
-	/* this is safe even if someone messes with the address field def */
-		length = sqlite3_column_bytes(stmt, 0);
-		row = (const char*)sqlite3_column_text(stmt, 0);
-      if (subwrite(row,length) == -1) die_write();
-      no++;					/* count for list-list fxn */
-    }
-
-	sqlite3_finalize(stmt);
-    return no;
-}
-
 /* Searches the subscriber log and outputs via subwrite(s,len) any entry
  * that matches search. A '_' is search is a wildcard. Any other
  * non-alphanum/'.' char is replaced by a '_'. */
@@ -642,6 +595,9 @@ const char sql_mlog_table_defn[] =
 /* Definition of WHERE clause for selecting addresses in issub */
 const char sql_issub_where_defn[] = "address LIKE ?";
 
+/* Definition of WHERE clause for selecting addresses in putsubs */
+const char sql_putsubs_where_defn[] = "hash BETWEEN ? AND ?";
+
 const char *sql_drop_table(struct subdbinfo *info,
 			   const char *name)
 {
@@ -671,7 +627,7 @@ struct sub_plugin sub_plugin = {
   _logmsg,
   sub_sql_mktab,
   _opensub,
-  _putsubs,
+  sub_sql_putsubs,
   sub_sql_rmtab,
   _searchlog,
   _subscribe,

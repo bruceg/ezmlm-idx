@@ -1,13 +1,23 @@
 #include "byte.h"
 #include "case.h"
 #include "die.h"
+#include "fmt.h"
+#include "messages.h"
 #include "stralloc.h"
+#include "strerr.h"
 #include "sub_sql.h"
 #include "subdb.h"
 
 static stralloc addr;
 static stralloc name;
 static stralloc query;
+static stralloc params[2];
+static char strnum[FMT_ULONG];
+
+static void die_write(void)
+{
+  strerr_die2sys(111,FATAL,MSG(ERR_WRITE_STDOUT));
+}
 
 static void make_name(struct subdbinfo *info,
 		      const char *suffix1,
@@ -65,6 +75,42 @@ int sub_sql_issub(struct subdbinfo *info,
   }
   sql_free_result(info,result);
   return ret;
+}
+
+/* Outputs all addresses in the table through subwrite. subwrite must be
+ * a function returning >=0 on success, -1 on error, and taking
+ * arguments (char* string, unsigned int length). It will be called once
+ * per address and should take care of newline or whatever needed for
+ * the output form. */
+unsigned long sub_sql_putsubs(struct subdbinfo *info,
+			      const char *table,
+			      unsigned long hash_lo,
+			      unsigned long hash_hi,
+			      int subwrite()) /* write function. */
+{
+  void *result;
+  unsigned long no = 0L;
+
+  if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,hash_lo))) die_nomem();
+  if (!stralloc_copyb(&params[1],strnum,fmt_ulong(strnum,hash_hi))) die_nomem();
+  make_name(info,table?"_":0,table,0);
+
+  /* main query */
+  if (!stralloc_copys(&query,"SELECT address FROM "))
+		die_nomem();
+  if (!stralloc_cat(&query,&name)) die_nomem();
+  if (!stralloc_cats(&query," WHERE ")) die_nomem();
+  if (!stralloc_cats(&query,sql_putsubs_where_defn)) die_nomem();
+
+  result = sql_select(info,&query,2,params);
+
+  no = 0;
+  while (sql_fetch_row(info,result,1,&addr)) {
+    if (subwrite(addr.s,addr.len) == -1) die_write();
+    no++;					/* count for list-list fxn */
+  }
+  sql_free_result(info,result);
+  return no;
 }
 
 static const char *create_table(struct subdbinfo *info,
