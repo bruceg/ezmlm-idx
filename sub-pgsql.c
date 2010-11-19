@@ -1,39 +1,12 @@
-#include "byte.h"
-#include "case.h"
-#include "cookie.h"
-#include "date822fmt.h"
-#include "datetime.h"
 #include "die.h"
-#include "error.h"
-#include "messages.h"
 #include "fmt.h"
-#include "getln.h"
-#include "idx.h"
-#include "lock.h"
-#include "log.h"
-#include "makehash.h"
-#include "open.h"
-#include "qmail.h"
-#include "readwrite.h"
 #include "scan.h"
-#include "slurp.h"
-#include "str.h"
-#include "stralloc.h"
 #include "strerr.h"
 #include "sub_sql.h"
-#include "sub_std.h"
-#include "subhash.h"
-#include "subdb.h"
-#include "substdio.h"
-#include "uint32.h"
-#include "wrap.h"
 #include <sys/types.h>
 #include <libpq-fe.h>
-#include <libpq-fe.h> 
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
 static char strnum[FMT_ULONG];
 static stralloc line = {0};
