@@ -11,6 +11,7 @@ extern const char sql_mlog_table_defn[];
 extern const char sql_checktag_listno_where_defn[];
 extern const char sql_checktag_msgnum_where_defn[];
 extern const char sql_issub_where_defn[];
+extern const char sql_logmsg_values_defn[];
 extern const char sql_putsubs_where_defn[];
 extern const char sql_searchlog_select_defn[];
 extern const char sql_searchlog_where_defn[];
@@ -21,6 +22,10 @@ extern const char *sql_create_table(struct subdbinfo *info,
 				    const char *defn);
 extern const char *sql_drop_table(struct subdbinfo *info,
 				  const char *name);
+extern int sql_insert(struct subdbinfo *info,
+		      struct stralloc *q,
+		      unsigned int nparams,
+		      struct stralloc *params);
 extern void *sql_select(struct subdbinfo *info,
 			struct stralloc *q,
 			unsigned int nparams,
@@ -43,6 +48,11 @@ extern int sub_sql_issub(struct subdbinfo *info,
 			 const char *table,
 			 const char *userhost,
 			 stralloc *recorded);
+extern const char *sub_sql_logmsg(struct subdbinfo *info,
+				  unsigned long num,
+				  unsigned long listno,
+				  unsigned long subs,
+				  int done);
 extern unsigned long sub_sql_putsubs(struct subdbinfo *info,
 				     const char *table,
 				     unsigned long hash_lo,

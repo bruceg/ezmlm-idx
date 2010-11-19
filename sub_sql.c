@@ -15,7 +15,7 @@
 static stralloc addr;
 static stralloc name;
 static stralloc query;
-static stralloc params[2];
+static stralloc params[4];
 static char strnum[FMT_ULONG];
 
 static void die_write(void)
@@ -128,6 +128,37 @@ int sub_sql_issub(struct subdbinfo *info,
   }
   sql_free_result(info,result);
   return ret;
+}
+
+/* Creates an entry for message num and the list listno and code "done".
+ * Returns NULL on success, and the error string on error. */
+const char *sub_sql_logmsg(struct subdbinfo *info,
+			   unsigned long num,
+			   unsigned long listno,
+			   unsigned long subs,
+			   int done)
+{
+  char *s;
+
+  if (!stralloc_copys(&query,"INSERT INTO ")) die_nomem();
+  if (!stralloc_cats(&query,info->base_table)) die_nomem();
+  if (!stralloc_cats(&query,"_mlog (msgnum,listno,subs,done) VALUES "))
+	die_nomem();
+  if (!stralloc_cats(&query,sql_logmsg_values_defn)) die_nomem();
+  if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,num))) die_nomem();
+  if (!stralloc_copyb(&params[1],strnum,fmt_ulong(strnum,listno)))
+	die_nomem();
+  if (!stralloc_copyb(&params[2],strnum,fmt_ulong(strnum,subs))) die_nomem();
+  s = strnum;
+  if (done < 0) {
+    done = - done;
+    *s++ = '-';
+  }
+  s[fmt_uint(s,done)] = 0;
+  if (!stralloc_copys(&params[3],s)) die_nomem();
+
+  sql_insert(info,&query,4,params); /* ignore dups */
+  return 0;
 }
 
 /* Outputs all addresses in the table through subwrite. subwrite must be

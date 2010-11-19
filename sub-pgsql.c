@@ -31,6 +31,7 @@
 #include <libpq-fe.h>
 #include <libpq-fe.h> 
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -90,67 +91,6 @@ static void _closesub(struct subdbinfo *info)
   if ((PGconn*)info->conn)
     PQfinish((PGconn*)info->conn);
   info->conn = 0;		/* Destroy pointer */
-}
-
-/* Creates an entry for message num and the list listno and code "done".
- * Returns NULL on success, and the error string on error. */
-static const char *_logmsg(struct subdbinfo *info,
-			   unsigned long num,
-			   unsigned long listno,
-			   unsigned long subs,
-			   int done)
-{
-  PGresult *result;
-  PGresult *result2;
-
-  if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
-  if (!stralloc_cats(&logline,info->base_table)) die_nomem();
-  if (!stralloc_cats(&logline,"_mlog (msgnum,listno,subs,done) VALUES ("))
-	die_nomem();
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) die_nomem();
-  if (!stralloc_cats(&logline,",")) die_nomem();
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,listno)))
-	die_nomem();
-  if (!stralloc_cats(&logline,",")) die_nomem();
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) die_nomem();
-  if (!stralloc_cats(&logline,",")) die_nomem();
-  if (done < 0) {
-    done = - done;
-    if (!stralloc_append(&logline,"-")) die_nomem();
-  }
-  if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) die_nomem();
-  if (!stralloc_append(&logline,")")) die_nomem();
-
-  if (!stralloc_0(&logline)) die_nomem();
-  result = PQexec((PGconn*)info->conn,logline.s);
-  if(result==NULL)
-    return (PQerrorMessage((PGconn*)info->conn));
-  if(PQresultStatus(result) != PGRES_COMMAND_OK) { /* Check if duplicate */
-    if (!stralloc_copys(&logline,"SELECT msgnum FROM ")) die_nomem();
-    if (!stralloc_cats(&logline,info->base_table)) die_nomem();
-    if (!stralloc_cats(&logline,"_mlog WHERE msgnum = ")) die_nomem();
-    if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num)))
-      die_nomem();
-    if (!stralloc_cats(&logline," AND listno = ")) die_nomem();
-    if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,listno)))
-      die_nomem();
-    if (!stralloc_cats(&logline," AND done = ")) die_nomem();
-    if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,done)))
-      die_nomem();
-    /* Query */
-    if (!stralloc_0(&logline)) die_nomem();
-    result2 = PQexec((PGconn*)info->conn,logline.s);
-    if (result2 == NULL)
-      return (PQerrorMessage((PGconn*)info->conn));
-    if (PQresultStatus(result2) != PGRES_TUPLES_OK)
-      return (char *) (PQresultErrorMessage(result2));
-    /* No duplicate, return ERROR from first query */
-    if (PQntuples(result2)<1)
-      return (char *) (PQresultErrorMessage(result));
-    PQclear(result2);
-  }
-  PQclear(result);
-  return 0;
 }
 
 /* Add (flagadd=1) or remove (flagadd=0) userhost from the subscriber
@@ -374,13 +314,12 @@ static void die_sqlresulterror(PGresult *result)
   strerr_die2x(111,FATAL,PQresultErrorMessage(result));
 }
 
-void *sql_select(struct subdbinfo *info,
-		 struct stralloc *q,
-		 unsigned int nparams,
-		 struct stralloc *params)
+PGresult *_execute(struct subdbinfo *info,
+		   struct stralloc *q,
+		   unsigned int nparams,
+		   struct stralloc *params)
 {
   PGresult *result;
-  struct _result *ret;
   const char *values[nparams];
   int lengths[nparams];
   unsigned int i;
@@ -391,11 +330,50 @@ void *sql_select(struct subdbinfo *info,
     values[i] = params[i].s;
     lengths[i] = params[i].len - 1;
   }
-  if ((ret = malloc(sizeof *ret)) == 0) die_nomem();
 
   result = PQexecParams((PGconn*)info->conn,q->s,nparams,0,values,lengths,0,0);
   if (result == 0)
     die_sqlerror(info);
+  return result;
+}
+
+int sql_insert(struct subdbinfo *info,
+	       struct stralloc *q,
+	       unsigned int nparams,
+	       struct stralloc *params)
+{
+  PGresult *result;
+  int rows;
+  const char *err;
+
+  result = _execute(info,q,nparams,params);
+  switch (PQresultStatus(result)) {
+  case PGRES_COMMAND_OK:
+    rows = 1;
+    break;
+  default:
+    /* This is ugly, but I can't find another good way of doing this */
+    err = PQresultErrorMessage(result);
+    if (strstr(err, "duplicate") != 0)
+      rows = 0;
+    else
+      die_sqlresulterror(result);
+  }
+  PQclear(result);
+  return rows;
+}
+
+void *sql_select(struct subdbinfo *info,
+		 struct stralloc *q,
+		 unsigned int nparams,
+		 struct stralloc *params)
+{
+  PGresult *result;
+  struct _result *ret;
+
+  if ((ret = malloc(sizeof *ret)) == 0) die_nomem();
+
+  result = _execute(info,q,nparams,params);
   if (PQresultStatus(result) != PGRES_TUPLES_OK)
     die_sqlresulterror(result);
 
@@ -515,6 +493,9 @@ const char sql_checktag_msgnum_where_defn[] = "msgnum=$1 AND cookie=$2";
 /* Definition of WHERE clause for selecting addresses in issub */
 const char sql_issub_where_defn[] = "address ~* ('^' || $1 || '$')::text";
 
+/* Definition of VALUES clause for insert in logmsg */
+const char sql_logmsg_values_defn[] = "($1,$2,$3,$4)";
+
 /* Definition of WHERE clause for selecting addresses in putsubs */
 const char sql_putsubs_where_defn[] = "hash BETWEEN $1 AND $2";
 
@@ -544,7 +525,7 @@ struct sub_plugin sub_plugin = {
   sub_sql_checktag,
   _closesub,
   sub_sql_issub,
-  _logmsg,
+  sub_sql_logmsg,
   sub_sql_mktab,
   _opensub,
   sub_sql_putsubs,

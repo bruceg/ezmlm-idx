@@ -29,6 +29,7 @@
 #include "wrap.h"
 #include <sys/types.h>
 #include <mysql.h>
+#include <mysql/errmsg.h>
 #include <mysqld_error.h>
 #include <stdio.h>
 #include <sys/stat.h>
@@ -79,38 +80,6 @@ static void safe_query(struct subdbinfo *info,const stralloc* query)
 {
   if (mysql_real_query((MYSQL*)info->conn,query->s,query->len))
     strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
-}
-
-/* Creates an entry for message num and the list listno and code "done".
- * Returns NULL on success, and the error string on error. */
-static const char *_logmsg(struct subdbinfo *info,
-			   unsigned long num,
-			   unsigned long listno,
-			   unsigned long subs,
-			   int done)
-{
-  if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
-  if (!stralloc_cats(&logline,info->base_table)) die_nomem();
-  if (!stralloc_cats(&logline,"_mlog (msgnum,listno,subs,done) VALUES ("))
-	die_nomem();
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) die_nomem();
-  if (!stralloc_cats(&logline,",")) die_nomem();
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,listno)))
-	die_nomem();
-  if (!stralloc_cats(&logline,",")) die_nomem();
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) die_nomem();
-  if (!stralloc_cats(&logline,",")) die_nomem();
-  if (done < 0) {
-    done = - done;
-    if (!stralloc_append(&logline,"-")) die_nomem();
-  }
-  if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) die_nomem();
-  if (!stralloc_append(&logline,")")) die_nomem();
-
-  if (mysql_real_query((MYSQL*)info->conn,logline.s,logline.len))	/* log query */
-    if (mysql_errno((MYSQL*)info->conn) != ER_DUP_ENTRY)	/* ignore dups */
-	return mysql_error((MYSQL*)info->conn);
-  return 0;
 }
 
 /* Add (flagadd=1) or remove (flagadd=0) userhost from the subscriber
@@ -295,10 +264,10 @@ static void die_sqlerror(struct subdbinfo *info)
   strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
 }
 
-void *sql_select(struct subdbinfo *info,
-		 struct stralloc *q,
-		 unsigned int nparams,
-		 struct stralloc *params)
+MYSQL_STMT *_prepbind(struct subdbinfo *info,
+		      struct stralloc *q,
+		      unsigned int nparams,
+		      struct stralloc *params)
 {
   MYSQL_STMT *stmt;
   MYSQL_BIND bind[nparams];
@@ -316,6 +285,40 @@ void *sql_select(struct subdbinfo *info,
   }
   if (mysql_stmt_bind_param(stmt,bind) != 0)
     die_sqlerror(info);
+  return stmt;
+}
+
+int sql_insert(struct subdbinfo *info,
+	       struct stralloc *q,
+	       unsigned int nparams,
+	       struct stralloc *params)
+{
+  int rows;
+  MYSQL_STMT *stmt;
+
+  stmt = _prepbind(info,q,nparams,params);
+  switch (rows = mysql_stmt_execute(stmt)) {
+  case 0:
+    rows = mysql_stmt_affected_rows(stmt);
+    break;
+  default:
+    if (mysql_stmt_errno(stmt) == ER_DUP_ENTRY)
+      rows = 0;
+    else
+      die_sqlerror(info);
+  }
+  sql_free_result(info,stmt);
+  return rows;
+}
+
+void *sql_select(struct subdbinfo *info,
+		 struct stralloc *q,
+		 unsigned int nparams,
+		 struct stralloc *params)
+{
+  MYSQL_STMT *stmt;
+
+  stmt = _prepbind(info,q,nparams,params);
   if (mysql_stmt_execute(stmt) != 0)
     die_sqlerror(info);
   return stmt;
@@ -427,6 +430,9 @@ const char sql_checktag_msgnum_where_defn[] = "msgnum=? AND cookie=?";
 /* Definition of WHERE clause for selecting addresses in issub */
 const char sql_issub_where_defn[] = "address LIKE ?";
 
+/* Definition of VALUES clause for insert in logmsg */
+const char sql_logmsg_values_defn[] = "(?,?,?,?)";
+
 /* Definition of WHERE clause for selecting addresses in putsubs */
 const char sql_putsubs_where_defn[] = "hash BETWEEN ? AND ?";
 
@@ -467,7 +473,7 @@ struct sub_plugin sub_plugin = {
   sub_sql_checktag,
   _closesub,
   sub_sql_issub,
-  _logmsg,
+  sub_sql_logmsg,
   sub_sql_mktab,
   _opensub,
   sub_sql_putsubs,

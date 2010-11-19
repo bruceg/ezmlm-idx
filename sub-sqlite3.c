@@ -83,53 +83,6 @@ static const char *_opensub(struct subdbinfo *info)
   return (char *) 0;
 }
 
-/* Creates an entry for message num and the list listno and code "done".
- * Returns NULL on success, and the error string on error. */
-static const char *_logmsg(struct subdbinfo *info,
-			   unsigned long num,
-			   unsigned long listno,
-			   unsigned long subs,
-			   int done)
-{
-  sqlite3_stmt *stmt;
-  int res;
-
-  if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
-  if (!stralloc_cats(&logline,info->base_table)) die_nomem();
-  if (!stralloc_cats(&logline,"_mlog (msgnum,listno,tai,subs,done) VALUES ("))
-	die_nomem();
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,num))) die_nomem();
-  if (!stralloc_cats(&logline,",")) die_nomem();
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,listno)))
-	die_nomem();
-  if (!stralloc_cats(&line,",")) die_nomem();
-  if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,now()))) die_nomem();
-  if (!stralloc_cats(&line,",'")) die_nomem();
-  if (!stralloc_catb(&logline,strnum,fmt_ulong(strnum,subs))) die_nomem();
-  if (!stralloc_cats(&logline,",")) die_nomem();
-  if (done < 0) {
-    done = - done;
-    if (!stralloc_append(&logline,"-")) die_nomem();
-  }
-  if (!stralloc_catb(&logline,strnum,fmt_uint(strnum,done))) die_nomem();
-  if (!stralloc_append(&logline,")")) die_nomem();
-  if (!stralloc_0(&logline)) die_nomem();
-
-  if ((stmt = _sqlquery(info, &logline)) == NULL)	/* log query */
-	  return sqlite3_errmsg((sqlite3*)info->conn);
-
-  res = sqlite3_step(stmt);
-  sqlite3_finalize(stmt);
-
-  if (res != SQLITE_DONE)
-  {
-	  if (res != SQLITE_CONSTRAINT)		/* ignore dups */
-		  return sqlite3_errmsg((sqlite3*)info->conn);
-  }
-
-  return 0;
-}
-
 /* Add (flagadd=1) or remove (flagadd=0) userhost from the subscriber
  * database table. Comment is e.g. the subscriber from line or name. It
  * is added to the log. Event is the action type, e.g. "probe",
@@ -344,7 +297,28 @@ static void die_sqlerror(struct subdbinfo *info)
 {
   strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
 }
-  
+
+int sql_insert(struct subdbinfo *info,
+	       struct stralloc *q,
+	       unsigned int nparams,
+	       struct stralloc *params)
+{
+  sqlite3_stmt *stmt;
+  int res;
+
+  stmt = sql_select(info,q,nparams,params);
+  res = sqlite3_step(stmt);
+  sqlite3_finalize(stmt);
+
+  if (res != SQLITE_DONE)
+  {
+    if (res == SQLITE_CONSTRAINT) /* duplicated key */
+      return 0;
+    die_sqlerror(info);
+  }
+  return 1;
+}
+
 void *sql_select(struct subdbinfo *info,
 		 struct stralloc *q,
 		 unsigned int nparams,
@@ -479,6 +453,9 @@ const char sql_checktag_msgnum_where_defn[] = "msgnum=? AND cookie=?";
 /* Definition of WHERE clause for selecting addresses in issub */
 const char sql_issub_where_defn[] = "address LIKE ?";
 
+/* Definition of VALUES clause for insert in logmsg */
+const char sql_logmsg_values_defn[] = "(?,?,?,?)";
+
 /* Definition of WHERE clause for selecting addresses in putsubs */
 const char sql_putsubs_where_defn[] = "hash BETWEEN ? AND ?";
 
@@ -512,7 +489,7 @@ struct sub_plugin sub_plugin = {
   sub_sql_checktag,
   _closesub,
   sub_sql_issub,
-  _logmsg,
+  sub_sql_logmsg,
   sub_sql_mktab,
   _opensub,
   sub_sql_putsubs,
