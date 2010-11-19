@@ -36,12 +36,7 @@
 #include <unistd.h>
 
 static char strnum[FMT_ULONG];
-static stralloc addr = {0};
-static stralloc domain = {0};
-static stralloc lcaddr = {0};
 static stralloc line = {0};
-static stralloc logline = {0};
-static stralloc quoted = {0};
 
 struct _result
 {
@@ -73,176 +68,12 @@ static const char *_opensub(struct subdbinfo *info)
   return (char *) 0;
 }
 
-static int stralloc_cat_table(stralloc *s,
-			      const struct subdbinfo *info,
-			      const char *table)
-{
-  if (!stralloc_cats(s,info->base_table)) return 0;
-  if (table) {
-    if (!stralloc_append(s,"_")) return 0;
-    if (!stralloc_cats(s,table)) return 0;
-  }
-  return 1;
-}
-
 /* close connection to SQL server, if open */
 static void _closesub(struct subdbinfo *info)
 {
   if ((PGconn*)info->conn)
     PQfinish((PGconn*)info->conn);
   info->conn = 0;		/* Destroy pointer */
-}
-
-/* Add (flagadd=1) or remove (flagadd=0) userhost from the subscriber
- * database table. Comment is e.g. the subscriber from line or name. It
- * is added to the log. Event is the action type, e.g. "probe",
- * "manual", etc. The direction (sub/unsub) is inferred from
- * flagadd. Returns 1 on success, 0 on failure. If forcehash is >=0 it
- * is used in place of the calculated hash. This makes it possible to
- * add addresses with a hash that does not exist. forcehash has to be
- * 0..99.  For unsubscribes, the address is only removed if forcehash
- * matches the actual hash. This way, ezmlm-manage can be prevented from
- * touching certain addresses that can only be removed by
- * ezmlm-unsub. Usually, this would be used for sublist addresses (to
- * avoid removal) and sublist aliases (to prevent users from subscribing
- * them (although the cookie mechanism would prevent the resulting
- * duplicate message from being distributed. */
-static int _subscribe(struct subdbinfo *info,
-		      const char *table,
-		      const char *userhost,
-		      int flagadd,
-		      const char *comment,
-		      const char *event,
-		      int forcehash)
-{
-  PGresult *result;
-  char *cpat;
-  char szhash[3] = "00";
-  unsigned int j;
-  unsigned char ch;
-
-    domain.len = 0;			/* clear domain */
-					/* lowercase and check address */
-    if (!stralloc_copys(&addr,userhost)) die_nomem();
-    if (addr.len > 255)			/* this is 401 in std ezmlm. 255 */
-					/* should be plenty! */
-      strerr_die2x(100,FATAL,MSG(ERR_ADDR_LONG));
-    j = byte_rchr(addr.s,addr.len,'@');
-    if (j == addr.len)
-      strerr_die2x(100,FATAL,MSG(ERR_ADDR_AT));
-    cpat = addr.s + j;
-    case_lowerb(cpat + 1,addr.len - j - 1);
-
-    if (!stralloc_ready(&quoted,2 * addr.len + 1)) die_nomem();
-    quoted.len = PQescapeString(quoted.s,addr.s,addr.len);
-	/* stored unescaped, so it should be ok if quoted.len is >255, as */
-	/* long as addr.len is not */
-
-    if (!stralloc_ready(&quoted,2 * addr.len + 1)) die_nomem();
-    quoted.len = PQescapeString(quoted.s,addr.s,addr.len);
-	/* stored unescaped, so it should be ok if quoted.len is >255, as */
-	/* long as addr.len is not */
-
-    if (forcehash < 0) {
-      if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
-      case_lowerb(lcaddr.s,j);		/* make all-lc version of address */
-      ch = subhashsa(&lcaddr);
-    } else
-      ch = (forcehash % 100);
-
-    szhash[0] = '0' + ch / 10;		/* hash for sublist split */
-    szhash[1] = '0' + (ch % 10);
-
-    if (flagadd) {
-      if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
-      if (!stralloc_cat_table(&line,info,table)) die_nomem();
-      if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
-      if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
-      if (!stralloc_cats(&line,"$'")) die_nomem();
-      if (!stralloc_0(&line)) die_nomem();
-      result = PQexec((PGconn*)info->conn,line.s);
-      if (result == NULL)
-	strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
-      if (PQresultStatus(result) != PGRES_TUPLES_OK)
-	strerr_die2x(111,FATAL,PQresultErrorMessage(result));
-
-      if (PQntuples(result)>0) {			/* there */
-	PQclear(result);
-        return 0;						/* there */
-      } else {							/* not there */
-	PQclear(result);
-	if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
-	if (!stralloc_cat_table(&line,info,table)) die_nomem();
-	if (!stralloc_cats(&line," (address,hash) VALUES ('"))
-		die_nomem();
-	if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
-	if (!stralloc_cats(&line,"',")) die_nomem();
-	if (!stralloc_cats(&line,szhash)) die_nomem();	/* hash */
-	if (!stralloc_cats(&line,")")) die_nomem();
-	if (!stralloc_0(&line)) die_nomem();
-	result = PQexec((PGconn*)info->conn,line.s);
-	if (result == NULL)
-	  strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
-	if (PQresultStatus(result) != PGRES_COMMAND_OK)
-	  strerr_die2x(111,FATAL,PQresultErrorMessage(result));
-      }
-    } else {							/* unsub */
-      if (!stralloc_copys(&line,"DELETE FROM ")) die_nomem();
-      if (!stralloc_cat_table(&line,info,table)) die_nomem();
-      if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
-      if (!stralloc_cat(&line,&quoted)) die_nomem();	/* addr */
-      if (forcehash >= 0) {
-	if (!stralloc_cats(&line,"$' AND hash=")) die_nomem();
-	if (!stralloc_cats(&line,szhash)) die_nomem();
-      } else {
-        if (!stralloc_cats(&line,"$' AND hash BETWEEN 0 AND 52"))
-		die_nomem();
-      }
-      
-      if (!stralloc_0(&line)) die_nomem();
-      result = PQexec((PGconn*)info->conn,line.s);
-      if (result == NULL)
-	strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
-      if (PQresultStatus(result) != PGRES_COMMAND_OK)
-	strerr_die2x(111,FATAL,PQresultErrorMessage(result));
-      if (atoi(PQcmdTuples(result))<1)
-	return 0;				/* address wasn't there*/
-      PQclear(result);
-    }
-
-		/* log to subscriber log */
-		/* INSERT INTO t_slog (address,edir,etype,fromline) */
-		/* VALUES('address',{'+'|'-'},'etype','[comment]') */
-
-    if (!stralloc_copys(&logline,"INSERT INTO ")) die_nomem();
-    if (!stralloc_cat_table(&logline,info,table)) die_nomem();
-    if (!stralloc_cats(&logline,
-	"_slog (address,edir,etype,fromline) VALUES ('")) die_nomem();
-    if (!stralloc_cat(&logline,&quoted)) die_nomem();
-    if (flagadd) {						/* edir */
-      if (!stralloc_cats(&logline,"','+','")) die_nomem();
-    } else {
-      if (!stralloc_cats(&logline,"','-','")) die_nomem();
-    }
-    if (*(event + 1))	/* ezmlm-0.53 uses '' for ezmlm-manage's work */
-      if (!stralloc_catb(&logline,event+1,1)) die_nomem();	/* etype */
-    if (!stralloc_cats(&logline,"','")) die_nomem();
-    if (comment && *comment) {
-      j = str_len(comment);
-      if (!stralloc_ready(&quoted,2 * j + 1)) die_nomem();
-      quoted.len = PQescapeString(quoted.s,comment,j); /* from */
-      if (!stralloc_cat(&logline,&quoted)) die_nomem();
-    }
-    if (!stralloc_cats(&logline,"')")) die_nomem();
-
-    if (!stralloc_0(&logline)) die_nomem();
-    result = PQexec((PGconn*)info->conn,logline.s);		/* log (ignore errors) */
-    PQclear(result);
-
-    if (!stralloc_0(&addr))
-		;				/* ignore errors */
-    logaddr(table,event,addr.s,comment);	/* also log to old log */
-    return 1;					/* desired effect */
 }
 
 static void die_sqlerror(struct subdbinfo *info)
@@ -278,19 +109,20 @@ PGresult *_execute(struct subdbinfo *info,
   return result;
 }
 
-int sql_insert(struct subdbinfo *info,
-	       struct stralloc *q,
-	       unsigned int nparams,
-	       struct stralloc *params)
+int sql_exec(struct subdbinfo *info,
+	     struct stralloc *q,
+	     unsigned int nparams,
+	     struct stralloc *params)
 {
   PGresult *result;
-  int rows;
+  unsigned long rows;
   const char *err;
 
   result = _execute(info,q,nparams,params);
   switch (PQresultStatus(result)) {
   case PGRES_COMMAND_OK:
-    rows = 1;
+    err = PQcmdTuples(result);
+    (void)scan_ulong(err,&rows);
     break;
   default:
     /* This is ugly, but I can't find another good way of doing this */
@@ -432,7 +264,7 @@ const char sql_checktag_listno_where_defn[] = "listno=$1 AND msgnum=$2 AND done 
 const char sql_checktag_msgnum_where_defn[] = "msgnum=$1 AND cookie=$2";
 
 /* Definition of WHERE clause for selecting addresses in issub */
-const char sql_issub_where_defn[] = "address ~* ('^' || $1 || '$')::text";
+const char sql_issub_where_defn[] = "address ~* ('^' || $1 || '$')";
 
 /* Definition of VALUES clause for insert in logmsg */
 const char sql_logmsg_values_defn[] = "($1,$2,$3,$4)";
@@ -443,6 +275,13 @@ const char sql_putsubs_where_defn[] = "hash BETWEEN $1 AND $2";
 /* Definition of clauses for searchlog query */
 const char sql_searchlog_select_defn[] = "extract(epoch from tai),address||' '||edir||etype||' '||fromline";
 const char sql_searchlog_where_defn[] = "fromline LIKE concat('%',$1,'%') OR address LIKE concat('%',$1,'%')";
+
+/* Definition of clauses for subscribe queries */
+const char sql_subscribe_select_where_defn[] = "address=$1";
+const char sql_subscribe_list_values_defn[] = "($1,$2)";
+const char sql_subscribe_delete1_where_defn[] = "address ~* ('^' || $1 || '$') and hash BETWEEN 0 AND 52";
+const char sql_subscribe_delete2_where_defn[] = "address ~* ('^' || $1 || '$') and hash=$2";
+const char sql_subscribe_slog_values_defn[] = "($1,$2,$3,$4)";
 
 /* Definition of VALUES clause for insert in tagmsg */
 const char sql_tagmsg_values_defn[] = "($1,NOW(),$2,$3,$4)";
@@ -475,6 +314,6 @@ struct sub_plugin sub_plugin = {
   sub_sql_putsubs,
   sub_sql_rmtab,
   sub_sql_searchlog,
-  _subscribe,
+  sub_sql_subscribe,
   sub_sql_tagmsg,
 };

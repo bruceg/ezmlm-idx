@@ -5,17 +5,20 @@
 #include "datetime.h"
 #include "die.h"
 #include "fmt.h"
+#include "log.h"
 #include "messages.h"
 #include "scan.h"
 #include "stralloc.h"
 #include "strerr.h"
 #include "sub_sql.h"
 #include "subdb.h"
+#include "subhash.h"
 
 static stralloc addr;
 static stralloc name;
 static stralloc query;
 static stralloc params[4];
+static stralloc lcaddr;
 static char strnum[FMT_ULONG];
 
 static void die_write(void)
@@ -157,7 +160,7 @@ const char *sub_sql_logmsg(struct subdbinfo *info,
   s[fmt_uint(s,done)] = 0;
   if (!stralloc_copys(&params[3],s)) die_nomem();
 
-  sql_insert(info,&query,4,params); /* ignore dups */
+  sql_exec(info,&query,4,params); /* ignore dups */
   return 0;
 }
 
@@ -250,6 +253,120 @@ void sub_sql_searchlog(struct subdbinfo *info,
   sql_free_result(info,result);
 }
 
+/* Add (flagadd=1) or remove (flagadd=0) userhost from the subscriber
+ * database table. Comment is e.g. the subscriber from line or name. It
+ * is added to the log. Event is the action type, e.g. "probe",
+ * "manual", etc. The direction (sub/unsub) is inferred from
+ * flagadd. Returns 1 on success, 0 on failure. If forcehash is >=0 it
+ * is used in place of the calculated hash. This makes it possible to
+ * add addresses with a hash that does not exist. forcehash has to be
+ * 0..99.  For unsubscribes, the address is only removed if forcehash
+ * matches the actual hash. This way, ezmlm-manage can be prevented from
+ * touching certain addresses that can only be removed by
+ * ezmlm-unsub. Usually, this would be used for sublist addresses (to
+ * avoid removal) and sublist aliases (to prevent users from subscribing
+ * them (although the cookie mechanism would prevent the resulting
+ * duplicate message from being distributed. */
+int sub_sql_subscribe(struct subdbinfo *info,
+		      const char *table,
+		      const char *userhost,
+		      int flagadd,
+		      const char *comment,
+		      const char *event,
+		      int forcehash)
+{
+  void *result;
+  char *cpat;
+  char szhash[3] = "00";
+
+  unsigned int j;
+  unsigned char ch;
+  int nparams;
+
+  make_name(info,table?"_":0,table,0);
+
+  /* lowercase and check address */
+  if (!stralloc_copys(&addr,userhost)) die_nomem();
+  if (addr.len > 255)			/* this is 401 in std ezmlm. 255 */
+					/* should be plenty! */
+    strerr_die2x(100,FATAL,MSG(ERR_ADDR_LONG));
+  j = byte_rchr(addr.s,addr.len,'@');
+  if (j == addr.len)
+    strerr_die2x(100,FATAL,MSG(ERR_ADDR_AT));
+  cpat = addr.s + j;
+  case_lowerb(cpat + 1,addr.len - j - 1);
+
+  if (forcehash < 0) {
+    if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
+    case_lowerb(lcaddr.s,j);		/* make all-lc version of address */
+    ch = subhashsa(&lcaddr);
+  } else
+    ch = (forcehash % 100);
+
+  szhash[0] = '0' + ch / 10;		/* hash for sublist split */
+  szhash[1] = '0' + (ch % 10);
+
+  if (flagadd) {
+    /* FIXME: LOCK TABLES name WRITE */
+    if (!stralloc_copys(&query,"SELECT address FROM ")) die_nomem();
+    if (!stralloc_cat(&query,&name)) die_nomem();
+    if (!stralloc_cats(&query," WHERE ")) die_nomem();
+    if (!stralloc_cats(&query,sql_subscribe_select_where_defn)) die_nomem();
+    if (!stralloc_copy(&params[0],&addr)) die_nomem();
+    result = sql_select(info,&query,1,params);
+    if (sql_fetch_row(info,result,1,params)) {
+      sql_free_result(info,result);
+      /* FIXME: UNLOCK TABLES */
+      return 0;			/* already subscribed */
+    } else {			/* not there */
+      sql_free_result(info,result);
+
+      if (!stralloc_copys(&query,"INSERT INTO ")) die_nomem();
+      if (!stralloc_cat(&query,&name)) die_nomem();
+      if (!stralloc_cats(&query," (address,hash) VALUES ")) die_nomem();
+      if (!stralloc_cats(&query,sql_subscribe_list_values_defn)) die_nomem();
+      if (!stralloc_copy(&params[0],&addr)) die_nomem();
+      if (!stralloc_copys(&params[1],szhash)) die_nomem();
+      sql_exec(info,&query,2,params);
+      /* FIXME: UNLOCK TABLES */
+    }
+  } else {							/* unsub */
+    if (!stralloc_copys(&query,"DELETE FROM ")) die_nomem();
+    if (!stralloc_cat(&query,&name)) die_nomem();
+    if (!stralloc_cats(&query," WHERE ")) die_nomem();
+    if (!stralloc_copy(&params[0],&addr)) die_nomem();
+    if (forcehash >= 0) {
+      if (!stralloc_cats(&query,sql_subscribe_delete2_where_defn)) die_nomem();
+      if (!stralloc_copys(&params[1],szhash)) die_nomem();
+      nparams = 2;
+    }
+    else {
+      if (!stralloc_cats(&query,sql_subscribe_delete1_where_defn)) die_nomem();
+      nparams = 1;
+    }
+    if (sql_exec(info,&query,1,params) == 0)
+      return 0;			/* address wasn't there*/
+  }
+
+  /* log to subscriber log */
+  /* INSERT INTO t_slog (address,edir,etype,fromline) */
+  /* VALUES('address',{'+'|'-'},'etype','[comment]') */
+
+  if (!stralloc_copys(&query,"INSERT INTO ")) die_nomem();
+  if (!stralloc_cat(&query,&name)) die_nomem();
+  if (!stralloc_cats(&query,"_slog (address,edir,etype,fromline) VALUES ")) die_nomem();
+  if (!stralloc_cats(&query,sql_subscribe_slog_values_defn)) die_nomem();
+  if (!stralloc_copy(&params[0],&addr)) die_nomem();
+  if (!stralloc_copys(&params[1],flagadd?"+":"-")) die_nomem(); /* edir */
+  if (!stralloc_copyb(&params[2],event+1,!!*(event+1))) die_nomem(); /* etype */
+  if (!stralloc_copys(&params[3],comment && *comment ? comment : "")) die_nomem(); /* from */
+
+  sql_exec(info,&query,4,params); /* log (ignore errors) */
+  if (stralloc_0(&addr))
+    logaddr(table,event,addr.s,comment); /* also log to old log */
+  return 1;				 /* desired effect */
+}
+
 /* This routine inserts the cookie into table_cookie. We log arrival of
  * the message (done=0). */
 void sub_sql_tagmsg(struct subdbinfo *info,
@@ -275,7 +392,7 @@ void sub_sql_tagmsg(struct subdbinfo *info,
   if (!stralloc_copyb(&params[2],strnum,fmt_ulong(strnum,bodysize))) die_nomem();
   if (!stralloc_copyb(&params[3],strnum,fmt_ulong(strnum,chunk))) die_nomem();
 
-  sql_insert(info,&query,4,params); /* ignore dups */
+  sql_exec(info,&query,4,params); /* ignore dups */
 
   if (! (ret = logmsg(msgnum,0L,0L,1)))
     return;			/* log done=1*/

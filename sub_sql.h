@@ -15,6 +15,11 @@ extern const char sql_logmsg_values_defn[];
 extern const char sql_putsubs_where_defn[];
 extern const char sql_searchlog_select_defn[];
 extern const char sql_searchlog_where_defn[];
+extern const char sql_subscribe_select_where_defn[];
+extern const char sql_subscribe_list_values_defn[];
+extern const char sql_subscribe_delete1_where_defn[];
+extern const char sql_subscribe_delete2_where_defn[];
+extern const char sql_subscribe_slog_values_defn[];
 extern const char sql_tagmsg_values_defn[];
 
 extern int sql_table_exists(struct subdbinfo *info,
@@ -23,10 +28,10 @@ extern const char *sql_create_table(struct subdbinfo *info,
 				    const char *defn);
 extern const char *sql_drop_table(struct subdbinfo *info,
 				  const char *name);
-extern int sql_insert(struct subdbinfo *info,
-		      struct stralloc *q,
-		      unsigned int nparams,
-		      struct stralloc *params);
+extern int sql_exec(struct subdbinfo *info,
+		    struct stralloc *q,
+		    unsigned int nparams,
+		    struct stralloc *params);
 extern void *sql_select(struct subdbinfo *info,
 			struct stralloc *q,
 			unsigned int nparams,
@@ -63,6 +68,13 @@ extern void sub_sql_searchlog(struct subdbinfo *info,
 			      const char *table,
 			      char *search,
 			      int subwrite());
+extern int sub_sql_subscribe(struct subdbinfo *info,
+			     const char *table,
+			     const char *userhost,
+			     int flagadd,
+			     const char *comment,
+			     const char *event,
+			     int forcehash);
 extern void sub_sql_tagmsg(struct subdbinfo *info,
 			   unsigned long msgnum,
 			   const char *hashout,
