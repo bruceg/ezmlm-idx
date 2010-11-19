@@ -8,6 +8,8 @@ extern const char sql_sub_table_defn[];
 extern const char sql_slog_table_defn[];
 extern const char sql_cookie_table_defn[];
 extern const char sql_mlog_table_defn[];
+extern const char sql_checktag_listno_where_defn[];
+extern const char sql_checktag_msgnum_where_defn[];
 extern const char sql_issub_where_defn[];
 extern const char sql_putsubs_where_defn[];
 
@@ -29,6 +31,12 @@ extern void sql_free_result(struct subdbinfo *info,
 			    void *result);
 
 /* Common functions provided by sub_sql */
+extern const char *sub_sql_checktag (struct subdbinfo *info,
+				     unsigned long num,
+				     unsigned long listno,
+				     const char *action,
+				     const char *seed,
+				     const char *hash);
 extern int sub_sql_issub(struct subdbinfo *info,
 			 const char *table,
 			 const char *userhost,

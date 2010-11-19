@@ -97,68 +97,6 @@ static void _closesub(struct subdbinfo *info)
   info->conn = 0;		/* Destroy pointer */
 }
 
-/* Checks the hash against the cookie table. If it matches, returns NULL,
- * else returns "". If error, returns error string. */
-static const char *_checktag(struct subdbinfo *info,
-			     unsigned long num,	/* message number */
-			     unsigned long listno, /* bottom of range => slave */
-			     const char *action,
-			     const char *seed,
-			     const char *hash)		/* cookie */
-{
-  PGresult *result;
-
-    /* SELECT msgnum FROM table_cookie WHERE msgnum=num and cookie='hash' */
-    /* succeeds only is everything correct. 'hash' is quoted since it is  */
-    /* potentially hostile. */
-    if (listno) {			/* only for slaves */
-      if (!stralloc_copys(&line,"SELECT listno FROM ")) die_nomem();
-      if (!stralloc_cats(&line,info->base_table)) die_nomem();
-      if (!stralloc_cats(&line,"_mlog WHERE listno=")) die_nomem();
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,listno)))
-	die_nomem();
-      if (!stralloc_cats(&line," AND msgnum=")) die_nomem();
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) die_nomem();
-      if (!stralloc_cats(&line," AND done > 3")) die_nomem();
-
-      if (!stralloc_0(&line)) die_nomem();
-      result = PQexec( (PGconn*)info->conn, line.s );
-      if(result == NULL)
-	return (PQerrorMessage((PGconn*)info->conn));
-      if( PQresultStatus(result) != PGRES_TUPLES_OK)
-	return (char *) (PQresultErrorMessage(result));
-      if( PQntuples(result) > 0 ) {
-	PQclear(result);
-	return("");
-      } else
-	PQclear(result);
-    }
-
-    if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
-    if (!stralloc_cats(&line,info->base_table)) die_nomem();
-    if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) die_nomem();
-    if (!stralloc_cats(&line," and cookie='")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_str(strnum,hash))) die_nomem();
-    if (!stralloc_cats(&line,"'")) die_nomem();
-
-    if (!stralloc_0(&line)) die_nomem();
-    result = PQexec((PGconn*)info->conn,line.s);
-    if (result == NULL)
-      return (PQerrorMessage((PGconn*)info->conn));
-    if (PQresultStatus(result) != PGRES_TUPLES_OK)
-      return (char *) (PQresultErrorMessage(result));
-    if(PQntuples(result) < 0) {
-      PQclear( result );
-      return("");
-    }
-
-    PQclear(result);
-    return (char *)0;
-    (void)action;
-    (void)seed;
-}
-
 /* Creates an entry for message num and the list listno and code "done".
  * Returns NULL on success, and the error string on error. */
 static const char *_logmsg(struct subdbinfo *info,
@@ -625,6 +563,10 @@ const char sql_mlog_table_defn[] =
   "done		INT4 NOT NULL DEFAULT 0,"
   "PRIMARY KEY (listno,msgnum,done)";
 
+/* Definition of WHERE clauses for checktag */
+const char sql_checktag_listno_where_defn[] = "listno=$1 AND msgnum=$2 AND done > 3";
+const char sql_checktag_msgnum_where_defn[] = "msgnum=$1 AND cookie=$2";
+
 /* Definition of WHERE clause for selecting addresses in issub */
 const char sql_issub_where_defn[] = "address ~* ('^' || $1 || '$')::text";
 
@@ -650,7 +592,7 @@ const char *sql_drop_table(struct subdbinfo *info,
 
 struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
-  _checktag,
+  sub_sql_checktag,
   _closesub,
   sub_sql_issub,
   _logmsg,

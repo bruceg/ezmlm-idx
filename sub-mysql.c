@@ -95,68 +95,6 @@ static MYSQL_RES *safe_select(struct subdbinfo *info,const stralloc* query)
   return result;
 }
 
-/* Checks the hash against the cookie table. If it matches, returns NULL,
- * else returns "". If error, returns error string. */
-static const char *_checktag (struct subdbinfo *info,
-			      unsigned long num,	/* message number */
-			      unsigned long listno,	/* bottom of range => slave */
-			      const char *action,
-			      const char *seed,
-			      const char *hash)		/* cookie */
-{
-  MYSQL_RES *result;
-  MYSQL_ROW row;
-
-/* SELECT msgnum FROM table_cookie WHERE msgnum=num and cookie='hash' */
-/* succeeds only is everything correct. 'hash' is quoted since it is  */
-/*  potentially hostile. */
-    if (listno) {			/* only for slaves */
-      if (!stralloc_copys(&line,"SELECT listno FROM ")) die_nomem();
-      if (!stralloc_cats(&line,info->base_table)) die_nomem();
-      if (!stralloc_cats(&line,"_mlog WHERE listno=")) die_nomem();
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,listno)))
-	die_nomem();
-      if (!stralloc_cats(&line," AND msgnum=")) die_nomem();
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) die_nomem();
-      if (!stralloc_cats(&line," AND done > 3")) die_nomem();
-      if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)
-	return mysql_error((MYSQL*)info->conn);			/* query */
-      if (!(result = mysql_use_result((MYSQL*)info->conn)))		/* use result */
-	return mysql_error((MYSQL*)info->conn);
-      if ((row = mysql_fetch_row(result)))
-	return "";					/*already done */
-      else						/* no result */
-        if (!mysql_eof(result))
-	  return mysql_error((MYSQL*)info->conn);
-      mysql_free_result(result);			/* free res */
-    }
-
-    if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
-    if (!stralloc_cats(&line,info->base_table)) die_nomem();
-    if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) die_nomem();
-    if (!stralloc_cats(&line," and cookie='")) die_nomem();
-    if (!stralloc_ready(&quoted,COOKIE * 2 + 1)) die_nomem();
-    quoted.len = mysql_escape_string(quoted.s,hash,COOKIE);
-    if (!stralloc_cat(&line,&quoted)) die_nomem();
-    if (!stralloc_cats(&line,"'")) die_nomem();
-
-    if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)	/* select */
-	return mysql_error((MYSQL*)info->conn);
-    if (!(result = mysql_use_result((MYSQL*)info->conn)))
-	return mysql_error((MYSQL*)info->conn);
-    if (!mysql_fetch_row(result)) {
-    if (!mysql_eof(result))		/* some error occurred */
-	return mysql_error((MYSQL*)info->conn);
-      mysql_free_result(result);	/* eof => query ok, but null result*/
-      return "";			/* not parent => perm error */
-    }
-    mysql_free_result(result);		/* success! cookie matches */
-    return (char *)0;
-    (void)action;
-    (void)seed;
-}
-
 /* Creates an entry for message num and the list listno and code "done".
  * Returns NULL on success, and the error string on error. */
 static const char *_logmsg(struct subdbinfo *info,
@@ -539,6 +477,10 @@ const char sql_mlog_table_defn[] =
   "done		TINYINT NOT NULL DEFAULT 0,"
   "PRIMARY KEY listmsg (listno,msgnum,done)";
 
+/* Definition of WHERE clauses for checktag */
+const char sql_checktag_listno_where_defn[] = "listno=? AND msgnum=? AND done > 3";
+const char sql_checktag_msgnum_where_defn[] = "msgnum=? AND cookie=?";
+
 /* Definition of WHERE clause for selecting addresses in issub */
 const char sql_issub_where_defn[] = "address LIKE ?";
 
@@ -575,7 +517,7 @@ const char *sql_drop_table(struct subdbinfo *info,
 
 struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
-  _checktag,
+  sub_sql_checktag,
   _closesub,
   sub_sql_issub,
   _logmsg,

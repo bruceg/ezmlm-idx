@@ -1,5 +1,6 @@
 #include "byte.h"
 #include "case.h"
+#include "cookie.h"
 #include "die.h"
 #include "fmt.h"
 #include "messages.h"
@@ -28,6 +29,55 @@ static void make_name(struct subdbinfo *info,
   if (suffix1 && !stralloc_cats(&name,suffix1)) die_nomem();
   if (suffix2 && !stralloc_cats(&name,suffix2)) die_nomem();
   if (terminate && !stralloc_0(&name)) die_nomem();
+}
+
+/* Checks the hash against the cookie table. If it matches, returns NULL,
+ * else returns "". If error, returns error string. */
+const char *sub_sql_checktag (struct subdbinfo *info,
+			      unsigned long num,	/* message number */
+			      unsigned long listno,	/* bottom of range => slave */
+			      const char *action,
+			      const char *seed,
+			      const char *hash)		/* cookie */
+{
+  void *result;
+
+  /* SELECT msgnum FROM table_cookie WHERE msgnum=num and cookie='hash' */
+  /* succeeds only is everything correct. */
+  if (listno) {			/* only for slaves */
+    if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,listno))) die_nomem();
+    if (!stralloc_copyb(&params[1],strnum,fmt_ulong(strnum,num))) die_nomem();
+    if (!stralloc_copys(&query,"SELECT listno FROM ")) die_nomem();
+    if (!stralloc_cats(&query,info->base_table)) die_nomem();
+    if (!stralloc_cats(&query,"_mlog WHERE ")) die_nomem();
+    if (!stralloc_cats(&query,sql_checktag_listno_where_defn)) die_nomem();
+
+    result = sql_select(info,&query,2,params);
+    if (sql_fetch_row(info,result,1,params)) {
+      sql_free_result(info,result);
+      return "";		/* already done */
+    }
+    /* no result */
+    sql_free_result(info,result);
+  }
+
+  if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,num))) die_nomem();
+  if (!stralloc_copyb(&params[1],hash,COOKIE)) die_nomem();
+
+  if (!stralloc_copys(&query,"SELECT msgnum FROM ")) die_nomem();
+  if (!stralloc_cats(&query,info->base_table)) die_nomem();
+  if (!stralloc_cats(&query,"_cookie WHERE ")) die_nomem();
+  if (!stralloc_cats(&query,sql_checktag_msgnum_where_defn)) die_nomem();
+
+  result = sql_select(info,&query,2,params);
+  if (!sql_fetch_row(info,result,1,params)) {
+    sql_free_result(info,result);
+    return "";			/* not parent => perm error */
+  }
+  sql_free_result(info,result);	/* success! cookie matches */
+  return (char *)0;
+  (void)action;
+  (void)seed;
 }
 
 int sub_sql_issub(struct subdbinfo *info,

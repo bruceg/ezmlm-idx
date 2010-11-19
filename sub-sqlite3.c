@@ -88,64 +88,6 @@ static const char *_opensub(struct subdbinfo *info)
   return (char *) 0;
 }
 
-/* Checks the hash against the cookie table. If it matches, returns NULL,
- * else returns "". If error, returns error string. */
-static const char *_checktag (struct subdbinfo *info,
-			      unsigned long num,	/* message number */
-			      unsigned long listno,	/* bottom of range => slave */
-			      const char *action,
-			      const char *seed,
-			      const char *hash)		/* cookie */
-{
-  sqlite3_stmt *stmt;
-  int res;
-
-/* SELECT msgnum FROM table_cookie WHERE msgnum=num and cookie='hash' */
-/* succeeds only is everything correct. 'hash' is quoted since it is  */
-/*  potentially hostile. */
-    if (listno) {			/* only for slaves */
-      if (!stralloc_copys(&line,"SELECT listno FROM ")) die_nomem();
-      if (!stralloc_cats(&line,info->base_table)) die_nomem();
-      if (!stralloc_cats(&line,"_mlog WHERE listno=")) die_nomem();
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,listno)))
-	die_nomem();
-      if (!stralloc_cats(&line," AND msgnum=")) die_nomem();
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) die_nomem();
-      if (!stralloc_cats(&line," AND done > 3")) die_nomem();
-	  if (!stralloc_0(&line)) die_nomem();
-
-	  if ((stmt = _sqlquery(info, &line)) == NULL)
-		return sqlite3_errmsg((sqlite3*)info->conn);			/* query */
-	  res = sqlite3_step(stmt);
-	  sqlite3_finalize(stmt);			/* free res */
-	  if (res == SQLITE_ROW)
-		  return "";					/*already done */
-	  else if (res != SQLITE_DONE)
-		return sqlite3_errmsg((sqlite3*)info->conn);
-    }
-
-    if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
-    if (!stralloc_cats(&line,info->base_table)) die_nomem();
-    if (!stralloc_cats(&line,"_cookie WHERE msgnum=")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,num))) die_nomem();
-    if (!stralloc_cats(&line," and cookie='")) die_nomem();
-	if (!stralloc_catb(&line,strnum,fmt_str(strnum,hash))) die_nomem();
-    if (!stralloc_cats(&line,"'")) die_nomem();
-	if (!stralloc_0(&line)) die_nomem();
-
-	if ((stmt = _sqlquery(info, &line)) == NULL)	/* select */
-		return sqlite3_errmsg((sqlite3*)info->conn);
-	res = sqlite3_step(stmt);
-	sqlite3_finalize(stmt);			/* free res */
-	if (res == SQLITE_DONE)
-		return "";					/* eof => query ok, but null result*/
-	else if (res != SQLITE_ROW)
-		return sqlite3_errmsg((sqlite3*)info->conn);	/* some error occurred */
-    return (char *)0;				/* success! cookie matches */
-    (void)action;
-    (void)seed;
-}
-
 /* Creates an entry for message num and the list listno and code "done".
  * Returns NULL on success, and the error string on error. */
 static const char *_logmsg(struct subdbinfo *info,
@@ -592,6 +534,10 @@ const char sql_mlog_table_defn[] =
   "done		INT4 NOT NULL DEFAULT 0,"
   "PRIMARY KEY (listno,msgnum,done)";
 
+/* Definition of WHERE clauses for checktag */
+const char sql_checktag_listno_where_defn[] = "listno=? AND msgnum=? AND done > 3";
+const char sql_checktag_msgnum_where_defn[] = "msgnum=? AND cookie=?";
+
 /* Definition of WHERE clause for selecting addresses in issub */
 const char sql_issub_where_defn[] = "address LIKE ?";
 
@@ -621,7 +567,7 @@ const char *sql_drop_table(struct subdbinfo *info,
 
 struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
-  _checktag,
+  sub_sql_checktag,
   _closesub,
   sub_sql_issub,
   _logmsg,
