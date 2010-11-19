@@ -250,6 +250,38 @@ void sub_sql_searchlog(struct subdbinfo *info,
   sql_free_result(info,result);
 }
 
+/* This routine inserts the cookie into table_cookie. We log arrival of
+ * the message (done=0). */
+void sub_sql_tagmsg(struct subdbinfo *info,
+		    unsigned long msgnum,	/* number of this message */
+		    const char *hashout,	/* previously calculated hash */
+		    unsigned long bodysize,
+		    unsigned long chunk)
+{
+  const char *ret;
+
+  if (chunk >= 53L) chunk = 0L;	/* sanity */
+
+  /* INSERT INTO table_cookie (msgnum,tai,cookie,bodysize,chunk) VALUES (...) */
+  /* (we may have tried message before, but failed to complete, so */
+  /* ER_DUP_ENTRY is ok) */
+  if (!stralloc_copys(&query,"INSERT INTO ")) die_nomem();
+  if (!stralloc_cats(&query,info->base_table)) die_nomem();
+  if (!stralloc_cats(&query,"_cookie (msgnum,tai,cookie,bodysize,chunk) VALUES "))
+    die_nomem();
+  if (!stralloc_cats(&query,sql_tagmsg_values_defn)) die_nomem();
+  if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,msgnum))) die_nomem();
+  if (!stralloc_copyb(&params[1],hashout,COOKIE)) die_nomem();
+  if (!stralloc_copyb(&params[2],strnum,fmt_ulong(strnum,bodysize))) die_nomem();
+  if (!stralloc_copyb(&params[3],strnum,fmt_ulong(strnum,chunk))) die_nomem();
+
+  sql_insert(info,&query,4,params); /* ignore dups */
+
+  if (! (ret = logmsg(msgnum,0L,0L,1)))
+    return;			/* log done=1*/
+  if (*ret) strerr_die2x(111,FATAL,ret);
+}
+
 static const char *create_table(struct subdbinfo *info,
 				const char *suffix1,
 				const char *suffix2,

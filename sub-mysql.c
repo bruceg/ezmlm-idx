@@ -35,7 +35,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-static char strnum[FMT_ULONG];
 static stralloc addr = {0};
 static stralloc domain = {0};
 static stralloc lcaddr = {0};
@@ -223,42 +222,6 @@ static int _subscribe(struct subdbinfo *info,
     return 1;					/* desired effect */
 }
 
-/* This routine inserts the cookie into table_cookie. We log arrival of
- * the message (done=0). */
-static void _tagmsg(struct subdbinfo *info,
-		    unsigned long msgnum,	/* number of this message */
-		    const char *hashout,	/* previously calculated hash */
-		    unsigned long bodysize,
-		    unsigned long chunk)
-{
-  const char *ret;
-
-    if (chunk >= 53L) chunk = 0L;	/* sanity */
-
-	/* INSERT INTO table_cookie (msgnum,cookie) VALUES (num,cookie) */
-	/* (we may have tried message before, but failed to complete, so */
-	/* ER_DUP_ENTRY is ok) */
-    if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
-    if (!stralloc_cats(&line,info->base_table)) die_nomem();
-    if (!stralloc_cats(&line,"_cookie (msgnum,cookie,bodysize,chunk) VALUES ("))
-		die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgnum))) die_nomem();
-    if (!stralloc_cats(&line,",'")) die_nomem();
-    if (!stralloc_catb(&line,hashout,COOKIE)) die_nomem();
-    if (!stralloc_cats(&line,"',")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,bodysize)))
-		die_nomem();
-    if (!stralloc_cats(&line,",")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,chunk))) die_nomem();
-    if (!stralloc_cats(&line,")")) die_nomem();
-    if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)
-      if (mysql_errno((MYSQL*)info->conn) != ER_DUP_ENTRY)	/* ignore dups */
-        strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn)); /* cookie query */
-
-    if (! (ret = logmsg(msgnum,0L,0L,1))) return;	/* log done=1*/
-    if (*ret) strerr_die2x(111,FATAL,ret);
-}
-
 static void die_sqlerror(struct subdbinfo *info)
 {
   strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
@@ -440,6 +403,9 @@ const char sql_putsubs_where_defn[] = "hash BETWEEN ? AND ?";
 const char sql_searchlog_select_defn[] = "UNIX_TIMESTAMP(tai), CONCAT(edir,etype,' ',address,' ',fromline)";
 const char sql_searchlog_where_defn[] = "fromline LIKE concat('%',?,'%') OR address LIKE concat('%',?,'%')";
 
+/* Definition of VALUES clause for insert in tagmsg */
+const char sql_tagmsg_values_defn[] = "(?,NOW(),?,?,?)";
+
 int sql_table_exists(struct subdbinfo *info,
 		     const char *name)
 {
@@ -480,5 +446,5 @@ struct sub_plugin sub_plugin = {
   sub_sql_rmtab,
   sub_sql_searchlog,
   _subscribe,
-  _tagmsg,
+  sub_sql_tagmsg,
 };

@@ -245,65 +245,6 @@ static int _subscribe(struct subdbinfo *info,
     return 1;					/* desired effect */
 }
 
-/* This routine inserts the cookie into table_cookie. We log arrival of
- * the message (done=0). */
-static void _tagmsg(struct subdbinfo *info,
-		    unsigned long msgnum,	/* number of this message */
-		    const char *hashout,	/* previously calculated hash */
-		    unsigned long bodysize,
-		    unsigned long chunk)
-{
-  PGresult *result;
-  PGresult *result2; /* Need for dupicate check */
-  const char *ret;
-
-    if (chunk >= 53L) chunk = 0L;	/* sanity */
-
-	/* INSERT INTO table_cookie (msgnum,cookie) VALUES (num,cookie) */
-	/* (we may have tried message before, but failed to complete, so */
-	/* ER_DUP_ENTRY is ok) */
-    if (!stralloc_copys(&line,"INSERT INTO ")) die_nomem();
-    if (!stralloc_cats(&line,info->base_table)) die_nomem();
-    if (!stralloc_cats(&line,"_cookie (msgnum,cookie,bodysize,chunk) VALUES ("))
-      die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgnum))) die_nomem();
-    if (!stralloc_cats(&line,",'")) die_nomem();
-    if (!stralloc_catb(&line,hashout,COOKIE)) die_nomem();
-    if (!stralloc_cats(&line,"',")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,bodysize)))
-      die_nomem();
-    if (!stralloc_cats(&line,",")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,chunk))) die_nomem();
-    if (!stralloc_cats(&line,")")) die_nomem();
-    
-    if (!stralloc_0(&line)) die_nomem();
-    result = PQexec((PGconn*)info->conn,line.s);
-    if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
-    if (PQresultStatus(result) != PGRES_COMMAND_OK) { /* Possible tuplicate */
-      if (!stralloc_copys(&line,"SELECT msgnum FROM ")) die_nomem();
-      if (!stralloc_cats(&line,info->base_table)) die_nomem();	  
-      if (!stralloc_cats(&line,"_cookie WHERE msgnum = ")) die_nomem();
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgnum))) 
-	die_nomem();
-      /* Query */
-      if (!stralloc_0(&line)) die_nomem();
-      result2 = PQexec((PGconn*)info->conn,line.s);
-      if (result2 == NULL)
-	strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
-      if (PQresultStatus(result2) != PGRES_TUPLES_OK)
-	strerr_die2x(111,FATAL,PQresultErrorMessage(result2));
-      /* No duplicate, return ERROR from first query */
-      if (PQntuples(result2)<1) 
-	strerr_die2x(111,FATAL,PQresultErrorMessage(result));
-      PQclear(result2);
-    }
-    PQclear(result);
-
-    if (! (ret = logmsg(msgnum,0L,0L,1))) return;	/* log done=1*/
-    if (*ret) strerr_die2x(111,FATAL,ret);
-}
-
 static void die_sqlerror(struct subdbinfo *info)
 {
   strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
@@ -503,6 +444,9 @@ const char sql_putsubs_where_defn[] = "hash BETWEEN $1 AND $2";
 const char sql_searchlog_select_defn[] = "extract(epoch from tai),address||' '||edir||etype||' '||fromline";
 const char sql_searchlog_where_defn[] = "fromline LIKE concat('%',$1,'%') OR address LIKE concat('%',$1,'%')";
 
+/* Definition of VALUES clause for insert in tagmsg */
+const char sql_tagmsg_values_defn[] = "($1,NOW(),$2,$3,$4)";
+
 const char *sql_drop_table(struct subdbinfo *info,
 			   const char *name)
 {
@@ -532,5 +476,5 @@ struct sub_plugin sub_plugin = {
   sub_sql_rmtab,
   sub_sql_searchlog,
   _subscribe,
-  _tagmsg,
+  sub_sql_tagmsg,
 };
