@@ -40,11 +40,6 @@ static stralloc line = {0};
 static stralloc logline = {0};
 static stralloc quoted = {0};
 
-static void die_write(void)
-{
-  strerr_die2sys(111,FATAL,MSG(ERR_WRITE_STDOUT));
-}
-
 static int stralloc_cat_table(stralloc *s,
 			      const struct subdbinfo *info,
 			      const char *table)
@@ -133,63 +128,6 @@ static const char *_logmsg(struct subdbinfo *info,
   }
 
   return 0;
-}
-
-/* Searches the subscriber log and outputs via subwrite(s,len) any entry
- * that matches search. A '_' is search is a wildcard. Any other
- * non-alphanum/'.' char is replaced by a '_'. */
-static void _searchlog(struct subdbinfo *info,
-		       const char *table,
-		       char *search,		/* search string */
-		       int subwrite())		/* output fxn */
-{
-  sqlite3_stmt *stmt;
-  int res;
-  datetime_sec when;
-  struct datetime dt;
-  char date[DATE822FMT];
-
-/* SELECT (*) FROM list_slog WHERE fromline LIKE '%search%' OR address   */
-/* LIKE '%search%' ORDER BY tai; */
-/* The '*' is formatted to look like the output of the non-mysql version */
-/* This requires reading the entire table, since search fields are not   */
-/* indexed, but this is a rare query and time is not of the essence.     */
-
-    if (!stralloc_copys(&line,"SELECT tai, edir||etype||' '||address||' '||fromline"
-			" FROM ")) die_nomem();
-    if (!stralloc_cat_table(&line,info,table)) die_nomem();
-    if (!stralloc_cats(&line,"_slog")) die_nomem();
-    if (*search) {	/* We can afford to wait for LIKE '%xx%' */
-      if (!stralloc_cats(&line," WHERE fromline LIKE '%")) die_nomem();
-      if (!stralloc_cats(&line,search)) die_nomem();
-      if (!stralloc_cats(&line,"%' OR address LIKE '%")) die_nomem();
-      if (!stralloc_cats(&line,search)) die_nomem();
-      if (!stralloc_cats(&line,"%'")) die_nomem();
-    }	/* ordering by tai which is an index */
-      if (!stralloc_cats(&line," ORDER by tai")) die_nomem();
-	  if (!stralloc_0(&line)) die_nomem();
-
-	if ((stmt = _sqlquery(info, &line)) == NULL)
-		strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
-
-    while ((res = sqlite3_step(stmt)) != SQLITE_DONE) {
-      if (res != SQLITE_ROW)
-	strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
-
-      (void)scan_ulong((const char*)sqlite3_column_text(stmt,0),&when);
-      datetime_tai(&dt,when);
-      if (!stralloc_copyb(&line,date,date822fmt(date,&dt)-1)) die_nomem();
-      if (!stralloc_cats(&line,": ")) die_nomem();
-      if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,when))) die_nomem();
-      if (!stralloc_cats(&line," ")) die_nomem();
-      if (!stralloc_catb(&line,
-			 (const char*)sqlite3_column_text(stmt,1),
-			 sqlite3_column_bytes(stmt,1)))
-	die_nomem();
-      if (subwrite(line.s,line.len) == -1) die_write();
-    }
-
-	sqlite3_finalize(stmt);
 }
 
 /* Add (flagadd=1) or remove (flagadd=0) userhost from the subscriber
@@ -544,6 +482,10 @@ const char sql_issub_where_defn[] = "address LIKE ?";
 /* Definition of WHERE clause for selecting addresses in putsubs */
 const char sql_putsubs_where_defn[] = "hash BETWEEN ? AND ?";
 
+/* Definition of clauses for searchlog query */
+const char sql_searchlog_select_defn[] = "tai, edir||etype||' '||address||' '||fromline";
+const char sql_searchlog_where_defn[] = "fromline LIKE concat('%',?,'%') OR address LIKE concat('%',?,'%')";
+
 const char *sql_drop_table(struct subdbinfo *info,
 			   const char *name)
 {
@@ -575,7 +517,7 @@ struct sub_plugin sub_plugin = {
   _opensub,
   sub_sql_putsubs,
   sub_sql_rmtab,
-  _searchlog,
+  sub_sql_searchlog,
   _subscribe,
   _tagmsg,
 };

@@ -12,6 +12,8 @@ extern const char sql_checktag_listno_where_defn[];
 extern const char sql_checktag_msgnum_where_defn[];
 extern const char sql_issub_where_defn[];
 extern const char sql_putsubs_where_defn[];
+extern const char sql_searchlog_select_defn[];
+extern const char sql_searchlog_where_defn[];
 
 extern int sql_table_exists(struct subdbinfo *info,
 			    const char *name);
@@ -46,6 +48,10 @@ extern unsigned long sub_sql_putsubs(struct subdbinfo *info,
 				     unsigned long hash_lo,
 				     unsigned long hash_hi,
 				     int subwrite());
+extern void sub_sql_searchlog(struct subdbinfo *info,
+			      const char *table,
+			      char *search,
+			      int subwrite());
 extern const char *sub_sql_mktab(struct subdbinfo *info);
 extern const char *sub_sql_rmtab(struct subdbinfo *info);
 

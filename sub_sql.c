@@ -1,9 +1,12 @@
 #include "byte.h"
 #include "case.h"
 #include "cookie.h"
+#include "date822fmt.h"
+#include "datetime.h"
 #include "die.h"
 #include "fmt.h"
 #include "messages.h"
+#include "scan.h"
 #include "stralloc.h"
 #include "strerr.h"
 #include "sub_sql.h"
@@ -161,6 +164,59 @@ unsigned long sub_sql_putsubs(struct subdbinfo *info,
   }
   sql_free_result(info,result);
   return no;
+}
+
+/* Searches the subscriber log and outputs via subwrite(s,len) any entry
+ * that matches search. A '_' is search is a wildcard. Any other
+ * non-alphanum/'.' char is replaced by a '_'. */
+void sub_sql_searchlog(struct subdbinfo *info,
+		       const char *table,
+		       char *search,		/* search string */
+		       int subwrite())		/* output fxn */
+{
+  void *result;
+  datetime_sec when;
+  struct datetime dt;
+  char date[DATE822FMT];
+  int nparams;
+
+  make_name(info,table?"_":0,table,0);
+/* SELECT (*) FROM list_slog WHERE fromline LIKE '%search%' OR address   */
+/* LIKE '%search%' ORDER BY tai; */
+/* The '*' is formatted to look like the output of the non-mysql version */
+/* This requires reading the entire table, since search fields are not   */
+/* indexed, but this is a rare query and time is not of the essence.     */
+
+  if (!stralloc_copys(&query,"SELECT ")) die_nomem();
+  if (!stralloc_cats(&query,sql_searchlog_select_defn)) die_nomem();
+  if (!stralloc_cats(&query," FROM ")) die_nomem();
+  if (!stralloc_cat(&query,&name)) die_nomem();
+  if (!stralloc_cats(&query,"_slog")) die_nomem();
+  if (*search) {	/* We can afford to wait for LIKE '%xx%' */
+    if (!stralloc_copys(&params[0],search)) die_nomem();
+    if (!stralloc_copys(&params[1],search)) die_nomem();
+    nparams = 2;
+    if (!stralloc_cats(&query," WHERE ")) die_nomem();
+    if (!stralloc_cats(&query,sql_searchlog_where_defn)) die_nomem();
+  }
+  else
+    nparams = 0;
+  /* ordering by tai which is an index */
+  if (!stralloc_cats(&query," ORDER by tai")) die_nomem();
+
+  result = sql_select(info,&query,nparams,params);
+  while (sql_fetch_row(info,result,2,params)) {
+    if (!stralloc_0(&params[0])) die_nomem();
+    (void)scan_ulong(params[0].s,&when);
+    datetime_tai(&dt,when);
+    if (!stralloc_copyb(&params[0],date,date822fmt(date,&dt)-1)) die_nomem();
+    if (!stralloc_cats(&params[0],": ")) die_nomem();
+    if (!stralloc_catb(&params[0],strnum,fmt_ulong(strnum,when))) die_nomem();
+    if (!stralloc_cats(&params[0]," ")) die_nomem();
+    if (!stralloc_cat(&params[0],&params[1])) die_nomem();
+    if (subwrite(params[0].s,params[0].len) == -1) die_write();
+  }
+  sql_free_result(info,result);
 }
 
 static const char *create_table(struct subdbinfo *info,

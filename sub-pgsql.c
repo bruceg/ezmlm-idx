@@ -49,11 +49,6 @@ struct _result
   int nrows;
 };
 
-static void die_write(void)
-{
-  strerr_die2sys(111,FATAL,MSG(ERR_WRITE_STDOUT));
-}
-
 static void dummyNoticeProcessor(void *arg, const char *message)
 {
   (void)arg;
@@ -157,56 +152,6 @@ static const char *_logmsg(struct subdbinfo *info,
   PQclear(result);
   return 0;
 }
-
-/* Searches the subscriber log and outputs via subwrite(s,len) any entry
- * that matches search. A '_' is search is a wildcard. Any other
- * non-alphanum/'.' char is replaced by a '_'. */
-static void _searchlog(struct subdbinfo *info,
-		       const char *table,
-		       char *search,		/* search string */
-		       int subwrite())		/* output fxn */
-{
-  PGresult *result;
-  int row_nr;
-  int length;
-  char *row;
-
-/* SELECT (*) FROM list_slog WHERE fromline LIKE '%search%' OR address   */
-/* LIKE '%search%' ORDER BY tai; */
-/* The '*' is formatted to look like the output of the non-mysql version */
-/* This requires reading the entire table, since search fields are not   */
-/* indexed, but this is a rare query and time is not of the essence.     */
-	
-    if (!stralloc_copys(&line,"SELECT tai::timestamp||': '"
-		       "||extract(epoch from tai)||' '"
-		       "||address||' '||edir||etype||' '||fromline FROM "))
-      die_nomem();
-    if (!stralloc_cat_table(&line,info,table)) die_nomem();
-    if (!stralloc_cats(&line,"_slog ")) die_nomem();
-    if (*search) {	/* We can afford to wait for LIKE '%xx%' */
-      if (!stralloc_cats(&line,"WHERE fromline LIKE '%")) die_nomem();
-      if (!stralloc_cats(&line,search)) die_nomem();
-      if (!stralloc_cats(&line,"%' OR address LIKE '%")) die_nomem();
-      if (!stralloc_cats(&line,search)) die_nomem();
-      if (!stralloc_cats(&line,"%'")) die_nomem();
-    }	/* ordering by tai which is an index */
-    if (!stralloc_cats(&line," ORDER by tai")) die_nomem();
-      
-    if (!stralloc_0(&line)) die_nomem();  
-    result = PQexec((PGconn*)info->conn,line.s);
-    if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
-    if (PQresultStatus(result) != PGRES_TUPLES_OK)
-      strerr_die2x(111,FATAL,PQresultErrorMessage(result));
-    
-    for(row_nr=0; row_nr<PQntuples(result); row_nr++) {
-      row = PQgetvalue(result,row_nr,0);
-      length = PQgetlength(result,row_nr,0);
-      if (subwrite(row,length) == -1) die_write();
-    }
-    PQclear(result);
-}
-
 
 /* Add (flagadd=1) or remove (flagadd=0) userhost from the subscriber
  * database table. Comment is e.g. the subscriber from line or name. It
@@ -573,6 +518,10 @@ const char sql_issub_where_defn[] = "address ~* ('^' || $1 || '$')::text";
 /* Definition of WHERE clause for selecting addresses in putsubs */
 const char sql_putsubs_where_defn[] = "hash BETWEEN $1 AND $2";
 
+/* Definition of clauses for searchlog query */
+const char sql_searchlog_select_defn[] = "extract(epoch from tai),address||' '||edir||etype||' '||fromline";
+const char sql_searchlog_where_defn[] = "fromline LIKE concat('%',$1,'%') OR address LIKE concat('%',$1,'%')";
+
 const char *sql_drop_table(struct subdbinfo *info,
 			   const char *name)
 {
@@ -600,7 +549,7 @@ struct sub_plugin sub_plugin = {
   _opensub,
   sub_sql_putsubs,
   sub_sql_rmtab,
-  _searchlog,
+  sub_sql_searchlog,
   _subscribe,
   _tagmsg,
 };

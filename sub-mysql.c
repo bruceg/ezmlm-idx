@@ -42,11 +42,6 @@ static stralloc line = {0};
 static stralloc logline = {0};
 static stralloc quoted = {0};
 
-static void die_write(void)
-{
-  strerr_die2sys(111,FATAL,MSG(ERR_WRITE_STDOUT));
-}
-
 static int stralloc_cat_table(stralloc *s,
 			      const struct subdbinfo *info,
 			      const char *table)
@@ -86,15 +81,6 @@ static void safe_query(struct subdbinfo *info,const stralloc* query)
     strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
 }
 
-static MYSQL_RES *safe_select(struct subdbinfo *info,const stralloc* query)
-{
-  MYSQL_RES *result;
-  safe_query(info,query);
-  if ((result = mysql_use_result((MYSQL*)info->conn)) == 0)
-    strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
-  return result;
-}
-
 /* Creates an entry for message num and the list listno and code "done".
  * Returns NULL on success, and the error string on error. */
 static const char *_logmsg(struct subdbinfo *info,
@@ -125,49 +111,6 @@ static const char *_logmsg(struct subdbinfo *info,
     if (mysql_errno((MYSQL*)info->conn) != ER_DUP_ENTRY)	/* ignore dups */
 	return mysql_error((MYSQL*)info->conn);
   return 0;
-}
-
-/* Searches the subscriber log and outputs via subwrite(s,len) any entry
- * that matches search. A '_' is search is a wildcard. Any other
- * non-alphanum/'.' char is replaced by a '_'. */
-static void _searchlog(struct subdbinfo *info,
-		       const char *table,
-		       char *search,		/* search string */
-		       int subwrite())		/* output fxn */
-{
-  MYSQL_RES *result;
-  MYSQL_ROW row;
-  unsigned long *lengths;
-
-/* SELECT (*) FROM list_slog WHERE fromline LIKE '%search%' OR address   */
-/* LIKE '%search%' ORDER BY tai; */
-/* The '*' is formatted to look like the output of the non-mysql version */
-/* This requires reading the entire table, since search fields are not   */
-/* indexed, but this is a rare query and time is not of the essence.     */
-
-    if (!stralloc_copys(&line,"SELECT CONCAT(FROM_UNIXTIME(UNIX_TIMESTAMP(tai)),"
-	"'-0000: ',UNIX_TIMESTAMP(tai),' ',edir,etype,' ',address,' ',"
-	"fromline) FROM ")) die_nomem();
-    if (!stralloc_cat_table(&line,info,table)) die_nomem();
-    if (!stralloc_cats(&line,"_slog ")) die_nomem();
-    if (*search) {	/* We can afford to wait for LIKE '%xx%' */
-      if (!stralloc_cats(&line,"WHERE fromline LIKE '%")) die_nomem();
-      if (!stralloc_cats(&line,search)) die_nomem();
-      if (!stralloc_cats(&line,"%' OR address LIKE '%")) die_nomem();
-      if (!stralloc_cats(&line,search)) die_nomem();
-      if (!stralloc_cats(&line,"%'")) die_nomem();
-    }	/* ordering by tai which is an index */
-      if (!stralloc_cats(&line," ORDER by tai")) die_nomem();
-
-    result = safe_select(info,&line);
-    while ((row = mysql_fetch_row(result))) {
-    if (!(lengths = mysql_fetch_lengths(result)))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
-      if (subwrite(row[0],lengths[0]) == -1) die_write();
-    }
-    if (!mysql_eof(result))
-	strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
-    mysql_free_result(result);
 }
 
 /* Add (flagadd=1) or remove (flagadd=0) userhost from the subscriber
@@ -487,6 +430,10 @@ const char sql_issub_where_defn[] = "address LIKE ?";
 /* Definition of WHERE clause for selecting addresses in putsubs */
 const char sql_putsubs_where_defn[] = "hash BETWEEN ? AND ?";
 
+/* Definition of clauses for searchlog query */
+const char sql_searchlog_select_defn[] = "UNIX_TIMESTAMP(tai), CONCAT(edir,etype,' ',address,' ',fromline)";
+const char sql_searchlog_where_defn[] = "fromline LIKE concat('%',?,'%') OR address LIKE concat('%',?,'%')";
+
 int sql_table_exists(struct subdbinfo *info,
 		     const char *name)
 {
@@ -525,7 +472,7 @@ struct sub_plugin sub_plugin = {
   _opensub,
   sub_sql_putsubs,
   sub_sql_rmtab,
-  _searchlog,
+  sub_sql_searchlog,
   _subscribe,
   _tagmsg,
 };
