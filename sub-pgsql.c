@@ -42,6 +42,13 @@ static stralloc line = {0};
 static stralloc logline = {0};
 static stralloc quoted = {0};
 
+struct _result
+{
+  PGresult *res;
+  int row;
+  int nrows;
+};
+
 static void die_write(void)
 {
   strerr_die2sys(111,FATAL,MSG(ERR_WRITE_STDOUT));
@@ -150,55 +157,6 @@ static const char *_checktag(struct subdbinfo *info,
     return (char *)0;
     (void)action;
     (void)seed;
-}
-
-static int _issub(struct subdbinfo *info,
-		  const char *table,
-		  const char *userhost,
-		  stralloc *recorded)
-{
-  PGresult *result;
-
-  unsigned int j;
-
-	/* SELECT address FROM list WHERE address = 'userhost' AND hash */
-	/* BETWEEN 0 AND 52. Without the hash restriction, we'd make it */
-	/* even easier to defeat. Just faking sender to the list name would*/
-	/* work. Since sender checks for posts are bogus anyway, I don't */
-	/* know if it's worth the cost of the "WHERE ...". */
-
-    if (!stralloc_copys(&addr,userhost)) die_nomem();
-    j = byte_rchr(addr.s,addr.len,'@');
-    if (j == addr.len) return 0;
-    case_lowerb(addr.s + j + 1,addr.len - j - 1);
-
-    if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
-    if (!stralloc_cat_table(&line,info,table)) die_nomem();
-    if (!stralloc_cats(&line," WHERE address ~* '^")) die_nomem();
-    if (!stralloc_cat(&line,&addr)) die_nomem();
-    if (!stralloc_cats(&line,"$'")) die_nomem();
-
-    if (!stralloc_0(&line)) die_nomem();
-    result = PQexec((PGconn*)info->conn,line.s);
-    if (result == NULL)
-      strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
-    if (PQresultStatus(result) != PGRES_TUPLES_OK )
-      strerr_die2x(111,FATAL,PQresultErrorMessage(result));
-
-    /* No data returned in QUERY */
-    if (PQntuples(result) < 1) {
-      PQclear(result);
-      return 0;
-    }
-
-    if (recorded) {
-      if (!stralloc_copyb(recorded,PQgetvalue(result,0,0),
-			  PQgetlength(result,0,0)))
-	die_nomem();
-      if (!stralloc_0(recorded)) die_nomem();
-    }
-    PQclear(result);
-    return 1;
 }
 
 /* Creates an entry for message num and the list listno and code "done".
@@ -569,6 +527,76 @@ static void _tagmsg(struct subdbinfo *info,
     if (*ret) strerr_die2x(111,FATAL,ret);
 }
 
+static void die_sqlerror(struct subdbinfo *info)
+{
+  strerr_die2x(111,FATAL,PQerrorMessage((PGconn*)info->conn));
+}
+
+static void die_sqlresulterror(PGresult *result)
+{
+  strerr_die2x(111,FATAL,PQresultErrorMessage(result));
+}
+
+void *sql_select(struct subdbinfo *info,
+		 struct stralloc *q,
+		 unsigned int nparams,
+		 struct stralloc *params)
+{
+  PGresult *result;
+  struct _result *ret;
+  const char *values[nparams];
+  int lengths[nparams];
+  unsigned int i;
+
+  if (!stralloc_0(q)) die_nomem();
+  for (i = 0; i < nparams; ++i) {
+    if (!stralloc_0(&params[i])) die_nomem();
+    values[i] = params[i].s;
+    lengths[i] = params[i].len - 1;
+  }
+  if ((ret = malloc(sizeof *ret)) == 0) die_nomem();
+
+  result = PQexecParams((PGconn*)info->conn,q->s,nparams,0,values,lengths,0,0);
+  if (result == 0)
+    die_sqlerror(info);
+  if (PQresultStatus(result) != PGRES_TUPLES_OK)
+    die_sqlresulterror(result);
+
+  ret->res = result;
+  ret->row = 0;
+  ret->nrows = PQntuples(result);
+  return ret;
+}
+
+int sql_fetch_row(struct subdbinfo *info,
+		  void *result,
+		  unsigned int ncolumns,
+		  struct stralloc *columns)
+{
+  struct _result *r = result;
+  unsigned int i;
+
+  if (r->row >= r->nrows)
+    return 0;
+
+  for (i = 0; i < ncolumns; ++i) {
+    if (!stralloc_copys(&columns[i],PQgetvalue(r->res,r->row,i)))
+      die_nomem();
+  }
+  ++r->row;
+  return 1;
+  (void)info;
+}
+
+extern void sql_free_result(struct subdbinfo *info,
+			    void *result)
+{
+  struct _result *r = result;
+  PQclear(r->res);
+  free(r);
+  (void)info;
+}
+
 int sql_table_exists(struct subdbinfo *info,
 		     const char *name)
 {
@@ -643,6 +671,9 @@ const char sql_mlog_table_defn[] =
   "done		INT4 NOT NULL DEFAULT 0,"
   "PRIMARY KEY (listno,msgnum,done)";
 
+/* Definition of WHERE clause for selecting addresses in issub */
+const char sql_issub_where_defn[] = "address ~* ('^' || $1 || '$')::text";
+
 const char *sql_drop_table(struct subdbinfo *info,
 			   const char *name)
 {
@@ -664,7 +695,7 @@ struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
   _checktag,
   _closesub,
-  _issub,
+  sub_sql_issub,
   _logmsg,
   sub_sql_mktab,
   _opensub,

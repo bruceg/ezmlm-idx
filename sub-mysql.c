@@ -157,60 +157,6 @@ static const char *_checktag (struct subdbinfo *info,
     (void)seed;
 }
 
-static int _issub(struct subdbinfo *info,
-		  const char *table,
-		  const char *userhost,
-		  stralloc *recorded)
-{
-  MYSQL_RES *result;
-  MYSQL_ROW row;
-  unsigned long *lengths;
-  int ret;
-
-  unsigned int j;
-
-	/* SELECT address FROM list WHERE address = 'userhost' AND hash */
-	/* BETWEEN 0 AND 52. Without the hash restriction, we'd make it */
-	/* even easier to defeat. Just faking sender to the list name would*/
-	/* work. Since sender checks for posts are bogus anyway, I don't */
-	/* know if it's worth the cost of the "WHERE ...". */
-
-    if (!stralloc_copys(&addr,userhost)) die_nomem();
-    j = byte_rchr(addr.s,addr.len,'@');
-    if (j == addr.len) return 0;
-    case_lowerb(addr.s + j + 1,addr.len - j - 1);
-
-    if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
-    if (!stralloc_cat_table(&line,info,table)) die_nomem();
-    if (!stralloc_cats(&line," WHERE address = '")) die_nomem();
-    if (!stralloc_ready(&quoted,2 * addr.len + 1)) die_nomem();
-    if (!stralloc_catb(&line,quoted.s,
-	mysql_escape_string(quoted.s,userhost,addr.len))) die_nomem();
-    if (!stralloc_cats(&line,"'"))
-		die_nomem();
-    result = safe_select(info,&line);
-    row = mysql_fetch_row(result);
-    if (!row) {		/* we need to return the actual address as other */
-			/* dbs may accept user-*@host, but we still want */
-			/* to make sure to send to e.g the correct moderator*/
-			/* address. */
-      if (!mysql_eof(result))
-		strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
-      ret = 0;
-    } else {
-      if (!(lengths = mysql_fetch_lengths(result)))
-		strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
-      if (recorded) {
-	if (!stralloc_copyb(recorded,row[0],lengths[0])) die_nomem();
-	if (!stralloc_0(recorded)) die_nomem();
-      }
-      while ((row = mysql_fetch_row(result)));	/* maybe not necessary */
-      ret = 1;
-    }
-    mysql_free_result(result);
-    return ret;
-}
-
 /* Creates an entry for message num and the list listno and code "done".
  * Returns NULL on success, and the error string on error. */
 static const char *_logmsg(struct subdbinfo *info,
@@ -505,6 +451,85 @@ static void _tagmsg(struct subdbinfo *info,
     if (*ret) strerr_die2x(111,FATAL,ret);
 }
 
+static void die_sqlerror(struct subdbinfo *info)
+{
+  strerr_die2x(111,FATAL,mysql_error((MYSQL*)info->conn));
+}
+
+void *sql_select(struct subdbinfo *info,
+		 struct stralloc *q,
+		 unsigned int nparams,
+		 struct stralloc *params)
+{
+  MYSQL_STMT *stmt;
+  MYSQL_BIND bind[nparams];
+  unsigned int i;
+
+  if ((stmt = mysql_stmt_init((MYSQL*)info->conn)) == 0)
+    die_sqlerror(info);
+  if (mysql_stmt_prepare(stmt,q->s,q->len) != 0)
+    die_sqlerror(info);
+  byte_zero((char*)bind,sizeof bind);
+  for (i = 0; i < nparams; ++i) {
+    bind[i].buffer_type = MYSQL_TYPE_STRING;
+    bind[i].buffer = params[i].s;
+    bind[i].buffer_length = params[i].len;
+  }
+  if (mysql_stmt_bind_param(stmt,bind) != 0)
+    die_sqlerror(info);
+  if (mysql_stmt_execute(stmt) != 0)
+    die_sqlerror(info);
+  return stmt;
+}
+
+int sql_fetch_row(struct subdbinfo *info,
+		  void *result,
+		  unsigned int ncolumns,
+		  struct stralloc *columns)
+{
+  MYSQL_BIND bind[ncolumns];
+  unsigned long lengths[ncolumns];
+  unsigned int i;
+
+  byte_zero((char*)bind,sizeof bind);
+  byte_zero((char*)lengths,sizeof lengths);
+  for (i = 0; i < ncolumns; ++i) {
+    bind[i].buffer_type = MYSQL_TYPE_BLOB;
+    bind[i].buffer = 0;
+    bind[i].buffer_length = 0;
+    bind[i].length = &lengths[i];
+  }
+
+  if (mysql_stmt_bind_result((MYSQL_STMT*)result,bind) != 0)
+    die_sqlerror(info);
+  switch (mysql_stmt_fetch((MYSQL_STMT*)result)) {
+  case MYSQL_DATA_TRUNCATED:	/* expect this since buffer_length == 0 */
+    break;
+  case MYSQL_NO_DATA:
+    return 0;
+  default:
+    die_sqlerror(info);
+  }
+
+  for (i = 0; i < ncolumns; ++i) {
+    if (!stralloc_ready(&columns[i],lengths[i])) die_nomem();
+    bind[i].buffer = columns[i].s;
+    bind[i].buffer_length = lengths[i];
+    mysql_stmt_fetch_column((MYSQL_STMT*)result,&bind[i],i,0);
+    columns[i].len = lengths[i];
+  }
+
+  return 1;
+}
+
+void sql_free_result(struct subdbinfo *info,
+		     void *result)
+{
+  if (mysql_stmt_close((MYSQL_STMT*)result) != 0)
+    die_sqlerror(info);
+  (void)info;
+}
+
 const char *sql_create_table(struct subdbinfo *info,
 			     const char *defn)
 {
@@ -556,6 +581,9 @@ const char sql_mlog_table_defn[] =
   "done		TINYINT NOT NULL DEFAULT 0,"
   "PRIMARY KEY listmsg (listno,msgnum,done)";
 
+/* Definition of WHERE clause for selecting addresses in issub */
+const char sql_issub_where_defn[] = "address LIKE ?";
+
 int sql_table_exists(struct subdbinfo *info,
 		     const char *name)
 {
@@ -588,7 +616,7 @@ struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
   _checktag,
   _closesub,
-  _issub,
+  sub_sql_issub,
   _logmsg,
   sub_sql_mktab,
   _opensub,

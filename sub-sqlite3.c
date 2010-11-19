@@ -146,58 +146,6 @@ static const char *_checktag (struct subdbinfo *info,
     (void)seed;
 }
 
-static int _issub(struct subdbinfo *info,
-		  const char *table,
-		  const char *userhost,
-		  stralloc *recorded)
-{
-  sqlite3_stmt *stmt;
-  unsigned int j;
-  int res;
-
-	/* SELECT address FROM list WHERE address = 'userhost' AND hash */
-	/* BETWEEN 0 AND 52. Without the hash restriction, we'd make it */
-	/* even easier to defeat. Just faking sender to the list name would*/
-	/* work. Since sender checks for posts are bogus anyway, I don't */
-	/* know if it's worth the cost of the "WHERE ...". */
-
-    if (!stralloc_copys(&addr,userhost)) die_nomem();
-    j = byte_rchr(addr.s,addr.len,'@');
-    if (j == addr.len) return 0;
-    case_lowerb(addr.s + j + 1,addr.len - j - 1);
-
-    if (!stralloc_copys(&line,"SELECT address FROM ")) die_nomem();
-    if (!stralloc_cat_table(&line,info,table)) die_nomem();
-    if (!stralloc_cats(&line," WHERE address LIKE '")) die_nomem();
-	if (!stralloc_cat(&line,&addr)) die_nomem();
-    if (!stralloc_cats(&line,"'")) die_nomem();
-	if (!stralloc_0(&line)) die_nomem();
-
-	if ((stmt = _sqlquery(info, &line)) == NULL)	/* select */
-		strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
-
-	/* No data returned in QUERY */
-	res = sqlite3_step(stmt);
-	if (res != SQLITE_ROW)
-	{
-		if (res != SQLITE_DONE)
-			strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
-
-		sqlite3_finalize(stmt);
-		return 0;
-	}
-
-	if (recorded)
-	{
-		if (!stralloc_copyb(recorded, (const char*)sqlite3_column_text(stmt, 0), sqlite3_column_bytes(stmt, 0)))
-			die_nomem();
-		if (!stralloc_0(recorded)) die_nomem();
-	}
-
-    sqlite3_finalize(stmt);
-    return 1;
-}
-
 /* Creates an entry for message num and the list listno and code "done".
  * Returns NULL on success, and the error string on error. */
 static const char *_logmsg(struct subdbinfo *info,
@@ -559,6 +507,58 @@ static void _tagmsg(struct subdbinfo *info,
     if (*ret) strerr_die2x(111,FATAL,ret);
 }
 
+static void die_sqlerror(struct subdbinfo *info)
+{
+  strerr_die2x(111,FATAL,sqlite3_errmsg((sqlite3*)info->conn));
+}
+  
+void *sql_select(struct subdbinfo *info,
+		 struct stralloc *q,
+		 unsigned int nparams,
+		 struct stralloc *params)
+{
+  unsigned int i;
+  sqlite3_stmt *stmt;
+  if (sqlite3_prepare_v2((sqlite3*)info->conn,q->s,q->len,&stmt,NULL) != SQLITE_OK)
+    die_sqlerror(info);
+  for (i = 0; i < nparams; ++i) {
+    if (sqlite3_bind_text(stmt,i+1,params[i].s,params[i].len,SQLITE_STATIC) != SQLITE_OK)
+      die_sqlerror(info);
+  }
+  return stmt;
+}
+
+int sql_fetch_row(struct subdbinfo *info,
+		  void *result,
+		  unsigned int ncolumns,
+		  struct stralloc *columns)
+{
+  unsigned int i;
+  sqlite3_stmt *stmt = result;
+
+  switch (sqlite3_step(stmt)) {
+  case SQLITE_DONE:
+    return 0;
+  case SQLITE_ROW:
+    break;
+  default:
+    die_sqlerror(info);
+  }
+
+  for (i = 0; i < ncolumns; ++i) {
+    if (!stralloc_copyb(&columns[i],(char*)sqlite3_column_text(stmt,i),sqlite3_column_bytes(stmt,i)))
+      die_nomem();
+  }
+  return 1;
+}
+
+extern void sql_free_result(struct subdbinfo *info,
+			    void *result)
+{
+  sqlite3_finalize((sqlite3_stmt*)result);
+  (void)info;
+}
+
 int sql_table_exists(struct subdbinfo *info,
 		     const char *name)
 {
@@ -639,6 +639,9 @@ const char sql_mlog_table_defn[] =
   "done		INT4 NOT NULL DEFAULT 0,"
   "PRIMARY KEY (listno,msgnum,done)";
 
+/* Definition of WHERE clause for selecting addresses in issub */
+const char sql_issub_where_defn[] = "address LIKE ?";
+
 const char *sql_drop_table(struct subdbinfo *info,
 			   const char *name)
 {
@@ -664,7 +667,7 @@ struct sub_plugin sub_plugin = {
   SUB_PLUGIN_VERSION,
   _checktag,
   _closesub,
-  _issub,
+  sub_sql_issub,
   _logmsg,
   sub_sql_mktab,
   _opensub,

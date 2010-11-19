@@ -1,19 +1,70 @@
+#include "byte.h"
+#include "case.h"
 #include "die.h"
 #include "stralloc.h"
 #include "sub_sql.h"
 #include "subdb.h"
 
+static stralloc addr;
 static stralloc name;
 static stralloc query;
 
 static void make_name(struct subdbinfo *info,
 		      const char *suffix1,
-		      const char *suffix2)
+		      const char *suffix2,
+		      int terminate)
 {
   if (!stralloc_copys(&name,info->base_table)) die_nomem();
-  if (!stralloc_cats(&name,suffix1)) die_nomem();
-  if (!stralloc_cats(&name,suffix2)) die_nomem();
-  if (!stralloc_0(&name)) die_nomem();
+  if (suffix1 && !stralloc_cats(&name,suffix1)) die_nomem();
+  if (suffix2 && !stralloc_cats(&name,suffix2)) die_nomem();
+  if (terminate && !stralloc_0(&name)) die_nomem();
+}
+
+int sub_sql_issub(struct subdbinfo *info,
+		  const char *table,
+		  const char *userhost,
+		  stralloc *recorded)
+{
+  unsigned int j;
+  void *result;
+  int ret;
+
+  /* SELECT address FROM list WHERE address = 'userhost' AND hash */
+  /* BETWEEN 0 AND 52. Without the hash restriction, we'd make it */
+  /* even easier to defeat. Just faking sender to the list name would*/
+  /* work. Since sender checks for posts are bogus anyway, I don't */
+  /* know if it's worth the cost of the "WHERE ...". */
+
+  make_name(info,table?"_":0,table,0);
+
+  /* Lower-case the domain portion */
+  if (!stralloc_copys(&addr,userhost)) die_nomem();
+  j = byte_rchr(addr.s,addr.len,'@');
+  if (j == addr.len)
+    return 0;
+  case_lowerb(addr.s + j + 1,addr.len - j - 1);
+
+  if (!stralloc_copys(&query,"SELECT address FROM ")) die_nomem();
+  if (!stralloc_cat(&query,&name)) die_nomem();
+  if (!stralloc_cats(&query," WHERE ")) die_nomem();
+  if (!stralloc_cats(&query,sql_issub_where_defn)) die_nomem();
+
+  result = sql_select(info,&query,1,&addr);
+
+  if (!sql_fetch_row(info,result,1,&addr))
+    ret = 0;
+  else {
+    /* we need to return the actual address as other dbs may accept
+     * user-*@host, but we still want to make sure to send to e.g the
+     * correct moderator address. */
+    if (recorded != 0) {
+      if (!stralloc_copy(recorded,&addr)) die_nomem();
+      if (!stralloc_0(recorded)) die_nomem();
+    }
+    ret = 1;
+  }
+  sql_free_result(info,result);
+  return ret;
 }
 
 static const char *create_table(struct subdbinfo *info,
@@ -21,7 +72,7 @@ static const char *create_table(struct subdbinfo *info,
 				const char *suffix2,
 				const char *definition)
 {
-  make_name(info,suffix1,suffix2);
+  make_name(info,suffix1,suffix2,1);
   if (sql_table_exists(info,name.s) > 0)
     return 0;
   if (!stralloc_copys(&query,"CREATE TABLE ")) die_nomem();
@@ -81,7 +132,7 @@ static const char *remove_table(struct subdbinfo *info,
 				const char *suffix1,
 				const char *suffix2)
 {
-  make_name(info,suffix1,suffix2);
+  make_name(info,suffix1,suffix2,1);
   if (sql_table_exists(info,name.s) == 0)
     return 0;
   return sql_drop_table(info,name.s);
