@@ -1,13 +1,12 @@
-# Revision: 0
+# Revision: 1
 Vielen Dank, daß Sie bereit sind, die Moderation der Liste
    <#L#>@<#h#>
 zu übernehmen.
 
-Die Kommandos, die ich benutze, sind sehr verschieden von denen
+Die Kommandos, die ich benutze, sind leicht verschieden von denen
 anderer Mailinglistenmanager. Sie werden Ihnen anfangs sehr
 ungewohnt vorkommen, wenn Sie sich aber erst einmal daran gewöhnt
-haben werden Sie die Einfachheit und Geschwindigkeit des Systems
-schätzen lernen.
+haben, werden Sie hoffentlich ihre Einfachheit schätzen lernen.
 
 Hier einige Hinweise, wie die Moderation funktioniert.
 Generelle Hinweise zur Listenbedienung folgen am Ende dieser
@@ -17,7 +16,7 @@ Eintragen von Nutzern per Mail
 ------------------------------
 Als Moderator sind Sie in der Lage, per Mail beliebige Adressen
 in die Liste aufzunehmen oder sie daraus zu streichen. Sie
-bauen einfach die Adresse, um die es geht in meine Kommando-Adresse
+bauen einfach die Adresse, um die es geht, in meine Kommando-Adresse
 ein und ersetzen dabei das at-Zeichen (@) durch ein
 Gleichheitszeichen (=).
 Für die Adresse ich@example.com geht das zum Beispiel
@@ -38,26 +37,26 @@ So einfach ist das :) Sie brauchen nicht einmal einen
 Betreff oder irgendeinen Nachrichtentext schreiben.
 
 <=r=>
-Ich werde Ihnen eine Rückfrage schicken, um sicherzugehen daß
+Ich werde Ihnen eine Rückfrage schicken, um sicherzugehen dass
 wirklich Sie das Kommando geschickt haben.
 Sie brauchen dann einfach nur noch antworten und der Vorgang
 ist damit abgeschlossen.
 <=R=>
 Ich werde zur Sicherheit an die angegebene Adresse (in diesem
 Fall ich@example.com) eine Rückfrage schicken.
-Alles was der Nutzer tun muß, ist auf diese Anfrage zu antworten.
+Alles was der Nutzer tun muss, ist auf diese Anfrage zu antworten.
 <==>
 
 Die Bestätigungsnachrichten sind erforderlich um es Dritten
 schwerer zu machen, beliebige Mailadressen in die Liste
-aufzunehmen.
+aufzunehmen oder aus ihr zu entfernen.
 
 Der Nutzer wird darüber informiert, wenn er in die Liste
 aufgenommen oder aus ihr gelöscht wird.
 
 
-Abonnement durch die User
--------------------------
+Abonnement durch die Nutzer
+---------------------------
 
 Jeder kann die Liste abonnieren oder abbestellen indem eine
 Mail an die entsprechende Adresse geschickt wird:
@@ -85,13 +84,14 @@ bei einem Abonnement eine zweite Rückfrage an den oder die
 Moderatoren geschickt.
 Da die Bestätigung durch den Nutzer schon erfolgte, können Sie
 relativ sicher sein, daß die angegebene Adresse nicht gefälscht
-ist. Wenn Sie dem Abonnement durch den User zustimmen,
+ist. Wenn Sie dem Abonnement durch den Nutzer zustimmen,
 beantworten Sie die Bestätigungsanforderung einfach.
 Falls nicht, können Sie die Anforderung einfach löschen.
 Eventuell können Sie auch mehr Informationen vom Nutzer einholen
 oder ihm Ihre Gründe für die Nicht-Bestätigung mitteilen.
 Beachten Sie, daß dadurch Ihre Email-Adresse bekannt wird.
-
+<=S=>
+Einschreibungen laufen in derselben Art und Weise ab.
 <==>
 Die Nutzer können auch die folgende Adressen benutzen:
 
@@ -110,13 +110,13 @@ löschen (in diesem Beispiel die Adresse ich@example.com).
 Nur wenn die Rückfrage an diese Adresse dann auch beantwortet
 wird, kann die Aktion ausgeführt werden.
 
-All diese Rückfragen werden durchgeführt um sicherzustellen
-daß keine gefälschten Kommandos vorliegen und daß es sich
+All diese Rückfragen werden durchgeführt, um sicherzustellen
+dass keine gefälschten Kommandos vorliegen und dass es sich
 wirklich um den Wunsch der Person handelt, die Mails über
 diese Adresse empfängt.
 
 Ihre Adresse und Identität wird keiner weiteren Person
-offengelegt, es sei denn Sie nehmen direkt Kontakt auf.
+offengelegt, es sei denn, Sie nehmen direkt Kontakt auf.
 
 <=rl=>
 Information über den Listenzustand
@@ -141,9 +141,9 @@ Das Logfile für die <#L#>-digest@<#h#> Liste über:
 <=rn=>
 
 Textänderungen
---------------
+----------------
 
-Sie können die erläuternden Texte, die ich verschicke auch per Mail
+Sie können die erläuternden Texte, die ich verschicke, auch per Mail
 verändern. Um eine Datei- und Kommandoliste dafür zu erhalten schreiben
 Sie an:
    <<#L#>-edit@<#h#>>
@@ -158,23 +158,23 @@ Warteschlange eingereiht, daraufhin wird eine Bestätigungs-
 anforderung an Sie geschickt. In der Betreffzeile steht
 in diesem Fall "MODERATE for ...".
 
-Falls Sie die Nachricht genehmigen, müssen Sie einfach nur
+Falls Sie die Nachricht genehmigen wollen, müssen Sie einfach nur
 auf diese Anforderung antworten. Dazu benutzen Sie bitte
 die Adresse im Reply-To:-Header (sollte automatisch von
-Ihrem Mailprogramm angeboten werden). In einigen Programmen
+Ihrem Mailprogramm angeboten werden).
+In einigen Programmen
 wird die Adresse auch als Hyperlink im Mailtext angezeigt, den
-Sie dann nur noch per Mausklick öffnen müssen (zum Beispiel in
-Pegasus Mail).
+Sie dann nur noch per Mausklick öffnen müssen.
 Die Nachricht des Nutzers müssen Sie nicht mitschicken, da ich
 noch eine Kopie davon besitze und diese verwende.
 
 Wenn Sie die Nachricht ablehnen möchten, senden Sie an die
 Adresse, die im From:-Header angegeben ist. Auch hier können
 Sie die Möglichkeit des Hyperlinks verwenden, wenn Ihr Mailprogramm
-das unterstützt.
-Sie können eine Begründung oder einen Kommentar mitgeben, indem Sie
-Ihren Text in zwei Zeilen einschließen, die jeweils mit drei
-Prozentzeichen beginnen. Der Nutzer erhält nur diesen
+dies unterstützt.
+Sie können eine Begründung oder einen Kommentar beifügen,
+indem Sie Ihren Text zwischen zwei Zeilen einschließen, die jeweils
+mit drei Prozentzeichen beginnen. Der Nutzer erhält nur diesen
 Kommentar, ohne daß Ihre Identität dabei preisgegeben wird.
 
 Ich werde die Nachricht anhand der ersten Moderatoren-Antwort
@@ -193,7 +193,7 @@ kommentarlos gelöscht werden.
 <==>
 
 Urlaub und andere Abwesenheit
------------------------------
+------------------------------
 
 Wenn Sie zeitweilig über eine andere Adresse erreichbar sind, schicken
 Sie alle Mails, die den richtigen 'Mailing-List:' Header haben an diese
@@ -208,7 +208,7 @@ klären Sie aber Vertretungen vorher mit dem Listeneigentümer ab.
 
 Wenn Sie für eine Weile alle Anforderungsmails automatisch
 bestätigen wollen, lassen Sie einfach Ihr Mailsystem die Nachrichten
-automatisch beantworten, die die obengenannten Bedingungen erfüllen.
+automatisch beantworten, die die oben genannten Bedingungen erfüllen.
 
 <=r=>
 Wenn Sie die Liste von einer Fremdadresse aus administrieren wollen,
@@ -217,7 +217,7 @@ Danach wird die Bestätigungsanforderung an alle Moderatoren verschickt.
 Diese Verfahrensweise ist notwendig, da ich in diesem Fall nicht wissen kann,
 ob Sie zur Administration berechtigt sind.
 
-Bitte beachten Sie, daß in diesem Fall auch Ihre Administrationsmail
+Bitte beachten Sie, dass in diesem Fall auch Ihre Administrationsmail
 (und Ihre Mailadresse) an den Nutzer übermittelt werden.
 
 <==>
@@ -225,6 +225,6 @@ Viel Erfolg!
 
 PS: Bitte wenden Sie sich an den Listeneigentümer
    <#L#>-owner@<#h#>
-wenn Sie Probleme irgendwelcher Art mit der Listenadministration
-haben.
+falls Sie Probleme irgendwelcher Art mit der Listenadministration
+haben sollten.
 
