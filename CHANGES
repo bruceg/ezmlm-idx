@@ -18,6 +18,8 @@ Some ezmlmrc are not updated and may not work right.  If you fix them,
 please send them to ezmlm@list.cr.yp.to for inclusion in the next
 release.
 
+- Fixed behavior of ezmlm-manage -Q flag to match man page.
+
 ezmlm-idx-7.1.1, 2010-11-18
 ===========================
 

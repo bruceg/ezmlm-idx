@@ -84,7 +84,7 @@ static struct option options[] = {
   OPT_FLAG(flagsubconf,'s',1,0),
   OPT_FLAG(flagsubconf,'S',0,"nosubconfirm"),
   OPT_FLAG(flagverbose,'q',0,0),
-  OPT_FLAG(flagverbose,'Q',1,0), /* FIXME, should set flagverbose+1 */
+  OPT_COUNTER(flagverbose,'Q',1,0),
   OPT_FLAG(flagunsubconf,'u',1,0),
   OPT_FLAG(flagunsubconf,'U',0,"nounsubconfirm"),
   OPT_ULONG(copylines,0,"copylines"),
