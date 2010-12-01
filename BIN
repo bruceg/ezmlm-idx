@@ -1,6 +1,7 @@
 d:::755:::
 c:::755:/:ezmlm-accept:
 c:::755:/:ezmlm-archive:
+c:::755:/:ezmlm-cgi:
 c:::755:/:ezmlm-check:
 c:::755:/:ezmlm-checksub:
 c:::755:/:ezmlm-clean:
@@ -11,6 +12,7 @@ c:::755:/:ezmlm-gate:
 c:::755:/:ezmlm-get:
 c:::755:/:ezmlm-glconf:
 c:::755:/:ezmlm-idx:
+c:::755:/:ezmlm-import:
 c:::755:/:ezmlm-issubn:
 c:::755:/:ezmlm-limit:
 c:::755:/:ezmlm-list:
@@ -20,6 +22,7 @@ c:::755:/:ezmlm-moderate:
 c:::755:/:ezmlm-reject:
 c:::755:/:ezmlm-request:
 c:::755:/:ezmlm-return:
+c:::755:/:ezmlm-rmtab:
 c:::755:/:ezmlm-send:
 c:::755:/:ezmlm-split:
 c:::755:/:ezmlm-store:

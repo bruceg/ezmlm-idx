@@ -2,6 +2,7 @@ d:::755:::
 d:::755:/man1::
 c:::644:/man1/:ezmlm-accept.1:
 c:::644:/man1/:ezmlm-archive.1:
+c:::644:/man1/:ezmlm-cgi.1:
 c:::644:/man1/:ezmlm-check.1:
 c:::644:/man1/:ezmlm-checksub.1:
 c:::644:/man1/:ezmlm-clean.1:
@@ -12,6 +13,7 @@ c:::644:/man1/:ezmlm-gate.1:
 c:::644:/man1/:ezmlm-get.1:
 c:::644:/man1/:ezmlm-glconf.1:
 c:::644:/man1/:ezmlm-idx.1:
+c:::644:/man1/:ezmlm-import.1:
 c:::644:/man1/:ezmlm-issubn.1:
 c:::644:/man1/:ezmlm-limit.1:
 c:::644:/man1/:ezmlm-list.1:
@@ -21,6 +23,7 @@ c:::644:/man1/:ezmlm-moderate.1:
 c:::644:/man1/:ezmlm-reject.1:
 c:::644:/man1/:ezmlm-request.1:
 c:::644:/man1/:ezmlm-return.1:
+c:::644:/man1/:ezmlm-rmtab.1:
 c:::644:/man1/:ezmlm-send.1:
 c:::644:/man1/:ezmlm-split.1:
 c:::644:/man1/:ezmlm-store.1:
@@ -37,6 +40,7 @@ c:::644:/man5/:ezmlmsubrc.5:
 d:::755:/cat1::
 c:::644:/cat1/:ezmlm-accept.0:
 c:::644:/cat1/:ezmlm-archive.0:
+c:::644:/cat1/:ezmlm-cgi.0:
 c:::644:/cat1/:ezmlm-check.0:
 c:::644:/cat1/:ezmlm-checksub.0:
 c:::644:/cat1/:ezmlm-clean.0:
@@ -46,6 +50,7 @@ c:::644:/cat1/:ezmlm-gate.0:
 c:::644:/cat1/:ezmlm-get.0:
 c:::644:/cat1/:ezmlm-glconf.0:
 c:::644:/cat1/:ezmlm-idx.0:
+c:::644:/cat1/:ezmlm-import.0:
 c:::644:/cat1/:ezmlm-issubn.0:
 c:::644:/cat1/:ezmlm-limit.0:
 c:::644:/cat1/:ezmlm-list.0:
@@ -55,6 +60,7 @@ c:::644:/cat1/:ezmlm-moderate.0:
 c:::644:/cat1/:ezmlm-reject.0:
 c:::644:/cat1/:ezmlm-request.0:
 c:::644:/cat1/:ezmlm-return.0:
+c:::644:/cat1/:ezmlm-rmtab.0:
 c:::644:/cat1/:ezmlm-send.0:
 c:::644:/cat1/:ezmlm-split.0:
 c:::644:/cat1/:ezmlm-store.0:
