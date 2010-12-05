@@ -9,9 +9,9 @@ db=$1
 
 echo "==================== Testing subdb = $db ===================="
 
-`dirname $0`/makerrors
+make -s
 if [ $db != 'std' ]; then
-  `dirname $0`/makerrors $db
+  make -s $db
 fi
 
 exec ${0}-$db
