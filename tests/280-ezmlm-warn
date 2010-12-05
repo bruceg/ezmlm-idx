@@ -17,4 +17,4 @@ ${EZBIN}/ezmlm-issubn -n "$DIR" || \
 ${EZBIN}/ezmlm-issubn -n "$DIR" digest || \
 	fatal "failed to remove bouncing digest subscriber"
 
-${ECHO} "OK"
+echo "OK"

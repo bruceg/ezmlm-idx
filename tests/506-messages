@@ -4,13 +4,13 @@ if ! [ -n "$SUBDB" ]; then
 
   echo 'ERR_OPEN:My message ' >"$DIR"/text/messages
   ${EZBIN}/ezmlm-sub "$DIR" foobar "$SENDER" 2>&1 \
-  | ${GREP} ' My message ' >/dev/null \
+  | grep ' My message ' >/dev/null \
   || fatal "did not read local text/messages"
 
   echo 'ERR_XYZZY:My message' >"$DIR"/text/messages
   ${EZBIN}/ezmlm-sub "$DIR" foobar "$SENDER" 2>&1 \
-  | ${GREP} 'ERR_OPEN' >/dev/null \
+  | grep 'ERR_OPEN' >/dev/null \
   && fatal "did not read default text/messages"
 
-  ${ECHO} OK
+  echo OK
 fi

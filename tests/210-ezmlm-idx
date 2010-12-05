@@ -3,7 +3,7 @@
 #############
 
   prompt "ezmlm-idx:            "
-  ${RM} -f "${DIR}/archive/0/index" "${DIR}/indexed"
+  rm -f "${DIR}/archive/0/index" "${DIR}/indexed"
   ${EZBIN}/ezmlm-idx "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to run"
   if [ ! -r "${DIR}/indexed" ]; then
@@ -12,4 +12,4 @@
   if [ ! -r "${DIR}/archive/0/index" ]; then
 	fatal "failed to create index"
   fi 
-  ${ECHO} "OK"
+  echo "OK"

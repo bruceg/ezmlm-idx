@@ -15,4 +15,4 @@
   grepbody test@example.org
   grepbody was not on the ${LOC} mailing list when I received
 
-  ${ECHO} OK
+  echo OK

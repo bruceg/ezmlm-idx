@@ -10,27 +10,27 @@
 
 # message from mod, normal use -> should queue
   qqclean
-  { ${ECHO} "X-num: mod1"; make_message; } > ${TMP};
+  { echo "X-num: mod1"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	fatal "failed to process message 1"
   checkenv mod1 "$LOC-return-@$HOST" "$SENDER"
 
-  cat ${DIR}/mod/pending/* | ${GREP} "mod1" > /dev/null || \
+  cat ${DIR}/mod/pending/* | grep "mod1" > /dev/null || \
 	fatal "failed to queue message 1"
 
-  REJ=`${GREP} "From: $LOC-reject" "$QQMSG" | cut -d' ' -f2`
+  REJ=`grep "From: $LOC-reject" "$QQMSG" | cut -d' ' -f2`
   if [ -z "$REJ" ]; then
 	fatal "No From: ...-reject header in mod request for mod1"
   fi
 
-  ${RM} -f "${DIR}/modpost" 
+  rm -f "${DIR}/modpost" 
 #
 # no modpost - should go directly to list
   qqclean
-  { ${ECHO} "X-num: mod2"; make_message; } > ${TMP};
+  { echo "X-num: mod2"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	{
-	  ${GREP} -v "child" "$ERR" > /dev/null 2>&1
+	  grep -v "child" "$ERR" > /dev/null 2>&1
 	  if [ "$?" != "0" ]; then
 	    fatal "Failed to process message mod2"
 	  else
@@ -39,11 +39,11 @@
 	}
   checkenv mod2 "$LOC-return-.*@$HOST-@\\[\\]" "subscriber@$HOST"
 
-  cat ${DIR}/mod/pending/* | ${GREP} "mod2" > /dev/null && \
+  cat ${DIR}/mod/pending/* | grep "mod2" > /dev/null && \
 	fatal "queued message 2 despite non-modpost"
 
   if [ -z "$EZFORK" ]; then
-	cat ${DIR}/archive/0/* | ${GREP} "mod2" > /dev/null || \
+	cat ${DIR}/archive/0/* | grep "mod2" > /dev/null || \
 		fatal "failed to archive message 2 (non-modpost)"
   fi
 
@@ -51,32 +51,32 @@
 
 # from moderator. Should be queued, even with -P
   qqclean
-  { ${ECHO} "X-num: mod3"; make_message; } > ${TMP};
+  { echo "X-num: mod3"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	fatal "-P failed to accept mods post 3"
   checkenv mod3 "$LOC-return-@$HOST" "$SENDER"
 
-  cat ${DIR}/mod/pending/* | ${GREP} "mod3" > /dev/null || \
+  cat ${DIR}/mod/pending/* | grep "mod3" > /dev/null || \
 	fatal "failed to queue message 3"
 
-  ACC=`${GREP} "Reply-To: $LOC-accept" "$QQMSG" | cut -d' ' -f2`
+  ACC=`grep "Reply-To: $LOC-accept" "$QQMSG" | cut -d' ' -f2`
   if [ -z "$ACC" ]; then
 	fatal "No From: ...-accept header in mod request for mod3"
   fi
 
   qqclean
   touch "$DIR"/modpostonly
-  { ${ECHO} "X-num: mod4"; make_message; } > ${TMP};
+  { echo "X-num: mod4"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store  "$DIR" >"$ERR" 2>&1 < ${TMP} || \
 	fatal "modpostonly failed to accept mods post 4"
   checkenv mod4 "$LOC-return-@$HOST" "$SENDER"
-  ${RM} "$DIR"/modpostonly
+  rm "$DIR"/modpostonly
 
   ${EZBIN}/ezmlm-unsub "$DIR" mod "$SENDER"
 
 # not from moderator, should be rejected directly with -P
   qqclean
-  { ${ECHO} "X-num: mod5"; make_message; } > ${TMP};
+  { echo "X-num: mod5"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < ${TMP} && \
 	fatal "-P failed to reject non-mod message 5"
 
@@ -86,14 +86,14 @@
 # not from moderator, should be rejected directly with -P
   qqclean
   touch "$DIR"/modpostonly
-  { ${ECHO} "X-num: mod6"; make_message; } > ${TMP};
+  { echo "X-num: mod6"; make_message; } > ${TMP};
 	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} && \
 	fatal "modpostonly failed to reject non-mod message 6"
-  ${RM} "$DIR"/modpostonly
+  rm "$DIR"/modpostonly
 
   test -s "$QQMSG" && \
 	fatal "ezmlm-store: modpostonly failed to reject message from non-mod"
 
   ${EZBIN}/ezmlm-unsub "$DIR" "subscriber@$HOST"
 
-  ${ECHO} "OK"
+  echo "OK"

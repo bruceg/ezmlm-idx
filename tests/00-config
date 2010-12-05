@@ -48,25 +48,4 @@ DB='ezmlm'
 SQLHOST=''
 SQLUSER='eztest'	# -u overrides this
 
-#programs:
-# to report disk usage summary
-DU='du -s'
-# Need full path in case qmail doesn't have these in the path
-ECHO=`which echo` 2>/dev/null || ECHO='echo'
-GREP=`which grep` 2>/dev/null || GREP='grep'
-# std programs
-HEAD='head'
-MKDIR='mkdir'
-MV='mv'
-RM='rm'
-LN='ln'
-SED='sed'
-TAIL='tail'
-UNSET='unset'
-WC='wc'
-CHMOD='chmod'
-CAT='cat'
-TEST='test'
-TR='tr'
-
 ###################### END CONFIRGRABLE ITEMS #########################

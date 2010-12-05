@@ -79,4 +79,4 @@ checkenv modpost2 "$LOC-return-@$HOST" "moderator@$HOST"
 
 unset post
 
-${ECHO} "OK"
+echo "OK"

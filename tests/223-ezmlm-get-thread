@@ -8,7 +8,7 @@ qqclean
 SENDER="${BNC}@$HOST"
 LOCAL="$LOC-index"
 DEFAULT='index'
-${ECHO} "X-num: thread1" > "$TMP"
+echo "X-num: thread1" > "$TMP"
 LOCAL="$LOC-thread.1"
 DEFAULT='thread.1'
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1 && \
@@ -26,7 +26,7 @@ msgexists || \
 checkenv thread1 "$LOC-return-@$HOST" "$SENDER"
 
 qqclean
-${ECHO} "X-num: thread2" > "$TMP"
+echo "X-num: thread2" > "$TMP"
 SENDER="${DIG}@$HOST"
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
@@ -36,4 +36,4 @@ msgexists || \
 	fatal "-s failed to produce -thread message"
 checkenv thread2 "$LOC-return-@$HOST" "$SENDER"
 
-${ECHO} "OK"
+echo "OK"

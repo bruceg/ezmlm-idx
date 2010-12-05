@@ -11,13 +11,13 @@
   ${EZBIN}/ezmlm-list "$DIR" >/dev/null || \
 	fatal "ezmlm-list: failed"
 
-  ${EZBIN}/ezmlm-list "$DIR" | ${GREP} '@' >/dev/null 2>&1 && \
+  ${EZBIN}/ezmlm-list "$DIR" | grep '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
-  ${EZBIN}/ezmlm-list "$DIR" digest | ${GREP} '@' >/dev/null 2>&1 && \
+  ${EZBIN}/ezmlm-list "$DIR" digest | grep '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
-  ${EZBIN}/ezmlm-list "$DIR" allow | ${GREP} '@' >/dev/null 2>&1 && \
+  ${EZBIN}/ezmlm-list "$DIR" allow | grep '@' >/dev/null 2>&1 && \
 	fatal "already addresses in table - please remove and start again"
 
 # not subscriber. Test default
@@ -53,11 +53,11 @@
 # add to allow
   ${EZBIN}/ezmlm-sub "$DIR" allow "ZZtop@hoSt" || \
 	fatal "ezmlm-sub: failed to add address to ${DIR}/allow"
-  ${EZBIN}/ezmlm-list "$DIR" allow | ${GREP} 'ZZtop@host' >/dev/null 2>&1 || \
+  ${EZBIN}/ezmlm-list "$DIR" allow | grep 'ZZtop@host' >/dev/null 2>&1 || \
 	fatal "ezmlm-sub: failed to find address in ${DIR} allow"
 
 # list subscribers
-  ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"$ERR" 2>&1 || \
+  ${EZBIN}/ezmlm-list "$DIR" | grep "xyZZy" >"$ERR" 2>&1 || \
 	fatal "ezmlm-list: failed to list subscribers"
 
 # remove subscriber
@@ -65,7 +65,7 @@
 	fatal "ezmlm-unsub: failed to remove subscriber"
 
 # see that it was removed
-  ${EZBIN}/ezmlm-list "$DIR" | ${GREP} "xyZZy" >"$ERR" 2>&1 && \
+  ${EZBIN}/ezmlm-list "$DIR" | grep "xyZZy" >"$ERR" 2>&1 && \
 	fatal "ezmlm-unsub: failed to remove address"
 
   SENDER="zztop@HOst"
@@ -105,4 +105,4 @@
 # clean up
   LOCAL=''
 
-  ${ECHO} "OK"
+  echo "OK"

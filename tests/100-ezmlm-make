@@ -26,14 +26,14 @@
 # edit the list (add digest)
   ${EZBIN}/ezmlm-make -ed -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" \
 	>/dev/null 2>&1 || \
-	{ ${ECHO} "failed to edit"
+	{ echo "failed to edit"
 	  prompt "ezmlm-make ......     "
 	}
 
-  ${GREP} "ezmlm-weed" "${DIR}/bouncer" >/dev/null 2>&1 || \
+  grep "ezmlm-weed" "${DIR}/bouncer" >/dev/null 2>&1 || \
 	fatal "no ezmlm-weed in bouncer"
-  ${GREP} "ezmlm-return" "${DIR}/bouncer" >/dev/null 2>&1 || \
-	{ ${ECHO} "no ezmlm-return in bouncer: 0.32 bug, fixed in 0.321."
+  grep "ezmlm-return" "${DIR}/bouncer" >/dev/null 2>&1 || \
+	{ echo "no ezmlm-return in bouncer: 0.32 bug, fixed in 0.321."
 	  prompt "ezmlm-make ......     "
 	  BUG="${BUG} return"
 	}
@@ -42,18 +42,18 @@
     if [ ! -f "${DIR}/digest/bouncer" ]; then
 	fatal "failed to create digest/bouncer";
     fi
-    ${GREP} "ezmlm-weed" "${DIR}/digest/bouncer" >/dev/null 2>&1 || \
+    grep "ezmlm-weed" "${DIR}/digest/bouncer" >/dev/null 2>&1 || \
 	fatal "no ezmlm-weed in bouncer"
-    ${GREP} "ezmlm-return" "${DIR}/digest/bouncer" >/dev/null 2>&1 || \
-	{ ${ECHO} "no ezmlm-return in digest/bouncer: 0.32 bug, OK in 0.321."
+    grep "ezmlm-return" "${DIR}/digest/bouncer" >/dev/null 2>&1 || \
+	{ echo "no ezmlm-return in digest/bouncer: 0.32 bug, OK in 0.321."
 	  prompt "ezmlm-make ......     "
 	  BUG="${BUG} return"
 	}
 
-  ${ECHO} "OK"
+  echo "OK"
 
 # Add subdb files for plugin testing
-${ECHO} "Using subdb plugin:   ${SUBDB:-std}"
+echo "Using subdb plugin:   ${SUBDB:-std}"
 if [ -n "$SUBDB" ]; then
   # make sure any old tables no longer exist first
   ${EZBIN}/ezmlm-rmtab -S "$SUBDB:$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" "$DIR" \
@@ -64,19 +64,19 @@ if [ -n "$SUBDB" ]; then
 fi
 
   # remove inlocal/inhost - shouldn't be used
-  ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
+  rm -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
     fatal "failed to remove inlocal/inhost for testlist"
 
 #############################
 # set up qmail-queue script #
 #############################
   (
-    ${ECHO} "#!/bin/sh"
-    ${ECHO} "${CAT} >'${QQMSG}'"
-    ${ECHO} "${TR} \\\\0 \\\\n <&1 >'${QQENV}'"
-    ${ECHO} "${SED} -e '/^$/,\$d' <'${QQMSG}' >'${QQHDR}'"
-    ${ECHO} "${SED} -e '1,/^$/d' <'${QQMSG}' >'${QQBODY}'"
-    ${ECHO} "cp '${QQMSG}' '${QQMSG}'.\$\$"
-    ${ECHO} "exit 0"
+    echo "#!/bin/sh"
+    echo "cat >'${QQMSG}'"
+    echo "tr \\\\0 \\\\n <&1 >'${QQENV}'"
+    echo "sed -e '/^$/,\$d' <'${QQMSG}' >'${QQHDR}'"
+    echo "sed -e '1,/^$/d' <'${QQMSG}' >'${QQBODY}'"
+    echo "cp '${QQMSG}' '${QQMSG}'.\$\$"
+    echo "exit 0"
   ) > "$QQTEST"
-  ${CHMOD} 755 "$QQTEST"
+  chmod 755 "$QQTEST"

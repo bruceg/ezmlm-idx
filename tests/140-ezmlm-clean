@@ -9,12 +9,12 @@
 # clean3 should not since it's time hasn't come
 # clean4 should be removed, but not result in a message since we use -R
 
-  ${ECHO} "Return-Path: <${DIG}@$HOST>" > "${DIR}/mod/pending/1"
-  ${ECHO} "X-num: clean1" >> "${DIR}/mod/pending/1"
-  ${ECHO} "Return-Path: <${DIG}@${HOST}>" > "${DIR}/mod/pending/2"
-  ${ECHO} "X-num: clean2" >> "${DIR}/mod/pending/2"
-  ${ECHO} "Return-Path: <${DIG}@$HOST>" > "${DIR}/mod/pending/1999999999"
-  ${ECHO} "X-num: clean3" >> "${DIR}/mod/pending/1999999999"
+  echo "Return-Path: <${DIG}@$HOST>" > "${DIR}/mod/pending/1"
+  echo "X-num: clean1" >> "${DIR}/mod/pending/1"
+  echo "Return-Path: <${DIG}@${HOST}>" > "${DIR}/mod/pending/2"
+  echo "X-num: clean2" >> "${DIR}/mod/pending/2"
+  echo "Return-Path: <${DIG}@$HOST>" > "${DIR}/mod/pending/1999999999"
+  echo "X-num: clean3" >> "${DIR}/mod/pending/1999999999"
 
   chmod +x "${DIR}/mod/pending/2" "${DIR}/mod/pending/1999999999"
 
@@ -32,7 +32,7 @@
 	fatal "removed mod queue entry 3 that wasn't due"
   fi
 
-${ECHO} <<EOF > "${DIR}/mod/pending/4"
+echo <<EOF > "${DIR}/mod/pending/4"
 Return-Path: <${DIG}@$HOST>
 X-num: clean4
 EOF
@@ -46,22 +46,22 @@ EOF
   exists "$QQENV" \
   && fatal "second invocation of ezmlm-clean sent a message"
 
-  ${GREP} "clean1" "$QQMSG".* >/dev/null 2>&1 && \
+  grep "clean1" "$QQMSG".* >/dev/null 2>&1 && \
 	fatal "removal of non-x mod queue entry 1 wasn't silent"
-  ${GREP} "clean2" "$QQMSG".* >/dev/null 2>&1 || \
+  grep "clean2" "$QQMSG".* >/dev/null 2>&1 || \
 	fatal "failed to notify sender of mod queue entry 2 time out"
-  ${GREP} "clean3" "$QQMSG".* >/dev/null 2>&1 && \
+  grep "clean3" "$QQMSG".* >/dev/null 2>&1 && \
 	fatal "notified sender about entry 3 even though it wasn't rejected"
-  ${GREP} "clean4" "$QQMSG".* >/dev/null 2>&1 && \
+  grep "clean4" "$QQMSG".* >/dev/null 2>&1 && \
 	fatal "-R failed: notified sender about entry 3 rejection"
 
-${ECHO} <<EOF > "${DIR}/mod/pending/5"
+echo <<EOF > "${DIR}/mod/pending/5"
 Return-Path: <${DIG}@$HOST>
 X-num: clean5
 EOF
   chmod +x "${DIR}/mod/pending/5"
   rm -f "$QQENV"
-  ${ECHO} > "$DIR"/noreturnposts
+  echo > "$DIR"/noreturnposts
   ${EZBIN}/ezmlm-clean "$DIR" >"$ERR" 2>&1 ||
 	fatal "-R failed"
   if [ -r  "${DIR}/mod/pending/5" ]; then
@@ -70,4 +70,4 @@ EOF
   exists "$QQENV" \
   && fatal "third invocation of ezmlm-clean sent a message"
 
-  ${ECHO} "OK"
+  echo "OK"

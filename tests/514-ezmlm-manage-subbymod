@@ -19,4 +19,4 @@
   grepbody test@example.org
   grepbody to the subscribers of the ${LOC} mailing list. This request
 
-  ${ECHO} OK
+  echo OK

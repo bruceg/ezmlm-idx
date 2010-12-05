@@ -11,7 +11,7 @@
 	fatal "failed with nowarn"
   test -e "$QQMSG" \
   && fatal "ezmlm-warn sent a warning when nowarn was set"
-  ${RM} "$DIR"/nowarn
+  rm "$DIR"/nowarn
 
 # should send a warning
   ${EZBIN}/ezmlm-warn -D -t0 "$DIR" >"$ERR" 2>&1 || \
@@ -27,4 +27,4 @@
   ${EZBIN}/ezmlm-issubn "$DIR" digest || \
 	fatal "script error: SENDER is not a digest subscriber"
 
-  ${ECHO} "OK"
+  echo "OK"

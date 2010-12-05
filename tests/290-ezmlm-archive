@@ -4,27 +4,27 @@
 
 prompt "ezmlm-archive:        "
 
-${MV} "$DIR"/num "$DIR"/xnumx
+mv "$DIR"/num "$DIR"/xnumx
 ${EZBIN}/ezmlm-archive "$DIR" >"$ERR" 2>&1 \
 && fatal 'succeeded when "num" was missing'
 
-${TEST} -e "$DIR"/num && fatal 'recreated the "num" file'
-${TEST} -e "$DIR"/archive/authors \
+test -e "$DIR"/num && fatal 'recreated the "num" file'
+test -e "$DIR"/archive/authors \
 	-o -e "$DIR"/archive/lock \
 	-o -e "$DIR"/archive/subjects \
 	-o -e "$DIR"/archive/threads \
 	-o -e "$DIR"/archnum \
 && fatal 'created files after failing'
 
-${MV} "$DIR"/xnumx "$DIR"/num
+mv "$DIR"/xnumx "$DIR"/num
 ${EZBIN}/ezmlm-archive "$DIR" >"$ERR" 2>&1 \
 || fatal 'failed after "num" was restored'
 
-${TEST} -e "$DIR"/archive/authors \
+test -e "$DIR"/archive/authors \
 	-a -e "$DIR"/archive/lock \
 	-a -e "$DIR"/archive/subjects \
 	-a -e "$DIR"/archive/threads \
 	-a -e "$DIR"/archnum \
 || fatal 'failed to create index files'
 
-${ECHO} "OK"
+echo "OK"

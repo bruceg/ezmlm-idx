@@ -7,26 +7,26 @@ if [ -n "$SUBDB" ]; then
   prompt "ezmlm SQL:            "
 
   sed -e 's/^[^:]*://' "$DIR"/subdb >"$DIR"/sql
-  ${RM} -f "$EZBIN"/sub-sql.so
-  ${LN} -s sub-"$SUBDB".so "$EZBIN"/sub-sql.so
-  ${MV} "$DIR"/subdb "$DIR"/backup.subdb
+  rm -f "$EZBIN"/sub-sql.so
+  ln -s sub-"$SUBDB".so "$EZBIN"/sub-sql.so
+  mv "$DIR"/subdb "$DIR"/backup.subdb
 
   ${EZBIN}/ezmlm-sub "$DIR" "xyZZy@hoSt" \
 	|| fatal "ezmlm-sub failed"
 
-  ${GREP} -i "xyZZy@hoST" "$DIR"/subscribers/* >/dev/null 2>&1 \
+  grep -i "xyZZy@hoST" "$DIR"/subscribers/* >/dev/null 2>&1 \
 	&& fatal "ezmlm-sub did not use plugin"
 
   ${EZBIN}/ezmlm-unsub "$DIR" "xyZZy@hoSt" \
 	|| fatal "ezmlm-unsub failed"
 
   ${EZBIN}/ezmlm-make -+ -C${EZBIN}/lang/en_US "$DIR"
-  ${GREP} '^sql:' "$DIR"/subdb >/dev/null 2>&1 \
+  grep '^sql:' "$DIR"/subdb >/dev/null 2>&1 \
 	|| fatal "ezmlm-make did not create subdb file"
 
-  ${RM} -f "$DIR"/sql "$DIR"/subdb "$EZBIN"/sub-sql.so
+  rm -f "$DIR"/sql "$DIR"/subdb "$EZBIN"/sub-sql.so
   mv "$DIR"/backup.subdb "$DIR"/subdb
 
-  ${ECHO} "OK"
+  echo "OK"
 
 fi

@@ -1,7 +1,7 @@
   prompt "unsubscribe:          "
 
   LOCAL=${UNSUBCOOKIE}
-  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
+  DEFAULT=`echo "$LOCAL" | cut -c"$LOCLEN"-`
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce unsubscribe confirmation"
 
@@ -12,4 +12,4 @@
   grepbody test@example.org
   grepbody from the ${LOC} mailing list. This address
 
-  ${ECHO} OK
+  echo OK

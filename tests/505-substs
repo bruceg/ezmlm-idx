@@ -16,4 +16,4 @@
   grepbody MsgNum: "?????"
   grepbody ConfirmLocal: "${LOC}-digest-sc.*.*-test=example.org"
 
-  ${ECHO} OK
+  echo OK

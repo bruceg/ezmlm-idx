@@ -4,7 +4,7 @@
   touch "$DIR"/modsub
 
   LOCAL=${UNSUBCOOKIE}
-  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
+  DEFAULT=`echo "$LOCAL" | cut -c"$LOCLEN"-`
   ${EZBIN}/ezmlm-manage -m "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce unsubscribe confirmation"
 
@@ -17,4 +17,4 @@
   grepbody test@example.org
   grepbody from the ${LOC} mailing list. If you agree, please send
 
-  ${ECHO} OK
+  echo OK

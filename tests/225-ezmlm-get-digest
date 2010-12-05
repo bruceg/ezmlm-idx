@@ -6,7 +6,7 @@ prompt "ezmlm-get (digest):   "
 
 ######### digests
 # we use headeradd to label them since trigger headers aren't propagated
-${ECHO} "X-num: not_propagated" > "$TMP"
+echo "X-num: not_propagated" > "$TMP"
 
 # dig1 from manager will go to DIG@HOST
 # dig2 from editor
@@ -20,7 +20,7 @@ ${ECHO} "X-num: not_propagated" > "$TMP"
 # now -dig in the manager position:
 qqclean
 mv -f "${DIR}/headeradd" "${DIR}/headeradd.bak"
-${ECHO} "X-num: dig1" > "${DIR}/headeradd"
+echo "X-num: dig1" > "${DIR}/headeradd"
 SENDER="${BNC}@$HOST"
 LOCAL="$LOC-dig.code"
 DEFAULT='dig.code'
@@ -48,8 +48,8 @@ msgexists || \
 checkenv dig1 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 qqclean
-${RM} "$DIR"/dignum
-${ECHO} code >"$DIR"/digestcode
+rm "$DIR"/dignum
+echo code >"$DIR"/digestcode
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1
 if [ "$?" != "99" ]; then
 	fatal "failed to exit 99 after digest in manager position with file"
@@ -63,7 +63,7 @@ fi
 msgexists || \
 	fatal "dig1 from manager wasn't delivered"
 checkenv dig1 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
-${ECHO} >"$DIR"/digestcode
+echo >"$DIR"/digestcode
 
 qqclean
 ${EZBIN}/ezmlm-get "$DIR" 'code' < "$TMP" >/dev/null 2>&1
@@ -86,14 +86,14 @@ msgexists && \
 	fatal "delivered -dig with bad digest code 'code'"
 
 qqclean
-${ECHO} coden >"$DIR"/digestcode
+echo coden >"$DIR"/digestcode
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject -dig with bad digest code file 'coden'"
 msgexists && \
 	fatal "delivered -dig with bad digest code file 'coden'"
 
 qqclean
-${ECHO} cod >"$DIR"/digestcode
+echo cod >"$DIR"/digestcode
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject -dig with bad digest code file 'cod'"
 msgexists && \
@@ -101,10 +101,10 @@ msgexists && \
 
 # now in the editor position:
 qqclean
-${RM} -f "${DIR}/dignum"
+rm -f "${DIR}/dignum"
 LOCAL="$LOC"
-${UNSET} DEFAULT
-${ECHO} "X-num: dig2" > "${DIR}/headeradd"
+unset DEFAULT
+echo "X-num: dig2" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "failed to exit 0 after digest in editor"
 msgexists || \
@@ -119,7 +119,7 @@ checkenv dig2 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 	fatal "failed to generate dignum after digest in editor"
     fi
 
-    ${GREP} "^3:" "${DIR}/digissue" >/dev/null 2>&1 || \
+    grep "^3:" "${DIR}/digissue" >/dev/null 2>&1 || \
 	fatal "failed to update digissue after digest in editor"
     ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "failed to exit 0 when nothing to digest in editor"
@@ -129,9 +129,9 @@ checkenv dig2 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 # now from the command line with formats ...
 qqclean
-${RM} -f "${DIR}/dignum"
+rm -f "${DIR}/dignum"
 LOCAL=''
-${ECHO} "X-num: dig3" > "${DIR}/headeradd"
+echo "X-num: dig3" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "failed to exit 0 after cmd line digest"
 msgexists || \
@@ -139,7 +139,7 @@ msgexists || \
 checkenv dig3 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 qqclean
-${GREP} "^4:" "${DIR}/digissue" >/dev/null 2>&1 || \
+grep "^4:" "${DIR}/digissue" >/dev/null 2>&1 || \
 	fatal "failed to update digissue after cmd line digest"
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "failed to exit 0 when nothing to digest from cmd line"
@@ -147,8 +147,8 @@ msgexists && \
 	fatal "empty dig3 from command line was delivered"
 
 qqclean
-${RM} -f "${DIR}/dignum"
-${ECHO} "X-num: dig4" > "${DIR}/headeradd"
+rm -f "${DIR}/dignum"
+echo "X-num: dig4" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fr "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "-fr failed for digest"
 msgexists || \
@@ -156,8 +156,8 @@ msgexists || \
 checkenv dig4 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 qqclean
-${RM} -f "${DIR}/dignum"
-${ECHO} "X-num: dig5" > "${DIR}/headeradd"
+rm -f "${DIR}/dignum"
+echo "X-num: dig5" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fn "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "-fn failed for digest"
 msgexists || \
@@ -165,35 +165,35 @@ msgexists || \
 checkenv dig5 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
 qqclean
-${RM} -f "${DIR}/dignum"
-${ECHO} "X-num: dig6" > "${DIR}/headeradd"
+rm -f "${DIR}/dignum"
+echo "X-num: dig6" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fv "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "-fv failed for digest"
 msgexists || \
 	fatal "dig6 format 'v' wasn't delivered"
 checkenv dig6 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
-${RM} -f "${DIR}/dignum"
-${ECHO} "X-num: dig7" > "${DIR}/headeradd"
+rm -f "${DIR}/dignum"
+echo "X-num: dig7" > "${DIR}/headeradd"
 ${EZBIN}/ezmlm-get -fx "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "-fx failed for digest"
 msgexists || \
 	fatal "dig7 format 'x' wasn't delivered"
 checkenv dig7 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
-${RM} -f "${DIR}/dignum"
-${ECHO} "X-num: dig8" > "${DIR}/headeradd"
-${ECHO} r > "$DIR"/digformat
+rm -f "${DIR}/dignum"
+echo "X-num: dig8" > "${DIR}/headeradd"
+echo r > "$DIR"/digformat
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "digformat=r failed for digest"
 msgexists || \
 	fatal "dig8 format 'r' wasn't delivered"
 checkenv dig8 "$LOC-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
-test $(${GREP} -c Content-Type: "$QQMSG") = 1 \
+test $(grep -c Content-Type: "$QQMSG") = 1 \
 || fatal "ezmlm-get didn't read digformat"
 
 # restore headeradd
 mv -f "${DIR}/headeradd.bak" "${DIR}/headeradd"
 
-${ECHO} "OK"
+echo "OK"
 export DEFAULT

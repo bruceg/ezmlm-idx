@@ -20,7 +20,7 @@ qqclean
 SENDER="${BNC}@$HOST"
 LOCAL="$LOC-xxxx"
 DEFAULT='xxxx'
-${ECHO} "X-num: index1" > "$TMP"
+echo "X-num: index1" > "$TMP"
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal " failed to exit 0 for non-recognized commands"
 msgexists && \
@@ -58,7 +58,7 @@ msgexists || \
 checkenv index "$LOC-return-@$HOST" "$SENDER"
 
 qqclean
-${ECHO} "X-num: index2" > "$TMP"
+echo "X-num: index2" > "$TMP"
 SENDER="${DIG}@$HOST"
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >"$ERR" 2>&1
 if [ "$?" -ne "99" ]; then
@@ -66,8 +66,8 @@ if [ "$?" -ne "99" ]; then
 fi
 msgexists || \
 	fatal "No message delivered"
-${GREP} "index2" "$QQMSG" >/dev/null 2>&1 || \
+grep "index2" "$QQMSG" >/dev/null 2>&1 || \
 	fatal "index2 failed to return"
 checkenv index2 "$LOC-return-@$HOST" "$SENDER"
 
-${ECHO} "OK"
+echo "OK"

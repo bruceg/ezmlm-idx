@@ -4,7 +4,7 @@
   touch "$DIR"/modsub
 
   LOCAL=${SUBCOOKIE}
-  DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
+  DEFAULT=`echo "$LOCAL" | cut -c"$LOCLEN"-`
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce subscribe confirmation"
 
@@ -17,4 +17,4 @@
   grepbody test@example.org
   grepbody to the subscribers of the ${LOC} mailing list. This request
 
-  ${ECHO} OK
+  echo OK

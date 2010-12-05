@@ -21,4 +21,4 @@
   grepbody 1
   grepbody 2
 
-  ${ECHO} OK
+  echo OK

@@ -15,7 +15,7 @@ ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce post"
 grepbody trailer is present
 
-${RM} "$DIR"/addtrailer
+rm "$DIR"/addtrailer
 ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce post"
 grepbodynot trailer is present
@@ -28,13 +28,13 @@ ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce post"
 grepbodynot trailer is present
 
-${RM} "$DIR"/addtrailer
+rm "$DIR"/addtrailer
 echo aBcdefGHIJkLmNOpqRStuvWxYz > "$DIR"/flags
 ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce post"
 grepbody trailer is present
 
-${RM} "$DIR"/flags
+rm "$DIR"/flags
 
 touch "$DIR"/addtrailer
 for encoding in 7bit base64 quoted-printable
@@ -57,4 +57,4 @@ EOF
   fi
 done
 
-${ECHO} OK
+echo OK

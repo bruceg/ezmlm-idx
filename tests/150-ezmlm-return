@@ -9,12 +9,12 @@
   LOCAL="$LOC-return-1-$BNC=$HOST"
   DEFAULT="1-$BNC=$HOST"
 # we use 'du' because bounce handling is different in 0.31x and >=0.32
-  BSIZE1=`${DU} "${DIR}/bounce"` || \
-	{ ${ECHO} "du doesn't work"; exit 99; } 
+  BSIZE1=`du "${DIR}/bounce"` || \
+	{ echo "du doesn't work"; exit 99; } 
   make_message | ${EZBIN}/ezmlm-return "$DIR" || \
     [ "$?" -eq "99" ] || \
 	fatal "failed to process normal bounce from non-sub"
-  BSIZE2=`${DU} "${DIR}/bounce"`
+  BSIZE2=`du "${DIR}/bounce"`
   if [ "$BSIZE1" != "$BSIZE2" ]; then
 	fatal "failed to ignore non-subscriber bounce"
   fi
@@ -22,17 +22,17 @@
   make_message | ${EZBIN}/ezmlm-return "$DIR" || \
     [ "$?" -eq "99" ] || \
 	fatal "failed to process normal bounce from sub"
-  BSIZE1=`${DU} "${DIR}/bounce"`
+  BSIZE1=`du "${DIR}/bounce"`
   if [ "$BSIZE1" = "$BSIZE2" ]; then
 	fatal "failed to note subscriber bounce"
   fi
   LOCAL="$LOC-digest-return-1-$BNC=$HOST"
   DEFAULT="1-$BNC=$HOST"
-  BSIZE1=`${DU} "${DIR}/digest/bounce"`
+  BSIZE1=`du "${DIR}/digest/bounce"`
   make_message | ${EZBIN}/ezmlm-return -d "$DIR" || \
     [ "$?" -eq "99" ] || \
 	fatal "failed to process normal digest non-sub bounce"
-  BSIZE2=`${DU} "${DIR}/digest/bounce"`
+  BSIZE2=`du "${DIR}/digest/bounce"`
   if [ "$BSIZE1" != "$BSIZE2" ]; then
 	fatal "failed to ignore non-digest-subscriber bounce"
   fi
@@ -41,13 +41,13 @@
   make_message | ${EZBIN}/ezmlm-return -d "$DIR" || \
     [ "$?" -eq "99" ] || \
 	fatal "failed to proc. nl digest-subscriber bounce"
-  BSIZE1=`${DU} "${DIR}/digest/bounce"`
+  BSIZE1=`du "${DIR}/digest/bounce"`
   if [ "$BSIZE1" = "$BSIZE2" ]; then
 	fatal "failed to note digest-subscriber bounce"
   fi
   ${EZBIN}/ezmlm-sub "$DIR" "${BNC}@$HOST"
 
-  ${ECHO} "OK"
+  echo "OK"
 
 # as we exit, the bounce address is subscribed to both list and digest-list
 # and is the SENDER

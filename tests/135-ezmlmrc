@@ -7,13 +7,13 @@
 # make sure a few ezmlm-make switches work
   ${EZBIN}/ezmlm-make -+qkgu -C${EZBIN}/lang/en_US "$DIR" || \
 	fatal "failed to edit test list to +qkgu"
-  ${GREP} deny "${DIR}/editor" >/dev/null 2>&1 || \
+  grep deny "${DIR}/editor" >/dev/null 2>&1 || \
 	fatal "failed to implement -k for list"
-  ${GREP} "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 || \
+  grep "ezmlm-request" "${DIR}/manager" >/dev/null 2>&1 || \
 	fatal "failed to implement -q for list"
   test -e "$DIR"/subgetonly || \
 	fatal "failed to implement -g for list"
-  ${GREP} allow "${DIR}/editor" >/dev/null 2>&1 || \
+  grep allow "${DIR}/editor" >/dev/null 2>&1 || \
 	fatal "failed to implement -u for list"
 
   ${EZBIN}/ezmlm-make -+QKGU -C${EZBIN}/lang/en_US "$DIR" || \
@@ -48,8 +48,8 @@ ${EZBIN}/ezmlm-make -+ln -C${EZBIN}/lang/en_US "$DIR" || \
   ) >"${DIR}/text/top"
 
   # remove inlocal/inhost - shouldn't be used
-  ${RM} -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
+  rm -f "${DIR}/inlocal" "${DIR}/inhost" > /dev/null || \
     fatal "failed to remove inlocal/inhost for testlist"
 
-  ${ECHO} "OK"
+  echo "OK"
 

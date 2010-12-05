@@ -34,4 +34,4 @@ EOF
   fatal "failed to produce post"
   grephdr Subject: 'test post'
 
-  ${ECHO} OK
+  echo OK

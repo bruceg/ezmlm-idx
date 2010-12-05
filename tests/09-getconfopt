@@ -5,7 +5,7 @@
 prompt "getconfopt library:   "
 
 t() {
-    ${EZBIN}/test-getconfopt $1 | ${GREP} $2 >/dev/null \
+    ${EZBIN}/test-getconfopt $1 | grep $2 >/dev/null \
 	|| fatal "$3"
 }
 
@@ -102,4 +102,4 @@ cd ..
 rm -f "$DIR"/*
 rmdir "$DIR" || fatal "Could not create temporary directory"
 
-${ECHO} "OK"
+echo "OK"

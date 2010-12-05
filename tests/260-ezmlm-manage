@@ -10,108 +10,108 @@ ${EZBIN}/ezmlm-sub "$DIR" allow "aaa@bbb" "ccc@ddd" "eee@fff"
 
 # test -edit
 qqclean
-${ECHO} "#TEST_TEXT#" > "${DIR}/text/test"
+echo "#TEST_TEXT#" > "${DIR}/text/test"
 LOCAL="$LOC-edit.test-$MAN=$HOST"
 DEFAULT="edit.test-$MAN=$HOST"
-${ECHO} "X-num: edit1" > "$TMP"
+echo "X-num: edit1" > "$TMP"
 ${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject edit request from non-mod"
 LOCAL="$LOC-edit.test-$MOD=$HOST"
 DEFAULT="edit.test-$MOD=$HOST"
-${ECHO} "X-num: edit2" > "$TMP"
-${RM} "$DIR"/modcanedit
+echo "X-num: edit2" > "$TMP"
+rm "$DIR"/modcanedit
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \
 	fatal "-E failed for edit2"
-${ECHO} "X-num: edit3" > "$TMP"
+echo "X-num: edit3" > "$TMP"
 touch "$DIR"/modcanedit
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "modcanedit failed for remote admin for edit3"
 checkenv edit3 "$LOC-return-@$HOST" "$MOD@$HOST"
-${GREP} "^Subject: EDIT test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
+grep "^Subject: EDIT test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
 || fatal "edit3 had incorrect subject"
-${RM} "$DIR"/modcanedit
+rm "$DIR"/modcanedit
 
 # complete edit. SENDER can be any address
 SENDER="${MAN}@$HOST"
-${GREP} 'edit3' "$QQMSG" >/dev/null 2>&1 || \
+grep 'edit3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting edit reply for edit3"
-${GREP} "#TEST_TEXT#" "$QQMSG" >/dev/null 2>&1 || \
+grep "#TEST_TEXT#" "$QQMSG" >/dev/null 2>&1 || \
 	fatal "old text missing in edit3 edit reply"
-LOCAL=`${GREP} "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
+LOCAL=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
 	fatal "no reply address in edit3 edit reply"
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$LOCLEN"-`
-${ECHO} "X-num: edit4" > "$TMP"
-${ECHO} >> "$TMP"
-${ECHO} "%%% START OF TEXT FILE" >> "$TMP"
-${ECHO} "#NEW_TEXT#" >> "$TMP"
-${ECHO} "%%% END OF TEXT FILE" >> "$TMP"
+DEFAULT=`echo "$LOCAL" | cut -c"$LOCLEN"-`
+echo "X-num: edit4" > "$TMP"
+echo >> "$TMP"
+echo "%%% START OF TEXT FILE" >> "$TMP"
+echo "#NEW_TEXT#" >> "$TMP"
+echo "%%% END OF TEXT FILE" >> "$TMP"
 ${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "failed to send edit4 reply for edit3"
-${GREP} "#NEW_TEXT#" "${DIR}/text/test" >/dev/null 2>&1 || \
+grep "#NEW_TEXT#" "${DIR}/text/test" >/dev/null 2>&1 || \
 	fatal "edit4 failed to update text file"
-${GREP} "^Subject: Success editing test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
+grep "^Subject: Success editing test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
 || fatal "edit4 had incorrect subject"
 
 # test list/log
 LOCAL="$LOC-allow-list-$MAN=$HOST"
 DEFAULT="allow-list-$MAN=$HOST"
-${ECHO} "X-num: list1" > "$TMP"
+echo "X-num: list1" > "$TMP"
 ${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject list request from non-mod"
 
 LOCAL="$LOC-allow-log-$MAN=$HOST"
 DEFAULT="allow-log-$MAN=$HOST"
-${ECHO} "X-num: log1" > "$TMP"
+echo "X-num: log1" > "$TMP"
 ${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject log request from non-mod"
 
 LOCAL="$LOC-allow-list-$MOD=$HOST"
 DEFAULT="allow-list-$MOD=$HOST"
-${ECHO} "X-num: list2" > "$TMP"
-${RM} "$DIR"/modcanlist
+echo "X-num: list2" > "$TMP"
+rm "$DIR"/modcanlist
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "-L failed to reject list request"
 
 qqclean
-${ECHO} "X-num: list3" > "$TMP"
+echo "X-num: list3" > "$TMP"
 ${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "-l failed for remote admin for list3"
 
-${GREP} 'list3' "$QQMSG" >/dev/null 2>&1 || \
+grep 'list3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -list reply to list3"
-${GREP} "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
+grep "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to get list reply to list3"
 checkenv list3 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 
 qqclean
-${ECHO} "X-num: list4" > "$TMP"
+echo "X-num: list4" > "$TMP"
 touch "$DIR"/modcanlist
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "modcanlist failed for remote admin for list3"
 
-${GREP} 'list4' "$QQMSG" >/dev/null 2>&1 || \
+grep 'list4' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -list reply to list4"
-${GREP} "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
+grep "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to get list reply to list4"
 checkenv list4 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
-${RM} "$DIR"/modcanlist
+rm "$DIR"/modcanlist
 
 LOCAL="$LOC-allow-log-$MOD=$HOST"
 DEFAULT="allow-log-$MOD=$HOST"
-${ECHO} "X-num: log2" > "$TMP"
+echo "X-num: log2" > "$TMP"
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \
 	fatal "-L failed to reject log request"
 
 qqclean
-${ECHO} "X-num: log3" > "$TMP"
+echo "X-num: log3" > "$TMP"
 ${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "-l failed for remote admin for log3"
 
 # check results of log/list
-${GREP} 'log3' "$QQMSG" >/dev/null 2>&1 || \
+grep 'log3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -log reply to log3"
-${GREP} "aaa@bbb" "$QQMSG" | ${GREP} "+m" > /dev/null 2>&1 || \
+grep "aaa@bbb" "$QQMSG" | grep "+m" > /dev/null 2>&1 || \
 	fatal "failed to get log reply to log3"
 checkenv log3 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 
-${ECHO} "OK"
+echo "OK"

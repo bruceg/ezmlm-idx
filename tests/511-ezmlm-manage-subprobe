@@ -17,4 +17,4 @@
   grepbody added to the ${LOC} mailing list, please send
 
 
-  ${ECHO} OK
+  echo OK

@@ -13,10 +13,10 @@ testdispatch() {
 prompt "ezmlm-dispatch:       "
 
 for list in list1 list2; do
-  ${MKDIR} "$DIR"/$list
-  ${MKDIR} "$DIR"/$list/digest
+  mkdir "$DIR"/$list
+  mkdir "$DIR"/$list/digest
   for cmd in editor owner bouncer digest/bouncer confirmer moderator manager; do
-    ${ECHO} "|${ECHO} $list $cmd" >"$DIR"/$list/$cmd
+    echo "|echo $list $cmd" >"$DIR"/$list/$cmd
   done
 done
 
@@ -46,5 +46,5 @@ testdispatch list2 accept-xyzzy 'list2 moderator'
 testdispatch list2 reject-xyzzy 'list2 moderator'
 testdispatch list2 xyzzy 'list2 manager'
 
-${RM} -r "$DIR"/list1 "$DIR"/list2
-${ECHO} "OK"
+rm -r "$DIR"/list1 "$DIR"/list2
+echo "OK"

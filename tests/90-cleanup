@@ -2,7 +2,7 @@
 # remove test files #
 #####################
 
-${ECHO} Cleaning up...
+echo Cleaning up...
 
 # cleanup the mysql sub tables so we can repeat if necessary
 # the Log test will pass due to old data once we access the mysql log,
@@ -18,14 +18,14 @@ ${ECHO} Cleaning up...
   ${EZBIN}/ezmlm-sub "$DIR" "$SENDER" 2>/dev/null \
   && fatal "ezmlm-sub worked after ezmlm-rmtab"
 
-  ${EZBIN}/ezmlm-list "$DIR" 2>/dev/null | ${GREP} @ >/dev/null \
+  ${EZBIN}/ezmlm-list "$DIR" 2>/dev/null | grep @ >/dev/null \
   && fatal "subscribers left in subdb after ezmlm-rmtab"
 
-  ${TEST} -e "$DIR"/subscribers \
+  test -e "$DIR"/subscribers \
        -o -e "$DIR"/allow/subscribers \
        -o -e "$DIR"/deny/subscribers \
        -o -e "$DIR"/digest/subscribers \
        -o -e "$DIR"/mod/subscribers \
   && fatal "ezmlm-rmtab didn't clean up properly."
 
-  ${RM} -rf "$DIR" "$ERR" >/dev/null 2>&1
+  rm -rf "$DIR" "$ERR" >/dev/null 2>&1

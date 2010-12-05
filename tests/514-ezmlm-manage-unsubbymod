@@ -19,4 +19,4 @@
   grepbody test@example.org
   grepbody from the ${LOC} mailing list. If you agree, please send
 
-  ${ECHO} OK
+  echo OK

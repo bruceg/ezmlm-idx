@@ -6,7 +6,7 @@ prompt "ezmlm-get (get):      "
 
 qqclean
 SENDER="${BNC}@$HOST"
-${ECHO} "X-num: get1" > "$TMP"
+echo "X-num: get1" > "$TMP"
 LOCAL="$LOC-get.2_4"
 DEFAULT='get.2_4'
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1 && \
@@ -19,7 +19,7 @@ ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "subgetonly failed to reject -get from non-sub"
 msgexists && \
 	fatal "subgetonly failed to reject -get from non-sub"
-${RM} "$DIR"/subgetonly
+rm "$DIR"/subgetonly
 
 qqclean
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
@@ -28,7 +28,7 @@ if [ "$?" != "99" ]; then
 fi
 
 qqclean
-${ECHO} "X-num: get2" > "$TMP"
+echo "X-num: get2" > "$TMP"
 SENDER="${DIG}@$HOST"
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1
 if [ "$?" != "99" ]; then
@@ -40,7 +40,7 @@ checkenv get2 "$LOC-return-@$HOST" "$SENDER"
 
 # test formats for -get
 qqclean
-${ECHO} "X-num: get3" > "$TMP"
+echo "X-num: get3" > "$TMP"
 LOCAL="$LOC-getr.2_4"
 DEFAULT='getr.2_4'
 qqclean
@@ -53,7 +53,7 @@ msgexists || \
 checkenv get3 "$LOC-return-@$HOST" "$SENDER"
 
 qqclean
-${ECHO} "X-num: get4" > "$TMP"
+echo "X-num: get4" > "$TMP"
 LOCAL="$LOC-getn.2_4"
 DEFAULT='getn.2_4'
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
@@ -65,7 +65,7 @@ msgexists || \
 checkenv get4 "$LOC-return-@$HOST" "$SENDER"
 
 qqclean
-${ECHO} "X-num: get5" > "$TMP"
+echo "X-num: get5" > "$TMP"
 LOCAL="$LOC-getv.2_4"
 DEFAULT='getv.2_4'
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
@@ -77,7 +77,7 @@ msgexists || \
 checkenv get5 "$LOC-return-@$HOST" "$SENDER"
 
 qqclean
-${ECHO} "X-num: get6" > "$TMP"
+echo "X-num: get6" > "$TMP"
 LOCAL="$LOC-getx.2_4"
 DEFAULT='getx.2_4'
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >/dev/null 2>&1
@@ -88,4 +88,4 @@ msgexists || \
 	fatal "get6 format 'x' failed to return"
 checkenv get6 "$LOC-return-@$HOST" "$SENDER"
 
-${ECHO} "OK"
+echo "OK"

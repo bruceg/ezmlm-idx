@@ -16,4 +16,4 @@
   grepbody test@example.org
   grepbody removed from the ${LOC} mailing list, please send an empty reply
 
-  ${ECHO} OK
+  echo OK

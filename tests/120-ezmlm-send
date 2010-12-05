@@ -7,13 +7,13 @@
   SENDER="${SND}@$HOST"
   ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
 # set up prefix
-  ${ECHO} "[PFX]" > "${DIR}/prefix"
+  echo "[PFX]" > "${DIR}/prefix"
 # set up trailer
   mkdir -p "${DIR}/text"
-  { ${ECHO} "--- TRAILER ---"; ${ECHO}; } > "${DIR}/text/trailer"
+  { echo "--- TRAILER ---"; echo; } > "${DIR}/text/trailer"
   touch "$DIR"/addtrailer
 # test
-  { ${ECHO} "X-num: msg1"; make_message; } | \
+  { echo "X-num: msg1"; make_message; } | \
 	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to accept normal message"
   if [ `cat "${DIR}/num"` != "1:1" ]; then
@@ -22,50 +22,50 @@
   if [ ! -x "${DIR}/archive/0/01" ]; then
 	fatal "failed to archive normal message"
   fi
-  ${GREP} "1:" "${DIR}/archive/0/index" >/dev/null 2>&1 || \
+  grep "1:" "${DIR}/archive/0/index" >/dev/null 2>&1 || \
 	fatal "failed to index archive"
 
-  ${GREP} "$SENDER" "$QQENV" >/dev/null 2>&1 ||
+  grep "$SENDER" "$QQENV" >/dev/null 2>&1 ||
 	fatal "failed to deliver message to subscriber"
   checkenv msg1 "$LOC-return-1-@$HOST-@\\[\\]" "$SENDER"
 
 # make sure headeradd was done
-  ${GREP} -i 'precedence: bulk' "$QQMSG" >/dev/null 2>&1 ||
+  grep -i 'precedence: bulk' "$QQMSG" >/dev/null 2>&1 ||
 	fatal "failed to add headeradd"
 # check on received: header handling
-  ${GREP} '#PENULTIMATE#' "$QQMSG" >/dev/null && \
+  grep '#PENULTIMATE#' "$QQMSG" >/dev/null && \
 	fatal "-r failed to remove received header"
-  ${GREP} '#LAST#' "$QQMSG" >/dev/null || \
+  grep '#LAST#' "$QQMSG" >/dev/null || \
 	fatal "-r failed to leave last received header"
-  ${GREP} 'Subject:' "$QQMSG" | ${GREP} 'PFX' >/dev/null 2>&1 || \
+  grep 'Subject:' "$QQMSG" | grep 'PFX' >/dev/null 2>&1 || \
 	fatal "failed to add subject prefix"
 	# the trailer should be a MIME part, so not at the very end
-  ${TAIL} -n 6 "$QQMSG" | ${HEAD} -n 2 | ${GREP} 'TRAILER' >/dev/null 2>&1 || \
+  tail -n 6 "$QQMSG" | head -n 2 | grep 'TRAILER' >/dev/null 2>&1 || \
 	fatal "failed to add trailer"
 
-  ${RM} -f "${DIR}/indexed"
-  ${RM} -f "${DIR}/archived"
+  rm -f "${DIR}/indexed"
+  rm -f "${DIR}/archived"
 
 # test to see that trailer is added to nom-mime messages
   CONTENT=''
-  { ${ECHO} "X-num: msg5"; make_message; } | \
+  { echo "X-num: msg5"; make_message; } | \
 	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1  || \
 	fatal "failed to accept non-mime message"
 
   checkenv msg5 "$LOC-return-2-@$HOST-@\\[\\]" "$SENDER"
-  ${GREP} 'TRAILER' "$QQMSG" >/dev/null 2>&1 || \
+  grep 'TRAILER' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed to add trailer to non-mime message"
 
 # test to see that trailer is suppressed for multipart/signed
   CONTENT='multipart/signed'
-  { ${ECHO} "X-num: msg6"; make_message; } | \
+  { echo "X-num: msg6"; make_message; } | \
 	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1  || \
 	fatal "failed to accept multipart/signed message"
 
   checkenv msg6 "$LOC-return-3-@$HOST-@\\[\\]" "$SENDER"
-  ${GREP} 'TRAILER' "$QQMSG" >/dev/null 2>&1 && \
-	{ ${ECHO} "failed to suppress trailer for multipart/signed message"; \
-	  ${ECHO} "                      0.31 bug fixed in 0.316/0.323";
+  grep 'TRAILER' "$QQMSG" >/dev/null 2>&1 && \
+	{ echo "failed to suppress trailer for multipart/signed message"; \
+	  echo "                      0.31 bug fixed in 0.316/0.323";
 	  BUG="${BUG}_signed"; \
 	  prompt "ezmlm-send ......:    "; }
 
@@ -74,9 +74,9 @@
 
 # test content-type with something after boundary=xxx
   AFTERBOUND=';micalg=pgp-md5'
-  ${ECHO} "text/html" > "$DIR"/mimeremove
+  echo "text/html" > "$DIR"/mimeremove
   make_message | ${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1  || \
-	{ ${ECHO} "err with text after boundary: 0.30 bug fixed in 0.322"
+	{ echo "err with text after boundary: 0.30 bug fixed in 0.322"
 	  prompt "ezmlm-send.........   "
 	  BUG="${BUG} send_bound"
 	}
@@ -84,72 +84,72 @@
 
 # restore
   AFTERBOUND=''
-  ${ECHO} "1:1" > "${DIR}/num"
-  ${RM} "$DIR"/mimeremove
+  echo "1:1" > "${DIR}/num"
+  rm "$DIR"/mimeremove
 
 # -r => don't trim received headers
-  { ${ECHO} "X-num: msg2"; make_message; } | \
+  { echo "X-num: msg2"; make_message; } | \
 	${EZBIN}/ezmlm-send -r "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to accept normal message 2"
   checkenv msg2 "$LOC-return-2-@$HOST-@\\[\\]" "$SENDER"
 
-  ${GREP} "2:" "${DIR}/archive/0/index" >/dev/null 2>&1 && \
+  grep "2:" "${DIR}/archive/0/index" >/dev/null 2>&1 && \
 	fatal "indexed message with DIR/indexed missing"
-  ${GREP} "msg2" ${DIR}/archive/0/* >/dev/null 2>&1 && \
+  grep "msg2" ${DIR}/archive/0/* >/dev/null 2>&1 && \
 	fatal "archived message with DIR/archived missing"
 
-  ${GREP}  '#PENULTIMATE#' "$QQMSG" >/dev/null 2>&1 || \
+  grep  '#PENULTIMATE#' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "-r failed to leave received header"
 
 # -C eliminate SENDER from addressees
-  { ${ECHO} "X-num: msg3"; make_message; } | \
+  { echo "X-num: msg3"; make_message; } | \
 	${EZBIN}/ezmlm-send -C "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to accept normal message 3"
   checkenv msg3 "$LOC-return-3-@$HOST-@\\[\\]" "$SENDER"
   ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
 
-  ${GREP} T"$SENDER" "$QQENV" >/dev/null 2>&1 || \
-	{ ${ECHO} "failed to include sender (-C is ignored)"; \
+  grep T"$SENDER" "$QQENV" >/dev/null 2>&1 || \
+	{ echo "failed to include sender (-C is ignored)"; \
 	  BUG="${BUG}_noself"; \
 	  prompt "ezmlm-send:           "; }
 
 # make sure headerremove was done
-  ${GREP} -i 'return-receipt-to' < "${DIR}/archive/0/01" >/dev/null &&
+  grep -i 'return-receipt-to' < "${DIR}/archive/0/01" >/dev/null &&
 	fatal "failed to remove headerremove"
 
 # test mimeremove
   touch "${DIR}/archived" "${DIR}/indexed"
-  ${ECHO} "teXT/hTml" > "${DIR}/mimeremove"
-  { ${ECHO} "X-num: mimeremove"; make_message; } | \
+  echo "teXT/hTml" > "${DIR}/mimeremove"
+  { echo "X-num: mimeremove"; make_message; } | \
 	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to accept mimeremove message"
   checkenv mimeremove "$LOC-return-4-@$HOST-@\\[\\]"
-  ${GREP} -i 'text/html' < "${DIR}/archive/0/04" >/dev/null &&
+  grep -i 'text/html' < "${DIR}/archive/0/04" >/dev/null &&
 	fatal "failed to remove mimeremove part"
 
 # test mimekeep
   touch "${DIR}/archived" "${DIR}/indexed"
-  ${ECHO} "multipart/mixed" > "${DIR}/mimekeep"
-  ${ECHO} "teXT/plain" >> "${DIR}/mimekeep"
-  { ${ECHO} "X-num: mimekeep"; make_message; } | \
+  echo "multipart/mixed" > "${DIR}/mimekeep"
+  echo "teXT/plain" >> "${DIR}/mimekeep"
+  { echo "X-num: mimekeep"; make_message; } | \
         ${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to accept mimekeep message"
   checkenv mimekeep "$LOC-return-5-@$HOST-@\\[\\]"
-  ${GREP} -i 'text/html' < "${DIR}/archive/0/05" >/dev/null &&
+  grep -i 'text/html' < "${DIR}/archive/0/05" >/dev/null &&
 	fatal "failed to remove mimekeep part"
 
 # test headerkeep
-  ${ECHO} subject >"$DIR"/headerkeep
-  ${ECHO} from >>"$DIR"/headerkeep
-  ${ECHO} x-num >>"$DIR"/headerkeep
-  { ${ECHO} "X-num: keeptest"; make_message; } | \
+  echo subject >"$DIR"/headerkeep
+  echo from >>"$DIR"/headerkeep
+  echo x-num >>"$DIR"/headerkeep
+  { echo "X-num: keeptest"; make_message; } | \
 	${EZBIN}/ezmlm-send -C "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to accept keeptest message"
   checkenv keeptest "$LOC-return-6-@$HOST-@\\[\\]"
-  ${GREP} -i '^x-num: keeptest' < "${DIR}/archive/0/06" >/dev/null ||
+  grep -i '^x-num: keeptest' < "${DIR}/archive/0/06" >/dev/null ||
 	fatal "failed to keep header in headerkeep"
-  ${GREP} -i '^return-receipt-to' < "${DIR}/archive/0/06" >/dev/null &&
+  grep -i '^return-receipt-to' < "${DIR}/archive/0/06" >/dev/null &&
 	fatal "failed to remove header not in headerkeep"
-  ${RM} "$DIR"/headerkeep
+  rm "$DIR"/headerkeep
 
-  ${ECHO} "OK"
+  echo "OK"

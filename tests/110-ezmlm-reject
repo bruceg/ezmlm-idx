@@ -31,22 +31,22 @@
 	fatal "failed to accept good message without dir: $?"
 
 #too small
-  ${ECHO} "5000:1000" > "${DIR}/msgsize"
+  echo "5000:1000" > "${DIR}/msgsize"
   { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } >/dev/null 2>&1 && \
 	fatal "ezmlm-reject failed to reject too small message"
 
 # just right
-  ${ECHO} "500:5" > "${DIR}/msgsize"
+  echo "500:5" > "${DIR}/msgsize"
   make_message | ${EZBIN}/ezmlm-reject "$DIR" || \
 	fatal "failed to accept message of ok size"
 
 #too large
-  ${ECHO} "20:10" > "${DIR}/msgsize"
+  echo "20:10" > "${DIR}/msgsize"
   { make_message  | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null 2>&1 && \
         fatal "ezmlm-reject failed to reject too large message"
 
 # restore
-  ${RM} -f "${DIR}/msgsize"
+  rm -f "${DIR}/msgsize"
 
 # without subject
   SUBJECT=''
@@ -118,58 +118,58 @@ SUBJECT='test'
 
 # if part is mimereject message should be rejected
   touch "$DIR"/mimeremove
-  ${ECHO} "text/html" > "$DIR"/mimereject
+  echo "text/html" > "$DIR"/mimereject
   { make_message | ${EZBIN}/ezmlm-reject "$DIR"; }  > /dev/null 2>&1 && \
 	fatal "mimereject failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	fatal "mimereject without dir"
 
 # if part is removed ezmlm-reject should not reject
-  ${ECHO} "tExt/htMl" > "$DIR"/mimeremove
-  ${ECHO} "" > "$DIR"/mimereject 
+  echo "tExt/htMl" > "$DIR"/mimeremove
+  echo "" > "$DIR"/mimereject 
   { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null || \
 	fatal "mimeremove failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	fatal "mimeremove failed without dir"
 
-  ${ECHO} "tExt/htMl" > "$DIR"/mimekeep
-  ${ECHO} "multipart/mixed" > "$DIR"/mimekeep
+  echo "tExt/htMl" > "$DIR"/mimekeep
+  echo "multipart/mixed" > "$DIR"/mimekeep
   { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null || \
 	fatal "mimekeep failed"
-  ${RM} "$DIR"/mimekeep
+  rm "$DIR"/mimekeep
 
 # test content-type with something after boundary=xxx
   AFTERBOUND=';micalg=pgp-md5'
-  ${ECHO} "text/html" > "$DIR"/mimereject
+  echo "text/html" > "$DIR"/mimereject
   { make_message | ${EZBIN}/ezmlm-reject "$DIR" 2>&1; } > /dev/null 2>&1 && \
-	{ ${ECHO} "err with text after boundary: 0.30 bug fixed in 0.322"
+	{ echo "err with text after boundary: 0.30 bug fixed in 0.322"
 	  prompt "ezmlm-reject.......   "
 	  BUG="${BUG} reject_bound"
 	}
 
 # restore
-  ${RM} "$DIR"/mimereject
+  rm "$DIR"/mimereject
   AFTERBOUND=''
 
 # if entire message is mimeremove type it should be rejected
-  ${ECHO} "multipart/mixed" > "$DIR"/mimeremove
+  echo "multipart/mixed" > "$DIR"/mimeremove
   { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null 2>&1  && \
 	fatal "mimereject failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	fatal "mimereject without dir"
 
 # if entire message has no parts in mimekeep it should be rejected
-  ${ECHO} "no/type" > "$DIR"/mimekeep
+  echo "no/type" > "$DIR"/mimekeep
   { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null 2>&1  && \
 	fatal "mimekeep failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject; } > /dev/null || \
 	fatal "mimekeep failed without dir"
 
 # restore
-  ${RM} "$DIR"/mimeremove "$DIR"/mimekeep
+  rm "$DIR"/mimeremove "$DIR"/mimekeep
 
 # test headerreject
-  ${ECHO} "Content-TYPE" > "$DIR"/headerreject
+  echo "Content-TYPE" > "$DIR"/headerreject
   { make_message | ${EZBIN}/ezmlm-reject -H "$DIR"; } > /dev/null || \
 	fatal "headerreject -H failed with dir"
   { make_message | ${EZBIN}/ezmlm-reject "$DIR"; } > /dev/null 2>&1 && \
@@ -186,6 +186,6 @@ SUBJECT='test'
 
   CONTENT='multIpart/mIXed'
 
-  ${RM} "$DIR"/headerreject
+  rm "$DIR"/headerreject
 
-  ${ECHO} "OK"
+  echo "OK"

@@ -8,10 +8,10 @@ prompt "ezmlm-moderate:       "
 ${EZBIN}/ezmlm-sub "$DIR" "${SND}@$HOST"
 
 # REJ is set in 145-ezmlm-store, as the reject address for "mod1" message
-LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
+LOCAL=`echo "$REJ" | cut -d@ -f1`
 
 qqclean
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
+DEFAULT=`echo "$LOCAL" | cut -c"$REJLEN"-`
 {
     make_message
     echo
@@ -24,58 +24,58 @@ DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
 msgexists ||
 	fatal "failed to send rejection notice for message mod1"
 # ${SND}@$HOST means it was rejected, not send through the list
-${GREP} "To: ${SND}@$HOST" "$QQMSG" > /dev/null 2>&1 || \
+grep "To: ${SND}@$HOST" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to reject message mod1"
-${GREP} '^rejection test message$' "$QQMSG" >/dev/null 2>&1 || \
+grep '^rejection test message$' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "reject message did not include given text"
 checkenv rejection "$LOC-return-@$HOST" "$SND@$HOST"
 
 qqclean
 # ACC is set in 145-ezmlm-store, as the accept address for "mod3" message
-LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`
+LOCAL=`echo "$ACC" | cut -d@ -f1`
+DEFAULT=`echo "$LOCAL" | cut -c"$ACCLEN"-`
 ${EZBIN}/ezmlm-moderate "$DIR" ${EZBIN}/ezmlm-send "$DIR" \
 	 </dev/null >"$ERR" 2>&1 || \
 		fatal "failed on acceptance"
 msgexists || \
 	fatal "failed to post message mod3"
 # ${LOC}@$HOST means it was not rejected, but sent through the list
-${GREP} "To: ${LOC}@$HOST" $QQMSG > /dev/null 2>&1 || \
+grep "To: ${LOC}@$HOST" $QQMSG > /dev/null 2>&1 || \
 	fatal "failed to accept message mod3"
 checkenv accept "$LOC-return-.*-@$HOST-@\\[\\]" "$SND@$HOST" "$MAN@$HOST"
 
-ls -l "${DIR}/mod/rejected/" | ${GREP} '[0-9]' >/dev/null 2>&1 || \
+ls -l "${DIR}/mod/rejected/" | grep '[0-9]' >/dev/null 2>&1 || \
 	fatal "failed to write reject stub"
-ls -l "${DIR}/mod/accepted/" | ${GREP} '[0-9]' >/dev/null 2>&1 || \
+ls -l "${DIR}/mod/accepted/" | grep '[0-9]' >/dev/null 2>&1 || \
 	fatal "failed to write accept stub"
 
-REJ1=`${ECHO} "$REJ" | sed s/reject/accept/`
-LOCAL=`${ECHO} "$REJ1" | cut -d@ -f1`
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
+REJ1=`echo "$REJ" | sed s/reject/accept/`
+LOCAL=`echo "$REJ1" | cut -d@ -f1`
+DEFAULT=`echo "$LOCAL" | cut -c"$REJLEN"-`
 ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
 	</dev/null >/dev/null 2>&1 && \
 	fatal "failed to bounce accept of rejected message"
 
-LOCAL=`${ECHO} "$REJ" | cut -d@ -f1`
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
+LOCAL=`echo "$REJ" | cut -d@ -f1`
+DEFAULT=`echo "$LOCAL" | cut -c"$REJLEN"-`
 ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
 	</dev/null >/dev/null 2>&1 || \
 	fatal "failed to silently ignore re-rejection"
 
-ACC1=`${ECHO} "$ACC" | sed s/accept/reject/`
-LOCAL=`${ECHO} "$ACC1" | cut -d@ -f1`
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$REJLEN"-`
+ACC1=`echo "$ACC" | sed s/accept/reject/`
+LOCAL=`echo "$ACC1" | cut -d@ -f1`
+DEFAULT=`echo "$LOCAL" | cut -c"$REJLEN"-`
 ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
 	</dev/null >/dev/null 2>&1 && \
 	fatal "failed to bounce reject of accepted message"
 
-LOCAL=`${ECHO} "$ACC" | cut -d@ -f1`
-DEFAULT=`${ECHO} "$LOCAL" | cut -c"$ACCLEN"-`
+LOCAL=`echo "$ACC" | cut -d@ -f1`
+DEFAULT=`echo "$LOCAL" | cut -c"$ACCLEN"-`
 ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
 	</dev/null >/dev/null 2>&1 || \
 	fatal "failed to silently ignore re-acceptance"
 
-${ECHO} "OK"
+echo "OK"
 
 # cleanup
 ${EZBIN}/ezmlm-unsub "$DIR" "${SND}@$HOST"

@@ -11,12 +11,12 @@ ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "ezmlm-manage failed"
 grepbodynot bottom is present
 
-${RM} -f "$DIR"/omitbottom
+rm -f "$DIR"/omitbottom
 ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "ezmlm-manage failed"
 grepbody bottom is present
 
-${ECHO} OK
+echo OK
 
 prompt "omitbottom (-get):    "
 
@@ -28,9 +28,9 @@ ${EZBIN}/ezmlm-get "$DIR" <"$TMP" >"$ERR" 2>&1 && \
   fatal "ezmlm-get failed"
 grepbodynot bottom is present
 
-${RM} -f "$DIR"/omitbottom
+rm -f "$DIR"/omitbottom
 ${EZBIN}/ezmlm-get "$DIR" <"$TMP" >"$ERR" 2>&1 && \
   fatal "ezmlm-get failed"
 grepbody bottom is present
 
-${ECHO} OK
+echo OK

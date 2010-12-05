@@ -1,13 +1,13 @@
   SENDER="test@example.org"
   (
-    ${ECHO} "From: Test <${SENDER}>"
-    ${ECHO}
-    ${ECHO} 1
-    ${ECHO} 2
-    ${ECHO} 3
+    echo "From: Test <${SENDER}>"
+    echo
+    echo 1
+    echo 2
+    echo 3
   ) >"$TMP"
 
-  ${ECHO} Verifying message header and body contents...
+  echo Verifying message header and body contents...
 
   ${EZBIN}/ezmlm-make -+ -S "$DIR" || \
   fatal "ezmlm-make failed"
