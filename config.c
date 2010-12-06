@@ -56,6 +56,19 @@ static struct flag flags[NO_FLAGS] = {
   { -1, 0 }			/* z unused */
 };
 
+static struct flag numflags[10] = {
+  { -1, "sublist" },		/* 0 */
+  { -1, 0 },			/* 1 unused */
+  { -1, 0 },			/* 2 unused */
+  { -1, "fromheader" },		/* 3 */
+  { -1, 0 },			/* 4 */
+  { -1, "owner" },		/* 5 */
+  { -1, "subdb" },		/* 6 */
+  { -1, "modpost" },		/* 7 */
+  { -1, "modsub" },		/* 8 */
+  { -1, "remote" },		/* 9 */
+};
+
 static void parse_flags(const char* start,int len)
 {
   while (len > 0) {
@@ -140,9 +153,9 @@ void startup(const char *dir)
   load_config();
 }
 
-static int getflag(int flagno)
+static int getflag(struct flag *flagset,int flagno)
 {
-  struct flag *flag = &flags[flagno];
+  struct flag *flag = &flagset[flagno];
   if (flag->state < 0)
     flag->state = (flag->filename == 0) || getconf_isset(flag->filename);
   return flag->state;
@@ -151,8 +164,9 @@ static int getflag(int flagno)
 int flag_isset(char flag)
 {
   return
-    (flag >= 'A' && flag <= 'Z') ? getflag(flag - 'A')
-    : (flag >= 'a' && flag <= 'z') ? getflag(flag - 'a')
+    (flag >= 'A' && flag <= 'Z') ? getflag(flags,flag - 'A')
+    : (flag >= 'a' && flag <= 'z') ? getflag(flags,flag - 'a')
+    : (flag >= '0' && flag <= '9') ? getflag(numflags,flag - '0')
     : 0;
 }
 
@@ -163,6 +177,11 @@ int flag_isnameset(const char *name)
     if (flags[i].filename != 0
 	&& str_diff(name, flags[i].filename) == 0)
       return flags[i].state;
+  }
+  for (i = 0; i < 10; ++i) {
+    if (numflags[i].filename != 0
+	&& str_diff(name, numflags[i].filename) == 0)
+      return numflags[i].state;
   }
   return -1;
 }
