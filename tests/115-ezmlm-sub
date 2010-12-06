@@ -102,6 +102,18 @@
   ${EZBIN}/ezmlm-issubn "$DIR" deny && \
 	fatal "ezmlm-sub/issubn: failed to remove wildcard address"
 
+# check tags written to the Log
+  grep -i '[0-9]\+ +manual xyzzy@host' "$DIR"/Log >/dev/null \
+      || fatal "Log is missing manual subscribe tag"
+  grep -i '[0-9]\+ -manual xyzzy@host' "$DIR"/Log >/dev/null \
+      || fatal "Log is missing manual unsubscribe tag"
+  ${EZBIN}/ezmlm-sub -t tag1 "$DIR" xyzzy@host
+  grep -i '[0-9]\+ +tag1 xyzzy@host' "$DIR"/Log >/dev/null \
+      || fatal "ezmlm-sub did not alter subscribe tag"
+  ${EZBIN}/ezmlm-unsub -t tag2 "$DIR" xyzzy@host
+  grep -i '[0-9]\+ -tag2 xyzzy@host' "$DIR"/Log >/dev/null \
+      || fatal "ezmlm-sub did not alter subscribe tag"
+
 # clean up
   LOCAL=''
 

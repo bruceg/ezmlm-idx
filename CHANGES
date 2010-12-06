@@ -22,6 +22,8 @@ release.
   confirmation emails, replaced with the hash code, time stamp, and
   action respectively.
 
+- Added option to ezmlm-[un]sub to use a tag other than "manual" in Log.
+
 - Fixed behavior of ezmlm-manage -Q flag to match man page.
 
 ezmlm-idx-7.1.1, 2010-11-18
