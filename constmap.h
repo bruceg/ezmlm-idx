@@ -3,14 +3,18 @@
 
 typedef unsigned long constmap_hash;
 
+struct constmap_entry {
+  const char *input;
+  int inputlen;
+  constmap_hash hash;
+  int next;
+};
+
 struct constmap {
   unsigned int num;
   constmap_hash mask;
-  constmap_hash *hash;
   int *first;
-  int *next;
-  const char **input;
-  int *inputlen;
+  struct constmap_entry *entries;
 } ;
 
 extern int constmap_init(struct constmap *cm,const char *s,int len,int splitchar);
