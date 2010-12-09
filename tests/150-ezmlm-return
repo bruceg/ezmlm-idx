@@ -5,7 +5,6 @@
   prompt "ezmlm-return:         "
 
   SENDER="${BNC}@$HOST"
-  HOST="$HOST"
   LOCAL="$LOC-return-1-$BNC=$HOST"
   DEFAULT="1-$BNC=$HOST"
 # we use 'du' because bounce handling is different in 0.31x and >=0.32
