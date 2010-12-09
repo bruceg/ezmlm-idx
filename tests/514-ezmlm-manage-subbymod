@@ -6,7 +6,6 @@
   SENDER="moderator@$HOST"
 
   DEFAULT="subscribe-test=example.org"
-  LOCAL="${LOC}-subscribe-test=example.org"
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce subscribe confirmation"
 

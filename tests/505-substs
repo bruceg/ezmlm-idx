@@ -1,7 +1,6 @@
   prompt "substitutions:        "
 
   DEFAULT="digest-subscribe"
-  LOCAL="${LOC}-${DEFAULT}"
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce subscribe probe"
 

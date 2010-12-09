@@ -1,7 +1,6 @@
 prompt "flags:                "
 
 DEFAULT="digest-subscribe"
-LOCAL="${LOC}-${DEFAULT}"
 
 # Check loading flags from "flags"
 

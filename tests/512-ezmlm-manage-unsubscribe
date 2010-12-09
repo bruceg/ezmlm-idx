@@ -1,7 +1,6 @@
   prompt "unsubscribe:          "
 
-  LOCAL=${UNSUBCOOKIE}
-  DEFAULT=`echo "$LOCAL" | cut -c"$LOCLEN"-`
+  DEFAULT=`echo "$UNSUBCOOKIE" | cut -c"$LOCLEN"-`
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce unsubscribe confirmation"
 

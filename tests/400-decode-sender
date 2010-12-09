@@ -4,7 +4,6 @@
 
 prompt "decode sender:        "
 
-LOCAL="$LOC-help"
 DEFAULT='help'
 
 SENDER="SRS0=HrNdli=BZ=host=xyzzy@otherhost.com"

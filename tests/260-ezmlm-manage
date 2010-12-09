@@ -11,12 +11,10 @@ ${EZBIN}/ezmlm-sub "$DIR" allow "aaa@bbb" "ccc@ddd" "eee@fff"
 # test -edit
 qqclean
 echo "#TEST_TEXT#" > "${DIR}/text/test"
-LOCAL="$LOC-edit.test-$MAN=$HOST"
 DEFAULT="edit.test-$MAN=$HOST"
 echo "X-num: edit1" > "$TMP"
 ${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject edit request from non-mod"
-LOCAL="$LOC-edit.test-$MOD=$HOST"
 DEFAULT="edit.test-$MOD=$HOST"
 echo "X-num: edit2" > "$TMP"
 rm "$DIR"/modcanedit
@@ -37,9 +35,8 @@ grep 'edit3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting edit reply for edit3"
 grep "#TEST_TEXT#" "$QQMSG" >/dev/null 2>&1 || \
 	fatal "old text missing in edit3 edit reply"
-LOCAL=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
+DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LOCLEN"-` || \
 	fatal "no reply address in edit3 edit reply"
-DEFAULT=`echo "$LOCAL" | cut -c"$LOCLEN"-`
 echo "X-num: edit4" > "$TMP"
 echo >> "$TMP"
 echo "%%% START OF TEXT FILE" >> "$TMP"
@@ -53,19 +50,16 @@ grep "^Subject: Success editing test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
 || fatal "edit4 had incorrect subject"
 
 # test list/log
-LOCAL="$LOC-allow-list-$MAN=$HOST"
 DEFAULT="allow-list-$MAN=$HOST"
 echo "X-num: list1" > "$TMP"
 ${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject list request from non-mod"
 
-LOCAL="$LOC-allow-log-$MAN=$HOST"
 DEFAULT="allow-log-$MAN=$HOST"
 echo "X-num: log1" > "$TMP"
 ${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "failed to reject log request from non-mod"
 
-LOCAL="$LOC-allow-list-$MOD=$HOST"
 DEFAULT="allow-list-$MOD=$HOST"
 echo "X-num: list2" > "$TMP"
 rm "$DIR"/modcanlist
@@ -96,7 +90,6 @@ grep "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
 checkenv list4 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 rm "$DIR"/modcanlist
 
-LOCAL="$LOC-allow-log-$MOD=$HOST"
 DEFAULT="allow-log-$MOD=$HOST"
 echo "X-num: log2" > "$TMP"
 ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \

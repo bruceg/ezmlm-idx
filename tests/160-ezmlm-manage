@@ -4,7 +4,6 @@
 
   prompt "ezmlm-manage (1/2):   "
 
-  LOCAL="$LOC-unsubscribe"
   DEFAULT='unsubscribe'
   SENDER="${SND}@$HOST"
 
@@ -24,12 +23,9 @@
 	fatal "unsubscribe with nounsubconfirm failed"
   rm "$DIR"/nounsubconfirm
 
-  LOCAL="$LOC-digest-subscribe"
-  DEFAULT='digest-subscribe'
   ${EZBIN}/ezmlm-unsub "$DIR" digest "$SENDER"
 
 # test that access to the deny db is restricted to remote admins
-  LOCAL="$LOC-deny-subscribe"
   DEFAULT='deny-subscribe'
   ${EZBIN}/ezmlm-manage "$DIR" </dev/null >/dev/null 2>&1 && \
 	{
@@ -59,13 +55,12 @@
 	}
   checkenv noremote-deny "$LOC-deny-return-@$HOST" "$SENDER"
 
-# restore remote/SENDER/mod/LOCAL/DEFAULT
+# restore remote/SENDER/mod/DEFAULT
   ${EZBIN}/ezmlm-unsub "$DIR" mod "$SENDER" || exit 100
   SENDER="${SND}@$HOST"		# restore order
   touch "${DIR}/remote" || \
 	{ echo "Failed to remove DIR/remote"; exit 99; }
-  LOCAL="$LOC-digest-subscribe"
-	DEFAULT='digest-subscribe'
+  DEFAULT='digest-subscribe'
 
   ${EZBIN}/ezmlm-manage -S "$DIR" </dev/null >"$ERR" 2>&1 || \
 	fatal "failed with -S"
@@ -102,10 +97,9 @@
   # Add moderator
   ${EZBIN}/ezmlm-sub "$DIR" mod "${MOD}@$HOST"
 
-  LOCAL=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
+  DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LOCLEN"-` || \
 	fatal "failed to find confirm address in -subscribe reply"
   qqclean
-  DEFAULT=`echo "$LOCAL" | cut -c"$LOCLEN"-`
   echo "X-num: sub3" > "$TMP"
   echo "From: Mr. User confirms <$SENDER>" >> "$TMP"
   echo >> "$TMP"
@@ -122,9 +116,8 @@
 	fatal "failed getting subscribe moderation confirm request"
 
   # confirm subscription request
-  LOCAL=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
+  DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LOCLEN-"` || \
 	fatal "no confirm address in sub3 mod confirm request"
-  DEFAULT=`echo "$LOCAL" | cut -c"$LOCLEN"-`
   echo "X-num: modR1" > "$TMP"
   echo "FROM: moderator agrees <$SENDER>" >> "$TMP"
   echo >> "$TMP"
@@ -135,23 +128,20 @@
 
   SENDER="${MAN}@$HOST"
   ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
-  LOCAL="$LOC-unsubscribe"
   DEFAULT='unsubscribe'
   echo "X-num: sub2" > "$TMP"
   ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "unsubscribe request failed"
   checkenv sub2 "$LOC-return-@$HOST" "$SENDER"
 
-  LOCAL=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1` || \
+  DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LOCLEN"` || \
 	fatal "failed to find confirm address in -unsubscribe reply"
-  DEFAULT=`echo "$LOCAL" | cut -c"$LOCLEN"-`
   echo "X-num: sub4" > "$TMP"
   ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >/dev/null 2>&1 || \
 	fatal "failed to send conf for sub2"
   checkenv sub4 "$LOC-return-@$HOST" "$SENDER"
 
 # -get function for backwards compatibility
-  LOCAL="$LOC-get.1"
   DEFAULT='get.1'
   echo "X-num: manget1" > "$TMP"
   ${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \

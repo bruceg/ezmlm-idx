@@ -2,8 +2,7 @@
 
   ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
 
-  LOCAL=${SUBCOOKIE}
-  DEFAULT=`echo "$LOCAL" | cut -c"$LOCLEN"-`
+  DEFAULT=`echo "$SUBCOOKIE" | cut -c"$LOCLEN"-`
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce subscribe confirmation"
 

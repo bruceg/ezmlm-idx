@@ -3,7 +3,6 @@
   ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
 
   DEFAULT="unsubscribe"
-  LOCAL="${LOC}-${DEFAULT}"
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce unsubscribe probe"
 
