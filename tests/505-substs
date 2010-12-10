@@ -12,7 +12,10 @@
   grepbody target: "test=example.org"
   grepbody Confirm: "${LOC}-digest-sc.*.*-test=example.org@example.com"
   grepbody Cookie: "sc.*.*-test=example.org"
-  grepbody MsgNum: "?????"
+  grepbody MsgNum: '\?\?\?\?\?'
   grepbody ConfirmLocal: "${LOC}-digest-sc.*.*-test=example.org"
+  grepbody Action: 'sc.'
+  grepbody Hash: '[a-p]{20}'
+  grepbody Time: '[0-9]{10}'
 
   echo OK

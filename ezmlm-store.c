@@ -131,6 +131,7 @@ void makeacthash(stralloc *act)
   if (!stralloc_catb(act,hash,COOKIE)) die_nomem();
   if (!stralloc_cats(act,"@")) die_nomem();
   if (!stralloc_cat(act,&outhost)) die_nomem();
+  set_cphash(hash);
 }
 
 int main(int argc,char **argv)
@@ -239,7 +240,9 @@ int main(int argc,char **argv)
   if (!stralloc_0(&accept)) die_nomem();
 
   set_cptarget(accept.s);	/* for copy () */
+  set_cpaction(flagconfirm?ACTION_CONFIRM:ACTION_ACCEPT);
   set_cpconfirm(reject.s,quoted.len);
+  set_cpwhen(when);
 
   fdmsg = open_trunc(fnmsg.s);
   if (fdmsg == -1)

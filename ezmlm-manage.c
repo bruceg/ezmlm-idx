@@ -547,6 +547,9 @@ void doconfirm(const char *act)
   if (!stralloc_cat(&confirm,&outhost)) die_nomem();
   if (!stralloc_0(&confirm)) die_nomem();
   set_cpconfirm(confirm.s,outlocal.len);		/* for copy */
+  set_cpaction(act);
+  set_cphash(hash);
+  set_cpwhen(when);
 
   qmail_puts(&qq,"Reply-To: ");
   if (!quote2(&quoted,confirm.s)) die_nomem();
@@ -986,6 +989,9 @@ int main(int argc,char **argv)
       if (!stralloc_cat(&confirm,&outhost)) die_nomem();
       if (!stralloc_0(&confirm)) die_nomem();
       set_cpconfirm(confirm.s,outlocal.len);
+      set_cpaction(ACTION_ED);
+      set_cphash(hash);
+      set_cpwhen(when);
 
       qmail_puts(&qq,"Reply-To: ");
       if (!quote2(&quoted,confirm.s)) die_nomem();

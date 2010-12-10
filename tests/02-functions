@@ -7,7 +7,7 @@ fatal() {
 
 grephdr() {
   # Search for the header line, and produce an error if it didn't match.
-  grep "^$*$" "$QQHDR" >/dev/null 2>&1 || \
+  egrep "^$*$" "$QQHDR" >/dev/null 2>&1 || \
   {
     echo "Header is missing or wrong $1 line:";
     grep -i "^$1" "$QQHDR"
@@ -20,7 +20,7 @@ grephdr() {
 }
 
 grepbody() {
-  grep "^$*$" "$QQBODY" >/dev/null 2>&1 || \
+  egrep "^$*$" "$QQBODY" >/dev/null 2>&1 || \
   {
     echo "Body is missing or wrong $1 line:";
     grep -i "^$1" "$QQBODY"
@@ -30,7 +30,7 @@ grepbody() {
 }
 
 grepbodynot() {
-  grep "^$*" "$QQBODY" >/dev/null 2>&1 && \
+  egrep "^$*" "$QQBODY" >/dev/null 2>&1 && \
   {
     echo "Body contains extraneous $1 line:";
     grep -i "^$1" "$QQBODY"

@@ -759,10 +759,20 @@ The local part of the reject or reply address, equivalent to
 .B <#l#>-<#c#>
 .TP
 .B <#c#>
-The cryptographic "cookie" in the reject or reply address
+The cryptographic "cookie" in the reject or reply address, equivalent to
+.B <#X#><#T#>.<#C#>-<#a#>=<#h#>
 .TP
 .B <#d#>
 .I dir
+.TP
+.B <#C#>
+The cryptographic confirmation hash code.
+.TP
+.B <#T#>
+The confirmation time stamp, expressed as a UNIX time.
+.TP
+.B <#X#>
+The confirmation action code.
 .PP
 The subscription target address is the address that has requested
 subscription to or unsubscription from the list in
