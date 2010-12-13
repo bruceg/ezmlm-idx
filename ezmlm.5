@@ -799,6 +799,25 @@ are replaced with the value of
 and
 .B <#R#>
 respectively.
+.SS SECTIONS
+The text files may be split into sections which are enabled or disabled
+by special markers containing a list of flags.  All of the lines in the
+text file following one section marker up to the next marker are output
+if all of the flags listed in the marker are set.
+.P
+The markers are written as
+.B <=FLAGS=>
+and must be the only thing on a line.  The list of
+.B FLAGS
+may be empty, in which case the following section.  Otherwise, it
+contains a list of flags that correspond to the
+.B ezmlm-make
+options, including both alpha and numeric options.
+.P
+For example, the section marker
+.B <=Bn=>
+will only be output if archive access is open (\fB\-B\fR) and text
+editing is enabled (\fB\-n\fR).
 .SS "TEXT/MESSAGES"
 One of the
 .I text
