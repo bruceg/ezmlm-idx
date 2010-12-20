@@ -43,7 +43,7 @@ const char INFO[] = "ezmlm-manage: info: ";
 const char USAGE[] =
 "ezmlm-manage: usage: ezmlm-manage [-bBcCdDeEfFlLmMnNqQsSuUvV] dir";
 
-int flagverbose = 0;	/* default: Owner not informed about subdb changes */
+int flagcopyowner = 0;	/* default: Owner not informed about subdb changes */
 			/* 1 => notified for failed unsub, 2 => for all */
 int flagnotify = 1;	/* notify subscriber of completed events. 0 also */
 			/* suppresses all subscriber communication for */
@@ -83,8 +83,8 @@ static struct option options[] = {
   OPT_FLAG(flagnotify,'N',0,0),
   OPT_FLAG(flagsubconf,'s',1,0),
   OPT_FLAG(flagsubconf,'S',0,"nosubconfirm"),
-  OPT_FLAG(flagverbose,'q',0,0),
-  OPT_COUNTER(flagverbose,'Q',1,0),
+  OPT_FLAG(flagcopyowner,'q',0,0),
+  OPT_COUNTER(flagcopyowner,'Q',1,0),
   OPT_FLAG(flagunsubconf,'u',1,0),
   OPT_FLAG(flagunsubconf,'U',0,"nounsubconfirm"),
   OPT_ULONG(copylines,0,"copylines"),
@@ -779,7 +779,7 @@ int main(int argc,char **argv)
       r = geton(action);		/* should be rarely used. */
       copybottom();
       if (flagnotify) qmail_to(&qq,target.s);
-      if (r && flagverbose > 1) to_owner();
+      if (r && flagcopyowner > 1) to_owner();
     }
 
   } else if (act == AC_SC) {
@@ -795,7 +795,7 @@ int main(int argc,char **argv)
         r = geton(action);
         copybottom();
         qmail_to(&qq,target.s);
-	if (r && flagverbose > 1) to_owner();
+	if (r && flagcopyowner > 1) to_owner();
       }
     } else {
       doconfirm(ACTION_SC);
@@ -813,7 +813,7 @@ int main(int argc,char **argv)
       r = geton(action);
       mod_bottom();
       if (flagnotify) qmail_to(&qq,target.s);	/* unless suppressed */
-      if (r && flagverbose > 1) to_owner();
+      if (r && flagcopyowner > 1) to_owner();
     } else {
       if (!ismod || remote.s == 0)	/* else anyone can get a good -tc. */
         die_cookie();
@@ -850,7 +850,7 @@ int main(int argc,char **argv)
       copybottom();
       if (!r || flagnotify) qmail_to(&qq,target.s);
 		/* tell owner if problems (-Q) or anyway (-QQ) */
-      if (flagverbose && (!r || flagverbose > 1)) to_owner();
+      if (flagcopyowner && (!r || flagcopyowner > 1)) to_owner();
     }
 
   } else if (str_start(action,ACTION_UC)) {
@@ -867,7 +867,7 @@ int main(int argc,char **argv)
         copybottom();
         if (!r || flagnotify) qmail_to(&qq,target.s);
 		/* tell owner if problems (-Q) or anyway (-QQ) */
-	if (flagverbose && (!r || flagverbose > 1)) to_owner();
+	if (flagcopyowner && (!r || flagcopyowner > 1)) to_owner();
       }
     } else {
       doconfirm(ACTION_UC);
@@ -888,7 +888,7 @@ int main(int argc,char **argv)
       mod_bottom();
       if (r) {				/* success to target */
 	qmail_to(&qq,target.s);
-        if (flagverbose > 1) to_owner();
+        if (flagcopyowner > 1) to_owner();
       } else				/* NOP to sender = admin. Will take */
         qmail_to(&qq,sender);		/* care of it. No need to tell owner */
 		/* if list is moderated skip - otherwise bad with > 1 mod */
