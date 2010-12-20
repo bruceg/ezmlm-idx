@@ -1247,13 +1247,11 @@ int main(int argc,char **argv)
     qmail_to(&qq,sender);
   }
 
-  if (*(err = qmail_close(&qq)) == '\0') {
-      strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
-      closesub();
-      strerr_die2x(0,"ezmlm-manage: info: qp ",strnum);
-  } else {
-      closesub();
-      strerr_die4x(111,FATAL,MSG(ERR_TMP_QMAIL_QUEUE),": ",err + 1);
-  }
+  err = qmail_close(&qq);
+  closesub();
+  if (*err != '\0')
+    strerr_die4x(111,FATAL,MSG(ERR_TMP_QMAIL_QUEUE),": ",err + 1);
+  strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
+  strerr_die3x(0,INFO,"qp ",strnum);
 }
 
