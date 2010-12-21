@@ -123,6 +123,13 @@ int main(int argc,char *argv[])
   }
   cumsize += (msgsize + 128L) >> 8;
 
+  if (fd > 0) {
+    if (substdio_flush(&ssarchive) == -1
+       || fchmod(fd,MODE_ARCHIVE|0700) == -1
+       || close(fd) == -1)
+      strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnaf.s));
+  }
+
   numwrite();
   
   return 0;
