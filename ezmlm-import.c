@@ -39,7 +39,7 @@ unsigned long msgnum;
 unsigned long cumsize;
 char strnum[FMT_ULONG*2];
 
-int openone(unsigned long outnum)
+static int openone(unsigned long outnum)
 {
   int fd;
   if (!stralloc_copys(&fnadir,"archive/")) die_nomem();
@@ -63,7 +63,7 @@ int openone(unsigned long outnum)
   return fd;
 }
 
-void numwrite(void)
+static void numwrite(void)
 {
   int fd;
   int i;
@@ -79,6 +79,15 @@ void numwrite(void)
       || close(fd) == -1)
     strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"numnew"));
   wrap_rename("numnew","num");
+}
+
+static void flushit(int fd)
+{
+  if (fd > 0)
+    if (substdio_flush(&ssarchive) == -1
+	|| fchmod(fd,MODE_ARCHIVE|0700) == -1
+	|| close(fd) == -1)
+      strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnaf.s));
 }
 
 int main(int argc,char *argv[])
@@ -110,13 +119,7 @@ int main(int argc,char *argv[])
   while (getln(&ssin,&line,&match,'\n') == 0 && match) {
     if (line.len > 5
 	&& byte_diff(line.s,5,"From ") == 0) {
-      if (fd > 0) {
-	if (substdio_flush(&ssarchive) == -1
-	    || fchmod(fd,MODE_ARCHIVE|0700) == -1
-	    || close(fd) == -1)
-	  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnaf.s));
-	fd = 0;
-      }
+      flushit(fd);
       ++msgnum;
       cumsize += (msgsize + 128L) >> 8;
       msgsize = 0L;
@@ -129,12 +132,7 @@ int main(int argc,char *argv[])
   }
   cumsize += (msgsize + 128L) >> 8;
 
-  if (fd > 0) {
-    if (substdio_flush(&ssarchive) == -1
-       || fchmod(fd,MODE_ARCHIVE|0700) == -1
-       || close(fd) == -1)
-      strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnaf.s));
-  }
+  flushit(fd);
 
   numwrite();
   
