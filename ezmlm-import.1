@@ -4,17 +4,26 @@ ezmlm-import \- import messages into an ezmlm archive
 .SH SYNOPSIS
 .B ezmlm-import
 .I dir
-.I mbox
+[
+.I /path/to/mbox
+]
 .SH DESCRIPTION
 .B ezmlm-import
 scans the input file
-.I mbox
-for messages, and writes each message into a seperate file in
+.I /path/to/mbox
+(default: stdin) for messages, and writes each message
+into a seperate file in
 .IR dir\fB/archive .
 The input file is expected to be in the standard UNIX "mbox" file
-format, which uses lines starting with "From " to mark the start of each
-message.  All text before the first message is discarded, as are the
-seperator lines themselves.
+format, which uses lines starting with "From " to mark the start
+of each message.  All text before the first message is discarded,
+as are the seperator lines themselves.
+
+WARNING:
+.I mbox
+should be an absolute pathname.
+Otherwise it will be relative to the directory
+.IR dir .
 .SH "SEE ALSO"
 ezmlm(5),
 ezmlm-archive(1),

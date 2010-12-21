@@ -26,7 +26,8 @@ release.
 
 - Fixed behavior of ezmlm-manage -Q flag to match man page.
 
-- Fixed ezmlm-import failing to flush output to the last message.
+- Fixed ezmlm-import failing to flush output to the last message,
+  and enhanced it to allow reading the mbox from stdin.
   Thanks to Tullio Andreatta.
 
 ezmlm-idx-7.1.1, 2010-11-18

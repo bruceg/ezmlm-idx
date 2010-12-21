@@ -22,7 +22,7 @@
 
 const char FATAL[] = "ezmlm-import: fatal: ";
 const char USAGE[] =
-"ezmlm-import: usage: ezmlm-import dir mbox";
+"ezmlm-import: usage: ezmlm-import dir [/path/to/mbox]";
 
 static struct option options[] = {
   OPT_END
@@ -89,12 +89,18 @@ int main(int argc,char *argv[])
   int opt;
 
   opt = getconfopt(argc,argv,options,1,0);
-  if (argc - opt != 1)
-    die_usage();
-
-  if ((fd = open_read(argv[opt])) == -1)
-    strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,argv[opt]));
-  substdio_fdbuf(&ssin,read,fd,inputbuf,sizeof inputbuf);
+  switch (argc - opt) {
+    case 0:
+      substdio_fdbuf(&ssin,read,0,inputbuf,sizeof inputbuf);
+      break;
+    case 1:
+      if ((fd = open_read(argv[opt])) == -1)
+        strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,argv[opt]));
+      substdio_fdbuf(&ssin,read,fd,inputbuf,sizeof inputbuf);
+      break;
+    default:
+      die_usage();
+  }
 
   lockfile("lock");
 
