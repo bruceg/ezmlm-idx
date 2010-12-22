@@ -453,8 +453,10 @@ int geton(const char *action)
   unsigned char ch;
 
   fl = get_from(target.s,action);		/* try to match up */
-  switch((r = subscribe(workdir,target.s,1,fl,
-			(*action == ACTION_RC[0]) ? "+mod" : "+",-1))) {
+  r = subscribe(workdir,target.s,1,fl,(*action == ACTION_RC[0]) ? "+mod" : "+",-1);
+  if (flagdig == FLD_DENY || flagdig == FLD_ALLOW)
+    strerr_die2x(0,INFO,MSG1(ERR_EXTRA_SUB,target.s));
+  switch (r) {
     case 1:
 	    qmail_puts(&qq,"List-Unsubscribe: <mailto:");	/*rfc2369 */
 	    qmail_put(&qq,outlocal.s,outlocal.len);
@@ -496,8 +498,6 @@ int geton(const char *action)
             copy(&qq,"text/sub-nop",flagcd);
             break;
   }
-  if (flagdig == FLD_DENY || flagdig == FLD_ALLOW)
-    strerr_die2x(0,INFO,MSG1(ERR_EXTRA_SUB,target.s));
   return r;
 }
 
@@ -505,8 +505,10 @@ int getoff(const char *action)
 {
   int r;
 
-  switch((r = subscribe(workdir,target.s,0,"",
-			(*action == ACTION_WC[0]) ? "-mod" : "-",-1))) {
+  r = subscribe(workdir,target.s,0,"",(*action == ACTION_WC[0]) ? "-mod" : "-",-1);
+  if (flagdig == FLD_DENY || flagdig == FLD_ALLOW)
+    strerr_die2x(0,INFO,MSG1(ERR_EXTRA_UNSUB,target.s));
+  switch (r) {
 			/* no comment for unsubscribe */
     case 1:
 	    hdr_subject(MSG(SUB_GOODBYE));
@@ -522,8 +524,6 @@ int getoff(const char *action)
             copy(&qq,"text/unsub-nop",flagcd);
             break;
   }
-  if (flagdig == FLD_DENY || flagdig == FLD_ALLOW)
-    strerr_die2x(0,INFO,MSG1(ERR_EXTRA_UNSUB,target.s));
   return r;
 }
 
