@@ -13,18 +13,17 @@ qqclean
 echo "#TEST_TEXT#" > "${DIR}/text/test"
 DEFAULT="edit.test-$MAN=$HOST"
 echo "X-num: edit1" > "$TMP"
-${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >/dev/null 2>&1 && \
-	fatal "failed to reject edit request from non-mod"
+check_manage edit1 -e 100 'failed to reject edit request from non-mod'
+
 DEFAULT="edit.test-$MOD=$HOST"
 echo "X-num: edit2" > "$TMP"
 rm "$DIR"/modcanedit
-${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \
-	fatal "-E failed for edit2"
+check_manage edit2 '' 100 '-E failed for edit2'
+
 echo "X-num: edit3" > "$TMP"
 touch "$DIR"/modcanedit
-${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
-	fatal "modcanedit failed for remote admin for edit3"
-checkenv edit3 "$LOC-return-@$HOST" "$MOD@$HOST"
+check_manage edit3 '' 0 'modcanedit failed for remote admin for edit3' 'edit test' \
+    "$LOC-return-@$HOST" "$MOD@$HOST"
 grep "^Subject: EDIT test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
 || fatal "edit3 had incorrect subject"
 rm "$DIR"/modcanedit
@@ -42,8 +41,8 @@ echo >> "$TMP"
 echo "%%% START OF TEXT FILE" >> "$TMP"
 echo "#NEW_TEXT#" >> "$TMP"
 echo "%%% END OF TEXT FILE" >> "$TMP"
-${EZBIN}/ezmlm-manage -e "$DIR" < "$TMP" >/dev/null 2>&1 || \
-	fatal "failed to send edit4 reply for edit3"
+check_manage edit4 -e 0 'failed to send edit4 reply for edit3' edit-done \
+    "$LOC-return-@$HOST" "$MAN@$HOST"
 grep "#NEW_TEXT#" "${DIR}/text/test" >/dev/null 2>&1 || \
 	fatal "edit4 failed to update text file"
 grep "^Subject: Success editing test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
@@ -52,59 +51,50 @@ grep "^Subject: Success editing test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
 # test list/log
 DEFAULT="allow-list-$MAN=$HOST"
 echo "X-num: list1" > "$TMP"
-${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >/dev/null 2>&1 && \
-	fatal "failed to reject list request from non-mod"
+check_manage list-l -l 100 'failed to reject list request from non-mod'
 
 DEFAULT="allow-log-$MAN=$HOST"
 echo "X-num: log1" > "$TMP"
-${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >/dev/null 2>&1 && \
-	fatal "failed to reject log request from non-mod"
+check_manage log-l -l 100 'failed to reject log request from non-mod'
 
 DEFAULT="allow-list-$MOD=$HOST"
 echo "X-num: list2" > "$TMP"
 rm "$DIR"/modcanlist
-${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >/dev/null 2>&1 && \
-	fatal "-L failed to reject list request"
+check_manage list2 '' 100 '-L failed to reject list request'
 
 qqclean
 echo "X-num: list3" > "$TMP"
-${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >"$ERR" 2>&1 || \
-	fatal "-l failed for remote admin for list3"
+check_manage list3 -l 0 '-l failed for remote admin' list \
+    "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 
 grep 'list3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -list reply to list3"
 grep "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to get list reply to list3"
-checkenv list3 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 
 qqclean
 echo "X-num: list4" > "$TMP"
 touch "$DIR"/modcanlist
-${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 || \
-	fatal "modcanlist failed for remote admin for list3"
+check_manage list4 '' 0 'modcanlist failed for remote admin for list3' list \
+    "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 
 grep 'list4' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -list reply to list4"
 grep "aaa@bbb" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to get list reply to list4"
-checkenv list4 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 rm "$DIR"/modcanlist
 
 DEFAULT="allow-log-$MOD=$HOST"
 echo "X-num: log2" > "$TMP"
-${EZBIN}/ezmlm-manage "$DIR" < "$TMP" >"$ERR" 2>&1 && \
-	fatal "-L failed to reject log request"
+check_manage log2 '' 100 '-L failed to reject log request'
 
 qqclean
 echo "X-num: log3" > "$TMP"
-${EZBIN}/ezmlm-manage -l "$DIR" < "$TMP" >"$ERR" 2>&1 || \
-	fatal "-l failed for remote admin for log3"
-
-# check results of log/list
+check_manage log3 -l 0 '-l failed for remote admin for log3' log \
+    "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 grep 'log3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -log reply to log3"
 grep "aaa@bbb" "$QQMSG" | grep "+m" > /dev/null 2>&1 || \
 	fatal "failed to get log reply to log3"
-checkenv log3 "$LOC-allow-return-@$HOST" "$MOD@$HOST"
 
 echo "OK"

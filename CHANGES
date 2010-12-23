@@ -24,6 +24,8 @@ release.
 
 - Added option to ezmlm-[un]sub to use a tag other than "manual" in Log.
 
+- Added option to ezmlm-manage to show what response is being sent.
+
 - Fixed behavior of ezmlm-manage -Q flag to match man page.
 
 - Fixed ezmlm-import failing to flush output to the last message,

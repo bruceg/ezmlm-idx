@@ -155,3 +155,28 @@ msgexists() {
 gethdr() {
     sed -e "/^$1:/!d; s/[^ ]* *//;" "$QQHDR"
 }
+
+##########################################
+# Run ezmlm-manage and check the results #
+##########################################
+check_manage() {
+    local name=$1
+    local options=$2
+    local exit=$3
+    local exitmsg="$4"
+    local text=$5
+    local sender="$6"
+    shift 6
+    ${EZBIN}/ezmlm-manage -a $options "$DIR" < "$TMP" > "$ERR" 2>&1
+    local e=$?
+    test $e -eq $exit || fatal "ezmlm-manage ($name) $exitmsg (exit $e)"
+    if [ -n "$text" ]
+    then
+	grep "ezmlm-manage: info: sending $text$" "$ERR" >/dev/null 2>&1 \
+	    || fatal "ezmlm-manage ($name) sent wrong text (should be $text)"
+    fi
+    if [ -n "$sender" ]
+    then
+	checkenv $name "$sender" "$@"
+    fi
+}
