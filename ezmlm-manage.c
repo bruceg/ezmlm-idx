@@ -102,8 +102,6 @@ static struct option options[] = {
 static const char hex[]="0123456789ABCDEF";
 char urlstr[] = "%00";	/* to build a url-encoded version of a char */
 
-int act = AC_NONE;	/* desired action */
-unsigned int actlen = 0;/* str_len of above */
 const char *dir;
 const char *workdir;
 const char *sender;
@@ -389,7 +387,7 @@ void mod_bottom(void)
       qmail_from(&qq,from.s);
 }
 
-void msg_headers(void)
+void msg_headers(int act)
 /* Writes all the headers up to but not including subject */
 {
   int flaggoodfield;
@@ -597,9 +595,9 @@ void sendtomods(void)
   putsubs(moddir.s,0L,52L,subto);
 }
 
-void copybottom(void)
+void copybottom(int forcebottom)
 {
-  if (!omitbottom || act == AC_HELP) {
+  if (!omitbottom || forcebottom) {
     copy(&qq,"text/bottom",flagcd);
     if (flagcd) {
       if (flagcd == 'B') {
@@ -648,27 +646,27 @@ static void do_subscribe(const char *action)
 
   if (issub(workdir,target.s,0)) {
     geton(ACTION_SC);
-    copybottom();
+    copybottom(0);
     qmail_to(&qq,target.s);
   } else if (ismod && remote.s != 0) {
     doconfirm(ACTION_RC);
     copy_act("text/mod-sub-confirm");
-    copybottom();
+    copybottom(0);
     qmail_to(&qq,mod.s);
   } else if (flagsubconf) {
     doconfirm(ACTION_SC);
     copy_act("text/sub-confirm");
-    copybottom();
+    copybottom(0);
     qmail_to(&qq,target.s);
   } else if (modsub.s != 0) {
     store_from(&fromline,target.s);
     doconfirm(ACTION_TC);
     copy_act("text/mod-sub-confirm");
-    copybottom();
+    copybottom(0);
     sendtomods();
   } else {				/* normal subscribe, no confirm */
     r = geton(action);		/* should be rarely used. */
-    copybottom();
+    copybottom(0);
     if (flagnotify) qmail_to(&qq,target.s);
     if (r && flagcopyowner > 1) to_owner();
   }
@@ -684,18 +682,18 @@ static void do_sc(const char *action)
 					/* since transaction not complete */
       doconfirm(ACTION_TC);
       copy_act("text/mod-sub-confirm");
-      copybottom();
+      copybottom(0);
       sendtomods();
     } else {
       r = geton(action);
-      copybottom();
+      copybottom(0);
       qmail_to(&qq,target.s);
       if (r && flagcopyowner > 1) to_owner();
     }
   } else {
     doconfirm(ACTION_SC);
     copy_act("text/sub-bad");
-    copybottom();
+    copybottom(0);
     qmail_to(&qq,target.s);
   }
 }
@@ -714,7 +712,7 @@ static void do_rc_tc(const char *action,const char *ac)
       die_cookie();
     doconfirm(ac);
     copy(&qq,"text/sub-bad",flagcd);
-    copybottom();
+    copybottom(0);
     qmail_to(&qq,mod.s);
   }
 }
@@ -725,28 +723,28 @@ static void do_unsubscribe(const char *action)
 
   if (!issub(workdir,target.s,0)) {
     getoff(ACTION_UC);
-    copybottom();
+    copybottom(0);
     qmail_to(&qq,target.s);
   } else if (flagunsubconf) {
     if (ismod && remote.s != 0) {
       doconfirm(ACTION_WC);
       copy_act("text/mod-unsub-confirm");
-      copybottom();
+      copybottom(0);
       qmail_to(&qq,mod.s);
     } else {
       doconfirm(ACTION_UC);
       copy_act("text/unsub-confirm");
-      copybottom();
+      copybottom(0);
       qmail_to(&qq,target.s);
     }
   } else if (flagunsubismod && modsub.s != 0) {
     doconfirm(ACTION_VC);
     copy_act("text/mod-unsub-confirm");
-    copybottom();
+    copybottom(0);
     sendtomods();
   } else {
     r = getoff(action);
-    copybottom();
+    copybottom(0);
     if (!r || flagnotify) qmail_to(&qq,target.s);
 		/* tell owner if problems (-Q) or anyway (-QQ) */
     if (flagcopyowner && (!r || flagcopyowner > 1)) to_owner();
@@ -763,11 +761,11 @@ static void do_uc(const char *action)
     if (flagunsubismod && modsub.s != 0) {
       doconfirm(ACTION_VC);
       copy_act("text/mod-unsub-confirm");
-      copybottom();
+      copybottom(0);
       sendtomods();
     } else {
       r = getoff(action);
-      copybottom();
+      copybottom(0);
       if (!r || flagnotify) qmail_to(&qq,target.s);
 		/* tell owner if problems (-Q) or anyway (-QQ) */
       if (flagcopyowner && (!r || flagcopyowner > 1)) to_owner();
@@ -775,7 +773,7 @@ static void do_uc(const char *action)
   } else {
     doconfirm(ACTION_UC);
     copy_act("text/unsub-bad");
-    copybottom();
+    copybottom(0);
     qmail_to(&qq,target.s);
   }
 }
@@ -800,12 +798,12 @@ static void do_vc_wc(const char *action,const char *ac)
       die_cookie();
     doconfirm(ac);
     copy_act("text/unsub-bad");
-    copybottom();
+    copybottom(0);
     qmail_to(&qq,mod.s);
   }
 }
 
-static void do_list(void)
+static void do_list(int act)
 {
   unsigned int i;
   if (!flaglist || (modsub.s == 0 && remote.s == 0))
@@ -829,11 +827,11 @@ static void do_list(void)
   (void) code_qput("\n  ======> ",11);
   (void) code_qput(strnum,fmt_ulong(strnum,i));
   (void) code_qput("\n",1);
-  copybottom();
+  copybottom(0);
   qmail_to(&qq,mod.s);
 }
 
-static void do_log(char *action)
+static void do_log(char *action,unsigned int actlen)
 {
   action += actlen;
   if (*action == '.' || *action == '_') ++action;
@@ -845,7 +843,7 @@ static void do_log(char *action)
   hdr_subject((*action == 0) ? MSG(SUB_LOG) : MSG(SUB_LOG_SEARCH));
   hdr_ctboundary();
   searchlog(workdir,action,code_subto);
-  copybottom();
+  copybottom(0);
   qmail_to(&qq,mod.s);
 }
 
@@ -927,7 +925,7 @@ static void do_edit(const char *action)
     copy_act("text/edit-list");
   }
   qmail_puts(&qq,"\n\n");
-  copybottom();
+  copybottom(0);
   qmail_to(&qq,mod.s);
 }
 
@@ -1061,7 +1059,7 @@ static void do_ed(char *action)
   hdr_ctboundary();
   copy(&qq,"text/top",flagcd);
   copy_act("text/edit-done");
-  copybottom();
+  copybottom(0);
   qmail_to(&qq,sender);		/* not necessarily from mod */
 }
 
@@ -1119,7 +1117,7 @@ static void do_get(const char *action)
     }
     close(fd);
   }
-  copybottom();
+  copybottom(0);
   qmail_to(&qq,target.s);
 }
 
@@ -1132,7 +1130,7 @@ static void do_query(void)
     copy_act("text/sub-nop");
   else
     copy_act("text/unsub-nop");
-  copybottom();
+  copybottom(0);
   qmail_to(&qq,ismod ? mod.s : target.s);
 }
 
@@ -1142,7 +1140,7 @@ static void do_info(void)
   hdr_ctboundary();
   copy(&qq,"text/top",flagcd);
   copy_act("text/info");
-  copybottom();
+  copybottom(0);
   qmail_to(&qq,target.s);
 }
 
@@ -1152,7 +1150,7 @@ static void do_faq(void)
   hdr_ctboundary();
   copy(&qq,"text/top",flagcd);
   copy_act("text/faq");
-  copybottom();
+  copybottom(0);
   qmail_to(&qq,target.s);
 }
 
@@ -1163,18 +1161,17 @@ static void do_mod_help(void)
   copy(&qq,"text/top",flagcd);
   copy_act("text/mod-help");
   copy(&qq,"text/help",flagcd);
-  copybottom();
+  copybottom(0);
   qmail_to(&qq,mod.s);
 }
 
 static void do_help(void)
 {
-  act = AC_HELP;
   hdr_subject(MSG(SUB_HELP));
   hdr_ctboundary();
   copy(&qq,"text/top",flagcd);
   copy_act("text/help");
-  copybottom();
+  copybottom(1);
   qmail_to(&qq,sender);
 }
 
@@ -1209,11 +1206,86 @@ static char *set_workdir(char *action)
   return action;
 }
 
+static int get_act_ismod(const char *action,unsigned int *actlen)
+{
+  int act;
+
+  if (case_equals(action,ACTION_LISTN) ||
+		case_equals(action,ALT_LISTN))
+    act = AC_LISTN;
+  else if (case_equals(action,ACTION_LIST) ||
+		case_equals(action,ALT_LIST))
+    act = AC_LIST;
+  else if (case_starts(action,ACTION_GET) ||
+		case_starts(action,ALT_GET))
+    act = AC_GET;
+  else if (case_equals(action,ACTION_HELP) ||
+		case_equals(action,ALT_HELP))
+    act = AC_HELP;
+  else if (case_starts(action,ACTION_EDIT) ||
+		case_starts(action,ALT_EDIT))
+    act = AC_EDIT;
+  else if (case_starts(action,ACTION_LOG))
+    { act = AC_LOG; *actlen = str_len(ACTION_LOG); }
+  else if (case_starts(action,ALT_LOG))
+    { act = AC_LOG; *actlen = str_len(ALT_LOG); }
+  else
+    act = AC_NONE;
+
+  if (modsub.s != 0 || remote.s != 0) {
+    if (modsub.len) {
+      if (!stralloc_copy(&moddir,&modsub)) die_nomem();
+    } else if (remote.len) {
+      if (!stralloc_copy(&moddir,&remote)) die_nomem();
+    } else {
+      if (!stralloc_copys(&moddir,"mod")) die_nomem();
+    }
+    if (!stralloc_0(&moddir)) die_nomem();
+		/* for these the reply is 'secret' and goes to sender  */
+		/* This means that they can be triggered from a SENDER */
+		/* that is not a mod, but never send to a non-mod */
+    if (act == AC_NONE || flagdig == FLD_DENY)	/* None of the above */
+      ismod = issub(moddir.s,sender,&mod);
+				/* sender = moderator? */
+    else
+      ismod = issub(moddir.s,target.s,&mod);
+				/* target = moderator? */
+   } else
+     ismod = 0;			/* always 0 for non-mod/remote lists */
+				/* if DIR/public is missing, we still respond*/
+				/* to requests from moderators for remote    */
+				/* admin and modsub lists. Since ismod   */
+				/* is false for all non-mod lists, only it   */
+				/* needs to be tested. */
+
+  if (!flagpublic && !(ismod && remote.s != 0) &&
+                !case_equals(action,ACTION_HELP))
+      strerr_die2x(100,FATAL,MSG(ERR_NOT_PUBLIC));
+
+  if (flagdig == FLD_DENY)
+    if (!ismod || remote.s == 0)	/* only mods can do */
+      strerr_die1x(100,MSG(ERR_NOT_ALLOWED));
+
+  if (act == AC_NONE) {		/* none of the above */
+    if (case_equals(action,ACTION_SUBSCRIBE) ||
+		case_equals(action,ALT_SUBSCRIBE))
+      act = AC_SUBSCRIBE;
+    else if (case_equals(action,ACTION_UNSUBSCRIBE)
+		|| case_equals(action,ALT_UNSUBSCRIBE))
+      act = AC_UNSUBSCRIBE;
+    else if (str_start(action,ACTION_SC))
+      act = AC_SC;
+  }
+  return act;
+}
+
 int main(int argc,char **argv)
 {
   char *action;
   const char *err;
   unsigned int i;
+  int act = AC_NONE;	/* desired action */
+  unsigned int actlen = 0;/* str_len of above */
 
   (void) umask(022);
   sig_pipeignore();
@@ -1251,71 +1323,7 @@ int main(int argc,char **argv)
   set_cptarget(target.s);	/* for copy() */
   make_verptarget();
 
-  if (case_equals(action,ACTION_LISTN) ||
-		case_equals(action,ALT_LISTN))
-    act = AC_LISTN;
-  else if (case_equals(action,ACTION_LIST) ||
-		case_equals(action,ALT_LIST))
-    act = AC_LIST;
-  else if (case_starts(action,ACTION_GET) ||
-		case_starts(action,ALT_GET))
-    act = AC_GET;
-  else if (case_equals(action,ACTION_HELP) ||
-		case_equals(action,ALT_HELP))
-    act = AC_HELP;
-  else if (case_starts(action,ACTION_EDIT) ||
-		case_starts(action,ALT_EDIT))
-    act = AC_EDIT;
-  else if (case_starts(action,ACTION_LOG))
-   { act = AC_LOG; actlen = str_len(ACTION_LOG); }
-  else if (case_starts(action,ALT_LOG))
-   { act = AC_LOG; actlen = str_len(ALT_LOG); }
-
-			/* NOTE: act is needed in msg_headers(). */
-			/* Yes, this needs to be cleaned up! */
-
-  if (modsub.s != 0 || remote.s != 0) {
-    if (modsub.len) {
-      if (!stralloc_copy(&moddir,&modsub)) die_nomem();
-    } else if (remote.len) {
-      if (!stralloc_copy(&moddir,&remote)) die_nomem();
-    } else {
-      if (!stralloc_copys(&moddir,"mod")) die_nomem();
-    }
-    if (!stralloc_0(&moddir)) die_nomem();
-		/* for these the reply is 'secret' and goes to sender  */
-		/* This means that they can be triggered from a SENDER */
-		/* that is not a mod, but never send to a non-mod */
-    if (act == AC_NONE || flagdig == FLD_DENY)	/* None of the above */
-      ismod = issub(moddir.s,sender,&mod);
-				/* sender = moderator? */
-    else
-      ismod = issub(moddir.s,target.s,&mod);
-				/* target = moderator? */
-   } else
-     ismod = 0;			/* always 0 for non-mod/remote lists */
-				/* if DIR/public is missing, we still respond*/
-				/* to requests from moderators for remote    */
-				/* admin and modsub lists. Since ismod   */
-				/* is false for all non-mod lists, only it   */
-				/* needs to be tested. */
-  if (!flagpublic && !(ismod && remote.s != 0) &&
-                !case_equals(action,ACTION_HELP))
-      strerr_die2x(100,FATAL,MSG(ERR_NOT_PUBLIC));
-
-  if (flagdig == FLD_DENY)
-    if (!ismod || remote.s == 0)	/* only mods can do */
-      strerr_die1x(100,MSG(ERR_NOT_ALLOWED));
-
-  if (act == AC_NONE) {		/* none of the above */
-    if (case_equals(action,ACTION_SUBSCRIBE) ||
-		case_equals(action,ALT_SUBSCRIBE))
-      act = AC_SUBSCRIBE;
-    else if (case_equals(action,ACTION_UNSUBSCRIBE)
-		|| case_equals(action,ALT_UNSUBSCRIBE))
-      act = AC_UNSUBSCRIBE;
-    else if (str_start(action,ACTION_SC)) act = AC_SC;
-  }
+  act = get_act_ismod(action,&actlen);
 
   if (!stralloc_copy(&from,&outlocal)) die_nomem();
   if (!stralloc_cats(&from,"-return-@")) die_nomem();
@@ -1324,7 +1332,7 @@ int main(int argc,char **argv)
 
   if (qmail_open(&qq) == -1)
     strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
-  msg_headers();
+  msg_headers(act);
 
   if (act == AC_SUBSCRIBE)
     do_subscribe(action);
@@ -1343,9 +1351,9 @@ int main(int argc,char **argv)
   else if (str_start(action,ACTION_WC))
     do_vc_wc(action,ACTION_WC);
   else if (act == AC_LIST || act == AC_LISTN) 
-    do_list();
+    do_list(act);
   else if (act == AC_LOG)
-    do_log(action);
+    do_log(action,actlen);
   else if (act == AC_EDIT)
     do_edit(action);
   else if (str_start(action,ACTION_ED))
@@ -1373,4 +1381,3 @@ int main(int argc,char **argv)
   strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
   strerr_die3x(0,INFO,"qp ",strnum);
 }
-
