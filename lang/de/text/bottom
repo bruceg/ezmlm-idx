@@ -1,52 +1,42 @@
 # Revision: 1
 
-Wenn Sie weiterführende Informationen zu Mailinglisten haben möchten,
-schauen Sie sich doch im World Wide Web einmal das Dokument
-"Mailinglisten und ihre Benutzung"  unter folgender Adresse an:
-http://www.pobox.com/~fte/ml.html
-
---- Hier eine Aufstellung der wichtigsten Kommandos zur Steuerung des
+--- Die wichtigsten Kommandos zur Steuerung des
     Mailinglistenmanagers ezmlm für diese Liste:
 
-Ich kann alle Ihre Anforderungen bezüglich der Liste
-automatisch bearbeiten. Schicken Sie einfach eine leere Mail
-an die jeweilige Adresse.
-SENDEN SIE KEINE KOMMANDOS AN DIE MAILINGLISTE SELBST.
-In dem Fall kann ich nicht darauf reagieren und viele Empfänger
-der Mailingliste werden sich bei Ihnen oder über Sie beschweren.
+Ich kann Ihre Anforderungen bezüglich der Liste automatisch 
+bearbeiten. Bitte senden Sie keine Kommandos an die Mailingliste
+selbst. Schicken Sie eine leere Mail an die jeweilige Adresse.
 
+Beschreibung der Kommandos für die Mailingliste:
    <<#L#>-help@<#h#>>
-   Beschreibung der Steuerungsmöglichkeiten für diese
-   Mailingliste
 
+Anmeldung für die Mailingliste:
    <<#L#>-subscribe@<#h#>>
-   wenn Sie die Mailingliste in Zukunft beziehen möchten
-
-   Wenn Sie keine Nachrichten der Mailingliste <#L#>
-   mehr empfangen möchten, benutzen Sie bitte die Adresse, die
-   im Header "List-Unsubscribe:" angegeben ist. Wenn Sie Ihre
-   Email-Adresse nach der Listenbestellung nicht geändert haben,
-   geht auch:
+   
+Wenn Sie keine Nachrichten der Mailingliste <#L#> mehr empfangen 
+möchten, benutzen Sie bitte die Adresse, die im Mail-Header 
+"List-Unsubscribe:" angegeben ist. Wenn sich Ihre Email-Adresse 
+seit der Anmeldung nicht geändert hat, kann die Abmeldung
+auch unter folgender Adresse erfolgen:
    <<#L#>-unsubscribe@<#h#>>
 
 <=d=>
-   Für die Digest-Liste existieren die entsprechenden Adressen:
+oder für die Digest-Liste:
    <<#L#>-digest-subscribe@<#h#>>
    <<#L#>-digest-unsubscribe@<#h#>>
 
 <=HJ=>
-Beim Löschen oder Eintragen von Abonnenten verschicke ich eine
-zusätzliche Kontrollnachricht. Diese muß zur Bestätigung einfach
-nur beantwortet werden.
+Nach An- oder Abmelden einer Adresse erhalten Sie ein
+Bestätigungsmail an diese Adresse. Beantworten Sie dieses,
+um den Vorgang abzuschließen.
 
 <==>
-Falls Sie menschliche Hilfe brauchen, wenden Sie sich bitte an
-den Listeneigentümer:
+Falls Sie den Betreiber der Mailingliste kontaktieren möchten,
+senden Sie eine Nachricht an:
 
    <<#L#>-owner@<#h#>>
 
-Bitte schicken Sie eine Listenmail inklusive ALLER Header mit -
-dadurch wird es sehr viel leichter, Ihnen schnell zu helfen.
+Bitte schicken Sie eine WEITERGELEITETE Nachricht der Liste
+inklusive ALLER HEADER mit - das macht es leichter Ihnen zu helfen.
 
---- Anbei eine Kopie der Anforderung die ich erhalten habe:
-
+--- Anbei eine Kopie der Anfrage, die ich erhalten habe.
