@@ -10,13 +10,13 @@ moderation requests to the moderator(s).
 stores a main message sent to a ezmlm mailing list awaiting
 message moderation or user confirmation.
 
-If
+If the
+.B \-y
+option is set, or
 .I dir\fB/confirmpost
 exists and the
 .B \-Y
-option is not set, it works in user confirmation mode.  Otherwise if the
-.B \-y
-option is not set and
+option is not set, it works in user confirmation mode.  Otherwise if
 .I dir\fB/modpost
 exists, it works in message moderation mode.
 Otherwise the message is passed on to
@@ -164,11 +164,11 @@ is used as a distribution channel of e.g. catalogs).
 .B \-cCrR
 Passed on to
 .B ezmlm-send(1)
-in case this program is executed. This happens only if
+in case this program is executed. This happens only if neither
 .I dir\fB/modpost
-and
+nor
 .I dir\fB/confirmpost
-does not exist.
+exist.
 .TP
 .B \-m
 (Default.)
