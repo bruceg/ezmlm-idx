@@ -12,6 +12,10 @@
   and enhanced it to allow reading the mbox from stdin.
   Thanks to Tullio Andreatta.
 
+- Fixed ezmlm-manage notifying target of an unsubscribe by a remote
+  administrator when the -N option is in use.
+  Thanks to Nebojsa Milovanovic.
+
 ezmlm-idx-7.1.1, 2010-11-18
 ===========================
 

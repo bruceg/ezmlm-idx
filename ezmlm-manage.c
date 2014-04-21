@@ -788,7 +788,7 @@ static void do_vc_wc(const char *action,const char *ac)
       strerr_die2x(0,INFO,MSG(ERR_UNSUB_NOP));
     mod_bottom();
     if (r) {				/* success to target */
-      qmail_to(&qq,target.s);
+      if (flagnotify) qmail_to(&qq,target.s);
       if (flagcopyowner > 1) to_owner();
     } else				/* NOP to sender = admin. Will take */
       qmail_to(&qq,sender);		/* care of it. No need to tell owner */
