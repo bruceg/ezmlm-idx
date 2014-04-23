@@ -16,6 +16,8 @@
   administrator when the -N option is in use.
   Thanks to Nebojsa Milovanovic.
 
+- Fixed ezmlm-archive corrupting output index files.
+
 ezmlm-idx-7.1.1, 2010-11-18
 ===========================
 

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "alloc.h"
+#include "byte.h"
 #include "error.h"
 #include "stralloc.h"
 #include "str.h"
@@ -96,7 +97,7 @@ void write_threads(const msgentry *msgtable,
   const authentry *pautht;
   const dateentry *pdatet;
   const char *cp;
-  const char *cp1;
+  unsigned int cp1;
   unsigned long msg;
   unsigned long ulmsginthread;
   unsigned long subnum;
@@ -237,7 +238,7 @@ void write_threads(const msgentry *msgtable,
     if ((fd = open_read(fn.s)) == -1) {
       if (errno != error_noent)
 	  strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
-      if (substdio_puts(&ssout,psubt->sub) == -1)	/* write subject */
+      if (substdio_put(&ssout,psubt->sub,psubt->sublen) == -1)	/* write subject */
 	     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
     } else {					/* copy data */
 	substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
@@ -273,11 +274,10 @@ void write_threads(const msgentry *msgtable,
 	if (!stralloc_cats(&line,":")) die_nomem();
         if (pmsgt->authnum) {
 	  pautht = authtable + pmsgt->authnum - 1;
-	  cp = pautht->auth;
-	  cp1 = cp + str_chr(cp,' ');
-	  if (cp + HASHLEN != cp1)
+	  cp1 = byte_chr(pautht->auth,pautht->authlen,' ');
+	  if (cp1 != HASHLEN)
 	    strerr_die1x(100,MSG(ERR_BAD_INDEX));
-	  if (!stralloc_cats(&line,cp))
+	  if (!stralloc_catb(&line,pautht->auth,pautht->authlen))
 		die_nomem();				/* hash */
 	} else
           if (!stralloc_cats(&line,"\n")) die_nomem();
