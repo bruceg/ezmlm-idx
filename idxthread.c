@@ -305,8 +305,8 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
       pmsgt->date = lastdate;
       if (hasauth) {
 	pos = 0;
-	while (authline.s[pos] && authline.s[pos] != ' ') pos++;
-	if (authline.s[++pos]) {
+	while (pos < authline.len && authline.s[pos] != ' ') pos++;
+	if (++pos < authline.len) {
 	  thisdate = date2yyyymm(authline.s + pos);
 	  if (thisdate) pmsgt->date = thisdate;
 	  if (pmsgt->date > lastdate) {
@@ -529,7 +529,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
 	  psubt->lastmsg = msg;
           pmsgt->subnum = 1;
           if (flagauth) {
-	    if (*authline.s)
+	    if (authline.len > 0)
 	      pmsgt->date = date2yyyymm(authline.s + 1);
             pos = byte_chr(authline.s,authline.len,';');
 	    if (authline.len > pos + HASHLEN + 1 && authline.s[pos+1] != ' ') {
