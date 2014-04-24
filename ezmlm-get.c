@@ -76,7 +76,7 @@ static struct option options[] = {
 };
 
 stralloc listname = {0};
-stralloc fn = {0};
+stralloc filename = {0};
 stralloc moddir = {0};
 stralloc mydtline = {0};
 stralloc digheaders = {0};
@@ -104,8 +104,6 @@ stralloc line2 = {0};
 stralloc qline = {0};
 stralloc quoted = {0};
 stralloc msgnum = {0};
-stralloc num = {0};
-stralloc subject = {0};
 stralloc author = {0};
 
 /* for copy archive */
@@ -569,24 +567,24 @@ void msgout(unsigned long msg,char format)
   int fd;
   unsigned int len;
 
-    if (!stralloc_copys(&fn,"archive/")) die_nomem();
+    if (!stralloc_copys(&filename,"archive/")) die_nomem();
 
     len = fmt_ulong(strnum, msg / 100);
-    if (!stralloc_catb(&fn,strnum,len)) die_nomem();
-    if (!stralloc_cats(&fn,"/")) die_nomem();
+    if (!stralloc_catb(&filename,strnum,len)) die_nomem();
+    if (!stralloc_cats(&filename,"/")) die_nomem();
     len = fmt_uint0(strnum, (unsigned int) (msg % 100),2);
-    if (!stralloc_catb(&fn,strnum,len)) die_nomem();
-    if (!stralloc_0(&fn)) die_nomem();
+    if (!stralloc_catb(&filename,strnum,len)) die_nomem();
+    if (!stralloc_0(&filename)) die_nomem();
 
     switch(format) {
       case MIME:
       case VIRGIN:
       case NATIVE:
       case MIXED:
-	fd = open_read(fn.s);
+	fd = open_read(filename.s);
 	if (fd == -1) {
 	  if (errno != error_noent)
-	    strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
+	    strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,filename.s));
           else
             mime_getbad(msg);
         } else if (fstat(fd,&st) == -1 || (!(st.st_mode & 0100))) {
@@ -605,10 +603,10 @@ void msgout(unsigned long msg,char format)
         }
 	break;
       case RFC1153:
-	fd = open_read(fn.s);
+	fd = open_read(filename.s);
 	if (fd == -1) {
 	  if (errno != error_noent)
-	    strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
+	    strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,filename.s));
 	  else {
 	    qmail_puts(&qq,"\n== ");
 	    qmail_put(&qq,strnum,fmt_ulong(strnum,msg));
@@ -788,6 +786,8 @@ int main(int argc,char **argv)
   dateentry *datetable;
   struct datetime dt;
   char date[DATE822FMT];
+  stralloc num = {0};
+  stralloc subject = {0};
 
   (void) umask(022);
   sig_pipeignore();
@@ -1127,25 +1127,25 @@ int main(int argc,char **argv)
     u /= 100;
     to /= 100;
     while (u <= to) {
-      if (!stralloc_copys(&fn,"archive/")) die_nomem();
-      if (!stralloc_catb(&fn,strnum,fmt_ulong(strnum,u))) die_nomem();
-      if (!stralloc_cats(&fn,"/index")) die_nomem();
-      if (!stralloc_0(&fn)) die_nomem();
+      if (!stralloc_copys(&filename,"archive/")) die_nomem();
+      if (!stralloc_catb(&filename,strnum,fmt_ulong(strnum,u))) die_nomem();
+      if (!stralloc_cats(&filename,"/index")) die_nomem();
+      if (!stralloc_0(&filename)) die_nomem();
 
       if (u == max/100)	/* lock if last index file in archive */
         lockup();
 
-      fd = open_read(fn.s);
+      fd = open_read(filename.s);
       if (fd == -1)
         if (errno != error_noent)
-          strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
+          strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,filename.s));
         else
           code_qputs(MSG(TXT_NOINDEX));
       else {
         substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
         for (;;) {
           if (getln(&sstext,&line,&match,'\n') == -1)
-            strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
+            strerr_die2sys(111,FATAL,MSG1(ERR_READ,filename.s));
           if (match) {
             if (line.s[0] != '\t') {	/* subject line */
               pos = byte_chr(line.s,line.len,' ');

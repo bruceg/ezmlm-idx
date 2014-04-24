@@ -82,7 +82,7 @@ datetime_sec hashdate;
 
 stralloc quoted = {0};
 stralloc line = {0};
-stralloc modtime = {0};
+stralloc modtimestr = {0};
 stralloc to = {0};
 
 int fd;
@@ -233,9 +233,9 @@ int main(int argc,char **argv)
     /* default to returning timed-out messages */
     flagreturn = !getconf_isset("noreturnposts");
 
-  getconf_line(&modtime,"modtime",0);
-  if (!stralloc_0(&modtime)) die_nomem();
-  scan_ulong(modtime.s,&delay);
+  getconf_line(&modtimestr,"modtime",0);
+  if (!stralloc_0(&modtimestr)) die_nomem();
+  scan_ulong(modtimestr.s,&delay);
   if (!delay) delay = DELAY_DEFAULT;
   else if (delay < DELAY_MIN) delay = DELAY_MIN;
   else if (delay > DELAY_MAX) delay = DELAY_MAX;

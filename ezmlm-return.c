@@ -63,7 +63,6 @@ char strnum[FMT_ULONG];
 char hash[COOKIE];
 char hashcopy[COOKIE];
 char *hashp = (char *) 0;
-unsigned long cookiedate;
 unsigned long addrno = 0L;
 unsigned long addrno1 = 0L;
 stralloc fndir = {0};
@@ -77,10 +76,11 @@ const char *sender;
 const char *dir;
 const char *workdir;
 
-void die_hashnew(void)
-{ strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnhashnew.s)); }
-void die_datenew(void)
-{ strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fndatenew.s)); }
+void die_write(const char *fn)
+{ strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fn)); }
+
+void die_hashnew(void) { die_write(fnhashnew.s); }
+void die_datenew(void) { die_write(fndatenew.s); }
 void die_msgin(void)
 { strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT)); }
 

@@ -35,7 +35,7 @@ const char WARNING[] = "ezmlm-archive: warning: inconsistent index: ";
 static int flagcreate = 0;
 static unsigned long archnum = 0L;
 static int flagsyncall = 0;
-static unsigned long to = 0L;
+static unsigned long optto = 0L;
 
 static struct option options[] = {
   OPT_FLAG(flagcreate,'c',1,0),
@@ -44,8 +44,8 @@ static struct option options[] = {
   OPT_ULONG_FLAG(archnum,'F',0,0),
   OPT_FLAG(flagsyncall,'s',1,0),
   OPT_FLAG(flagsyncall,'S',0,0),
-  OPT_ULONG(to,'t',0),
-  OPT_ULONG_FLAG(to,'T',0,0),
+  OPT_ULONG(optto,'t',0),
+  OPT_ULONG_FLAG(optto,'T',0,0),
   OPT_END
 };
 
@@ -390,7 +390,7 @@ int main(int argc,char **argv)
     strerr_die1x(100,MSG(ERR_EMPTY_LIST));
   (void) close(fdlock);
 
-  if (!to || to > max) to = max;
+  if (!optto || optto > max) optto = max;
 
   fdlock = lockfile("archive/lock");	/* lock index */
   if (!flagcreate && !archnum) {	/* adjust archnum (from) / to */
@@ -400,7 +400,7 @@ int main(int argc,char **argv)
       archnum = 0;
   }
 
-  if (archnum > to)
+  if (archnum > optto)
     _exit(0);				/* nothing to do */
 
   if (mkdir("archive/threads",0755) == -1)
@@ -414,14 +414,14 @@ int main(int argc,char **argv)
       strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archive/authors"));
 
 					/* do the subject threading */
-  idx_mkthreads(&msgtable,&subtable,&authtable,&datetable,archnum,to,max,0);
+  idx_mkthreads(&msgtable,&subtable,&authtable,&datetable,archnum,optto,max,0);
 					/* update the index */
-  write_threads(msgtable,subtable,authtable,datetable,archnum,to);
+  write_threads(msgtable,subtable,authtable,datetable,archnum,optto);
 					/* update archnum */
   if ((fd = open_trunc("archnumn")) == -1)
     strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,"archnumn"));
   substdio_fdbuf(&ssnum,write,fd,numbuf,sizeof(numbuf));
-  if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,to)) == -1)
+  if (substdio_put(&ssnum,strnum,fmt_ulong(strnum,optto)) == -1)
      strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
   if (substdio_puts(&ssnum,"\n") == -1)
      strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));

@@ -50,7 +50,7 @@
 #include "idx.h"
 #include "config.h"
 
-static stralloc line = {0};
+static stralloc srcline = {0};
 static stralloc outline = {0};
 static stralloc qline = {0};
 static substdio sstext;
@@ -239,20 +239,20 @@ void copy(struct qmail *qq,
 		   FATAL,MSG1(ERR_OPEN,fn));
   substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
   for (;;) {
-    if (getln(&sstext,&line,&match,'\n') == -1)
+    if (getln(&sstext,&srcline,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn));
-    if (line.len > 0) {		/* line.len is always > 0 if match is true */
-      if (line.s[0] == '#') continue;
+    if (srcline.len > 0) {		/* srcline.len is always > 0 if match is true */
+      if (srcline.s[0] == '#') continue;
       /* suppress blank line for 'H'eader mode */
-      if (line.len == 1 && q == 'H') continue;
-      if (line.s[0] == '!') {
-	if (line.s[1] == 'R') {
+      if (srcline.len == 1 && q == 'H') continue;
+      if (srcline.s[0] == '!') {
+	if (srcline.s[1] == 'R') {
 	  codeput(qq,"   ",3,q);
 	  codeputs(qq,confirm,q);
 	  codeput(qq,"\n",1,q);
 	  continue;
 	}
-	if (line.s[1] == 'A') {
+	if (srcline.s[1] == 'A') {
 	  codeput(qq,"   ",3,q);
 	  codeputs(qq,target,q);
 	  codeput(qq,"\n",1,q);
@@ -261,20 +261,20 @@ void copy(struct qmail *qq,
       }
       /* Find <=flags=> tags */
       if (q != 'H'
-	  && line.len >= 5
-	  && line.s[0] == '<'
-	  && line.s[1] == '='
-	  && line.s[line.len-3] == '='
-	  && line.s[line.len-2] == '>') {
+	  && srcline.len >= 5
+	  && srcline.s[0] == '<'
+	  && srcline.s[1] == '='
+	  && srcline.s[srcline.len-3] == '='
+	  && srcline.s[srcline.len-2] == '>') {
 	for (flagsmatched = 1, pos = 2;
-	     flagsmatched && pos < line.len - 3;
+	     flagsmatched && pos < srcline.len - 3;
 	     ++pos)
-	  flagsmatched = flagsmatched && flag_isset(line.s[pos]);
+	  flagsmatched = flagsmatched && flag_isset(srcline.s[pos]);
 	continue;
       }
       if (!flagsmatched) continue;
 
-      copy_xlate(&outline,&line,0,q);
+      copy_xlate(&outline,&srcline,0,q);
       codeput(qq,outline.s,outline.len,q);
 
       /* Last line is missing its trailing newline, add one on output. */

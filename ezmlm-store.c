@@ -75,11 +75,6 @@ stralloc fnmsg = {0};
 
 void die_msg(void) { strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnmsg.s)); }
 
-int fdmsg;
-int fdmod;
-int pid;
-int match;
-
 char strnum[FMT_ULONG];
 char hash[COOKIE];
 char boundary[COOKIE];
@@ -147,6 +142,8 @@ int main(int argc,char **argv)
   stralloc mod = {0};
   const char *err;
   unsigned int i;
+  int fdmsg;
+  int pid;
 
   (void) umask(022);
   sig_pipeignore();

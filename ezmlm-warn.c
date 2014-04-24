@@ -38,14 +38,14 @@ const char FATAL[] = "ezmlm-warn: fatal: ";
 const char USAGE[] =
 "ezmlm-warn: usage: ezmlm-warn -dD -l secs -t days dir";
 
-static int flagdig = -1;
+static int digopt = -1;
 static unsigned long lockout = 0L;
 static unsigned long bouncetimeout = BOUNCE_TIMEOUT;
 static int nowarn = 0;
 unsigned long copylines = 0;	/* Number of lines from the message to copy */
 static struct option options[] = {
-  OPT_FLAG(flagdig,'d',1,0),
-  OPT_FLAG(flagdig,'D',0,0),
+  OPT_FLAG(digopt,'d',1,0),
+  OPT_FLAG(digopt,'D',0,0),
   OPT_ULONG(lockout,'l',0),
   OPT_ULONG(bouncetimeout,'t',0),
   OPT_ULONG(copylines,0,"copylines"),
@@ -420,12 +420,12 @@ int main(int argc,char **argv)
   bouncetimeout *= 3600L * 24L;
   if (nowarn)
     _exit(0);
-  if (flagdig < 0) {
+  if (digopt < 0) {
     dodir(0);
     if (getconf_isset("digest"))
       dodir(1);
   }
   else
-    dodir(flagdig);
+    dodir(digopt);
   _exit(0);
 }

@@ -135,7 +135,7 @@ static int fd;		/* same; never >1 open */
 static int cache;	/* 0 = don't; 1 = don't know; 2 = do */
 static int flagtoplevel;
 static unsigned int flagmime;
-static unsigned int cs,csbase,pos;
+static unsigned int cs,csbase;
 static int flagrobot;
 static int flagpre;
 static int precharcount;
@@ -1214,11 +1214,11 @@ void mime_getarg(stralloc *sa,char **s, unsigned int *l)
       return;
 }
 
-void decode_mime_type(char *s,unsigned int l,unsigned int flagmime)
+void decode_mime_type(char *s,unsigned int l,unsigned int domime)
 {
   char *st;
   unsigned int r,lt;
-  if (!flagmime || !l) {		/* treat non-MIME as plain text */
+  if (!domime || !l) {		/* treat non-MIME as plain text */
     mime_current->mimetype = MIME_TEXT_PLAIN;
     if (!stralloc_copys(&curcharset,charset)) die_nomem();
 	/* should be us-ascii, but this is very likely better */
@@ -1723,6 +1723,7 @@ void setmsg(struct msginfo *infop)
 /* first thread in the date file. DIRECT_LAST is not supported.        */
 /* DIRECT_FIRST is supported ONLY for date. */
 {
+  unsigned int pos;
   if (infop->direction == DIRECT_SAME) {
     infop->target = infop->source;
     return;

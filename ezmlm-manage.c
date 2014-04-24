@@ -123,7 +123,6 @@ stralloc from = {0};
 stralloc to = {0};
 stralloc owner = {0};
 stralloc fromline = {0};
-stralloc text = {0};
 stralloc fnedit = {0};
 stralloc fneditn = {0};
 
@@ -846,6 +845,8 @@ static void do_log(char *action,unsigned int actlen)
   copybottom(0);
   qmail_to(&qq,mod.s);
 }
+
+stralloc text = {0};
 
 static void do_edit(const char *action)
 {

@@ -60,7 +60,6 @@ static unsigned long uid,euid;
 
 static stralloc line = {0};
 static stralloc rp = {0};
-static stralloc addr = {0};
 static stralloc user = {0};
 static stralloc euser = {0};
 static stralloc dir = {0};
@@ -80,7 +79,6 @@ static int foundlocal;
 static int foundmatch = 0;
 static unsigned int nolists = 0;
 static unsigned long maxlists;
-static unsigned int pos,pos2,poslocal,len;
 static unsigned int lenhost,lenlocal;
 static unsigned int part0start,part0len;
 static int fdlock,fdin,fdout;
@@ -88,7 +86,6 @@ static int fdlock,fdin,fdout;
 static char *local = (char *) 0;	/* list = local@host */
 static const char *host = (char *) 0;
 static char *code = (char *) 0;	/* digest code */
-static const char *cp;
 
 static void die_syntax(void)
 {
@@ -143,6 +140,9 @@ int main(int argc,char **argv)
 {
   int child;
   const char *sendargs[4];
+  stralloc addr = {0};
+  unsigned int pos = 0,pos2,poslocal,len;
+  const char *cp;
 
   (void) umask(077);
   sig_pipeignore();
