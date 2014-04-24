@@ -42,7 +42,7 @@ static int digopt = -1;
 static unsigned long lockout = 0L;
 static unsigned long bouncetimeout = BOUNCE_TIMEOUT;
 static int nowarn = 0;
-unsigned long copylines = 0;	/* Number of lines from the message to copy */
+static unsigned long copylines = 0;	/* Number of lines from the message to copy */
 static struct option options[] = {
   OPT_FLAG(digopt,'d',1,0),
   OPT_FLAG(digopt,'D',0,0),
@@ -55,40 +55,22 @@ static struct option options[] = {
 
 char boundary[COOKIE];
 
-substdio ssout;
-char outbuf[16];
-
-unsigned long when;
-const char *workdir;
-stralloc fn = {0};
-stralloc bdname = {0};
-stralloc fnlasth = {0};
-stralloc fnlastd = {0};
-stralloc lasth = {0};
-stralloc lastd = {0};
-struct stat st;
+static unsigned long when;
+static const char *workdir;
+static stralloc fn = {0};
+static stralloc bdname = {0};
+static stralloc fnlasth = {0};
+static stralloc fnlastd = {0};
+static stralloc lasth = {0};
+static stralloc lastd = {0};
 
 static void die_read(void) { strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s)); }
 
-void makedir(const char *s)
-{
-  if (mkdir(s,0755) == -1)
-    if (errno != error_exist)
-      strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,s));
-}
-
-char inbuf[1024];
-substdio ssin;
-char textbuf[1024];
-substdio sstext;
-
-stralloc addr = {0};
-char strnum[FMT_ULONG];
-char hash[COOKIE];
-stralloc fnhash = {0};
+static stralloc addr = {0};
+static stralloc fnhash = {0};
 stralloc quoted = {0};
 stralloc line = {0};
-stralloc qline = {0};
+static stralloc qline;
 
 struct qmail qq;
 
@@ -112,6 +94,12 @@ static void doit(int flagdig, int flagw)
   int match;
   int fdhash;
   const char *err;
+  char strnum[FMT_ULONG];
+  char textbuf[1024];
+  substdio sstext;
+  char inbuf[1024];
+  substdio ssin;
+  char hash[COOKIE];
 
   fd = open_read(fn.s);
   if (fd == -1) die_read();
@@ -243,6 +231,10 @@ static void dodir(int flagdig)
   unsigned long ld;
   int fd;
   char ch;
+  char strnum[FMT_ULONG];
+  substdio ssout;
+  char outbuf[16];
+  struct stat st;
 
   workdir = flagdig ? "digest" : ".";
 
@@ -410,6 +402,7 @@ static void dodir(int flagdig)
 
   closesub();
 }
+
 
 int main(int argc,char **argv)
 {

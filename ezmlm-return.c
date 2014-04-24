@@ -45,57 +45,51 @@ static struct option options[] = {
   OPT_END
 };
 
-void die_badretaddr(void)
+static void die_badretaddr(void)
 {
   strerr_die2x(100,FATAL,MSG(ERR_BAD_RETURN_ADDRESS));
 }
-void die_trash(void)
+static void die_trash(void)
 {
   strerr_die2x(99,INFO,"trash address");
 }
 
-char outbuf[1024];
-substdio ssout;
-char inbuf[1024];
-substdio ssin;
+static char outbuf[1024];
+static substdio ssout;
 
-char strnum[FMT_ULONG];
-char hash[COOKIE];
-char hashcopy[COOKIE];
-char *hashp = (char *) 0;
-unsigned long addrno = 0L;
-unsigned long addrno1 = 0L;
-stralloc fndir = {0};
-stralloc fndate = {0};
-stralloc fndatenew = {0};
-stralloc fnhash = {0};
-stralloc fnhashnew = {0};
+static char *hashp = (char *) 0;
+static unsigned long addrno = 0L;
+static stralloc fndir = {0};
+static stralloc fndate = {0};
+static stralloc fndatenew = {0};
+static stralloc fnhash = {0};
+static stralloc fnhashnew = {0};
 
-stralloc quoted = {0};
-const char *sender;
-const char *dir;
-const char *workdir;
+static stralloc quoted = {0};
+static const char *sender;
+static const char *workdir;
 
-void die_write(const char *fn)
+static void die_write(const char *fn)
 { strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fn)); }
 
-void die_hashnew(void) { die_write(fnhashnew.s); }
-void die_datenew(void) { die_write(fndatenew.s); }
-void die_msgin(void)
+static void die_hashnew(void) { die_write(fnhashnew.s); }
+static void die_datenew(void) { die_write(fndatenew.s); }
+static void die_msgin(void)
 { strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT)); }
 
-void makedir(const char *s)
+static void makedir(const char *s)
 {
   if (mkdir(s,0755) == -1)
     if (errno != error_exist)
       strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,s));
 }
 
-void dowit(const char *addr,unsigned long when,const stralloc *bounce)
+static void dowit(const char *addr,unsigned long when,const stralloc *bounce)
 {
   int fd;
   unsigned int wpos;
   unsigned long wdir,wfile;
+  char strnum[FMT_ULONG];
 
   if (!issub(workdir,addr,0)) return;
 
@@ -137,13 +131,17 @@ void dowit(const char *addr,unsigned long when,const stralloc *bounce)
   wrap_rename(fndatenew.s,fndate.s);
 }
 
-void doit(const char *addr,unsigned long msgnum,unsigned long when,
-	  const stralloc *bounce)
+static void doit(const char *addr,unsigned long msgnum,unsigned long when,
+		 const stralloc *bounce)
 {
   int fd;
   int fdnew;
   unsigned int pos;
   unsigned long ddir,dfile;
+  char inbuf[1024];
+  substdio ssin;
+  char strnum[FMT_ULONG];
+  char hash[COOKIE];
 
   if (!issub(workdir,addr,0)) return;
 
@@ -236,19 +234,6 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   wrap_rename(fnhashnew.s,fnhash.s);
 }
 
-stralloc bounce = {0};
-stralloc line = {0};
-stralloc header = {0};
-stralloc intro = {0};
-stralloc failure = {0};
-stralloc paragraph = {0};
-int flagmasterbounce = 0;
-int flaghaveheader;
-int flaghaveintro;
-
-char msginbuf[1024];
-substdio ssmsgin;
-
 int main(int argc,char **argv)
 {
   char *action;
@@ -263,6 +248,23 @@ int main(int argc,char **argv)
   int flagmaster = 0;
   int flagreceipt = 0;
   char ch;
+
+  stralloc bounce = {0};
+  stralloc line = {0};
+  stralloc header = {0};
+  stralloc intro = {0};
+  stralloc failure = {0};
+  stralloc paragraph = {0};
+  int flagmasterbounce = 0;
+  int flaghaveheader;
+  int flaghaveintro;
+
+  char msginbuf[1024];
+  substdio ssmsgin;
+
+  char strnum[FMT_ULONG];
+  char hash[COOKIE];
+  char hashcopy[COOKIE];
 
   umask(022);
   sig_pipeignore();

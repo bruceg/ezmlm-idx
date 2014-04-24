@@ -34,9 +34,9 @@
 #include "config.h"
 #include "auto_version.h"
 
-int flagmime = MOD_MIME;	/* default is message as attachment */
-int flagreturn = -1;
-stralloc fnmsg = {0};
+static int flagmime = MOD_MIME;	/* default is message as attachment */
+static int flagreturn = -1;
+static stralloc fnmsg = {0};
 
 /* When ezmlm-clean is run, messages and message stubs in pending/      */
 /* rejected/accepted/unconfirmed are erased if they are older than      */
@@ -63,38 +63,37 @@ static struct option options[] = {
   OPT_END
 };
 
-void die_read(void)
+static void die_read(void)
 {
   strerr_die2x(111,FATAL,MSG1(ERR_READ,fnmsg.s));
 }
 
-datetime_sec when;
-unsigned int older;
+static datetime_sec when;
+static unsigned int older;
 
-char textbuf[1024];
-substdio sstext;
+static char textbuf[1024];
+static substdio sstext;
 
 struct qmail qq;
 
-char strnum[FMT_ULONG];
+static char strnum[FMT_ULONG];
 char boundary[COOKIE];
-datetime_sec hashdate;
 
 stralloc quoted = {0};
 stralloc line = {0};
-stralloc modtimestr = {0};
-stralloc to = {0};
+static stralloc modtimestr = {0};
+static stralloc to = {0};
 
-int fd;
-int match;
-unsigned long msgnum = 0;
+static int fd;
+static int match;
+static unsigned long msgnum = 0;
 			/* counter to make message-id unique, since we may */
 			/* send out several msgs. This is not bullet-proof.*/
 			/* Duplication occurs if we do x>1 msg && another  */
 			/* ezmlm started within x seconds, and with the    */
 			/* same pid. Very unlikely.                        */
 
-void sendnotice(const char *d)
+static void sendnotice(const char *d)
 /* sends file pointed to by d to the address in the return-path of the  */
 /* message. */
 {
@@ -170,7 +169,7 @@ void sendnotice(const char *d)
      strerr_warn2("ezmlm-clean: info: qp ",strnum,0);
 }
 
-void dodir(const char *dirname,int reply)
+static void dodir(const char *dirname,int reply)
 /* parses file names in directory 'dirname'. Files that are not owner */
 /* writable (w) are ignored. If the files are older (by name!) than   */
 /* now-delay, action is taken:                                        */

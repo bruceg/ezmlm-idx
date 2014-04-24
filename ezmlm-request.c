@@ -50,38 +50,28 @@ static struct option options[] = {
   OPT_END
 };
 
-char strnum[FMT_ULONG];
-
-char *userlocal = (char *) 0;
-char *userhost = (char *) 0;
-char *listlocal = (char *) 0;
-char *listhost = (char *) 0;
-char *command = (char*)"help";
+static char *userlocal = (char *) 0;
+static char *userhost = (char *) 0;
+static char *listlocal = (char *) 0;
+static char *listhost = (char *) 0;
+static char *command = (char*)"help";
 stralloc line = {0};
-stralloc qline = {0};
-stralloc usr = {0};
-stralloc lhost = {0};
-stralloc subject = {0};
-stralloc listname = {0};
-stralloc hostname = {0};
-stralloc headerremove = {0};
-stralloc cmds = {0};
-stralloc from = {0};
-stralloc to = {0};
+static stralloc listname = {0};
+static stralloc hostname = {0};
 stralloc quoted = {0};
 char boundary[COOKIE] = "zxcaeedrqcrtrvthbdty";	/* cheap "rnd" MIME boundary */
 
-struct constmap headerremovemap;
-int headerremoveflag = 0;
-struct constmap commandmap;
-int flaggotsub = 0;		/* Found a subject */
+static struct constmap headerremovemap;
+static int headerremoveflag = 0;
+static struct constmap commandmap;
+static int flaggotsub = 0;		/* Found a subject */
 	/* cmdstring has all commands seperated by '\'. cmdxlate maps each */
 	/* command alias to the basic command, which is used to construct  */
 	/* the command address (positive numbers) or handled by this       */
 	/* program (negative numbers). Note: Any command not matched is    */
 	/* used to make a command address, so ezmlm request can handle     */
 	/* ("transmit") user-added commands.                               */
-const char cmdstring[] =
+static const char cmdstring[] =
 		"system\\help\\"			/* 1,2 */
 		"subscribe\\unsubscribe\\index\\"	/* 3,4,5 */
 		"info\\list\\query\\"			/* 6,7,8 */
@@ -95,16 +85,16 @@ const char cmdstring[] =
 	/* help and arguments scrapped. < 0 handled locally. HELP without    */
 	/* args also handled locally */
 			/* the last are not supported -> help */
-const int cmdxlate[] = { 0,1,2,3,4,5,6,7,8,3,4,4,4,-13,-14,5,7,7,7,7,7,
-			1,1 };
+static const int cmdxlate[] = { 0,1,2,3,4,5,6,7,8,3,4,4,4,-13,-14,5,7,7,7,7,7,
+				1,1 };
 
 	/* If there are no arguments (listlocal = 0) then commands are mapped*/
 	/* through this. This way, help, list, query, ... can mean something */
 	/* here even though they have local funcions at the lists if used    */
 	/* with arguments. (Made same lengh as cmdxlate in case of bugs.)    */
 	/* Note: This is used ONLY for the global interface */
-const int noargsxlate[] = { 0,1,-2,3,4,5,-2,-13,-14,9,10,11,12,13,14,15,16,17,
-			18,19,20,21,22 };
+static const int noargsxlate[] = { 0,1,-2,3,4,5,-2,-13,-14,9,10,11,12,13,14,15,16,17,
+				   18,19,20,21,22 };
 
 	/* these need to be defined as the index of the corresponding      */
 	/* commands. They are handled by ezmlm-request. NOTE: Help is >0!  */
@@ -113,19 +103,21 @@ const int noargsxlate[] = { 0,1,-2,3,4,5,-2,-13,-14,9,10,11,12,13,14,15,16,17,
 #define EZREQ_HELP  2
 #define EZREQ_BAD 1
 
-substdio sstext;
-char textbuf[1024];
+static substdio sstext;
+static char textbuf[1024];
 
 struct qmail qq;
 
-char inbuf[1024];
-substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
-substdio ssin2 = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
+static char inbuf[1024];
+static substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
+static substdio ssin2 = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
 
-stralloc mydtline = {0};
+static stralloc mydtline = {0};
 
-int code_qput(const char *s,unsigned int n)
+static int code_qput(const char *s,unsigned int n)
 {
+  static stralloc qline = {0};
+
     if (!flagcd)
       qmail_put(&qq,s,n);
     else {
@@ -140,7 +132,7 @@ int code_qput(const char *s,unsigned int n)
 
 /* Checks the argument. Only  us-ascii letters, numbers, ".+-_" are ok. */
 /* NOTE: For addresses this is more restrictive than rfc821/822.        */
-void checkarg(const char *s)
+static void checkarg(const char *s)
 {
   const char *cp;
   char ch;
@@ -178,7 +170,7 @@ void checkarg(const char *s)
 /* is accepted to allow commands that take arguments that are not       */
 /* addresses (e.g. -get12-34).                                          */
 
-void parseline(char *cp)
+static void parseline(char *cp)
 {
   char *cp1;
   char *cp2;
@@ -278,6 +270,14 @@ int main(int argc,char **argv)
   int flagmultipart = 0;
   int fd;
   unsigned int pos,pos1,len,last;
+  char strnum[FMT_ULONG];
+  stralloc usr = {0};
+  stralloc lhost = {0};
+  stralloc subject = {0};
+  stralloc headerremove = {0};
+  stralloc cmds = {0};
+  stralloc from = {0};
+  stralloc to = {0};
 
   (void)umask(022);
   sig_pipeignore();

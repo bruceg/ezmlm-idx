@@ -24,13 +24,13 @@ const char INFO[] = "ezmlm-limit: info: ";
 const char USAGE[] =
 "ezmlm-limit: usage: ezmlm-limit [-f file] [-dDF] [-n messages] [-t secs] dir";
 
-unsigned long deltasecs = LIMSECS;	/* interval to test over (seconds) */
-unsigned long deltanum = LIMMSG;	/* max no messages in interval */
-					/* see idx.h. Usually 30 msg/3600 secs*/
-int flagd = 0;				/* =0 create modpost, =1 ignore */
-					/* excess, =2 defer excess */
-int flagloop;
-const char *fn = TXT_LOOPNUM;
+static unsigned long deltasecs = LIMSECS;	/* interval to test over (seconds) */
+static unsigned long deltanum = LIMMSG;		/* max no messages in interval */
+						/* see idx.h. Usually 30 msg/3600 secs*/
+static int flagd = 0;				/* =0 create modpost, =1 ignore */
+						/* excess, =2 defer excess */
+static int flagloop;
+static const char *fn = TXT_LOOPNUM;
 
 static struct option options[] = {
   OPT_FLAG(flagd,'d',1,0),
@@ -42,14 +42,7 @@ static struct option options[] = {
   OPT_END
 };
 
-void die_new(void) { strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fn)); }
-
-stralloc line = {0};
-
-substdio ssnew;
-char newbuf[16];
-
-char strnum[FMT_ULONG];
+static void die_new(void) { strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fn)); }
 
 int main(int argc,char **argv)
 {
@@ -58,6 +51,12 @@ int main(int argc,char **argv)
   unsigned long num, loopnum, when;
   unsigned long loopwhen = 0L;
   int fd;
+  stralloc line = {0};
+
+  substdio ssnew;
+  char newbuf[16];
+
+  char strnum[FMT_ULONG];
 
   (void) umask(022);
   sig_pipeignore();

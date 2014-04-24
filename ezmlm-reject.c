@@ -26,22 +26,22 @@ const char FATAL[] = "ezmlm-reject: fatal: ";
 const char USAGE[] =
 "ezmlm-reject: usage: ezmlm-reject [-bBcCfFhHqQsStT] [dir]";
 
-int flagrejectcommands = 1;	/* reject if subject is simple command */
-int flagneedsubject = 1;	/* reject if subject is missing */
-int flagtook = 0;		/* reject unless listaddress in To: or Cc: */
-int exitquiet = 100;		/* reject with error (100) rather than exit */
-				/* quietly (99) if listaddress missing */
-int flagheaderreject = 1;	/* reject messages with headers listed in */
-				/* DIR/headerreject. */
-int flagbody = 0;		/* =1 => reject if subject or body starts with*/
-				/* "subscribe" or "unsubscribe" */
-int flagforward = 0;		/* =1 => forward commands to list-request */
-int flagparsemime = 0;
-int flaghavesubject = 0;
-int flaghavecommand = 0;
-int flagcheck = 0;		/* set after boundary is found in body, */
-				/* until blank line */
-unsigned long copylines = 0;	/* Number of lines from the message to copy */
+static int flagrejectcommands = 1;	/* reject if subject is simple command */
+static int flagneedsubject = 1;		/* reject if subject is missing */
+static int flagtook = 0;		/* reject unless listaddress in To: or Cc: */
+static int exitquiet = 100;		/* reject with error (100) rather than exit */
+					/* quietly (99) if listaddress missing */
+static int flagheaderreject = 1;	/* reject messages with headers listed in */
+					/* DIR/headerreject. */
+static int flagbody = 0;		/* =1 => reject if subject or body starts with*/
+					/* "subscribe" or "unsubscribe" */
+static int flagforward = 0;		/* =1 => forward commands to list-request */
+static int flagparsemime = 0;
+static int flaghavesubject = 0;
+static int flaghavecommand = 0;
+static int flagcheck = 0;		/* set after boundary is found in body, */
+					/* until blank line */
+static unsigned long copylines = 0;	/* Number of lines from the message to copy */
 
 static struct option options[] = {
   OPT_FLAG(flagbody,'b',1,0),
@@ -61,31 +61,26 @@ static struct option options[] = {
   OPT_END
 };
 
-stralloc mimeremove = {0};
-stralloc mimereject = {0};
-stralloc headerreject = {0};
+static stralloc mimeremove = {0};
+static stralloc mimereject = {0};
+static stralloc headerreject = {0};
 
-struct constmap mimeremovemap;
-struct constmap mimerejectmap;
-struct constmap headerrejectmap;
-int mimeremoveflag = 0;
-
-char strnum[FMT_ULONG];
-char buf0[256];
-substdio ssin = SUBSTDIO_FDBUF(read,0,buf0,(int) sizeof(buf0));
-substdio ssin2 = SUBSTDIO_FDBUF(read,0,buf0,(int) sizeof(buf0));
+static struct constmap mimeremovemap;
+static struct constmap mimerejectmap;
+static struct constmap headerrejectmap;
+static int mimeremoveflag = 0;
 
 struct qmail qq;
 
-stralloc line = {0};
-stralloc to = {0};
-stralloc content = {0};
-stralloc subject = {0};
-stralloc boundary = {0};
-stralloc precd = {0};
-stralloc mydtline = {0};
+static stralloc line = {0};
+static stralloc to = {0};
+static stralloc content = {0};
+static stralloc subject = {0};
+static stralloc boundary = {0};
+static stralloc precd = {0};
+static stralloc mydtline = {0};
 
-unsigned int findlocal(const stralloc *sa,unsigned int n)
+static unsigned int findlocal(const stralloc *sa,unsigned int n)
 	/* n is index of '@' within sa. Returns index to last postition */
 	/* of local, n otherwise. */
 {
@@ -119,7 +114,7 @@ unsigned int findlocal(const stralloc *sa,unsigned int n)
   return n;
 }
 
-unsigned int findhost(const stralloc *sa,unsigned int n)
+static unsigned int findhost(const stralloc *sa,unsigned int n)
 	/* s in index to a '@' within sa. Returns index to first pos of */
 	/* host part if there is one, n otherwise. */
 {
@@ -154,7 +149,7 @@ unsigned int findhost(const stralloc *sa,unsigned int n)
   return n;
 }
 
-int getto(const stralloc *sa)
+static int getto(const stralloc *sa)
 	/* find list address in line. If found, return 1, else return 0. */
 {
   unsigned int pos = 0;
@@ -189,6 +184,10 @@ int main(int argc,char **argv)
   const char *sender;
   unsigned int len;
   int match;
+  char strnum[FMT_ULONG];
+  char buf0[4096];
+  substdio ssin = SUBSTDIO_FDBUF(read,0,buf0,(int) sizeof(buf0));
+  substdio ssin2 = SUBSTDIO_FDBUF(read,0,buf0,(int) sizeof(buf0));
 
   getconfopt(argc,argv,options,-1,&dir);
   if (dir) {

@@ -28,19 +28,14 @@ static struct option options[] = {
   OPT_END
 };
 
-stralloc fnadir = {0};
-stralloc fnaf = {0};
-stralloc line = {0};
-substdio ssarchive;
-char archivebuf[4096];
-substdio ssin;
-char inputbuf[4096];
-unsigned long msgnum;
-unsigned long cumsize;
-char strnum[FMT_ULONG*2];
+static stralloc fnaf = {0};
+static substdio ssarchive;
+static char archivebuf[4096];
 
 static int openone(unsigned long outnum)
 {
+  static stralloc fnadir = {0};
+  char strnum[FMT_ULONG];
   int fd;
   if (!stralloc_copys(&fnadir,"archive/")) die_nomem();
   if (!stralloc_catb(&fnadir,strnum,
@@ -63,8 +58,9 @@ static int openone(unsigned long outnum)
   return fd;
 }
 
-static void numwrite(void)
+static void numwrite(unsigned long msgnum,unsigned long cumsize)
 {
+  char strnum[FMT_ULONG*2];
   int fd;
   int i;
 
@@ -96,6 +92,12 @@ int main(int argc,char *argv[])
   int match;
   unsigned long msgsize = 0L;
   int opt;
+  stralloc line = {0};
+  substdio ssin;
+  char inputbuf[4096];
+  unsigned long msgnum;
+  unsigned long cumsize;
+
 
   opt = getconfopt(argc,argv,options,1,0);
   switch (argc - opt) {
@@ -134,7 +136,7 @@ int main(int argc,char *argv[])
 
   flushit(fd);
 
-  numwrite();
+  numwrite(msgnum,cumsize);
   
   return 0;
 }

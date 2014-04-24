@@ -59,17 +59,9 @@ static struct option options[] = {
 
 static stralloc to = {0};
 static datetime_sec when;
-
-static char hash[COOKIE];
 static stralloc line = {0};
-static stralloc fnbase = {0};
-static stralloc fnmsg = {0};
 
-static const char *dir;
-
-static struct stat st;
-
-static int checkfile(const char *fn)
+static int checkfile(const char *fn,stralloc *fnmsg)
 /* looks for DIR/mod/unconfirmed/fn.              */
 /* Returns:                                       */
 /*          1 found in unconfirmed                */
@@ -78,18 +70,16 @@ static int checkfile(const char *fn)
 /* ALSO: if found, fnmsg contains the o-terminated*/
 /* file name.                                     */
 {
-  if (!stralloc_copys(&fnmsg,"mod/unconfirmed/")) die_nomem();
-  if (!stralloc_cats(&fnmsg,fn)) die_nomem();
-  if (!stralloc_0(&fnmsg)) die_nomem();
-  if (stat(fnmsg.s,&st) == 0)
+  struct stat st;
+  if (!stralloc_copys(fnmsg,"mod/unconfirmed/")) die_nomem();
+  if (!stralloc_cats(fnmsg,fn)) die_nomem();
+  if (!stralloc_0(fnmsg)) die_nomem();
+  if (stat(fnmsg->s,&st) == 0)
     return 1;
   if (errno != error_noent)
-    strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fnmsg.s));
+    strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fnmsg->s));
   return 0;
 }
-
-static substdio sstext;
-static char textbuf[1024];
 
 static void maketo(void)
 /* expects line to be a return-path line. If it is and the format is valid */
@@ -122,6 +112,16 @@ int main(int argc, char **argv)
   int child;
   int opt;
   const char *cp;
+
+  char hash[COOKIE];
+  stralloc fnbase = {0};
+  stralloc fnmsg = {0};
+
+  const char *dir;
+
+  substdio sstext;
+  char textbuf[1024];
+
 
   (void) umask(022);
   sig_pipeignore();
@@ -168,7 +168,7 @@ int main(int argc, char **argv)
 
   lockfile("mod/confirmlock");
 
-  if (!checkfile(fnbase.s)) strerr_die2x(100,FATAL,MSG(ERR_MOD_TIMEOUT));
+  if (!checkfile(fnbase.s,&fnmsg)) strerr_die2x(100,FATAL,MSG(ERR_MOD_TIMEOUT));
 /* Here, we have an existing filename in fnbase with the complete path */
 /* from the current dir in fnmsg. */
 

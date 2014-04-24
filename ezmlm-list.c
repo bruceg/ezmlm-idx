@@ -29,19 +29,17 @@ static struct option options[] = {
   OPT_END
 };
 
-char strnum[FMT_ULONG];
-
 static void die_write(void)
 {
   strerr_die2sys(111,FATAL,MSG(ERR_WRITE_STDOUT));
 }
 
-int subwrite(const char *s,unsigned int l)
+static int subwrite(const char *s,unsigned int l)
 {
   return substdio_put(subfdout,s,l) | substdio_put(subfdout,"\n",1);
 }
 
-int dummywrite(const char *s,unsigned int l)
+static int dummywrite(const char *s,unsigned int l)
 {
   return (int) l;
   (void)s;
@@ -52,6 +50,7 @@ int main(int argc,char **argv)
   const char *subdir;
   unsigned long n;
   int i;
+  char strnum[FMT_ULONG];
 
   i = getconfopt(argc,argv,options,1,0);
   initsub(flagsubdb);

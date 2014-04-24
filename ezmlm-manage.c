@@ -43,27 +43,27 @@ const char INFO[] = "ezmlm-manage: info: ";
 const char USAGE[] =
 "ezmlm-manage: usage: ezmlm-manage [-aAbBcCdDeEfFlLmMnNqQsSuUvV] dir";
 
-int flagcopyowner = 0;	/* default: Owner not informed about subdb changes */
-			/* 1 => notified for failed unsub, 2 => for all */
-int flagnotify = 1;	/* notify subscriber of completed events. 0 also */
-			/* suppresses all subscriber communication for */
-			/* [un]sub if -U/-S is used */
-int omitbottom = 0;	/* default: copy request & admin info to message */
-int flaglist = -1;	/* default: do not reply to -list */
-int flagget = 1;	/* default: service -get requests */
-int flagsubconf = -1;	/* default: require user-confirm for subscribe */
-int flagunsubconf = -1;	/* default: require user-confirm for unsubscribe */
-int flagunsubismod = 0;	/* default: do not require moderator approval to */
-			/* unsubscribe from moderated list */
-int flagedit = -1;	/* default: text file edit not allowed */
-int flagstorefrom = 1;	/* default: store from: line for subscribes */
-int flagshowact = 0;	/* default: do not show the action taken */
-char encin = '\0';	/* encoding of incoming message */
-int flagdig = 0;	/* request is not for digest list */
-unsigned long copylines = 0;	/* Number of lines from the message to copy */
-int flagpublic = 0;
-stralloc modsub = {0};
-stralloc remote = {0};
+static int flagcopyowner = 0;	/* default: Owner not informed about subdb changes */
+				/* 1 => notified for failed unsub, 2 => for all */
+static int flagnotify = 1;	/* notify subscriber of completed events. 0 also */
+				/* suppresses all subscriber communication for */
+				/* [un]sub if -U/-S is used */
+static int omitbottom = 0;	/* default: copy request & admin info to message */
+static int flaglist = -1;	/* default: do not reply to -list */
+static int flagget = 1;		/* default: service -get requests */
+static int flagsubconf = -1;	/* default: require user-confirm for subscribe */
+static int flagunsubconf = -1;	/* default: require user-confirm for unsubscribe */
+static int flagunsubismod = 0;	/* default: do not require moderator approval to */
+				/* unsubscribe from moderated list */
+static int flagedit = -1;	/* default: text file edit not allowed */
+static int flagstorefrom = 1;	/* default: store from: line for subscribes */
+static int flagshowact = 0;	/* default: do not show the action taken */
+static char encin = '\0';	/* encoding of incoming message */
+static int flagdig = 0;		/* request is not for digest list */
+static unsigned long copylines = 0;	/* Number of lines from the message to copy */
+static int flagpublic = 0;
+static stralloc modsub = {0};
+static stralloc remote = {0};
 static int ismod;
 static stralloc mod = {0};
 
@@ -100,48 +100,48 @@ static struct option options[] = {
 };
 
 static const char hex[]="0123456789ABCDEF";
-char urlstr[] = "%00";	/* to build a url-encoded version of a char */
+static char urlstr[] = "%00";	/* to build a url-encoded version of a char */
 
-const char *dir;
-const char *workdir;
-const char *sender;
+static const char *dir;
+static const char *workdir;
+static const char *sender;
 
-void die_cookie(void)
+static void die_cookie(void)
 {
   strerr_die2x(100,FATAL,MSG(ERR_MOD_COOKIE));
 }
 
-stralloc mydtline = {0};
-stralloc target = {0};
-stralloc verptarget = {0};
-stralloc confirm = {0};
+static stralloc mydtline = {0};
+static stralloc target = {0};
+static stralloc verptarget = {0};
+static stralloc confirm = {0};
 stralloc line = {0};
-stralloc qline = {0};
+static stralloc qline = {0};
 stralloc quoted = {0};
-stralloc moddir = {0};
-stralloc from = {0};
-stralloc owner = {0};
-stralloc fromline = {0};
-stralloc fnedit = {0};
-stralloc fneditn = {0};
+static stralloc moddir = {0};
+static stralloc from = {0};
+static stralloc owner = {0};
+static stralloc fromline = {0};
+static stralloc fnedit = {0};
+static stralloc fneditn = {0};
 
-datetime_sec when;
-int match;
+static datetime_sec when;
+static int match;
 
-char strnum[FMT_ULONG];
-char hash[COOKIE];
+static char strnum[FMT_ULONG];
+static char hash[COOKIE];
 char boundary[COOKIE];
-datetime_sec hashdate;
+static datetime_sec hashdate;
 
-char inbuf[1024];
-substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
-substdio ssin2 = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
+static char inbuf[1024];
+static substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
+static substdio ssin2 = SUBSTDIO_FDBUF(read,0,inbuf,(int) sizeof(inbuf));
 
-substdio sstext;	/* editing texts and reading "from" */
-char textbuf[512];
+static substdio sstext;	/* editing texts and reading "from" */
+static char textbuf[512];
 
-substdio ssfrom;	/* writing "from" */
-char frombuf[512];
+static substdio ssfrom;	/* writing "from" */
+static char frombuf[512];
 
 static int fdlock;
 

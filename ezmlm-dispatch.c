@@ -33,7 +33,6 @@ static stralloc basedir;
 static stralloc path;
 
 static struct qmail qq;
-static char strnum[FMT_ULONG];
 static int did_program;
 static int did_forward;
 
@@ -64,6 +63,7 @@ static int is_file(const char *fn)
 
 static void forward(const char *rcpt)
 {
+  char strnum[FMT_ULONG];
   char buf[4096];
   const char *dtline;
   const char *err;
@@ -80,9 +80,8 @@ static void forward(const char *rcpt)
   qmail_to(&qq,rcpt);
   if (*(err = qmail_close(&qq)) != '\0')
     strerr_die4x(111,FATAL,MSG(ERR_TMP_QMAIL_QUEUE),": ",err + 1);
-  strnum[fmt_ulong(strnum,qmail_qp(&qq))] = 0;
   substdio_puts(subfderr,"qp ");
-  substdio_puts(subfderr,strnum);
+  substdio_put(subfderr,strnum,fmt_ulong(strnum,qmail_qp(&qq)));
   substdio_putsflush(subfderr,"\n");
   ++did_forward;
 }
@@ -137,6 +136,7 @@ static int execute_file(const char *fn,stralloc *file)
 static void execute(const char *fn,const char *def)
      /* Load and execute a qmail command file. */
 {
+  char strnum[FMT_ULONG];
   stralloc file = {0,0,0};
   int code;
   if (def != 0)

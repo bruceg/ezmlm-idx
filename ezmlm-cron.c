@@ -62,8 +62,8 @@ static void die_argument(void)
   strerr_die2x(100,FATAL,MSG(ERR_NOT_CLEAN));
 }
 
-int isclean(char *addr,
-	    int flagaddr) /* 1 for addresses with '@', 0 for other args */
+static int isclean(char *addr,
+		   int flagaddr) /* 1 for addresses with '@', 0 for other args */
 	/* assures that addr has only letters, digits, "-_" */
 	/* also checks allows single '@' if flagaddr = 1 */
 	/* returns 1 if clean, 0 otherwise */

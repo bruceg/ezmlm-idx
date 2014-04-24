@@ -58,35 +58,17 @@ static struct option options[] = {
   OPT_END
 };
 
-stralloc mydtline = {0};
-stralloc accept = {0};
-stralloc reject = {0};
-stralloc to = {0};
-stralloc send = {0};
-stralloc comment = {0};
-datetime_sec when;
+static stralloc to = {0};
 
-char strnum[FMT_ULONG];
-char hash[COOKIE];
 char boundary[COOKIE];
 stralloc line = {0};
 stralloc qline = {0};
-stralloc text = {0};
 stralloc quoted = {0};
-stralloc fnbase = {0};
-stralloc fnmsg = {0};
-stralloc fnnew = {0};
-stralloc fnsub = {0};
-char subbuf[256];
-substdio sssub;
-
-static const char *dir;
-
-struct stat st;
+static stralloc fnmsg = {0};
 
 struct qmail qq;
 
-void code_qput(const char *s,unsigned int n)
+static void code_qput(const char *s,unsigned int n)
 {
     if (!flagcd)
       qmail_put(&qq,s,n);
@@ -99,7 +81,7 @@ void code_qput(const char *s,unsigned int n)
     }
 }
 
-int checkfile(const char *fn)
+static int checkfile(const char *fn)
 /* looks for DIR/mod/{pending|rejected|accept}/fn.*/
 /* Returns:                                       */
 /*          1 found in pending                    */
@@ -110,6 +92,7 @@ int checkfile(const char *fn)
 /* ALSO: if found, fnmsg contains the o-terminated*/
 /* file name.                                     */
 {
+  struct stat st;
   
   if (!stralloc_copys(&fnmsg,"mod/pending/")) die_nomem();
   if (!stralloc_cats(&fnmsg,fn)) die_nomem();
@@ -140,10 +123,7 @@ int checkfile(const char *fn)
   return 0;
 }
 
-substdio sstext;
-char textbuf[1024];
-
-void maketo(void)
+static void maketo(void)
 /* expects line to be a return-path line. If it is and the format is valid */
 /* to is set to to the sender. Otherwise, to is left untouched. Assuming   */
 /* to is empty to start with, it will remain empty if no sender is found.  */
@@ -180,6 +160,15 @@ int main(int argc,char **argv)
   int child;
   int opt;
   char *cp,*cpnext,*cplast,*cpafter;
+  char strnum[FMT_ULONG];
+  char hash[COOKIE];
+  substdio sstext;
+  char textbuf[1024];
+  datetime_sec when;
+  stralloc text = {0};
+  stralloc fnbase = {0};
+  stralloc fnnew = {0};
+  const char *dir;
 
   (void) umask(022);
   sig_pipeignore();

@@ -37,15 +37,15 @@
 #include "config.h"
 #include "auto_version.h"
 
-int flagmime = MOD_MIME;	/* default is message as attachment */
-int flagmodpostonly = -1;	/* default anyone can post */
-				/* =1 for only moderators can */
-int flagself = 0;		/* `modpost` mods approve own posts */
-				/* but mod/ is used for moderators */
-				/* of other posts. Def=no=0 */
-int flagconfirm = -1;           /* if true, sender must approve its own posts */
-int flagbody = 1;		/* body of message enclosed with mod request */
-				/* 0 => headers only */
+static int flagmime = MOD_MIME;		/* default is message as attachment */
+static int flagmodpostonly = -1;	/* default anyone can post */
+					/* =1 for only moderators can */
+static int flagself = 0;		/* `modpost` mods approve own posts */
+					/* but mod/ is used for moderators */
+					/* of other posts. Def=no=0 */
+static int flagconfirm = -1;           /* if true, sender must approve its own posts */
+static int flagbody = 1;		/* body of message enclosed with mod request */
+					/* 0 => headers only */
 
 const char FATAL[] = "ezmlm-store: fatal: ";
 const char USAGE[] =
@@ -71,29 +71,17 @@ static struct option options[] = {
   OPT_END
 };
 
-stralloc fnmsg = {0};
+static stralloc fnmsg = {0};
 
-void die_msg(void) { strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnmsg.s)); }
+static void die_msg(void) { strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnmsg.s)); }
 
-char strnum[FMT_ULONG];
-char hash[COOKIE];
 char boundary[COOKIE];
-datetime_sec when;
-struct stat st;
-
-stralloc fnbase = {0};
 stralloc line = {0};
-stralloc mydtline = {0};
-stralloc returnpath = {0};
-stralloc accept = {0};
-stralloc action = {0};
-stralloc reject = {0};
 stralloc quoted = {0};
-stralloc moderators = {0};
 
 struct qmail qq;
 
-int subto(const char *s,unsigned int l)
+static int subto(const char *s,unsigned int l)
 {
   qmail_put(&qq,"T",1);
   qmail_put(&qq,s,l);
@@ -101,23 +89,12 @@ int subto(const char *s,unsigned int l)
   return (int) l;
 }
 
-substdio ssin;
-char inbuf[1024];
-
-substdio ssmsg;
-char msgbuf[1024];
-
-substdio sstext;
-char textbuf[512];
-
-substdio sssub;
-char subbuf[512];
-
-void makeacthash(stralloc *act)
+static void makeacthash(stralloc *act)
 /* act is expected to be -reject-ddddd.ttttt or -accept-ddddd.ttttt and
  * has to be 0-terminated. */
 /* The routine will add .hash@outhost to act. act will NOT be 0-terminated */
 {
+  char hash[COOKIE];
   int d;
 
   d = 2 + str_chr(act->s + 1,'-');
@@ -129,8 +106,27 @@ void makeacthash(stralloc *act)
   set_cphash(hash);
 }
 
+static substdio ssin;
+static char inbuf[1024];
+
+static substdio ssmsg;
+static char msgbuf[1024];
+
 int main(int argc,char **argv)
 {
+  char strnum[FMT_ULONG];
+  datetime_sec when;
+  struct stat st;
+
+  stralloc fnbase = {0};
+  stralloc mydtline = {0};
+  stralloc returnpath = {0};
+  stralloc accept = {0};
+  stralloc action = {0};
+  stralloc reject = {0};
+  stralloc moderators = {0};
+
+  char hash[COOKIE];
   const char *dir;
   int fdlock;
   const char *sender;

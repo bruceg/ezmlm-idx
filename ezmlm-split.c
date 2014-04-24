@@ -42,31 +42,31 @@ static struct option options[] = {
   OPT_END
 };
 
-const char *sender;
-const char *split;
-stralloc target = {0};
-stralloc lctarget = {0};
-stralloc line = {0};
-stralloc domain = {0};
-stralloc name = {0};
-stralloc from = {0};
-stralloc to = {0};
-char strnum[FMT_ULONG];
-unsigned long lineno;
-int flagfound;
+static const char *sender;
+static const char *split;
+static stralloc target = {0};
+static stralloc lctarget = {0};
+static stralloc line = {0};
+static stralloc domain = {0};
+static stralloc name = {0};
+static stralloc from = {0};
+static stralloc to = {0};
+static unsigned long lineno;
+static int flagfound;
 
-void die_syntax(void)
+static void die_syntax(void)
 {
+  char strnum[FMT_ULONG];
   strnum[fmt_ulong(strnum,lineno)] = '\0';
   strerr_die6x(111,FATAL,split," syntax error line ",strnum,": ",line.s);
 }
 
-char spbuf[1024];	/* should normally hold entire file */
-substdio sssp;
+static char spbuf[1024];	/* should normally hold entire file */
+static substdio sssp;
 
 struct qmail qq;
 
-int findname(void)
+static int findname(void)
 /* returns 1 if a matching line was found, 0 otherwise. name will contain */
 /* the correct list address in either case */
 {
@@ -165,6 +165,7 @@ int findname(void)
 
 int main(int argc,char **argv)
 {
+  char strnum[FMT_ULONG];
   char *action;
   char *dtline;
   char *nhost;

@@ -42,48 +42,31 @@ static struct option options[] = {
   OPT_END
 };
 
-void die_trash(void)
+static void die_trash(void)
 {
   strerr_die2x(0,INFO,"trash address");
 }
 
-stralloc line = {0};
-stralloc quoted = {0};
-stralloc intro = {0};
-stralloc bounce = {0};
-stralloc header = {0};
-stralloc failure = {0};
-stralloc paragraph = {0};
-stralloc ddir = {0};
-stralloc tagline = {0};
-stralloc listaddr = {0};
-stralloc fndate = {0};
-stralloc fndir = {0};
-stralloc fndatenew = {0};
+static stralloc fndate = {0};
+static stralloc fndatenew = {0};
+static stralloc fndir = {0};
+static stralloc line = {0};
+static stralloc quoted = {0};
 
-void die_datenew(void)
+static void die_datenew(void)
 { strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fndatenew.s)); }
-void die_msgin(void)
+static void die_msgin(void)
 { strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT)); }
 
-char strnum[FMT_ULONG];
-char inbuf[1024];
-substdio ssin;
+static char outbuf[256];	/* small - rarely used */
+static substdio ssout;
 
-char outbuf[256];	/* small - rarely used */
-substdio ssout;
+static unsigned long addrno = 0L;
 
-unsigned long when;
-unsigned long addrno = 0L;
-
-const char *sender;
-const char *dir;
-const char *workdir;
-stralloc listno = {0};
+static const char *sender;
 
 
-void doit(const char *addr,unsigned long msgnum,unsigned long when,
-	  const stralloc *bounce)
+static void doit(const char *workdir,const char *addr,unsigned long msgnum,unsigned long when,const stralloc *bounce)
 /* Just stores address\0nsgnum\0 followed by bounce. File name is          */
 /* dttt.ppp[.n], where 'ttt' is a time stamp, 'ppp' the pid, and 'n' the   */
 /* number when there are more than 1 addresses in a pre-VERP bounce. In    */
@@ -95,6 +78,7 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
   DIR *bouncedir;
   direntry *d;
   unsigned int no;
+  char strnum[FMT_ULONG];
 
   if (!stralloc_copys(&fndir,workdir)) die_nomem();
   if (!stralloc_cats(&fndir,"/bounce")) die_nomem();
@@ -155,6 +139,24 @@ void doit(const char *addr,unsigned long msgnum,unsigned long when,
 
 int main(int argc,char **argv)
 {
+  stralloc intro = {0};
+  stralloc bounce = {0};
+  stralloc header = {0};
+  stralloc failure = {0};
+  stralloc paragraph = {0};
+  stralloc ddir = {0};
+  stralloc tagline = {0};
+  stralloc listaddr = {0};
+
+  char inbuf[1024];
+  substdio ssin;
+
+  unsigned long when;
+
+  const char *dir;
+  const char *workdir;
+  stralloc listno = {0};
+
   char *local;
   char *host;
   char *action;
@@ -274,7 +276,7 @@ int main(int argc,char **argv)
     switch (subreceipt(workdir,msgnum,&tagline,listaddr.s,-1,INFO,FATAL)) {
 	case -1: strerr_die2x(0,INFO,MSG(ERR_COOKIE));
 	case -2: strerr_die2x(0,INFO,MSG(ERR_NOT_ACTIVE));
-	default: doit(listaddr.s,msgnum,when,&bounce);
+        default: doit(workdir,listaddr.s,msgnum,when,&bounce);
     }
     closesub();
     _exit(0);
@@ -326,7 +328,7 @@ int main(int argc,char **argv)
       if (byte_chr(listaddr.s,listaddr.len,'\0') == listaddr.len) {
         if (!stralloc_0(&listaddr)) die_nomem();
         if (subreceipt(workdir,msgnum,&tagline,listaddr.s,-1,INFO,FATAL) == 0)
-	  doit(listaddr.s,msgnum,when,&bounce);
+	  doit(workdir,listaddr.s,msgnum,when,&bounce);
       }
     }
   }

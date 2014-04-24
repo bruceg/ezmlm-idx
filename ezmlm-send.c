@@ -38,10 +38,10 @@
 #include "config.h"
 #include "auto_version.h"
 
-int flagnoreceived = 1;		/* suppress received headers by default. They*/
+static int flagnoreceived = 1;	/* suppress received headers by default. They*/
 				/* are still archived. =0 => archived and */
 				/* copied. */
-int flaglog = 1;		/* for lists with mysql support, use tags */
+static int flaglog = 1;		/* for lists with mysql support, use tags */
 				/* and log traffic to the database */
 const char FATAL[] = "ezmlm-send: fatal: ";
 const char USAGE[] =
@@ -66,75 +66,60 @@ static struct option options[] = {
   OPT_END
 };
 
-	/* for writing new index file indexn later moved to index. */
-substdio ssindexn;
-char indexnbuf[1024];
-
-char strnum[FMT_ULONG];
-char szmsgnum[FMT_ULONG];
-char hash[HASHLEN];
-
-stralloc fnadir = {0};
-stralloc fnaf = {0};
-stralloc fnif = {0};
-stralloc fnifn = {0};
-stralloc fnsub = {0};
-stralloc line = {0};
-stralloc qline = {0};
-stralloc lines = {0};
-stralloc subject = {0};
-stralloc from = {0};
-stralloc received = {0};
-stralloc prefix = {0};
-stralloc content = {0};
+static stralloc fnadir = {0};
+static stralloc fnaf = {0};
+static stralloc fnif = {0};
+static stralloc fnifn = {0};
+static stralloc line = {0};
+static stralloc qline = {0};
+static stralloc lines = {0};
+static stralloc subject = {0};
+static stralloc from = {0};
+static stralloc received = {0};
+static stralloc prefix = {0};
+static stralloc content = {0};
 stralloc boundary = {0};
-stralloc dcprefix = {0};
-stralloc dummy = {0};
+static stralloc dcprefix = {0};
+static stralloc dummy = {0};
 
 void die_indexn(void)
 {
   strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnifn.s));
 }
 
-unsigned long innum;
-unsigned long outnum;
-unsigned long msgnum = 0L;
-unsigned long hash_lo = 0L;
-unsigned long hash_hi = 52L;
-unsigned long msgsize = 0L;
-unsigned long cumsize = 0L;	/* cumulative archive size bytes / 256 */
-char encin = '\0';
-int flagindexed;
-int flagfoundokpart;		/* Found something to pass on. If multipart */
-				/* we set to 0 and then set to 1 for any */
-				/* acceptable mime part. If 0 -> reject */
-int flagsawreceived;
-int flagprefixed;
-unsigned int serial = 0;
-int flagarchived;
-int fdarchive;
-int fdindex;
-int fdindexn;
-char hashout[COOKIE+1];
+static unsigned long innum;
+static unsigned long outnum;
+static unsigned long msgnum = 0L;
+static unsigned long hash_lo = 0L;
+static unsigned long hash_hi = 52L;
+static unsigned long msgsize = 0L;
+static unsigned long cumsize = 0L;	/* cumulative archive size bytes / 256 */
+static char encin = '\0';
+static int flagindexed;
+static int flagfoundokpart;		/* Found something to pass on. If multipart */
+					/* we set to 0 and then set to 1 for any */
+					/* acceptable mime part. If 0 -> reject */
+static int flagsawreceived;
+static int flagprefixed;
+static unsigned int serial = 0;
+static int flagarchived;
+static int fdarchive;
+static int fdindex;
+static int fdindexn;
 
-substdio ssarchive;
-char archivebuf[1024];
+static substdio ssarchive;
+static char archivebuf[1024];
 
-int flagsublist;
-stralloc sublist = {0};
-stralloc headerremove = {0};
-struct constmap headerremovemap;
-int headerremoveflag = 0;
-stralloc mimeremove = {0};
-struct constmap mimeremovemap;
-int mimeremoveflag = 0;
+static int flagsublist;
+static stralloc sublist = {0};
+static stralloc headerremove = {0};
+static struct constmap headerremovemap;
+static int headerremoveflag = 0;
+static stralloc mimeremove = {0};
+static struct constmap mimeremovemap;
+static int mimeremoveflag = 0;
 
 struct qmail qq;
-substdio ssin;
-char inbuf[1024];
-
-char textbuf[512];
-substdio sstext;
 
 int subto(const char *s,unsigned int l)
 {
@@ -185,12 +170,12 @@ int sublistmatch(const char *sender)
   return 1;
 }
 
-substdio ssnumnew;
-char numnewbuf[16];
-
 void numwrite(void)
 {		/* this one deals with msgnum, not outnum! */
   int fd;
+  substdio ssnumnew;
+  char numnewbuf[16];
+  char strnum[FMT_ULONG];
 
   fd = open_trunc("numnew");
   if (fd == -1) die_numnew();
@@ -208,8 +193,6 @@ void numwrite(void)
   wrap_rename("numnew","num");
 }
 
-stralloc mydtline = {0};
-
 int idx_copy_insertsubject(void)
 /* copies old index file up to but not including msg, then adds a line with */
 /* 'sub' trimmed of reply indicators, then closes the new index and moves it*/
@@ -225,6 +208,13 @@ int idx_copy_insertsubject(void)
   int r;
   unsigned int pos;
   int k;
+  substdio ssin;
+  char inbuf[1024];
+  /* for writing new index file indexn later moved to index. */
+  substdio ssindexn;
+  char indexnbuf[1024];
+  char strnum[FMT_ULONG];
+  char hash[HASHLEN];
 
   if (!stralloc_copys(&fnadir,"archive/")) die_nomem();
   if (!stralloc_catb(&fnadir,strnum,fmt_ulong(strnum,outnum / 100)))
@@ -338,6 +328,10 @@ int main(int argc,char **argv)
   enum { no_prev_line, subject_line, from_line, content_line, received_line } prevline;
   unsigned int pos;
   char *cp, *cpstart, *cpafter;
+  stralloc mydtline = {0};
+  char strnum[FMT_ULONG];
+  char szmsgnum[FMT_ULONG];
+  char hashout[COOKIE+1];
 
   umask(022);
   sig_pipeignore();

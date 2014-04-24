@@ -37,15 +37,6 @@ static struct option options[] = {
   OPT_END
 };
 
-stralloc line = {0};
-
-substdio ssnum;
-char numbuf[16];
-
-char strnum[FMT_ULONG];
-
-int flaglocal = 0;
-
 int main(int argc,char **argv)
 {
   char *local;
@@ -55,6 +46,11 @@ int main(int argc,char **argv)
   unsigned long cumsize = 0L;
   unsigned long when, tsttime, digwhen;
   int fd;
+  stralloc line = {0};
+  substdio ssnum;
+  char numbuf[16];
+  char strnum[FMT_ULONG];
+  int flaglocal = 0;
 
   (void) umask(022);
   sig_pipeignore();

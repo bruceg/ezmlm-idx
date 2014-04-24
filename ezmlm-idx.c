@@ -47,42 +47,15 @@ static struct option options[] = {
   OPT_END
 };
 
-char strnum[FMT_ULONG];
-char hash[HASHLEN];
-
-stralloc fnadir = {0};
-stralloc fnif = {0};
-stralloc fnifn = {0};
-stralloc fnaf = {0};
-
-stralloc line = {0};
-stralloc lines = {0};
-stralloc dummy = {0};
-
-int fdindexn;
-int fdlock;
-int fd;
-
 	/* for reading index and in ezmlm-idx for reading message */
-static substdio ssin;
-static char inbuf[1024];
+static stralloc line = {0};
+static stralloc lines = {0};
+static stralloc subject = {0};
+static stralloc author = {0};
+static stralloc received = {0};
+static stralloc prefix = {0};
 
-substdio ssindex;
-char indexbuf[1024];
-
-struct stat st;
-
-stralloc subject = {0};
-stralloc author = {0};
-stralloc authmail = {0};
-stralloc received = {0};
-stralloc prefix = {0};
-
-struct strerr index_err;
-
-stralloc num = {0};
-
-int idx_get_trimsubject(void)
+static int idx_get_trimsubject(int fd)
 
 /* reads an open message from 'fd', extracts the subject (if any), and    */
 /* returns the subject in 'sub', the author in 'author', and the received */
@@ -101,6 +74,9 @@ int foundfrom = 0;
 int match;
 int r;
 unsigned int pos,pos1;
+
+  substdio ssin;
+  char inbuf[1024];
 
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   for (;;) {
@@ -189,15 +165,32 @@ unsigned int pos,pos1;
 
 int main(int argc,char **argv)
 {
+  stralloc fnadir = {0};
+  stralloc fnif = {0};
+  stralloc fnifn = {0};
+  stralloc fnaf = {0};
+
+  stralloc dummy = {0};
+
+  int fdindexn = -1;
+
+  substdio ssindex;
+  char indexbuf[1024];
+
+  struct stat st;
+
+  char strnum[FMT_ULONG];
+  char hash[HASHLEN];
   char *cp;
   int r;
+  int fd;
 
   getconfopt(argc,argv,options,1,0);
 
   (void) umask(022);
   sig_pipeignore();
 			/* obtain lock to write index files */
-  fdlock = lockfile("lock");
+  lockfile("lock");
 
   getconf_line(&prefix,"prefix",0);
 					/* support rfc2047-encoded prefix */
@@ -256,7 +249,7 @@ int main(int argc,char **argv)
       subject.len = 0;		/* clear in case they're missing in msg */
       author.len = 0;
       received.len = 0;
-      r = idx_get_trimsubject();
+      r = idx_get_trimsubject(fd);
       close(fd);
       if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,msgnum))) die_nomem();
       if (!stralloc_cats(&line,": ")) die_nomem();
@@ -303,7 +296,6 @@ int main(int argc,char **argv)
   if (fd == -1)
     strerr_die2sys(100,FATAL,MSG1(ERR_CREATE,"indexed"));
   close(fd);
-  close(fdlock);
   _exit(0);
 }
 

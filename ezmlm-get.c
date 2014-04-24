@@ -42,18 +42,18 @@
 #include "config.h"
 #include "auto_version.h"
 
-int flagdo = 1;			/* React to commands (doesn't affect -dig)*/
-int omitbottom = 0;		/* copy text/bottom + request */
-int flagpublic = -1;		/* 0 = non-public, 1 = public, -1 = respect */
-				/* dir/public. */
-int flagsubonly = -1;		/* =1 subscribers only for get/index/thread */
-unsigned long copylines = 0;	/* Number of lines from the message to copy */
-const char *digsz =
+static int flagdo = 1;			/* React to commands (doesn't affect -dig)*/
+static int omitbottom = 0;		/* copy text/bottom + request */
+static int flagpublic = -1;		/* 0 = non-public, 1 = public, -1 = respect */
+					/* dir/public. */
+static int flagsubonly = -1;		/* =1 subscribers only for get/index/thread */
+static unsigned long copylines = 0;	/* Number of lines from the message to copy */
+static const char *digsz =
 		"from\\to\\subject\\reply-to\\date\\message-id\\cc\\"
 		"mime-version\\content-type\\content-transfer-encoding";
-int flagarchived;		/* if list is archived */
-int flagindexed;		/* if list is indexed */
-const char *flagformat = 0;
+static int flagarchived;		/* if list is archived */
+static int flagindexed;		/* if list is indexed */
+static const char *flagformat = 0;
 
 const char FATAL[] = "ezmlm-get: fatal: ";
 const char USAGE[] =
@@ -75,62 +75,59 @@ static struct option options[] = {
   OPT_END
 };
 
-stralloc listname = {0};
-stralloc filename = {0};
-stralloc moddir = {0};
-stralloc mydtline = {0};
-stralloc digheaders = {0};
-stralloc seed = {0};
-stralloc digestcodefile = {0};
-struct constmap digheadersmap;
+static stralloc listname = {0};
+static stralloc filename = {0};
+static stralloc moddir = {0};
+static stralloc mydtline = {0};
+static stralloc digheaders = {0};
+static stralloc seed = {0};
+static stralloc digestcodefile = {0};
+static struct constmap digheadersmap;
 
-char schar[] = "00_";
-stralloc listno = {0};
+static char schar[] = "00_";
 
-datetime_sec when;
-unsigned long cumsize = 0L;	/* cumulative msgs / 256 */
-unsigned long cumsizen = 0L;	/* new cumulative msgs / 256 */
-unsigned long max = 0L;		/* Last message in archive */
-unsigned long msgsize = 0L;	/* for digest accounting */
-datetime_sec digwhen;		/* last digest */
+static datetime_sec when;
+static unsigned long cumsize = 0L;	/* cumulative msgs / 256 */
+static unsigned long cumsizen = 0L;	/* new cumulative msgs / 256 */
+static unsigned long max = 0L;		/* Last message in archive */
+static unsigned long msgsize = 0L;	/* for digest accounting */
+static datetime_sec digwhen;		/* last digest */
 
-char strnum[FMT_ULONG];
-char strnum2[FMT_ULONG];
-char szmsgnum[FMT_ULONG];
+static char strnum[FMT_ULONG];
+static char strnum2[FMT_ULONG];
+static char szmsgnum[FMT_ULONG];
 char boundary[COOKIE];
-char hashout[COOKIE];
+static char hashout[COOKIE];
 stralloc line = {0};
-stralloc line2 = {0};
-stralloc qline = {0};
+static stralloc line2 = {0};
+static stralloc qline = {0};
 stralloc quoted = {0};
-stralloc msgnum = {0};
-stralloc author = {0};
+static stralloc author = {0};
 
 /* for copy archive */
-stralloc archdate = {0};
-stralloc archfrom = {0};
-stralloc archto = {0};
-stralloc archcc = {0};
-stralloc archsubject = {0};
-stralloc archmessageid = {0};
-stralloc archkeywords = {0};
-stralloc archblanklines = {0};
-char archtype=' ';
+static stralloc archdate = {0};
+static stralloc archfrom = {0};
+static stralloc archto = {0};
+static stralloc archcc = {0};
+static stralloc archsubject = {0};
+static stralloc archmessageid = {0};
+static stralloc archkeywords = {0};
+static stralloc archblanklines = {0};
+static char archtype=' ';
 
 /* for mods on non-public lists (needed for future fuzzy sub dbs) */
-stralloc mod = {0};		/* moderator addr for non-public lists */
-int ismod = 0;			/* true for moderator senders */
+static stralloc mod = {0};		/* moderator addr for non-public lists */
+static int ismod = 0;			/* true for moderator senders */
 
-int act = AC_NONE;		/* Action we do */
-int flageditor = 0;		/* if we're invoked for within dir/editor */
-struct stat st;
+static int act = AC_NONE;		/* Action we do */
+static int flageditor = 0;		/* if we're invoked for within dir/editor */
+static struct stat st;
 
-int flaglocked = 0;		/* if directory is locked */
-int flagq = 0;			/* don't use 'quoted-printable' */
+static int flaglocked = 0;		/* if directory is locked */
 
-const char *workdir;
-const char *sender;
-const char *digestcode;
+static const char *workdir;
+static const char *sender;
+static const char *digestcode;
 
 struct qmail qq;
 
@@ -142,22 +139,19 @@ int subto(const char *s,unsigned int l)
   return (int) l;
 }
 
-char inbuf[1024];
-substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,sizeof(inbuf));
-substdio ssin2 = SUBSTDIO_FDBUF(read,0,inbuf,sizeof(inbuf));
+static char inbuf[1024];
+static substdio ssin = SUBSTDIO_FDBUF(read,0,inbuf,sizeof(inbuf));
+static substdio ssin2 = SUBSTDIO_FDBUF(read,0,inbuf,sizeof(inbuf));
 
-substdio ssnum;
-char numbuf[16];
+static substdio ssnum;
+static char numbuf[16];
 
-substdio sstext;
-char textbuf[1024];
+static substdio sstext;
+static char textbuf[1024];
 
-substdio ssindex;
-char indexbuf[1024];
+static int fdlock;
 
-int fdlock;
-
-void lockup(void)
+static void lockup(void)
 /* lock unless locked */
 {
   if(!flaglocked) {
@@ -166,7 +160,7 @@ void lockup(void)
   }
 }
 
-void unlock(void)
+static void unlock(void)
 /* unlock if locked */
 {
   if (flaglocked) {
@@ -175,7 +169,7 @@ void unlock(void)
   }
 }
 
-void code_qput(const char *s,unsigned int n)
+static void code_qput(const char *s,unsigned int n)
 {
     if (!flagcd)
       qmail_put(&qq,s,n);
@@ -189,7 +183,7 @@ void code_qput(const char *s,unsigned int n)
     }
 }
 
-void code_qputs(const char *s)
+static void code_qputs(const char *s)
 {
   code_qput(s,str_len(s));
   code_qput("\n",1);
@@ -221,13 +215,13 @@ void tosender(void)
   qmail_puts(&qq,"\n");
 }
 
-void get_num(void)
+static void get_num(void)
 {
   /* read dir/num -> max. */
   getconf_ulong2(&max,&cumsizen,"num",0);
 }
 
-unsigned long dignum(void)
+static unsigned long dignum(void)
 {
 /* return dignum if exists, 0 otherwise. */
   unsigned long u;

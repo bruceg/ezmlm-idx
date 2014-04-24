@@ -52,16 +52,10 @@ static struct option options[] = {
   OPT_END
 };
 
-stralloc line = {0};
-stralloc cmds = {0};
-
-char szchar[2] = "-";
-  int child;
-int ismod;
-
-int mailprog(const char *s)
+static int mailprog(const char *s)
 {
     int r;
+    int child;
 
     if ((child = wrap_fork()) == 0)
       wrap_execsh(s);
@@ -90,6 +84,9 @@ int main(int argc,char **argv)
   unsigned int i,j;
   const char *program;
   stralloc *opts;
+  stralloc cmds = {0};
+  int child;
+  int ismod;
 
   umask(022);
   sig_pipeignore();

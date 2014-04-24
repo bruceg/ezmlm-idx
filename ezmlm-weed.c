@@ -15,7 +15,12 @@ const char FATAL[] = "ezmlm-weed: fatal: ";
 const char USAGE[] =
 "ezmlm-weed: usage: ezmlm-weed";
 
-void get(stralloc *sa)
+static const char warn1[] = "    **********************************************";
+static const char warn2[] = "    **      THIS IS A WARNING MESSAGE ONLY      **";
+static const char warn3[] = "    **  YOU DO NOT NEED TO RESEND YOUR MESSAGE  **";
+static const char warn4[] = "    **********************************************";
+
+static void get(stralloc *sa)
 {
   int match;
   if (getln(subfdin,sa,&match,'\n') == -1)
@@ -23,32 +28,10 @@ void get(stralloc *sa)
   if (!match) _exit(0);
 }
 
-stralloc line = {0};
-stralloc line1 = {0};
-stralloc line2 = {0};
-stralloc line3 = {0};
-stralloc line4 = {0};
-stralloc line5 = {0};
-stralloc line6 = {0};
-stralloc line7 = {0};
-stralloc line8 = {0};
+static stralloc line = {0};
+static stralloc boundary = {0};
 
-stralloc boundary = {0};
-stralloc dsnline = {0};
-
-char warn1[] = "    **********************************************";
-char warn2[] = "    **      THIS IS A WARNING MESSAGE ONLY      **";
-char warn3[] = "    **  YOU DO NOT NEED TO RESEND YOUR MESSAGE  **";
-char warn4[] = "    **********************************************";
-
-int flagmds = 0;
-int flagsw = 0;
-int flagsr = 0;
-int flagas = 0;
-int flagbw = 0;
-int flagdsn = 0;
-
-int isboundary(void)
+static int isboundary(void)
 /* returns 1 if line.len contains the mime bondary, 0 otherwise */
 {
     if (line.s[0] == '-' && line.s[1] == '-' && line.len >= boundary.len + 3)
@@ -59,6 +42,23 @@ int isboundary(void)
 
 int main(void)
 {
+  stralloc line1 = {0};
+  stralloc line2 = {0};
+  stralloc line3 = {0};
+  stralloc line4 = {0};
+  stralloc line5 = {0};
+  stralloc line6 = {0};
+  stralloc line7 = {0};
+  stralloc line8 = {0};
+  stralloc dsnline = {0};
+
+  int flagmds = 0;
+  int flagsw = 0;
+  int flagsr = 0;
+  int flagas = 0;
+  int flagbw = 0;
+  int flagdsn = 0;
+
   unsigned int i,j;
 
   for (;;) {

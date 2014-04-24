@@ -37,8 +37,6 @@ static struct option options[] = {
   OPT_END
 };
 
-stralloc line = {0};
-
 void subunsub_main(int submode,
 		   int argc,char **argv)
 {
@@ -49,6 +47,7 @@ void subunsub_main(int submode,
   char ch;
   int match;
   int i;
+  stralloc line = {0};
 
   (void) umask(022);
   i = getconfopt(argc,argv,options,1,0);
