@@ -1,4 +1,5 @@
 sub-mysql.lo
+sub_sql.lo
 -lezmlm
 -lmysqlclient
 nsl.lib

@@ -18,6 +18,8 @@
 
 - Fixed ezmlm-archive corrupting output index files.
 
+- Internal rewrite of SQL modules to merge all common code.
+
 ezmlm-idx-7.1.1, 2010-11-18
 ===========================
 
