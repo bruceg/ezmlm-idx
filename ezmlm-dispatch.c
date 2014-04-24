@@ -40,7 +40,7 @@ static const char *makepath(const char *fn)
 {
   if (!stralloc_copy(&path,&basedir)) die_nomem();
   if (fn) {
-    if (!stralloc_append(&path,"/")) die_nomem();
+    if (!stralloc_append(&path,'/')) die_nomem();
     if (!stralloc_cats(&path,fn)) die_nomem();
   }
   if (!stralloc_0(&path)) die_nomem();
@@ -170,7 +170,7 @@ static void dispatch(const char *dir,const char *def)
 {
   if (!is_dir(dir))
     return;
-  if (!stralloc_append(&basedir,"/")) die_nomem();
+  if (!stralloc_append(&basedir,'/')) die_nomem();
   if (!stralloc_cats(&basedir,dir)) die_nomem();
   /* FIXME: set up $EXT $EXT2 $EXT3 $EXT4 ?  Is it feasable? */
   if (def == 0 || *def == 0)

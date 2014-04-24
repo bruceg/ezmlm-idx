@@ -666,7 +666,7 @@ void digest(msgentry *msgtable,
             if (!stralloc_copys(&line,"")) die_nomem();
           if (!stralloc_cats(&line,"\t")) die_nomem();
           if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msg))) die_nomem();
-          if (!stralloc_append(&line," ")) die_nomem();
+          if (!stralloc_append(&line,' ')) die_nomem();
           if (pmsgt->authnum) {
 	    author.len = 0;
 	    cp = authtable[pmsgt->authnum - 1].auth;
@@ -679,7 +679,7 @@ void digest(msgentry *msgtable,
 	    if (!stralloc_0(&author)) die_nomem();
 	  }
           if (!stralloc_cats(&line,MSG1(TXT_BY,author.s))) die_nomem();
-	  if (!stralloc_append(&line,"\n")) die_nomem();
+	  if (!stralloc_append(&line,'\n')) die_nomem();
           code_qput(line.s,line.len);
         }
         pmsgt++;

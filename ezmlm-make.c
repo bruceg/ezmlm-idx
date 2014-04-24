@@ -82,15 +82,15 @@ static stralloc template = {0};	/* template file name */
 static stralloc f = {0};
 static stralloc key = {0};
 static struct timeval tv;
-static char sz[2] = "?";
+static char sz = '?';
 
 void keyadd(unsigned long u)
 {
   char ch;
-  ch = (char) u; if (!stralloc_append(&key,&ch)) die_nomem(); u >>= 8;
-  ch = (char) u; if (!stralloc_append(&key,&ch)) die_nomem(); u >>= 8;
-  ch = (char) u; if (!stralloc_append(&key,&ch)) die_nomem(); u >>= 8;
-  ch = (char) u; if (!stralloc_append(&key,&ch)) die_nomem();
+  ch = (char) u; if (!stralloc_append(&key,ch)) die_nomem(); u >>= 8;
+  ch = (char) u; if (!stralloc_append(&key,ch)) die_nomem(); u >>= 8;
+  ch = (char) u; if (!stralloc_append(&key,ch)) die_nomem(); u >>= 8;
+  ch = (char) u; if (!stralloc_append(&key,ch)) die_nomem();
 }
 
 void keyaddtime(void)
@@ -480,9 +480,9 @@ int main(int argc,char **argv)
   if (!stralloc_copys(&f,"-")) die_nomem();
   for (ch = 0; ch <= 'z' - 'a'; ch++) {		/* build string with flags */
     if (flags[ch])
-      sz[0] = 'a' + ch;
+      sz = 'a' + ch;
     else
-      sz[0] = 'A' + ch;
+      sz = 'A' + ch;
     if (!stralloc_append(&f,sz)) die_nomem();
   }
 

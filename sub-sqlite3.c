@@ -121,7 +121,7 @@ int sql_table_exists(struct subdbinfo *info,
 
   if (!stralloc_copys(&line,"SELECT name FROM sqlite_master WHERE name='")) return -1;
   if (!stralloc_cats(&line,name)) return -1;
-  if (!stralloc_append(&line,"'")) return -1;
+  if (!stralloc_append(&line,'\'')) return -1;
   if (!stralloc_0(&line)) return -1;
 
   if ((stmt = _sqlquery(info, &line)) == NULL)

@@ -373,7 +373,7 @@ static void dodir(int flagdig)
       if (str_equal(d->d_name,".")) continue;
       if (str_equal(d->d_name,"..")) continue;
       if (!stralloc_copys(&fn,line.s)) die_nomem();
-      if (!stralloc_append(&fn,"/")) die_nomem();
+      if (!stralloc_append(&fn,'/')) die_nomem();
       if (!stralloc_cats(&fn,d->d_name)) die_nomem();
       if (!stralloc_0(&fn)) die_nomem();
       if (stat(fn.s,&st) == -1) {

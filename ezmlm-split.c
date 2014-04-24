@@ -96,7 +96,7 @@ static int findname(void)
     cp2 = cpat + byte_rchr(cpat, cp1 - cpat,'.');
     if (cp2 == cp1) cp2 = cpat;
     ++cp2;
-    if (!stralloc_append(&domain,".")) die_nomem();
+    if (!stralloc_append(&domain,'.')) die_nomem();
     if (!stralloc_catb(&domain,cp2, cp1 - cp2)) die_nomem();
   } else				/* no '.' */
     if (!stralloc_copyb(&domain,cpat + 1,cplast - cpat)) die_nomem();
@@ -149,14 +149,14 @@ static int findname(void)
   if (*cpname) {
     if (!stralloc_copys(&name,cpname)) die_nomem();
     if (byte_chr(name.s,name.len,'@') == name.len) {	/* local sublist */
-      if (!stralloc_append(&name,"@")) die_nomem();
+      if (!stralloc_append(&name,'@')) die_nomem();
       if (!stralloc_cat(&name,&outhost)) die_nomem();
     }
     if (!stralloc_0(&name)) die_nomem();
     return 1;
   } else {			/* match without name or no match =>this list */
     if (!stralloc_copy(&name,&outlocal)) die_nomem();
-    if (!stralloc_append(&name,"@")) die_nomem();
+    if (!stralloc_append(&name,'@')) die_nomem();
     if (!stralloc_cat(&name,&outhost)) die_nomem();
     if (!stralloc_0(&name)) die_nomem();
     return 0;
@@ -220,13 +220,13 @@ int main(int argc,char **argv)
       nhost = name.s + str_rchr(name.s,'@');		/* name must have '@'*/
       *(nhost++) = '\0';
       if (!stralloc_copys(&to,name.s)) die_nomem();	/* local */
-      if (!stralloc_append(&to,"-")) die_nomem();	/* - */
+      if (!stralloc_append(&to,'-')) die_nomem();	/* - */
       if (!stralloc_cats(&to,action)) die_nomem();	/* subscribe */
-      if (!stralloc_append(&to,"-")) die_nomem();	/* - */
+      if (!stralloc_append(&to,'-')) die_nomem();	/* - */
       if (target.s[i = str_rchr(target.s,'@')])
 	target.s[i] = '=';
       if (!stralloc_cats(&to,target.s)) die_nomem();	/* target */
-      if (!stralloc_append(&to,"@")) die_nomem();	/* - */
+      if (!stralloc_append(&to,'@')) die_nomem();	/* - */
       if (!stralloc_cats(&to,nhost)) die_nomem();	/* host */
       if (!stralloc_0(&to)) die_nomem();
       dtline = env_get("DTLINE");
@@ -260,7 +260,7 @@ int main(int argc,char **argv)
       (void) findname();
       if (!stralloc_cats(&name,": ")) die_nomem();
       if (!stralloc_cats(&name,target.s)) die_nomem();
-      if (!stralloc_append(&name,"\n")) die_nomem();
+      if (!stralloc_append(&name,'\n')) die_nomem();
       if (substdio_put(subfdout,name.s,name.len) == -1)
 	strerr_die2sys(111,FATAL,MSG(ERR_WRITE_STDOUT));
     }

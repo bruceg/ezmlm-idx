@@ -181,7 +181,7 @@ int main(int argc,char **argv)
     ? "Delivered-To: confirm to "
     : "Delivered-To: moderator for ")) die_nomem();
   if (!stralloc_catb(&mydtline,outlocal.s,outlocal.len)) die_nomem();
-  if (!stralloc_append(&mydtline,"@")) die_nomem();
+  if (!stralloc_append(&mydtline,'@')) die_nomem();
   if (!stralloc_catb(&mydtline,outhost.s,outhost.len)) die_nomem();
   if (!stralloc_cats(&mydtline,"\n")) die_nomem();
 
@@ -202,7 +202,7 @@ int main(int argc,char **argv)
    when = now();		/* when is also used later for date! */
    if (!stralloc_copys(&fnmsg, flagconfirm?"mod/unconfirmed/":"mod/pending/")) die_nomem();
    if (!stralloc_copyb(&fnbase,strnum,fmt_ulong(strnum,when))) die_nomem();
-   if (!stralloc_append(&fnbase,".")) die_nomem();
+   if (!stralloc_append(&fnbase,'.')) die_nomem();
    if (!stralloc_catb(&fnbase,strnum,fmt_ulong(strnum,pid))) die_nomem();
    if (!stralloc_cat(&fnmsg,&fnbase)) die_nomem();
    if (!stralloc_0(&fnmsg)) die_nomem();
@@ -261,13 +261,13 @@ int main(int argc,char **argv)
     if (!stralloc_copy(&line,&outlocal)) die_nomem();
     if (!stralloc_cats(&line,"-allow-tc.")) die_nomem();
     if (!stralloc_cats(&line,strnum)) die_nomem();
-    if (!stralloc_append(&line,".")) die_nomem();
+    if (!stralloc_append(&line,'.')) die_nomem();
     if (!stralloc_catb(&line,hash,COOKIE)) die_nomem();
-    if (!stralloc_append(&line,"-")) die_nomem();
+    if (!stralloc_append(&line,'-')) die_nomem();
     i = str_rchr(sender,'@');
     if (!stralloc_catb(&line,sender,i)) die_nomem();
     if (sender[i]) {
-      if (!stralloc_append(&line,"=")) die_nomem();
+      if (!stralloc_append(&line,'=')) die_nomem();
       if (!stralloc_cats(&line,sender + i + 1)) die_nomem();
     }
     qmail_put(&qq,line.s,line.len);

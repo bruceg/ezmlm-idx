@@ -111,7 +111,7 @@ static void init_dummy(void)
   for (i = 0; i< HASHLEN; i++)
     dummyind.s[i] = 'a';
   dummyind.len = HASHLEN;
-  if (!stralloc_append(&dummyind," ")) die_nomem();
+  if (!stralloc_append(&dummyind,' ')) die_nomem();
 }
 
 void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */

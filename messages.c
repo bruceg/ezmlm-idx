@@ -48,7 +48,7 @@ static int readit(stralloc *sa,const char *fn)
     case 0:
       return 0;
   }
-  if (!stralloc_append(&data,"\n")) die_nomem();
+  if (!stralloc_append(&data,'\n')) die_nomem();
   if (!stralloc_copys(sa,"")) die_nomem();
   i = 0;
   for (j = 0;j < data.len;++j)

@@ -14,7 +14,7 @@ static stralloc path = {0};
 const char *altpath(stralloc *s,const char *fn)
 {
   if (!stralloc_copy(s,&ezmlmrc)) die_nomem();
-  if (!stralloc_append(s,"/")) die_nomem();
+  if (!stralloc_append(s,'/')) die_nomem();
   if (!stralloc_cats(s,fn)) die_nomem();
   if (!stralloc_0(s)) die_nomem();
   return s->s;
@@ -24,7 +24,7 @@ const char *altdefaultpath(stralloc *s,const char *fn)
 {
   if (!stralloc_copys(s,auto_etc())) die_nomem();
   if (!stralloc_cats(s,TXT_DEFAULT)) die_nomem();
-  if (!stralloc_append(s,"/")) die_nomem();
+  if (!stralloc_append(s,'/')) die_nomem();
   if (!stralloc_cats(s,fn)) die_nomem();
   if (!stralloc_0(s)) die_nomem();
   return s->s;

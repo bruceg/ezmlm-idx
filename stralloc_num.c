@@ -25,7 +25,7 @@ int stralloc_catulong0(stralloc *sa,unsigned long u,unsigned int n)
 int stralloc_catlong0(stralloc *sa,long l,unsigned int n)
 {
   if (l < 0) {
-    if (!stralloc_append(sa,"-")) return 0;
+    if (!stralloc_append(sa,'-')) return 0;
     l = -l;
   }
   return stralloc_catulong0(sa,l,n);

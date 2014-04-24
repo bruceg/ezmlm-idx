@@ -51,7 +51,7 @@ void decodeQ(const char *cpfrom,unsigned int n,stralloc *outdata)
         ch = (ch1 << 4 | ch2) & 0xff;
       }
     }
-    if (!stralloc_append(outdata,&ch)) die_nomem();
+    if (!stralloc_append(outdata,ch)) die_nomem();
   }
 }      
 

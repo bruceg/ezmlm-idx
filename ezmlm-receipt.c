@@ -212,7 +212,7 @@ int main(int argc,char **argv)
           strerr_die2x(100,FATAL,"bad VERP format for receipt");
          *cp = '\0';
         if (!stralloc_copys(&listaddr,sender)) die_nomem();
-        if (!stralloc_append(&listaddr,"@")) die_nomem();
+        if (!stralloc_append(&listaddr,'@')) die_nomem();
         if (!stralloc_cats(&listaddr,host)) die_nomem();
         if (!stralloc_0(&listaddr)) die_nomem();
         break;

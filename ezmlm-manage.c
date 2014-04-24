@@ -188,7 +188,7 @@ void make_verptarget(void)
   i = str_rchr(target.s,'@');
   if (!stralloc_copyb(&verptarget,target.s,i)) die_nomem();
   if (target.s[i]) {
-    if (!stralloc_append(&verptarget,"=")) die_nomem();
+    if (!stralloc_append(&verptarget,'=')) die_nomem();
     if (!stralloc_cats(&verptarget,target.s + i + 1)) die_nomem();
   }
   if (!stralloc_0(&verptarget)) die_nomem();
@@ -228,11 +228,11 @@ void store_from(stralloc *frl,	/* from line */
       close(fdin);
   }					/* build new entry */
   if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,when))) die_nomem();
-  if (!stralloc_append(&line," ")) die_nomem();
+  if (!stralloc_append(&line,' ')) die_nomem();
   if (!stralloc_cats(&line,adr)) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   if (!stralloc_catb(&line,frl->s,frl->len)) die_nomem();
-  if (!stralloc_append(&line,"\n")) die_nomem();
+  if (!stralloc_append(&line,'\n')) die_nomem();
   if (substdio_bput(&ssfrom,line.s,line.len) == -1)
     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,"fromn"));
   if (substdio_flush(&ssfrom) == -1)
@@ -504,7 +504,7 @@ int geton(const char *action)
 	    if (!stralloc_copy(&confirm,&outlocal)) die_nomem();
 	    if (!stralloc_cats(&confirm,"-unsubscribe-")) die_nomem();
 	    if (!stralloc_cats(&confirm,verptarget.s)) die_nomem();
-	    if (!stralloc_append(&confirm,"@")) die_nomem();
+	    if (!stralloc_append(&confirm,'@')) die_nomem();
 	    if (!stralloc_cat(&confirm,&outhost)) die_nomem();
 	    if (!stralloc_0(&confirm)) die_nomem();
 	    set_cpconfirm(confirm.s,outlocal.len);	/* for !R in copy */
@@ -557,15 +557,15 @@ void doconfirm(const char *act)
   strnum[fmt_ulong(strnum,when)] = 0;
   cookie(hash,key.s,key.len-flagdig,strnum,target.s,act);
   if (!stralloc_copy(&confirm,&outlocal)) die_nomem();
-  if (!stralloc_append(&confirm,"-")) die_nomem();
+  if (!stralloc_append(&confirm,'-')) die_nomem();
   if (!stralloc_catb(&confirm,act,1)) die_nomem();
   if (!stralloc_cats(&confirm,"c.")) die_nomem();
   if (!stralloc_cats(&confirm,strnum)) die_nomem();
-  if (!stralloc_append(&confirm,".")) die_nomem();
+  if (!stralloc_append(&confirm,'.')) die_nomem();
   if (!stralloc_catb(&confirm,hash,COOKIE)) die_nomem();
-  if (!stralloc_append(&confirm,"-")) die_nomem();
+  if (!stralloc_append(&confirm,'-')) die_nomem();
   if (!stralloc_cats(&confirm,verptarget.s)) die_nomem();
-  if (!stralloc_append(&confirm,"@")) die_nomem();
+  if (!stralloc_append(&confirm,'@')) die_nomem();
   if (!stralloc_cat(&confirm,&outhost)) die_nomem();
   if (!stralloc_0(&confirm)) die_nomem();
   set_cpconfirm(confirm.s,outlocal.len);		/* for copy */
@@ -888,15 +888,15 @@ static void do_edit(const char *action)
     strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
     cookie(hash,key.s,key.len,strnum,line.s,"-e");
     if (!stralloc_copy(&confirm,&outlocal)) die_nomem();
-    if (!stralloc_append(&confirm,"-")) die_nomem();
+    if (!stralloc_append(&confirm,'-')) die_nomem();
     if (!stralloc_catb(&confirm,ACTION_ED,LENGTH_ED)) die_nomem();
     if (!stralloc_cats(&confirm,strnum)) die_nomem();
-    if (!stralloc_append(&confirm,".")) die_nomem();
+    if (!stralloc_append(&confirm,'.')) die_nomem();
 		/* action part has been checked for bad chars */
     if (!stralloc_cats(&confirm,action + len + 1)) die_nomem();
-    if (!stralloc_append(&confirm,".")) die_nomem();
+    if (!stralloc_append(&confirm,'.')) die_nomem();
     if (!stralloc_catb(&confirm,hash,COOKIE)) die_nomem();
-    if (!stralloc_append(&confirm,"@")) die_nomem();
+    if (!stralloc_append(&confirm,'@')) die_nomem();
     if (!stralloc_cat(&confirm,&outhost)) die_nomem();
     if (!stralloc_0(&confirm)) die_nomem();
     set_cpconfirm(confirm.s,outlocal.len);
@@ -979,7 +979,7 @@ static void do_ed(char *action)
   if (byte_diff(hash,COOKIE,x)) die_cookie();
 	/* cookie is ok, file exists, lock's on, new file ends in '_' */
   if (!stralloc_copys(&fneditn,fnedit.s)) die_nomem();
-  if (!stralloc_append(&fneditn,"_")) die_nomem();
+  if (!stralloc_append(&fneditn,'_')) die_nomem();
   if (!stralloc_0(&fneditn)) die_nomem();
   fd = open_trunc(fneditn.s);
   if (fd == -1)
@@ -1182,13 +1182,13 @@ static char *set_workdir(char *action)
     flagdig = FLD_DIGEST;
   } else if (case_starts(action,ACTION_ALLOW)) {	/* allow */
     action += str_len(ACTION_ALLOW);
-    if (!stralloc_append(&outlocal,"-")) die_nomem();
+    if (!stralloc_append(&outlocal,'-')) die_nomem();
     if (!stralloc_cats(&outlocal,ACTION_ALLOW)) die_nomem();
     workdir = "allow";
     flagdig = FLD_ALLOW;
   } else if (case_starts(action,ACTION_DENY)) {		/* deny */
     action += str_len(ACTION_DENY);
-    if (!stralloc_append(&outlocal,"-")) die_nomem();
+    if (!stralloc_append(&outlocal,'-')) die_nomem();
     if (!stralloc_cats(&outlocal,ACTION_DENY)) die_nomem();
     workdir = "deny";
     flagdig = FLD_DENY;

@@ -26,7 +26,7 @@ void hdr_datemsgid(unsigned long when)
   qmail_puts(&qq,"Message-ID: <");
   if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,(unsigned long)when)))
     die_nomem();
-  if (!stralloc_append(&line,".")) die_nomem();
+  if (!stralloc_append(&line,'.')) die_nomem();
   if (!stralloc_catb(&line,strnum,
 		     fmt_ulong(strnum,(unsigned long) getpid()))) die_nomem();
   if (!stralloc_cats(&line,".ezmlm@")) die_nomem();

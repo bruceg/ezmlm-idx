@@ -35,7 +35,7 @@ static void parsesubdb(const char *plugin_name)
 
 		/* [plugin:]host:port:db:table:user:pw:name */
   port = 0;
-  if (!stralloc_append(&line,"\n")) die_nomem();
+  if (!stralloc_append(&line,'\n')) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
   if (line.s[j = str_chr(line.s,'\n')])
     line.s[j] = '\0';

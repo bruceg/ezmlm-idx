@@ -29,7 +29,7 @@ static int decode_srs(const char *s)
   ++sep2;
 
   if (!stralloc_copyb(&realsender,s+sep2,at-sep2)) die_nomem();
-  if (!stralloc_append(&realsender,"@")) die_nomem();
+  if (!stralloc_append(&realsender,'@')) die_nomem();
   if (!stralloc_catb(&realsender,s+sep1,sep2-sep1-1)) die_nomem();
   if (!stralloc_0(&realsender)) die_nomem();
   return 1;

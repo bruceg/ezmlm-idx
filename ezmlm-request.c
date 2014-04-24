@@ -388,7 +388,7 @@ int main(int argc,char **argv)
           while (line.s[len] == ' ' || line.s[len] == '\t') --len;
           while (pos < len &&
 		(line.s[pos] == ' ' || line.s[pos] == '\t')) ++pos;
-          if (!stralloc_append(&subject," ")) die_nomem();
+          if (!stralloc_append(&subject,' ')) die_nomem();
           if (!stralloc_catb(&subject,line.s+pos,len-pos+1)) die_nomem();
       }
       if (!match)
