@@ -51,46 +51,10 @@ static struct option options[] = {
   OPT_END
 };
 
-static unsigned long hh = 4L;		/* default time 04:12 */
-static unsigned long mm = 12L;
-static const char *dow = "*";		/* day of week */
-static const char *qmail_inject = "/bin/qmail-inject ";
-static char strnum[FMT_ULONG];
-static unsigned long uid,euid;
-
-static stralloc line = {0};
-static stralloc rp = {0};
-static stralloc user = {0};
-static stralloc euser = {0};
-static stralloc dir = {0};
-static stralloc listaddr = {0};
-
-static struct passwd *ppasswd;
-
-static int match;
-static int hostmatch;
-static int localmatch;
-static unsigned long dh,t;
-static int founduser = 0;
-static int listmatch = 0;
-static int flagdigit = 0;
-static int flagours;
-static int foundlocal;
-static int foundmatch = 0;
-static unsigned int nolists = 0;
-static unsigned long maxlists;
-static unsigned int lenhost,lenlocal;
-static unsigned int part0start,part0len;
-static int fdlock,fdin,fdout;
-
-static char *local = (char *) 0;	/* list = local@host */
-static const char *host = (char *) 0;
-static char *code = (char *) 0;	/* digest code */
-
-static void die_syntax(void)
+static void die_syntax(stralloc *line)
 {
-  if (!stralloc_0(&line)) die_nomem();
-  strerr_die4x(100,FATAL,MSG1(ERR_SYNTAX,TXT_EZCRONRC),": ",line.s);
+  if (!stralloc_0(line)) die_nomem();
+  strerr_die4x(100,FATAL,MSG1(ERR_SYNTAX,TXT_EZCRONRC),": ",line->s);
 }
 
 static void die_argument(void)
@@ -130,12 +94,6 @@ int isclean(char *addr,
   return 1;
 }
 
-char inbuf[512];
-substdio ssin;
-
-char outbuf[512];
-substdio ssout;
-
 int main(int argc,char **argv)
 {
   int child;
@@ -143,6 +101,47 @@ int main(int argc,char **argv)
   stralloc addr = {0};
   unsigned int pos = 0,pos2,poslocal,len;
   const char *cp;
+
+  unsigned long hh = 4L;		/* default time 04:12 */
+  unsigned long mm = 12L;
+  const char *dow = "*";		/* day of week */
+  const char *qmail_inject = "/bin/qmail-inject ";
+  char strnum[FMT_ULONG];
+  unsigned long uid,euid = 0;
+
+  stralloc rp = {0};
+  stralloc user = {0};
+  stralloc euser = {0};
+  stralloc dir = {0};
+  stralloc listaddr = {0};
+  stralloc line = {0};
+
+  struct passwd *ppasswd;
+
+  int match;
+  int hostmatch;
+  int localmatch;
+  unsigned long dh,t;
+  int founduser = 0;
+  int listmatch = 0;
+  int flagdigit = 0;
+  int flagours;
+  int foundlocal = 0;
+  int foundmatch = 0;
+  unsigned int nolists = 0;
+  unsigned long maxlists;
+  unsigned int lenhost,lenlocal;
+  int fdin,fdout = -1;
+
+  char *local = (char *) 0;	/* list = local@host */
+  const char *host = (char *) 0;
+  char *code = (char *) 0;	/* digest code */
+
+  char inbuf[512];
+  substdio ssin;
+
+  char outbuf[512];
+  substdio ssout;
 
   (void) umask(077);
   sig_pipeignore();
@@ -259,7 +258,7 @@ int main(int argc,char **argv)
   ++pos;				/* points to first ':' */
   len = str_chr(line.s+pos,':');	/* second ':' */
     if (!line.s[pos + len])
-      die_syntax();
+      die_syntax(&line);
   if (!local) {				/* only -d and std left */
     localmatch = 1;
     hostmatch = 1;
@@ -272,7 +271,7 @@ int main(int argc,char **argv)
   pos += len + 1;
   len = str_chr(line.s + pos,':');	/* third */
   if (!line.s[pos + len])
-    die_syntax();
+    die_syntax(&line);
   if (local) {				/* check host */
     if (len == 0)			/* empty host => any host */
       hostmatch = 1;
@@ -285,11 +284,11 @@ int main(int argc,char **argv)
   pos += scan_ulong(line.s+pos,&maxlists);
   if (line.s[pos]) {			/* check additional lists */
     if (line.s[pos] != ':')
-      die_syntax();
+      die_syntax(&line);
     if (line.s[pos+1+str_chr(line.s+pos+1,':')])
-      die_syntax();	/* reminder lists are not separated by ':'  */
-			/* otherwise a ':' or arg miscount will die */
-			/* silently */
+      die_syntax(&line);	/* reminder lists are not separated by ':'  */
+				/* otherwise a ':' or arg miscount will die */
+				/* silently */
     if (local) {
       while (++pos < line.len) {
         len = str_chr(line.s + pos,'@');
@@ -341,10 +340,8 @@ int main(int argc,char **argv)
     if (!stralloc_cats(&addr," * * ")) die_nomem();
     if (!stralloc_cats(&addr,dow)) die_nomem();
     if (!stralloc_cats(&addr," ")) die_nomem();
-    part0start = addr.len;		/* /var/qmail/bin/qmail-inject */
     if (!stralloc_cats(&addr,auto_qmail)) die_nomem();
     if (!stralloc_cats(&addr,qmail_inject)) die_nomem();
-    part0len = addr.len - part0start;
     if (!stralloc_cats(&addr,local)) die_nomem();
     if (!stralloc_cats(&addr,"-dig-")) die_nomem();
     if (!stralloc_cats(&addr,code)) die_nomem();
@@ -361,7 +358,7 @@ int main(int argc,char **argv)
 
   if (!flaglist) {
 	/* now to rewrite crontab we need to lock */
-    fdlock = lockfile("crontabl");
+    lockfile("crontabl");
   } /* if !flaglist */
   if ((fdin = open_read("crontab")) == -1) {
     if (errno != error_noent)
