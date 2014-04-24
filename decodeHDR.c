@@ -15,7 +15,6 @@ void decodeHDR(const char *indata,
 /* decodes indata depending on charset. May put '\n' and '\0' into out */
 /* data and can take them as indata. */
 {
-  unsigned int pos;
   const char *cp,*cpnext,*cpstart,*cpenc,*cptxt,*cpend,*cpafter;
 
   cpnext = indata;
@@ -60,7 +59,6 @@ void decodeHDR(const char *indata,
           switch (*cpenc) {
             case 'b':
             case 'B':
-              pos = outdata->len;
               decodeB(cptxt,cpend-cptxt,outdata);
               cpnext = cpend + 2;
               cpstart = cpnext;

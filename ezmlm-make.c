@@ -359,7 +359,7 @@ int main(int argc,char **argv)
   unsigned int next,i,j;
   int last;
   unsigned int slpos,hashpos,pos;
-  int fdin,fdlock,fdtmp;
+  int fdin,fdtmp;
   const char *p;
   unsigned char ch;
 
@@ -418,7 +418,7 @@ int main(int argc,char **argv)
   if (flags['e' - 'a'] & 1) {
     /* lock for edit */
     dirplusmake("/lock");
-    fdlock = lockfile(dirplus.s);
+    lockfile(dirplus.s);
     if (!read_flags_config())
       if (!read_old_config())
 	read_file_config();

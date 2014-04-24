@@ -57,7 +57,7 @@ int main(int argc,char **argv)
   unsigned int pos;
   unsigned long num, loopnum, when;
   unsigned long loopwhen = 0L;
-  int fd,fdlock;
+  int fd;
 
   (void) umask(022);
   sig_pipeignore();
@@ -70,7 +70,7 @@ int main(int argc,char **argv)
   if (getconf_isset("modpost"))
     _exit(0);		/* already mod */
 			/* lock for num and for writing loopnum */
-  fdlock = lockfile("lock");
+  lockfile("lock");
 
   if (!getconf_ulong(&num,"num",1))
     _exit(99);						/* no msgs */

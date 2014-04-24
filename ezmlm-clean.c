@@ -223,7 +223,6 @@ void dodir(const char *dirname,int reply)
 
 int main(int argc,char **argv)
 {
-  int fdlock;
   unsigned long delay;
   (void) umask(022);
   sig_pipeignore();
@@ -242,7 +241,7 @@ int main(int argc,char **argv)
   else if (delay > DELAY_MAX) delay = DELAY_MAX;
   older = (unsigned long) when - 3600L * delay;	/* delay is in hours */
 
-  fdlock = lockfile("mod/lock");
+  lockfile("mod/lock");
 
   dodir("mod/pending/",flagreturn);
   dodir("mod/accepted/",0);

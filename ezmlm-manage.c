@@ -935,7 +935,7 @@ static void do_ed(char *action)
   int flaggoodfield;
   int fd;
   char *x, *y;
-  char *cp,*cpfirst,*cplast,*cpnext,*cpafter;
+  char *cp,*cplast,*cpnext,*cpafter;
   int flagdone;
   unsigned int len;
   const char *fname;
@@ -1016,7 +1016,6 @@ static void do_ed(char *action)
 	  if (!stralloc_copyb(&quoted,cp,i)) die_nomem();
 	  flaggoodfield = 1;
 	  cp = cpnext + 1;
-	  cpfirst = cp;
 	  continue;
 	}
       } else

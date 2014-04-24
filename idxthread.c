@@ -149,7 +149,6 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
   unsigned int authlen = 0;
   unsigned int pos = 0;
   unsigned int posa;
-  unsigned long submax;		/* max subject num in subtable */
   subentry *psubnext;		/* points to next entry in subtable */
   subentry *psubt;		/* points to entry in subtable */
   authentry *pauthnext;		/* points to next entry in authtable */
@@ -198,7 +197,6 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
 
   idxlatest = msg_latest / 100;
   idxto = msg_to / 100;
-  submax = 0;
   psubnext = *psubtable;	/* dummy node to get tree going. Basically, */
   psubt = &sdummy;		/* assure that subject > psubt-sub and that */
   init_dummy();			/* below ok unless HASHLEN > 40 */

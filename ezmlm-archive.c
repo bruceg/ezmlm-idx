@@ -92,7 +92,7 @@ void write_threads(const msgentry *msgtable,
 /* Writes the subject index first, then processes the individual files */
 {
   const msgentry *pmsgt;
-  subentry *psubt,*psubtm, *psubtlast;
+  subentry *psubt,*psubtm;
   subentry *presubt = (subentry *)0;
   const authentry *pautht;
   const dateentry *pdatet;
@@ -123,7 +123,6 @@ void write_threads(const msgentry *msgtable,
 	presubt = psubtm;	/* this thread extends beyond current month */
     if (psubtm->firstmsg >= nextmsg) {	/* done with this month */
       if (fdn != -1) close_proper(&ssout,fn.s,fnn.s);
-      psubtlast = psubtm;		/* last thread done */
       if (presubt)			/* need to rewind? */
 	psubtm = presubt;		/* do it */
       psubt = psubtm;			/* tmp pointer to reset done flag */

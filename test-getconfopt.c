@@ -80,6 +80,7 @@ int main(int argc,char *argv[])
 
   substdio_fdbuf(&ssout,write,1,buf,sizeof buf);
 
+  put_u("getconfopt => ",i);
   put_u("optind=",optind);
   put_s("dir=",dir);
   put_u("a=",option_a);

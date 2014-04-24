@@ -241,8 +241,7 @@ static void dodir(int flagdig)
   direntry *d, *ds;
   unsigned long bouncedate;
   unsigned long ld;
-  unsigned long ddir,dfile;
-  int fdlock,fd;
+  int fd;
   char ch;
 
   workdir = flagdig ? "digest" : ".";
@@ -266,13 +265,10 @@ static void dodir(int flagdig)
   if (flagdig)
     if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
 
-  ddir = when / 10000;
-  dfile = when - 10000 * ddir;
-
   if (!stralloc_copys(&line,workdir)) die_nomem();
   if (!stralloc_cats(&line,"/lockbounce")) die_nomem();
   if (!stralloc_0(&line)) die_nomem();
-  fdlock = lockfile(line.s);
+  lockfile(line.s);
 
   if (!stralloc_copys(&line,workdir)) die_nomem();
   if (!stralloc_cats(&line,"/bounce/d")) die_nomem();

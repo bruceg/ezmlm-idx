@@ -321,7 +321,6 @@ int idx_copy_insertsubject(void)
 int main(int argc,char **argv)
 {
   unsigned long subs;
-  int fdlock;
   const char *sender;
   const char *ret;
   const char *err;
@@ -361,7 +360,7 @@ int main(int argc,char **argv)
 
   sender = get_sender();
 
-  fdlock = lockfile("lock");
+  lockfile("lock");
 
   flagarchived = getconf_isset("archived");
   flagindexed = getconf_isset("indexed");

@@ -54,7 +54,7 @@ int main(int argc,char **argv)
   unsigned long num, digsize, dignum;
   unsigned long cumsize = 0L;
   unsigned long when, tsttime, digwhen;
-  int fd,fdlock;
+  int fd;
 
   (void) umask(022);
   sig_pipeignore();
@@ -101,7 +101,7 @@ int main(int argc,char **argv)
       (deltanum && ((dignum + deltanum) <= num))) {	/* digest! */
     if (flaglocal) {	/* avoid multiple digests. Of course, ezmlm-tstdig*/
 			/* belongs in ezmlm-digest, but it's too late ....*/
-      fdlock = lockfile("lock");
+      lockfile("lock");
       getconf_line(&line,"tstdig",0);
       if (!stralloc_0(&line)) die_nomem();
       scan_ulong(line.s,&tsttime);	/* give digest 1 h to complete */

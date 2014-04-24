@@ -169,10 +169,9 @@ int main(int argc,char **argv)
   char *local;
   const char *action;
   int flaginheader;
-  int flagcomment;
   int flaggoodfield;
   int flagdone;
-  int fd, fdlock;
+  int fd;
   int match;
   const char *err;
   char encin = '\0';
@@ -180,7 +179,7 @@ int main(int argc,char **argv)
   unsigned int pos,i;
   int child;
   int opt;
-  char *cp,*cpnext,*cpfirst,*cplast,*cpafter;
+  char *cp,*cpnext,*cplast,*cpafter;
 
   (void) umask(022);
   sig_pipeignore();
@@ -225,7 +224,7 @@ int main(int argc,char **argv)
   if (byte_diff(hash,COOKIE,action+confnum+1))
     die_badformat();
 
-  fdlock = lockfile("mod/lock");
+  lockfile("mod/lock");
 
   switch(checkfile(fnbase.s)) {
     case 0:
@@ -285,7 +284,6 @@ int main(int argc,char **argv)
     copy(&qq,"text/top",flagcd);
     copy(&qq,"text/mod-reject",flagcd);
 
-    flagcomment = 0;
     flaginheader = 1;
     if (!stralloc_copys(&text,"")) die_nomem();
     if (!stralloc_ready(&text,1024)) die_nomem(); 
@@ -329,7 +327,6 @@ int main(int argc,char **argv)
             if (!stralloc_copyb(&quoted,cp,i)) die_nomem();	/* quote chars*/
             flaggoodfield = 1;
             cp = cpnext + 1;
-            cpfirst = cp;
             continue;
           } else {						/* end tag */
             if (flagdone)	/* 0 no comment lines, 1 comment line */

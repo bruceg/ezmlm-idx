@@ -945,7 +945,7 @@ void indexlinks(struct msginfo *infop)
 int show_index(struct msginfo *infop)
 {
   unsigned long thismsg;
-  unsigned int pos,l;
+  unsigned int pos;
   char ch;
 
   (void) makefn(&fn,ITEM_INDEX,msginfo.target,"");
@@ -973,7 +973,6 @@ int show_index(struct msginfo *infop)
     if (!match)
       break;
     pos = scan_ulong(line.s,&thismsg);
-    l = pos;
     ch = line.s[pos++];
     pos++;
     if (line.len < pos + 1 + HASHLEN)
@@ -1385,7 +1384,6 @@ void show_part(struct msginfo *infop,int flagshowheaders,int flagstartseen)
   int flaghtml;
   int btype,i;
   unsigned int colpos;
-  char linetype;
 
   flaginheader = 1;
   for (i = 0; i < NO_HDRS; i++) hdr[i].len = 0;
@@ -1512,7 +1510,6 @@ void show_part(struct msginfo *infop,int flagshowheaders,int flagstartseen)
 		continue;
 	}
       } else if (line.s[0] != ' ' && line.s[0] != '\t') {
-	linetype = ' ';
         flaggoodfield = 0;
 	colpos = byte_chr(line.s,line.len,':');
 	if ((whatheader = constmap_index(&headermap,line.s,colpos))) {

@@ -262,7 +262,6 @@ int main(int argc,char **argv)
   unsigned int i;
   int flagmaster = 0;
   int flagreceipt = 0;
-  int fdlock;
   char ch;
 
   umask(022);
@@ -331,7 +330,7 @@ int main(int argc,char **argv)
     if (!stralloc_cats(&line,"/lockbounce")) die_nomem();
     if (!stralloc_0(&line)) die_nomem();
 
-    fdlock = lockfile(line.s);
+    lockfile(line.s);
 
     if (!flagmaster && str_start(action,"warn-")) {
       action += 5;
