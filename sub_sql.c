@@ -19,7 +19,6 @@ static stralloc name;
 static stralloc query;
 static stralloc params[4];
 static stralloc lcaddr;
-static char strnum[FMT_ULONG];
 
 static void die_write(void)
 {
@@ -47,6 +46,7 @@ const char *sub_sql_checktag (struct subdbinfo *info,
 			      const char *hash)		/* cookie */
 {
   void *result;
+  char strnum[FMT_ULONG];
 
   /* SELECT msgnum FROM table_cookie WHERE msgnum=num and cookie='hash' */
   /* succeeds only is everything correct. */
@@ -142,6 +142,7 @@ const char *sub_sql_logmsg(struct subdbinfo *info,
 			   int done)
 {
   char *s;
+  char strnum[FMT_ULONG];
 
   if (!stralloc_copys(&query,"INSERT INTO ")) die_nomem();
   if (!stralloc_cats(&query,info->base_table)) die_nomem();
@@ -177,6 +178,7 @@ unsigned long sub_sql_putsubs(struct subdbinfo *info,
 {
   void *result;
   unsigned long no = 0L;
+  char strnum[FMT_ULONG];
 
   if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,hash_lo))) die_nomem();
   if (!stralloc_copyb(&params[1],strnum,fmt_ulong(strnum,hash_hi))) die_nomem();
@@ -376,6 +378,7 @@ void sub_sql_tagmsg(struct subdbinfo *info,
 		    unsigned long chunk)
 {
   const char *ret;
+  char strnum[FMT_ULONG];
 
   if (chunk >= 53L) chunk = 0L;	/* sanity */
 

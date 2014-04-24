@@ -13,12 +13,12 @@ extern struct qmail qq;
 extern char flagcd;
 extern char boundary[HASHLEN];
 extern stralloc line;
-extern char strnum[FMT_ULONG];
 extern stralloc outhost;
 
 void hdr_datemsgid(unsigned long when)
 {
   char date[DATE822FMT];
+  char strnum[FMT_ULONG];
   struct datetime dt;
   qmail_puts(&qq,"Date: ");
   datetime_tai(&dt,when);

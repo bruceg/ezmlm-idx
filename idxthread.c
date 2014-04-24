@@ -37,8 +37,6 @@ static stralloc dummyind = {0};
 static substdio ssindex;
 static char indexbuf[1024];
 
-static char strnum[FMT_ULONG];
-
 struct stat st;
 			/* if no data, these may be the entire table, so */
 			/* need to be static */
@@ -165,6 +163,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
   unsigned int lastdate = 0;
   unsigned int thisdate;
   msgentry *x, *y;
+  char strnum[FMT_ULONG];
 
 				/* a few unnecessary sanity checks */
   if (msg_to > msg_latest)
@@ -408,6 +407,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
   int match;
   msgentry *pmsgt;
   msgentry *x,*y;
+  char strnum[FMT_ULONG];
 
   if ((ulmrange = msg_to - msg_from +1) <= 0)
     strerr_die2x(100,FATAL,"Program error: bad range in idx_mkthreads");

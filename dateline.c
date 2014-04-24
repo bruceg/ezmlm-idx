@@ -3,11 +3,10 @@
 #include "stralloc.h"
 #include "cgi.h"
 
-static char strnum[FMT_ULONG];
-
 int dateline(stralloc *dt, unsigned long d)
 /* converts yyyymm from unsigned long d to text dt */
 {
+  char strnum[FMT_ULONG];
   const char *mo;
   switch (d % 100) {
     case 1: mo = "January"; break;
