@@ -120,7 +120,6 @@ stralloc qline = {0};
 stralloc quoted = {0};
 stralloc moddir = {0};
 stralloc from = {0};
-stralloc to = {0};
 stralloc owner = {0};
 stralloc fromline = {0};
 stralloc fnedit = {0};
@@ -128,7 +127,6 @@ stralloc fneditn = {0};
 
 datetime_sec when;
 int match;
-unsigned int max;
 
 char strnum[FMT_ULONG];
 char hash[COOKIE];
