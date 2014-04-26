@@ -6,6 +6,8 @@
 
 - Added option to ezmlm-manage to show what response is being sent.
 
+- Added rewritefrom feature to ezmlm-send.
+
 - Fixed behavior of ezmlm-manage -Q flag to match man page.
 
 - Fixed ezmlm-import failing to flush output to the last message,

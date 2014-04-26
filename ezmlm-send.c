@@ -50,6 +50,7 @@ const char USAGE[] =
 static int ignoredflag;
 static const char *hash_str = 0;
 static char *mlheader = 0;
+static int flagrewritefrom = 0;
 
 static struct option options[] = {
   OPT_FLAG(ignoredflag,'c',0,0), /* ignore for backwards compat */
@@ -63,6 +64,7 @@ static struct option options[] = {
   OPT_CSTR(hash_str,'S',0),
   OPT_FLAG(ignoredflag,'q',0,0),
   OPT_FLAG(ignoredflag,'Q',0,0),
+  OPT_FLAG(flagrewritefrom,0,1,"rewritefrom"),
   OPT_END
 };
 
@@ -81,6 +83,7 @@ static stralloc content = {0};
 stralloc boundary = {0};
 static stralloc dcprefix = {0};
 static stralloc dummy = {0};
+static stralloc author = {0};
 
 void die_indexn(void)
 {
@@ -306,6 +309,26 @@ int idx_copy_insertsubject(void)
   return r;
 }
 
+static void rewrite_from()
+{
+  int k;
+  char *cp;
+
+  concatHDR(from.s,from.len,&lines);
+  k = author_name(&cp,lines.s,lines.len);
+  decodeHDR(cp,k,&author);
+  stralloc_0(&author);
+  qa_put("From: \"",7);
+  qa_puts(MSG2(AUTHOR_VIA_LIST,author.s,"ezmlm"));
+  qa_put("\" <",3);
+  qa_put(outlocal.s,outlocal.len);
+  qa_put("@",1);
+  qa_put(outhost.s,outhost.len);
+  qa_put(">\n",2);
+  qa_put("Cc:",3);
+  qa_put(from.s,from.len);
+}
+
 int main(int argc,char **argv)
 {
   unsigned long subs;
@@ -469,6 +492,8 @@ int main(int argc,char **argv)
     if (flaginheader && match) {
       if (line.len == 1) {		/* end of header */
 	flaginheader = 0;
+	if (flagrewritefrom)
+	  rewrite_from();
         if (flagindexed)		/* std entry */
           r = idx_copy_insertsubject();	/* all indexed lists */
         if (flagprefixed && !flagsublist) {
@@ -578,6 +603,7 @@ int main(int argc,char **argv)
 
           if (case_startb(line.s,line.len,"From:")) {
             if (!stralloc_copyb(&from,line.s+5,line.len-5)) die_nomem();
+	    flagbadfield = flagrewritefrom; /* suppress if we're going to rewrite it */
           }
         } else if (line.len == mydtline.len)
 	  if (!byte_diff(line.s,line.len,mydtline.s))

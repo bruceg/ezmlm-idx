@@ -87,6 +87,15 @@ If not,
 deletes any incoming fields with names listed in
 .IR dir\fB/headerremove .
 
+If
+.I dir\fB/rewritefrom
+is present,
+.B ezmlm-send
+removes the original
+.B From:
+header and replaces it.
+FIXME explain replacement why and content
+
 If present,
 .B ezmlm-send
 removes all MIME parts not specified in

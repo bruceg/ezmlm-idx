@@ -1,18 +1,21 @@
   prompt "ezmlm-send:           "
 
-  cat >"$TMP" <<EOF
-From: test@example.org
+  sendfrom() {
+    cat >"$TMP" <<EOF
+From: ${1:-test@example.org}
 Subject: test post
 X-Test-Header: one
 Content-Length: zip
 
 message goes here
 EOF
+    ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+	fatal "failed to produce post"
+  }
 
   touch "$DIR"/addtrailer
   LOCAL="$LOC"
-  ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
-  fatal "failed to produce post"
+  sendfrom
 
   grephdr_list 1
   grephdr Precedence: bulk
@@ -33,5 +36,27 @@ EOF
   ${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce post"
   grephdr Subject: 'test post'
+
+  touch "$DIR"/rewritefrom
+
+  sendfrom '"My Name" <test@example.org>'
+  grephdr From: "\"My Name via ezmlm\" <${LOC}@${HOST}>$"
+  grephdr Cc: '"My Name" <test@example.org>'
+
+  sendfrom '"My Name" test@example.org'
+  grephdr From: "\"My Name via ezmlm\" <${LOC}@${HOST}>$"
+  grephdr Cc: '"My Name" test@example.org'
+
+  sendfrom 'My Name <test@example.org>'
+  grephdr From: "\"My Name via ezmlm\" <${LOC}@${HOST}>$"
+  grephdr Cc: 'My Name <test@example.org>'
+
+  sendfrom 'test@example.org (My Name)'
+  grephdr From: "\"My Name via ezmlm\" <${LOC}@${HOST}>$"
+  grephdr Cc: 'test@example.org \(My Name\)'
+
+  sendfrom 'test@example.org'
+  grephdr From: "\"test.example.org via ezmlm\" <${LOC}@${HOST}>$"
+  grephdr Cc: 'test@example.org'
 
   echo OK
