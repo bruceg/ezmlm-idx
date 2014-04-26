@@ -147,9 +147,7 @@ void qa_put(const char *buf,unsigned int len)
 
 void qa_puts(const char *buf)
 {
-  qmail_puts(&qq,buf);
-  if (flagarchived)
-    if (substdio_puts(&ssarchive,buf) == -1) die_archive();
+  qa_put(buf,str_len(buf));
 }
 
 int sublistmatch(const char *sender)
