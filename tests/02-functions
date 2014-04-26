@@ -164,9 +164,8 @@ check_manage() {
     local options=$2
     local exit=$3
     local exitmsg="$4"
-    local text=$5
+    local text="$5"
     local sender="$6"
-    shift 6
     ${EZBIN}/ezmlm-manage -a $options "$DIR" < "$TMP" > "$ERR" 2>&1
     local e=$?
     test $e -eq $exit || fatal "ezmlm-manage ($name) $exitmsg (exit $e)"
@@ -177,6 +176,7 @@ check_manage() {
     fi
     if [ -n "$sender" ]
     then
+	shift 6
 	checkenv $name "$sender" "$@"
     fi
 }

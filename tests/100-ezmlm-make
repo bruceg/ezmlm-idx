@@ -70,13 +70,13 @@ fi
 #############################
 # set up qmail-queue script #
 #############################
-  (
-    echo "#!/bin/sh"
-    echo "cat >'${QQMSG}'"
-    echo "tr \\\\0 \\\\n <&1 >'${QQENV}'"
-    echo "sed -e '/^$/,\$d' <'${QQMSG}' >'${QQHDR}'"
-    echo "sed -e '1,/^$/d' <'${QQMSG}' >'${QQBODY}'"
-    echo "cp '${QQMSG}' '${QQMSG}'.\$\$"
-    echo "exit 0"
-  ) > "$QQTEST"
-  chmod 755 "$QQTEST"
+cat >"$QQTEST" <<EOF
+#!/bin/sh
+cat > '${QQMSG}'
+tr '\\0' '\\n' <&1 >'${QQENV}'
+sed -e '/^$/,\$d' <'${QQMSG}' >'${QQHDR}'
+sed -e '1,/^$/d' <'${QQMSG}' >'${QQBODY}'
+cp '${QQMSG}' '${QQMSG}'.\$\$
+exit 0
+EOF
+chmod 755 "$QQTEST"
