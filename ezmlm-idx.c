@@ -67,8 +67,6 @@ static int idx_get_trimsubject(int fd)
 /* No terminal '\n' in any of the strallocs! */
 {
 int foundsubject = 0;
-int issubject = 0;
-int isfrom = 0;
 int foundreceived = 0;
 int foundfrom = 0;
 int match;
@@ -80,37 +78,26 @@ unsigned int pos,pos1;
 
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
   for (;;) {
-    if (getln(&ssin,&line,&match,'\n') == -1)
+    if (gethdrln(&ssin,&line,&match,'\n') == -1)
       strerr_die2x(111,FATAL,MSG(ERR_READ_INPUT));
     if (match) {
       if (line.len == 1)
         break;
-      if (*line.s == ' ' || *line.s == '\t') {
-				/* continuation */
-        if (issubject) {
-          if (!stralloc_cat(&subject,&line)) die_nomem();
-        } else if (isfrom)
-          if (!stralloc_cat(&author,&line)) die_nomem();
-      } else {
-        issubject = 0;
-        isfrom = 0;
-        if (!foundsubject && case_startb(line.s,line.len,"Subject:")) {
-          if (!stralloc_copyb(&subject,line.s+8,line.len-8)) die_nomem();
-          foundsubject = 1;
-          issubject = 1;
-        } else if (!foundfrom && case_startb(line.s,line.len,"From:")) {
-          if (!stralloc_copyb(&author,line.s+5,line.len-5)) die_nomem();
-          foundfrom = 1;
-          isfrom = 1;
-        } else if (!flagdate && !foundreceived &&
-            case_startb(line.s,line.len,"Received:")) {
+      if (!foundsubject && case_startb(line.s,line.len,"Subject:")) {
+	if (!stralloc_copyb(&subject,line.s+8,line.len-8)) die_nomem();
+	foundsubject = 1;
+      } else if (!foundfrom && case_startb(line.s,line.len,"From:")) {
+	if (!stralloc_copyb(&author,line.s+5,line.len-5)) die_nomem();
+	foundfrom = 1;
+      } else if (!flagdate && !foundreceived &&
+		 case_startb(line.s,line.len,"Received:")) {
           pos = byte_chr(line.s,line.len,';');
           if (pos != line.len)
             if (!stralloc_copyb(&received,line.s+pos+2,line.len - pos - 3))
               die_nomem();
           foundreceived = 1;
-        } else if (flagdate && !foundreceived &&
-            case_startb(line.s,line.len,"Date:")) {
+      } else if (flagdate && !foundreceived &&
+		 case_startb(line.s,line.len,"Date:")) {
           if (line.len < 22) continue;				/* illegal */
           pos = 6 + byte_chr(line.s+6,line.len-6,',');
           if (pos == line.len)
@@ -144,7 +131,6 @@ unsigned int pos,pos1;
             }
           }
           received.len = 0;		/* bad format - scrap */
-        }
       }
     } else
       break;

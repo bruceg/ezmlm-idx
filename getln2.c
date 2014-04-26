@@ -10,9 +10,6 @@ int getln2(substdio *ss,stralloc *sa,
   unsigned int i;
   int n;
  
-  if (!stralloc_ready(sa,0)) return -1;
-  sa->len = 0;
- 
   for (;;) {
     n = substdio_feed(ss);
     if (n < 0) return -1;

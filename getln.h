@@ -8,5 +8,6 @@ extern int getln(struct substdio *ss,struct stralloc *sa,
 		 int *match,int sep);
 extern int getln2(struct substdio *ss,struct stralloc *sa,
 		  /*@out@*/char **cont,/*@out@*/unsigned int *clen,int sep);
+extern int gethdrln(struct substdio *ss,struct stralloc *sa,int *match,int sep);
 
 #endif

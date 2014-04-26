@@ -113,7 +113,6 @@ static stralloc archsubject = {0};
 static stralloc archmessageid = {0};
 static stralloc archkeywords = {0};
 static stralloc archblanklines = {0};
-static char archtype=' ';
 
 /* for mods on non-public lists (needed for future fuzzy sub dbs) */
 static stralloc mod = {0};		/* moderator addr for non-public lists */
@@ -371,12 +370,11 @@ void copymsg(int fd,char format)
   int match;
   int flaginheader;
   int flagskipblanks;
-  int flaggoodfield;
 
+  substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
   switch(format) {
     case VIRGIN:
     case NATIVE:
-      substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
         if (getln(&sstext,&line,&match,'\n') == -1)
            strerr_die2sys(111,FATAL,MSG1(ERR_READ,line.s));
@@ -390,25 +388,19 @@ void copymsg(int fd,char format)
     case MIME:
     case MIXED:
       flaginheader = 1;
-      flaggoodfield = 0;
-      substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
-        if (getln(&sstext,&line,&match,'\n') == -1)
+        if (gethdrln(&sstext,&line,&match,'\n') == -1)
            strerr_die2sys(111,FATAL,MSG1(ERR_READ,line.s));
         if (match) {
           if (flaginheader) {
             if (line.len == 1) {
               flaginheader = 0;
-              flaggoodfield = 1;
-            } else if (line.s[0] != ' ' && line.s[0] != '\t') {
-              flaggoodfield = 0;
+            } else {
               if (constmap(&digheadersmap,line.s,
-			byte_chr(line.s,line.len,':')))
-                flaggoodfield = 1;
-            }
-            if (flaggoodfield) {
-              qmail_put(&qq,line.s,line.len);		/* header */
-	      msgsize += line.len;
+			   byte_chr(line.s,line.len,':'))) {
+		qmail_put(&qq,line.s,line.len);		/* header */
+		msgsize += line.len;
+	      }
 	    }
           } else {
             qmail_put(&qq,line.s,line.len);		/* body */
@@ -421,16 +413,15 @@ void copymsg(int fd,char format)
     case RFC1153:		/* Not worth optimizing. Rarely used */
       flaginheader = 1;
       flagskipblanks = 1;	/* must skip terminal blanks acc to rfc1153 */
-      archtype = ' ';		/* rfc1153 requires ordered headers */
       if (!stralloc_copys(&archblanklines,"")) die_nomem();
-      substdio_fdbuf(&sstext,read,fd,textbuf,sizeof(textbuf));
       for (;;) {
-        if (getln(&sstext,&line,&match,'\n') == -1)
+        if (gethdrln(&sstext,&line,&match,'\n') == -1)
            strerr_die2sys(111,FATAL,MSG1(ERR_READ,line.s));
         if (match) {
           if (flaginheader) {
             if (line.len == 1) {
               flaginheader = 0;
+	      /* rfc1153 requires ordered headers */
               if (archdate.len) {
                 qmail_put(&qq,archdate.s,archdate.len);
                 archdate.len = 0;
@@ -467,56 +458,26 @@ void copymsg(int fd,char format)
                 archkeywords.len = 0;
               }
               qmail_puts(&qq,"\n");
-            } else if (line.s[0] == ' ' || line.s[0] == '\t') {
-              switch (archtype) {	/* continuation lines */
-                case ' ':
-                  break;
-                case 'D':
-                  if (!stralloc_cat(&archdate,&line)) die_nomem(); break;
-                case 'F':
-                  if (!stralloc_cat(&archfrom,&line)) die_nomem(); break;
-                case 'T':
-                  if (!stralloc_cat(&archto,&line)) die_nomem(); break;
-                case 'C':
-                  if (!stralloc_cat(&archcc,&line)) die_nomem(); break;
-                case 'S':
-                  if (!stralloc_cat(&archsubject,&line)) die_nomem(); break;
-                case 'M':
-                  if (!stralloc_cat(&archmessageid,&line)) die_nomem(); break;
-                case 'K':
-                  if (!stralloc_cat(&archkeywords,&line)) die_nomem(); break;
-                default:
-                  strerr_die2x(111,FATAL,
-                      "Program error: Bad archive header type");
-              }
             } else {
-              archtype = ' ';
               if (case_startb(line.s,line.len,"cc:")) {
-                archtype='C';
                 if (!stralloc_copy(&archcc,&line)) die_nomem();
               }
               else if (case_startb(line.s,line.len,"date:")) {
-                archtype='D';
                 if (!stralloc_copy(&archdate,&line)) die_nomem();
               }
               else if (case_startb(line.s,line.len,"from:")) {
-                archtype='F';
                 if (!stralloc_copy(&archfrom,&line)) die_nomem();
               }
               else if (case_startb(line.s,line.len,"keywords:")) {
-                archtype='K';
                 if (!stralloc_copy(&archkeywords,&line)) die_nomem();
               }
               else if (case_startb(line.s,line.len,"message-id:")) {
-                archtype='M';
                 if (!stralloc_copy(&archmessageid,&line)) die_nomem();
               }
               else if (case_startb(line.s,line.len,"subject:")) {
-                archtype='S';
                 if (!stralloc_copy(&archsubject,&line)) die_nomem();
               }
               else if (case_startb(line.s,line.len,"to:")) {
-                archtype='T';
                 if (!stralloc_copy(&archto,&line)) die_nomem();
               }
             }
@@ -727,11 +688,10 @@ void doheaders(void)
   flaggoodfield = 0;
   if (act != AC_DIGEST)
     for (;;) {
-    if (getln(&ssin,&line,&match,'\n') == -1)
+    if (gethdrln(&ssin,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (!match) break;
     if (line.len == 1) break;
-    if ((line.s[0] != ' ') && (line.s[0] != '\t')) {
       flaggoodfield = 0;
       if (case_startb(line.s,line.len,"mailing-list:")) {
         if (flageditor)			/* we may be running from a sublist */
@@ -746,7 +706,6 @@ void doheaders(void)
         flaggoodfield = 1;
       if (case_startb(line.s,line.len,"received:"))
         flaggoodfield = 1;
-    }
     if (flaggoodfield)
       qmail_put(&qq,line.s,line.len);
   }

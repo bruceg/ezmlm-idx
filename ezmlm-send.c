@@ -323,7 +323,6 @@ int main(int argc,char **argv)
   int flagseenext;
   int flagarchiveonly;
   int flagtrailer;
-  enum { no_prev_line, subject_line, from_line, content_line, received_line } prevline;
   unsigned int pos;
   char *cp, *cpstart, *cpafter;
   stralloc mydtline = {0};
@@ -464,9 +463,8 @@ int main(int argc,char **argv)
   flagseenext = 0;
   flagsawreceived = 0;
   flagarchiveonly = 0;
-  prevline = no_prev_line;
   for (;;) {
-    if (getln(subfdin,&line,&match,'\n') == -1)
+    if (gethdrln(subfdin,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (flaginheader && match) {
       if (line.len == 1) {		/* end of header */
@@ -535,10 +533,9 @@ int main(int argc,char **argv)
             }
           }
         }
-      } else if ((*line.s != ' ') && (*line.s != '\t')) {
+      } else {
         flagbadfield = headerremoveflag;
         flagarchiveonly = 0;
-	prevline = no_prev_line;
 	if (constmap(&headerremovemap,line.s,byte_chr(line.s,line.len,':')))
 	  flagbadfield = !headerremoveflag;
         if ((flagnoreceived || !flagsawreceived) &&
@@ -552,7 +549,6 @@ int main(int argc,char **argv)
 		    break;
                 if (!stralloc_copyb(&received,line.s+pos,line.len-pos-1))
                   die_nomem();
-		prevline = received_line;
 	      }
             } else {				/* suppress, but archive */
               flagarchiveonly = 1;		/* but do not suppress the */
@@ -565,10 +561,8 @@ int main(int argc,char **argv)
         else if ((mimeremove.len || flagtrailer) &&	/* else no MIME need*/
 		case_startb(line.s,line.len,"Content-Type:")) {
           if (!stralloc_copyb(&content,line.s+13,line.len-13)) die_nomem();
-          prevline = content_line;
 	} else if (case_startb(line.s,line.len,"Subject:")) {
           if (!stralloc_copyb(&subject,line.s+8,line.len-8)) die_nomem();
-	  prevline = subject_line;
           if (flagprefixed && !flagsublist)	/* don't prefix for sublists */
 	    flagbadfield = 1;			/* we'll print our own */
         } else if (flagtrailer &&
@@ -583,30 +577,11 @@ int main(int argc,char **argv)
 	else if (flagindexed) {
 
           if (case_startb(line.s,line.len,"From:")) {
-            prevline = from_line;
             if (!stralloc_copyb(&from,line.s+5,line.len-5)) die_nomem();
           }
         } else if (line.len == mydtline.len)
 	  if (!byte_diff(line.s,line.len,mydtline.s))
             strerr_die2x(100,FATAL,MSG(ERR_LOOPING));
-      } else {			/* continuation lines */
-	switch (prevline) {
-	case subject_line:
-	  if (!stralloc_cat(&subject,&line)) die_nomem();
-	  break;
-	case from_line:
-	  if (!stralloc_cat(&from,&line)) die_nomem();
-	  break;
-	case content_line:
-          if (!stralloc_cat(&content,&line)) die_nomem();
-	  break;
-	case received_line:
-	  for (pos = 1; pos < line.len; ++pos)
-	    if (line.s[pos] != ' ' && line.s[pos] != '\t')
-	      break;
-	  if (!stralloc_catb(&received,line.s+pos,line.len-pos-1)) die_nomem();
-	  break;
-	}
       }
     } else				/* body */
       msgsize += line.len;		/* always for tstdig support */

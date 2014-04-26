@@ -388,7 +388,6 @@ void msg_headers(int act)
 /* Writes all the headers up to but not including subject */
 {
   int flaggoodfield;
-  int flagfromline;
   int flaggetfrom;
   unsigned int pos;
 
@@ -422,17 +421,14 @@ void msg_headers(int act)
   qmail_put(&qq,mydtline.s,mydtline.len);
 
   flaggoodfield = 0;
-  flagfromline = 0;
 	/* do it for -sc, but if the -S flag is used, do it for -subscribe */
   flaggetfrom = flagstorefrom &&
 	 ((act == AC_SC) || ((act == AC_SUBSCRIBE) && !flagsubconf));
   for (;;) {
-    if (getln(&ssin,&line,&match,'\n') == -1)
+    if (gethdrln(&ssin,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (!match) break;
     if (line.len == 1) break;
-    if ((line.s[0] != ' ') && (line.s[0] != '\t')) {
-      flagfromline = 0;
       flaggoodfield = 0;
       if (case_startb(line.s,line.len,"mailing-list:"))
         strerr_die2x(100,FATAL,MSG(ERR_MAILING_LIST));
@@ -451,16 +447,9 @@ void msg_headers(int act)
         else if (case_startb(line.s+pos,line.len-pos,"quoted-printable"))
           encin = 'Q';
       } else if (flaggetfrom && case_startb(line.s,line.len,"from:")) {
-	flagfromline = 1;		/* for logging subscriber data */
-	pos = 5;
-	while (line.s[pos] == ' ' || line.s[pos] == '\t') ++pos;
-        if (!stralloc_copyb(&fromline,line.s + pos,line.len - pos - 1))
-	  die_nomem();
+	/* for logging subscriber data */
+	concatHDR(line.s+5,line.len-5,&fromline);
       }
-    } else {
-      if (flagfromline == 1)		/* scrap terminal '\n' */
-        if (!stralloc_catb(&fromline,line.s,line.len - 1)) die_nomem();
-    }
     if (flaggoodfield)
       qmail_put(&qq,line.s,line.len);
   }

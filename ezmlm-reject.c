@@ -17,6 +17,7 @@
 #include "env.h"
 #include "sender.h"
 #include "messages.h"
+#include "mime.h"
 #include "die.h"
 #include "idx.h"
 #include "config.h"
@@ -177,7 +178,6 @@ int main(int argc,char **argv)
   unsigned long maxmsgsize = 0L;
   unsigned long minmsgsize = 0L;
   unsigned long msgsize = 0L;
-  char linetype = ' ';
   char *cp, *cpstart, *cpafter;
   const char *dir;
   const char *err;
@@ -232,7 +232,7 @@ int main(int argc,char **argv)
     constmap_init(&headerrejectmap,headerreject.s,headerreject.len,0);
   }
   for (;;) {
-    if (getln(&ssin,&line,&match,'\n') == -1)
+    if (gethdrln(&ssin,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (!match) break;
     if (flagheaderreject && dir)
@@ -241,37 +241,22 @@ int main(int argc,char **argv)
 
     if (line.len == 1) break;
     cp = line.s; len = line.len;
-    if ((*cp == ' ' || *cp == '\t')) {
-      switch(linetype) {
-	case 'T': if (!stralloc_catb(&to,cp,len-1)) die_nomem(); break;
-	case 'S': if (!stralloc_catb(&subject,cp,len-1)) die_nomem(); break;
-	case 'C': if (!stralloc_catb(&content,cp,len-1)) die_nomem(); break;
-	case 'P': if (!stralloc_catb(&precd,cp,len-1)) die_nomem(); break;
-	default: break;
-      }
-    } else {
       if (!flagtook &&
 		(case_startb(cp,len,"to:") || case_startb(cp,len,"cc:"))) {
-	linetype = 'T';		/* cat so that To/Cc don't overwrite */
         if (!stralloc_catb(&to,line.s + 3,line.len - 4)) die_nomem();
       } else if ((flagneedsubject || flagrejectcommands) &&
 			 case_startb(cp,len,"subject:")) {
-	if (!stralloc_copyb(&subject,cp+8,len-9)) die_nomem();
-	linetype = 'S';
+	concatHDR(cp+8,len-8,&subject);
       } else if (case_startb(cp,len,"content-type:")) {
-	if (!stralloc_copyb(&content,cp+13,len-14)) die_nomem();
-	linetype = 'C';
+	concatHDR(cp+13,len-13,&content);
       } else if (case_startb(cp,len,"precedence:")) {
-	if (!stralloc_copyb(&precd,cp+11,len-12)) die_nomem();
-	linetype = 'P';
+	concatHDR(cp+11,len-11,&precd);
       } else {
 	if (flagforward && line.len == mydtline.len) {
 	  if (!byte_diff(line.s,line.len,mydtline.s))
             strerr_die2x(100,FATAL,MSG(ERR_LOOPING));
         }
-        linetype = ' ';
       }
-    }
   }
   if (precd.len >= 4 &&
 		(!case_diffb(precd.s + precd.len - 4,4,"junk") ||
@@ -279,7 +264,7 @@ int main(int argc,char **argv)
 	  strerr_die1x(99,MSG(ERR_JUNK));	/* ignore precedence junk/bulk */
   cp = subject.s;
   len = subject.len;
-  while (len && (cp[len-1] == ' ' || cp[len-1] == '\t')) --len;
+  while (len && (cp[len-1] == ' ' || cp[len-1] == '\t' || cp[len-1] == '\n')) --len;
   while (len && ((*cp == ' ') || (*cp == '\t'))) { ++cp; --len; }
   flaghavesubject = 1;
 

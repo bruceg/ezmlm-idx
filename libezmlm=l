@@ -51,6 +51,7 @@ fmt_uint0.lo
 fmt_ulong.lo
 getconf.lo
 getconf_ulong.lo
+gethdrln.lo
 getln.lo
 getln2.lo
 getconfopt.lo

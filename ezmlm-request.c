@@ -261,7 +261,6 @@ int main(int argc,char **argv)
   char *psz;
   const char *err;
   int cmdidx;
-  int flagsub;
   int flagok;
   int flagnosubject;
   int match;
@@ -355,24 +354,17 @@ int main(int argc,char **argv)
       }
     }
   } else {
-    for (flagsub = 0;;) {			/* Get Subject: */
-      if (getln(&ssin,&line,&match,'\n') == -1)
+    for (;;) {			/* Get Subject: */
+      if (gethdrln(&ssin,&line,&match,'\n') == -1)
         strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
       if (line.len <= 1)
         break;
-      if ((line.s[0] != ' ') && (line.s[0] != '\t')) {
-          flagsub = 0;
 
           if (case_startb(line.s,line.len,"mailing-list:"))
             strerr_die2x(100,FATAL,MSG(ERR_MAILING_LIST));
           else if (case_startb(line.s,line.len,"Subject:")) {
-            flagsub = flaggotsub = 1;
-            pos = 8;
-            last = line.len - 2;		/* skip terminal '\n' */
-            while (line.s[last] == ' ' || line.s[last] == '\t') --last;
-            while (pos <= last &&
-		(line.s[pos] == ' ' || line.s[pos] == '\t')) ++pos;
-            if (!stralloc_copyb(&subject,line.s+pos,last-pos+1)) die_nomem();
+            flaggotsub = 1;
+	    concatHDR(line.s+8,line.len-8,&subject);
           } else if (case_startb(line.s,line.len,"content-type:")) {
 	    pos = 13; last = line.len - 2;	/* not cont-line - ok */
             while (pos <= last &&
@@ -382,15 +374,6 @@ int main(int argc,char **argv)
 	  } else if (line.len == mydtline.len)
             if (!byte_diff(line.s,line.len,mydtline.s))
                strerr_die2x(100,FATAL,MSG(ERR_LOOPING));
-      } else if (flagsub) {	/* Continuation line */
-          pos = 1;
-          len = line.len - 2;	/* skip terminal '\n' */
-          while (line.s[len] == ' ' || line.s[len] == '\t') --len;
-          while (pos < len &&
-		(line.s[pos] == ' ' || line.s[pos] == '\t')) ++pos;
-          if (!stralloc_append(&subject,' ')) die_nomem();
-          if (!stralloc_catb(&subject,line.s+pos,len-pos+1)) die_nomem();
-      }
       if (!match)
 	break;
     }

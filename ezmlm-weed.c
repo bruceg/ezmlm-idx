@@ -9,6 +9,7 @@
 #include "getln.h"
 #include "strerr.h"
 #include "messages.h"
+#include "mime.h"
 #include "die.h"
 
 const char FATAL[] = "ezmlm-weed: fatal: ";
@@ -23,7 +24,7 @@ static const char warn4[] = "    **********************************************"
 static void get(stralloc *sa)
 {
   int match;
-  if (getln(subfdin,sa,&match,'\n') == -1)
+  if (gethdrln(subfdin,sa,&match,'\n') == -1)
     strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
   if (!match) _exit(0);
 }
@@ -64,12 +65,6 @@ int main(void)
   for (;;) {
     get(&line);
     if (line.len == 1) break;
-    if (flagdsn) {
-      if (line.s[0] == ' ' || line.s[0] == '\t')	/* continuation */
-	if (!stralloc_catb(&dsnline,line.s,line.len - 1)) die_nomem();
-      continue;
-    }
-    flagdsn = 0;
     if (stralloc_starts(&line,"Subject: success notice"))
       _exit(99);
     if (stralloc_starts(&line,"Subject: deferral notice"))
@@ -129,8 +124,7 @@ int main(void)
     if (stralloc_starts(&line,"Auto-Submitted: auto-generated (warning"))
       flagas = 1;
     if (case_startb(line.s,line.len,"Content-type: multipart/report")) {
-      if (!stralloc_copyb(&dsnline,line.s,line.len - 1)) die_nomem();
-      flagdsn = 1;
+      concatHDR(line.s,line.len - 1,&dsnline);
     }
   }			/* end of header */
 
