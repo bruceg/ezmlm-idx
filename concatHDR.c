@@ -19,13 +19,19 @@ void concatHDR(char *indata,
   char *cp;
   char *cpout;
   char *cplast;
+  /* Skip leading whitespace */
+  while (n > 0 && (*indata == ' ' || *indata == '\t' || *indata == '\n')) {
+    ++indata;
+    --n;
+  }
   if (!stralloc_copys(outdata,"")) die_nomem();
   if (!stralloc_ready(outdata,n)) die_nomem();
   cpout = outdata->s;
   if (n == 0) return;
   cplast = indata + n - 1;
   cp = cplast;
-  while (cplast >= indata && (*cplast == '\0' || *cplast == '\n'))
+  /* Trim trailing whitespace */
+  while (cplast >= indata && (*cplast == '\0' || *cplast == '\n' || *cplast == '\t' || *cplast == ' '))
     --cplast;
   if (cp == cplast) die_nomem();		/* just in case */
   *(++cplast) = '\n';				/* have terminal '\n' */

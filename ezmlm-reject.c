@@ -265,7 +265,6 @@ int main(int argc,char **argv)
   cp = subject.s;
   len = subject.len;
   while (len && (cp[len-1] == ' ' || cp[len-1] == '\t' || cp[len-1] == '\n')) --len;
-  while (len && ((*cp == ' ') || (*cp == '\t'))) { ++cp; --len; }
   flaghavesubject = 1;
 
   if (flagbody)
@@ -325,7 +324,6 @@ int main(int argc,char **argv)
   if (content.len) {			/* MIME header */
     cp = content.s;
     len = content.len;
-    while (len && (*cp == ' ' || *cp == '\t')) { ++cp; --len; }
     cpstart = cp;
     if (*cp == '"') {			/* might be commented */
       ++cp; cpstart = cp;
