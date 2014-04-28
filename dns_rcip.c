@@ -12,7 +12,7 @@ static stralloc data = {0};
 static int init(char ip[64])
 {
   int i;
-  int j;
+  unsigned int j;
   int iplen = 0;
   char *x;
 

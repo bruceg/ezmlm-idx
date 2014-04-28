@@ -267,7 +267,7 @@ have sent query to curserver on UDP socket s
       if (errno == error_connrefused) if (d->udploop == 2) return 0;
       return nextudp(d);
     }
-    if (r + 1 > sizeof udpbuf) return 0;
+    if ((unsigned)r + 1 > sizeof udpbuf) return 0;
 
     if (irrelevant(d,udpbuf,r)) return 0;
     if (serverwantstcp(udpbuf,r)) return firsttcp(d);

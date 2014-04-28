@@ -14,8 +14,8 @@ static int init(stralloc *rules)
 {
   char host[256];
   const char *x;
-  int i;
-  int j;
+  unsigned int i;
+  unsigned int j;
   int k;
 
   if (!stralloc_copys(rules,"")) return -1;
@@ -23,10 +23,10 @@ static int init(stralloc *rules)
   x = env_get("DNSREWRITEFILE");
   if (!x) x = "/etc/dnsrewrite";
 
-  i = openreadclose(x,&data,64);
-  if (i == -1) return -1;
+  k = openreadclose(x,&data,64);
+  if (k == -1) return -1;
 
-  if (i) {
+  if (k) {
     if (!stralloc_append(&data,'\n')) return -1;
     i = 0;
     for (j = 0;j < data.len;++j)
@@ -63,10 +63,10 @@ static int init(stralloc *rules)
     return 0;
   }
 
-  i = openreadclose("/etc/resolv.conf",&data,64);
-  if (i == -1) return -1;
+  k = openreadclose("/etc/resolv.conf",&data,64);
+  if (k == -1) return -1;
 
-  if (i) {
+  if (k) {
     if (!stralloc_append(&data,'\n')) return -1;
     i = 0;
     for (j = 0;j < data.len;++j)

@@ -9,7 +9,7 @@ void iopause(iopause_fd *x,unsigned int len,struct taia *deadline,struct taia *s
   struct taia t;
   int millisecs;
   double d;
-  int i;
+  unsigned int i;
 
   if (taia_less(deadline,stamp))
     millisecs = 0;
