@@ -40,23 +40,23 @@ EOF
   touch "$DIR"/rewritefrom
 
   sendfrom '"My Name" <test@example.org>'
-  grephdr From: "\"My Name via ezmlm\" <${LOC}@${HOST}>$"
+  grephdr From: "\"My Name via ${LOC}\" <${LOC}@${HOST}>$"
   grephdr Cc: '"My Name" <test@example.org>'
 
   sendfrom '"My Name" test@example.org'
-  grephdr From: "\"My Name via ezmlm\" <${LOC}@${HOST}>$"
+  grephdr From: "\"My Name via ${LOC}\" <${LOC}@${HOST}>$"
   grephdr Cc: '"My Name" test@example.org'
 
   sendfrom 'My Name <test@example.org>'
-  grephdr From: "\"My Name via ezmlm\" <${LOC}@${HOST}>$"
+  grephdr From: "\"My Name via ${LOC}\" <${LOC}@${HOST}>$"
   grephdr Cc: 'My Name <test@example.org>'
 
   sendfrom 'test@example.org (My Name)'
-  grephdr From: "\"My Name via ezmlm\" <${LOC}@${HOST}>$"
+  grephdr From: "\"My Name via ${LOC}\" <${LOC}@${HOST}>$"
   grephdr Cc: 'test@example.org \(My Name\)'
 
   sendfrom 'test@example.org'
-  grephdr From: "\"test.example.org via ezmlm\" <${LOC}@${HOST}>$"
+  grephdr From: "\"test.example.org via ${LOC}\" <${LOC}@${HOST}>$"
   grephdr Cc: 'test@example.org'
 
   echo OK

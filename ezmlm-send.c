@@ -314,12 +314,14 @@ static void rewrite_from()
   int k;
   char *cp;
 
-  concatHDR(from.s,from.len,&lines);
-  k = author_name(&cp,lines.s,lines.len);
+  concatHDR(from.s,from.len,&dummy);
+  k = author_name(&cp,dummy.s,dummy.len);
   decodeHDR(cp,k,&author);
   stralloc_0(&author);
+  stralloc_copy(&dummy,&outlocal);
+  stralloc_0(&dummy);
   qa_put("From: \"",7);
-  qa_puts(MSG2(AUTHOR_VIA_LIST,author.s,"ezmlm"));
+  qa_puts(MSG2(AUTHOR_VIA_LIST,author.s,dummy.s));
   qa_put("\" <",3);
   qa_put(outlocal.s,outlocal.len);
   qa_put("@",1);
