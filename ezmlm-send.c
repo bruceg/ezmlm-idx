@@ -203,12 +203,10 @@ int idx_copy_insertsubject(void)
 /* returns 1 if reply-indicators were found, 0 otherwise.                   */
 /* no terminal \n or \0 in any of the strallocs! */
 {
-  char *cp;
   unsigned long idx;
   int match;
   int r;
   unsigned int pos;
-  int k;
   substdio ssin;
   char inbuf[1024];
   /* for writing new index file indexn later moved to index. */
@@ -293,8 +291,7 @@ int idx_copy_insertsubject(void)
   if (!stralloc_catb(&qline,hash,HASHLEN)) die_nomem();
   if (!stralloc_cats(&qline," ")) die_nomem();
 
-  k = author_name(&cp,lines.s,lines.len);
-  decodeHDR(cp,k,&from);
+  author_name(&from,lines.s,lines.len);
 
   (void) unfoldHDR(from.s,from.len,&lines,charset.s,&dcprefix,0);
   if (!stralloc_cat(&qline,&lines)) die_nomem();
@@ -311,12 +308,8 @@ int idx_copy_insertsubject(void)
 
 static void rewrite_from()
 {
-  int k;
-  char *cp;
-
   concatHDR(from.s,from.len,&dummy);
-  k = author_name(&cp,dummy.s,dummy.len);
-  decodeHDR(cp,k,&author);
+  author_name(&author,dummy.s,dummy.len);
   stralloc_0(&author);
   stralloc_copy(&dummy,&outlocal);
   stralloc_0(&dummy);

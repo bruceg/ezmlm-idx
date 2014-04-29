@@ -167,7 +167,6 @@ int main(int argc,char **argv)
 
   char strnum[FMT_ULONG];
   char hash[HASHLEN];
-  char *cp;
   int r;
   int fd;
 
@@ -230,8 +229,6 @@ int main(int argc,char **argv)
     } else if (fstat(fd,&st) == -1 || (!(st.st_mode & 0100)))
         close(fd);
     else {
-      int k;
-
       subject.len = 0;		/* clear in case they're missing in msg */
       author.len = 0;
       received.len = 0;
@@ -253,8 +250,7 @@ int main(int argc,char **argv)
       mkauthhash(lines.s,lines.len,hash);
       if (!stralloc_catb(&line,hash,HASHLEN)) die_nomem();
 
-      k = author_name(&cp,lines.s,lines.len);
-      decodeHDR(cp,k,&author);
+      author_name(&author,lines.s,lines.len);
 
       (void) unfoldHDR(author.s,author.len,&lines,charset.s,&prefix,0);
 

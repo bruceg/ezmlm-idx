@@ -1,4 +1,7 @@
-unsigned int author_name(char **sout,char *s,unsigned int l)
+#include "die.h"
+#include "mime.h"
+
+void author_name(stralloc *out,char *s,unsigned int l)
 /* s is a string that contains a from: line argument\n. We parse */
 /* s as follows: If there is an unquoted '<' we eliminate everything after */
 /* it else if there is a unquoted ';' we eliminate everything after it.    */
@@ -21,11 +24,10 @@ unsigned int author_name(char **sout,char *s,unsigned int l)
   char *cpquot = 0;
   char *cpcom = 0;
   char *cplt = 0;
+  char *cpout;
 
-  if (!s || !l) {	/* Yuck - pass the buck */
-    *sout = s;
-    return 0;
-  }
+  if (!s || !l)		/* Yuck - pass the buck */
+    if (!stralloc_copyb(out,"",0)) die_nomem();
   cp = s; len = l;
 
   while (len--) {
@@ -88,13 +90,12 @@ unsigned int author_name(char **sout,char *s,unsigned int l)
     flagdone = 1;
   }
 
-  *sout = cpfirst;
+  cpout = cpfirst;
   len = cp - cpfirst + 1;
   while (cpfirst <= cp) {
     if (*cpfirst == '@')
       *cpfirst = '.';
     cpfirst++;
   }
-  return len;
+  decodeHDR(cpout,len,out);
 }
-

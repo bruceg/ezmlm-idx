@@ -1377,7 +1377,6 @@ void show_part(struct msginfo *infop,int flagshowheaders,int flagstartseen)
 /* if not we'll ignore what's there up to it */
 /* if flagskip we skip this part */
 {
-  char *cp;
   int flaginheader;
   int whatheader;
   int flaggoodfield;
@@ -1443,10 +1442,8 @@ void show_part(struct msginfo *infop,int flagshowheaders,int flagstartseen)
 	      oputs("\">");
 	    }
 	    if (flagobscure && i == HDR_FROM - 1) {
-	      int k;
 	      oputs(" ");
-	      k = author_name(&cp,line.s,line.len);
-	      decodeHDR(cp,k,&decline);
+	      author_name(&decline,line.s,line.len);
 	      html_put(decline.s,decline.len);
 	    } else {
 	      decodeHDR(hdr[i].s,hdr[i].len,&decline);

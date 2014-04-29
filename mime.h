@@ -12,7 +12,7 @@ extern void concatHDR(char *,unsigned int,stralloc *);
 extern int unfoldHDR(char *,unsigned int,stralloc *,const char *,
 		     stralloc *,int);
 
-extern unsigned int author_name(char **,char *,unsigned int);
+extern void author_name(stralloc *out,char *,unsigned int);
 
 /* Characters */
 #define ESC 0x1B
