@@ -28,7 +28,7 @@ if speed turns out to be a problem, switch to a CRC.
   for (i = 0;i < 32;++i) seed[i] = 0;
   for (j = 0;j < 4;++j) {
     surfpcs_init(&s,seed);
-    surfpcs_add(&s,(const unsigned char*)key,keylen);
+    surfpcs_add(&s,key,keylen);
     surfpcs_out(&s,out);
     for (i = 0;i < 32;++i) seed[i] = (seed[i] << 8) + out[i];
   }
@@ -37,9 +37,9 @@ if speed turns out to be a problem, switch to a CRC.
 step 2: apply SURF.
 */
   surfpcs_init(&s,seed);
-  surfpcs_add(&s,(const unsigned char*)date,str_len(date) + 1);
-  surfpcs_add(&s,(const unsigned char*)addr,str_len(addr) + 1);
-  surfpcs_add(&s,(const unsigned char*)action,1);
+  surfpcs_add(&s,date,str_len(date) + 1);
+  surfpcs_add(&s,addr,str_len(addr) + 1);
+  surfpcs_add(&s,action,1);
   surfpcs_out(&s,out);
 
 /*
