@@ -381,7 +381,7 @@ int main(int argc,char **argv)
       char ch;
       if (!stralloc_0(&subject)) die_nomem();
       ch = *subject.s;		/* valid commands/list names start w letter */
-      if ((ch <= 'z' && ch >= 'a') || (ch <= 'Z' && ch >= 'A')) {
+      if ((ch <= 'z' && ch >= 'a') || (ch <= 'Z' && ch >= 'A') || ch == '_') {
         parseline(subject.s);
         flagnosubject = 0;
       }
