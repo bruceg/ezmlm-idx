@@ -181,9 +181,8 @@ static void parseline(char *cp)
     if (*cp1 == '\t') *cp1 = ' ';
     ++cp1;
   }
-					/* NOTE: listname has '\0' added! */
-  if (listname.len < str_len(cp) && cp[listname.len -1] == '-' &&
-	case_starts(cp,listname.s))	 {	/* normal ezmlm cmd */
+  if (str_len(cp) >= outlocal.len && cp[outlocal.len] == '-'
+      && case_startb(cp,outlocal.len,outlocal.s)) {	/* normal ezmlm cmd */
     command = cp + listname.len;		/* after the '-' */
     listlocal = listname.s;
     listhost = hostname.s;
@@ -332,9 +331,9 @@ int main(int argc,char **argv)
 
   if (!stralloc_copys(&mydtline,
        "Delivered-To: request processor for ")) die_nomem();
-  if (!stralloc_cats(&mydtline,listname.s)) die_nomem();
+  if (!stralloc_cat(&mydtline,&outlocal)) die_nomem();
   if (!stralloc_cats(&mydtline,"@")) die_nomem();
-  if (!stralloc_cats(&mydtline,hostname.s)) die_nomem();
+  if (!stralloc_cat(&mydtline,&outhost)) die_nomem();
   if (!stralloc_cats(&mydtline,"\n")) die_nomem();
 
   flagnosubject = 1;
@@ -571,9 +570,9 @@ int main(int argc,char **argv)
       userhost = listhost; listhost = 0;
       initsub(0);
     }
-    if (!stralloc_copys(&from,listname.s)) die_nomem();
+    if (!stralloc_copy(&from,&outlocal)) die_nomem();
     if (!stralloc_cats(&from,"-return-@")) die_nomem();
-    if (!stralloc_cats(&from,hostname.s)) die_nomem();
+    if (!stralloc_cat(&from,&outhost)) die_nomem();
     if (!stralloc_0(&from)) die_nomem();
 
     if (userlocal) {
@@ -582,7 +581,7 @@ int main(int argc,char **argv)
       if (userhost) {
         if (!stralloc_cats(&to,userhost)) die_nomem();
        } else {
-        if (!stralloc_cats(&to,hostname.s)) die_nomem();
+        if (!stralloc_cat(&to,&outhost)) die_nomem();
       }
     } else
       if (!stralloc_copys(&to,sender)) die_nomem();
