@@ -9,7 +9,7 @@
   echo "com:::l3@h3" >> "${DIR}/split"
 # most testing with -D
   echo "lindberg@ezmlm.org" | ${EZBIN}/ezmlm-split -D "$DIR" | \
-	grep "$LOC@$HOST" >/dev/null || \
+	grep "$LIST@$HOST" >/dev/null || \
 	fatal "failed to split correctly on domain"
   echo "lindberg@id.com" | ${EZBIN}/ezmlm-split -D "$DIR" | \
 	grep 'l3' >/dev/null || \
@@ -22,10 +22,10 @@
 	fatal "failed to split correctly on hash + domain"
 # one test with delivery - redirect to local manager
 # should exit 99 after redirecting
-  echo ":::${LOC}@$HOST" > "${DIR}/split"
+  echo ":::${LIST}@$HOST" > "${DIR}/split"
   SENDER="${MOD}@$HOST"
   DTLINE="Delivered-To: ezmlm-split@$HOST"; export DTLINE
-  LOCAL="$LOC-subscribe-${SND}=$HOST"
+  LOCAL="$LIST-subscribe-${SND}=$HOST"
   DEFAULT="subscribe-${SND}=$HOST"
   echo "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"$ERR" 2>&1
 
@@ -36,14 +36,14 @@
 	fatal "failed to process message for forwarding"
   fi
 # if no match, should exit 0
-  echo "___:::${LOC}@$HOST" > "${DIR}/split"
+  echo "___:::${LIST}@$HOST" > "${DIR}/split"
   echo "X-num: spl1" | ${EZBIN}/ezmlm-split "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to exit 0 after failing to match"
-  checkenv spl1 "$LOC-return-@$HOST" "$LOC-subscribe-$SND=$HOST@$HOST"
+  checkenv spl1 "$LIST-return-@$HOST" "$LIST-subscribe-$SND=$HOST@$HOST"
 # if no split file, should exit 0
   rm "${DIR}/split"
   echo "X-num: spl2" | ${EZBIN}/ezmlm-split "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed to exit 0 with no split file"
-  checkenv spl2 "$LOC-return-@$HOST" "$LOC-subscribe-$SND=$HOST@$HOST"
+  checkenv spl2 "$LIST-return-@$HOST" "$LIST-subscribe-$SND=$HOST@$HOST"
 
   echo "OK"

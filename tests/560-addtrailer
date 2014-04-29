@@ -1,7 +1,7 @@
 prompt "ezmlm-send trailer:   "
 
 echo "trailer is present" > "$DIR"/text/trailer
-LOCAL="$LOC"
+LOCAL="$LIST"
 
 cat >"$TMP" <<EOF
 From: test@example.org

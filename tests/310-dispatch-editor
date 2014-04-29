@@ -34,21 +34,21 @@ post denied \
 # Normal post, goes to subscribers
 post sender \
 || fatal "Error delivering normal post"
-checkenv post1 "$LOC-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
+checkenv post1 "$LIST-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
 
 # Moderated post, goes to moderator
 post sender modpost \
 || fatal "Error delivering moderated post"
-checkenv modpost1 "$LOC-return-@$HOST" "moderator@$HOST"
+checkenv modpost1 "$LIST-return-@$HOST" "moderator@$HOST"
 
 # Confirmed post, goes to sender
 post sender confirmpost modpost \
 || fatal "Error delivering confirmed post"
-checkenv confirmpost1 "$LOC-discard-.*@$HOST" "sender@$HOST"
+checkenv confirmpost1 "$LIST-discard-.*@$HOST" "sender@$HOST"
 
 post sender confirmpost \
 || fatal "Error delivering confirmed post"
-checkenv confirmpost2 "$LOC-discard-.*@$HOST" "sender@$HOST"
+checkenv confirmpost2 "$LIST-discard-.*@$HOST" "sender@$HOST"
 
 # User post only from non-subscriber, is rejected
 post sender subpostonly \
@@ -57,25 +57,25 @@ post sender subpostonly \
 # User post only from subscriber, is accepted
 post subscriber subpostonly \
 || fatal "Error delivering normal post from subscriber"
-checkenv post2 "$LOC-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
+checkenv post2 "$LIST-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
 
 # User post only with confirmation, is confirmed
 post subscriber confirmpost subpostonly \
 || fatal "Error delivering confirmed post from subscriber"
-checkenv confirmpost3 "$LOC-discard-.*@$HOST" "subscriber@$HOST"
+checkenv confirmpost3 "$LIST-discard-.*@$HOST" "subscriber@$HOST"
 
 post subscriber confirmpost modpost subpostonly \
 || fatal "Error delivering confirmed post from subscriber"
-checkenv confirmpost4 "$LOC-discard-.*@$HOST" "subscriber@$HOST"
+checkenv confirmpost4 "$LIST-discard-.*@$HOST" "subscriber@$HOST"
 
 # Subscribers post OK, non-subscribers are moderated
 post subscriber modpost subpostonly \
 || fatal "Error delivering normal post from subscriber"
-checkenv post3 "$LOC-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
+checkenv post3 "$LIST-return-.*-@$HOST-@\\[\\]" "subscriber@$HOST"
 
 post sender modpost subpostonly \
 || fatal "Error delivering moderated post from non-subscriber"
-checkenv modpost2 "$LOC-return-@$HOST" "moderator@$HOST"
+checkenv modpost2 "$LIST-return-@$HOST" "moderator@$HOST"
 
 unset post
 

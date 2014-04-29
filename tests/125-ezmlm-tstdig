@@ -19,15 +19,15 @@
 	fatal "digtime=0 succeeded"
   rm "$DIR"/digsize "$DIR"/digcount "$DIR"/digtime
 
-  LOCAL="$LOC-xx"
+  LOCAL="$LIST-xx"
   DEFAULT='xx'
   ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" || \
 	fatal "problem with -xx in manager position"
-  LOCAL="$LOC-dig."
+  LOCAL="$LIST-dig."
   DEFAULT='dig.'
   ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" && \
 	fatal "problem with -dig in manager position"
-  LOCAL="$LOC-digest-"
+  LOCAL="$LIST-digest-"
   DEFAULT='digest-'
   ${EZBIN}/ezmlm-tstdig -k2 -m10 -t0 "$DIR" || \
 	{ echo "err with -digest- in mgr pos: 0.31 bug fixed in 0.321"
@@ -51,7 +51,7 @@
 	fatal "digsize=2 failed"
   rm "$DIR"/digsize "$DIR"/digcount "$DIR"/digtime
 
-  LOCAL="$LOC"
+  LOCAL="$LIST"
   ${EZBIN}/ezmlm-tstdig -k1 -m10 -t0 "$DIR" > "$ERR" 2>&1 || \
 	{
 	 echo "problem with DEFAULT unset: 0.32 bug, OK in 0.321."

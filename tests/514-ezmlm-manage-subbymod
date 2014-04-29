@@ -11,11 +11,11 @@
 
   MODSUBCOOKIE=`gethdr Reply-To | cut -d@ -f1`
   grephdr_manage
-  grephdr Reply-To: "${LOC}-rc\\..*\\..*-test=example.org@${HOST}"
-  grephdr Subject: "CONFIRM subscribe to ${LOC}@${HOST}"
+  grephdr Reply-To: "${LIST}-rc\\..*\\..*-test=example.org@${HOST}"
+  grephdr Subject: "CONFIRM subscribe to ${LIST}@${HOST}"
   grephdr_empty
   grepbody I respectfully request your permission to add
   grepbody test@example.org
-  grepbody to the subscribers of the ${LOC} mailing list. This request
+  grepbody to the subscribers of the ${LIST} mailing list. This request
 
   echo OK

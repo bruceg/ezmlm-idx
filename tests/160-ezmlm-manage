@@ -9,14 +9,14 @@
 
   ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
   check_manage unsubscribe-U -U 0 "failed with -U" unsub-ok \
-      "$LOC-return-@$HOST" "$SENDER"
+      "$LIST-return-@$HOST" "$SENDER"
   ${EZBIN}/ezmlm-issubn "$DIR" && \
 	fatal "unsubscribe with -U failed"
 
   ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
   touch "$DIR"/nounsubconfirm
   check_manage unsubscribe-nounsubconfirm '' 0 "failed with nounsubconfirm" unsub-ok \
-      "$LOC-return-@$HOST" "$SENDER"
+      "$LIST-return-@$HOST" "$SENDER"
   ${EZBIN}/ezmlm-issubn "$DIR" && \
 	fatal "unsubscribe with nounsubconfirm failed"
   rm "$DIR"/nounsubconfirm
@@ -30,7 +30,7 @@
   SENDER="${MOD}@$HOST"
   ${EZBIN}/ezmlm-sub "$DIR" mod "$SENDER" || exit 100
   check_manage admin-deny '' 0 'Deny access denied to remote admin' mod-sub-confirm \
-      "$LOC-deny-return-@$HOST" "$SENDER"
+      "$LIST-deny-return-@$HOST" "$SENDER"
 
 # make non-moderated
   rm -f "${DIR}/modsub" || \
@@ -49,14 +49,14 @@
   DEFAULT='digest-subscribe'
 
   check_manage digest-subscribe-S -S 0 'failed with -S' sub-ok \
-      "$LOC-digest-return-@$HOST" "$SENDER"
+      "$LIST-digest-return-@$HOST" "$SENDER"
   ${EZBIN}/ezmlm-issubn "$DIR" digest || \
 	fatal "digest-subscribe with -S failed"
 
   ${EZBIN}/ezmlm-unsub "$DIR" digest "$SENDER"
   touch "$DIR"/nosubconfirm
   check_manage digest-subscribe-nosubconfirm '' 0 'failed with nosubconfirm' sub-ok \
-      "$LOC-digest-return-@$HOST" "$SENDER"
+      "$LIST-digest-return-@$HOST" "$SENDER"
   ${EZBIN}/ezmlm-issubn "$DIR" digest || \
 	fatal "digest-subscribe with nosubconfirm failed"
   rm "$DIR"/nosubconfirm
@@ -71,7 +71,7 @@
   echo "From: Mr. User requests <${MAN}@$HOST>" >> "$TMP"
   echo >> "$TMP"
   check_manage sub1 '' 0 'digest-subscribe with request failed' sub-confirm \
-      "$LOC-digest-return-@$HOST" "$SENDER"
+      "$LIST-digest-return-@$HOST" "$SENDER"
 
   grep T"${MAN}@$HOST" "$QQENV" >/dev/null 2>&1 || \
 	fatal "failed getting digest-subscribe confirm request"
@@ -79,14 +79,14 @@
   # Add moderator
   ${EZBIN}/ezmlm-sub "$DIR" mod "${MOD}@$HOST"
 
-  DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LOCLEN"-` || \
+  DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LISTLEN"-` || \
 	fatal "failed to find confirm address in -subscribe reply"
   qqclean
   echo "X-num: sub3" > "$TMP"
   echo "From: Mr. User confirms <$SENDER>" >> "$TMP"
   echo >> "$TMP"
   check_manage sub3 '' 0 'failed to send user conf for sub1' mod-sub-confirm \
-      "$LOC-digest-return-@$HOST" "$MOD@$HOST"
+      "$LIST-digest-return-@$HOST" "$MOD@$HOST"
   msgexists || \
 	fatal "failed to receive user conf for sub1"
   SENDER="${MOD}@$HOST"
@@ -96,32 +96,32 @@
 	fatal "failed getting subscribe moderation confirm request"
 
   # confirm subscription request
-  DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LOCLEN-"` || \
+  DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LISTLEN-"` || \
 	fatal "no confirm address in sub3 mod confirm request"
   echo "X-num: modR1" > "$TMP"
   echo "FROM: moderator agrees <$SENDER>" >> "$TMP"
   echo >> "$TMP"
   check_manage modR1 '' 0 'failed to send digest sub mod accept for sub3' sub-ok \
-      "$LOC-digest-return-@$HOST" "$MAN@$HOST"
+      "$LIST-digest-return-@$HOST" "$MAN@$HOST"
 
   SENDER="${MAN}@$HOST"
   ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
   DEFAULT='unsubscribe'
   echo "X-num: sub2" > "$TMP"
   check_manage sub2 '' 0 'unsubscribe request failed' unsub-confirm \
-      "$LOC-return-@$HOST" "$SENDER"
+      "$LIST-return-@$HOST" "$SENDER"
 
-  DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LOCLEN"-` || \
+  DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LISTLEN"-` || \
 	fatal "failed to find confirm address in -unsubscribe reply"
   echo "X-num: sub4" > "$TMP"
   check_manage sub4 '' 0 'failed to send conf for sub2' unsub-ok \
-      "$LOC-return-@$HOST" "$SENDER"
+      "$LIST-return-@$HOST" "$SENDER"
 
 # -get function for backwards compatibility
   DEFAULT='get.1'
   echo "X-num: manget1" > "$TMP"
   check_manage get.1 '' 0 'get failed' get \
-      "$LOC-return-@$HOST" "$SENDER"
+      "$LIST-return-@$HOST" "$SENDER"
 
   # Check -get.1 reply
   grep 'msg1' "$QQMSG" >/dev/null || \

@@ -2,16 +2,16 @@
 
   ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
 
-  DEFAULT=`echo "$SUBCOOKIE" | cut -c"$LOCLEN"-`
+  DEFAULT=`echo "$SUBCOOKIE" | cut -c"$LISTLEN"-`
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce subscribe confirmation"
 
   grephdr_manage
-  grephdr List-Unsubscribe: "<mailto:${LOC}-unsubscribe-test=example.org@${HOST}>"
-  grephdr Subject: "WELCOME to ${LOC}@${HOST}"
+  grephdr List-Unsubscribe: "<mailto:${LIST}-unsubscribe-test=example.org@${HOST}>"
+  grephdr Subject: "WELCOME to ${LIST}@${HOST}"
   grephdr_empty
   grepbody Acknowledgment: I have added the address
   grepbody test@example.org
-  grepbody to the ${LOC} mailing list.
+  grepbody to the ${LIST} mailing list.
 
   echo OK

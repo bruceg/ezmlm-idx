@@ -6,10 +6,10 @@ prompt "ezmlm-get (thread):   "
 
 qqclean
 SENDER="${BNC}@$HOST"
-LOCAL="$LOC-index"
+LOCAL="$LIST-index"
 DEFAULT='index'
 echo "X-num: thread1" > "$TMP"
-LOCAL="$LOC-thread.1"
+LOCAL="$LIST-thread.1"
 DEFAULT='thread.1'
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >/dev/null 2>&1 && \
 	fatal "-s failed to reject -thread from non-sub"
@@ -23,7 +23,7 @@ if [ "$?" != "99" ]; then
 fi
 msgexists || \
 	fatal "failed to produce -thread message"
-checkenv thread1 "$LOC-return-@$HOST" "$SENDER"
+checkenv thread1 "$LIST-return-@$HOST" "$SENDER"
 
 qqclean
 echo "X-num: thread2" > "$TMP"
@@ -34,6 +34,6 @@ if [ "$?" != "99" ]; then
 fi
 msgexists || \
 	fatal "-s failed to produce -thread message"
-checkenv thread2 "$LOC-return-@$HOST" "$SENDER"
+checkenv thread2 "$LIST-return-@$HOST" "$SENDER"
 
 echo "OK"

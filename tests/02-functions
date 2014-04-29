@@ -41,17 +41,17 @@ grepbodynot() {
 
 grephdr_std() {
   grephdr Message-ID: "<[0123456789]*\\.[0123456789]*\\.ezmlm@${HOST}>"
-  grephdr Delivered-To: "responder for ${LOC}@${HOST}"
+  grephdr Delivered-To: "responder for ${LIST}@${HOST}"
   grephdr MIME-Version: 1.0
 }
 
 grephdr_list() {
-  grephdr Mailing-List: "contact ${LOC}-help@${HOST}; run by ezmlm"
-  grephdr List-Help: "<mailto:${LOC}-help@${HOST}>"
-  grephdr List-Post: "<mailto:${LOC}@${HOST}>"
-  grephdr List-Subscribe: "<mailto:${LOC}-subscribe@${HOST}>"
+  grephdr Mailing-List: "contact ${LIST}-help@${HOST}; run by ezmlm"
+  grephdr List-Help: "<mailto:${LIST}-help@${HOST}>"
+  grephdr List-Post: "<mailto:${LIST}@${HOST}>"
+  grephdr List-Subscribe: "<mailto:${LIST}-subscribe@${HOST}>"
   if [ -n "$*" ]; then
-    grephdr List-Unsubscribe: "<mailto:${LOC}-unsubscribe@${HOST}>"
+    grephdr List-Unsubscribe: "<mailto:${LIST}-unsubscribe@${HOST}>"
   fi
 }
 
@@ -59,7 +59,7 @@ grephdr_manage() {
   grephdr_std
   grephdr_list
   grephdr Date: '..* ... .... ..:..:.. [-+]....'
-  grephdr From: "${LOC}-help@${HOST}"
+  grephdr From: "${LIST}-help@${HOST}"
   grephdr To: "test@example.org"
   grephdr Content-Type: "text/plain; charset=.*"
 }

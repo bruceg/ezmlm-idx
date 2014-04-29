@@ -6,17 +6,17 @@
 
 # edit non-existant list
   ${EZBIN}/ezmlm-make -e -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
-	"$LOC" "$HOST" > /dev/null 2>&1 && \
+	"$LIST" "$HOST" > /dev/null 2>&1 && \
 	fatal "ezmlm-make failed reject edit of non-existing list:"
 
 # make simple test list
   ${EZBIN}/ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
-	"$LOC" "$HOST" || \
+	"$LIST" "$HOST" || \
 	fatal "ezmlm-make failed to create test list"
 
 # remake simple test list which should fail
   ${EZBIN}/ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
-	"$LOC" "$HOST" >/dev/null 2>&1 && \
+	"$LIST" "$HOST" >/dev/null 2>&1 && \
 	fatal "failed to reject creation of existing list"
 
 # edit the list (add digest)
@@ -24,7 +24,7 @@
 	fatal "ezmlm-make failed to edit test list"
 
 # edit the list (add digest)
-  ${EZBIN}/ezmlm-make -ed -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LOC" "$HOST" \
+  ${EZBIN}/ezmlm-make -ed -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LIST" "$HOST" \
 	>/dev/null 2>&1 || \
 	{ echo "failed to edit"
 	  prompt "ezmlm-make ......     "

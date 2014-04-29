@@ -72,11 +72,10 @@ while [ ! -z "$1" ]; do		# not everyone has getopt :-(
 	esac
 done
 
-LOC="xyzzy-$LIST"
-# calculate position in LOCAL where [normally] default starts
-LOCLEN=`echo "$LOC-" | wc -c | sed 's/ //g'`
-REJLEN=`echo "$LOC-reject-" | wc -c | sed 's/ //g'`
-ACCLEN=`echo "$LOC-accept-" | wc -c | sed 's/ //g'`
+# calculate position in LIST where [normally] default starts
+LISTLEN=`echo "$LIST-" | wc -c | sed 's/ //g'`
+REJLEN=`echo "$LIST-reject-" | wc -c | sed 's/ //g'`
+ACCLEN=`echo "$LIST-accept-" | wc -c | sed 's/ //g'`
 
 DOT="$DIR/dot.qmail-$LIST"
 

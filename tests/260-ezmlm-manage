@@ -23,8 +23,8 @@ check_manage edit2 '' 100 '-E failed for edit2'
 echo "X-num: edit3" > "$TMP"
 touch "$DIR"/modcanedit
 check_manage edit3 '' 0 'modcanedit failed for remote admin for edit3' 'edit test' \
-    "$LOC-return-@$HOST" "$MOD@$HOST"
-grep "^Subject: EDIT test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
+    "$LIST-return-@$HOST" "$MOD@$HOST"
+grep "^Subject: EDIT test for ${LIST}@${HOST}$" "$QQMSG" >/dev/null \
 || fatal "edit3 had incorrect subject"
 rm "$DIR"/modcanedit
 
@@ -34,7 +34,7 @@ grep 'edit3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting edit reply for edit3"
 grep "#TEST_TEXT#" "$QQMSG" >/dev/null 2>&1 || \
 	fatal "old text missing in edit3 edit reply"
-DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LOCLEN"-` || \
+DEFAULT=`grep "Reply-To:" "$QQMSG" | cut -d' ' -f2 | cut -d'@' -f1 | cut -c"$LISTLEN"-` || \
 	fatal "no reply address in edit3 edit reply"
 echo "X-num: edit4" > "$TMP"
 echo >> "$TMP"
@@ -42,10 +42,10 @@ echo "%%% START OF TEXT FILE" >> "$TMP"
 echo "#NEW_TEXT#" >> "$TMP"
 echo "%%% END OF TEXT FILE" >> "$TMP"
 check_manage edit4 -e 0 'failed to send edit4 reply for edit3' edit-done \
-    "$LOC-return-@$HOST" "$MAN@$HOST"
+    "$LIST-return-@$HOST" "$MAN@$HOST"
 grep "#NEW_TEXT#" "${DIR}/text/test" >/dev/null 2>&1 || \
 	fatal "edit4 failed to update text file"
-grep "^Subject: Success editing test for ${LOC}@${HOST}$" "$QQMSG" >/dev/null \
+grep "^Subject: Success editing test for ${LIST}@${HOST}$" "$QQMSG" >/dev/null \
 || fatal "edit4 had incorrect subject"
 
 # test list/log
@@ -65,7 +65,7 @@ check_manage list2 '' 100 '-L failed to reject list request'
 qqclean
 echo "X-num: list3" > "$TMP"
 check_manage list3 -l 0 '-l failed for remote admin' list \
-    "$LOC-allow-return-@$HOST" "$MOD@$HOST"
+    "$LIST-allow-return-@$HOST" "$MOD@$HOST"
 
 grep 'list3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -list reply to list3"
@@ -76,7 +76,7 @@ qqclean
 echo "X-num: list4" > "$TMP"
 touch "$DIR"/modcanlist
 check_manage list4 '' 0 'modcanlist failed for remote admin for list3' list \
-    "$LOC-allow-return-@$HOST" "$MOD@$HOST"
+    "$LIST-allow-return-@$HOST" "$MOD@$HOST"
 
 grep 'list4' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -list reply to list4"
@@ -91,7 +91,7 @@ check_manage log2 '' 100 '-L failed to reject log request'
 qqclean
 echo "X-num: log3" > "$TMP"
 check_manage log3 -l 0 '-l failed for remote admin for log3' log \
-    "$LOC-allow-return-@$HOST" "$MOD@$HOST"
+    "$LIST-allow-return-@$HOST" "$MOD@$HOST"
 grep 'log3' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "failed getting -log reply to log3"
 grep "aaa@bbb" "$QQMSG" | grep "+m" > /dev/null 2>&1 || \

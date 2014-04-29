@@ -28,7 +28,7 @@ grep "To: ${SND}@$HOST" "$QQMSG" > /dev/null 2>&1 || \
 	fatal "failed to reject message mod1"
 grep '^rejection test message$' "$QQMSG" >/dev/null 2>&1 || \
 	fatal "reject message did not include given text"
-checkenv rejection "$LOC-return-@$HOST" "$SND@$HOST"
+checkenv rejection "$LIST-return-@$HOST" "$SND@$HOST"
 
 qqclean
 # ACC is set in 145-ezmlm-store, as the accept address for "mod3" message
@@ -39,10 +39,10 @@ ${EZBIN}/ezmlm-moderate "$DIR" ${EZBIN}/ezmlm-send "$DIR" \
 		fatal "failed on acceptance"
 msgexists || \
 	fatal "failed to post message mod3"
-# ${LOC}@$HOST means it was not rejected, but sent through the list
-grep "To: ${LOC}@$HOST" $QQMSG > /dev/null 2>&1 || \
+# ${LIST}@$HOST means it was not rejected, but sent through the list
+grep "To: ${LIST}@$HOST" $QQMSG > /dev/null 2>&1 || \
 	fatal "failed to accept message mod3"
-checkenv accept "$LOC-return-.*-@$HOST-@\\[\\]" "$SND@$HOST" "$MAN@$HOST"
+checkenv accept "$LIST-return-.*-@$HOST-@\\[\\]" "$SND@$HOST" "$MAN@$HOST"
 
 ls -l "${DIR}/mod/rejected/" | grep '[0-9]' >/dev/null 2>&1 || \
 	fatal "failed to write reject stub"

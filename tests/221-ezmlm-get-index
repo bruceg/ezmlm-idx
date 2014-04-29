@@ -18,7 +18,7 @@ ${EZBIN}/ezmlm-sub "$DIR" digest "${DIG}@$HOST"
 
 qqclean
 SENDER="${BNC}@$HOST"
-LOCAL="$LOC-xxxx"
+LOCAL="$LIST-xxxx"
 DEFAULT='xxxx'
 echo "X-num: index1" > "$TMP"
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1 || \
@@ -28,7 +28,7 @@ msgexists && \
 
 # This should not give a digest
 qqclean
-LOCAL="$LOC-"
+LOCAL="$LIST-"
 DEFAULT=''
 ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal " failed to exit 0 for list-@host"
@@ -41,7 +41,7 @@ ${EZBIN}/ezmlm-unsub "$DIR" allow "${SENDER}" >/dev/null 2>&1
 ${EZBIN}/ezmlm-unsub "$DIR" digest "${SENDER}" >/dev/null 2>&1
 
 qqclean
-LOCAL="$LOC-index"
+LOCAL="$LIST-index"
 DEFAULT='index'
 ${EZBIN}/ezmlm-get -s "$DIR" < "$TMP" >"$ERR" 2>&1 && \
 	fatal "-s failed to reject -index from non-sub"
@@ -55,7 +55,7 @@ if [ "$?" -ne "99" ]; then
 fi
 msgexists || \
 	fatal "No message delivered"
-checkenv index "$LOC-return-@$HOST" "$SENDER"
+checkenv index "$LIST-return-@$HOST" "$SENDER"
 
 qqclean
 echo "X-num: index2" > "$TMP"
@@ -68,6 +68,6 @@ msgexists || \
 	fatal "No message delivered"
 grep "index2" "$QQMSG" >/dev/null 2>&1 || \
 	fatal "index2 failed to return"
-checkenv index2 "$LOC-return-@$HOST" "$SENDER"
+checkenv index2 "$LIST-return-@$HOST" "$SENDER"
 
 echo "OK"

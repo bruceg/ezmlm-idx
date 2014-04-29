@@ -7,10 +7,10 @@
   fatal "failed to produce subscribe nop"
 
   grephdr_manage
-  grephdr Subject: "Already subscribed to ${LOC}@${HOST}"
+  grephdr Subject: "Already subscribed to ${LIST}@${HOST}"
   grephdr_empty
   grepbody I\'ve been unable to carry out your request: The address
   grepbody test@example.org
-  grepbody was already on the ${LOC} mailing list when I received
+  grepbody was already on the ${LIST} mailing list when I received
 
   echo OK

@@ -21,7 +21,7 @@
   qqclean
   ${EZBIN}/ezmlm-clean "$DIR" >"$ERR" 2>&1 ||
 	fatal "failed first invocation"
-  checkenv clean1 "$LOC-return-@$HOST" "$DIG@$HOST"
+  checkenv clean1 "$LIST-return-@$HOST" "$DIG@$HOST"
   if [ -r "${DIR}/mod/pending/1" ]; then
 	fatal "failed to remove non-x moderation queue entry 1"
   fi

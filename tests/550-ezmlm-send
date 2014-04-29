@@ -14,17 +14,17 @@ EOF
   }
 
   touch "$DIR"/addtrailer
-  LOCAL="$LOC"
+  LOCAL="$LIST"
   sendfrom
 
   grephdr_list 1
   grephdr Precedence: bulk
   grephdr X-No-Archive: yes
-  grephdr Delivered-To: "mailing list ${LOC}@${HOST}"
+  grephdr Delivered-To: "mailing list ${LIST}@${HOST}"
   grephdr From: test@example.org
   grephdr Subject: '\[PFX\] test post'
   grephdr X-Test-Header: one
-  grephdr Sender: "<${LOC}@${HOST}>"
+  grephdr Sender: "<${LIST}@${HOST}>"
   grephdr_empty
 
   grepbody Local: "$LOCAL"
@@ -40,23 +40,23 @@ EOF
   touch "$DIR"/rewritefrom
 
   sendfrom '"My Name" <test@example.org>'
-  grephdr From: "\"My Name via ${LOC}\" <${LOC}@${HOST}>$"
+  grephdr From: "\"My Name via ${LIST}\" <${LIST}@${HOST}>$"
   grephdr Cc: '"My Name" <test@example.org>'
 
   sendfrom '"My Name" test@example.org'
-  grephdr From: "\"My Name via ${LOC}\" <${LOC}@${HOST}>$"
+  grephdr From: "\"My Name via ${LIST}\" <${LIST}@${HOST}>$"
   grephdr Cc: '"My Name" test@example.org'
 
   sendfrom 'My Name <test@example.org>'
-  grephdr From: "\"My Name via ${LOC}\" <${LOC}@${HOST}>$"
+  grephdr From: "\"My Name via ${LIST}\" <${LIST}@${HOST}>$"
   grephdr Cc: 'My Name <test@example.org>'
 
   sendfrom 'test@example.org (My Name)'
-  grephdr From: "\"My Name via ${LOC}\" <${LOC}@${HOST}>$"
+  grephdr From: "\"My Name via ${LIST}\" <${LIST}@${HOST}>$"
   grephdr Cc: 'test@example.org \(My Name\)'
 
   sendfrom 'test@example.org'
-  grephdr From: "\"test.example.org via ${LOC}\" <${LOC}@${HOST}>$"
+  grephdr From: "\"test.example.org via ${LIST}\" <${LIST}@${HOST}>$"
   grephdr Cc: 'test@example.org'
 
   echo OK

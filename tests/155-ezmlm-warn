@@ -16,14 +16,14 @@
 # should send a warning
   ${EZBIN}/ezmlm-warn -D -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with normal bounce for warning"
-  checkenv warn1 "$LOC-return-warn-.*-$BNC=$HOST@$HOST" "$BNC@$HOST"
+  checkenv warn1 "$LIST-return-warn-.*-$BNC=$HOST@$HOST" "$BNC@$HOST"
   ${EZBIN}/ezmlm-issubn "$DIR" || \
 	fatal "script error: SENDER is not a subscriber"
 
   qqclean
   ${EZBIN}/ezmlm-warn -d -t0 "$DIR" >"$ERR" 2>&1 || \
 	fatal "failed with digest bounce for warning"
-  checkenv warn2 "$LOC-digest-return-warn-.*-$BNC=$HOST@$HOST" "$BNC@$HOST"
+  checkenv warn2 "$LIST-digest-return-warn-.*-$BNC=$HOST@$HOST" "$BNC@$HOST"
   ${EZBIN}/ezmlm-issubn "$DIR" digest || \
 	fatal "script error: SENDER is not a digest subscriber"
 

@@ -3,17 +3,17 @@
   ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
   touch "$DIR"/modsub
 
-  DEFAULT=`echo "$SUBCOOKIE" | cut -c"$LOCLEN"-`
+  DEFAULT=`echo "$SUBCOOKIE" | cut -c"$LISTLEN"-`
   ${EZBIN}/ezmlm-manage "$DIR" <"$TMP" >"$ERR" 2>&1 || \
   fatal "failed to produce subscribe confirmation"
 
   MODSUBCOOKIE=`gethdr Reply-To | cut -d@ -f1`
   grephdr_manage
-  grephdr Reply-To: "${LOC}-tc\\..*\\..*-test=example.org@${HOST}"
-  grephdr Subject: "CONFIRM subscribe to ${LOC}@${HOST}"
+  grephdr Reply-To: "${LIST}-tc\\..*\\..*-test=example.org@${HOST}"
+  grephdr Subject: "CONFIRM subscribe to ${LIST}@${HOST}"
   grephdr_empty
   grepbody I respectfully request your permission to add
   grepbody test@example.org
-  grepbody to the subscribers of the ${LOC} mailing list. This request
+  grepbody to the subscribers of the ${LIST} mailing list. This request
 
   echo OK

@@ -11,11 +11,11 @@
 
   MODUNSUBCOOKIE=`gethdr Reply-To | cut -d@ -f1`
   grephdr_manage
-  grephdr Reply-To: "${LOC}-wc\\..*\\..*-test=example.org@${HOST}"
-  grephdr Subject: "CONFIRM unsubscribe from ${LOC}@${HOST}"
+  grephdr Reply-To: "${LIST}-wc\\..*\\..*-test=example.org@${HOST}"
+  grephdr Subject: "CONFIRM unsubscribe from ${LIST}@${HOST}"
   grephdr_empty
   grepbody A request has been made to remove
   grepbody test@example.org
-  grepbody from the ${LOC} mailing list. If you agree, please send
+  grepbody from the ${LIST} mailing list. If you agree, please send
 
   echo OK

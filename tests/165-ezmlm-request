@@ -5,7 +5,7 @@
   prompt "ezmlm-request:        "
 
   SENDER="${SND}@$HOST"
-  LOCAL="$LOC-request"
+  LOCAL="$LIST-request"
   DEFAULT='request'
 
   echo "X-num: req1" > "$TMP"
@@ -16,34 +16,34 @@
   if [ "$?" != "99" ]; then
 	fatal "qqqq command in subject failed to exit 99"
   fi
-  checkenv req1 "$SENDER" "$LOC-qqqq-$SND=${HOST}@$HOST"
+  checkenv req1 "$SENDER" "$LIST-qqqq-$SND=${HOST}@$HOST"
   grep "Sender: ${SND}@$HOST" "$QQMSG" >/dev/null \
   && fatal "ezmlm-reject didn't honor headerremove"
 
   echo "X-num: req2" > "$TMP"
 # test full ezmlm cmd in subject and command substitution
-  echo "Subject: ${LOC}-remove-${SND}=${HOST}@${HOST}" >> "$TMP"
+  echo "Subject: ${LIST}-remove-${SND}=${HOST}@${HOST}" >> "$TMP"
   ${EZBIN}/ezmlm-request "$DIR" < "$TMP" > "$ERR" 2>&1
   if [ "$?" != "99" ]; then
 	fatal "full ezmlm command in subject failed to exit 99"
   fi
 
-  grep T"$LOC-unsubscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
+  grep T"$LIST-unsubscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
 	fatal "ezmlm 'remove' subject query rewriting failed"
 
   echo "X-num: req3" > "$TMP"
-  echo "Subject: subscribe ${LOC}@${HOST} ${SND}@${HOST}" >> "$TMP"
+  echo "Subject: subscribe ${LIST}@${HOST} ${SND}@${HOST}" >> "$TMP"
   ${EZBIN}/ezmlm-request "$DIR" < "$TMP" > "$ERR" 2>&1
   if [ "$?" != "99" ]; then
 	fatal "other command in subject failed to exit 99"
   fi
 
-  grep T"$LOC-subscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
+  grep T"$LIST-subscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
 	fatal "ezmlm 'subscribe' subject query rewriting failed"
 
   echo "X-num: req4" > "$TMP"
   echo "Subject: subscribe" >> "$TMP"
-  echo "	${LOC}@${HOST} ${SND}@${HOST}" >> "$TMP"
+  echo "	${LIST}@${HOST} ${SND}@${HOST}" >> "$TMP"
   echo "Foo-Bar: nothing" >> "$TMP"
   echo x-num >"$DIR"/headerkeep
   echo subject >>"$DIR"/headerkeep
@@ -55,7 +55,7 @@
   && fatal "ezmlm-reject didn't honor headerkeep"
   rm "$DIR"/headerkeep
 
-  grep T"$LOC-subscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
+  grep T"$LIST-subscribe-$SND=${HOST}@$HOST" "$QQENV" >/dev/null || \
 	fatal "ezmlm multi-line 'subscribe' subject query rewriting failed"
 
   DEFAULT=
@@ -64,13 +64,13 @@
   echo "Subject: which" >> "$TMP"
   echo >> "$TMP"
   echo "which" >> "$TMP"
-  echo "${LOC}@${HOST}:${DIR}:Description" > "$DIR"/request-config
+  echo "${LIST}@${HOST}:${DIR}:Description" > "$DIR"/request-config
   ${EZBIN}/ezmlm-request -f "$DIR"/request-config "$DIR" < "$TMP" > "$ERR" 2>&1
   test "$?" = 99 \
   || fatal "which command failed to exit 99"
-  grep "^Subject: $LOC results" "$QQMSG" >/dev/null \
+  grep "^Subject: $LIST results" "$QQMSG" >/dev/null \
   || fatal "which command had incorrect subject"
-  grep "^${LOC}@${HOST}$" "$QQMSG" >/dev/null \
+  grep "^${LIST}@${HOST}$" "$QQMSG" >/dev/null \
   || fatal "which command failed to find mailing list subscriber"
 
   ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
@@ -78,13 +78,13 @@
   echo "Subject: which" >> "$TMP"
   echo >> "$TMP"
   echo "which" >> "$TMP"
-  echo "${LOC}@${HOST}:${DIR}:Description" > "$DIR"/request-config
+  echo "${LIST}@${HOST}:${DIR}:Description" > "$DIR"/request-config
   ${EZBIN}/ezmlm-request -f "$DIR"/request-config "$DIR" < "$TMP" > "$ERR" 2>&1
   test "$?" = 99 \
   || fatal "which command failed to exit 99"
-  grep "^Subject: $LOC results" "$QQMSG" >/dev/null \
+  grep "^Subject: $LIST results" "$QQMSG" >/dev/null \
   || fatal "which command had incorrect subject"
-  grep "^${LOC}@${HOST}$" "$QQMSG" >/dev/null \
+  grep "^${LIST}@${HOST}$" "$QQMSG" >/dev/null \
   && fatal "which command found unsubscribed mailing list subscriber"
 
   echo "OK"

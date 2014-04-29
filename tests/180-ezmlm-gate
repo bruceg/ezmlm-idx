@@ -12,7 +12,7 @@ SENDER="not${SND}@not${HOST}"
 || fatal "failed to process message 1"
 cat "$DIR"/mod/pending/* | grep "gate1" > /dev/null \
 || fatal "failed to queue message 1"
-checkenv gate1 "$LOC-return-@$HOST" "$MOD@$HOST"
+checkenv gate1 "$LIST-return-@$HOST" "$MOD@$HOST"
 
 SENDER="${MAN}@${HOST}"
 ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
@@ -21,7 +21,7 @@ ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
 || fatal "failed to process message 2"
 cat "$DIR"/mod/pending/* | grep "gate2" > /dev/null \
 && fatal "mistakenly queued message 2"
-checkenv gate2 "$LOC-return-.*-@$HOST-@\\[\\]" "$SND@$HOST" "$MAN@$HOST" "$BNC@$HOST"
+checkenv gate2 "$LIST-return-.*-@$HOST-@\\[\\]" "$SND@$HOST" "$MAN@$HOST" "$BNC@$HOST"
 
 SENDER="${MOD}@${HOST}"
 { echo "X-num: gate3"; make_message; } \
@@ -29,7 +29,7 @@ SENDER="${MOD}@${HOST}"
 || fatal "failed to process message 3"
 cat "$DIR"/mod/pending/* | grep "gate3" > /dev/null \
 && fatal "mistakenly queued message 3"
-checkenv gate3 "$LOC-return-.*-@$HOST-@\\[\\]" "$SND@$HOST" "$MAN@$HOST" "$BNC@$HOST"
+checkenv gate3 "$LIST-return-.*-@$HOST-@\\[\\]" "$SND@$HOST" "$MAN@$HOST" "$BNC@$HOST"
 
 make_message | ${EZBIN}/ezmlm-gate "$DIR" /etc/"$DIR" > "$ERR" 2>&1 \
 && fatal "failed to reject bad command line 1"
