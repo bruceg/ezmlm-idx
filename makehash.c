@@ -5,71 +5,7 @@
 #include "makehash.h"
 #include "die.h"
 #include "idx.h"
-
-typedef struct {
-  uint32 seed[32];
-  uint32 sum[8];
-  uint32 out[8];
-  uint32 in[12];
-  int todo;
-} surfpcs;
-
-#define SURFPCS_LEN 32
-
-static void surfpcs_init(surfpcs *s,const uint32 k[32])
-{
-  int i;
-  for (i = 0;i < 32;++i) s->seed[i] = k[i];
-  for (i = 0;i < 8;++i) s->sum[i] = 0;
-  for (i = 0;i < 12;++i) s->in[i] = 0;
-  s->todo = 0;
-}
-
-static uint32 littleendian[8] = {
-  0x03020100, 0x07060504, 0x0b0a0908, 0x0f0e0d0c,
-  0x13121110, 0x17161514, 0x1b1a1918, 0x1f1e1d1c
-} ;
-#define end ((unsigned char *) littleendian)
-
-#define data ((unsigned char *) s->in)
-#define outdata ((unsigned char *) s->out)
-
-static void surfpcs_addlc(surfpcs *s,const char *x,unsigned int n)
-	/* modified from Dan's surfpcs_add by skipping ' ' & '\t' and */
-	/* case-independence */
-{
-  unsigned char ch;
-  int i;
-  while (n--) {
-    ch = *x++;
-    if (ch == ' ' || ch == '\t') continue;
-    if (ch >= 'A' && ch <= 'Z')
-      data[end[s->todo++]] = ch - 'A' + 'a';
-    else
-      data[end[s->todo++]] = ch;
-    if (s->todo == 32) {
-      s->todo = 0;
-      if (!++s->in[8])
-        if (!++s->in[9])
-          if (!++s->in[10])
-            ++s->in[11];
-      surf(s->out,s->in,s->seed);
-      for (i = 0;i < 8;++i)
-	s->sum[i] += s->out[i];
-    }
-  }
-}
-
-static void surfpcs_out(surfpcs *s,unsigned char h[32])
-{
-  int i;
-  surfpcs_addlc(s,".",1);
-  while (s->todo) surfpcs_addlc(s,"",1);
-  for (i = 0;i < 8;++i) s->in[i] = s->sum[i];
-  for (;i < 12;++i) s->in[i] = 0;
-  surf(s->out,s->in,s->seed);
-  for (i = 0;i < 32;++i) h[i] = outdata[end[i]];
-}
+#include "surfpcs.h"
 
 void makehash(const char *indata,unsigned int inlen,char *hash)
 	/* makes hash[COOKIE=20] from stralloc *indata, ignoring case and */

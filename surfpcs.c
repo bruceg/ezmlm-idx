@@ -13,8 +13,8 @@ void surfpcs_init(surfpcs *s,const uint32 k[32])
 }
 
 static const uint32 littleendian[8] = {
-  50462976, 117835012, 185207048, 252579084,
-  319951120, 387323156, 454695192, 522067228
+  0x03020100, 0x07060504, 0x0b0a0908, 0x0f0e0d0c,
+  0x13121110, 0x17161514, 0x1b1a1918, 0x1f1e1d1c
 } ;
 #define end ((unsigned char *) &littleendian)
 
@@ -26,6 +26,30 @@ void surfpcs_add(surfpcs *s,const unsigned char *x,unsigned int n)
   int i;
   while (n--) {
     data[end[s->todo++]] = *x++;
+    if (s->todo == 32) {
+      s->todo = 0;
+      if (!++s->in[8])
+        if (!++s->in[9])
+          if (!++s->in[10])
+            ++s->in[11];
+      surf(s->out,s->in,s->seed);
+      for (i = 0;i < 8;++i)
+	s->sum[i] += s->out[i];
+    }
+  }
+}
+
+void surfpcs_addlc(surfpcs *s,const char *x,unsigned int n)
+/* modified from surfpcs_add by case-independence and skipping ' ' & '\t' */
+{
+  unsigned char ch;
+  int i;
+  while (n--) {
+    ch = *x++;
+    if (ch == ' ' || ch == '\t') continue;
+    if (ch >= 'A' && ch <= 'Z')
+      ch -= 'a' - 'A';
+    data[end[s->todo++]] = ch;
     if (s->todo == 32) {
       s->todo = 0;
       if (!++s->in[8])

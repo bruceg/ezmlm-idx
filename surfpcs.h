@@ -15,6 +15,7 @@ typedef struct {
 
 extern void surfpcs_init(surfpcs *s,const uint32 k[32]);
 extern void surfpcs_add(surfpcs *s,const unsigned char *x,unsigned int n);
+extern void surfpcs_addlc(surfpcs *s,const char *x,unsigned int n);
 extern void surfpcs_out(surfpcs *s,unsigned char h[32]);
 
 #endif
