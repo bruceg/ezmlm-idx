@@ -1,7 +1,7 @@
 #include "die.h"
 #include "mime.h"
 
-void author_name(stralloc *out,char *s,unsigned int l)
+void author_name(stralloc *out,const char *s,unsigned int l)
 /* s is a string that contains a from: line argument\n. We parse */
 /* s as follows: If there is an unquoted '<' we eliminate everything after */
 /* it else if there is a unquoted ';' we eliminate everything after it.    */
@@ -18,12 +18,12 @@ void author_name(stralloc *out,char *s,unsigned int l)
   int flagdone;
   unsigned int len;
   char ch;
-  char *cpfirst,*cp;
-  char *cpcomlast = 0;
-  char *cpquotlast = 0;
-  char *cpquot = 0;
-  char *cpcom = 0;
-  char *cplt = 0;
+  const char *cpfirst,*cp;
+  const char *cpcomlast = 0;
+  const char *cpquotlast = 0;
+  const char *cpquot = 0;
+  const char *cpcom = 0;
+  const char *cplt = 0;
   char *cpout;
 
   if (!s || !l)		/* Yuck - pass the buck */
@@ -32,15 +32,11 @@ void author_name(stralloc *out,char *s,unsigned int l)
 
   while (len--) {
     ch = *(cp++);
-    if (squote) {
+    if (squote)
       squote = 0;
-      continue;
-    }
-    if (ch == '\\') {
+    else if (ch == '\\')
       squote = 1;
-      continue;
-    }
-    if (ch == '"') {		/* "name" <address@host> */
+    else if (ch == '"') {	/* "name" <address@host> */
       if (dquote) {
 	cpquotlast = cp - 2;
         break;
@@ -48,16 +44,19 @@ void author_name(stralloc *out,char *s,unsigned int l)
 	cpquot = cp;
         dquote = 1;
       }
-      continue;
-    } else if (dquote) continue;
-    if (ch == '(') {
+    }
+    else if (dquote)
+      ;
+    else if (ch == '(') {
 	if (!level) cpcom = cp;
 	level++;
-    } else if (ch == ')') {
+    }
+    else if (ch == ')') {
 	level--;
 	if (!level)
 	  cpcomlast = cp - 2;	/* address@host (name) */
-    } else if (!level) {
+    }
+    else if (!level) {
       if (ch == '<') {		/* name <address@host> */
 	cplt = cp - 2;
 	break;
@@ -90,12 +89,8 @@ void author_name(stralloc *out,char *s,unsigned int l)
     flagdone = 1;
   }
 
-  cpout = cpfirst;
-  len = cp - cpfirst + 1;
-  while (cpfirst <= cp) {
-    if (*cpfirst == '@')
-      *cpfirst = '.';
-    cpfirst++;
-  }
-  decodeHDR(cpout,len,out);
+  decodeHDR(cpfirst,cp - cpfirst + 1,out);
+  for (cpout = out->s, len = out->len; len > 0; --len, ++cpout)
+    if (*cpout == '@')
+      *cpout = '.';
 }
