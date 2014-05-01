@@ -313,15 +313,15 @@ static void rewrite_from()
   stralloc_0(&author);
   stralloc_copy(&dummy,&outlocal);
   stralloc_0(&dummy);
-  qa_put("From: \"",7);
-  qa_puts(MSG2(AUTHOR_VIA_LIST,author.s,dummy.s));
-  qa_put("\" <",3);
-  qa_put(outlocal.s,outlocal.len);
-  qa_put("@",1);
-  qa_put(outhost.s,outhost.len);
-  qa_put(">\n",2);
-  qa_put("Cc:",3);
-  qa_put(from.s,from.len);
+  if (!stralloc_copyb(&line,"From: \"",7)) die_nomem();
+  if (!stralloc_cats(&line,MSG2(AUTHOR_VIA_LIST,author.s,dummy.s))) die_nomem();
+  if (!stralloc_catb(&line,"\" <",3)) die_nomem();
+  if (!stralloc_catb(&line,outlocal.s,outlocal.len)) die_nomem();
+  if (!stralloc_catb(&line,"@",1)) die_nomem();
+  if (!stralloc_catb(&line,outhost.s,outhost.len)) die_nomem();
+  if (!stralloc_catb(&line,">\n",2)) die_nomem();
+  if (!stralloc_catb(&line,"Cc:",3)) die_nomem();
+  if (!stralloc_catb(&line,from.s,from.len)) die_nomem();
 }
 
 int main(int argc,char **argv)
@@ -487,8 +487,6 @@ int main(int argc,char **argv)
     if (flaginheader && match) {
       if (line.len == 1) {		/* end of header */
 	flaginheader = 0;
-	if (flagrewritefrom)
-	  rewrite_from();
         if (flagindexed)		/* std entry */
           r = idx_copy_insertsubject();	/* all indexed lists */
         if (flagprefixed && !flagsublist) {
@@ -598,7 +596,8 @@ int main(int argc,char **argv)
 
           if (case_startb(line.s,line.len,"From:")) {
             if (!stralloc_copyb(&from,line.s+5,line.len-5)) die_nomem();
-	    flagbadfield = flagrewritefrom; /* suppress if we're going to rewrite it */
+	    if (flagrewritefrom)
+	      rewrite_from();
           }
         } else if (line.len == mydtline.len)
 	  if (!byte_diff(line.s,line.len,mydtline.s))
