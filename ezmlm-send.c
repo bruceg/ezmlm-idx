@@ -30,6 +30,7 @@
 #include "messages.h"
 #include "makehash.h"
 #include "cookie.h"
+#include "dmarc.h"
 #include "hdr.h"
 #include "die.h"
 #include "wrap.h"
@@ -88,6 +89,11 @@ static stralloc author = {0};
 void die_indexn(void)
 {
   strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnifn.s));
+}
+
+void die_dns(const char *domain)
+{
+  strerr_die2sys(111,FATAL,MSG1(ERR_DNS_LOOKUP,domain));
 }
 
 static unsigned long innum;
@@ -308,11 +314,31 @@ int idx_copy_insertsubject(void)
 
 static void rewrite_from()
 {
-  concatHDR(from.s,from.len,&dummy);
-  author_name(&author,dummy.s,dummy.len);
+  unsigned int at;
+  int r;
+
+  /* If not unconditionally rewriting headers, turn it on for this
+   * message if DMARC would prevent us from sending as-is. */
+  if (!flagrewritefrom) {
+    concatHDR(from.s,from.len,&lines);
+    author_addr(&author,lines.s,lines.len);
+    at = byte_rchr(author.s,author.len,'@');
+    if (++at >= author.len)
+      return;
+    if (!stralloc_copyb(&dummy,author.s + at,author.len - at)) die_nomem();
+    if (!stralloc_0(&dummy)) die_nomem();
+    r = dmarc_p_reject(dummy.s);
+    if (r < 0) die_dns(dummy.s);
+    if (!r)
+      return;
+  }
+
+  concatHDR(from.s,from.len,&lines);
+  author_name(&author,lines.s,lines.len);
   stralloc_0(&author);
   stralloc_copy(&dummy,&outlocal);
   stralloc_0(&dummy);
+
   if (!stralloc_copyb(&line,"From: \"",7)) die_nomem();
   if (!stralloc_cats(&line,MSG2(AUTHOR_VIA_LIST,author.s,dummy.s))) die_nomem();
   if (!stralloc_catb(&line,"\" <",3)) die_nomem();
@@ -596,8 +622,7 @@ int main(int argc,char **argv)
 
           if (case_startb(line.s,line.len,"From:")) {
             if (!stralloc_copyb(&from,line.s+5,line.len-5)) die_nomem();
-	    if (flagrewritefrom)
-	      rewrite_from();
+	    rewrite_from();
           }
         } else if (line.len == mydtline.len)
 	  if (!byte_diff(line.s,line.len,mydtline.s))

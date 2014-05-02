@@ -37,6 +37,7 @@ die_dow.lo
 die_nomem.lo
 die_sender.lo
 die_usage.lo
+dmarc.lo
 dns_dfd.lo
 dns_domain.lo
 dns_dtda.lo

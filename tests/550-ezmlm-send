@@ -59,4 +59,10 @@ EOF
   grephdr From: "\"test5.example.org via ${LIST}\" <${LIST}@${HOST}>$"
   grephdr Cc: 'test5@example.org'
 
+  rm -f "$DIR"/rewritefrom
+
+  sendfrom 'test6@yahoo.com'
+  grephdr From: "\"test6.yahoo.com via ${LIST}\" <${LIST}@${HOST}>$"
+  grephdr Cc: 'test6@yahoo.com'
+
   echo OK

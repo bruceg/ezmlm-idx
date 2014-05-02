@@ -6,7 +6,8 @@
 
 - Added option to ezmlm-manage to show what response is being sent.
 
-- Added rewritefrom feature to ezmlm-send.
+- Added optional rewritefrom feature to ezmlm-send, automatically
+  enabled when the sender has a "reject" DMARC policy.
 
 - Fixed behavior of ezmlm-manage -Q flag to match man page.
 

@@ -30,6 +30,7 @@ ERR_COOKIE|message does not have valid authentication token|message does not hav
 ERR_CREATE|unable to create <#1#>|unable to create <#1#>
 ERR_CRONTAB|crontab update failed. Contact your sysadmin with the above error information|crontab update failed. Contact your sysadmin with the above error information
 ERR_DELETE|unable to delete <#1#>|unable to delete <#1#>
+ERR_DNS_LOOKUP|error fetching DNS record for <#1#>|error fetching DNS record for <#1#>
 ERR_DONE|message already successfully processed by this list|message already successfully processed by this list
 ERR_DOW|single comma-separated digits only for day-of-week|single comma-separated digits only for day-of-week
 ERR_EDSIZE|Maximum edit file size exceeded (#5.6.0)|Maximum edit file size exceeded (#5.6.0)

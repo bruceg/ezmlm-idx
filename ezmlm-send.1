@@ -96,6 +96,14 @@ removes the original
 header and replaces it.
 FIXME explain replacement why and content
 
+If the DMARC record for the address in the From: header contains a
+.B reject
+policy,
+.B ezmlm-send
+enables
+.B rewritefrom
+for this message.
+
 If present,
 .B ezmlm-send
 removes all MIME parts not specified in

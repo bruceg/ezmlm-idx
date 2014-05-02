@@ -12,6 +12,7 @@ extern void concatHDR(char *,unsigned int,stralloc *);
 extern int unfoldHDR(char *,unsigned int,stralloc *,const char *,
 		     stralloc *,int);
 
+extern void author_addr(stralloc *out,const char *,unsigned int);
 extern void author_name(stralloc *out,const char *,unsigned int);
 
 /* Characters */
