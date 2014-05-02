@@ -93,8 +93,14 @@ is present,
 .B ezmlm-send
 removes the original
 .B From:
-header and replaces it.
-FIXME explain replacement why and content
+header and replaces it with the following:
+
+.RS
+.EX
+From: "Real Name via listname" <listname@hostname>
+Cc: "Real Name" <address@sender>
+.EE
+.RE
 
 If the DMARC record for the address in the From: header contains a
 .B reject
