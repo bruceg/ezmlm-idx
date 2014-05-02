@@ -1,3 +1,6 @@
+ezmlm-idx-7.2.0, 2014-05-02
+===========================
+
 - Added <#C#>, <#T#>, and <#X#> substitutions for (un)subscribe
   confirmation emails, replaced with the hash code, time stamp, and
   action respectively.
