@@ -215,6 +215,7 @@ void sub_sql_searchlog(struct subdbinfo *info,
   struct datetime dt;
   char date[DATE822FMT];
   int nparams;
+  char strnum[FMT_ULONG];
 
   make_name(info,table?"_":0,table,0);
 /* SELECT (*) FROM list_slog WHERE fromline LIKE '%search%' OR address   */
