@@ -1,3 +1,4 @@
+AUTHOR_VIA_LIST|<#1#> via <#2#>|<#1#> tramite <#2#>
 ERR_ADDR_AT|address does not contain @|l'indirizzo non ha @
 ERR_ADDR_LONG|address is too long|l'indirizzo è troppo lungo
 ERR_ADDR_NL|address contains newline|l'indirizzo ha un a capo
@@ -29,6 +30,7 @@ ERR_COOKIE|message does not have valid authentication token|il messaggio non ha 
 ERR_CREATE|unable to create <#1#>|non posso creare <#1#>
 ERR_CRONTAB|crontab update failed. Contact your sysadmin with the above error information|aggiornamento di crontab fallito. Contatta l'amministratore di sistema con le informazioni di errore precedenti
 ERR_DELETE|unable to delete <#1#>|non posso cancellare <#1#>
+ERR_DNS_LOOKUP|error fetching DNS record for <#1#>|impossibile trovare le informazioni DNS per <#1#>
 ERR_DONE|message already successfully processed by this list|il messaggio è già stato processato da questa lista
 ERR_DOW|single comma-separated digits only for day-of-week|per i giorni della settimana usa solo singole cifre separate da virgola
 ERR_EDSIZE|Maximum edit file size exceeded (#5.6.0)|Superata la massima dimensione per un file da modificare (#5.6.0)
