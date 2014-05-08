@@ -1,3 +1,5 @@
+- Fixed header address extraction in the presence of double quotes.
+
 - Fixed rewritefrom feature to run if the list is not indexed.
 
 ezmlm-idx-7.2.0, 2014-05-02

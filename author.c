@@ -129,7 +129,7 @@ void author_addr(stralloc *out,const char *s,unsigned int l)
     else if (ch == '\\')
       squote = 1;
     else if (ch == '"')		/* "name" <address@host> */
-      dquote = 1;
+      dquote = !dquote;
     else if (dquote)
       ;
     else if (ch == '(') {
