@@ -618,12 +618,9 @@ int main(int argc,char **argv)
           else if (case_startb(cp,cpafter-cp,"Quoted-Printable")) encin = 'Q';
         } else if (flaglistid && case_startb(line.s,line.len,"list-id:"))
 	  flagbadfield = 1;		/* suppress if we added our own */
-	else if (flagindexed) {
-
-          if (case_startb(line.s,line.len,"From:")) {
-            if (!stralloc_copyb(&from,line.s+5,line.len-5)) die_nomem();
-	    rewrite_from();
-          }
+	else if (case_startb(line.s,line.len,"From:")) {
+	  if (!stralloc_copyb(&from,line.s+5,line.len-5)) die_nomem();
+	  rewrite_from();
         } else if (line.len == mydtline.len)
 	  if (!byte_diff(line.s,line.len,mydtline.s))
             strerr_die2x(100,FATAL,MSG(ERR_LOOPING));
