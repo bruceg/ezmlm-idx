@@ -124,7 +124,7 @@ int main(void)
     if (stralloc_starts(&line,"Auto-Submitted: auto-generated (warning"))
       flagas = 1;
     if (case_startb(line.s,line.len,"Content-type: multipart/report")) {
-      concatHDR(line.s,line.len - 1,&dsnline);
+      concatHDR(line.s,line.len,&dsnline);
     }
   }			/* end of header */
 

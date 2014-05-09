@@ -2,11 +2,22 @@
 # ezmlm-weed #
 ##############
 
-  prompt "ezmlm-weed:           "
+prompt "ezmlm-weed:           "
 
-  echo "Subject: test" | ${EZBIN}/ezmlm-weed || \
+echo "Subject: test" | ${EZBIN}/ezmlm-weed || \
 	fatal "failed to accept good message"
-  echo "Subject: success notice" | ${EZBIN}/ezmlm-weed >/dev/null 2>&1 && \
+echo "Subject: success notice" | ${EZBIN}/ezmlm-weed >/dev/null 2>&1 && \
 	fatal "failed to reject bad message"
 
-  echo "OK"
+cat > $TMP <<EOF
+From: <MAILER-DAEMON@example.com>
+To: <$LIST-return-196-sender=example.com@$HOST>
+Date: Fri, 9 May 2014 11:08:16 -0500
+Content-Type: multipart/report; report-type=delivery-status;
+        boundary="ae41b682-7129-4f9d-8548-7f837b891795"
+Subject: Undeliverable: test
+EOF
+
+${EZBIN}/ezmlm-weed < $TMP || fatal "failed to handle multipart/report"
+
+echo "OK"

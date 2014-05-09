@@ -1,3 +1,5 @@
+- Fixed off-by-one typo in ezmlm-weed causing an "out of memory" error.
+
 ezmlm-idx-7.2.1, 2014-05-09
 ===========================
 
