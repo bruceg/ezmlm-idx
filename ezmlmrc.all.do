@@ -1,3 +1,1 @@
-ls -1 lang | while read lang; do
-  dependon lang/${lang}/ezmlmrc
-done
+dependon(*[ 'lang/{}/ezmlmrc'.format(lang) for lang in listdir('lang') ])

@@ -1,4 +1,3 @@
-directtarget
-dependon libcompile
-dependcc $2.c
-formake ./libcompile $2.c
+dependon('libcompile')
+dependcc(base+'.c')
+formake('./libcompile {base}.c')

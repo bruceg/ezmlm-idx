@@ -1,1 +1,1 @@
-dependon sub-mysql.so
+dependon('sub-mysql.so')

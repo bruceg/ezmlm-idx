@@ -1,1 +1,1 @@
-dependon sub-sqlite3.so
+dependon('sub-sqlite3.so')
