@@ -1,6 +1,0 @@
-fmt_str.lo
-fmt_uint.lo
-fmt_uint0.lo
-fmt_ulong.lo
-scan_ulong.lo
-scan_8long.lo
