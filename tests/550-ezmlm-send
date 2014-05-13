@@ -69,4 +69,8 @@ EOF
   grephdr From: "\"My Name 7 via ${LIST}\" <${LIST}@${HOST}>$"
   grephdr Cc: '"My Name 7" <test7@yahoo.com>'
 
+  sendfrom 'My Name 8 <test8@yahoo.com>'
+  grephdr From: "\"My Name 8 via ${LIST}\" <${LIST}@${HOST}>$"
+  grephdr Cc: 'My Name 8 <test8@yahoo.com>'
+
   echo OK
