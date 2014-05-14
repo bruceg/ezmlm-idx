@@ -1,0 +1,39 @@
+prompt "ezmlm-send (from):    "
+
+touch "$DIR"/rewritefrom
+
+sendfrom '"My Name 1" <test1@example.org>'
+grephdr From: "\"My Name 1 via ${LIST}\" <${LIST}@${HOST}>$"
+grephdr Reply-To: '"My Name 1" <test1@example.org>'
+
+sendfrom '"My Name 2" test2@example.org'
+grephdr From: "\"My Name 2 via ${LIST}\" <${LIST}@${HOST}>$"
+grephdr Reply-To: '"My Name 2" test2@example.org'
+
+sendfrom 'My Name 3 <test3@example.org>'
+grephdr From: "\"My Name 3 via ${LIST}\" <${LIST}@${HOST}>$"
+grephdr Reply-To: 'My Name 3 <test3@example.org>'
+
+sendfrom 'test4@example.org (My Name 4)'
+grephdr From: "\"My Name 4 via ${LIST}\" <${LIST}@${HOST}>$"
+grephdr Reply-To: 'test4@example.org \(My Name 4\)'
+
+sendfrom 'test5@example.org'
+grephdr From: "\"test5.example.org via ${LIST}\" <${LIST}@${HOST}>$"
+grephdr Reply-To: 'test5@example.org'
+
+rm -f "$DIR"/rewritefrom
+
+sendfrom 'test6@yahoo.com'
+grephdr From: "\"test6.yahoo.com via ${LIST}\" <${LIST}@${HOST}>$"
+grephdr Reply-To: 'test6@yahoo.com'
+
+sendfrom '"My Name 7" <test7@yahoo.com>'
+grephdr From: "\"My Name 7 via ${LIST}\" <${LIST}@${HOST}>$"
+grephdr Reply-To: '"My Name 7" <test7@yahoo.com>'
+
+sendfrom 'My Name 8 <test8@yahoo.com>'
+grephdr From: "\"My Name 8 via ${LIST}\" <${LIST}@${HOST}>$"
+grephdr Reply-To: 'My Name 8 <test8@yahoo.com>'
+
+echo OK

@@ -78,6 +78,17 @@ then prints an appropriate
 .B Delivered-To
 line.
 
+If
+.I dir\fB/replytolist
+is present,
+.B ezmlm-send
+Adds a
+.B Reply-To:
+header to the outgoing message pointing to the mailing list and removes
+any incoming
+.B Reply-To:
+header.
+
 If it is present,
 .B ezmlm-send
 deletes any incoming fields with names not listed in
@@ -98,7 +109,6 @@ header and replaces it with the following:
 .RS
 .EX
 From: "Real Name via listname" <listname@hostname>
-Cc: "Real Name" <address@sender>
 .EE
 .RE
 
@@ -109,6 +119,16 @@ policy,
 enables
 .B rewritefrom
 for this message.
+
+If
+.B replytolist
+is enabled as above, the original
+.B From:
+header is added to the list as a
+.B Cc:
+header, otherwise as a
+.B Reply-To:
+header.
 
 If present,
 .B ezmlm-send

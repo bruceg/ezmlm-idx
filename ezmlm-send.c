@@ -52,6 +52,7 @@ static int ignoredflag;
 static const char *hash_str = 0;
 static char *mlheader = 0;
 static int flagrewritefrom = 0;
+static int flagreplytolist = 0;
 
 static struct option options[] = {
   OPT_FLAG(ignoredflag,'c',0,0), /* ignore for backwards compat */
@@ -66,6 +67,7 @@ static struct option options[] = {
   OPT_FLAG(ignoredflag,'q',0,0),
   OPT_FLAG(ignoredflag,'Q',0,0),
   OPT_FLAG(flagrewritefrom,0,1,"rewritefrom"),
+  OPT_FLAG(flagreplytolist,0,1,"replytolist"),
   OPT_END
 };
 
@@ -346,7 +348,7 @@ static void rewrite_from()
     if (!stralloc_catb(&line,"@",1)) die_nomem();
     if (!stralloc_catb(&line,outhost.s,outhost.len)) die_nomem();
     if (!stralloc_catb(&line,">\n",2)) die_nomem();
-    if (!stralloc_catb(&line,"Cc:",3)) die_nomem();
+    if (!stralloc_cats(&line,flagreplytolist ? "Cc:" : "Reply-To:")) die_nomem();
     if (!stralloc_catb(&line,from.s,from.len)) die_nomem();
   }
 }
@@ -499,6 +501,14 @@ int main(int argc,char **argv)
   }
   copy(&qq,"headeradd",'H');
   qa_put(mydtline.s,mydtline.len);
+  if (flagreplytolist) {
+    if (!stralloc_copyb(&line,"Reply-To: <",11)) die_nomem();
+    if (!stralloc_cat(&line,&outlocal)) die_nomem();
+    if (!stralloc_append(&line,'@')) die_nomem();
+    if (!stralloc_cat(&line,&outhost)) die_nomem();
+    if (!stralloc_catb(&line,">\n",2)) die_nomem();
+    qa_put(line.s,line.len);
+  }
 
   flagmlwasthere = 0;
   flaginheader = 1;
@@ -581,7 +591,9 @@ int main(int argc,char **argv)
       } else {
         flagbadfield = headerremoveflag;
         flagarchiveonly = 0;
-	if (constmap(&headerremovemap,line.s,byte_chr(line.s,line.len,':')))
+	if (flagreplytolist && case_startb(line.s,line.len,"reply-to:"))
+	  flagbadfield = 1;
+	else if (constmap(&headerremovemap,line.s,byte_chr(line.s,line.len,':')))
 	  flagbadfield = !headerremoveflag;
         if ((flagnoreceived || !flagsawreceived) &&
 		case_startb(line.s,line.len,"Received:")) {

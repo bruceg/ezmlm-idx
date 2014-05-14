@@ -1,3 +1,7 @@
+- Added replytolist feature to ezmlm-send. When enabled, strips incoming
+  Reply-To: header and adds its own. Also alters the behavior of
+  rewritefrom.
+
 - Fixed off-by-one typo in ezmlm-weed causing an "out of memory" error.
 
 ezmlm-idx-7.2.1, 2014-05-09
