@@ -329,25 +329,26 @@ static void rewrite_from()
     if (!stralloc_0(&dummy)) die_nomem();
     r = dmarc_p_reject(dummy.s);
     if (r < 0) die_dns(dummy.s);
-    if (!r)
-      return;
+    flagrewritefrom = r;
   }
 
-  concatHDR(from.s,from.len,&lines);
-  author_name(&author,lines.s,lines.len);
-  stralloc_0(&author);
-  stralloc_copy(&dummy,&outlocal);
-  stralloc_0(&dummy);
+  if (flagrewritefrom) {
+    concatHDR(from.s,from.len,&lines);
+    author_name(&author,lines.s,lines.len);
+    stralloc_0(&author);
+    stralloc_copy(&dummy,&outlocal);
+    stralloc_0(&dummy);
 
-  if (!stralloc_copyb(&line,"From: \"",7)) die_nomem();
-  if (!stralloc_cats(&line,MSG2(AUTHOR_VIA_LIST,author.s,dummy.s))) die_nomem();
-  if (!stralloc_catb(&line,"\" <",3)) die_nomem();
-  if (!stralloc_catb(&line,outlocal.s,outlocal.len)) die_nomem();
-  if (!stralloc_catb(&line,"@",1)) die_nomem();
-  if (!stralloc_catb(&line,outhost.s,outhost.len)) die_nomem();
-  if (!stralloc_catb(&line,">\n",2)) die_nomem();
-  if (!stralloc_catb(&line,"Cc:",3)) die_nomem();
-  if (!stralloc_catb(&line,from.s,from.len)) die_nomem();
+    if (!stralloc_copyb(&line,"From: \"",7)) die_nomem();
+    if (!stralloc_cats(&line,MSG2(AUTHOR_VIA_LIST,author.s,dummy.s))) die_nomem();
+    if (!stralloc_catb(&line,"\" <",3)) die_nomem();
+    if (!stralloc_catb(&line,outlocal.s,outlocal.len)) die_nomem();
+    if (!stralloc_catb(&line,"@",1)) die_nomem();
+    if (!stralloc_catb(&line,outhost.s,outhost.len)) die_nomem();
+    if (!stralloc_catb(&line,">\n",2)) die_nomem();
+    if (!stralloc_catb(&line,"Cc:",3)) die_nomem();
+    if (!stralloc_catb(&line,from.s,from.len)) die_nomem();
+  }
 }
 
 int main(int argc,char **argv)
