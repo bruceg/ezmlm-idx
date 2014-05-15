@@ -22,7 +22,7 @@ fi
 
 git checkout conf-*
 
-tools/makemake
+tools/gitmakemake
 
 # Need to regenerate the spec before copying
 make ezmlm-idx.spec

@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+copydir="$PWD/gitclone"
+trap "rm -rf $copydir" EXIT
+git clone $PWD $copydir
+( cd $copydir && touch TARGETS Makefile && tools/makemake )
+mv -fv $copydir/{Makefile,SOURCES,TARGETS} .
