@@ -45,8 +45,18 @@ class Target:
 
     def dependcc(self, source):
         self.dependon(source)
+        dirname = os.path.dirname(source)
+        if dirname:
+            dirname += '/'
         if os.path.exists(source):
             for match in re_include.findall(open(source).read()):
+                if '/' not in match:
+                    try:
+                        self.dependcc(dirname + match)
+                    except NoSuchTarget:
+                        pass
+                    else:
+                        continue
                 self.dependcc(match)
 
     def dependx(self, source, command, *deps):
