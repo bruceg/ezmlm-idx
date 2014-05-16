@@ -32,7 +32,7 @@ dependon(
 'bin/ezmlm-warn',
 'bin/ezmlm-weed',
 'bin/ezmlm-test',
-'sub-std.so',
+'db/sub-std.so',
 'ezmlmrc.all',
 'messages.all',
 'ezmlm-idx.spec',

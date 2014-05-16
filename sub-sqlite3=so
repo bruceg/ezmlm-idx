@@ -1,5 +1,0 @@
-sub-sqlite3.lo
-sub_sql.lo
--lezmlm
--lsqlite3
-crypt.lib

@@ -1,5 +1,5 @@
 d:::755:::
-?c:::755:/:sub-mysql.so:
-?c:::755:/:sub-pgsql.so:
-?c:::755:/:sub-sqlite3.so:
-c:::755:/:sub-std.so:
+?c:::755:/:sub-mysql.so:db/sub-mysql.so
+?c:::755:/:sub-pgsql.so:db/sub-pgsql.so
+?c:::755:/:sub-sqlite3.so:db/sub-sqlite3.so
+c:::755:/:sub-std.so:db/sub-std.so
