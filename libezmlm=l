@@ -90,7 +90,7 @@ hdr_mime.lo
 hdr_subject.lo
 hdr_transferenc.lo
 idxthread.lo
-iopause.lo
+sys/iopause.lo
 ip4_scan.lo
 lock_ex.lo
 lockfile.lo
@@ -160,9 +160,9 @@ taia_pack.lo
 taia_sub.lo
 taia_uint.lo
 tai_pack.lo
-uint16_pack.lo
-uint16_unpack.lo
-uint32_unpack.lo
+sys/uint16_pack.lo
+sys/uint16_unpack.lo
+sys/uint32_unpack.lo
 unfoldHDR.lo
 wait_pid.lo
 wrap_chdir.lo

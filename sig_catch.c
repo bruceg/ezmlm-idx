@@ -1,6 +1,6 @@
 #include <signal.h>
 #include "sig.h"
-#include "hassgact.h"
+#include "sys/hassgact.h"
 
 void sig_catch(int sig,void (*f)(int))
 {

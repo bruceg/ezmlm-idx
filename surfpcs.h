@@ -1,7 +1,7 @@
 #ifndef SURFPCS_H
 #define SURFPCS_H
 
-#include "uint32.h"
+#include "sys/uint32.h"
 
 typedef struct {
   uint32 seed[32];

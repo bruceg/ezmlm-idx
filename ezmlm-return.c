@@ -2,7 +2,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "direntry.h"
+#include "sys/direntry.h"
 #include "stralloc.h"
 #include "str.h"
 #include "env.h"

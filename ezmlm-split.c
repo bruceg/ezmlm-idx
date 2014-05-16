@@ -20,7 +20,7 @@
 #include "readwrite.h"
 #include "quote.h"
 #include "now.h"
-#include "uint32.h"
+#include "sys/uint32.h"
 #include "subhash.h"
 #include "fmt.h"
 #include "messages.h"

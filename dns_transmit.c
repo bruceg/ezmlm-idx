@@ -7,7 +7,7 @@
 #include "alloc.h"
 #include "error.h"
 #include "byte.h"
-#include "uint16.h"
+#include "sys/uint16.h"
 #include "dns.h"
 
 static int serverwantstcp(const char *buf,unsigned int len)

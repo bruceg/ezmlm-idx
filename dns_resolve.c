@@ -1,6 +1,6 @@
 /* Public domain, from djbdns-1.05. */
 
-#include "iopause.h"
+#include "sys/iopause.h"
 #include "taia.h"
 #include "byte.h"
 #include "dns.h"

@@ -3,7 +3,7 @@
 #include "error.h"
 #include "case.h"
 #include "byte.h"
-#include "uint32.h"
+#include "sys/uint32.h"
 #include "mime.h"
 #include "messages.h"
 #include "die.h"

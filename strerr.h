@@ -1,7 +1,7 @@
 #ifndef STRERR_H
 #define STRERR_H
 
-#include "hasattribute.h"
+#include "sys/hasattribute.h"
 
 struct strerr
  {

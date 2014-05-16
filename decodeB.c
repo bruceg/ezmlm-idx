@@ -1,6 +1,6 @@
 #include "stralloc.h"
 #include "strerr.h"
-#include "uint32.h"
+#include "sys/uint32.h"
 #include "messages.h"
 #include "die.h"
 #include "idx.h"

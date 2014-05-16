@@ -1,8 +1,8 @@
 /* Public domain, from djbdns-1.05. */
 
 #include "taia.h"
-#include "select.h"
-#include "iopause.h"
+#include "sys/select.h"
+#include "sys/iopause.h"
 
 void iopause(iopause_fd *x,unsigned int len,struct taia *deadline,struct taia *stamp)
 {

@@ -1,2 +1,2 @@
-dependon('find-systype','trycpp.c')
+dependon('find-systype','sys/trycpp.c')
 formake('./find-systype > systype')

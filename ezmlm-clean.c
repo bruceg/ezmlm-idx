@@ -19,7 +19,7 @@
 #include "quote.h"
 #include "datetime.h"
 #include "now.h"
-#include "direntry.h"
+#include "sys/direntry.h"
 #include "cookie.h"
 #include "fmt.h"
 #include "messages.h"

@@ -1,7 +1,7 @@
 /* Public domain, from djbdns-1.05. */
 
 #include "stralloc.h"
-#include "uint16.h"
+#include "sys/uint16.h"
 #include "byte.h"
 #include "dns.h"
 

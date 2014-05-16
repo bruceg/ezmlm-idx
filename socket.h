@@ -1,7 +1,7 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 
-#include "uint16.h"
+#include "sys/uint16.h"
 
 extern int socket_tcp(void);
 extern int socket_udp(void);

@@ -1,6 +1,6 @@
 #include "cookie.h"
 #include "str.h"
-#include "uint32.h"
+#include "sys/uint32.h"
 #include "surfpcs.h"
 
 void cookie(char *hash,

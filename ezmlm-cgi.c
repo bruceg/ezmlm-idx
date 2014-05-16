@@ -1,7 +1,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include "alloc.h"
-#include "direntry.h"
+#include "sys/direntry.h"
 #include "datetime.h"
 #include "now.h"
 #include "stralloc.h"

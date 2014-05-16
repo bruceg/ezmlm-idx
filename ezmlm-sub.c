@@ -1,4 +1,4 @@
-#include "hasattribute.h"
+#include "sys/hasattribute.h"
 
 const char FATAL[] = "ezmlm-sub: fatal: ";
 const char USAGE[] =

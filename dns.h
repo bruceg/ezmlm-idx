@@ -2,7 +2,7 @@
 #define DNS_H
 
 #include "stralloc.h"
-#include "iopause.h"
+#include "sys/iopause.h"
 #include "taia.h"
 
 #define DNS_C_IN "\0\1"

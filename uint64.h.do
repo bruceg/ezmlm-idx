@@ -1,1 +1,0 @@
-choose('clr', 'tryulong64')

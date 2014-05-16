@@ -1,5 +1,5 @@
 #include "stralloc.h"
-#include "uint32.h"
+#include "sys/uint32.h"
 #include "mime.h"
 #include "strerr.h"
 #include "messages.h"

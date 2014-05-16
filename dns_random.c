@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include "dns.h"
 #include "taia.h"
-#include "uint32.h"
+#include "sys/uint32.h"
 
 static uint32 seed[32];
 static uint32 in[12];

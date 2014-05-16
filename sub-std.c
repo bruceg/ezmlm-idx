@@ -30,7 +30,7 @@
 #include "subhash.h"
 #include "substdio.h"
 #include "subdb.h"
-#include "uint32.h"
+#include "sys/uint32.h"
 #include "wrap.h"
 
 static stralloc addr = {0};
