@@ -1,0 +1,119 @@
+ACKNOWLEDGEMENTS (from Fred Lindberg)
+- Fred B. Ringel, first and foremost, for a great collaboration, ideas, testing,
+  docs clarification. This makes it so much more fun.
+- Dan J. Bernstein for qmail, ezmlm, and great libraries.
+- Tullio Andreatta, for the confirm (-y option) patches.
+- Toshinori Maeno (TM; tmaeno@hpcl.titech.ac.jp) for finding an ezmlm-idx-0.20
+  bug, and MIME suggestions, suggestions about hopcount and received headers,
+  return-path header in archive, sublist loop detection, ezmlm-limit suggestion,
+  many other suggestions and explanations, help to get ezmlm-cgi Japanese
+  support to work, as well as pre-release testing.
+- Frank Tegtmeyer for inciting digests and format info/suggestions, and for
+  ezmlmrc.de.
+- Magnus Stålåker (MAS; stalaker@umc.se) for the PostgresSQL interface.
+- Mark Delany for the original ezmlm-issub and for suggesting reordering
+  unlink() and doit() in ezmlm-warn.
+- Raul Miller and Chris Garrigues for format info/suggestions.
+- Thomas Erskine (TEE; tom@crc.doc.ca) for fix to clean sunos-4.1.3 compiles
+  and pre-release compilation on many platforms, fixes for bash-isms in
+  ezmlm-check, and testing.
+- Shuhei Kobayashi (SK; shuhei-k@jaist.ac.jp) for MIME corrections/suggestions,
+  X-sequence suggestions, ezmlm-check/make corrections, and pre-release testing.
+- Yusuf Goolamabbas (YG; yusufg@krdl.org.sg) and the Mutt developers for
+  pointing out outdated MIME, ezmlmrc improvements, outformat bug, suggestion
+  about ezmlm-moderate -r switch, and pre-release testing.
+- Brian Gentry (BG; gentry@usaccess-inc.com) for reporting the
+  ezmlm-moderate-0.12 exit code bug.
+- Anand R. Buddhev (ARB; arb@iconnect.co.ke) for fix to clean BSDI 2.1 compiles
+  and pre-release testing.
+- Masashi Fujita (MF; objectx@polyphony.scei.co.jp) for fix to clean SGI
+  compiles, lint advice, MIME suggestions, pre-release testing, a patch for
+  the ezmlm-make-0.21 -c bug, ezmlmrc.ja, and finding postmsg bug in 0.301.
+- Matthew D. Stock (MDS; stock@perdix.acsu.buffalo.edu) for pre-release testing.
+- Ximenes Zalteca for finding an ezmlm-send-0.21 bug.
+- Jukka Suomela (JS; jukka@narnia.tky.hut.fi) for inciting the ezmlm-send -cC
+  switch.
+- John White (johnjohn@triceratops.com) for questions leading to ezmlm-tstdig,
+  and for testing the example script.
+- Torben Fjerdingstad (TF; unitfj@tfj.uni-c.dk) for testing case-insensitive
+  issub.c and subscribe.c, for TARGETS, for suggesting a no-copy-to-SENDER
+  option, for ezmlmrc.da, for reporting missing MIME end for base64/QP
+  moderated [un]sub confirms, and for pre-release testing.
+- Shinya O'Hira (SOH; Shinya_Oohira@justsystem.co.jp) for reporting the
+  ezmlm-make-0.22 lock file name bug and for testing the fix. Also for many
+  helpful suggestions and hard work testing rfc2047 subject support.
+- Sadhu(sadhu@aloha.net) & Tracy Reed (TR; treed@ultraviolet.org) for reporting
+  the ezmlm-send-0.22 undefined SENDER bug, and testing the fix.
+- Scott Balantyne (SDB; sdb@ssr.com) for inciting the modifications for digest
+  out of dir/editor.
+- Frank Denis (j@industrie.capgemini.fr) for ezmlmrc.fr.
+- Marc Evans (marc@destek.net) for reporting the ezmlm-make-0.221 64-bit bug
+  and pre-release testing, and inciting, improving, and testing ezmlm-test.
+- Vince Vielhaber (VV; vev@michvhf.com) for reporting ezmlm-check problems with
+  non-bash and testing fixes.
+- Andrew Pam (AP; xanni@xanadu.net) for suggesting the ezmlm-idx -d switch and
+  reporting the ezmlm-gate failure on NULL $SENDER bug.
+- Glen Stewart (GS; glen_stewart@associate.com) for reminding me about command
+  case insensitivity and ezmlmrc typo fixes.
+- Kenji Ikeda (KI; noroi@nt.is.dnp.co.jp) for a patch to ezmlm-idx-0.23 to get
+  message numbers in subjects. I've added code to ezmlm-idx-0.30 implementing
+  this is a similar manner. Sen Nagata (sen_ml@eccosys.com) for suggesting this
+  earlier. Bugfix for missing MIME boundary in -index reply.
+- Sebastian Andersson (SA; sa@hogia.net) for ezmlmrc.sv, MIME suggestions,
+  ezmlm-weed patch, ezmlmrc version check suggestion and pre-release testing.
+- Giorgos Stathakopoulos (GS; stathako@cti.gr) for pre-release testing.
+- David Summers (DS; david@summersoft.fay.ar.us) for pre-release testing,
+  reporting a ezmlm-check bug and SPEC files for rpm:s.
+- Steinar Haug (STH; sthaug@nethelp.no) for pointing out missing ';' in
+  ezmlmrc (caused problems with /bin/sh on FreeBSD), and the trigger message
+  received lines in the digest header.
+- Peter Hunter (PH) for suggesting dir/headeradd and list address in digest
+  headers and for reporting a "cosmetic" bug in subscription logging.
+- Jim Simmons (JS) for finding the n/d switch misnaming in ezmlmrc for text file
+  editing.
+- Sergiusz Pawlowicz (SP; ser@arch.pwr.wroc.pl) for ezmlmrc.pl, and many entries
+  for mimeremove.
+- Wanderlei Antonio Cavassin (WAC; cavassin@connectiva.com.br) for
+  ezmlmrc.pt_BR.
+- Jim Simmons (     ) for finding a missing-newline-mime bug in
+  ezmlm-moderate/store/clean.
+- Monte Mitzelfelt (MM; monte@gonefishing.org) for suggesting alternative
+  From: for ezmlm-manage help messages to break responder loops.
+- Louis Larry (LL; luois@kediri.webindonesia.com) for reporting a 0.311 prefix
+  handling bug.
+- Sigi Remsmurr (SR; service@isk.de), Bill Nugent (whn@topelo.lopi.com), James
+  Smallacombe (JS; up@3am) for ezmlmrc corrections/suggestions.
+- Matthew Saunders (MS; matts@easynet.net) for ezmlm-glconf.sh corrections and
+  reporting crashability of ezmlm-get by abnormal use (fixed).
+- Petr Novotny (PN; Petr.Novotny@antek.cz) for ezdomo.tar.gz corrections.
+- Evan Champion (EC; evanc@synapse.net) for ezmlm-request bug report.
+- Jeff Hill (JH; jhill@hronline.com) for ezmlm-reject bug report.
+- Bruno Wolff (BW; bruno@cerberus.umn.edu) for Ultrix fixes.
+- Butch Evans (BE; butch@###.com) for reporting trailer problems with
+  multipart/alternative messages and testing fix.
+- Kragen Sitaker (KS; kragen@pobox.com) for reporting ezmlm-manage -get bug.
+- Lars B. Rasmusson (LBR; lbr@mjolner.dk) for prerelease testing with sun cc.
+- Mike McLeish (MMcL; Mike.Mcleish@chatsoft.com) for reporting problems
+  using the 'x' format and testing the fix.
+- Jan Kasprzak (JK; kas@informatics.muni.cz) for ezmlmrc.cs and headerremove
+  suggestions.
+- Matt McGlynn for reporting 0.32 ezmlmrc -return omission.
+- Roman V Isaev (RVI; rm@techno.ru) for ezmlmrc.ru as well as suggestions
+  on -allow automation.
+- Aria Prima Novianto (APN; aria@isnet.org) for ezmlmrc.id.
+- Roberto De Carlo (RDC; rodeca@flashnet.it) for ezmlmrc.it.
+- Vicent Mas, Francesc Alted, Sonia Lorente, and Cyndy DePoy for ezmlmrc.es.
+- HaiFeng Guo (HFG; haifeng@ms.lawton.com.cn) for ezmlmrc.cn_GB.
+- Julian Severn-nek (http://js.hu/) for ezmlmrc.hu.
+- Willem <willem@king-pin.nl> for ezmlmrc.nl.
+- Benjamin Pflugman (BPF; philemon@spin.de) for reporting multipart/signed
+  problems and testing fix.
+- Rik Myers (RM; rik@sumthin.nu), Daniel Mattos (DM; daniel@tiii.com) and others
+  for helping make ezmlm-test less platform-sensitive.
+- Michael Hirohama (MH; michael@sooth.com) for reporting Outlook problems and
+  testing a work-around.
+- Mate Wierdl (MW; mw@wierdlpc.msci.memphis.edu) for SPEC file kit and
+  suggestions on ezmlm-test, "it", etc, and pre-release testing.
+- Numerous users for suggestions/corrections for the documentation.
+- I'm sure I've forgotten others who have contributed ideas, questions,
+  comments. Thanks!
