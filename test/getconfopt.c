@@ -5,9 +5,9 @@
 #include "stralloc.h"
 #include "substdio.h"
 
-const char FATAL[] = "test-getconfopt: fatal: ";
+const char FATAL[] = "getconfopt: fatal: ";
 const char USAGE[] =
-"test-getconfopt: usage: test-getconfopt [-aAbBvV] dir";
+"test-getconfopt: usage: getconfopt [-aAbBvV] dir";
 
 static int option_a = -1;
 static int option_b = -2;

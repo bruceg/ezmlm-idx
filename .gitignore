@@ -83,4 +83,4 @@ sys/select.h
 systype
 sys/uint32.h
 sys/uint64.h
-test-getconfopt
+test/getconfopt
