@@ -4,3 +4,4 @@ set -e
 `dirname $0`/test std
 `dirname $0`/test mysql
 `dirname $0`/test pgsql
+`dirname $0`/test sqlite3
