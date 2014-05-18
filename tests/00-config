@@ -9,6 +9,7 @@
 # must be absolute
 EZPWD=`pwd`
 EZBIN=${EZPWD}/bin
+EZETC=${EZPWD}/lang
 
 # basedir for test list. It and all files therein are destroyed by
 # the script
