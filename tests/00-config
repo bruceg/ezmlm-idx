@@ -7,10 +7,8 @@
 # below, but this should only very rarely be necessary.
 
 # must be absolute
-EZBIN=`pwd`
-
-# Version of ezmlm-idx for which this test script is designed
-OLD_VER='ezmlm-idx-031'		# ezmlm-idx-0.31x
+EZPWD=`pwd`
+EZBIN=${EZPWD}/bin
 
 # basedir for test list. It and all files therein are destroyed by
 # the script

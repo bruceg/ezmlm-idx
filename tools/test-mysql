@@ -1,4 +1,4 @@
 #!/bin/sh
 set -e
 
-./ezmlm-test -s mysql -d eztest -p '' -h mysql
+bin/ezmlm-test -s mysql -d eztest -p '' -h mysql
