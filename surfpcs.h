@@ -6,7 +6,6 @@
 typedef struct {
   uint32 seed[32];
   uint32 sum[8];
-  uint32 out[8];
   uint32 in[12];
   int todo;
 } surfpcs;

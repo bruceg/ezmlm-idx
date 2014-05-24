@@ -24,6 +24,7 @@ static const uint32 littleendian[8] = {
 void surfpcs_add(surfpcs *s,const char *x,unsigned int n)
 {
   int i;
+  uint32 out[8];
   while (n--) {
     data[end[s->todo++]] = *x++;
     if (s->todo == 32) {
@@ -32,9 +33,9 @@ void surfpcs_add(surfpcs *s,const char *x,unsigned int n)
         if (!++s->in[9])
           if (!++s->in[10])
             ++s->in[11];
-      surf(s->out,s->in,s->seed);
+      surf(out,s->in,s->seed);
       for (i = 0;i < 8;++i)
-	s->sum[i] += s->out[i];
+	s->sum[i] += out[i];
     }
   }
 }
@@ -44,6 +45,7 @@ void surfpcs_addlc(surfpcs *s,const char *x,unsigned int n)
 {
   unsigned char ch;
   int i;
+  uint32 out[8];
   while (n--) {
     ch = *x++;
     if (ch == ' ' || ch == '\t') continue;
@@ -56,9 +58,9 @@ void surfpcs_addlc(surfpcs *s,const char *x,unsigned int n)
         if (!++s->in[9])
           if (!++s->in[10])
             ++s->in[11];
-      surf(s->out,s->in,s->seed);
+      surf(out,s->in,s->seed);
       for (i = 0;i < 8;++i)
-	s->sum[i] += s->out[i];
+	s->sum[i] += out[i];
     }
   }
 }
@@ -66,10 +68,11 @@ void surfpcs_addlc(surfpcs *s,const char *x,unsigned int n)
 void surfpcs_out(surfpcs *s,unsigned char h[32])
 {
   int i;
+  uint32 out[8];
   surfpcs_add(s,".",1);
   while (s->todo) surfpcs_add(s,"",1);
   for (i = 0;i < 8;++i) s->in[i] = s->sum[i];
   for (;i < 12;++i) s->in[i] = 0;
-  surf(s->out,s->in,s->seed);
-  for (i = 0;i < 32;++i) h[i] = outdata[end[i]];
+  surf(out,s->in,s->seed);
+  for (i = 0;i < 32;++i) h[i] = ((unsigned char*)out)[end[i]];
 }
