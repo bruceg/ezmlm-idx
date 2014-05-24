@@ -48,7 +48,7 @@ void surfpcs_addlc(surfpcs *s,const char *x,unsigned int n)
     ch = *x++;
     if (ch == ' ' || ch == '\t') continue;
     if (ch >= 'A' && ch <= 'Z')
-      ch -= 'a' - 'A';
+      ch += 'a' - 'A';
     data[end[s->todo++]] = ch;
     if (s->todo == 32) {
       s->todo = 0;
