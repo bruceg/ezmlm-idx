@@ -97,17 +97,49 @@ static const char *_checktag(struct subdbinfo *info,
   (void)listno;
 }
 
+static int issub_one(const char *subdir,char ch,stralloc *a,stralloc *recorded)
+{
+  static stralloc line = {0};
+
+  int fd;
+  int match;
+
+  if (!stralloc_0(a)) die_nomem();
+  makepath(&fn,subdir,"/subscribers/",ch);
+
+  fd = open_read(fn.s);
+  if (fd == -1) {
+    if (errno != error_noent)
+      strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
+  } else {
+    substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
+
+    for (;;) {
+      if (getln(&ss,&line,&match,'\0') == -1)
+	strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
+      if (!match) break;
+      if (line.len == a->len)
+	if (!case_diffb(line.s,line.len,a->s)) {
+	  close(fd);
+	  if (recorded)
+	    if (!stralloc_copyb(recorded,line.s+1,line.len-1))
+	      die_nomem();
+	  return 1;
+	}
+    }
+
+    close(fd);
+  }
+  return 0;
+}
+
 static int _issub(struct subdbinfo *info,
 		  const char *subdir,
 		  const char *userhost,
 		  stralloc *recorded)
 {
-  static stralloc line = {0};
-
-  int fd;
   unsigned int j;
   char ch,lcch;
-  int match;
 
     if (!stralloc_copys(&addr,"T")) die_nomem();
     if (!stralloc_cats(&addr,userhost)) die_nomem();
@@ -122,64 +154,14 @@ static int _issub(struct subdbinfo *info,
     ch = 64 + subhashsa(&addr);
     lcch = 64 + subhashsa(&lcaddr);
 
-    if (!stralloc_0(&addr)) die_nomem();
-    if (!stralloc_0(&lcaddr)) die_nomem();
-    makepath(&fn,subdir,"/subscribers/",lcch);
-
-    fd = open_read(fn.s);
-    if (fd == -1) {
-      if (errno != error_noent)
-        strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
-    } else {
-      substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
-
-      for (;;) {
-        if (getln(&ss,&line,&match,'\0') == -1)
-          strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
-        if (!match) break;
-        if (line.len == lcaddr.len)
-          if (!case_diffb(line.s,line.len,lcaddr.s)) {
-	    close(fd);
-	    if (recorded)
-	      if (!stralloc_copyb(recorded,line.s+1,line.len-1))
-		die_nomem();
-	    return 1;
-	  }
-      }
-
-      close(fd);
-    }
+    if (issub_one(subdir,lcch,&lcaddr,recorded))
+      return 1;
 	/* here if file not found or (file found && addr not there) */
 
     if (ch == lcch) return 0;
 
 	/* try case sensitive hash for backwards compatibility */
-    fn.s[fn.len - 2] = ch;
-    fd = open_read(fn.s);
-    if (fd == -1) {
-      if (errno != error_noent)
-        strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
-      return 0;
-    }
-    substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
-
-    for (;;) {
-      if (getln(&ss,&line,&match,'\0') == -1)
-        strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
-      if (!match) break;
-      if (line.len == addr.len)
-        if (!case_diffb(line.s,line.len,addr.s)) {
-	  close(fd);
-	  if (recorded)
-	    if (!stralloc_copyb(recorded,line.s+1,line.len-1))
-	      die_nomem();
-	  return 1;
-	}
-    }
-
-    close(fd);
-
-    return 0;
+    return issub_one(subdir,ch,&addr,recorded);
 
     (void)info;
 }
