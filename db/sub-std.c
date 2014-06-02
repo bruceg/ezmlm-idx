@@ -50,8 +50,6 @@ static substdio ss;
 static substdio ssin;
 static substdio ssnew;
 
-static int fdnew;
-
 static void die_read(void)
 {
   strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn.s));
@@ -315,6 +313,63 @@ static void _searchlog(struct subdbinfo *info,
   (void)info;
 }
 
+static int subloop(const char *subdir,char ch,int flagadd)
+{
+  static stralloc line = {0};
+
+  int fd;
+  int fdnew;
+  int flagwasthere = 0;
+  int match;
+
+  makepath(&fn,subdir,"/subscribers/",ch);
+  if (!stralloc_copyb(&fnnew,fn.s,fn.len-1)) die_nomem();
+  if (!stralloc_append(&fnnew,'n')) die_nomem();
+  if (!stralloc_0(&fnnew)) die_nomem();
+
+  fdnew = open_trunc(fnnew.s);
+  if (fdnew == -1) die_write(fnnew.s);
+  substdio_fdbuf(&ssnew,write,fdnew,ssnewbuf,sizeof(ssnewbuf));
+
+  fd = open_read(fn.s);
+  if (fd == -1) {
+    if (errno != error_noent) { die_read(); }
+  }
+  else {
+    substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
+
+    for (;;) {
+      if (getln(&ss,&line,&match,'\0') == -1) {
+	close(fd); close(fdnew); die_read();
+      }
+      if (!match) break;
+      if (line.len == addr.len)
+	if (!case_diffb(line.s,line.len,addr.s)) {
+	  flagwasthere = 1;
+	  if (!flagadd)
+	    continue;
+	}
+      if (substdio_bput(&ssnew,line.s,line.len) == -1) {
+	close(fd); close(fdnew); die_write(fnnew.s);
+      }
+    }
+
+    close(fd);
+  }
+
+  if (flagadd && !flagwasthere)
+    if (substdio_bput(&ssnew,addr.s,addr.len) == -1) {
+      close(fdnew); die_write(fnnew.s);
+    }
+
+  if (substdio_flush(&ssnew) == -1) { close(fdnew); die_write(fnnew.s); }
+  if (fsync(fdnew) == -1) { close(fdnew); die_write(fnnew.s); }
+  close(fdnew);
+
+  wrap_rename(fnnew.s,fn.s);
+  return flagwasthere;
+}
+
 /* Add (flagadd=1) or remove (flagadd=0) userhost from the
  * subscr. Comment is e.g. the subscriber from line or name. It is added
  * to the log. Event is the action type, e.g. "probe", "manual",
@@ -337,15 +392,11 @@ static int _subscribe(struct subdbinfo *info,
 		      const char *event,
 		      int forcehash)
 {
-  static stralloc line = {0};
-
   int fdlock;
 
   unsigned int j;
   unsigned char ch,lcch;
-  int match;
   int flagwasthere;
-  int fd;
 
   if (userhost[str_chr(userhost,'\n')])
     strerr_die2x(100,FATAL,MSG(ERR_ADDR_NL));
@@ -371,59 +422,12 @@ static int _subscribe(struct subdbinfo *info,
 
     if (!stralloc_0(&addr)) die_nomem();
     if (!stralloc_0(&lcaddr)) die_nomem();
-    makepath(&fn,subdir,"/subscribers/",lcch);
     makepath(&fnlock,subdir,"/lock",0);
-
-    if (!stralloc_copyb(&fnnew,fn.s,fn.len-1)) die_nomem();
-	/* code later depends on fnnew = fn + 'n' */
-    if (!stralloc_cats(&fnnew,"n")) die_nomem();
-    if (!stralloc_0(&fnnew)) die_nomem();
 
     fdlock = lockfile(fnlock.s);
 
 				/* do lower case hashed version first */
-    fdnew = open_trunc(fnnew.s);
-    if (fdnew == -1) die_write(fnnew.s);
-    substdio_fdbuf(&ssnew,write,fdnew,ssnewbuf,sizeof(ssnewbuf));
-
-    flagwasthere = 0;
-
-    fd = open_read(fn.s);
-    if (fd == -1) {
-      if (errno != error_noent) { close(fdnew); die_read(); }
-    }
-    else {
-      substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
-
-      for (;;) {
-        if (getln(&ss,&line,&match,'\0') == -1) {
-	  close(fd); close(fdnew); die_read();
-        }
-        if (!match) break;
-        if (line.len == addr.len)
-          if (!case_diffb(line.s,line.len,addr.s)) {
-	    flagwasthere = 1;
-	    if (!flagadd)
-	      continue;
-	  }
-        if (substdio_bput(&ssnew,line.s,line.len) == -1) {
-	  close(fd); close(fdnew); die_write(fnnew.s);
-        }
-      }
-
-      close(fd);
-    }
-
-    if (flagadd && !flagwasthere)
-      if (substdio_bput(&ssnew,addr.s,addr.len) == -1) {
-        close(fdnew); die_write(fnnew.s);
-      }
-
-    if (substdio_flush(&ssnew) == -1) { close(fdnew); die_write(fnnew.s); }
-    if (fsync(fdnew) == -1) { close(fdnew); die_write(fnnew.s); }
-    close(fdnew);
-
-    wrap_rename(fnnew.s,fn.s);
+    flagwasthere = subloop(subdir,lcch,flagadd);
 
     if ((ch == lcch) || flagwasthere) {
       close(fdlock);
@@ -439,39 +443,7 @@ static int _subscribe(struct subdbinfo *info,
 			/* sub and not found (so added with new hash) */
 			/* do the 'case-dependent' hash */
 
-    fn.s[fn.len - 2] = ch;
-    fnnew.s[fnnew.len - 3] = ch;
-    fdnew = open_trunc(fnnew.s);
-    if (fdnew == -1) die_write(fnnew.s);
-    substdio_fdbuf(&ssnew,write,fdnew,ssnewbuf,sizeof(ssnewbuf));
-
-    fd = open_read(fn.s);
-    if (fd == -1) {
-      if (errno != error_noent) { close(fdnew); die_read(); }
-    } else {
-      substdio_fdbuf(&ss,read,fd,ssbuf,sizeof(ssbuf));
-
-      for (;;) {
-        if (getln(&ss,&line,&match,'\0') == -1)
-          { close(fd); close(fdnew); die_read(); }
-        if (!match) break;
-        if (line.len == addr.len)
-          if (!case_diffb(line.s,line.len,addr.s)) {
-            flagwasthere = 1;
-            continue;	/* always want to remove from case-sensitive hash */
-          }
-        if (substdio_bput(&ssnew,line.s,line.len) == -1)
-          { close(fd); close(fdnew); die_write(fnnew.s); }
-      }
-
-      close(fd);
-    }
-
-    if (substdio_flush(&ssnew) == -1) { close(fdnew); die_write(fnnew.s); }
-    if (fsync(fdnew) == -1) { close(fdnew); die_write(fnnew.s); }
-    close(fdnew);
-
-    wrap_rename(fnnew.s,fn.s);
+    flagwasthere = subloop(subdir,ch,0); /* always want to remove from case-sensitive hash */
 
     close(fdlock);
     if (flagadd ^ flagwasthere) {
