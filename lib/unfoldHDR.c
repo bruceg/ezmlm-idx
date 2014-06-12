@@ -9,7 +9,7 @@
 
 static stralloc tmpdata = {0};
 
-static int trimre(char **cpp,char *cpend,stralloc *prefix)
+static int trimre(char **cpp,char *cpend,const stralloc *prefix)
 {
   int r = 0;
   char *cp;
@@ -127,7 +127,7 @@ int unfoldHDR(char *indata,
 	      unsigned int n,
 	      stralloc *outdata,
 	      const char *charset,
-	      stralloc *prefix,
+	      const stralloc *prefix,
 	      int flagtrimsub)
 	/* takes a header as indata. Removal of reply-indicators is done */
 	/* but removal of line breaks and Q and B decoding should have   */

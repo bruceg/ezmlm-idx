@@ -9,8 +9,7 @@ extern void encodeQ(const char *,unsigned int,stralloc *);
 extern void encodeB(const char *,unsigned int,stralloc *,int);
 extern void decodeHDR(const char *,unsigned int,stralloc *);
 extern void concatHDR(char *,unsigned int,stralloc *);
-extern int unfoldHDR(char *,unsigned int,stralloc *,const char *,
-		     stralloc *,int);
+extern int unfoldHDR(char *,unsigned int,stralloc *,const char *, const stralloc *,int);
 
 extern void author_addr(stralloc *out,const char *,unsigned int);
 extern void author_name(stralloc *out,const char *,unsigned int);
