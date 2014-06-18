@@ -12,14 +12,12 @@ LOCAL=`echo "$REJ" | cut -d@ -f1`
 
 qqclean
 DEFAULT=`echo "$LOCAL" | cut -c"$REJLEN"-`
-{
-    make_message
-    echo
-    echo '> %%%'
-    echo '> rejection test message'
-    echo '> %%%'
-} | ${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" \
-	>"$ERR" 2>&1 || \
+make_message \
+  '' \
+  '> %%%' \
+  '> rejection test message' \
+  '> %%%'
+${EZBIN}/ezmlm-moderate "$DIR" "${EZBIN}/ezmlm-send ${DIR}" < "$TMP" >"$ERR" 2>&1 || \
 		fatal "failed on rejection"
 msgexists ||
 	fatal "failed to send rejection notice for message mod1"

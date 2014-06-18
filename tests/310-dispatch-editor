@@ -5,7 +5,7 @@
 prompt "dispatch editor:      "
 
 DEFAULT=
-make_message > "$TMP"
+make_message
 
 post() {
     qqclean

@@ -2,7 +2,7 @@
 # ezmlm-dispatch #
 ##################
 
-make_message >"$TMP"
+make_message
 testdispatch() {
   DEFAULT="$2"
   ${EZBIN}/ezmlm-dispatch "$DIR" $1 <"$TMP" >"$ERR" 2>&1

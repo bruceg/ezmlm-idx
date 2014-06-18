@@ -10,8 +10,8 @@
 
 # message from mod, normal use -> should queue
   qqclean
-  { echo "X-num: mod1"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} || \
+  make_message 'X-num: mod1'
+  ${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < "$TMP" || \
 	fatal "failed to process message 1"
   checkenv mod1 "$LIST-return-@$HOST" "$SENDER"
 
@@ -27,8 +27,8 @@
 #
 # no modpost - should go directly to list
   qqclean
-  { echo "X-num: mod2"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} || \
+  make_message 'X-num: mod2'
+  ${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < "$TMP" || \
 	{
 	  grep -v "child" "$ERR" > /dev/null 2>&1
 	  if [ "$?" != "0" ]; then
@@ -51,8 +51,8 @@
 
 # from moderator. Should be queued, even with -P
   qqclean
-  { echo "X-num: mod3"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < ${TMP} || \
+  make_message 'X-num: mod3'
+  ${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < "$TMP" || \
 	fatal "-P failed to accept mods post 3"
   checkenv mod3 "$LIST-return-@$HOST" "$SENDER"
 
@@ -66,8 +66,8 @@
 
   qqclean
   touch "$DIR"/modpostonly
-  { echo "X-num: mod4"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store  "$DIR" >"$ERR" 2>&1 < ${TMP} || \
+  make_message 'X-num: mod4'
+  ${EZBIN}/ezmlm-store  "$DIR" >"$ERR" 2>&1 < "$TMP" || \
 	fatal "modpostonly failed to accept mods post 4"
   checkenv mod4 "$LIST-return-@$HOST" "$SENDER"
   rm "$DIR"/modpostonly
@@ -76,8 +76,8 @@
 
 # not from moderator, should be rejected directly with -P
   qqclean
-  { echo "X-num: mod5"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < ${TMP} && \
+  make_message 'X-num: mod5'
+  ${EZBIN}/ezmlm-store -P "$DIR" >"$ERR" 2>&1 < "$TMP" && \
 	fatal "-P failed to reject non-mod message 5"
 
   test -s "$QQMSG" && \
@@ -86,8 +86,8 @@
 # not from moderator, should be rejected directly with -P
   qqclean
   touch "$DIR"/modpostonly
-  { echo "X-num: mod6"; make_message; } > ${TMP};
-	${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < ${TMP} && \
+  make_message 'X-num: mod6'
+  ${EZBIN}/ezmlm-store "$DIR" >"$ERR" 2>&1 < "$TMP" && \
 	fatal "modpostonly failed to reject non-mod message 6"
   rm "$DIR"/modpostonly
 
