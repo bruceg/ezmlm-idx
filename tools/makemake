@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 t=makemake.targets
 T=makemake.TARGETS
