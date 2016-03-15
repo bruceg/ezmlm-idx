@@ -1,11 +1,18 @@
-if echo -n | grep n > /dev/null 2>&1; then
-	prompt() {
-		echo "$*\c"
-	}
-else
+if ! echo -n | grep n > /dev/null 2>&1; then
 	prompt() {
 		echo -n "$*"
 	}
+elif ! echo "\c" | grep c > /dev/null 2>&1; then
+	prompt() {
+		echo "$*\c"
+	}
+elif which printf > /dev/null 2>&1; then
+	prompt() {
+		printf '%s' "$*"
+	}
+else
+	echo "No way to print prompts, aborting"
+	exit 1
 fi
 
 if ps auxw > /dev/null 2>&1; then

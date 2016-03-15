@@ -1,3 +1,5 @@
+- Fixed tests to work on shells with neither echo -n nor echo \c.
+
 - Moved most source files into subdirectories.
 
 ezmlm-idx-7.2.2, 2014-05-14
