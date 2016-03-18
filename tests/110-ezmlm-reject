@@ -6,7 +6,7 @@
 # test ezmlm-reject #
 #####################
   prompt "ezmlm-reject:         "
-  FROM="$USER"
+  FROM="someuser"
   TO="$LIST@$HOST"
   SUBJECT="test"
   CONTENT="multipart/mixed"

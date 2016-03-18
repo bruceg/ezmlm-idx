@@ -1,3 +1,20 @@
+if ! echo -n | grep n > /dev/null 2>&1; then
+	prompt() {
+		echo -n "$*"
+	}
+elif ! echo "\c" | grep c > /dev/null 2>&1; then
+	prompt() {
+		echo "$*\c"
+	}
+elif which printf > /dev/null 2>&1; then
+	prompt() {
+		printf '%s' "$*"
+	}
+else
+	echo "No way to print prompts, aborting"
+	exit 1
+fi
+
 fatal() {
   for line in "$@"; do
     echo "$line" >&2

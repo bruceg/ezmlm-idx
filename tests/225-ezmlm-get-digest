@@ -111,21 +111,17 @@ msgexists || \
 	fatal "dig2 from editor wasn't delivered"
 checkenv dig2 "$LIST-digest-return-.*@$HOST-@\\[\\]" "$DIG@$HOST" "$MAN@$HOST"
 
-# This causes an error on systems where 'unset' doesn't work
-# For these, we skip this test.
-  if [ -z "$BADUNSET" ]; then
-    qqclean
-    if [ ! -r "${DIR}/dignum" ]; then
-	fatal "failed to generate dignum after digest in editor"
-    fi
+qqclean
+if [ ! -r "${DIR}/dignum" ]; then
+    fatal "failed to generate dignum after digest in editor"
+fi
 
-    grep "^3:" "${DIR}/digissue" >/dev/null 2>&1 || \
-	fatal "failed to update digissue after digest in editor"
-    ${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1 || \
-	fatal "failed to exit 0 when nothing to digest in editor"
-    msgexists && \
-	fatal "empty dig2 from editor was delivered"
-  fi
+grep "^3:" "${DIR}/digissue" >/dev/null 2>&1 || \
+    fatal "failed to update digissue after digest in editor"
+${EZBIN}/ezmlm-get "$DIR" < "$TMP" >"$ERR" 2>&1 || \
+    fatal "failed to exit 0 when nothing to digest in editor"
+msgexists && \
+    fatal "empty dig2 from editor was delivered"
 
 # now from the command line with formats ...
 qqclean

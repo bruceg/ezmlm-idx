@@ -1,40 +1,3 @@
-if ! echo -n | grep n > /dev/null 2>&1; then
-	prompt() {
-		echo -n "$*"
-	}
-elif ! echo "\c" | grep c > /dev/null 2>&1; then
-	prompt() {
-		echo "$*\c"
-	}
-elif which printf > /dev/null 2>&1; then
-	prompt() {
-		printf '%s' "$*"
-	}
-else
-	echo "No way to print prompts, aborting"
-	exit 1
-fi
-
-if ps auxw > /dev/null 2>&1; then
-	PS='ps auxw'
-else
-	PS='ps -ef'
-fi
-
-if (whoami) > /dev/null 2>&1; then
-	USER=`whoami`
-elif (id) > /dev/null 2>&1; then
-	USER=`id | cut -d'(' -f2 | cut -d')' -f1`
-# the remaining two tests work only if "su -" was used
-# perhaps delete them
-elif (logname) > /dev/null 2>&1; then
-	USER=`logname`
-elif (who am i) > /dev/null 2>&1; then
-	USER=`who am i | cut -d' ' -f1 | cut -d'!' -f2`
-else
-	echo "Could not determine current user name, using 'nobody'"
-	USER='nobody'
-fi
 
 SQLUSER=''	# must be empty
 # Set if we've found bug from old version
@@ -107,12 +70,9 @@ fi
 # remove old test list #
 ########################
 if [ -n "$SUBDB" ]; then
-	${EZBIN}/ezmlm-unsub "$DIR" digest "${MAN}@$HOST" "${DIG}@$HOST" \
-		>"$ERR" 2>&1
-	${EZBIN}/ezmlm-unsub "$DIR" mod "${MOD}@$HOST" \
-		>"$ERR" 2>&1
-	${EZBIN}/ezmlm-unsub "$DIR" allow "aaa@bbb" "ccc@ddd" "eee@fff" \
-		>"$ERR" 2>&1
+	${EZBIN}/ezmlm-unsub "$DIR" digest "${MAN}@$HOST" "${DIG}@$HOST" >"$ERR" 2>&1
+	${EZBIN}/ezmlm-unsub "$DIR" mod "${MOD}@$HOST" >"$ERR" 2>&1
+	${EZBIN}/ezmlm-unsub "$DIR" allow "aaa@bbb" "ccc@ddd" "eee@fff" >"$ERR" 2>&1
 fi
 rm -rf "$DIR" "$ERR" >/dev/null 2>&1
 test -e "$DIR" \
@@ -136,7 +96,10 @@ fi
 A='a'
 export A
 unset A
-[ -z "$A" ] || BADUNSET='y'
+if [ -n "$A" ]; then
+    echo "unset does not work on this shell, bailing"
+    exit 1
+fi
 
 unset DEFAULT
 
