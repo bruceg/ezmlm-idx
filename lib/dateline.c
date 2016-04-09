@@ -3,7 +3,7 @@
 #include "stralloc.h"
 #include "cgi.h"
 
-int dateline(stralloc *dt, unsigned long d)
+void dateline(stralloc *dt, unsigned long d)
 /* converts yyyymm from unsigned long d to text dt */
 {
   char strnum[FMT_ULONG];
@@ -31,7 +31,6 @@ int dateline(stralloc *dt, unsigned long d)
     stralloc_catb(dt,strnum,fmt_ulong(strnum,d/100));
   } else
     stralloc_cats(dt,"????");
-  return 1;
 }
 
 

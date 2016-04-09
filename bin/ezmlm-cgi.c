@@ -820,7 +820,7 @@ void datelink(struct msginfo *infop,unsigned long d,int direction)
   oputs("#b\">");
   switch (direction) {
     case DIRECT_SAME:
-	if (dateline(&dtline,d) < 0) die_nomem();
+	dateline(&dtline,d);
 	oput(dtline.s,dtline.len);
 	break;
     case DIRECT_PREV:
@@ -1083,7 +1083,7 @@ int show_object(struct msginfo *infop,int item)
     case ITEM_DATE:
 /*	targetitem = ITEM_SUBJECT;*/	/* thread index is target */
 	thisdate = infop->date;
-	if (dateline(&dtline,infop->date) < 0) die_nomem();
+	dateline(&dtline,infop->date);
 	html_header("Threads for ",
 		dtline.s,dtline.len,"threadsbody",SPC_BANNER | SPC_BASE);
 	objectlinks(infop,item);
