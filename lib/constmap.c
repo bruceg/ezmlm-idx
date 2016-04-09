@@ -63,7 +63,7 @@ const char *constmap(struct constmap *cm,const char *s,int len)
   return 0;
 }
 
-int constmap_init(struct constmap *cm,const char *s,int len,int splitchar)
+void constmap_init(struct constmap *cm,const char *s,int len,int splitchar)
 /* if splitchar is set, we process only the stuff before that character
  * on each line. Otherwise, it's the entire line. Still, the entire line
  * is stored! */
@@ -109,7 +109,6 @@ int constmap_init(struct constmap *cm,const char *s,int len,int splitchar)
       ++pos;
       i = j + 1;
     }
-  return 1;
 }
 
 void constmap_free(struct constmap *cm)

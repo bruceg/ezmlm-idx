@@ -428,8 +428,7 @@ int main(int argc,char **argv)
     headerremoveflag = 1;
   else
     getconf(&headerremove,"headerremove",1);
-  if (!constmap_init(&headerremovemap,headerremove.s,headerremove.len,0))
-	die_nomem();
+  constmap_init(&headerremovemap,headerremove.s,headerremove.len,0);
 
   if (!stralloc_copys(&mydtline,"Delivered-To: mailing list ")) die_nomem();
   if (!stralloc_catb(&mydtline,outlocal.s,outlocal.len)) die_nomem();
@@ -581,8 +580,7 @@ int main(int argc,char **argv)
                if (!stralloc_catb(&boundary,cpstart,cp-cpstart))
 			die_nomem();
 	       flagfoundokpart = 0;
-               if (!constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0))
-			die_nomem();
+               constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0);
                flagbadpart = 1;		/* skip before first boundary */
                qa_puts("\n");		/* to make up for the lost '\n' */
             }

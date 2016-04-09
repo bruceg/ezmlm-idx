@@ -430,7 +430,7 @@ int main(int argc,char **argv)
     if (*psz == '\\') *psz = '\0';
     ++psz;
   }
-  if (!constmap_init(&commandmap,cmds.s,cmds.len,0)) die_nomem();
+  constmap_init(&commandmap,cmds.s,cmds.len,0);
   cmdidx = cmdxlate[constmap_index(&commandmap,command,str_len(command))];
   if (cmdidx == EZREQ_BAD) {	/* recognized, but not supported -> help */
     listlocal = 0;		/* needed 'cause arguments are who-knows-what */

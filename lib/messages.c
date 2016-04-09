@@ -65,8 +65,7 @@ static int readit(stralloc *sa,const char *fn)
 
 static void init_map(struct messages *m)
 {
-  if (!constmap_init(&m->map,m->text.s,m->text.len,SPLIT))
-    die_nomem();
+  constmap_init(&m->map,m->text.s,m->text.len,SPLIT);
 }
 
 static void init(void)

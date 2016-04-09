@@ -1552,8 +1552,7 @@ int show_message(struct msginfo *infop)
     if (*psz == '\\') *psz = '\0';
     ++psz;
   }
-  if (!constmap_init(&headermap,headers.s,headers.len,0))
-	die_nomem();
+  constmap_init(&headermap,headers.s,headers.len,0);
 
   (void) makefn(&fn,ITEM_MESSAGE,msginfo.target,"");
   if ((fd = open_read(fn.s)) == -1) {

@@ -843,8 +843,7 @@ int main(int argc,char **argv)
         ++psz;
       }
     }
-    if (!constmap_init(&digheadersmap,digheaders.s,digheaders.len,0))
-	die_nomem();
+    constmap_init(&digheadersmap,digheaders.s,digheaders.len,0);
   }
   if (act != AC_DIGEST) {
     if (!flagdo)			/* only do digests */
