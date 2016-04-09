@@ -1166,8 +1166,7 @@ void new_mime()
     if (mime_current)
       mime_current = mime_current->next;
     if (!mime_current) {
-      if (!(mime_current = (mime_info *) alloc(sizeof (mime_info))))
-	die_nomem();
+      mime_current = (mime_info *) alloc(sizeof (mime_info));
       mime_current->charset = sainit;		/* init */
       mime_current->boundary = sainit;
       mime_current->ctype = sainit;

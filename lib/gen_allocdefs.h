@@ -15,7 +15,8 @@ int ta_ready(ta *x,unsigned int n) \
       x->a = i; return 0; } \
     return 1; } \
   x->len = 0; \
-  return !!(x->field = (type *) alloc((x->a = n) * sizeof(type))); }
+  x->field = (type *) alloc((x->a = n) * sizeof(type)); \
+  return 1; }
 
 #define GEN_ALLOC_readyplus(ta,type,field,len,a,i,n,x,base,ta_rplus) \
 int ta_rplus(ta *x,unsigned int n) \
@@ -29,7 +30,8 @@ int ta_rplus(ta *x,unsigned int n) \
       x->a = i; return 0; } \
     return 1; } \
   x->len = 0; \
-  return !!(x->field = (type *) alloc((x->a = n) * sizeof(type))); }
+  x->field = (type *) alloc((x->a = n) * sizeof(type)); \
+  return 1; }
 
 #define GEN_ALLOC_append(ta,type,field,len,a,i,n,x,base,ta_rplus,ta_append) \
 int ta_append(ta *x,type i) \

@@ -117,7 +117,7 @@ void *sql_select(struct subdbinfo *info,
   PGresult *result;
   struct _result *ret;
 
-  if ((ret = malloc(sizeof *ret)) == 0) die_nomem();
+  ret = alloc(sizeof *ret);
 
   result = _execute(info,q,nparams,params);
   if (PQresultStatus(result) != PGRES_TUPLES_OK)

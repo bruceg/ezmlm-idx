@@ -67,7 +67,6 @@ int env_put(char *s)
  char *u;
  if (!env_isinit) if (!env_init()) return 0;
  u = alloc(str_len(s) + 1);
- if (!u) return 0;
  str_copy(u,s);
  if (!env_add(u)) { alloc_free(u); return 0; }
  return 1;
@@ -80,7 +79,6 @@ int env_put2(const char *s,const char *t)
  if (!env_isinit) if (!env_init()) return 0;
  slen = str_len(s);
  u = alloc(slen + str_len(t) + 2);
- if (!u) return 0;
  str_copy(u,s);
  u[slen] = '=';
  str_copy(u + slen + 1,t);
@@ -91,20 +89,12 @@ int env_put2(const char *s,const char *t)
 int env_init(void)
 {
  char **newenviron;
- int i;
  for (en = 0;environ[en];++en) ;
  ea = en + 10;
  newenviron = (char **) alloc((ea + 1) * sizeof(char *));
- if (!newenviron) return 0;
  for (en = 0;environ[en];++en)
   {
    newenviron[en] = alloc(str_len(environ[en]) + 1);
-   if (!newenviron[en])
-    {
-     for (i = 0;i < en;++i) alloc_free(newenviron[i]);
-     alloc_free(newenviron);
-     return 0;
-    }
    str_copy(newenviron[en],environ[en]);
   }
  newenviron[en] = 0;

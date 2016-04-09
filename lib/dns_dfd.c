@@ -62,7 +62,6 @@ int dns_domain_fromdot(char **out,const char *buf,unsigned int n)
   name[namelen++] = 0;
 
   x = alloc(namelen);
-  if (!x) return 0;
   byte_copy(x,namelen,name);
 
   if (*out) alloc_free(*out);

@@ -62,7 +62,7 @@ int qmail_open(struct qmail *qq)
 	for (i = 0; i < qmqpservers.len; i++) {
 	  if (qmqpservers.s[i] == '\0') j++;
 	}				/* make space */
-	if (!(cpp = (const char **) alloc(j * sizeof (char *)))) _exit(51);
+	if (!(cpp = (const char **) alloc_nodie(j * sizeof (char *)))) _exit(51);
 	cpp[0] = PROG_QMAIL_QMQPC;
 	cp = qmqpservers.s;
 	j = 1;

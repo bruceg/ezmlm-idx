@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 #include "alloc.h"
-#include "error.h"
+#include "die.h"
 
 #define ALIGNMENT 16 /* XXX: assuming that this alignment is enough */
 #define SPACE 2048 /* must be multiple of ALIGNMENT */
@@ -12,13 +12,19 @@ static aligned realspace[SPACE / ALIGNMENT];
 #define space ((char *) realspace)
 static unsigned int avail = SPACE; /* multiple of ALIGNMENT; 0<=avail<=SPACE */
 
-/*@null@*//*@out@*/void *alloc(unsigned int n)
+/*@null@*/void *alloc_nodie(unsigned int n)
 {
-  char *x;
   n = ALIGNMENT + n - (n & (ALIGNMENT - 1)); /* XXX: could overflow */
   if (n <= avail) { avail -= n; return space + avail; }
-  x = malloc(n);
-  if (!x) errno = error_nomem;
+  return malloc(n);
+}
+
+void *alloc(unsigned int n)
+{
+  char *x;
+  x = alloc_nodie(n);
+  if (!x)
+    die_nomem();
   return x;
 }
 

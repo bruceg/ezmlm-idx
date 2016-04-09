@@ -71,8 +71,7 @@ static void newsub(subentry *psubt,const char *subject,unsigned int sublen,
   psubt->firstmsg = msg;
   psubt->lastmsg = msg;
   psubt->msginthread = 1;
-  if (!(psubt->sub = alloc ((sublen) * sizeof(char))))
-    die_nomem();
+  psubt->sub = alloc ((sublen) * sizeof(char));
   cpto = psubt->sub;
   cpno = sublen;
   cpfrom = subject;
@@ -94,8 +93,7 @@ static void newauth(authentry *pautht,		/* entry for current message */
   pautht->higher = (subentry *) 0;
   pautht->lower = (subentry *) 0;
   pautht->firstmsg = msg;
-  if (!(pautht->auth = alloc ((authlen) * sizeof(char))))
-    die_nomem();
+  pautht->auth = alloc ((authlen) * sizeof(char));
   cpto = pautht->auth;
   cpno = authlen;
   cpfrom = author;
@@ -171,8 +169,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
   if (msg_to < msg_from)
     strerr_die2x(100,FATAL,"Program error: bad range in idx_mkthreads");
   ulmrange = msg_to - msg_from + 1;
-  if (!(*pmsgtable = (msgentry *) alloc(ulmrange * sizeof(msgentry))))
-        die_nomem();
+  *pmsgtable = (msgentry *) alloc(ulmrange * sizeof(msgentry));
   y = *pmsgtable;
   x = y + ulmrange;		/* clear */
   while (--x >= y) {
@@ -181,15 +178,12 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
     x->date = 0;
   }
 				/* max entries - acceptable waste for now */
-  if (!(*psubtable = (subentry *) alloc((ulmrange+1) * sizeof(subentry))))
-        die_nomem();
+  *psubtable = (subentry *) alloc((ulmrange+1) * sizeof(subentry));
 
-  if (!(*pauthtable = (authentry *) alloc((ulmrange+1) * sizeof(authentry))))
-        die_nomem();
+  *pauthtable = (authentry *) alloc((ulmrange+1) * sizeof(authentry));
   datetableunit = DATENO * sizeof(dateentry);
   datetablesize = datetableunit;
-  if (!(*pdatetable = (dateentry *) alloc(datetablesize)))
-        die_nomem();
+  *pdatetable = (dateentry *) alloc(datetablesize);
   datepos = 0;
   datemax = DATENO - 2;		/* entry 0 and end marker */
   lastdate = 0;
@@ -411,8 +405,7 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
 
   if ((ulmrange = msg_to - msg_from +1) <= 0)
     strerr_die2x(100,FATAL,"Program error: bad range in idx_mkthreads");
-  if (!(*pmsgtable = (msgentry *) alloc(ulmrange * sizeof(msgentry))))
-         die_nomem();
+  *pmsgtable = (msgentry *) alloc(ulmrange * sizeof(msgentry));
   y = *pmsgtable;
   x = y + ulmrange;
   while (--x >= y) {
@@ -421,11 +414,9 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
     x->date = 0;
   }
 
-  if (!(*psubtable = (subentry *) alloc(2 * sizeof(subentry))))
-          die_nomem();
+  *psubtable = (subentry *) alloc(2 * sizeof(subentry));
 
-  if (!(*pauthtable = (authentry *) alloc((ulmrange + 1) * sizeof(authentry))))
-          die_nomem();
+  *pauthtable = (authentry *) alloc((ulmrange + 1) * sizeof(authentry));
 
   pauthnext = *pauthtable;
   pautht = &adummy;
@@ -598,8 +589,7 @@ void idx_mklist(msgentry **pmsgtable,	/* pointer to table of message<->subject *
   if ((ulmrange = msg_to - msg_from +1) <= 0)
     strerr_die2x(111,FATAL,"bad range in idx_mkthreads :");
 
-  if (!(*pmsgtable = (msgentry *) alloc(ulmrange * sizeof(msgentry))))
-         die_nomem();
+  *pmsgtable = (msgentry *) alloc(ulmrange * sizeof(msgentry));
 
   y = *pmsgtable;
   x = y + ulmrange;
@@ -609,15 +599,13 @@ void idx_mklist(msgentry **pmsgtable,	/* pointer to table of message<->subject *
     x->date = 0;
   }
 
-  if (!(*psubtable = (subentry *) alloc(2 * sizeof(subentry))))
-          die_nomem();
+  *psubtable = (subentry *) alloc(2 * sizeof(subentry));
   psubt = *psubtable;
   newsub(psubt,dummyind.s,dummyind.len,msg_from);
   psubt->lastmsg = msg_to;
   ++psubt;
   psubt->sub = (char *) 0;
-  if (!(*pauthtable = (authentry *) alloc(sizeof(authentry))))
-          die_nomem();		/* nodata. Avoid dangling ptr. */
+  *pauthtable = (authentry *) alloc(sizeof(authentry));
   pautht = *pauthtable;
   pautht->auth = 0;		/* tells app that there are no author data */
   pautht->higher = (authentry *) 0;
