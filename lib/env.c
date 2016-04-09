@@ -14,6 +14,8 @@ int env_isinit = 0; /* if env_isinit: */
 static int ea; /* environ is a pointer to ea+1 char*'s. */
 static int en; /* the first en of those are ALLOCATED. environ[en] is 0. */
 
+static void env_init(void);
+
 static void env_goodbye(int i)
 {
  alloc_free(environ[i]);
@@ -38,14 +40,13 @@ static void env_unsetlen(const char *s,int len)
        env_goodbye(i);
 }
 
-int env_unset(const char *s)
+void env_unset(const char *s)
 {
- if (!env_isinit) if (!env_init()) return 0;
+ env_init();
  env_unsetlen(s,str_len(s));
- return 1;
 }
 
-static int env_add(char *s)
+static void env_add(char *s)
 {
  const char *t;
  t = env_findeq(s);
@@ -57,36 +58,34 @@ static int env_add(char *s)
   }
  environ[en++] = s;
  environ[en] = 0;
- return 1;
 }
 
-int env_put(char *s)
+void env_put(char *s)
 {
  char *u;
- if (!env_isinit) if (!env_init()) return 0;
+ env_init();
  u = alloc(str_len(s) + 1);
  str_copy(u,s);
- if (!env_add(u)) { alloc_free(u); return 0; }
- return 1;
+ env_add(u);
 }
 
-int env_put2(const char *s,const char *t)
+void env_put2(const char *s,const char *t)
 {
  char *u;
  int slen;
- if (!env_isinit) if (!env_init()) return 0;
+ env_init();
  slen = str_len(s);
  u = alloc(slen + str_len(t) + 2);
  str_copy(u,s);
  u[slen] = '=';
  str_copy(u + slen + 1,t);
- if (!env_add(u)) { alloc_free(u); return 0; }
- return 1;
+ env_add(u);
 }
 
-int env_init(void)
+static void env_init(void)
 {
  char **newenviron;
+ if (env_isinit) return;
  for (en = 0;environ[en];++en) ;
  ea = en + 10;
  newenviron = (char **) alloc((ea + 1) * sizeof(char *));
@@ -98,5 +97,4 @@ int env_init(void)
  newenviron[en] = 0;
  environ = newenviron;
  env_isinit = 1;
- return 1;
 }
