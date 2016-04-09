@@ -45,7 +45,7 @@ extern unsigned int dns_random(unsigned int);
 extern void dns_sortip(char *,unsigned int);
 
 extern void dns_domain_free(char **);
-extern int dns_domain_copy(char **,const char *);
+extern void dns_domain_copy(char **,const char *);
 extern unsigned int dns_domain_length(const char *);
 extern int dns_domain_equal(const char *,const char *);
 extern int dns_domain_suffix(const char *,const char *);
