@@ -74,7 +74,7 @@ int main(int argc,char **argv)
   if (!getconf_ulong(&num,"num",1))
     _exit(99);						/* no msgs */
   if ((flagloop = getconf_line(&line,fn,0))) {
-    if(!stralloc_0(&line)) die_nomem();
+    stralloc_0(&line);
     pos = scan_ulong(line.s,&loopnum);			/* msg when written */
     if (line.s[pos] == ':')
       scan_ulong(line.s+pos+1,&loopwhen);		/* time written */

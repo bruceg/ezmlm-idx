@@ -29,7 +29,8 @@ static int doit(stralloc *work,const char *rule)
 
   work->len = prefixlen;
   if (ch == '-') work->len = 0;
-  return stralloc_cats(work,rule + colon + 1);
+  stralloc_cats(work,rule + colon + 1);
+  return 1;
 }
 
 int dns_ip4_qualify_rules(stralloc *out,stralloc *fqdn,const stralloc *in,const stralloc *rules)
@@ -39,7 +40,7 @@ int dns_ip4_qualify_rules(stralloc *out,stralloc *fqdn,const stralloc *in,const 
   unsigned int plus;
   unsigned int fqdnlen;
 
-  if (!stralloc_copy(fqdn,in)) return -1;
+  stralloc_copy(fqdn,in);
 
   for (j = i = 0;j < rules->len;++j)
     if (!rules->s[j]) {

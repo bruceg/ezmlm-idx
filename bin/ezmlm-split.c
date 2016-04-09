@@ -80,7 +80,7 @@ static int findname(void)
   /* make case insensitive hash */
   flagfound = 0;			/* default */
   cpname = "";				/* default */
-  if (!stralloc_copy(&lctarget,&target)) die_nomem();
+  stralloc_copy(&lctarget,&target);
   case_lowerb(lctarget.s,lctarget.len -1);
   hash = subhashs(lctarget.s);
 
@@ -92,15 +92,15 @@ static int findname(void)
   if (*cplast == '.') --cplast;		/* annonying special case */
   cp1 = cpat + byte_rchr(cpat,cplast - cpat, '.');
   if (cp1 != cplast) {			/* got one '.' */
-    if (!stralloc_copyb(&domain,cp1 + 1, cplast - cp1)) die_nomem();
+    stralloc_copyb(&domain,cp1 + 1, cplast - cp1);
     cp2 = cpat + byte_rchr(cpat, cp1 - cpat,'.');
     if (cp2 == cp1) cp2 = cpat;
     ++cp2;
-    if (!stralloc_append(&domain,'.')) die_nomem();
-    if (!stralloc_catb(&domain,cp2, cp1 - cp2)) die_nomem();
+    stralloc_append(&domain,'.');
+    stralloc_catb(&domain,cp2, cp1 - cp2);
   } else				/* no '.' */
-    if (!stralloc_copyb(&domain,cpat + 1,cplast - cpat)) die_nomem();
-  if (!stralloc_0(&domain)) die_nomem();
+    stralloc_copyb(&domain,cpat + 1,cplast - cpat);
+  stralloc_0(&domain);
 
   if ((fd = open_read(split)) == -1) {
     if (errno == error_noent)
@@ -147,18 +147,18 @@ static int findname(void)
   close(fd);
 
   if (*cpname) {
-    if (!stralloc_copys(&name,cpname)) die_nomem();
+    stralloc_copys(&name,cpname);
     if (byte_chr(name.s,name.len,'@') == name.len) {	/* local sublist */
-      if (!stralloc_append(&name,'@')) die_nomem();
-      if (!stralloc_cat(&name,&outhost)) die_nomem();
+      stralloc_append(&name,'@');
+      stralloc_cat(&name,&outhost);
     }
-    if (!stralloc_0(&name)) die_nomem();
+    stralloc_0(&name);
     return 1;
   } else {			/* match without name or no match =>this list */
-    if (!stralloc_copy(&name,&outlocal)) die_nomem();
-    if (!stralloc_append(&name,'@')) die_nomem();
-    if (!stralloc_cat(&name,&outhost)) die_nomem();
-    if (!stralloc_0(&name)) die_nomem();
+    stralloc_copy(&name,&outlocal);
+    stralloc_append(&name,'@');
+    stralloc_cat(&name,&outhost);
+    stralloc_0(&name);
     return 0;
   }
 }
@@ -192,18 +192,18 @@ int main(int argc,char **argv)
 
     action = env_get("DEFAULT");
     if (!action) strerr_die2x(100,FATAL,MSG(ERR_NODEFAULT));
-    if (!stralloc_copys(&target,sender)) die_nomem();
+    stralloc_copys(&target,sender);
     if (action[0]) {
       i = str_chr(action,'-');
       if (action[i]) {
         action[i] = '\0';
-        if (!stralloc_copys(&target,action + i + 1)) die_nomem();
+        stralloc_copys(&target,action + i + 1);
         i = byte_rchr(target.s,target.len,'=');
         if (i < target.len)
 	  target.s[i] = '@';
       }
     }
-    if (!stralloc_0(&target)) die_nomem();
+    stralloc_0(&target);
 
     if (case_diffs(action,ACTION_SUBSCRIBE) &&
       case_diffs(action,ALT_SUBSCRIBE) &&
@@ -213,22 +213,22 @@ int main(int argc,char **argv)
 
     if (findname()) {
 				/* new sender */
-      if (!stralloc_copy(&from,&outlocal)) die_nomem();
-      if (!stralloc_cats(&from,"-return-@")) die_nomem();
-      if (!stralloc_cat(&from,&outhost)) die_nomem();
-      if (!stralloc_0(&from)) die_nomem();
+      stralloc_copy(&from,&outlocal);
+      stralloc_cats(&from,"-return-@");
+      stralloc_cat(&from,&outhost);
+      stralloc_0(&from);
       nhost = name.s + str_rchr(name.s,'@');		/* name must have '@'*/
       *(nhost++) = '\0';
-      if (!stralloc_copys(&to,name.s)) die_nomem();	/* local */
-      if (!stralloc_append(&to,'-')) die_nomem();	/* - */
-      if (!stralloc_cats(&to,action)) die_nomem();	/* subscribe */
-      if (!stralloc_append(&to,'-')) die_nomem();	/* - */
+      stralloc_copys(&to,name.s);	/* local */
+      stralloc_append(&to,'-');	/* - */
+      stralloc_cats(&to,action);	/* subscribe */
+      stralloc_append(&to,'-');	/* - */
       if (target.s[i = str_rchr(target.s,'@')])
 	target.s[i] = '=';
-      if (!stralloc_cats(&to,target.s)) die_nomem();	/* target */
-      if (!stralloc_append(&to,'@')) die_nomem();	/* - */
-      if (!stralloc_cats(&to,nhost)) die_nomem();	/* host */
-      if (!stralloc_0(&to)) die_nomem();
+      stralloc_cats(&to,target.s);	/* target */
+      stralloc_append(&to,'@');	/* - */
+      stralloc_cats(&to,nhost);	/* host */
+      stralloc_0(&to);
       dtline = env_get("DTLINE");
       if (!dtline) strerr_die2x(100,FATAL,MSG(ERR_NODTLINE));
 
@@ -255,12 +255,12 @@ int main(int argc,char **argv)
       if (!match) break;
       if (line.len == 1) continue;	/* ignore blank lines */
       if (line.s[0] == '#') continue;	/* ignore comments */
-      if (!stralloc_copy(&target,&line)) die_nomem();
+      stralloc_copy(&target,&line);
       target.s[target.len - 1] = '\0';
       (void) findname();
-      if (!stralloc_cats(&name,": ")) die_nomem();
-      if (!stralloc_cats(&name,target.s)) die_nomem();
-      if (!stralloc_append(&name,'\n')) die_nomem();
+      stralloc_cats(&name,": ");
+      stralloc_cats(&name,target.s);
+      stralloc_append(&name,'\n');
       if (substdio_put(subfdout,name.s,name.len) == -1)
 	strerr_die2sys(111,FATAL,MSG(ERR_WRITE_STDOUT));
     }

@@ -113,8 +113,8 @@ static void sendnotice(const char *d)
       x = 12 + byte_chr(line.s + 12,line.len-12,'<');
       y = byte_rchr(line.s + x,line.len-x,'>');
       if (x != line.len && x+y != line.len) {
-        if (!stralloc_copyb(&to,line.s+x+1, y-1)) die_nomem();
-        if (!stralloc_0(&to)) die_nomem();
+        stralloc_copyb(&to,line.s+x+1, y-1);
+        stralloc_0(&to);
       } else
         die_read();
       hdr_add2s("Mailing-List: ",MSG(TXT_MAILING_LIST));
@@ -155,10 +155,10 @@ static void sendnotice(const char *d)
       if (flagmime)
 	hdr_boundary(1);
 
-      if (!stralloc_copy(&line,&outlocal)) die_nomem();
-      if (!stralloc_cats(&line,"-return-@")) die_nomem();
-      if (!stralloc_cat(&line,&outhost)) die_nomem();
-      if (!stralloc_0(&line)) die_nomem();
+      stralloc_copy(&line,&outlocal);
+      stralloc_cats(&line,"-return-@");
+      stralloc_cat(&line,&outhost);
+      stralloc_0(&line);
       qmail_from(&qq,line.s);		/* sender */
         qmail_to(&qq,to.s);
 
@@ -200,9 +200,9 @@ static void dodir(const char *dirname,int reply)
     if (d->d_name[0] == '.') continue;
     scan_ulong(d->d_name,&modtime);
     if (modtime < older) {
-      if (!stralloc_copys(&fnmsg,dirname)) die_nomem();
-      if (!stralloc_cats(&fnmsg,d->d_name)) die_nomem();
-      if (!stralloc_0(&fnmsg)) die_nomem();
+      stralloc_copys(&fnmsg,dirname);
+      stralloc_cats(&fnmsg,d->d_name);
+      stralloc_0(&fnmsg);
       if((stat(fnmsg.s,&st) != -1) && (st.st_mode & 0200)) {
         if(reply && (st.st_mode & 0100)) {
 			/* unlink unless there was a TEMPORARY */
@@ -233,7 +233,7 @@ int main(int argc,char **argv)
     flagreturn = !getconf_isset("noreturnposts");
 
   getconf_line(&modtimestr,"modtime",0);
-  if (!stralloc_0(&modtimestr)) die_nomem();
+  stralloc_0(&modtimestr);
   scan_ulong(modtimestr.s,&delay);
   if (!delay) delay = DELAY_DEFAULT;
   else if (delay < DELAY_MIN) delay = DELAY_MIN;

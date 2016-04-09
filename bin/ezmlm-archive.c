@@ -132,12 +132,12 @@ void write_threads(const msgentry *msgtable,
       nextdate = pdatet->date;		/* end date */
       startmsg = nextmsg;		/* first message in month */
       nextmsg = pdatet->msg;		/* first message in next month */
-      if (!stralloc_copys(&fn,"archive/threads/")) die_nomem();
-      if (!stralloc_catb(&fn,strnum,fmt_uint(strnum,startdate))) die_nomem();
-      if (!stralloc_copy(&fnn,&fn)) die_nomem();
-      if (!stralloc_0(&fn)) die_nomem();
-      if (!stralloc_cats(&fnn,"n")) die_nomem();
-      if (!stralloc_0(&fnn)) die_nomem();
+      stralloc_copys(&fn,"archive/threads/");
+      stralloc_catb(&fn,strnum,fmt_uint(strnum,startdate));
+      stralloc_copy(&fnn,&fn);
+      stralloc_0(&fn);
+      stralloc_cats(&fnn,"n");
+      stralloc_0(&fnn);
       if ((fdn = open_trunc(fnn.s)) == -1)
 	strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fnn.s));
       substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
@@ -198,17 +198,13 @@ void write_threads(const msgentry *msgtable,
   }
 
     if (psubtm->firstmsg < nextmsg && psubtm->lastmsg >= startmsg) {
-    if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,psubtm->lastmsg)))
-		die_nomem();
-    if (!stralloc_cats(&line,":")) die_nomem();
-    if (!stralloc_catb(&line,psubtm->sub,HASHLEN)) die_nomem();
-    if (!stralloc_cats(&line," [")) die_nomem();
-    if (!stralloc_catb(&line,strnum,
-	fmt_ulong(strnum,(unsigned long) psubtm->msginthread)))
-		die_nomem();
-    if (!stralloc_cats(&line,"]")) die_nomem();
-    if (!stralloc_catb(&line,psubtm->sub + HASHLEN,psubtm->sublen - HASHLEN))
-			 die_nomem();	/* has \n */
+      stralloc_copyb(&line,strnum,fmt_ulong(strnum,psubtm->lastmsg));
+    stralloc_cats(&line,":");
+    stralloc_catb(&line,psubtm->sub,HASHLEN);
+    stralloc_cats(&line," [");
+    stralloc_catb(&line,strnum,fmt_ulong(strnum,(unsigned long) psubtm->msginthread));
+    stralloc_cats(&line,"]");
+    stralloc_catb(&line,psubtm->sub + HASHLEN,psubtm->sublen - HASHLEN); /* has \n */
     if (substdio_put(&ssout,line.s,line.len) == -1)
 	strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
     }
@@ -219,18 +215,18 @@ void write_threads(const msgentry *msgtable,
 
   psubt = subtable;
   while (psubt->sub) {		/* now the threads */
-    if (!stralloc_copys(&fn,"archive/subjects/")) die_nomem();
-    if (!stralloc_catb(&fn,psubt->sub,2)) die_nomem();
-    if (!stralloc_0(&fn)) die_nomem();
+    stralloc_copys(&fn,"archive/subjects/");
+    stralloc_catb(&fn,psubt->sub,2);
+    stralloc_0(&fn);
     if (mkdir(fn.s,0755) == -1)
     if (errno != error_exist)
       strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fn.s));
     fn.s[fn.len - 1] = '/';
-    if (!stralloc_catb(&fn,psubt->sub+2,HASHLEN-2)) die_nomem();
-    if (!stralloc_copy(&fnn,&fn)) die_nomem();
-    if (!stralloc_cats(&fnn,"n")) die_nomem();
-    if (!stralloc_0(&fn)) die_nomem();
-    if (!stralloc_0(&fnn)) die_nomem();
+    stralloc_catb(&fn,psubt->sub+2,HASHLEN-2);
+    stralloc_copy(&fnn,&fn);
+    stralloc_cats(&fnn,"n");
+    stralloc_0(&fn);
+    stralloc_0(&fnn);
     if ((fdn = open_trunc(fnn.s)) == -1)
       strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fnn.s));
     substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
@@ -266,20 +262,18 @@ void write_threads(const msgentry *msgtable,
     pmsgt = msgtable + psubt->firstmsg - from;	/* first message entry */
     for (msg = psubt->firstmsg; msg <= psubt->lastmsg; msg++) {
       if (pmsgt->subnum == subnum) {
-        if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,msg))) die_nomem();
-        if (!stralloc_cats(&line,":")) die_nomem();
-	if (!stralloc_catb(&line,strnum,fmt_uint(strnum,pmsgt->date)))
-		die_nomem();
-	if (!stralloc_cats(&line,":")) die_nomem();
+        stralloc_copyb(&line,strnum,fmt_ulong(strnum,msg));
+        stralloc_cats(&line,":");
+	stralloc_catb(&line,strnum,fmt_uint(strnum,pmsgt->date));
+	stralloc_cats(&line,":");
         if (pmsgt->authnum) {
 	  pautht = authtable + pmsgt->authnum - 1;
 	  cp1 = byte_chr(pautht->auth,pautht->authlen,' ');
 	  if (cp1 != HASHLEN)
 	    strerr_die1x(100,MSG(ERR_BAD_INDEX));
-	  if (!stralloc_catb(&line,pautht->auth,pautht->authlen))
-		die_nomem();				/* hash */
+	  stralloc_catb(&line,pautht->auth,pautht->authlen); /* hash */
 	} else
-          if (!stralloc_cats(&line,"\n")) die_nomem();
+          stralloc_cats(&line,"\n");
 	if (substdio_put(&ssout,line.s,line.len) == -1)
 	  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));
       }
@@ -292,18 +286,18 @@ void write_threads(const msgentry *msgtable,
 					/* (no master author index) */
   pautht = authtable;
   while (pautht->auth) {		/* now the authors */
-    if (!stralloc_copys(&fn,"archive/authors/")) die_nomem();
-    if (!stralloc_catb(&fn,pautht->auth,2)) die_nomem();
-    if (!stralloc_0(&fn)) die_nomem();
+    stralloc_copys(&fn,"archive/authors/");
+    stralloc_catb(&fn,pautht->auth,2);
+    stralloc_0(&fn);
     if (mkdir(fn.s,0755) == -1)
     if (errno != error_exist)
       strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fn.s));
     fn.s[fn.len - 1] = '/';
-    if (!stralloc_catb(&fn,pautht->auth+2,HASHLEN-2)) die_nomem();
-    if (!stralloc_copy(&fnn,&fn)) die_nomem();
-    if (!stralloc_cats(&fnn,"n")) die_nomem();
-    if (!stralloc_0(&fn)) die_nomem();
-    if (!stralloc_0(&fnn)) die_nomem();
+    stralloc_catb(&fn,pautht->auth+2,HASHLEN-2);
+    stralloc_copy(&fnn,&fn);
+    stralloc_cats(&fnn,"n");
+    stralloc_0(&fn);
+    stralloc_0(&fnn);
     if ((fdn = open_trunc(fnn.s)) == -1)
       strerr_die2sys(111,FATAL,MSG1(ERR_CREATE,fnn.s));
     substdio_fdbuf(&ssout,write,fdn,outbuf,sizeof(outbuf));
@@ -341,15 +335,13 @@ void write_threads(const msgentry *msgtable,
     pmsgt = msgtable + pautht->firstmsg - from;	/* first message entry */
     for (msg = pautht->firstmsg; msg <= to; msg++) {
       if (pmsgt->authnum == authnum) {
-        if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,msg))) die_nomem();
-        if (!stralloc_cats(&line,":")) die_nomem();
-	if (!stralloc_catb(&line,strnum,fmt_uint(strnum,pmsgt->date)))
-		die_nomem();
-	if (!stralloc_cats(&line,":")) die_nomem();
+        stralloc_copyb(&line,strnum,fmt_ulong(strnum,msg));
+        stralloc_cats(&line,":");
+	stralloc_catb(&line,strnum,fmt_uint(strnum,pmsgt->date));
+	stralloc_cats(&line,":");
         if (pmsgt->subnum) {
 	  psubt = subtable + pmsgt->subnum - 1;
-          if (!stralloc_catb(&line,psubt->sub,psubt->sublen))
-		die_nomem();
+          stralloc_catb(&line,psubt->sub,psubt->sublen);
 	}
 	if (substdio_put(&ssout,line.s,line.len) == -1)
 	  strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fnn.s));

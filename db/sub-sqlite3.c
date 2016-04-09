@@ -30,9 +30,9 @@ static void _closesub(struct subdbinfo *info)
 static const char *_opensub(struct subdbinfo *info)
 {
   if (!(sqlite3*)info->conn) {
-    if (!stralloc_copys(&line,info->db)) die_nomem();
-    if (!stralloc_cats(&line,".db")) die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
+    stralloc_copys(&line,info->db);
+    stralloc_cats(&line,".db");
+    stralloc_0(&line);
     if (sqlite3_open_v2(line.s, (sqlite3**)&info->conn, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL) != SQLITE_OK)
 	return sqlite3_errmsg((sqlite3*)info->conn); /* init */
   }
@@ -99,10 +99,8 @@ int sql_fetch_row(struct subdbinfo *info,
     die_sqlerror(info);
   }
 
-  for (i = 0; i < ncolumns; ++i) {
-    if (!stralloc_copyb(&columns[i],(char*)sqlite3_column_text(stmt,i),sqlite3_column_bytes(stmt,i)))
-      die_nomem();
-  }
+  for (i = 0; i < ncolumns; ++i)
+    stralloc_copyb(&columns[i],(char*)sqlite3_column_text(stmt,i),sqlite3_column_bytes(stmt,i));
   return 1;
 }
 
@@ -119,10 +117,10 @@ int sql_table_exists(struct subdbinfo *info,
   sqlite3_stmt *stmt;
   int res;
 
-  if (!stralloc_copys(&line,"SELECT name FROM sqlite_master WHERE name='")) return -1;
-  if (!stralloc_cats(&line,name)) return -1;
-  if (!stralloc_append(&line,'\'')) return -1;
-  if (!stralloc_0(&line)) return -1;
+  stralloc_copys(&line,"SELECT name FROM sqlite_master WHERE name='");
+  stralloc_cats(&line,name);
+  stralloc_append(&line,'\'');
+  stralloc_0(&line);
 
   if ((stmt = _sqlquery(info, &line)) == NULL)
 	  return -1;
@@ -141,8 +139,8 @@ const char *sql_create_table(struct subdbinfo *info,
   sqlite3_stmt *stmt;
   int res;
 
-  if (!stralloc_copys(&line,definition)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copys(&line,definition);
+  stralloc_0(&line);
 
   if ((stmt = _sqlquery(info, &line)) == NULL)
 	  return sqlite3_errmsg((sqlite3*)info->conn);
@@ -226,9 +224,9 @@ const char *sql_drop_table(struct subdbinfo *info,
   sqlite3_stmt *stmt;
   int res;
 
-  if (!stralloc_copys(&line,"DROP TABLE ")) die_nomem();
-  if (!stralloc_cats(&line,name)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copys(&line,"DROP TABLE ");
+  stralloc_cats(&line,name);
+  stralloc_0(&line);
 
   if ((stmt = _sqlquery(info, &line)) == NULL)
 	  return sqlite3_errmsg((sqlite3*)info->conn);

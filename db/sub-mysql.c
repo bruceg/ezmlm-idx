@@ -127,7 +127,7 @@ int sql_fetch_row(struct subdbinfo *info,
   }
 
   for (i = 0; i < ncolumns; ++i) {
-    if (!stralloc_ready(&columns[i],lengths[i])) die_nomem();
+    stralloc_ready(&columns[i],lengths[i]);
     bind[i].buffer = columns[i].s;
     bind[i].buffer_length = lengths[i];
     mysql_stmt_fetch_column((MYSQL_STMT*)result,&bind[i],i,0);
@@ -228,10 +228,10 @@ int sql_table_exists(struct subdbinfo *info,
 {
   MYSQL_RES *result;
 
-  if (!stralloc_copys(&line,"SELECT 0 FROM ")) die_nomem();
-  if (!stralloc_cats(&line,name)) die_nomem();
-  if (!stralloc_cats(&line," LIMIT 1")) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copys(&line,"SELECT 0 FROM ");
+  stralloc_cats(&line,name);
+  stralloc_cats(&line," LIMIT 1");
+  stralloc_0(&line);
   if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) == 0) {
     if ((result = mysql_use_result((MYSQL*)info->conn)) != 0)
       mysql_free_result(result);
@@ -243,8 +243,8 @@ int sql_table_exists(struct subdbinfo *info,
 const char *sql_drop_table(struct subdbinfo *info,
 			   const char *name)
 {
-  if (!stralloc_copys(&line,"DROP TABLE ")) die_nomem();
-  if (!stralloc_cats(&line,name)) die_nomem();
+  stralloc_copys(&line,"DROP TABLE ");
+  stralloc_cats(&line,name);
   if (mysql_real_query((MYSQL*)info->conn,line.s,line.len) != 0)
     if (mysql_errno((MYSQL*)info->conn) != ER_BAD_TABLE_ERROR)
       return mysql_error((MYSQL*)info->conn);

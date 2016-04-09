@@ -186,12 +186,12 @@ void make_verptarget(void)
   unsigned int i;
 
   i = str_rchr(target.s,'@');
-  if (!stralloc_copyb(&verptarget,target.s,i)) die_nomem();
+  stralloc_copyb(&verptarget,target.s,i);
   if (target.s[i]) {
-    if (!stralloc_append(&verptarget,'=')) die_nomem();
-    if (!stralloc_cats(&verptarget,target.s + i + 1)) die_nomem();
+    stralloc_append(&verptarget,'=');
+    stralloc_cats(&verptarget,target.s + i + 1);
   }
-  if (!stralloc_0(&verptarget)) die_nomem();
+  stralloc_0(&verptarget);
   set_cpverptarget(verptarget.s);
 }
 
@@ -227,12 +227,12 @@ void store_from(stralloc *frl,	/* from line */
       }
       close(fdin);
   }					/* build new entry */
-  if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,when))) die_nomem();
-  if (!stralloc_append(&line,' ')) die_nomem();
-  if (!stralloc_cats(&line,adr)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
-  if (!stralloc_catb(&line,frl->s,frl->len)) die_nomem();
-  if (!stralloc_append(&line,'\n')) die_nomem();
+  stralloc_copyb(&line,strnum,fmt_ulong(strnum,when));
+  stralloc_append(&line,' ');
+  stralloc_cats(&line,adr);
+  stralloc_0(&line);
+  stralloc_catb(&line,frl->s,frl->len);
+  stralloc_append(&line,'\n');
   if (substdio_bput(&ssfrom,line.s,line.len) == -1)
     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,"fromn"));
   if (substdio_flush(&ssfrom) == -1)
@@ -266,7 +266,7 @@ const char *get_from(const char *adr, /* target address */
 
   if (!flagstorefrom) return 0;
   if (fromline.len) {	/* easy! We got it in this message */
-    if (!stralloc_0(&fromline)) die_nomem();
+    stralloc_0(&fromline);
     return fromline.s;
   }			/* need to recover it from DIR/from */
   fl = 0;
@@ -361,10 +361,10 @@ int dummy_to(const char *s,	/* ignored */
 
 void to_owner(void)
 {
-	if (!stralloc_copy(&owner,&outlocal)) die_nomem();
-	if (!stralloc_cats(&owner,"-owner@")) die_nomem();
-	if (!stralloc_cat(&owner,&outhost)) die_nomem();
-	if (!stralloc_0(&owner)) die_nomem();
+	stralloc_copy(&owner,&outlocal);
+	stralloc_cats(&owner,"-owner@");
+	stralloc_cat(&owner,&outhost);
+	stralloc_0(&owner);
 	qmail_to(&qq,owner.s);
 }
 
@@ -413,11 +413,11 @@ void msg_headers(int act)
   hdr_from((act == AC_HELP) ? "-return-" : "-help");
   if (!quote2(&quoted,target.s)) die_nomem();
   hdr_add2("To: ",quoted.s,quoted.len);
-  if (!stralloc_copys(&mydtline,"Delivered-To: responder for ")) die_nomem();
-  if (!stralloc_catb(&mydtline,outlocal.s,outlocal.len)) die_nomem();
-  if (!stralloc_cats(&mydtline,"@")) die_nomem();
-  if (!stralloc_catb(&mydtline,outhost.s,outhost.len)) die_nomem();
-  if (!stralloc_cats(&mydtline,"\n")) die_nomem();
+  stralloc_copys(&mydtline,"Delivered-To: responder for ");
+  stralloc_catb(&mydtline,outlocal.s,outlocal.len);
+  stralloc_cats(&mydtline,"@");
+  stralloc_catb(&mydtline,outhost.s,outhost.len);
+  stralloc_cats(&mydtline,"\n");
   qmail_put(&qq,mydtline.s,mydtline.len);
 
   flaggoodfield = 0;
@@ -490,12 +490,12 @@ int geton(const char *action)
 	    qmail_puts(&qq,">\n");
 	    hdr_subject(MSG(SUB_WELCOME));
             hdr_ctboundary();
-	    if (!stralloc_copy(&confirm,&outlocal)) die_nomem();
-	    if (!stralloc_cats(&confirm,"-unsubscribe-")) die_nomem();
-	    if (!stralloc_cats(&confirm,verptarget.s)) die_nomem();
-	    if (!stralloc_append(&confirm,'@')) die_nomem();
-	    if (!stralloc_cat(&confirm,&outhost)) die_nomem();
-	    if (!stralloc_0(&confirm)) die_nomem();
+	    stralloc_copy(&confirm,&outlocal);
+	    stralloc_cats(&confirm,"-unsubscribe-");
+	    stralloc_cats(&confirm,verptarget.s);
+	    stralloc_append(&confirm,'@');
+	    stralloc_cat(&confirm,&outhost);
+	    stralloc_0(&confirm);
 	    set_cpconfirm(confirm.s,outlocal.len);	/* for !R in copy */
             copy(&qq,"text/top",flagcd);
             copy_act("text/sub-ok");
@@ -545,18 +545,18 @@ void doconfirm(const char *act)
 {
   strnum[fmt_ulong(strnum,when)] = 0;
   cookie(hash,key.s,key.len-flagdig,strnum,target.s,act);
-  if (!stralloc_copy(&confirm,&outlocal)) die_nomem();
-  if (!stralloc_append(&confirm,'-')) die_nomem();
-  if (!stralloc_catb(&confirm,act,1)) die_nomem();
-  if (!stralloc_cats(&confirm,"c.")) die_nomem();
-  if (!stralloc_cats(&confirm,strnum)) die_nomem();
-  if (!stralloc_append(&confirm,'.')) die_nomem();
-  if (!stralloc_catb(&confirm,hash,COOKIE)) die_nomem();
-  if (!stralloc_append(&confirm,'-')) die_nomem();
-  if (!stralloc_cats(&confirm,verptarget.s)) die_nomem();
-  if (!stralloc_append(&confirm,'@')) die_nomem();
-  if (!stralloc_cat(&confirm,&outhost)) die_nomem();
-  if (!stralloc_0(&confirm)) die_nomem();
+  stralloc_copy(&confirm,&outlocal);
+  stralloc_append(&confirm,'-');
+  stralloc_catb(&confirm,act,1);
+  stralloc_cats(&confirm,"c.");
+  stralloc_cats(&confirm,strnum);
+  stralloc_append(&confirm,'.');
+  stralloc_catb(&confirm,hash,COOKIE);
+  stralloc_append(&confirm,'-');
+  stralloc_cats(&confirm,verptarget.s);
+  stralloc_append(&confirm,'@');
+  stralloc_cat(&confirm,&outhost);
+  stralloc_0(&confirm);
   set_cpconfirm(confirm.s,outlocal.len);		/* for copy */
   set_cpaction(act);
   set_cphash(hash);
@@ -853,9 +853,9 @@ static void do_edit(const char *action)
     if (action[len] != '.')
       strerr_die2x(100,FATAL,MSG(ERR_BAD_REQUEST));
     showsend2("edit ",action+len+1);
-    if (!stralloc_copys(&fnedit,"text/")) die_nomem();
-    if (!stralloc_cats(&fnedit,action+len+1)) die_nomem();
-    if (!stralloc_0(&fnedit)) die_nomem();
+    stralloc_copys(&fnedit,"text/");
+    stralloc_cats(&fnedit,action+len+1);
+    stralloc_0(&fnedit);
     case_lowerb(fnedit.s,fnedit.len);
     i = 5;	/* after the "text/" */
     while ((ch = fnedit.s[i++])) {
@@ -869,25 +869,25 @@ static void do_edit(const char *action)
     case 0:
       strerr_die5x(100,FATAL,dir,"/",fnedit.s,MSG(ERR_NOEXIST));
     }
-    if (!stralloc_copy(&line,&text)) die_nomem();
+    stralloc_copy(&line,&text);
 
     subst_nuls(&line);
 
-    if (!stralloc_cat(&line,&fnedit)) die_nomem();	/* including '\0' */
+    stralloc_cat(&line,&fnedit);	/* including '\0' */
     strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
     cookie(hash,key.s,key.len,strnum,line.s,"-e");
-    if (!stralloc_copy(&confirm,&outlocal)) die_nomem();
-    if (!stralloc_append(&confirm,'-')) die_nomem();
-    if (!stralloc_catb(&confirm,ACTION_ED,LENGTH_ED)) die_nomem();
-    if (!stralloc_cats(&confirm,strnum)) die_nomem();
-    if (!stralloc_append(&confirm,'.')) die_nomem();
+    stralloc_copy(&confirm,&outlocal);
+    stralloc_append(&confirm,'-');
+    stralloc_catb(&confirm,ACTION_ED,LENGTH_ED);
+    stralloc_cats(&confirm,strnum);
+    stralloc_append(&confirm,'.');
 		/* action part has been checked for bad chars */
-    if (!stralloc_cats(&confirm,action + len + 1)) die_nomem();
-    if (!stralloc_append(&confirm,'.')) die_nomem();
-    if (!stralloc_catb(&confirm,hash,COOKIE)) die_nomem();
-    if (!stralloc_append(&confirm,'@')) die_nomem();
-    if (!stralloc_cat(&confirm,&outhost)) die_nomem();
-    if (!stralloc_0(&confirm)) die_nomem();
+    stralloc_cats(&confirm,action + len + 1);
+    stralloc_append(&confirm,'.');
+    stralloc_catb(&confirm,hash,COOKIE);
+    stralloc_append(&confirm,'@');
+    stralloc_cat(&confirm,&outhost);
+    stralloc_0(&confirm);
     set_cpconfirm(confirm.s,outlocal.len);
     set_cpaction(ACTION_ED);
     set_cphash(hash);
@@ -938,9 +938,9 @@ static void do_ed(char *action)
   if (!*x) die_cookie();
   *x = (char) 0;
   ++x;
-  if (!stralloc_copys(&fnedit,"text/")) die_nomem();
-  if (!stralloc_cats(&fnedit,fname)) die_nomem();
-  if (!stralloc_0(&fnedit)) die_nomem();
+  stralloc_copys(&fnedit,"text/");
+  stralloc_cats(&fnedit,fname);
+  stralloc_0(&fnedit);
   y = fnedit.s + 5;		/* after "text/" */
   while (*++y) {		/* Name should be guaranteed by the cookie, */
 				/* but better safe than sorry ... */
@@ -957,38 +957,38 @@ static void do_ed(char *action)
   case 0:
     strerr_die5x(100,FATAL,dir,"/",fnedit.s,MSG(ERR_NOEXIST));
   }
-  if (!stralloc_copy(&line,&text)) die_nomem();
+  stralloc_copy(&line,&text);
 
   subst_nuls(&line);
 
-  if (!stralloc_cat(&line,&fnedit)) die_nomem();	/* including '\0' */
+  stralloc_cat(&line,&fnedit);	/* including '\0' */
   strnum[fmt_ulong(strnum,(unsigned long) u)] = 0;
   cookie(hash,key.s,key.len,strnum,line.s,"-e");
   if (str_len(x) != COOKIE) die_cookie();
   if (byte_diff(hash,COOKIE,x)) die_cookie();
 	/* cookie is ok, file exists, lock's on, new file ends in '_' */
-  if (!stralloc_copys(&fneditn,fnedit.s)) die_nomem();
-  if (!stralloc_append(&fneditn,'_')) die_nomem();
-  if (!stralloc_0(&fneditn)) die_nomem();
+  stralloc_copys(&fneditn,fnedit.s);
+  stralloc_append(&fneditn,'_');
+  stralloc_0(&fneditn);
   fd = open_trunc(fneditn.s);
   if (fd == -1)
     strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,fneditn.s));
   substdio_fdbuf(&sstext,write,fd,textbuf,sizeof(textbuf));
-  if (!stralloc_copys(&quoted,"")) die_nomem();	/* clear */
-  if (!stralloc_copys(&text,"")) die_nomem();
+  stralloc_copys(&quoted,"");	/* clear */
+  stralloc_copys(&text,"");
 
   for (;;) {			/* get message body */
     if (getln(&ssin,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (!match) break;
-    if (!stralloc_cat(&text,&line)) die_nomem();
+    stralloc_cat(&text,&line);
   }
   if (encin) {			/* decode if necessary */
     if (encin == 'B')
       decodeB(text.s,text.len,&line);
     else
       decodeQ(text.s,text.len,&line);
-    if (!stralloc_copy(&text,&line)) die_nomem();
+    stralloc_copy(&text,&line);
   }
   cp = text.s;
   cpafter = text.s+text.len;
@@ -1001,7 +1001,7 @@ static void do_ed(char *action)
       if (!flaggoodfield) {	/* MSG(TXT_EDIT_START)/END */
 	if (case_startb(cp+i,cpnext-cp-i,MSG(TXT_EDIT_START))) {
 		/* start tag. Store users 'quote characters', e.g. '> ' */
-	  if (!stralloc_copyb(&quoted,cp,i)) die_nomem();
+	  stralloc_copyb(&quoted,cp,i);
 	  flaggoodfield = 1;
 	  cp = cpnext + 1;
 	  continue;
@@ -1072,11 +1072,11 @@ static void do_get(const char *action)
   if (action[pos] == '.' || action [pos] == '_') pos++;
   scan_ulong(action + pos,&u);
 
-  if (!stralloc_copys(&line,"archive/")) die_nomem();
-  if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,u / 100))) die_nomem();
-  if (!stralloc_cats(&line,"/")) die_nomem();
-  if (!stralloc_catb(&line,strnum,fmt_uint0(strnum,(unsigned int) (u % 100),2))) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copys(&line,"archive/");
+  stralloc_catb(&line,strnum,fmt_ulong(strnum,u / 100));
+  stralloc_cats(&line,"/");
+  stralloc_catb(&line,strnum,fmt_uint0(strnum,(unsigned int) (u % 100),2));
+  stralloc_0(&line);
 
   fd = open_read(line.s);
   if (fd == -1)
@@ -1166,19 +1166,19 @@ static char *set_workdir(char *action)
 {
   if (case_starts(action,"digest")) {			/* digest */
     action += 6;
-    if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
+    stralloc_cats(&outlocal,"-digest");
     workdir = "digest";
     flagdig = FLD_DIGEST;
   } else if (case_starts(action,ACTION_ALLOW)) {	/* allow */
     action += str_len(ACTION_ALLOW);
-    if (!stralloc_append(&outlocal,'-')) die_nomem();
-    if (!stralloc_cats(&outlocal,ACTION_ALLOW)) die_nomem();
+    stralloc_append(&outlocal,'-');
+    stralloc_cats(&outlocal,ACTION_ALLOW);
     workdir = "allow";
     flagdig = FLD_ALLOW;
   } else if (case_starts(action,ACTION_DENY)) {		/* deny */
     action += str_len(ACTION_DENY);
-    if (!stralloc_append(&outlocal,'-')) die_nomem();
-    if (!stralloc_cats(&outlocal,ACTION_DENY)) die_nomem();
+    stralloc_append(&outlocal,'-');
+    stralloc_cats(&outlocal,ACTION_DENY);
     workdir = "deny";
     flagdig = FLD_DENY;
   }
@@ -1221,13 +1221,13 @@ static int get_act_ismod(const char *action,unsigned int *actlen)
 
   if (modsub.s != 0 || remote.s != 0) {
     if (modsub.len) {
-      if (!stralloc_copy(&moddir,&modsub)) die_nomem();
+      stralloc_copy(&moddir,&modsub);
     } else if (remote.len) {
-      if (!stralloc_copy(&moddir,&remote)) die_nomem();
+      stralloc_copy(&moddir,&remote);
     } else {
-      if (!stralloc_copys(&moddir,"mod")) die_nomem();
+      stralloc_copys(&moddir,"mod");
     }
-    if (!stralloc_0(&moddir)) die_nomem();
+    stralloc_0(&moddir);
 		/* for these the reply is 'secret' and goes to sender  */
 		/* This means that they can be triggered from a SENDER */
 		/* that is not a mod, but never send to a non-mod */
@@ -1295,27 +1295,27 @@ int main(int argc,char **argv)
 
   action = set_workdir(action);
 
-  if (!stralloc_copys(&target,sender)) die_nomem();
+  stralloc_copys(&target,sender);
   if (action[0]) {
     i = str_chr(action,'-');
     if (action[i]) {
       action[i] = 0;
-      if (!stralloc_copys(&target,action + i + 1)) die_nomem();
+      stralloc_copys(&target,action + i + 1);
       i = byte_rchr(target.s,target.len,'=');
       if (i < target.len)
 	target.s[i] = '@';
     }
   }
-  if (!stralloc_0(&target)) die_nomem();
+  stralloc_0(&target);
   set_cptarget(target.s);	/* for copy() */
   make_verptarget();
 
   act = get_act_ismod(action,&actlen);
 
-  if (!stralloc_copy(&from,&outlocal)) die_nomem();
-  if (!stralloc_cats(&from,"-return-@")) die_nomem();
-  if (!stralloc_cat(&from,&outhost)) die_nomem();
-  if (!stralloc_0(&from)) die_nomem();
+  stralloc_copy(&from,&outlocal);
+  stralloc_cats(&from,"-return-@");
+  stralloc_cat(&from,&outhost);
+  stralloc_0(&from);
 
   if (qmail_open(&qq) == -1)
     strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));

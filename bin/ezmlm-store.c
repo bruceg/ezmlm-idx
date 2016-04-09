@@ -100,9 +100,9 @@ static void makeacthash(stralloc *act)
   d = 2 + str_chr(act->s + 1,'-');
   cookie(hash,key.s,key.len,act->s + d,"","a");
   *(act->s + act->len - 1) = '.';	/* we put a '.' Bad, but works */
-  if (!stralloc_catb(act,hash,COOKIE)) die_nomem();
-  if (!stralloc_cats(act,"@")) die_nomem();
-  if (!stralloc_cat(act,&outhost)) die_nomem();
+  stralloc_catb(act,hash,COOKIE);
+  stralloc_cats(act,"@");
+  stralloc_cat(act,&outhost);
   set_cphash(hash);
 }
 
@@ -151,7 +151,7 @@ int main(int argc,char **argv)
       strerr_die2x(100,FATAL,MSG(ERR_BOUNCE));
   }
 
-  if (!stralloc_copys(&sendopt,"-")) die_nomem();
+  stralloc_copys(&sendopt,"-");
   getconfopt(argc,argv,options,1,&dir);
   initsub(0);
 
@@ -161,9 +161,9 @@ int main(int argc,char **argv)
     wrap_execbin("/ezmlm-send", &sendopt, dir);
 
   if (!moderators.len) {
-    if (!stralloc_copys(&moderators,"mod")) die_nomem();
+    stralloc_copys(&moderators,"mod");
   }
-  if (!stralloc_0(&moderators)) die_nomem();
+  stralloc_0(&moderators);
 
   if (sender) {
     ismod = issub(moderators.s,sender,&mod);
@@ -177,35 +177,35 @@ int main(int argc,char **argv)
 
   fdlock = lockfile("mod/lock");
 
-  if (!stralloc_copys(&mydtline, flagconfirm
+  stralloc_copys(&mydtline, flagconfirm
     ? "Delivered-To: confirm to "
-    : "Delivered-To: moderator for ")) die_nomem();
-  if (!stralloc_catb(&mydtline,outlocal.s,outlocal.len)) die_nomem();
-  if (!stralloc_append(&mydtline,'@')) die_nomem();
-  if (!stralloc_catb(&mydtline,outhost.s,outhost.len)) die_nomem();
-  if (!stralloc_cats(&mydtline,"\n")) die_nomem();
+    : "Delivered-To: moderator for ");
+  stralloc_catb(&mydtline,outlocal.s,outlocal.len);
+  stralloc_append(&mydtline,'@');
+  stralloc_catb(&mydtline,outhost.s,outhost.len);
+  stralloc_cats(&mydtline,"\n");
 
-  if (!stralloc_copys(&returnpath,"Return-Path: <")) die_nomem();
+  stralloc_copys(&returnpath,"Return-Path: <");
   if (sender) {
-    if (!stralloc_cats(&returnpath,sender)) die_nomem();
+    stralloc_cats(&returnpath,sender);
     for (i = 14; i < returnpath.len;++i)
       if (returnpath.s[i] == '\n' || !returnpath.s[i] )
         returnpath.s[i] = '_';
 		/* NUL and '\n' are bad, but we don't quote since this is */
 		/* only for ezmlm-moderate, NOT for SMTP */
   }
-  if (!stralloc_cats(&returnpath,">\n")) die_nomem();
+  stralloc_cats(&returnpath,">\n");
 
  pid = getpid();		/* unique file name */
  for (i = 0;;++i)		/* got lock - nobody else can add files */
   {
    when = now();		/* when is also used later for date! */
-   if (!stralloc_copys(&fnmsg, flagconfirm?"mod/unconfirmed/":"mod/pending/")) die_nomem();
-   if (!stralloc_copyb(&fnbase,strnum,fmt_ulong(strnum,when))) die_nomem();
-   if (!stralloc_append(&fnbase,'.')) die_nomem();
-   if (!stralloc_catb(&fnbase,strnum,fmt_ulong(strnum,pid))) die_nomem();
-   if (!stralloc_cat(&fnmsg,&fnbase)) die_nomem();
-   if (!stralloc_0(&fnmsg)) die_nomem();
+   stralloc_copys(&fnmsg, flagconfirm?"mod/unconfirmed/":"mod/pending/");
+   stralloc_copyb(&fnbase,strnum,fmt_ulong(strnum,when));
+   stralloc_append(&fnbase,'.');
+   stralloc_catb(&fnbase,strnum,fmt_ulong(strnum,pid));
+   stralloc_cat(&fnmsg,&fnbase);
+   stralloc_0(&fnmsg);
    if (stat(fnmsg.s,&st) == -1) if (errno == error_noent) break;
    /* really should never get to this point */
    if (i == 2)
@@ -213,24 +213,24 @@ int main(int argc,char **argv)
    sleep(2);
   }
 
-  if (!stralloc_copys(&action,"-")) die_nomem();
-  if (!stralloc_cats(&action,flagconfirm?ACTION_DISCARD:ACTION_REJECT)) die_nomem();
-  if (!stralloc_cat(&action,&fnbase)) die_nomem();
-  if (!stralloc_0(&action)) die_nomem();
+  stralloc_copys(&action,"-");
+  stralloc_cats(&action,flagconfirm?ACTION_DISCARD:ACTION_REJECT);
+  stralloc_cat(&action,&fnbase);
+  stralloc_0(&action);
   makeacthash(&action);
   if (!quote(&quoted,&outlocal)) die_nomem();
-  if (!stralloc_copy(&reject,&quoted)) die_nomem();
-  if (!stralloc_cat(&reject,&action)) die_nomem();
-  if (!stralloc_0(&reject)) die_nomem();
+  stralloc_copy(&reject,&quoted);
+  stralloc_cat(&reject,&action);
+  stralloc_0(&reject);
 
-  if (!stralloc_copys(&action,"-")) die_nomem();
-  if (!stralloc_cats(&action,flagconfirm?ACTION_CONFIRM:ACTION_ACCEPT)) die_nomem();
-  if (!stralloc_cat(&action,&fnbase)) die_nomem();
-  if (!stralloc_0(&action)) die_nomem();
+  stralloc_copys(&action,"-");
+  stralloc_cats(&action,flagconfirm?ACTION_CONFIRM:ACTION_ACCEPT);
+  stralloc_cat(&action,&fnbase);
+  stralloc_0(&action);
   makeacthash(&action);
-  if (!stralloc_copy(&accept,&quoted)) die_nomem();
-  if (!stralloc_cat(&accept,&action)) die_nomem();
-  if (!stralloc_0(&accept)) die_nomem();
+  stralloc_copy(&accept,&quoted);
+  stralloc_cat(&accept,&action);
+  stralloc_0(&accept);
 
   set_cptarget(accept.s);	/* for copy () */
   set_cpaction(flagconfirm?ACTION_CONFIRM:ACTION_ACCEPT);
@@ -258,17 +258,17 @@ int main(int argc,char **argv)
     qmail_puts(&qq,"Cc: ");	/* for ezmlm-gate users */
     strnum[fmt_ulong(strnum,(unsigned long) when)] = 0;
     cookie(hash,key.s,key.len-FLD_ALLOW,strnum,sender,"t");
-    if (!stralloc_copy(&line,&outlocal)) die_nomem();
-    if (!stralloc_cats(&line,"-allow-tc.")) die_nomem();
-    if (!stralloc_cats(&line,strnum)) die_nomem();
-    if (!stralloc_append(&line,'.')) die_nomem();
-    if (!stralloc_catb(&line,hash,COOKIE)) die_nomem();
-    if (!stralloc_append(&line,'-')) die_nomem();
+    stralloc_copy(&line,&outlocal);
+    stralloc_cats(&line,"-allow-tc.");
+    stralloc_cats(&line,strnum);
+    stralloc_append(&line,'.');
+    stralloc_catb(&line,hash,COOKIE);
+    stralloc_append(&line,'-');
     i = str_rchr(sender,'@');
-    if (!stralloc_catb(&line,sender,i)) die_nomem();
+    stralloc_catb(&line,sender,i);
     if (sender[i]) {
-      if (!stralloc_append(&line,'=')) die_nomem();
-      if (!stralloc_cats(&line,sender + i + 1)) die_nomem();
+      stralloc_append(&line,'=');
+      stralloc_cats(&line,sender + i + 1);
     }
     qmail_put(&qq,line.s,line.len);
     qmail_puts(&qq,"@");
@@ -355,10 +355,10 @@ int main(int argc,char **argv)
   if (flagconfirm) {
     qmail_from(&qq,reject.s);			/* envelope sender */
   } else {
-    if (!stralloc_copy(&line,&outlocal)) die_nomem();
-    if (!stralloc_cats(&line,"-return-@")) die_nomem();
-    if (!stralloc_cat(&line,&outhost)) die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
+    stralloc_copy(&line,&outlocal);
+    stralloc_cats(&line,"-return-@");
+    stralloc_cat(&line,&outhost);
+    stralloc_0(&line);
     qmail_from(&qq,line.s);			/* envelope sender */
   }
   if (flagconfirm)				/* to sender */
@@ -367,8 +367,8 @@ int main(int argc,char **argv)
     qmail_to(&qq,mod.s);
   else {
     if (flagself) {				/* to all moderators */
-      if (!stralloc_copys(&moderators,"mod")) die_nomem();
-      if (!stralloc_0(&moderators)) die_nomem();
+      stralloc_copys(&moderators,"mod");
+      stralloc_0(&moderators);
     }
     putsubs(moderators.s,0,52,subto);
   }

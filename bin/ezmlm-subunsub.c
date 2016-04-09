@@ -63,9 +63,9 @@ void subunsub_main(int submode,
   if (hash != 0)
     forcehash = (int) hash;
 
-  if (!stralloc_copys(&event,submode ? "+" : "-")) die_nomem();
-  if (!stralloc_cats(&event,flagtag)) die_nomem();
-  if (!stralloc_0(&event)) die_nomem();
+  stralloc_copys(&event,submode ? "+" : "-");
+  stralloc_cats(&event,flagtag);
+  stralloc_0(&event);
 
   if (argv[i]) {
     if (flagname) {

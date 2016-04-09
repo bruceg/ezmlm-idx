@@ -40,23 +40,22 @@ static int readit(stralloc *sa,const char *fn)
   unsigned int j;
   int k;
 
-  if (!stralloc_copys(&data,""))
-    die_nomem();
+  stralloc_copys(&data,"");
   switch (slurp(fn,&data,4096)) {
     case -1:
       strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn));
     case 0:
       return 0;
   }
-  if (!stralloc_append(&data,'\n')) die_nomem();
-  if (!stralloc_copys(sa,"")) die_nomem();
+  stralloc_append(&data,'\n');
+  stralloc_copys(sa,"");
   i = 0;
   for (j = 0;j < data.len;++j)
     if (data.s[j] == '\n') {
       k = j;
       if ((k > i) && (data.s[i] != '#')) {
-        if (!stralloc_catb(sa,data.s + i,k - i)) die_nomem();
-        if (!stralloc_0(sa)) die_nomem();
+        stralloc_catb(sa,data.s + i,k - i);
+        stralloc_0(sa);
       }
       i = j + 1;
     }
@@ -111,9 +110,9 @@ const char *messages_getn(const char *msg,const char *params[10])
 	if ((xmsg = constmap(&msg_internal.map,msg,msg_len)) == 0)
 	  xmsg = msg;
 
-  if (!stralloc_copys(&data,xmsg)) die_nomem();
+  stralloc_copys(&data,xmsg);
   copy_xlate(&xdata,&data,params,'H');
-  if (!stralloc_0(&xdata)) die_nomem();
+  stralloc_0(&xdata);
   return xdata.s;
 }
 

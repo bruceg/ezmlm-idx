@@ -69,9 +69,9 @@ PGresult *_execute(struct subdbinfo *info,
   int lengths[nparams];
   unsigned int i;
 
-  if (!stralloc_0(q)) die_nomem();
+  stralloc_0(q);
   for (i = 0; i < nparams; ++i) {
-    if (!stralloc_0(&params[i])) die_nomem();
+    stralloc_0(&params[i]);
     values[i] = params[i].s;
     lengths[i] = params[i].len - 1;
   }
@@ -140,10 +140,8 @@ int sql_fetch_row(struct subdbinfo *info,
   if (r->row >= r->nrows)
     return 0;
 
-  for (i = 0; i < ncolumns; ++i) {
-    if (!stralloc_copys(&columns[i],PQgetvalue(r->res,r->row,i)))
-      die_nomem();
-  }
+  for (i = 0; i < ncolumns; ++i)
+    stralloc_copys(&columns[i],PQgetvalue(r->res,r->row,i));
   ++r->row;
   return 1;
   (void)info;
@@ -165,10 +163,10 @@ int sql_table_exists(struct subdbinfo *info,
 
   /* This is a very crude cross-version portable kludge to test if a
    * table exists by testing if a select from the table succeeds.  */
-  if (!stralloc_copys(&line,"SELECT 0 FROM ")) return -1;
-  if (!stralloc_cats(&line,name)) return -1;
-  if (!stralloc_cats(&line," LIMIT 1")) return -1;
-  if (!stralloc_0(&line)) return -1;
+  stralloc_copys(&line,"SELECT 0 FROM ");
+  stralloc_cats(&line,name);
+  stralloc_cats(&line," LIMIT 1");
+  stralloc_0(&line);
   result = PQexec((PGconn*)info->conn,line.s);
   if (result == NULL)
     return -1;
@@ -264,9 +262,9 @@ const char *sql_drop_table(struct subdbinfo *info,
 {
   PGresult *result;
 
-  if (!stralloc_copys(&line,"DROP TABLE ")) die_nomem();
-  if (!stralloc_cats(&line,name)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copys(&line,"DROP TABLE ");
+  stralloc_cats(&line,name);
+  stralloc_0(&line);
   result = PQexec((PGconn*)info->conn,line.s);
   if (result == NULL)
     return PQerrorMessage((PGconn*)info->conn);

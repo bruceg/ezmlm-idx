@@ -102,7 +102,7 @@ static int issub_one(const char *subdir,char ch,stralloc *a,stralloc *recorded)
   int fd;
   int match;
 
-  if (!stralloc_0(a)) die_nomem();
+  stralloc_0(a);
   makepath(&fn,subdir,"/subscribers/",ch);
 
   fd = open_read(fn.s);
@@ -120,8 +120,7 @@ static int issub_one(const char *subdir,char ch,stralloc *a,stralloc *recorded)
 	if (!case_diffb(line.s,line.len,a->s)) {
 	  close(fd);
 	  if (recorded)
-	    if (!stralloc_copyb(recorded,line.s+1,line.len-1))
-	      die_nomem();
+	    stralloc_copyb(recorded,line.s+1,line.len-1);
 	  return 1;
 	}
     }
@@ -139,13 +138,13 @@ static int _issub(struct subdbinfo *info,
   unsigned int j;
   char ch,lcch;
 
-    if (!stralloc_copys(&addr,"T")) die_nomem();
-    if (!stralloc_cats(&addr,userhost)) die_nomem();
+    stralloc_copys(&addr,"T");
+    stralloc_cats(&addr,userhost);
 
     j = byte_rchr(addr.s,addr.len,'@');
     if (j == addr.len) return 0;
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
-    if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
+    stralloc_copy(&lcaddr,&addr);
     case_lowerb(lcaddr.s + 1,j - 1);	/* totally lc version of addr */
 
     /* make hash for both for backwards comp */
@@ -234,10 +233,9 @@ static void lineout(const stralloc *line, int subwrite())
 
   (void) scan_ulong(line->s,&when);
   datetime_tai(&dt,when);		/* there is always at least a '\n' */
-  if (!stralloc_copyb(&outline,date,date822fmt(date,&dt) - 1))
-	die_nomem();
-  if (!stralloc_cats(&outline,": ")) die_nomem();
-  if (!stralloc_catb(&outline,line->s,line->len - 1)) die_nomem();
+  stralloc_copyb(&outline,date,date822fmt(date,&dt) - 1);
+  stralloc_cats(&outline,": ");
+  stralloc_catb(&outline,line->s,line->len - 1);
   if (subwrite(outline.s,outline.len) == -1)
 	strerr_die2sys(111,FATAL,MSG1(ERR_WRITE,"output"));
   return;
@@ -323,9 +321,9 @@ static int subloop(const char *subdir,char ch,int flagadd)
   int match;
 
   makepath(&fn,subdir,"/subscribers/",ch);
-  if (!stralloc_copyb(&fnnew,fn.s,fn.len-1)) die_nomem();
-  if (!stralloc_append(&fnnew,'n')) die_nomem();
-  if (!stralloc_0(&fnnew)) die_nomem();
+  stralloc_copyb(&fnnew,fn.s,fn.len-1);
+  stralloc_append(&fnnew,'n');
+  stralloc_0(&fnnew);
 
   fdnew = open_trunc(fnnew.s);
   if (fdnew == -1) die_write(fnnew.s);
@@ -401,8 +399,8 @@ static int _subscribe(struct subdbinfo *info,
   if (userhost[str_chr(userhost,'\n')])
     strerr_die2x(100,FATAL,MSG(ERR_ADDR_NL));
 
-    if (!stralloc_copys(&addr,"T")) die_nomem();
-    if (!stralloc_cats(&addr,userhost)) die_nomem();
+    stralloc_copys(&addr,"T");
+    stralloc_cats(&addr,userhost);
     if (addr.len > 401)
       strerr_die2x(100,FATAL,MSG(ERR_ADDR_LONG));
 
@@ -410,7 +408,7 @@ static int _subscribe(struct subdbinfo *info,
     if (j == addr.len)
       strerr_die2x(100,FATAL,MSG(ERR_ADDR_AT));
     case_lowerb(addr.s + j + 1,addr.len - j - 1);
-    if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
+    stralloc_copy(&lcaddr,&addr);
     case_lowerb(lcaddr.s + 1,j - 1);	/* make all-lc version of address */
 
     if (forcehash >= 0 && forcehash <= 52) {
@@ -420,8 +418,8 @@ static int _subscribe(struct subdbinfo *info,
       lcch = 64 + subhashsa(&lcaddr);
     }
 
-    if (!stralloc_0(&addr)) die_nomem();
-    if (!stralloc_0(&lcaddr)) die_nomem();
+    stralloc_0(&addr);
+    stralloc_0(&lcaddr);
     makepath(&fnlock,subdir,"/lock",0);
 
     fdlock = lockfile(fnlock.s);
@@ -432,7 +430,7 @@ static int _subscribe(struct subdbinfo *info,
     if ((ch == lcch) || flagwasthere) {
       close(fdlock);
       if (flagadd ^ flagwasthere) {
-        if (!stralloc_0(&addr)) die_nomem();
+        stralloc_0(&addr);
         logaddr(subdir,event,addr.s+1,comment);
         return 1;
       }
@@ -447,7 +445,7 @@ static int _subscribe(struct subdbinfo *info,
 
     close(fdlock);
     if (flagadd ^ flagwasthere) {
-      if (!stralloc_0(&addr)) die_nomem();
+      stralloc_0(&addr);
       logaddr(subdir,event,addr.s+1,comment);
       return 1;
     }

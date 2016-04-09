@@ -145,57 +145,55 @@ void copy_xlate(stralloc *out,
 	line->s[pos+3] == '#' &&
 	line->s[pos+4] == '>') {
       /* tag. Copy first part of line */
-      if (!stralloc_catb(out,line->s+nextpos,pos-nextpos))
-	die_nomem();
+      stralloc_catb(out,line->s+nextpos,pos-nextpos);
       switch(line->s[pos+2]) {
       case 'A':
 	if (q == 'H') strerr_die1x(111,MSG(ERR_SUBST_UNSAFE));
-	if (!stralloc_cats(out,target)) die_nomem();
+	stralloc_cats(out,target);
 	break;
       case 'C':
-	if (!stralloc_catb(out,hash,COOKIE)) die_nomem();
+	stralloc_catb(out,hash,COOKIE);
 	break;
       case 'L':
 	if (!quote(&qline,&mainlocal)) die_nomem();
-	if (!stralloc_cat(out,&qline)) die_nomem();
+	stralloc_cat(out,&qline);
 	break;
       case 'R':
-	if (!stralloc_cats(out,confirm)) die_nomem();
+	stralloc_cats(out,confirm);
 	break;
       case 'T':
-	if (!stralloc_catb(out,strnum,fmt_ulong(strnum,(unsigned long )when))) die_nomem();
+	stralloc_catb(out,strnum,fmt_ulong(strnum,(unsigned long )when));
 	break;
       case 'X':
-	if (!stralloc_cats(out,action)) die_nomem();
+	stralloc_cats(out,action);
 	break;
       case 'a':
-	if (!stralloc_catb(out,target,targetlocal)) die_nomem();
+	stralloc_catb(out,target,targetlocal);
 	break;
       case 'c':
-	if (!stralloc_catb(out,confirm+confirmprefix,
-			   confirmlocal-confirmprefix)) die_nomem();
+	stralloc_catb(out,confirm+confirmprefix,confirmlocal-confirmprefix);
 	break;
       case 'd':
 	if (listdir != 0)
-	  if (!stralloc_cats(out,listdir)) die_nomem();
+	  stralloc_cats(out,listdir);
 	break;
       case 'r':
-	if (!stralloc_catb(out,confirm,confirmlocal)) die_nomem();
+	stralloc_catb(out,confirm,confirmlocal);
 	break;
       case 'l':
 	if (!quote(&qline,&outlocal)) die_nomem();
-	if (!stralloc_cat(out,&qline)) die_nomem();
+	stralloc_cat(out,&qline);
 	break;
       case 'h':
       case 'H':
-	if (!stralloc_cat(out,&outhost)) die_nomem();
+	stralloc_cat(out,&outhost);
 	break;
       case 't':
 	if (q == 'H') strerr_die1x(111,MSG(ERR_SUBST_UNSAFE));
-	if (!stralloc_cats(out,verptarget)) die_nomem();
+	stralloc_cats(out,verptarget);
 	break;
       case 'n':
-	if (!stralloc_cats(out,szmsgnum)) die_nomem();
+	stralloc_cats(out,szmsgnum);
 	break;
       case '0':
       case '1':
@@ -209,8 +207,7 @@ void copy_xlate(stralloc *out,
       case '9':
 	if (params != 0)
 	  if (params[line->s[pos+2]-'0'] != 0)
-	    if (!stralloc_cats(out,params[line->s[pos+2]-'0']))
-	      die_nomem();
+	    stralloc_cats(out,params[line->s[pos+2]-'0']);
 	break;
       default:
 	break;			/* unknown tags killed */
@@ -220,8 +217,7 @@ void copy_xlate(stralloc *out,
     } else
       ++pos;				/* try next position */
   }
-  if (!stralloc_catb(out,line->s+nextpos,line->len-nextpos))
-    die_nomem();		/* remainder */
+  stralloc_catb(out,line->s+nextpos,line->len-nextpos); /* remainder */
 }
 
 void copy(struct qmail *qq,

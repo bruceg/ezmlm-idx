@@ -489,31 +489,29 @@ int checkhash(const char *s)
 
 int makefn(stralloc *sa,int item,unsigned long n,const char *hash)
 {
-  if (!stralloc_copys(sa,"archive/")) die_nomem();
+  stralloc_copys(sa,"archive/");
   if (item == ITEM_MESSAGE) {
-    if (!stralloc_catb(sa,strnum,fmt_ulong(strnum, n / 100))) die_nomem();
-    if (!stralloc_cats(sa,"/")) die_nomem();
-    if (!stralloc_catb(sa,strnum,fmt_uint0(strnum,(unsigned int) (n % 100),2)))
-			die_nomem();
+    stralloc_catb(sa,strnum,fmt_ulong(strnum, n / 100));
+    stralloc_cats(sa,"/");
+    stralloc_catb(sa,strnum,fmt_uint0(strnum,(unsigned int) (n % 100),2));
   } else if (item == ITEM_DATE) {
-    if (!stralloc_cats(sa,"threads/")) die_nomem();
-    if (!stralloc_catb(sa,strnum,fmt_ulong(strnum,n)))
-	die_nomem();
+    stralloc_cats(sa,"threads/");
+    stralloc_catb(sa,strnum,fmt_ulong(strnum,n));
   } else if (item == ITEM_INDEX) {
-    if (!stralloc_catb(sa,strnum,fmt_ulong(strnum, n / 100))) die_nomem();
-    if (!stralloc_cats(sa,"/index")) die_nomem();
+    stralloc_catb(sa,strnum,fmt_ulong(strnum, n / 100));
+    stralloc_cats(sa,"/index");
   } else {
     if (item == ITEM_AUTHOR) {
-      if (!stralloc_cats(sa,"authors/")) die_nomem();
+      stralloc_cats(sa,"authors/");
     } else {
-      if (!stralloc_cats(sa,"subjects/")) die_nomem();
+      stralloc_cats(sa,"subjects/");
     }
     if (!hash) return 0;
-    if (!stralloc_catb(sa,hash,2)) die_nomem();
-    if (!stralloc_cats(sa,"/")) die_nomem();
-    if (!stralloc_catb(sa,hash+2,HASHLEN-2)) die_nomem();
+    stralloc_catb(sa,hash,2);
+    stralloc_cats(sa,"/");
+    stralloc_catb(sa,hash+2,HASHLEN-2);
   }
-  if (!stralloc_0(sa)) die_nomem();
+  stralloc_0(sa);
   return 1;
 }
 
@@ -956,10 +954,8 @@ int show_index(struct msginfo *infop)
       strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fn.s));
   }
   substdio_fdbuf(&ssin,read,fd,inbuf,sizeof(inbuf));
-  if (!stralloc_copyb(&line,strnum,
-	fmt_ulong(strnum,(unsigned long) (infop->target / 100))))
-		die_nomem();
-  if (!stralloc_cats(&line,"xx")) die_nomem();
+  stralloc_copyb(&line,strnum,fmt_ulong(strnum,(unsigned long) (infop->target / 100)));
+  stralloc_cats(&line,"xx");
   html_header("Messages ",line.s,line.len,"idxbody",SPC_BANNER | SPC_BASE);
   indexlinks(infop);
   oputs("<div><hr /></div><h1 id=\"idxhdr\">");
@@ -977,8 +973,8 @@ int show_index(struct msginfo *infop)
     pos++;
     if (line.len < pos + 1 + HASHLEN)
        strerr_die2x(100,FATAL,"index line with truncated subject entry");
-    if (!stralloc_copyb(&subject,line.s+pos,HASHLEN)) die_nomem();
-    if (!stralloc_0(&subject)) die_nomem();
+    stralloc_copyb(&subject,line.s+pos,HASHLEN);
+    stralloc_0(&subject);
     infop->axis = ITEM_SUBJECT;
     infop->subject = subject.s;
     oput(strnum,fmt_uint0(strnum,(unsigned int) thismsg % 100,2));
@@ -1207,7 +1203,7 @@ void mime_getarg(stralloc *sa,char **s, unsigned int *l)
 	}
 	cpnext = cp;
       }
-      if (!stralloc_copyb(sa,*s,cp - *s)) die_nomem();
+      stralloc_copyb(sa,*s,cp - *s);
       *l = cpafter - cpnext;		/* always >= 0 */
       *s = cpnext;
       return;
@@ -1219,7 +1215,7 @@ void decode_mime_type(char *s,unsigned int l,unsigned int domime)
   unsigned int r,lt;
   if (!domime || !l) {		/* treat non-MIME as plain text */
     mime_current->mimetype = MIME_TEXT_PLAIN;
-    if (!stralloc_copys(&curcharset,charset)) die_nomem();
+    stralloc_copys(&curcharset,charset);
 	/* should be us-ascii, but this is very likely better */
     return;
   }
@@ -1270,7 +1266,7 @@ void decode_mime_type(char *s,unsigned int l,unsigned int domime)
 		mime_current->charset.len);
       if (cs == CS_BAD) cs = csbase;			/* keep base cs */
       else
-	if (!stralloc_copy(&curcharset,&mime_current->charset)) die_nomem();
+	stralloc_copy(&curcharset,&mime_current->charset);
     } else {						/* skip non LWSP */
       for (;;) {
 	if (!l) break;
@@ -1333,7 +1329,7 @@ int check_boundary()
     }
     tmp = tmp->previous;
   }
-  if (!stralloc_copys(&curcharset,charset)) die_nomem();
+  stralloc_copys(&curcharset,charset);
 			/* suprtfluous since header done by now */
   cs = csbase;
   return 0;
@@ -1352,10 +1348,9 @@ void start_message_page(struct msginfo *infop)
 /* Now, the problem is that we need to "preview" MIME info _before_      */
 /* seeing the start boundary. */
 {
-  if (!stralloc_copyb(&decline,strnum,fmt_ulong(strnum,infop->target)))
-	die_nomem();
-  if (!stralloc_cats(&decline,":")) die_nomem();
-  if (!stralloc_0(&decline)) die_nomem();
+  stralloc_copyb(&decline,strnum,fmt_ulong(strnum,infop->target));
+  stralloc_cats(&decline,":");
+  stralloc_0(&decline);
   decodeHDR(hdr[HDR_SUBJECT - 1].s,hdr[HDR_SUBJECT - 1].len,&line);
   if (!mime_current)
     new_mime();			/* allocate */
@@ -1510,13 +1505,11 @@ void show_part(struct msginfo *infop,int flagshowheaders,int flagstartseen)
 	colpos = byte_chr(line.s,line.len,':');
 	if ((whatheader = constmap_index(&headermap,line.s,colpos))) {
           flaggoodfield = 1;
-	  if (!stralloc_copyb(&hdr[whatheader - 1],line.s + colpos + 1,
-		line.len - colpos - 1)) die_nomem();
+	  stralloc_copyb(&hdr[whatheader - 1],line.s + colpos + 1,line.len - colpos - 1);
 	}
       } else {
 	if (whatheader)
-	  if (!stralloc_catb(&hdr[whatheader - 1],line.s,line.len))
-		die_nomem();
+	  stralloc_catb(&hdr[whatheader - 1],line.s,line.len);
       }
     } else {
       if (flaggoodfield) {
@@ -1526,7 +1519,7 @@ void show_part(struct msginfo *infop,int flagshowheaders,int flagstartseen)
 	  else
 	    decodeB(line.s,line.len,&decline);
 	  if (decline.s[decline.len - 1] == '\n') {	/* complete line */
-	    if (!stralloc_copy(&line,&decline)) die_nomem();
+	    stralloc_copy(&line,&decline);
 	    decline.len = 0;
 	  } else				/* incomplete - wait for next */
 	    line.len = 0;			/* in case URL is split */
@@ -1545,8 +1538,8 @@ int show_message(struct msginfo *infop)
 {
   char *psz;
 
-  if(!stralloc_copys(&headers,(char *) headers_used)) die_nomem();
-  if (!stralloc_0(&headers)) die_nomem();
+  stralloc_copys(&headers,(char *) headers_used);
+  stralloc_0(&headers);
   psz = headers.s;
   while (*psz) {
     if (*psz == '\\') *psz = '\0';
@@ -1651,8 +1644,8 @@ int decode_cmd(char *s,struct msginfo *infop)
     if (!*s++) return 1;	/* skip any char - should be ':' unless NUL */
   }
   if (checkhash(s)) {		/* Ignore if illegal rather than complaining*/
-    if (!stralloc_copyb(&charg,s,HASHLEN)) die_nomem();
-    if (!stralloc_0(&charg)) die_nomem();
+    stralloc_copyb(&charg,s,HASHLEN);
+    stralloc_0(&charg);
     infop->cgiarg = charg.s;
   }
   return 1;
@@ -1684,8 +1677,8 @@ int msg2hash(struct msginfo *infop)
 	    strerr_die1x(100,MSG1(ERR_SYNTAX_MISSING_SEPARATOR,fn.s));
 	  if (line.len < HASHLEN + pos)
 	    strerr_die1x(100,MSG1(ERR_SYNTAX_MISSING_SUBJHASH,fn.s));
-	  if (!stralloc_copyb(&subject,line.s+pos,HASHLEN)) die_nomem();
-	  if (!stralloc_0(&subject)) die_nomem();
+	  stralloc_copyb(&subject,line.s+pos,HASHLEN);
+	  stralloc_0(&subject);
 	  infop->subject = subject.s;
           if (getln(&ssin,&line,&match,'\n') == -1)
             strerr_die2sys(111,FATAL,MSG1(ERR_READ,"index"));
@@ -1699,8 +1692,8 @@ int msg2hash(struct msginfo *infop)
 	  pos++;
 	  if (line.len < HASHLEN + pos)
 	    strerr_die1x(100,MSG1(ERR_SYNTAX_MISSING_AUTHHASH,fn.s));
-	  if (!stralloc_copyb(&author,line.s+pos,HASHLEN)) die_nomem();
-	  if (!stralloc_0(&author)) die_nomem();
+	  stralloc_copyb(&author,line.s+pos,HASHLEN);
+	  stralloc_0(&author);
 	  infop->author = author.s;
 	  close(fd);
 	  return 1;	/* success */
@@ -1748,8 +1741,8 @@ void setmsg(struct msginfo *infop)
     pos = scan_ulong(line.s,&(msgnav[2]));
     if (infop->direction == DIRECT_FIRST && infop->axis == ITEM_DATE) {
       if (pos + HASHLEN + 1 < line.len)
-        if (!stralloc_copyb(&subject,line.s+pos+1,HASHLEN)) die_nomem();
-	if (!stralloc_0(&subject)) die_nomem();
+        stralloc_copyb(&subject,line.s+pos+1,HASHLEN);
+	stralloc_0(&subject);
       break;
     }
     if (msgnav[2] == infop->source) {
@@ -1986,8 +1979,8 @@ void list_set(unsigned long msgset)
 
   flagrobot = 2;
   findlastmsg(&msginfo);
-  if (!stralloc_copys(&line,"<a href=\"../")) die_nomem();
-  if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,msgset))) die_nomem();
+  stralloc_copys(&line,"<a href=\"../");
+  stralloc_catb(&line,strnum,fmt_ulong(strnum,msgset));
   lastset = msginfo.target / 100;
   cache = 2;
   msgfirst = 0;
@@ -2045,9 +2038,9 @@ int main(int argc,char **argv)
   euid = (unsigned long) geteuid();			/* chroot only if 0 */
 
   if (!euid) {
-    if (!stralloc_copys(&line,auto_etc())) die_nomem();
-    if (!stralloc_cats(&line,EZ_CGIRC)) die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
+    stralloc_copys(&line,auto_etc());
+    stralloc_cats(&line,EZ_CGIRC);
+    stralloc_0(&line);
     if ((fd = open_read(line.s)) == -1)			/* open config */
       strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,line.s));
   } else {
@@ -2159,7 +2152,7 @@ int main(int argc,char **argv)
   }
   if (!charset || !*charset)				/* rfc822 default */
     charset = EZ_CHARSET;
-  if (!stralloc_copys(&curcharset,charset)) die_nomem();
+  stralloc_copys(&curcharset,charset);
   csbase = decode_charset(curcharset.s,curcharset.len);
   if (csbase == CS_BAD) csbase = CS_NONE;
   cs = csbase;
@@ -2187,33 +2180,33 @@ int main(int argc,char **argv)
 
 /********************* Get info from server on BASE etc ****************/
 
-  if (!stralloc_copys(&url,"<a href=\"")) die_nomem();
-  if (!stralloc_copys(&base,"<base href=\"http://")) die_nomem();
+  stralloc_copys(&url,"<a href=\"");
+  stralloc_copys(&base,"<base href=\"http://");
   cp = env_get("SERVER_PORT");
   if (cp) {			/* port */
     (void) scan_ulong(cp,&port);
     if ((unsigned int) port == 443) {		/* https: */
-      if (!stralloc_copys(&base,"<base href=\"https://")) die_nomem();
+      stralloc_copys(&base,"<base href=\"https://");
     }
   }
   if ((cp = env_get("HTTP_HOST")) || (cp = env_get("SERVER_NAME"))) {
-    if (!stralloc_cats(&base,cp)) die_nomem();
+    stralloc_cats(&base,cp);
     if (port && (unsigned int) port != 80 && (unsigned int) port != 443) {
-      if (!stralloc_cats(&base,":")) die_nomem();
-      if (!stralloc_catb(&base,strnum,fmt_ulong(strnum,port))) die_nomem();
+      stralloc_cats(&base,":");
+      stralloc_catb(&base,strnum,fmt_ulong(strnum,port));
     }
   }
   if ((cp = env_get("SCRIPT_NAME")) != 0) {
-    if (!stralloc_cats(&base,cp)) die_nomem();
+    stralloc_cats(&base,cp);
     pos = str_rchr(cp,'/');
     if (cp[pos])
-      if (!stralloc_cats(&url,cp + pos + 1)) die_nomem();
+      stralloc_cats(&url,cp + pos + 1);
   }
-  if (!stralloc_cats(&base,"\" />\n")) die_nomem();
-  if (!stralloc_cats(&url,"?")) die_nomem();
+  stralloc_cats(&base,"\" />\n");
+  stralloc_cats(&url,"?");
   if (thislistno) {
-    if (!stralloc_catb(&url,strnum,fmt_ulong(strnum,thislistno))) die_nomem();
-    if (!stralloc_cats(&url,":")) die_nomem();
+    stralloc_catb(&url,strnum,fmt_ulong(strnum,thislistno));
+    stralloc_cats(&url,":");
   }
 
   cache = 1;				/* don't know if we want to cache */

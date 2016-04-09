@@ -38,12 +38,12 @@ static int did_forward;
 
 static const char *makepath(const char *fn)
 {
-  if (!stralloc_copy(&path,&basedir)) die_nomem();
+  stralloc_copy(&path,&basedir);
   if (fn) {
-    if (!stralloc_append(&path,'/')) die_nomem();
-    if (!stralloc_cats(&path,fn)) die_nomem();
+    stralloc_append(&path,'/');
+    stralloc_cats(&path,fn);
   }
-  if (!stralloc_0(&path)) die_nomem();
+  stralloc_0(&path);
   return path.s;
 }
 
@@ -170,8 +170,8 @@ static void dispatch(const char *dir,const char *def)
 {
   if (!is_dir(dir))
     return;
-  if (!stralloc_append(&basedir,'/')) die_nomem();
-  if (!stralloc_cats(&basedir,dir)) die_nomem();
+  stralloc_append(&basedir,'/');
+  stralloc_cats(&basedir,dir);
   /* FIXME: set up $EXT $EXT2 $EXT3 $EXT4 ?  Is it feasable? */
   if (def == 0 || *def == 0)
     execute("editor",0);
@@ -199,7 +199,7 @@ int main(int argc,char **argv)
   optind = getconfopt(argc,argv,options,0,0);
   if (argv[optind] == 0)
     die_usage();
-  if (!stralloc_copys(&basedir,argv[optind++])) die_nomem();
+  stralloc_copys(&basedir,argv[optind++]);
 
   sender = get_sender();
   if (!sender)

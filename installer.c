@@ -71,10 +71,10 @@ stralloc *line;
   i = byte_chr(x,xlen,':'); if (i == xlen) return;
   x[i++] = 0; x += i; xlen -= i;
 
-  if (!stralloc_copys(&target,to)) nomem();
-  if (!stralloc_cats(&target,mid)) nomem();
-  if (!stralloc_cats(&target,name)) nomem();
-  if (!stralloc_0(&target)) nomem();
+  stralloc_copys(&target,to);
+  stralloc_cats(&target,mid);
+  stralloc_cats(&target,name);
+  stralloc_0(&target);
   if (xlen > 0) name = x;
 
   uid = -1; if (*uidstr) scan_ulong(uidstr,&uid);

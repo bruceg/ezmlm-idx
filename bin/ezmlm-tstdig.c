@@ -62,7 +62,7 @@ int main(int argc,char **argv)
     _exit(99);
 
   if (getconf_line(&line,"dignum",0)) {
-    if(!stralloc_0(&line)) die_nomem();
+    stralloc_0(&line);
     pos = scan_ulong(line.s,&dignum);
     if (line.s[pos] == ':')
       pos += 1 + scan_ulong(line.s+pos+1,&digsize);
@@ -99,7 +99,7 @@ int main(int argc,char **argv)
 			/* belongs in ezmlm-digest, but it's too late ....*/
       lockfile("lock");
       getconf_line(&line,"tstdig",0);
-      if (!stralloc_0(&line)) die_nomem();
+      stralloc_0(&line);
       scan_ulong(line.s,&tsttime);	/* give digest 1 h to complete */
 					/* nobody does digests more often */
       if ((tsttime + 3600L < when) || (tsttime <= digwhen)) {

@@ -34,14 +34,14 @@ void decodeB(const char *cpfrom,unsigned int n,stralloc *outdata)
   cpnext = cp + n;
   i = 0;
   hold32 = 0L;
-  if (!stralloc_readyplus(outdata,n)) die_nomem();
+  stralloc_readyplus(outdata,n);
   for (;;) {
     if (i == 4) {
       for (j = 2; j >= 0; --j) {
         holdch[j] = hold32 & 0xff;
         hold32 = hold32 >> 8;
       }
-      if (!stralloc_cats(outdata,holdch)) die_nomem();
+      stralloc_cats(outdata,holdch);
       if (cp >= cpnext)
         break;
       hold32 = 0L;

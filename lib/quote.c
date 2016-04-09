@@ -22,7 +22,7 @@ static int doit(stralloc *saout,const stralloc *sain)
  unsigned int i;
  int j;
 
- if (!stralloc_ready(saout,sain->len * 2 + 2)) return 0;
+ stralloc_ready(saout,sain->len * 2 + 2);
  j = 0;
  saout->s[j++] = '"';
  for (i = 0;i < sain->len;++i)
@@ -57,7 +57,8 @@ int quote_need(const char *s,unsigned int n)
 int quote(stralloc *saout,const stralloc *sain)
 {
  if (quote_need(sain->s,sain->len)) return doit(saout,sain);
- return stralloc_copy(saout,sain);
+ stralloc_copy(saout,sain);
+ return 1;
 }
 
 static stralloc foo = {0};
@@ -66,9 +67,10 @@ int quote2(stralloc *sa,const char *s)
 {
  int j;
  j = str_rchr(s,'@');
- if (!stralloc_copys(&foo,s)) return 0;
+ stralloc_copys(&foo,s);
  if (!s[j]) return quote(sa,&foo);
  foo.len = j;
  if (!quote(sa,&foo)) return 0;
- return stralloc_cats(sa,s + j);
+ stralloc_cats(sa,s + j);
+ return 1;
 }

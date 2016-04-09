@@ -93,25 +93,24 @@ static void dowit(const char *addr,unsigned long when,const stralloc *bounce)
 
   if (!issub(workdir,addr,0)) return;
 
-  if (!stralloc_copys(&fndate,workdir)) die_nomem();
-  if (!stralloc_cats(&fndate,"/bounce/d")) die_nomem();
-  if (!stralloc_0(&fndate)) die_nomem();
+  stralloc_copys(&fndate,workdir);
+  stralloc_cats(&fndate,"/bounce/d");
+  stralloc_0(&fndate);
   fndate.s[fndate.len - 1] = '/';	/* replace '\0' */
   wpos = fndate.len - 1;
   wdir = when / 10000;
   wfile = when - 10000 * wdir;
-  if (!stralloc_catb(&fndate,strnum,fmt_ulong(strnum,wdir))) die_nomem();
-  if (!stralloc_0(&fndate)) die_nomem();
+  stralloc_catb(&fndate,strnum,fmt_ulong(strnum,wdir));
+  stralloc_0(&fndate);
   makedir(fndate.s);
   --fndate.len;				/* remove terminal '\0' */
-  if (!stralloc_cats(&fndate,"/w")) die_nomem();
+  stralloc_cats(&fndate,"/w");
   wpos = fndate.len - 1;
-  if (!stralloc_catb(&fndate,strnum,fmt_ulong(strnum,wfile))) die_nomem();
-  if (!stralloc_cats(&fndate,".")) die_nomem();
-  if (!stralloc_catb(&fndate,strnum,fmt_ulong(strnum,(unsigned long) getpid())))
-	die_nomem();
-  if (!stralloc_0(&fndate)) die_nomem();
-  if (!stralloc_copy(&fndatenew,&fndate)) die_nomem();
+  stralloc_catb(&fndate,strnum,fmt_ulong(strnum,wfile));
+  stralloc_cats(&fndate,".");
+  stralloc_catb(&fndate,strnum,fmt_ulong(strnum,(unsigned long) getpid()));
+  stralloc_0(&fndate);
+  stralloc_copy(&fndatenew,&fndate);
   fndatenew.s[wpos] = 'W';
 
   fd = open_trunc(fndatenew.s);
@@ -145,30 +144,29 @@ static void doit(const char *addr,unsigned long msgnum,unsigned long when,
 
   if (!issub(workdir,addr,0)) return;
 
-  if (!stralloc_copys(&fndate,workdir)) die_nomem();
-  if (!stralloc_cats(&fndate,"/bounce/d")) die_nomem();
-  if (!stralloc_0(&fndate)) die_nomem();
+  stralloc_copys(&fndate,workdir);
+  stralloc_cats(&fndate,"/bounce/d");
+  stralloc_0(&fndate);
   makedir(fndate.s);
   fndate.s[fndate.len-1] = '/';		/* replace terminal '\0' */
   ddir = when / 10000;
   dfile = when - 10000 * ddir;
-  if (!stralloc_catb(&fndate,strnum,fmt_ulong(strnum,ddir))) die_nomem();
-  if (!stralloc_copy(&fndir,&fndate)) die_nomem();
-  if (!stralloc_0(&fndir)) die_nomem();	/* make later if necessary (new addr)*/
-  if (!stralloc_cats(&fndate,"/d")) die_nomem();
+  stralloc_catb(&fndate,strnum,fmt_ulong(strnum,ddir));
+  stralloc_copy(&fndir,&fndate);
+  stralloc_0(&fndir);	/* make later if necessary (new addr)*/
+  stralloc_cats(&fndate,"/d");
   pos = fndate.len - 2;
-  if (!stralloc_catb(&fndate,strnum,fmt_ulong(strnum,dfile))) die_nomem();
-  if (!stralloc_cats(&fndate,".")) die_nomem();
-  if (!stralloc_catb(&fndate,strnum,fmt_ulong(strnum,(unsigned long) getpid())))
-	 die_nomem();
+  stralloc_catb(&fndate,strnum,fmt_ulong(strnum,dfile));
+  stralloc_cats(&fndate,".");
+  stralloc_catb(&fndate,strnum,fmt_ulong(strnum,(unsigned long) getpid()));
   if (addrno) {	/* so that pre-VERP bounces make a d... file per address */
 		/* for the first one we use the std-style fname */
-    if (!stralloc_cats(&fndate,".")) die_nomem();
-    if (!stralloc_catb(&fndate,strnum,fmt_ulong(strnum,addrno))) die_nomem();
+    stralloc_cats(&fndate,".");
+    stralloc_catb(&fndate,strnum,fmt_ulong(strnum,addrno));
   }
   addrno++;	/* get ready for next */
-  if (!stralloc_0(&fndate)) die_nomem();
-  if (!stralloc_copy(&fndatenew,&fndate)) die_nomem();
+  stralloc_0(&fndate);
+  stralloc_copy(&fndatenew,&fndate);
   fndatenew.s[pos] = '_';	/* fndate = bounce/d/nnnn/dmmmmmm */
 				/* fndatenew = bounce/d/nnnn_dmmmmmm */
 
@@ -187,20 +185,20 @@ static void doit(const char *addr,unsigned long msgnum,unsigned long when,
   if (close(fd) == -1) die_datenew(); /* NFS stupidity */
 
   cookie(hash,"",0,"",addr,"");
-  if (!stralloc_copys(&fnhash,workdir)) die_nomem();
-  if (!stralloc_cats(&fnhash,"/bounce/h")) die_nomem();
-  if (!stralloc_0(&fnhash)) die_nomem();
+  stralloc_copys(&fnhash,workdir);
+  stralloc_cats(&fnhash,"/bounce/h");
+  stralloc_0(&fnhash);
   makedir(fnhash.s);
   fnhash.s[fnhash.len - 1] = '/';		/* replace terminal '\0' */
-  if (!stralloc_catb(&fnhash,hash,1)) die_nomem();
-  if (!stralloc_0(&fnhash)) die_nomem();
+  stralloc_catb(&fnhash,hash,1);
+  stralloc_0(&fnhash);
   makedir(fnhash.s);
   --fnhash.len;					/* remove terminal '\0' */
-  if (!stralloc_cats(&fnhash,"/h")) die_nomem();
+  stralloc_cats(&fnhash,"/h");
   pos = fnhash.len - 1;
-  if (!stralloc_catb(&fnhash,hash+1,COOKIE-1)) die_nomem();
-  if (!stralloc_0(&fnhash)) die_nomem();
-  if (!stralloc_copy(&fnhashnew,&fnhash)) die_nomem();
+  stralloc_catb(&fnhash,hash+1,COOKIE-1);
+  stralloc_0(&fnhash);
+  stralloc_copy(&fnhashnew,&fnhash);
   fnhashnew.s[pos] = 'H';
 
   fdnew = open_trunc(fnhashnew.s);
@@ -314,12 +312,12 @@ int main(int argc,char **argv)
       action += COOKIE;
       if (*action++ != '-') die_trash();
       i = str_rchr(action,'=');
-      if (!stralloc_copyb(&line,action,i)) die_nomem();
+      stralloc_copyb(&line,action,i);
       if (action[i]) {
-	if (!stralloc_cats(&line,"@")) die_nomem();
-	if (!stralloc_cats(&line,action + i + 1)) die_nomem();
+	stralloc_cats(&line,"@");
+	stralloc_cats(&line,action + i + 1);
       }
-      if (!stralloc_0(&line)) die_nomem();
+      stralloc_0(&line);
       strnum[fmt_ulong(strnum,cookiedate)] = 0;
       cookie(hash,key.s,key.len,strnum,line.s,"P");
       if (byte_diff(hash,COOKIE,hashcopy)) die_trash();
@@ -328,9 +326,9 @@ int main(int argc,char **argv)
       _exit(99);
     }
 
-    if (!stralloc_copys(&line,workdir)) die_nomem();
-    if (!stralloc_cats(&line,"/lockbounce")) die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
+    stralloc_copys(&line,workdir);
+    stralloc_cats(&line,"/lockbounce");
+    stralloc_0(&line);
 
     lockfile(line.s);
 
@@ -345,12 +343,12 @@ int main(int argc,char **argv)
       action += COOKIE;
       if (*action++ != '-') die_trash();
       i = str_rchr(action,'=');
-      if (!stralloc_copyb(&line,action,i)) die_nomem();
+      stralloc_copyb(&line,action,i);
       if (action[i]) {
-        if (!stralloc_cats(&line,"@")) die_nomem();
-        if (!stralloc_cats(&line,action + i + 1)) die_nomem();
+        stralloc_cats(&line,"@");
+        stralloc_cats(&line,action + i + 1);
       }
-      if (!stralloc_0(&line)) die_nomem();
+      stralloc_0(&line);
       strnum[fmt_ulong(strnum,cookiedate)] = 0;
       cookie(hash,key.s,key.len,strnum,line.s,"W");
       if (byte_diff(hash,COOKIE,hashcopy)) die_trash();
@@ -394,12 +392,12 @@ int main(int argc,char **argv)
 
   if (*action) {
     i = str_rchr(action,'=');
-    if (!stralloc_copyb(&line,action,i)) die_nomem();
+    stralloc_copyb(&line,action,i);
     if (action[i]) {
-      if (!stralloc_cats(&line,"@")) die_nomem();
-      if (!stralloc_cats(&line,action + i + 1)) die_nomem();
+      stralloc_cats(&line,"@");
+      stralloc_cats(&line,action + i + 1);
     }
-    if (!stralloc_0(&line)) die_nomem();
+    stralloc_0(&line);
     if (slurpclose(0,&bounce,1024) == -1) die_msgin();
     doit(line.s,msgnum,when,&bounce);
     _exit(99);
@@ -413,16 +411,16 @@ int main(int argc,char **argv)
   flaghaveintro = 0;
 
   for (;;) {
-    if (!stralloc_copys(&paragraph,"")) die_nomem();
+    stralloc_copys(&paragraph,"");
     for (;;) {
       if (getln(&ssmsgin,&line,&match,'\n') == -1) die_msgin();
       if (!match) die_trash();
-      if (!stralloc_cat(&paragraph,&line)) die_nomem();
+      stralloc_cat(&paragraph,&line);
       if (line.len <= 1) break;
     }
 
     if (!flaghaveheader) {
-      if (!stralloc_copy(&header,&paragraph)) die_nomem();
+      stralloc_copy(&header,&paragraph);
       flaghaveheader = 1;
       continue;
     }
@@ -432,7 +430,7 @@ int main(int argc,char **argv)
         continue;		/* skip MIME boundary if it exists */
       if (paragraph.len < 15) die_trash();
       if (str_diffn(paragraph.s,"Hi. This is the",15)) die_trash();
-      if (!stralloc_copy(&intro,&paragraph)) die_nomem();
+      stralloc_copy(&intro,&paragraph);
       flaghaveintro = 1;
       continue;
     }
@@ -441,18 +439,18 @@ int main(int argc,char **argv)
       break;
 
     if (paragraph.s[0] == '<') {
-      if (!stralloc_copy(&failure,&paragraph)) die_nomem();
+      stralloc_copy(&failure,&paragraph);
 
-      if (!stralloc_copy(&bounce,&header)) die_nomem();
-      if (!stralloc_cat(&bounce,&intro)) die_nomem();
-      if (!stralloc_cat(&bounce,&failure)) die_nomem();
+      stralloc_copy(&bounce,&header);
+      stralloc_cat(&bounce,&intro);
+      stralloc_cat(&bounce,&failure);
 
       i = byte_chr(failure.s,failure.len,'\n');
       if (i < 3) die_trash();
 
-      if (!stralloc_copyb(&line,failure.s + 1,i - 3)) die_nomem();
+      stralloc_copyb(&line,failure.s + 1,i - 3);
       if (byte_chr(line.s,line.len,'\0') == line.len) {
-        if (!stralloc_0(&line)) die_nomem();
+        stralloc_0(&line);
         if (flagmaster) {				/* bounced msg slave! */
 	  if ((i = str_rchr(line.s,'@')) >= 5) {	/* 00_52@host */
 	    line.s[i] = '\0';				/* 00_52 */

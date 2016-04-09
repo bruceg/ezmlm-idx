@@ -14,7 +14,7 @@ int dns_name_packet(stralloc *out,const char *buf,unsigned int len)
   uint16 numanswers;
   uint16 datalen;
 
-  if (!stralloc_copys(out,"")) return -1;
+  stralloc_copys(out,"");
 
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) return -1;
   uint16_unpack_big(header + 6,&numanswers);

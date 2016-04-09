@@ -87,10 +87,10 @@ static char sz = '?';
 void keyadd(unsigned long u)
 {
   char ch;
-  ch = (char) u; if (!stralloc_append(&key,ch)) die_nomem(); u >>= 8;
-  ch = (char) u; if (!stralloc_append(&key,ch)) die_nomem(); u >>= 8;
-  ch = (char) u; if (!stralloc_append(&key,ch)) die_nomem(); u >>= 8;
-  ch = (char) u; if (!stralloc_append(&key,ch)) die_nomem();
+  ch = (char) u; stralloc_append(&key,ch); u >>= 8;
+  ch = (char) u; stralloc_append(&key,ch); u >>= 8;
+  ch = (char) u; stralloc_append(&key,ch); u >>= 8;
+  ch = (char) u; stralloc_append(&key,ch);
 }
 
 void keyaddtime(void)
@@ -112,16 +112,16 @@ static int usecfg = 0;
 
 void dirplusmake(const char *slash)
 {
-  if (!stralloc_copy(&dirplus,&dir)) die_nomem();
-  if (!stralloc_cats(&dirplus,slash)) die_nomem();
-  if (!stralloc_0(&dirplus)) die_nomem();
+  stralloc_copy(&dirplus,&dir);
+  stralloc_cats(&dirplus,slash);
+  stralloc_0(&dirplus);
 }
 
 void linkdotdir(const char *dash,const char *slash)
 {
-  if (!stralloc_copy(&dotplus,&dot)) die_nomem();
-  if (!stralloc_cats(&dotplus,dash)) die_nomem();
-  if (!stralloc_0(&dotplus)) die_nomem();
+  stralloc_copy(&dotplus,&dot);
+  stralloc_cats(&dotplus,dash);
+  stralloc_0(&dotplus);
   dirplusmake(slash);
   if (flags['e' - 'a'])
     if (unlink(dotplus.s) == -1)
@@ -231,8 +231,8 @@ void read_files(void)
   read_line("/owner",&popt[5]);
   if (read_line("/subdb",&popt[6]) != 0
       && read_line("/sql",&line) == 0) {
-    if (!stralloc_copyb(&popt[6],"sql:",4)) die_nomem();
-    if (!stralloc_catb(&popt[6],line.s,line.len)) die_nomem();
+    stralloc_copyb(&popt[6],"sql:",4);
+    stralloc_catb(&popt[6],line.s,line.len);
   }
   read_line("/modpost",&popt[7]);
   read_line("/modsub",&popt[8]);
@@ -241,7 +241,7 @@ void read_files(void)
 
 int read_file_config(void)
 {
-  if (!stralloc_copys(&oldflags,"-ABCDEFGHIJKLMNOPqRSTUVWXYZ")) die_nomem();
+  stralloc_copys(&oldflags,"-ABCDEFGHIJKLMNOPqRSTUVWXYZ");
   oldflags.s[1] = "Aa"[exists("/archived")];
   oldflags.s[2] = "Bb"[exists("/modgetonly")];
   //oldflags.s[3] = "Cc"[exists("/ezmlmrc")]; /* Should always end up set */
@@ -303,18 +303,18 @@ int read_old_config(void)
       switch (ch = line.s[0]) {
       case 'X':
 	if (euid > 0 && !flags['c' - 'a'] && (cfname.len == 0))
-	  if (!stralloc_copys(&cfname,line.s+2)) die_nomem();
+	  stralloc_copys(&cfname,line.s+2);
 	break;	/* for safety: ignore if root */
-      case 'T': if (!stralloc_copys(&dot,line.s+2)) die_nomem(); break;
-      case 'L': if (!stralloc_copys(&local,line.s+2)) die_nomem(); break;
-      case 'H': if (!stralloc_copys(&host,line.s+2)) die_nomem(); break;
-      case 'C': if (!stralloc_copys(&code,line.s+2)) die_nomem(); break;
-      case 'F': if (!stralloc_copys(&oldflags,line.s+2)) die_nomem(); break;
+      case 'T': stralloc_copys(&dot,line.s+2); break;
+      case 'L': stralloc_copys(&local,line.s+2); break;
+      case 'H': stralloc_copys(&host,line.s+2); break;
+      case 'C': stralloc_copys(&code,line.s+2); break;
+      case 'F': stralloc_copys(&oldflags,line.s+2); break;
       case 'D': break;	/* no reason to check */
       default:
 	if (ch == '0' || (ch >= '3' && ch <= '9')) {
 	  if (usecfg && popt[ch - '0'].len == 0)
-	    if (!stralloc_copys(&popt[ch-'0'],line.s+2)) die_nomem();
+	    stralloc_copys(&popt[ch-'0'],line.s+2);
 	} else
 	  strerr_die4x(111,FATAL,MSG1(ERR_SYNTAX,dirplus.s),": ",line.s+2);
 	break;
@@ -329,13 +329,13 @@ static int open_template(stralloc *fn)
 {
   int fd;
   struct stat st;
-  if (!stralloc_0(fn)) die_nomem();
+  stralloc_0(fn);
   if (stat(fn->s,&st) == -1)
     strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fn->s));
   if (S_ISDIR(st.st_mode)) {
     --fn->len;
-    if (!stralloc_cats(fn,TXT_EZMLMRC)) die_nomem();
-    if (!stralloc_0(fn)) die_nomem();
+    stralloc_cats(fn,TXT_EZMLMRC);
+    stralloc_0(fn);
   }
   if ((fd = open_read(fn->s)) == -1) {
     if (errno != error_noent)
@@ -386,14 +386,14 @@ int main(int argc,char **argv)
     if (opt == 'v' || opt == 'V')
       strerr_die2x(0,"ezmlm-make version: ",auto_version);
     if (opt =='C')	/* treat this like nl switch to allow override of -c*/
-      if (!stralloc_copys(&cfname,optarg)) die_nomem();
+      stralloc_copys(&cfname,optarg);
     if (opt >= 'a' && opt <= 'z') {
       flags[opt - 'a'] = 3;		/* Dominant "set" */
       if (opt == 'e') flagforce++;	/* two 'e' => ignore 'E' */
     } else if (opt >= 'A' && opt <= 'Z')
       flags[opt - 'A'] = 2;		/* Dominant "unset" */
     else if (opt >= '0' && opt <= '9') {
-      if (!stralloc_copys(&popt[opt-'0'],optarg)) die_nomem();
+      stralloc_copys(&popt[opt-'0'],optarg);
     }
     else if (opt == '+') {
       flagforce_p++;		/* two '+' => ignore 'E' */
@@ -410,7 +410,7 @@ int main(int argc,char **argv)
     flagforce = 0;
 
   if (*argv == 0) die_usage();
-  if (!stralloc_copys(&dir,*argv++)) die_nomem();
+  stralloc_copys(&dir,*argv++);
   if (dir.s[0] != '/') die_relative();
   if (byte_chr(dir.s,dir.len,'\'') < dir.len) die_quote();
   if (byte_chr(dir.s,dir.len,'\n') < dir.len) die_newline();
@@ -425,17 +425,17 @@ int main(int argc,char **argv)
   }
 
   if ((p = *argv++) != 0) {
-    if (!stralloc_copys(&dot,p)) die_nomem();
+    stralloc_copys(&dot,p);
     if ((p = *argv++) != 0) {
       if (local.len == 0 || str_diff(local.s,p))
 	flagforce = 1;		/* must rewrite if list name changed */
-      if (!stralloc_copys(&local,p)) die_nomem();
+      stralloc_copys(&local,p);
       if ((p = *argv++) != 0) {
 	if (host.len == 0 || str_diff(host.s,p))
 	  flagforce = 1;	/* must rewrite if list name changed */
-	if (!stralloc_copys(&host,p)) die_nomem();
+	stralloc_copys(&host,p);
 	if ((p = *argv++) != 0) {
-	  if (!stralloc_copys(&code,p)) die_nomem();
+	  stralloc_copys(&code,p);
         }
       }
     }
@@ -476,31 +476,31 @@ int main(int argc,char **argv)
   if (byte_chr(host.s,host.len,'\n') < host.len) die_newline();
 
 	/* build 'f' for <#F#> */
-  if (!stralloc_ready(&f,28)) die_nomem();
-  if (!stralloc_copys(&f,"-")) die_nomem();
+  stralloc_ready(&f,28);
+  stralloc_copys(&f,"-");
   for (ch = 0; ch <= 'z' - 'a'; ch++) {		/* build string with flags */
     if (flags[ch])
       sz = 'a' + ch;
     else
       sz = 'A' + ch;
-    if (!stralloc_append(&f,sz)) die_nomem();
+    stralloc_append(&f,sz);
   }
 
   fdin = -1;	/* assure failure for .ezmlmrc in case flags['c'-'a'] = 0 */
   slpos = dot.len;
   while ((--slpos > 0) && dot.s[slpos] != '/');
   if (dot.s[slpos] == '/') {
-    if (!stralloc_copyb(&template,dot.s,slpos+1)) die_nomem();	/* dot dir */
+    stralloc_copyb(&template,dot.s,slpos+1);	/* dot dir */
     slpos += byte_chr(dot.s+slpos,dot.len-slpos,'-');
     if (dot.s[slpos]) {
       slpos++;
       if (slpos < dot.len
 	  && (pos = slpos+byte_chr(dot.s+slpos,dot.len-slpos,'-')) < dot.len) {
-        if (!stralloc_copyb(&popt[1],dot.s+slpos,pos-slpos)) die_nomem();
+        stralloc_copyb(&popt[1],dot.s+slpos,pos-slpos);
         pos++;
 	if (pos < dot.len
 	    && (slpos = pos+byte_chr(dot.s+pos,dot.len-pos,'-')) < dot.len)
-          if (!stralloc_copyb(&popt[2],dot.s+pos,slpos-pos)) die_nomem();
+          stralloc_copyb(&popt[2],dot.s+pos,slpos-pos);
       }
     }
   }
@@ -508,14 +508,14 @@ int main(int argc,char **argv)
 	/* (if exists and != '') points to the file name to use instead. */
   if (flags['c'-'a'] || (cfname.len > 0)) {
     if (!flags['c'-'a']) {	/* i.e. there is a cfname specified */
-      if (!stralloc_copy(&template,&cfname)) die_nomem();
+      stralloc_copy(&template,&cfname);
     } else
-      if (!stralloc_cats(&template,TXT_DOTEZMLMRC)) die_nomem();
+      stralloc_cats(&template,TXT_DOTEZMLMRC);
     fdin = open_template(&template);
   } else {
     /* /etc/ezmlm/default/ezmlmrc */
-    if (!stralloc_copys(&template,auto_etc())) die_nomem();
-    if (!stralloc_cats(&template,TXT_DEFAULT)) die_nomem();
+    stralloc_copys(&template,auto_etc());
+    stralloc_cats(&template,TXT_DEFAULT);
     fdin = open_template(&template);
   }
 
@@ -525,7 +525,7 @@ int main(int argc,char **argv)
 			/* at the end except in -e[dit] mode.           */
 
   substdio_fdbuf(&sstext,read,fdin,textbuf,sizeof(textbuf));
-  if (!stralloc_0(&oldfname)) die_nomem();		/* init oldfname */
+  stralloc_0(&oldfname);		/* init oldfname */
   flagdo = 0;
 
   if (getln(&sstext,&line,&match,'\n') == -1)
@@ -550,7 +550,7 @@ int main(int argc,char **argv)
       break;
     if (line.s[0] == '#')				/* comment */
       continue;
-    if (!stralloc_0(&line)) die_nomem();
+    stralloc_0(&line);
     if (line.s[0] == '<' && line.s[1] == '/') {		/* tag */
       if (byte_chr(line.s,line.len,'.') < line.len)
 	strerr_die4x(100,FATAL,MSG(ERR_PERIOD),": ",line.s);
@@ -602,9 +602,9 @@ int main(int argc,char **argv)
       if (line.s[2] == '+') {			/* mkdir */
         if (!flagdo)
           continue;
-        if (!stralloc_copys(&dname,"/")) die_nomem();
-        if (!stralloc_catb(&dname,line.s+3,pos-3)) die_nomem();
-        if (!stralloc_0(&dname)) die_nomem();
+        stralloc_copys(&dname,"/");
+        stralloc_catb(&dname,line.s+3,pos-3);
+        stralloc_0(&dname);
         dcreate(dname.s);
         flagdo = 0;
         continue;
@@ -614,19 +614,19 @@ int main(int argc,char **argv)
         slpos = byte_chr(line.s+3,line.len-3,'/') + 3;
         if (slpos >= pos)
           strerr_die2x(100,FATAL,MSG1(ERR_LINKDIR,line.s));
-        if (!stralloc_copyb(&dname,line.s+slpos,pos-slpos)) die_nomem();
-        if (!stralloc_copyb(&lname,line.s+3,slpos-3)) die_nomem();
-        if (!stralloc_0(&dname)) die_nomem();
-        if (!stralloc_0(&lname)) die_nomem();
+        stralloc_copyb(&dname,line.s+slpos,pos-slpos);
+        stralloc_copyb(&lname,line.s+3,slpos-3);
+        stralloc_0(&dname);
+        stralloc_0(&lname);
         linkdotdir(lname.s,dname.s);
         flagdo = 0;
         continue;
       } else if (line.s[2] == '-') {		/* rm */
         if (!flagdo)
           continue;
-        if (!stralloc_copys(&dname,"/")) die_nomem();
-        if (!stralloc_catb(&dname,line.s+3,pos-3)) die_nomem();
-        if (!stralloc_0(&dname)) die_nomem();
+        stralloc_copys(&dname,"/");
+        stralloc_catb(&dname,line.s+3,pos-3);
+        stralloc_0(&dname);
         frm(dname.s);
         flagdo = 0;
         continue;
@@ -634,8 +634,8 @@ int main(int argc,char **argv)
 						/* only plain files left */
 						/* first get file name */
       if (pos > 2) {			/* </#ai/> => add to open file */
-        if (!stralloc_copyb(&fname,line.s+1,pos-1)) die_nomem();
-        if (!stralloc_0(&fname)) die_nomem();
+        stralloc_copyb(&fname,line.s+1,pos-1);
+        stralloc_0(&fname);
       }
 
       if (str_diff(fname.s, oldfname.s)) {
@@ -656,14 +656,14 @@ int main(int argc,char **argv)
         }
         if (oldfname.len > 1) {
           f_close();
-          if (!stralloc_copys(&oldfname,"")) die_nomem();
-          if (!stralloc_0(&oldfname)) die_nomem();
+          stralloc_copys(&oldfname,"");
+          stralloc_0(&oldfname);
           }
           if (flagdo && flagnotexist) {
             if (!fname.len)
               strerr_die2x(100,FATAL,MSG1(ERR_FILENAME,line.s));
             f_open(fname.s);
-           if (!stralloc_copy(&oldfname,&fname)) die_nomem();
+           stralloc_copy(&oldfname,&fname);
           }
         }
 	if (flagdo) flagdo = flagnotexist;
@@ -680,49 +680,46 @@ int main(int argc,char **argv)
           line.s[pos+2] &&
           line.s[pos+3] == '#' &&
           line.s[pos+4] == '>') {	/* host/local */
-        if (!stralloc_catb(&outline,line.s+last+1,pos-last-1))
-                die_nomem();
+        stralloc_catb(&outline,line.s+last+1,pos-last-1);
         switch (line.s[pos+2]) {
           case 'B':		/* path to ezmlm binaries (no trailing /) */
-            if (!stralloc_cats(&outline,auto_bin())) die_nomem();
+            stralloc_cats(&outline,auto_bin());
             last = pos + 4; next = pos + 5; break;
           case 'C':		/* digestcode */
-	    if (!stralloc_cat(&outline,&code)) die_nomem();
+	    stralloc_cat(&outline,&code);
             last = pos + 4; next = pos + 5; break;
           case 'D':		/* listdir */
-            if (!stralloc_cat(&outline,&dir)) die_nomem();
+            stralloc_cat(&outline,&dir);
             last = pos + 4; next = pos + 5; break;
           case 'F':		/* flags */
-            if (!stralloc_cat(&outline,&f)) die_nomem();
+            stralloc_cat(&outline,&f);
             last = pos + 4; next = pos + 5; break;
           case 'H':		/* hostname */
-            if (!stralloc_cat(&outline,&host)) die_nomem();
+            stralloc_cat(&outline,&host);
             last = pos + 4; next = pos + 5; break;
           case 'L':		/* local */
-            if (!stralloc_cat(&outline,&local)) die_nomem();
+            stralloc_cat(&outline,&local);
             last = pos + 4; next = pos + 5; break;
           case 'T':		/* dot */
-            if (!stralloc_cat(&outline,&dot)) die_nomem();
+            stralloc_cat(&outline,&dot);
             last = pos + 4; next = pos + 5; break;
           case 'X':		/* config file name */
-	    if (!stralloc_cat(&outline,&cfname)) die_nomem();
+	    stralloc_cat(&outline,&cfname);
             last = pos + 4; next = pos + 5; break;
           default:		/* copy unknown tag as is for e.g. <#A#> and*/
 				/* <#R#> to be processed by -manage/store   */
                                 /* stuff in args for <#0#> .. <#9#> */
             if ((line.s[pos+2] >= '0') && (line.s[pos+2] <= '9')) {
-	      if (!stralloc_cat(&outline,&popt[line.s[pos+2]-'0']))
-		die_nomem();
+	      stralloc_cat(&outline,&popt[line.s[pos+2]-'0']);
             } else
-              if (!stralloc_catb(&outline,line.s+pos,5)) die_nomem();
+              stralloc_catb(&outline,line.s+pos,5);
             last = pos + 4; next = pos + 5; break;
         }
       } else {			/* not tag */
 	if (pos < line.len) {
           next++;
         } else {
-          if (!stralloc_catb(&outline,line.s+last+1,line.len-last-1))
-            die_nomem();
+          stralloc_catb(&outline,line.s+last+1,line.len-last-1);
           f_puts(outline.s);
           break;
         }
@@ -740,10 +737,10 @@ int main(int argc,char **argv)
     f_close();
   }
 
-  if (!stralloc_0(&dir)) die_nomem();
+  stralloc_0(&dir);
   wrap_chdir(dir.s);
   if (popt[6].len > 0) {
-    if (!stralloc_0(&popt[6])) die_nomem();
+    stralloc_0(&popt[6]);
     initsub(popt[6].s);
   }
   else

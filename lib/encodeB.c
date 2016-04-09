@@ -71,8 +71,8 @@ void encodeB(const char *indata,unsigned int n,stralloc *outdata,
     pos = 0;
     i = 0;
   }
-  if (!stralloc_copys(outdata,"")) die_nomem();
-  if (!stralloc_ready(outdata,n*8/3 + n/72 + 5)) die_nomem();
+  stralloc_copys(outdata,"");
+  stralloc_ready(outdata,n*8/3 + n/72 + 5);
   cpout = (unsigned char *) outdata->s;
   while (n--) {
     ch = *indata++;

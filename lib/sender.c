@@ -28,10 +28,10 @@ static int decode_srs(const char *s)
   ++sep1;
   ++sep2;
 
-  if (!stralloc_copyb(&realsender,s+sep2,at-sep2)) die_nomem();
-  if (!stralloc_append(&realsender,'@')) die_nomem();
-  if (!stralloc_catb(&realsender,s+sep1,sep2-sep1-1)) die_nomem();
-  if (!stralloc_0(&realsender)) die_nomem();
+  stralloc_copyb(&realsender,s+sep2,at-sep2);
+  stralloc_append(&realsender,'@');
+  stralloc_catb(&realsender,s+sep1,sep2-sep1-1);
+  stralloc_0(&realsender);
   return 1;
 }
 
@@ -78,17 +78,17 @@ static int decode_prvs(const char *s)
   if (sep >= at)
     return 0;
   if (is_batv_tag(s+5,sep-5)) {
-    if (!stralloc_copys(&realsender,s+sep+1)) die_nomem();
-    if (!stralloc_0(&realsender)) die_nomem();
+    stralloc_copys(&realsender,s+sep+1);
+    stralloc_0(&realsender);
     return 1;
   }
   /* Format: prvs=USER=TAG@example.com */
   for (sep = at - 1; sep > 5 && s[sep] != '='; --sep)
     ;
   if (is_batv_tag(s + sep + 1, at - sep - 1)) {
-    if (!stralloc_copyb(&realsender,s+5,sep-5)) die_nomem();
-    if (!stralloc_cats(&realsender,s+at)) die_nomem();
-    if (!stralloc_0(&realsender)) die_nomem();
+    stralloc_copyb(&realsender,s+5,sep-5);
+    stralloc_cats(&realsender,s+at);
+    stralloc_0(&realsender);
     return 1;
   }
   return 0;
@@ -107,8 +107,8 @@ static int decode_btv1(const char* s)
     for (sep = at - 1; sep > 6; --sep) {
       if (s[sep] == '=' && s[sep+1] == '=') {
 	if (is_batv_tag(s+6,sep-6)) {
-	  if (!stralloc_copys(&realsender,s+sep+2)) die_nomem();
-	  if (!stralloc_0(&realsender)) die_nomem();
+	  stralloc_copys(&realsender,s+sep+2);
+	  stralloc_0(&realsender);
 	  return 1;
 	}
 	break;

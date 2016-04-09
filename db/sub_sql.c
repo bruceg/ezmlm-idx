@@ -30,10 +30,10 @@ static void make_name(struct subdbinfo *info,
 		      const char *suffix2,
 		      int terminate)
 {
-  if (!stralloc_copys(&name,info->base_table)) die_nomem();
-  if (suffix1 && !stralloc_cats(&name,suffix1)) die_nomem();
-  if (suffix2 && !stralloc_cats(&name,suffix2)) die_nomem();
-  if (terminate && !stralloc_0(&name)) die_nomem();
+  stralloc_copys(&name,info->base_table);
+  if (suffix1) stralloc_cats(&name,suffix1);
+  if (suffix2) stralloc_cats(&name,suffix2);
+  if (terminate) stralloc_0(&name);
 }
 
 /* Checks the hash against the cookie table. If it matches, returns NULL,
@@ -51,12 +51,12 @@ const char *sub_sql_checktag (struct subdbinfo *info,
   /* SELECT msgnum FROM table_cookie WHERE msgnum=num and cookie='hash' */
   /* succeeds only is everything correct. */
   if (listno) {			/* only for slaves */
-    if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,listno))) die_nomem();
-    if (!stralloc_copyb(&params[1],strnum,fmt_ulong(strnum,num))) die_nomem();
-    if (!stralloc_copys(&query,"SELECT listno FROM ")) die_nomem();
-    if (!stralloc_cats(&query,info->base_table)) die_nomem();
-    if (!stralloc_cats(&query,"_mlog WHERE ")) die_nomem();
-    if (!stralloc_cats(&query,sql_checktag_listno_where_defn)) die_nomem();
+    stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,listno));
+    stralloc_copyb(&params[1],strnum,fmt_ulong(strnum,num));
+    stralloc_copys(&query,"SELECT listno FROM ");
+    stralloc_cats(&query,info->base_table);
+    stralloc_cats(&query,"_mlog WHERE ");
+    stralloc_cats(&query,sql_checktag_listno_where_defn);
 
     result = sql_select(info,&query,2,params);
     if (sql_fetch_row(info,result,1,params)) {
@@ -67,13 +67,13 @@ const char *sub_sql_checktag (struct subdbinfo *info,
     sql_free_result(info,result);
   }
 
-  if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,num))) die_nomem();
-  if (!stralloc_copyb(&params[1],hash,COOKIE)) die_nomem();
+  stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,num));
+  stralloc_copyb(&params[1],hash,COOKIE);
 
-  if (!stralloc_copys(&query,"SELECT msgnum FROM ")) die_nomem();
-  if (!stralloc_cats(&query,info->base_table)) die_nomem();
-  if (!stralloc_cats(&query,"_cookie WHERE ")) die_nomem();
-  if (!stralloc_cats(&query,sql_checktag_msgnum_where_defn)) die_nomem();
+  stralloc_copys(&query,"SELECT msgnum FROM ");
+  stralloc_cats(&query,info->base_table);
+  stralloc_cats(&query,"_cookie WHERE ");
+  stralloc_cats(&query,sql_checktag_msgnum_where_defn);
 
   result = sql_select(info,&query,2,params);
   if (!sql_fetch_row(info,result,1,params)) {
@@ -104,16 +104,16 @@ int sub_sql_issub(struct subdbinfo *info,
   make_name(info,table?"_":0,table,0);
 
   /* Lower-case the domain portion */
-  if (!stralloc_copys(&addr,userhost)) die_nomem();
+  stralloc_copys(&addr,userhost);
   j = byte_rchr(addr.s,addr.len,'@');
   if (j == addr.len)
     return 0;
   case_lowerb(addr.s + j + 1,addr.len - j - 1);
 
-  if (!stralloc_copys(&query,"SELECT address FROM ")) die_nomem();
-  if (!stralloc_cat(&query,&name)) die_nomem();
-  if (!stralloc_cats(&query," WHERE ")) die_nomem();
-  if (!stralloc_cats(&query,sql_issub_where_defn)) die_nomem();
+  stralloc_copys(&query,"SELECT address FROM ");
+  stralloc_cat(&query,&name);
+  stralloc_cats(&query," WHERE ");
+  stralloc_cats(&query,sql_issub_where_defn);
 
   result = sql_select(info,&query,1,&addr);
 
@@ -124,8 +124,8 @@ int sub_sql_issub(struct subdbinfo *info,
      * user-*@host, but we still want to make sure to send to e.g the
      * correct moderator address. */
     if (recorded != 0) {
-      if (!stralloc_copy(recorded,&addr)) die_nomem();
-      if (!stralloc_0(recorded)) die_nomem();
+      stralloc_copy(recorded,&addr);
+      stralloc_0(recorded);
     }
     ret = 1;
   }
@@ -144,22 +144,20 @@ const char *sub_sql_logmsg(struct subdbinfo *info,
   char *s;
   char strnum[FMT_ULONG];
 
-  if (!stralloc_copys(&query,"INSERT INTO ")) die_nomem();
-  if (!stralloc_cats(&query,info->base_table)) die_nomem();
-  if (!stralloc_cats(&query,"_mlog (msgnum,listno,subs,done) VALUES "))
-	die_nomem();
-  if (!stralloc_cats(&query,sql_logmsg_values_defn)) die_nomem();
-  if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,num))) die_nomem();
-  if (!stralloc_copyb(&params[1],strnum,fmt_ulong(strnum,listno)))
-	die_nomem();
-  if (!stralloc_copyb(&params[2],strnum,fmt_ulong(strnum,subs))) die_nomem();
+  stralloc_copys(&query,"INSERT INTO ");
+  stralloc_cats(&query,info->base_table);
+  stralloc_cats(&query,"_mlog (msgnum,listno,subs,done) VALUES ");
+  stralloc_cats(&query,sql_logmsg_values_defn);
+  stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,num));
+  stralloc_copyb(&params[1],strnum,fmt_ulong(strnum,listno));
+  stralloc_copyb(&params[2],strnum,fmt_ulong(strnum,subs));
   s = strnum;
   if (done < 0) {
     done = - done;
     *s++ = '-';
   }
   s[fmt_uint(s,done)] = 0;
-  if (!stralloc_copys(&params[3],s)) die_nomem();
+  stralloc_copys(&params[3],s);
 
   sql_exec(info,&query,4,params); /* ignore dups */
   return 0;
@@ -180,16 +178,15 @@ unsigned long sub_sql_putsubs(struct subdbinfo *info,
   unsigned long no = 0L;
   char strnum[FMT_ULONG];
 
-  if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,hash_lo))) die_nomem();
-  if (!stralloc_copyb(&params[1],strnum,fmt_ulong(strnum,hash_hi))) die_nomem();
+  stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,hash_lo));
+  stralloc_copyb(&params[1],strnum,fmt_ulong(strnum,hash_hi));
   make_name(info,table?"_":0,table,0);
 
   /* main query */
-  if (!stralloc_copys(&query,"SELECT address FROM "))
-		die_nomem();
-  if (!stralloc_cat(&query,&name)) die_nomem();
-  if (!stralloc_cats(&query," WHERE ")) die_nomem();
-  if (!stralloc_cats(&query,sql_putsubs_where_defn)) die_nomem();
+  stralloc_copys(&query,"SELECT address FROM ");
+  stralloc_cat(&query,&name);
+  stralloc_cats(&query," WHERE ");
+  stralloc_cats(&query,sql_putsubs_where_defn);
 
   result = sql_select(info,&query,2,params);
 
@@ -224,33 +221,33 @@ void sub_sql_searchlog(struct subdbinfo *info,
 /* This requires reading the entire table, since search fields are not   */
 /* indexed, but this is a rare query and time is not of the essence.     */
 
-  if (!stralloc_copys(&query,"SELECT ")) die_nomem();
-  if (!stralloc_cats(&query,sql_searchlog_select_defn)) die_nomem();
-  if (!stralloc_cats(&query," FROM ")) die_nomem();
-  if (!stralloc_cat(&query,&name)) die_nomem();
-  if (!stralloc_cats(&query,"_slog")) die_nomem();
+  stralloc_copys(&query,"SELECT ");
+  stralloc_cats(&query,sql_searchlog_select_defn);
+  stralloc_cats(&query," FROM ");
+  stralloc_cat(&query,&name);
+  stralloc_cats(&query,"_slog");
   if (*search) {	/* We can afford to wait for LIKE '%xx%' */
-    if (!stralloc_copys(&params[0],search)) die_nomem();
-    if (!stralloc_copys(&params[1],search)) die_nomem();
+    stralloc_copys(&params[0],search);
+    stralloc_copys(&params[1],search);
     nparams = 2;
-    if (!stralloc_cats(&query," WHERE ")) die_nomem();
-    if (!stralloc_cats(&query,sql_searchlog_where_defn)) die_nomem();
+    stralloc_cats(&query," WHERE ");
+    stralloc_cats(&query,sql_searchlog_where_defn);
   }
   else
     nparams = 0;
   /* ordering by tai which is an index */
-  if (!stralloc_cats(&query," ORDER by tai")) die_nomem();
+  stralloc_cats(&query," ORDER by tai");
 
   result = sql_select(info,&query,nparams,params);
   while (sql_fetch_row(info,result,2,params)) {
-    if (!stralloc_0(&params[0])) die_nomem();
+    stralloc_0(&params[0]);
     (void)scan_ulong(params[0].s,&when);
     datetime_tai(&dt,when);
-    if (!stralloc_copyb(&params[0],date,date822fmt(date,&dt)-1)) die_nomem();
-    if (!stralloc_cats(&params[0],": ")) die_nomem();
-    if (!stralloc_catb(&params[0],strnum,fmt_ulong(strnum,when))) die_nomem();
-    if (!stralloc_cats(&params[0]," ")) die_nomem();
-    if (!stralloc_cat(&params[0],&params[1])) die_nomem();
+    stralloc_copyb(&params[0],date,date822fmt(date,&dt)-1);
+    stralloc_cats(&params[0],": ");
+    stralloc_catb(&params[0],strnum,fmt_ulong(strnum,when));
+    stralloc_cats(&params[0]," ");
+    stralloc_cat(&params[0],&params[1]);
     if (subwrite(params[0].s,params[0].len) == -1) die_write();
   }
   sql_free_result(info,result);
@@ -289,7 +286,7 @@ int sub_sql_subscribe(struct subdbinfo *info,
   make_name(info,table?"_":0,table,0);
 
   /* lowercase and check address */
-  if (!stralloc_copys(&addr,userhost)) die_nomem();
+  stralloc_copys(&addr,userhost);
   if (addr.len > 255)			/* this is 401 in std ezmlm. 255 */
 					/* should be plenty! */
     strerr_die2x(100,FATAL,MSG(ERR_ADDR_LONG));
@@ -300,7 +297,7 @@ int sub_sql_subscribe(struct subdbinfo *info,
   case_lowerb(cpat + 1,addr.len - j - 1);
 
   if (forcehash < 0) {
-    if (!stralloc_copy(&lcaddr,&addr)) die_nomem();
+    stralloc_copy(&lcaddr,&addr);
     case_lowerb(lcaddr.s,j);		/* make all-lc version of address */
     ch = subhashsa(&lcaddr);
   } else
@@ -311,11 +308,11 @@ int sub_sql_subscribe(struct subdbinfo *info,
 
   if (flagadd) {
     /* FIXME: LOCK TABLES name WRITE */
-    if (!stralloc_copys(&query,"SELECT address FROM ")) die_nomem();
-    if (!stralloc_cat(&query,&name)) die_nomem();
-    if (!stralloc_cats(&query," WHERE ")) die_nomem();
-    if (!stralloc_cats(&query,sql_subscribe_select_where_defn)) die_nomem();
-    if (!stralloc_copy(&params[0],&addr)) die_nomem();
+    stralloc_copys(&query,"SELECT address FROM ");
+    stralloc_cat(&query,&name);
+    stralloc_cats(&query," WHERE ");
+    stralloc_cats(&query,sql_subscribe_select_where_defn);
+    stralloc_copy(&params[0],&addr);
     result = sql_select(info,&query,1,params);
     if (sql_fetch_row(info,result,1,params)) {
       sql_free_result(info,result);
@@ -324,27 +321,27 @@ int sub_sql_subscribe(struct subdbinfo *info,
     } else {			/* not there */
       sql_free_result(info,result);
 
-      if (!stralloc_copys(&query,"INSERT INTO ")) die_nomem();
-      if (!stralloc_cat(&query,&name)) die_nomem();
-      if (!stralloc_cats(&query," (address,hash) VALUES ")) die_nomem();
-      if (!stralloc_cats(&query,sql_subscribe_list_values_defn)) die_nomem();
-      if (!stralloc_copy(&params[0],&addr)) die_nomem();
-      if (!stralloc_copys(&params[1],szhash)) die_nomem();
+      stralloc_copys(&query,"INSERT INTO ");
+      stralloc_cat(&query,&name);
+      stralloc_cats(&query," (address,hash) VALUES ");
+      stralloc_cats(&query,sql_subscribe_list_values_defn);
+      stralloc_copy(&params[0],&addr);
+      stralloc_copys(&params[1],szhash);
       sql_exec(info,&query,2,params);
       /* FIXME: UNLOCK TABLES */
     }
   } else {							/* unsub */
-    if (!stralloc_copys(&query,"DELETE FROM ")) die_nomem();
-    if (!stralloc_cat(&query,&name)) die_nomem();
-    if (!stralloc_cats(&query," WHERE ")) die_nomem();
-    if (!stralloc_copy(&params[0],&addr)) die_nomem();
+    stralloc_copys(&query,"DELETE FROM ");
+    stralloc_cat(&query,&name);
+    stralloc_cats(&query," WHERE ");
+    stralloc_copy(&params[0],&addr);
     if (forcehash >= 0) {
-      if (!stralloc_cats(&query,sql_subscribe_delete2_where_defn)) die_nomem();
-      if (!stralloc_copys(&params[1],szhash)) die_nomem();
+      stralloc_cats(&query,sql_subscribe_delete2_where_defn);
+      stralloc_copys(&params[1],szhash);
       nparams = 2;
     }
     else {
-      if (!stralloc_cats(&query,sql_subscribe_delete1_where_defn)) die_nomem();
+      stralloc_cats(&query,sql_subscribe_delete1_where_defn);
       nparams = 1;
     }
     if (sql_exec(info,&query,1,params) == 0)
@@ -355,18 +352,18 @@ int sub_sql_subscribe(struct subdbinfo *info,
   /* INSERT INTO t_slog (address,edir,etype,fromline) */
   /* VALUES('address',{'+'|'-'},'etype','[comment]') */
 
-  if (!stralloc_copys(&query,"INSERT INTO ")) die_nomem();
-  if (!stralloc_cat(&query,&name)) die_nomem();
-  if (!stralloc_cats(&query,"_slog (address,edir,etype,fromline) VALUES ")) die_nomem();
-  if (!stralloc_cats(&query,sql_subscribe_slog_values_defn)) die_nomem();
-  if (!stralloc_copy(&params[0],&addr)) die_nomem();
-  if (!stralloc_copys(&params[1],flagadd?"+":"-")) die_nomem(); /* edir */
-  if (!stralloc_copyb(&params[2],event+1,!!*(event+1))) die_nomem(); /* etype */
-  if (!stralloc_copys(&params[3],comment && *comment ? comment : "")) die_nomem(); /* from */
+  stralloc_copys(&query,"INSERT INTO ");
+  stralloc_cat(&query,&name);
+  stralloc_cats(&query,"_slog (address,edir,etype,fromline) VALUES ");
+  stralloc_cats(&query,sql_subscribe_slog_values_defn);
+  stralloc_copy(&params[0],&addr);
+  stralloc_copys(&params[1],flagadd?"+":"-"); /* edir */
+  stralloc_copyb(&params[2],event+1,!!*(event+1)); /* etype */
+  stralloc_copys(&params[3],comment && *comment ? comment : ""); /* from */
 
   sql_exec(info,&query,4,params); /* log (ignore errors) */
-  if (stralloc_0(&addr))
-    logaddr(table,event,addr.s,comment); /* also log to old log */
+  stralloc_0(&addr);
+  logaddr(table,event,addr.s,comment);   /* also log to old log */
   return 1;				 /* desired effect */
 }
 
@@ -386,15 +383,14 @@ void sub_sql_tagmsg(struct subdbinfo *info,
   /* INSERT INTO table_cookie (msgnum,tai,cookie,bodysize,chunk) VALUES (...) */
   /* (we may have tried message before, but failed to complete, so */
   /* ER_DUP_ENTRY is ok) */
-  if (!stralloc_copys(&query,"INSERT INTO ")) die_nomem();
-  if (!stralloc_cats(&query,info->base_table)) die_nomem();
-  if (!stralloc_cats(&query,"_cookie (msgnum,tai,cookie,bodysize,chunk) VALUES "))
-    die_nomem();
-  if (!stralloc_cats(&query,sql_tagmsg_values_defn)) die_nomem();
-  if (!stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,msgnum))) die_nomem();
-  if (!stralloc_copyb(&params[1],hashout,COOKIE)) die_nomem();
-  if (!stralloc_copyb(&params[2],strnum,fmt_ulong(strnum,bodysize))) die_nomem();
-  if (!stralloc_copyb(&params[3],strnum,fmt_ulong(strnum,chunk))) die_nomem();
+  stralloc_copys(&query,"INSERT INTO ");
+  stralloc_cats(&query,info->base_table);
+  stralloc_cats(&query,"_cookie (msgnum,tai,cookie,bodysize,chunk) VALUES ");
+  stralloc_cats(&query,sql_tagmsg_values_defn);
+  stralloc_copyb(&params[0],strnum,fmt_ulong(strnum,msgnum));
+  stralloc_copyb(&params[1],hashout,COOKIE);
+  stralloc_copyb(&params[2],strnum,fmt_ulong(strnum,bodysize));
+  stralloc_copyb(&params[3],strnum,fmt_ulong(strnum,chunk));
 
   sql_exec(info,&query,4,params); /* ignore dups */
 
@@ -411,12 +407,12 @@ static const char *create_table(struct subdbinfo *info,
   make_name(info,suffix1,suffix2,1);
   if (sql_table_exists(info,name.s) > 0)
     return 0;
-  if (!stralloc_copys(&query,"CREATE TABLE ")) die_nomem();
-  if (!stralloc_cats(&query,name.s)) die_nomem();
-  if (!stralloc_cats(&query," (")) die_nomem();
-  if (!stralloc_cats(&query,definition)) die_nomem();
-  if (!stralloc_cats(&query,")")) die_nomem();
-  if (!stralloc_0(&query)) die_nomem();
+  stralloc_copys(&query,"CREATE TABLE ");
+  stralloc_cats(&query,name.s);
+  stralloc_cats(&query," (");
+  stralloc_cats(&query,definition);
+  stralloc_cats(&query,")");
+  stralloc_0(&query);
   return sql_create_table(info,query.s);
 }
 

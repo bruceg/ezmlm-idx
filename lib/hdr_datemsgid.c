@@ -24,14 +24,12 @@ void hdr_datemsgid(unsigned long when)
   datetime_tai(&dt,when);
   qmail_put(&qq,date,date822fmt(date,&dt));
   qmail_puts(&qq,"Message-ID: <");
-  if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,(unsigned long)when)))
-    die_nomem();
-  if (!stralloc_append(&line,'.')) die_nomem();
-  if (!stralloc_catb(&line,strnum,
-		     fmt_ulong(strnum,(unsigned long) getpid()))) die_nomem();
-  if (!stralloc_cats(&line,".ezmlm@")) die_nomem();
-  if (!stralloc_cats(&line,outhost.s)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copyb(&line,strnum,fmt_ulong(strnum,(unsigned long)when));
+  stralloc_append(&line,'.');
+  stralloc_catb(&line,strnum,fmt_ulong(strnum,(unsigned long) getpid()));
+  stralloc_cats(&line,".ezmlm@");
+  stralloc_cats(&line,outhost.s);
+  stralloc_0(&line);
   qmail_puts(&qq,line.s);
   qmail_puts(&qq,">\n");
   /* "unique" MIME boundary as hash of messageid */

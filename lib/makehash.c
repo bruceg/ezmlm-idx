@@ -51,8 +51,8 @@ void mkauthhash(const char *s,unsigned int len,char *h)
     }
     l = k;			/* k <= l <= i; */
     while (l < i && s[l] != '-') ++l;
-    if (!stralloc_copyb(&dummy,s + k, l - k)) die_nomem();
-    if (!stralloc_catb(&dummy,s + i, j - i)) die_nomem();
+    stralloc_copyb(&dummy,s + k, l - k);
+    stralloc_catb(&dummy,s + i, j - i);
     makehash(dummy.s,dummy.len,h);
   } else			/* use entire line if no '@' found */
     makehash(s,len,h);

@@ -8,8 +8,8 @@ static stralloc ddomain;
 
 int dmarc_fetch(stralloc *out,const char *domain)
 {
-  if (!stralloc_copys(&ddomain,"_dmarc.")) die_nomem();
-  if (!stralloc_cats(&ddomain,domain)) die_nomem();
+  stralloc_copys(&ddomain,"_dmarc.");
+  stralloc_cats(&ddomain,domain);
   if (dns_txt(out,&ddomain) < 0) return -1;
   /* Check if it's really a DMARC record */
   if (out->len < 10) return 0;
@@ -45,7 +45,7 @@ int dmarc_get(const stralloc *rec,const char *key,stralloc *out)
       while (tp > rp && tp[-1] == ' ')
 	--tp;
       /* Finally, can return */
-      if (!stralloc_copyb(out,rp,tp - rp)) die_nomem();
+      stralloc_copyb(out,rp,tp - rp);
       return 1;
     }
     while (rp < end && *rp++ != ';')

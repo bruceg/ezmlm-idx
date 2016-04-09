@@ -105,11 +105,11 @@ static void init_dummy(void)
 {
   unsigned int i;
 
-  if (!stralloc_ready(&dummyind,HASHLEN + 1)) die_nomem();
+  stralloc_ready(&dummyind,HASHLEN + 1);
   for (i = 0; i< HASHLEN; i++)
     dummyind.s[i] = 'a';
   dummyind.len = HASHLEN;
-  if (!stralloc_append(&dummyind,' ')) die_nomem();
+  stralloc_append(&dummyind,' ');
 }
 
 void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
@@ -205,10 +205,10 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
   pautht->lower = (authentry *) 0;
   for (idx = msg_from / 100; idx <= idxto; idx++) {
 				/* make index file name */
-    if (!stralloc_copys(&line,"archive/")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,idx))) die_nomem();
-    if (!stralloc_cats(&line,"/index")) die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
+    stralloc_copys(&line,"archive/");
+    stralloc_catb(&line,strnum,fmt_ulong(strnum,idx));
+    stralloc_cats(&line,"/index");
+    stralloc_0(&line);
     if (!locked && idx == idxlatest)
       lockup();
     flagmissingindex = 0;
@@ -428,10 +428,10 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
   idx = msg_master / 100;	/* index for master subject */
 
 				/* Get master subject */
-  if (!stralloc_copys(&line,"archive/")) die_nomem();
-  if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,idx))) die_nomem();
-  if (!stralloc_cats(&line,"/index")) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copys(&line,"archive/");
+  stralloc_catb(&line,strnum,fmt_ulong(strnum,idx));
+  stralloc_cats(&line,"/index");
+  stralloc_0(&line);
   ffound = 0;
   if (!locked && idx == idxlatest)
     lockup();
@@ -476,10 +476,10 @@ void idx_mkthread(msgentry **pmsgtable,		/* pointer to table of message<->subjec
       strerr_die2x(100,FATAL,MSG(ERR_NOINDEX));
   for (idx = msg_from / 100; idx <= idxto; idx++) {
 		/* make index file name */
-    if (!stralloc_copys(&line,"archive/")) die_nomem();
-    if (!stralloc_catb(&line,strnum,fmt_ulong(strnum,idx))) die_nomem();
-    if (!stralloc_cats(&line,"/index")) die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
+    stralloc_copys(&line,"archive/");
+    stralloc_catb(&line,strnum,fmt_ulong(strnum,idx));
+    stralloc_cats(&line,"/index");
+    stralloc_0(&line);
     if (!locked && idx == idxlatest)
       lockup();
     fd = open_read(line.s);

@@ -5,7 +5,7 @@
 
 static int parse(struct option *o,const char *arg)
 {
-  if (!stralloc_copys(o->var.str,arg)) die_nomem();
+  stralloc_copys(o->var.str,arg);
   return 1;
 }
 

@@ -25,12 +25,12 @@ int dateline(stralloc *dt, unsigned long d)
     default: cgierr("I don't know any month > 12",
 		"","");
   }
-  if (!stralloc_copys(dt,mo)) return -1;
-  if (!stralloc_cats(dt," ")) return -1;
+  stralloc_copys(dt,mo);
+  stralloc_cats(dt," ");
   if ((d/100)) {
-    if (!stralloc_catb(dt,strnum,fmt_ulong(strnum,d/100))) return -1;
+    stralloc_catb(dt,strnum,fmt_ulong(strnum,d/100));
   } else
-    if (!stralloc_cats(dt,"????")) return 0;
+    stralloc_cats(dt,"????");
   return 1;
 }
 

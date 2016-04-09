@@ -12,7 +12,7 @@ int dns_ip4_packet(stralloc *out,const char *buf,unsigned int len)
   uint16 numanswers;
   uint16 datalen;
 
-  if (!stralloc_copys(out,"")) return -1;
+  stralloc_copys(out,"");
 
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) return -1;
   uint16_unpack_big(header + 6,&numanswers);
@@ -27,7 +27,7 @@ int dns_ip4_packet(stralloc *out,const char *buf,unsigned int len)
       if (byte_equal(header + 2,2,DNS_C_IN))
         if (datalen == 4) {
 	  if (!dns_packet_copy(buf,len,pos,header,4)) return -1;
-	  if (!stralloc_catb(out,header,4)) return -1;
+	  stralloc_catb(out,header,4);
 	}
     pos += datalen;
   }
@@ -44,7 +44,7 @@ int dns_ip4(stralloc *out,const stralloc *fqdn)
   char code;
   char ch;
 
-  if (!stralloc_copys(out,"")) return -1;
+  stralloc_copys(out,"");
   code = 0;
   for (i = 0;i <= fqdn->len;++i) {
     if (i < fqdn->len)
@@ -54,7 +54,7 @@ int dns_ip4(stralloc *out,const stralloc *fqdn)
 
     if ((ch == '[') || (ch == ']')) continue;
     if (ch == '.') {
-      if (!stralloc_append(out,code)) return -1;
+      stralloc_append(out,code);
       code = 0;
       continue;
     }

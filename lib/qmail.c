@@ -2,7 +2,6 @@
 #include "substdio.h"
 #include "readwrite.h"
 #include "wait.h"
-#include "die.h"
 #include "env.h"
 #include "stralloc.h"
 #include "getconf.h"
@@ -29,12 +28,12 @@ int qmail_open(struct qmail *qq)
   const char *cp;
   const char **cpp;
 
-  if (!stralloc_copys(&filename,QMQPSERVERS)) die_nomem();
-  if (!stralloc_cats(&filename,"/0")) die_nomem();
-  if (!stralloc_0(&filename)) die_nomem();
+  stralloc_copys(&filename,QMQPSERVERS);
+  stralloc_cats(&filename,"/0");
+  stralloc_0(&filename);
   if (!getconf(&qmqpservers,filename.s,0)) {
-    if (!stralloc_copys(&filename,QMQPSERVERS)) die_nomem();
-    if (!stralloc_0(&filename)) die_nomem();
+    stralloc_copys(&filename,QMQPSERVERS);
+    stralloc_0(&filename);
     getconf(&qmqpservers,filename.s,0);
   }
 

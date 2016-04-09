@@ -33,7 +33,7 @@ static int init(char ip[64])
     i = openreadclose("/etc/resolv.conf",&data,64);
     if (i == -1) return -1;
     if (i) {
-      if (!stralloc_append(&data,'\n')) return -1;
+      stralloc_append(&data,'\n');
       i = 0;
       for (j = 0;j < data.len;++j)
         if (data.s[j] == '\n') {
