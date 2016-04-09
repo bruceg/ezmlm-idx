@@ -209,7 +209,7 @@ void zapnonsub(const char *szerr)
 void tosender(void)
 {
   qmail_puts(&qq,"To: ");
-  if (!quote2(&quoted,sender)) die_nomem();
+  quote2(&quoted,sender);
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"\n");
 }
@@ -277,7 +277,7 @@ void normal_bottom(char format)
       qmail_puts(&qq,"\n");
     }
     qmail_puts(&qq,"Return-Path: <");
-    if (!quote2(&quoted,sender)) die_nomem();
+    quote2(&quoted,sender);
     qmail_put(&qq,quoted.s,quoted.len);
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
@@ -955,7 +955,7 @@ int main(int argc,char **argv)
 
     doheaders();
     qmail_puts(&qq,"To: ");
-    if (!quote(&quoted,&listname)) die_nomem();
+    quote(&quoted,&listname);
     qmail_put(&qq,quoted.s,quoted.len);
     qmail_puts(&qq,"@");
     qmail_put(&qq,outhost.s,outhost.len);

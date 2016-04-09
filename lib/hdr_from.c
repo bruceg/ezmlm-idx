@@ -13,8 +13,7 @@ extern stralloc quoted;
 void hdr_from(const char *append)
 {
   qmail_puts(&qq,"From: ");
-  if (!quote(&quoted,&outlocal))
-    die_nomem();
+  quote(&quoted,&outlocal);
   qmail_put(&qq,quoted.s,quoted.len);
   if (append)
     qmail_puts(&qq,append);

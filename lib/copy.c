@@ -155,7 +155,7 @@ void copy_xlate(stralloc *out,
 	stralloc_catb(out,hash,COOKIE);
 	break;
       case 'L':
-	if (!quote(&qline,&mainlocal)) die_nomem();
+	quote(&qline,&mainlocal);
 	stralloc_cat(out,&qline);
 	break;
       case 'R':
@@ -181,7 +181,7 @@ void copy_xlate(stralloc *out,
 	stralloc_catb(out,confirm,confirmlocal);
 	break;
       case 'l':
-	if (!quote(&qline,&outlocal)) die_nomem();
+	quote(&qline,&outlocal);
 	stralloc_cat(out,&qline);
 	break;
       case 'h':

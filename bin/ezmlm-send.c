@@ -477,7 +477,7 @@ int main(int argc,char **argv)
 						/* return-path to archive */
     stralloc_copys(&line,"Return-Path: <");
     if (sender) {				/* same as qmail-local */
-      if (!quote2(&qline,sender)) die_nomem();
+      quote2(&qline,sender);
       for (i = 0;i < qline.len;++i) if (qline.s[i] == '\n') qline.s[i] = '_';
       stralloc_cat(&line,&qline);
     }

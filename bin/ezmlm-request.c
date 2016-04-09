@@ -592,7 +592,7 @@ int main(int argc,char **argv)
     hdr_datemsgid(now());
     hdr_from((cmdidx == EZREQ_HELP) ? "-return-" : "-help");
     qmail_put(&qq,mydtline.s,mydtline.len);
-    if (!quote2(&line,to.s)) die_nomem();
+    quote2(&line,to.s);
     hdr_add2("To: ",line.s,line.len);
     hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
     hdr_subject(MSG(SUB_RESULTS));
@@ -671,7 +671,7 @@ int main(int argc,char **argv)
       qmail_puts(&qq,"\n");
     }
     qmail_puts(&qq,"Return-Path: <");
-    if (!quote2(&line,sender)) die_nomem();
+    quote2(&line,sender);
     qmail_put(&qq,line.s,line.len);
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)

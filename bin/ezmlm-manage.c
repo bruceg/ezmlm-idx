@@ -394,7 +394,7 @@ void msg_headers(int act)
   hdr_add2s("Mailing-List: ",MSG(TXT_MAILING_LIST));
   if (listid.len > 0)
     hdr_add2("List-ID: ",listid.s,listid.len);
-  if (!quote(&quoted,&outlocal)) die_nomem();	/* quoted has outlocal */
+  quote(&quoted,&outlocal);	/* quoted has outlocal */
   qmail_puts(&qq,"List-Help: <mailto:");	/* General rfc2369 headers */
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"-help@");
@@ -411,7 +411,7 @@ void msg_headers(int act)
   hdr_datemsgid(when);
   /* differnt "From:" for help to break auto-responder loops */
   hdr_from((act == AC_HELP) ? "-return-" : "-help");
-  if (!quote2(&quoted,target.s)) die_nomem();
+  quote2(&quoted,target.s);
   hdr_add2("To: ",quoted.s,quoted.len);
   stralloc_copys(&mydtline,"Delivered-To: responder for ");
   stralloc_catb(&mydtline,outlocal.s,outlocal.len);
@@ -563,7 +563,7 @@ void doconfirm(const char *act)
   set_cpwhen(when);
 
   qmail_puts(&qq,"Reply-To: ");
-  if (!quote2(&quoted,confirm.s)) die_nomem();
+  quote2(&quoted,confirm.s);
   qmail_put(&qq,quoted.s,quoted.len);
   qmail_puts(&qq,"\n");
 
@@ -596,7 +596,7 @@ void copybottom(int forcebottom)
       qmail_puts(&qq,"\n");
     }
     qmail_puts(&qq,"Return-Path: <");
-    if (!quote2(&quoted,sender)) die_nomem();
+    quote2(&quoted,sender);
     qmail_put(&qq,quoted.s,quoted.len);
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)
@@ -894,7 +894,7 @@ static void do_edit(const char *action)
     set_cpwhen(when);
 
     qmail_puts(&qq,"Reply-To: ");
-    if (!quote2(&quoted,confirm.s)) die_nomem();
+    quote2(&quoted,confirm.s);
     qmail_put(&qq,quoted.s,quoted.len);
     qmail_puts(&qq,"\n");
 

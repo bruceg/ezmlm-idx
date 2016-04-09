@@ -2,7 +2,7 @@
 #define QUOTE_H
 
 extern int quote_need(const char *s,unsigned int n);
-extern int quote(stralloc *saout,const stralloc *sain);
-extern int quote2(stralloc *sa,const char *s);
+extern void quote(stralloc *saout,const stralloc *sain);
+extern void quote2(stralloc *sa,const char *s);
 
 #endif

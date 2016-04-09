@@ -218,7 +218,7 @@ int main(int argc,char **argv)
   stralloc_cat(&action,&fnbase);
   stralloc_0(&action);
   makeacthash(&action);
-  if (!quote(&quoted,&outlocal)) die_nomem();
+  quote(&quoted,&outlocal);
   stralloc_copy(&reject,&quoted);
   stralloc_cat(&reject,&action);
   stralloc_0(&reject);
@@ -280,8 +280,7 @@ int main(int argc,char **argv)
     if (sender)
       qmail_puts(&qq, sender);
   } else {
-    if (!quote(&quoted,&outlocal))
-      die_nomem();
+    quote(&quoted,&outlocal);
     qmail_put(&qq,quoted.s,quoted.len);
     qmail_puts(&qq,"-moderators@");
     qmail_put(&qq,outhost.s,outhost.len);

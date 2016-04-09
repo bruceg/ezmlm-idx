@@ -127,7 +127,7 @@ static void doit(int flagdig, int flagw)
     stralloc_0(&line);
   }
   hdr_from("-help");
-  if (!quote2(&quoted,addr.s)) die_nomem();
+  quote2(&quoted,addr.s);
   hdr_add2("To: ",quoted.s,quoted.len);
   /* to accomodate transfer-encoding */
   hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);

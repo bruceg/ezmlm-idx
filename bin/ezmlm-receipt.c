@@ -126,7 +126,7 @@ static void doit(const char *workdir,const char *addr,unsigned long msgnum,unsig
   if (substdio_put(&ssout,"",1) == -1) die_datenew();
 
   if (substdio_puts(&ssout,"Return-Path: <") == -1) die_datenew();
-  if (!quote2(&quoted,sender)) die_nomem();
+  quote2(&quoted,sender);
   if (substdio_put(&ssout,quoted.s,quoted.len) == -1) die_datenew();
   if (substdio_puts(&ssout,">\n") == -1) die_datenew();
   if (substdio_put(&ssout,bounce->s,bounce->len) == -1) die_datenew();

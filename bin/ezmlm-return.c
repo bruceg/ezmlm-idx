@@ -119,7 +119,7 @@ static void dowit(const char *addr,unsigned long when,const stralloc *bounce)
   if (substdio_puts(&ssout,addr) == -1) die_datenew();
   if (substdio_put(&ssout,"",1) == -1) die_datenew();
   if (substdio_puts(&ssout,"Return-Path: <") == -1) die_datenew();
-  if (!quote2(&quoted,sender)) die_nomem();
+  quote2(&quoted,sender);
   if (substdio_put(&ssout,quoted.s,quoted.len) == -1) die_datenew();
   if (substdio_puts(&ssout,">\n") == -1) die_datenew();
   if (substdio_put(&ssout,bounce->s,bounce->len) == -1) die_datenew();
@@ -176,7 +176,7 @@ static void doit(const char *addr,unsigned long msgnum,unsigned long when,
   if (substdio_puts(&ssout,addr) == -1) die_datenew();
   if (substdio_put(&ssout,"",1) == -1) die_datenew();
   if (substdio_puts(&ssout,"Return-Path: <") == -1) die_datenew();
-  if (!quote2(&quoted,sender)) die_nomem();
+  quote2(&quoted,sender);
   if (substdio_put(&ssout,quoted.s,quoted.len) == -1) die_datenew();
   if (substdio_puts(&ssout,">\n") == -1) die_datenew();
   if (substdio_put(&ssout,bounce->s,bounce->len) == -1) die_datenew();

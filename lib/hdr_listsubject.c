@@ -11,7 +11,7 @@ extern stralloc outhost;
 
 void hdr_listsubject3(const char *a,const char *b,const char *c)
 {
-  if (!quote(&quoted,&outlocal)) die_nomem();
+  quote(&quoted,&outlocal);
   qmail_puts(&qq,"Subject: ");
   if (a != 0) qmail_puts(&qq,a);
   if (b != 0) qmail_puts(&qq,b);
