@@ -3,7 +3,7 @@
 #include "stralloc.h"
 #include "dns.h"
 
-int dns_domain_todot_cat(stralloc *out,const char *d)
+void dns_domain_todot_cat(stralloc *out,const char *d)
 {
   char ch;
   char ch2;
@@ -12,7 +12,7 @@ int dns_domain_todot_cat(stralloc *out,const char *d)
 
   if (!*d) {
     stralloc_append(out,'.');
-    return 1;
+    return;
   }
 
   for (;;) {
@@ -33,7 +33,7 @@ int dns_domain_todot_cat(stralloc *out,const char *d)
 	stralloc_catb(out,buf,4);
       }
     }
-    if (!*d) return 1;
+    if (!*d) break;
     stralloc_append(out,'.');
   }
 }

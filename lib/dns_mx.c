@@ -31,7 +31,7 @@ int dns_mx_packet(stralloc *out,const char *buf,unsigned int len)
 	if (!dns_packet_copy(buf,len,pos,pref,2)) return -1;
 	if (!dns_packet_getname(buf,len,pos + 2,&q)) return -1;
 	stralloc_catb(out,pref,2);
-	if (!dns_domain_todot_cat(out,q)) return -1;
+	dns_domain_todot_cat(out,q);
 	stralloc_0(out);
       }
     pos += datalen;
