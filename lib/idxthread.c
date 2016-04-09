@@ -304,9 +304,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
 	    lastdate = pmsgt->date;
 	    if (datepos >= datemax) {		/* more space */
 	      datemax += DATENO;
-	      if (!alloc_re((void**)pdatetable,
-			    datetablesize,datetablesize+datetableunit))
-		die_nomem();
+	      alloc_re((void**)pdatetable,datetablesize,datetablesize+datetableunit);
 	    }
 	    (*pdatetable)[datepos].msg = msg;	/* first msg this mo */
 	    (*pdatetable)[datepos].date = lastdate;

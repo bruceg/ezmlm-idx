@@ -3,7 +3,7 @@
 #include "alloc.h"
 #include "byte.h"
 
-int alloc_re(void **x,unsigned int m,unsigned int n)
+void alloc_re(void **x,unsigned int m,unsigned int n)
 {
   void *y;
  
@@ -11,5 +11,4 @@ int alloc_re(void **x,unsigned int m,unsigned int n)
   byte_copy(y,m,*x);
   alloc_free(*x);
   *x = y;
-  return 1;
 }
