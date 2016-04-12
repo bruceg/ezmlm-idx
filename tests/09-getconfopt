@@ -5,7 +5,7 @@
 prompt "getconfopt library:   "
 
 t() {
-    ${EZBIN}/test-getconfopt $1 | grep $2 >/dev/null \
+    ${EZPWD}/test/getconfopt $1 | grep $2 >/dev/null \
 	|| fatal "$3"
 }
 

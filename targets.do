@@ -1,1 +1,1 @@
-dependon all install
+dependon('all', 'install')

@@ -105,6 +105,9 @@ make_body()
   echo "--bound123ary--"
   echo
   echo "junk after boundary"
+  for line in "$@"; do
+    echo "$line"
+  done
   return 0
 }
 
@@ -115,6 +118,12 @@ qqclean()
 
 make_message()
 {
+  {
+  while [ "x$1" != x ]; do
+    echo "$1"
+    shift
+  done
+  test $# -gt 0 && shift
   echo "ReCEIved: #LAST#"
   echo "ReCeIved: #PENULTIMATE#"
   echo "retuRN-RECeipt-to: nobody"
@@ -131,7 +140,8 @@ make_message()
 	echo "Subject: $SUBJECT"
   fi
   echo
-  make_body
+  make_body "$@"
+  } > "$TMP"
   return 0
 }
 

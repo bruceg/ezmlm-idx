@@ -1,0 +1,5 @@
+db/sub-pgsql.lo
+db/sub_sql.lo
+-lezmlm
+-lpq
+crypt.lib

@@ -1,1 +1,1 @@
-dependon sub-pgsql.so
+dependon('db/sub-pgsql.so')

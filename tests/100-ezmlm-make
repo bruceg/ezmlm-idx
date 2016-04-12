@@ -5,26 +5,26 @@
   prompt "ezmlm-make:           "
 
 # edit non-existant list
-  ${EZBIN}/ezmlm-make -e -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
+  ${EZBIN}/ezmlm-make -e -C${EZETC}/en_US "$DIR" "$DOT" \
 	"$LIST" "$HOST" > /dev/null 2>&1 && \
 	fatal "ezmlm-make failed reject edit of non-existing list:"
 
 # make simple test list
-  ${EZBIN}/ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
+  ${EZBIN}/ezmlm-make -C${EZETC}/en_US "$DIR" "$DOT" \
 	"$LIST" "$HOST" || \
 	fatal "ezmlm-make failed to create test list"
 
 # remake simple test list which should fail
-  ${EZBIN}/ezmlm-make -C${EZBIN}/lang/en_US "$DIR" "$DOT" \
+  ${EZBIN}/ezmlm-make -C${EZETC}/en_US "$DIR" "$DOT" \
 	"$LIST" "$HOST" >/dev/null 2>&1 && \
 	fatal "failed to reject creation of existing list"
 
 # edit the list (add digest)
-  ${EZBIN}/ezmlm-make -+d -C${EZBIN}/lang/en_US "$DIR" || \
+  ${EZBIN}/ezmlm-make -+d -C${EZETC}/en_US "$DIR" || \
 	fatal "ezmlm-make failed to edit test list"
 
 # edit the list (add digest)
-  ${EZBIN}/ezmlm-make -ed -C${EZBIN}/lang/en_US "$DIR" "$DOT" "$LIST" "$HOST" \
+  ${EZBIN}/ezmlm-make -ed -C${EZETC}/en_US "$DIR" "$DOT" "$LIST" "$HOST" \
 	>/dev/null 2>&1 || \
 	{ echo "failed to edit"
 	  prompt "ezmlm-make ......     "
@@ -59,7 +59,7 @@ if [ -n "$SUBDB" ]; then
   ${EZBIN}/ezmlm-rmtab -S "$SUBDB:$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" "$DIR" \
 	>/dev/null 2>&1
   ${EZBIN}/ezmlm-make -+6 "$SUBDB:$SQLHOST::$SQLUSER:$PW:$DB:$TABLE" \
-	-C${EZBIN}/lang/en_US "$DIR"|| \
+	-C${EZETC}/en_US "$DIR"|| \
 	fatal "ezmlm-make failed to add subdb config info"
 fi
 

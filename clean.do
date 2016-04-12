@@ -1,2 +1,2 @@
-dependon TARGETS
-formake 'rm -f `cat TARGETS`'
+dependon('TARGETS')
+formake('rm -f `cat TARGETS`')

@@ -1,0 +1,6 @@
+db/sub-mysql.lo
+db/sub_sql.lo
+-lezmlm
+-lmysqlclient
+nsl.lib
+m.lib

@@ -7,8 +7,8 @@ prompt "ezmlm-gate:           "
 ${EZBIN}/ezmlm-sub "$DIR" "${SND}@${HOST}"
 
 SENDER="not${SND}@not${HOST}"
-{ echo "X-num: gate1"; make_message; } \
-| ${EZBIN}/ezmlm-gate "$DIR" . > "$ERR" 2>&1 \
+make_message 'X-num: gate1'
+${EZBIN}/ezmlm-gate "$DIR" . < "$TMP" > "$ERR" 2>&1 \
 || fatal "failed to process message 1"
 cat "$DIR"/mod/pending/* | grep "gate1" > /dev/null \
 || fatal "failed to queue message 1"
@@ -16,22 +16,23 @@ checkenv gate1 "$LIST-return-@$HOST" "$MOD@$HOST"
 
 SENDER="${MAN}@${HOST}"
 ${EZBIN}/ezmlm-sub "$DIR" "$SENDER"
-{ echo "X-num: gate2"; make_message; } \
-| ${EZBIN}/ezmlm-gate "$DIR" . > "$ERR" 2>&1 \
+make_message 'X-num: gate2'
+${EZBIN}/ezmlm-gate "$DIR" . < "$TMP" > "$ERR" 2>&1 \
 || fatal "failed to process message 2"
 cat "$DIR"/mod/pending/* | grep "gate2" > /dev/null \
 && fatal "mistakenly queued message 2"
 checkenv gate2 "$LIST-return-.*-@$HOST-@\\[\\]" "$SND@$HOST" "$MAN@$HOST" "$BNC@$HOST"
 
 SENDER="${MOD}@${HOST}"
-{ echo "X-num: gate3"; make_message; } \
-| ${EZBIN}/ezmlm-gate "$DIR" "$DIR" "$DIR"/mod > "$ERR" 2>&1 \
+make_message 'X-num: gate3'
+${EZBIN}/ezmlm-gate "$DIR" "$DIR" "$DIR"/mod < "$TMP" > "$ERR" 2>&1 \
 || fatal "failed to process message 3"
 cat "$DIR"/mod/pending/* | grep "gate3" > /dev/null \
 && fatal "mistakenly queued message 3"
 checkenv gate3 "$LIST-return-.*-@$HOST-@\\[\\]" "$SND@$HOST" "$MAN@$HOST" "$BNC@$HOST"
 
-make_message | ${EZBIN}/ezmlm-gate "$DIR" /etc/"$DIR" > "$ERR" 2>&1 \
+make_message
+${EZBIN}/ezmlm-gate "$DIR" /etc/"$DIR" < "$TMP" > "$ERR" 2>&1 \
 && fatal "failed to reject bad command line 1"
 
 echo "OK"

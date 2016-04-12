@@ -20,7 +20,7 @@ if [ -n "$SUBDB" ]; then
   ${EZBIN}/ezmlm-unsub "$DIR" "xyZZy@hoSt" \
 	|| fatal "ezmlm-unsub failed"
 
-  ${EZBIN}/ezmlm-make -+ -C${EZBIN}/lang/en_US "$DIR"
+  ${EZBIN}/ezmlm-make -+ -C${EZETC}/en_US "$DIR"
   grep '^sql:' "$DIR"/subdb >/dev/null 2>&1 \
 	|| fatal "ezmlm-make did not create subdb file"
 

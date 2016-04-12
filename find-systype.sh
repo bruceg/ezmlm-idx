@@ -82,9 +82,9 @@ then
     ;;
   esac
 else
-  gcc -c trycpp.c
-  gcc -o trycpp trycpp.o
-  case `./trycpp` in
+  gcc -c sys/trycpp.c
+  gcc -o sys/trycpp sys/trycpp.o
+  case `sys/trycpp` in
   nextstep)
     oper="nextstep-`hostinfo | sed -n 's/^[ 	]*NeXT Mach \([^:]*\):.*$/\1/p'`"
     arch="`hostinfo | sed -n 's/^Processor type: \(.*\) (.*)$/\1/p' | tr /: ..`"
@@ -100,7 +100,7 @@ else
     kern=""
     ;;
   esac
-  rm -f trycpp.o trycpp
+  rm -f sys/trycpp.o sys/trycpp
 fi
 
 case "$chip" in

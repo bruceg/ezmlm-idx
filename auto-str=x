@@ -1,3 +1,9 @@
-substdio.a
-error.a
-str.a
+lib/subfdout.lo
+lib/subfdin.lo
+lib/substdi.lo
+lib/substdo.lo
+lib/str_chr.lo
+lib/byte_copy.lo
+lib/error.lo
+lib/byte_cr.lo
+lib/str_len.lo

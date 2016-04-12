@@ -1,0 +1,6 @@
+dependon('warn-auto.sh','conf-qmail','VERSION','Makefile')
+dependon(*[ 'tests/'+fn for fn in listdir('tests') if '-' in fn ])
+formake('( cat warn-auto.sh; \\')
+formake('  echo VER=\\"`head -n 1 VERSION`\\"; \\')
+formake('  cat tests/*-* ) > {target}')
+formake('chmod 755 {target}')

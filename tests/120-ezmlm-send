@@ -13,8 +13,8 @@
   { echo "--- TRAILER ---"; echo; } > "${DIR}/text/trailer"
   touch "$DIR"/addtrailer
 # test
-  { echo "X-num: msg1"; make_message; } | \
-	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
+  make_message 'X-num: msg1'
+  ${EZBIN}/ezmlm-send "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "failed to accept normal message"
   if [ `cat "${DIR}/num"` != "1:1" ]; then
 	fatal "failed to create num for normal message 1"; 
@@ -48,8 +48,8 @@
 
 # test to see that trailer is added to nom-mime messages
   CONTENT=''
-  { echo "X-num: msg5"; make_message; } | \
-	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1  || \
+  make_message 'X-num: msg5'
+  ${EZBIN}/ezmlm-send "$DIR" < "$TMP" >"$ERR" 2>&1  || \
 	fatal "failed to accept non-mime message"
 
   checkenv msg5 "$LIST-return-2-@$HOST-@\\[\\]" "$SENDER"
@@ -58,8 +58,8 @@
 
 # test to see that trailer is suppressed for multipart/signed
   CONTENT='multipart/signed'
-  { echo "X-num: msg6"; make_message; } | \
-	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1  || \
+  make_message 'X-num: msg6'
+  ${EZBIN}/ezmlm-send "$DIR" < "$TMP" >"$ERR" 2>&1  || \
 	fatal "failed to accept multipart/signed message"
 
   checkenv msg6 "$LIST-return-3-@$HOST-@\\[\\]" "$SENDER"
@@ -75,7 +75,8 @@
 # test content-type with something after boundary=xxx
   AFTERBOUND=';micalg=pgp-md5'
   echo "text/html" > "$DIR"/mimeremove
-  make_message | ${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1  || \
+  make_message
+  ${EZBIN}/ezmlm-send "$DIR" < "$TMP" >"$ERR" 2>&1  || \
 	{ echo "err with text after boundary: 0.30 bug fixed in 0.322"
 	  prompt "ezmlm-send.........   "
 	  BUG="${BUG} send_bound"
@@ -88,8 +89,8 @@
   rm "$DIR"/mimeremove
 
 # -r => don't trim received headers
-  { echo "X-num: msg2"; make_message; } | \
-	${EZBIN}/ezmlm-send -r "$DIR" >"$ERR" 2>&1 || \
+  make_message 'X-num: msg2'
+  ${EZBIN}/ezmlm-send -r "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "failed to accept normal message 2"
   checkenv msg2 "$LIST-return-2-@$HOST-@\\[\\]" "$SENDER"
 
@@ -102,8 +103,8 @@
 	fatal "-r failed to leave received header"
 
 # -C eliminate SENDER from addressees
-  { echo "X-num: msg3"; make_message; } | \
-	${EZBIN}/ezmlm-send -C "$DIR" >"$ERR" 2>&1 || \
+  make_message 'X-num: msg3'
+  ${EZBIN}/ezmlm-send -C "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "failed to accept normal message 3"
   checkenv msg3 "$LIST-return-3-@$HOST-@\\[\\]" "$SENDER"
   ${EZBIN}/ezmlm-unsub "$DIR" "$SENDER"
@@ -120,8 +121,8 @@
 # test mimeremove
   touch "${DIR}/archived" "${DIR}/indexed"
   echo "teXT/hTml" > "${DIR}/mimeremove"
-  { echo "X-num: mimeremove"; make_message; } | \
-	${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
+  make_message 'X-num: mimeremove'
+  ${EZBIN}/ezmlm-send "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "failed to accept mimeremove message"
   checkenv mimeremove "$LIST-return-4-@$HOST-@\\[\\]"
   grep -i 'text/html' < "${DIR}/archive/0/04" >/dev/null &&
@@ -131,8 +132,8 @@
   touch "${DIR}/archived" "${DIR}/indexed"
   echo "multipart/mixed" > "${DIR}/mimekeep"
   echo "teXT/plain" >> "${DIR}/mimekeep"
-  { echo "X-num: mimekeep"; make_message; } | \
-        ${EZBIN}/ezmlm-send "$DIR" >"$ERR" 2>&1 || \
+  make_message 'X-num: mimekeep'
+  ${EZBIN}/ezmlm-send "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "failed to accept mimekeep message"
   checkenv mimekeep "$LIST-return-5-@$HOST-@\\[\\]"
   grep -i 'text/html' < "${DIR}/archive/0/05" >/dev/null &&
@@ -142,8 +143,8 @@
   echo subject >"$DIR"/headerkeep
   echo from >>"$DIR"/headerkeep
   echo x-num >>"$DIR"/headerkeep
-  { echo "X-num: keeptest"; make_message; } | \
-	${EZBIN}/ezmlm-send -C "$DIR" >"$ERR" 2>&1 || \
+  make_message 'X-num: keeptest'
+  ${EZBIN}/ezmlm-send -C "$DIR" < "$TMP" >"$ERR" 2>&1 || \
 	fatal "failed to accept keeptest message"
   checkenv keeptest "$LIST-return-6-@$HOST-@\\[\\]"
   grep -i '^x-num: keeptest' < "${DIR}/archive/0/06" >/dev/null ||
