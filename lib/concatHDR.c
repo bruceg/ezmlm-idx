@@ -7,18 +7,15 @@
 #include "die.h"
 #include "idx.h"
 
-void concatHDR(char *indata,
+void concatHDR(const char *indata,
 	       unsigned int n,
 	       stralloc *outdata)
 /* takes a concatenated string of line and continuation line, trims leading */
 /* and trailing LWSP and collapses line breaks and surrounding LWSP to ' '. */
-/* indata has to end in \n or \0 or this routine will write beyond indata!  */
-/* if indata ends with \0, this will be changed to \n. */
-
 {
-  char *cp;
+  const char *cp;
   char *cpout;
-  char *cplast;
+  const char *cplast;
   /* Skip leading whitespace */
   while (n > 0 && (*indata == ' ' || *indata == '\t' || *indata == '\n')) {
     ++indata;
@@ -34,11 +31,12 @@ void concatHDR(char *indata,
   while (cplast >= indata && (*cplast == '\0' || *cplast == '\n' || *cplast == '\t' || *cplast == ' '))
     --cplast;
   if (cp == cplast) die_nomem();		/* just in case */
-  *(++cplast) = '\n';				/* have terminal '\n' */
   cp = indata;
   while (cp <= cplast) {
-    while (*cp == ' ' || *cp == '\t') ++cp;	/* LWSP before */
-    while (*cp != '\n') *(cpout++) = *(cp++);	/* text */
+    while (cp <= cplast && (*cp == ' ' || *cp == '\t')) /* LWSP before */
+      ++cp;
+    while (cp <= cplast && *cp != '\n')         /* text */
+      *(cpout++) = *(cp++);
     ++cp;					/* skip \n */ 
     --cpout;					/* last char */
     while (cpout >= outdata->s && (*cpout == ' ' || *cpout == '\t'))
@@ -48,4 +46,3 @@ void concatHDR(char *indata,
   }
   outdata->len = cpout - outdata->s;
 }
-
