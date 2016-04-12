@@ -117,10 +117,6 @@ lib/socket_conn.lo
 lib/socket_tcp.lo
 lib/socket_udp.lo
 lib/str_chr.lo
-lib/str_cpy.lo
-lib/str_diff.lo
-lib/str_diffn.lo
-lib/str_len.lo
 lib/str_rchr.lo
 lib/str_start.lo
 lib/stralloc_arts.lo

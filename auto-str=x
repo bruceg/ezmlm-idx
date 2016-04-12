@@ -4,4 +4,3 @@ lib/substdi.lo
 lib/substdo.lo
 lib/str_chr.lo
 lib/error.lo
-lib/str_len.lo

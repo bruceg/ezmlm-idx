@@ -3,10 +3,12 @@
 #ifndef STR_H
 #define STR_H
 
-extern unsigned int str_copy(char *,const char *);
-extern int str_diff(const char *,const char *);
-extern int str_diffn(const char *,const char *,unsigned int);
-extern unsigned int str_len(const char *);
+#include "byte.h"
+
+#define str_copy(TO,FROM) strcpy((TO),(FROM))
+#define str_diff(A,B) strcmp((A),(B))
+#define str_diffn(A,B,N) strncmp((A),(B),(N))
+#define str_len(S) strlen(S)
 extern unsigned int str_chr(const char *,int);
 extern unsigned int str_rchr(const char *,int);
 extern int str_start(const char *,const char *);
