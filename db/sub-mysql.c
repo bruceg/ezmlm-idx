@@ -50,7 +50,7 @@ MYSQL_STMT *_prepbind(struct subdbinfo *info,
     die_sqlerror(info);
   if (mysql_stmt_prepare(stmt,q->s,q->len) != 0)
     die_sqlerror(info);
-  byte_zero((char*)bind,sizeof bind);
+  byte_zero(bind,sizeof bind);
   for (i = 0; i < nparams; ++i) {
     bind[i].buffer_type = MYSQL_TYPE_STRING;
     bind[i].buffer = params[i].s;
@@ -106,8 +106,8 @@ int sql_fetch_row(struct subdbinfo *info,
   unsigned long lengths[ncolumns];
   unsigned int i;
 
-  byte_zero((char*)bind,sizeof bind);
-  byte_zero((char*)lengths,sizeof lengths);
+  byte_zero(bind,sizeof bind);
+  byte_zero(lengths,sizeof lengths);
   for (i = 0; i < ncolumns; ++i) {
     bind[i].buffer_type = MYSQL_TYPE_BLOB;
     bind[i].buffer = 0;

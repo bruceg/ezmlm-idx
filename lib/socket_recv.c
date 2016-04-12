@@ -16,7 +16,7 @@ int socket_recv4(int s,char *buf,int len,char ip[4],uint16 *port)
   r = recvfrom(s,buf,len,0,(struct sockaddr *) &sa,&dummy);
   if (r == -1) return -1;
 
-  byte_copy(ip,4,(char *) &sa.sin_addr);
+  byte_copy(ip,4,&sa.sin_addr);
   uint16_unpack_big((char *) &sa.sin_port,port);
 
   return r;

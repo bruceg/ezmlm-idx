@@ -11,10 +11,10 @@ int socket_bind4(int s,char ip[4],uint16 port)
 {
   struct sockaddr_in sa;
 
-  byte_zero((void*)&sa,sizeof sa);
+  byte_zero(&sa,sizeof sa);
   sa.sin_family = AF_INET;
   uint16_pack_big((char *) &sa.sin_port,port);
-  byte_copy((char *) &sa.sin_addr,4,ip);
+  byte_copy(&sa.sin_addr,4,ip);
 
   return bind(s,(struct sockaddr *) &sa,sizeof sa);
 }

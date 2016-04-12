@@ -16,7 +16,7 @@ int socket_accept4(int s,char ip[4],uint16 *port)
   fd = accept(s,(struct sockaddr *) &sa,&dummy);
   if (fd == -1) return -1;
 
-  byte_copy(ip,4,(char *) &sa.sin_addr);
+  byte_copy(ip,4,&sa.sin_addr);
   uint16_unpack_big((char *) &sa.sin_port,port);
 
   return fd;

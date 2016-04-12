@@ -9,11 +9,7 @@ lib/auto_lib.lo
 lib/auto_qmail.lo
 lib/auto_version.lo
 lib/byte_chr.lo
-lib/byte_copy.lo
-lib/byte_cr.lo
-lib/byte_diff.lo
 lib/byte_rchr.lo
-lib/byte_zero.lo
 lib/case_diffb.lo
 lib/case_diffs.lo
 lib/case_lowerb.lo
