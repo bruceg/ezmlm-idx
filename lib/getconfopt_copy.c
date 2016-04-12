@@ -4,7 +4,7 @@
 
 static int copy_flag(struct option *o,const char *arg)
 {
-  if (!stralloc_append(o->var.str,o->ch)) die_nomem();
+  stralloc_append(o->var.str,o->ch);
   return 1;
   (void)arg;
 }

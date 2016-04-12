@@ -91,13 +91,13 @@ int main(int argc,char **argv)
   umask(022);
   sig_pipeignore();
 
-  if (!stralloc_copys(&sendopt,"-")) die_nomem();
-  if (!stralloc_copys(&storeopt,"-")) die_nomem();
+  stralloc_copys(&sendopt,"-");
+  stralloc_copys(&storeopt,"-");
   opt = getconfopt(argc,argv,options,1,&dir);
 
 	/* storeopts to ezmlm-store only. Others to both (ezmlm-store may */
 	/* pass them on to ezmlm-send. */
-  if (!stralloc_catb(&storeopt,sendopt.s+1,sendopt.len-1)) die_nomem();
+  stralloc_catb(&storeopt,sendopt.s+1,sendopt.len-1);
 
   initsub(0);
 

@@ -223,16 +223,15 @@ int idx_copy_insertsubject(void)
   char strnum[FMT_ULONG];
   char hash[HASHLEN];
 
-  if (!stralloc_copys(&fnadir,"archive/")) die_nomem();
-  if (!stralloc_catb(&fnadir,strnum,fmt_ulong(strnum,outnum / 100)))
-	die_nomem();
-  if (!stralloc_copy(&fnif,&fnadir)) die_nomem();
-  if (!stralloc_copy(&fnifn,&fnif)) die_nomem();
-  if (!stralloc_cats(&fnif,"/index")) die_nomem();
-  if (!stralloc_cats(&fnifn,"/indexn")) die_nomem();
-  if (!stralloc_0(&fnif)) die_nomem();
-  if (!stralloc_0(&fnifn)) die_nomem();
-  if (!stralloc_0(&fnadir)) die_nomem();
+  stralloc_copys(&fnadir,"archive/");
+  stralloc_catb(&fnadir,strnum,fmt_ulong(strnum,outnum / 100));
+  stralloc_copy(&fnif,&fnadir);
+  stralloc_copy(&fnifn,&fnif);
+  stralloc_cats(&fnif,"/index");
+  stralloc_cats(&fnifn,"/indexn");
+  stralloc_0(&fnif);
+  stralloc_0(&fnifn);
+  stralloc_0(&fnadir);
 
 			/* may not exists since we run before ezmlm-send */
   if (mkdir(fnadir.s,0755) == -1)
@@ -281,30 +280,30 @@ int idx_copy_insertsubject(void)
     }
     close(fdindex);
   }
-  if (!stralloc_copyb(&qline,strnum,fmt_ulong(strnum,outnum))) die_nomem();
-  if (!stralloc_cats(&qline,": ")) die_nomem();	/* ':' for new ver */
+  stralloc_copyb(&qline,strnum,fmt_ulong(strnum,outnum));
+  stralloc_cats(&qline,": ");	/* ':' for new ver */
   makehash(lines.s,lines.len,hash);
-  if (!stralloc_catb(&qline,hash,HASHLEN)) die_nomem();
-  if (!stralloc_cats(&qline," ")) die_nomem();
+  stralloc_catb(&qline,hash,HASHLEN);
+  stralloc_cats(&qline," ");
   if (r & 1)		/* reply */
-    if (!stralloc_cats(&qline,"Re: ")) die_nomem();
-  if (!stralloc_cat(&qline,&lines)) die_nomem();
-  if (!stralloc_cats(&qline,"\n\t")) die_nomem();
-  if (!stralloc_cat(&qline,&received)) die_nomem();
-  if (!stralloc_cats(&qline,";")) die_nomem();
+    stralloc_cats(&qline,"Re: ");
+  stralloc_cat(&qline,&lines);
+  stralloc_cats(&qline,"\n\t");
+  stralloc_cat(&qline,&received);
+  stralloc_cats(&qline,";");
 
   concatHDR(from.s,from.len,&lines);
   mkauthhash(lines.s,lines.len,hash);
 
-  if (!stralloc_catb(&qline,hash,HASHLEN)) die_nomem();
-  if (!stralloc_cats(&qline," ")) die_nomem();
+  stralloc_catb(&qline,hash,HASHLEN);
+  stralloc_cats(&qline," ");
 
   author_name(&from,lines.s,lines.len);
 
   (void) unfoldHDR(from.s,from.len,&lines,charset.s,&dcprefix,0);
-  if (!stralloc_cat(&qline,&lines)) die_nomem();
+  stralloc_cat(&qline,&lines);
 
-  if (!stralloc_cats(&qline,"\n")) die_nomem();
+  stralloc_cats(&qline,"\n");
   if (substdio_put(&ssindexn,qline.s,qline.len) == -1) die_indexn();
   if (substdio_flush(&ssindexn) == -1) die_indexn();
   if (fsync(fdindexn) == -1) die_indexn();
@@ -327,8 +326,8 @@ static void rewrite_from()
     at = byte_rchr(author.s,author.len,'@');
     if (++at >= author.len)
       return;
-    if (!stralloc_copyb(&dummy,author.s + at,author.len - at)) die_nomem();
-    if (!stralloc_0(&dummy)) die_nomem();
+    stralloc_copyb(&dummy,author.s + at,author.len - at);
+    stralloc_0(&dummy);
     r = dmarc_p_reject(dummy.s);
     if (r < 0) die_dns(dummy.s);
     flagrewritefrom = r;
@@ -341,15 +340,15 @@ static void rewrite_from()
     stralloc_copy(&dummy,&outlocal);
     stralloc_0(&dummy);
 
-    if (!stralloc_copyb(&line,"From: \"",7)) die_nomem();
-    if (!stralloc_cats(&line,MSG2(AUTHOR_VIA_LIST,author.s,dummy.s))) die_nomem();
-    if (!stralloc_catb(&line,"\" <",3)) die_nomem();
-    if (!stralloc_catb(&line,outlocal.s,outlocal.len)) die_nomem();
-    if (!stralloc_catb(&line,"@",1)) die_nomem();
-    if (!stralloc_catb(&line,outhost.s,outhost.len)) die_nomem();
-    if (!stralloc_catb(&line,">\n",2)) die_nomem();
-    if (!stralloc_cats(&line,flagreplytolist ? "Cc:" : "Reply-To:")) die_nomem();
-    if (!stralloc_catb(&line,from.s,from.len)) die_nomem();
+    stralloc_copyb(&line,"From: \"",7);
+    stralloc_cats(&line,MSG2(AUTHOR_VIA_LIST,author.s,dummy.s));
+    stralloc_catb(&line,"\" <",3);
+    stralloc_catb(&line,outlocal.s,outlocal.len);
+    stralloc_catb(&line,"@",1);
+    stralloc_catb(&line,outhost.s,outhost.len);
+    stralloc_catb(&line,">\n",2);
+    stralloc_cats(&line,flagreplytolist ? "Cc:" : "Reply-To:");
+    stralloc_catb(&line,from.s,from.len);
   }
 }
 
@@ -409,7 +408,7 @@ int main(int argc,char **argv)
 
     decodeHDR(prefix.s,prefix.len,&line);
     (void) unfoldHDR(line.s,line.len,&dcprefix,charset.s,&dummy,0);
-    if (!stralloc_copy(&dcprefix,&line)) die_nomem();
+    stralloc_copy(&dcprefix,&line);
     serial = byte_rchr(prefix.s,prefix.len,'#');
   }
   flagtrailer = getconf_isset("addtrailer");
@@ -428,14 +427,13 @@ int main(int argc,char **argv)
     headerremoveflag = 1;
   else
     getconf(&headerremove,"headerremove",1);
-  if (!constmap_init(&headerremovemap,headerremove.s,headerremove.len,0))
-	die_nomem();
+  constmap_init(&headerremovemap,headerremove.s,headerremove.len,0);
 
-  if (!stralloc_copys(&mydtline,"Delivered-To: mailing list ")) die_nomem();
-  if (!stralloc_catb(&mydtline,outlocal.s,outlocal.len)) die_nomem();
-  if (!stralloc_cats(&mydtline,"@")) die_nomem();
-  if (!stralloc_catb(&mydtline,outhost.s,outhost.len)) die_nomem();
-  if (!stralloc_cats(&mydtline,"\n")) die_nomem();
+  stralloc_copys(&mydtline,"Delivered-To: mailing list ");
+  stralloc_catb(&mydtline,outlocal.s,outlocal.len);
+  stralloc_cats(&mydtline,"@");
+  stralloc_catb(&mydtline,outhost.s,outhost.len);
+  stralloc_cats(&mydtline,"\n");
 
   if (sender) {
     if (!*sender)
@@ -460,15 +458,13 @@ int main(int argc,char **argv)
   set_cpnum(szmsgnum);				/* for copy */
 
   if (flagarchived) {
-    if (!stralloc_copys(&fnadir,"archive/")) die_nomem();
-    if (!stralloc_catb(&fnadir,strnum,
-		fmt_ulong(strnum,outnum / 100))) die_nomem();
-    if (!stralloc_copy(&fnaf,&fnadir)) die_nomem();
-    if (!stralloc_cats(&fnaf,"/")) die_nomem();
-    if (!stralloc_catb(&fnaf,strnum,fmt_uint0(strnum,
-		(unsigned int) (outnum % 100),2))) die_nomem();
-    if (!stralloc_0(&fnadir)) die_nomem();
-    if (!stralloc_0(&fnaf)) die_nomem();
+    stralloc_copys(&fnadir,"archive/");
+    stralloc_catb(&fnadir,strnum,fmt_ulong(strnum,outnum / 100));
+    stralloc_copy(&fnaf,&fnadir);
+    stralloc_cats(&fnaf,"/");
+    stralloc_catb(&fnaf,strnum,fmt_uint0(strnum,(unsigned int) (outnum % 100),2));
+    stralloc_0(&fnadir);
+    stralloc_0(&fnaf);
 
     if (mkdir(fnadir.s,0755) == -1)
       if (errno != error_exist)
@@ -479,13 +475,13 @@ int main(int argc,char **argv)
 
     substdio_fdbuf(&ssarchive,write,fdarchive,archivebuf,sizeof(archivebuf));
 						/* return-path to archive */
-    if (!stralloc_copys(&line,"Return-Path: <")) die_nomem();
+    stralloc_copys(&line,"Return-Path: <");
     if (sender) {				/* same as qmail-local */
-      if (!quote2(&qline,sender)) die_nomem();
+      quote2(&qline,sender);
       for (i = 0;i < qline.len;++i) if (qline.s[i] == '\n') qline.s[i] = '_';
-      if (!stralloc_cat(&line,&qline)) die_nomem();
+      stralloc_cat(&line,&qline);
     }
-    if (!stralloc_cats(&line,">\n")) die_nomem();
+    stralloc_cats(&line,">\n");
     if (substdio_put(&ssarchive,line.s,line.len) == -1) die_archive();
   }
 
@@ -502,11 +498,11 @@ int main(int argc,char **argv)
   copy(&qq,"headeradd",'H');
   qa_put(mydtline.s,mydtline.len);
   if (flagreplytolist) {
-    if (!stralloc_copyb(&line,"Reply-To: <",11)) die_nomem();
-    if (!stralloc_cat(&line,&outlocal)) die_nomem();
-    if (!stralloc_append(&line,'@')) die_nomem();
-    if (!stralloc_cat(&line,&outhost)) die_nomem();
-    if (!stralloc_catb(&line,">\n",2)) die_nomem();
+    stralloc_copyb(&line,"Reply-To: <",11);
+    stralloc_cat(&line,&outlocal);
+    stralloc_append(&line,'@');
+    stralloc_cat(&line,&outhost);
+    stralloc_catb(&line,">\n",2);
     qa_put(line.s,line.len);
   }
 
@@ -549,7 +545,7 @@ int main(int argc,char **argv)
 		/* do other stuff to do with post header processing here */
 	if (content.len) {		/* get MIME boundary, if exists */
           concatHDR(content.s,content.len,&qline);
-          if (!stralloc_copy(&content,&qline)) die_nomem();
+          stralloc_copy(&content,&qline);
 
 	  if (flagtrailer &&		/* trailer only for some multipart */
 		case_startb(content.s,content.len,"multipart/"))
@@ -577,12 +573,10 @@ int main(int argc,char **argv)
                  while (cp < cpafter && *cp != ';' &&
 			*cp != ' ' && *cp != '\t' && *cp != '\n') ++cp;
                }
-               if (!stralloc_copys(&boundary,"--")) die_nomem();
-               if (!stralloc_catb(&boundary,cpstart,cp-cpstart))
-			die_nomem();
+               stralloc_copys(&boundary,"--");
+               stralloc_catb(&boundary,cpstart,cp-cpstart);
 	       flagfoundokpart = 0;
-               if (!constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0))
-			die_nomem();
+               constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0);
                flagbadpart = 1;		/* skip before first boundary */
                qa_puts("\n");		/* to make up for the lost '\n' */
             }
@@ -604,8 +598,7 @@ int main(int argc,char **argv)
 		for (++pos; pos < line.len; ++pos)
 		  if (line.s[pos] != ' ' && line.s[pos] != '\t')
 		    break;
-                if (!stralloc_copyb(&received,line.s+pos,line.len-pos-1))
-                  die_nomem();
+                stralloc_copyb(&received,line.s+pos,line.len-pos-1);
 	      }
             } else {				/* suppress, but archive */
               flagarchiveonly = 1;		/* but do not suppress the */
@@ -617,9 +610,9 @@ int main(int argc,char **argv)
 	  flagmlwasthere = 1;		/* mlheader treated as ML */
         else if ((mimeremove.len || flagtrailer) &&	/* else no MIME need*/
 		case_startb(line.s,line.len,"Content-Type:")) {
-          if (!stralloc_copyb(&content,line.s+13,line.len-13)) die_nomem();
+          stralloc_copyb(&content,line.s+13,line.len-13);
 	} else if (case_startb(line.s,line.len,"Subject:")) {
-          if (!stralloc_copyb(&subject,line.s+8,line.len-8)) die_nomem();
+          stralloc_copyb(&subject,line.s+8,line.len-8);
           if (flagprefixed && !flagsublist)	/* don't prefix for sublists */
 	    flagbadfield = 1;			/* we'll print our own */
         } else if (flagtrailer &&
@@ -632,7 +625,7 @@ int main(int argc,char **argv)
         } else if (flaglistid && case_startb(line.s,line.len,"list-id:"))
 	  flagbadfield = 1;		/* suppress if we added our own */
 	else if (case_startb(line.s,line.len,"From:")) {
-	  if (!stralloc_copyb(&from,line.s+5,line.len-5)) die_nomem();
+	  stralloc_copyb(&from,line.s+5,line.len-5);
 	  rewrite_from();
         } else if (line.len == mydtline.len)
 	  if (!byte_diff(line.s,line.len,mydtline.s))
@@ -659,7 +652,7 @@ int main(int argc,char **argv)
 	  }
         } else {			/* new part */
             flagbadpart = 1;		/* skip lines */
-            if (!stralloc_copy(&lines,&line)) die_nomem();	/* but save */
+            stralloc_copy(&lines,&line);	/* but save */
             flagseenext = 1;		/* need to check Cont-type */
         }
       } else if (flagseenext) {		/* last was boundary, now stored */
@@ -683,7 +676,7 @@ int main(int argc,char **argv)
           flagseenext = 0;		/* done thinking about it */
           qa_put(lines.s,lines.len);	/* saved lines */
         } else				/* save line in cont desc */
-          if (!stralloc_cat(&lines,&line)) die_nomem();
+          stralloc_cat(&lines,&line);
       }
       if (!flagbadpart)
         qa_put(line.s,line.len);
@@ -730,13 +723,13 @@ int main(int argc,char **argv)
   }
 
   numwrite();
-  if (!stralloc_copy(&line,&outlocal)) die_nomem();
-  if (!stralloc_cats(&line,"-return-")) die_nomem();
-  if (!stralloc_cats(&line,szmsgnum)) die_nomem();
-  if (!stralloc_cats(&line,"-@")) die_nomem();
-  if (!stralloc_cat(&line,&outhost)) die_nomem();
-  if (!stralloc_cats(&line,"-@[]")) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copy(&line,&outlocal);
+  stralloc_cats(&line,"-return-");
+  stralloc_cats(&line,szmsgnum);
+  stralloc_cats(&line,"-@");
+  stralloc_cat(&line,&outhost);
+  stralloc_cats(&line,"-@[]");
+  stralloc_0(&line);
   qmail_from(&qq,line.s);			/* envelope sender */
   subs = putsubs(0,hash_lo,hash_hi,subto);	/* subscribers */
   if (flagsublist) hash_lo++;

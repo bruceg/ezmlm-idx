@@ -16,13 +16,13 @@ static const char ok[128] = {
 ,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7 ,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,0
 } ;
 
-static int doit(stralloc *saout,const stralloc *sain)
+static void doit(stralloc *saout,const stralloc *sain)
 {
  char ch;
  unsigned int i;
  int j;
 
- if (!stralloc_ready(saout,sain->len * 2 + 2)) return 0;
+ stralloc_ready(saout,sain->len * 2 + 2);
  j = 0;
  saout->s[j++] = '"';
  for (i = 0;i < sain->len;++i)
@@ -34,7 +34,6 @@ static int doit(stralloc *saout,const stralloc *sain)
   }
  saout->s[j++] = '"';
  saout->len = j;
- return 1;
 }
 
 int quote_need(const char *s,unsigned int n)
@@ -54,21 +53,23 @@ int quote_need(const char *s,unsigned int n)
  return 0;
 }
 
-int quote(stralloc *saout,const stralloc *sain)
+void quote(stralloc *saout,const stralloc *sain)
 {
- if (quote_need(sain->s,sain->len)) return doit(saout,sain);
- return stralloc_copy(saout,sain);
+ if (quote_need(sain->s,sain->len))
+   doit(saout,sain);
+ else
+   stralloc_copy(saout,sain);
 }
 
 static stralloc foo = {0};
 
-int quote2(stralloc *sa,const char *s)
+void quote2(stralloc *sa,const char *s)
 {
  int j;
  j = str_rchr(s,'@');
- if (!stralloc_copys(&foo,s)) return 0;
- if (!s[j]) return quote(sa,&foo);
- foo.len = j;
- if (!quote(sa,&foo)) return 0;
- return stralloc_cats(sa,s + j);
+ stralloc_copys(&foo,s);
+ if (s[j])
+   foo.len = j;
+ quote(sa,&foo);
+ stralloc_cats(sa,s + j);
 }

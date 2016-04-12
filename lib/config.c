@@ -127,7 +127,7 @@ static void load_config(void)
 
   getconf_line(&outhost,"outhost",1);
   getconf_line(&outlocal,"outlocal",1);
-  if (!stralloc_copy(&mainlocal,&outlocal)) die_nomem();
+  stralloc_copy(&mainlocal,&outlocal);
 
   getconf_line(&listid,"listid",0);
   if (getconf_line(&charset,"charset",0)) {
@@ -139,8 +139,8 @@ static void load_config(void)
       }
     }
   } else
-    if (!stralloc_copys(&charset,TXT_DEF_CHARSET)) die_nomem();
-  if (!stralloc_0(&charset)) die_nomem();
+    stralloc_copys(&charset,TXT_DEF_CHARSET);
+  stralloc_0(&charset);
 }
 
 void startup(const char *dir)

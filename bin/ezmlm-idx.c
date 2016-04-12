@@ -84,17 +84,16 @@ unsigned int pos,pos1;
       if (line.len == 1)
         break;
       if (!foundsubject && case_startb(line.s,line.len,"Subject:")) {
-	if (!stralloc_copyb(&subject,line.s+8,line.len-8)) die_nomem();
+	stralloc_copyb(&subject,line.s+8,line.len-8);
 	foundsubject = 1;
       } else if (!foundfrom && case_startb(line.s,line.len,"From:")) {
-	if (!stralloc_copyb(&author,line.s+5,line.len-5)) die_nomem();
+	stralloc_copyb(&author,line.s+5,line.len-5);
 	foundfrom = 1;
       } else if (!flagdate && !foundreceived &&
 		 case_startb(line.s,line.len,"Received:")) {
           pos = byte_chr(line.s,line.len,';');
           if (pos != line.len)
-            if (!stralloc_copyb(&received,line.s+pos+2,line.len - pos - 3))
-              die_nomem();
+            stralloc_copyb(&received,line.s+pos+2,line.len - pos - 3);
           foundreceived = 1;
       } else if (flagdate && !foundreceived &&
 		 case_startb(line.s,line.len,"Date:")) {
@@ -107,13 +106,12 @@ unsigned int pos,pos1;
           pos1 = pos + 3;
           while (++pos1 < line.len && line.s[pos1] != ' ');		/* mo */
           ++pos1;
-          if (!stralloc_copyb(&received,line.s+pos,pos1 - pos))
-              die_nomem();					/* '01 Jun ' */
+          stralloc_copyb(&received,line.s+pos,pos1 - pos);      /* '01 Jun ' */
           if (pos1 + 2 < line.len) {
             if (line.s[pos1 + 2] == ' ') {			/* 2-digit */
               if (line.s[pos1] >= '7') {			/* >= 70 */
-              if (!stralloc_cats(&received,"19")) die_nomem();
-              } else if (!stralloc_cats(&received,"20")) die_nomem();
+              stralloc_cats(&received,"19");
+              } else stralloc_cats(&received,"20");
               pos = pos1 + 3;					/* 2 digit */
             } else
               pos = pos1 + 5;					/* 4 digit */
@@ -124,8 +122,7 @@ unsigned int pos,pos1;
                 while (line.s[pos] != ' ' && line.s[pos] != '\n') ++pos;
               } else
                 pos = line.len - 1;	/* no zone. Illegal; better than 0 */
-              if (!stralloc_catb(&received,line.s+pos1,pos - pos1))
-			die_nomem();
+              stralloc_catb(&received,line.s+pos1,pos - pos1);
               foundreceived = 1;
               continue;
             }
@@ -189,16 +186,15 @@ int main(int argc,char **argv)
   }
   while (++msgnum <= msgmax) {
     if (msgnum == 1 || !(msgnum % 100)) {
-      if (!stralloc_copys(&fnadir,"archive/")) die_nomem();
-      if (!stralloc_catb(&fnadir,strnum,fmt_ulong(strnum,msgnum / 100)))
-	die_nomem();
-      if (!stralloc_copy(&fnifn,&fnadir)) die_nomem();
-      if (!stralloc_copy(&fnif,&fnadir)) die_nomem();
-      if (!stralloc_cats(&fnif,"/index")) die_nomem();
-      if (!stralloc_cats(&fnifn,"/indexn")) die_nomem();
-      if (!stralloc_0(&fnadir)) die_nomem();
-      if (!stralloc_0(&fnifn)) die_nomem();
-      if (!stralloc_0(&fnif)) die_nomem();
+      stralloc_copys(&fnadir,"archive/");
+      stralloc_catb(&fnadir,strnum,fmt_ulong(strnum,msgnum / 100));
+      stralloc_copy(&fnifn,&fnadir);
+      stralloc_copy(&fnif,&fnadir);
+      stralloc_cats(&fnif,"/index");
+      stralloc_cats(&fnifn,"/indexn");
+      stralloc_0(&fnadir);
+      stralloc_0(&fnifn);
+      stralloc_0(&fnif);
 
 			/* May not exist, so be nice and make it */
       if (mkdir(fnadir.s,0755) == -1)
@@ -217,11 +213,10 @@ int main(int argc,char **argv)
 			/* make sure there is one */
     }
 
-    if (!stralloc_copys(&fnaf,fnadir.s)) die_nomem();
-    if (!stralloc_cats(&fnaf,"/")) die_nomem();
-    if (!stralloc_catb(&fnaf,strnum,
-       fmt_uint0(strnum,(unsigned int) (msgnum % 100),2))) die_nomem();
-    if (!stralloc_0(&fnaf)) die_nomem();
+    stralloc_copys(&fnaf,fnadir.s);
+    stralloc_cats(&fnaf,"/");
+    stralloc_catb(&fnaf,strnum,fmt_uint0(strnum,(unsigned int) (msgnum % 100),2));
+    stralloc_0(&fnaf);
     fd = open_read(fnaf.s);
     if (fd == -1) {
       if (errno != error_noent)
@@ -234,29 +229,29 @@ int main(int argc,char **argv)
       received.len = 0;
       r = idx_get_trimsubject(fd);
       close(fd);
-      if (!stralloc_copyb(&line,strnum,fmt_ulong(strnum,msgnum))) die_nomem();
-      if (!stralloc_cats(&line,": ")) die_nomem();
+      stralloc_copyb(&line,strnum,fmt_ulong(strnum,msgnum));
+      stralloc_cats(&line,": ");
       makehash(subject.s,subject.len,hash);
-      if (!stralloc_catb(&line,hash,HASHLEN)) die_nomem();
-      if (!stralloc_cats(&line," ")) die_nomem();
+      stralloc_catb(&line,hash,HASHLEN);
+      stralloc_cats(&line," ");
       if (r & 1)	/* reply */
-	if (!stralloc_cats(&line,"Re: ")) die_nomem();
-      if (!stralloc_cat(&line,&subject)) die_nomem();
-      if (!stralloc_cats(&line,"\n\t")) die_nomem();
-      if (!stralloc_cat(&line,&received)) die_nomem();
-      if (!stralloc_cats(&line,";")) die_nomem();
+	stralloc_cats(&line,"Re: ");
+      stralloc_cat(&line,&subject);
+      stralloc_cats(&line,"\n\t");
+      stralloc_cat(&line,&received);
+      stralloc_cats(&line,";");
 
       concatHDR(author.s,author.len,&lines);
       mkauthhash(lines.s,lines.len,hash);
-      if (!stralloc_catb(&line,hash,HASHLEN)) die_nomem();
+      stralloc_catb(&line,hash,HASHLEN);
 
       author_name(&author,lines.s,lines.len);
 
       (void) unfoldHDR(author.s,author.len,&lines,charset.s,&prefix,0);
 
-      if (!stralloc_cats(&line," ")) die_nomem();
-      if (!stralloc_cat(&line,&lines)) die_nomem();
-      if (!stralloc_cats(&line,"\n")) die_nomem();
+      stralloc_cats(&line," ");
+      stralloc_cat(&line,&lines);
+      stralloc_cats(&line,"\n");
       if (substdio_put(&ssindex,line.s,line.len) == -1)
           strerr_die2sys(100,FATAL,MSG1(ERR_WRITE,fnifn.s));
     }

@@ -21,8 +21,8 @@ void concatHDR(const char *indata,
     ++indata;
     --n;
   }
-  if (!stralloc_copys(outdata,"")) die_nomem();
-  if (!stralloc_ready(outdata,n)) die_nomem();
+  stralloc_copys(outdata,"");
+  stralloc_ready(outdata,n);
   cpout = outdata->s;
   if (n == 0) return;
   cplast = indata + n - 1;

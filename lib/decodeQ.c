@@ -33,7 +33,7 @@ void decodeQ(const char *cpfrom,unsigned int n,stralloc *outdata)
 
   cp = cpfrom;
   cpnext = cp + n;
-  if (!stralloc_readyplus(outdata,n)) die_nomem();
+  stralloc_readyplus(outdata,n);
 
   while (cp < cpnext) {
     ch = *cp++;
@@ -51,7 +51,7 @@ void decodeQ(const char *cpfrom,unsigned int n,stralloc *outdata)
         ch = (ch1 << 4 | ch2) & 0xff;
       }
     }
-    if (!stralloc_append(outdata,ch)) die_nomem();
+    stralloc_append(outdata,ch);
   }
 }      
 

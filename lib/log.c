@@ -23,25 +23,25 @@ void logaddr(const char *subdir,const char *event,
   char ch;
   int fd;
 
-  if (!stralloc_copyb(&line,num,fmt_ulong(num,(unsigned long) now()))) return;
-  if (!stralloc_cats(&line," ")) return;
-  if (!stralloc_cats(&line,event)) return;
-  if (!stralloc_cats(&line," ")) return;
+  stralloc_copyb(&line,num,fmt_ulong(num,(unsigned long) now()));
+  stralloc_cats(&line," ");
+  stralloc_cats(&line,event);
+  stralloc_cats(&line," ");
   while ((ch = *addr++) != 0) {
     if ((ch < 33) || (ch > 126)) ch = '?';
-    if (!stralloc_append(&line,ch)) return;
+    stralloc_append(&line,ch);
   }
   if (comment && *comment) {
-    if (!stralloc_cats(&line," ")) return;
+    stralloc_cats(&line," ");
     while ((ch = *comment++) != 0) {
       if (ch == '\t')
         ch = ' ';
       else 
         if ((ch < 32) || (ch > 126)) ch = '?';
-      if (!stralloc_append(&line,ch)) return;
+      stralloc_append(&line,ch);
     }
   }
-  if (!stralloc_cats(&line,"\n")) return;
+  stralloc_cats(&line,"\n");
 
   makepath(&fn,subdir,"/Log",0);
   fd = open_append(fn.s);

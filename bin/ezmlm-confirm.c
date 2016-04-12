@@ -71,9 +71,9 @@ static int checkfile(const char *fn,stralloc *fnmsg)
 /* file name.                                     */
 {
   struct stat st;
-  if (!stralloc_copys(fnmsg,"mod/unconfirmed/")) die_nomem();
-  if (!stralloc_cats(fnmsg,fn)) die_nomem();
-  if (!stralloc_0(fnmsg)) die_nomem();
+  stralloc_copys(fnmsg,"mod/unconfirmed/");
+  stralloc_cats(fnmsg,fn);
+  stralloc_0(fnmsg);
   if (stat(fnmsg->s,&st) == 0)
     return 1;
   if (errno != error_noent)
@@ -93,8 +93,8 @@ static void maketo(void)
     if (x != line.len) {
       y = byte_rchr(line.s + x,line.len-x,'>');
       if (y + x != line.len) {
-        if (!stralloc_copyb(&to,line.s+x+1,y-1)) die_nomem();
-        if (!stralloc_0(&to)) die_nomem();
+        stralloc_copyb(&to,line.s+x+1,y-1);
+        stralloc_0(&to);
       }			/* no return path-> no addressee. A NUL in the sender */
     }			/* is no worse than a faked sender, so no problem */
   }
@@ -127,7 +127,7 @@ int main(int argc, char **argv)
   sig_pipeignore();
   when = now();
 
-  if (!stralloc_copys(&sendopt,"-")) die_nomem();
+  stralloc_copys(&sendopt,"-");
   opt = getconfopt(argc,argv,options,1,&dir);
 
   sender = get_sender();
@@ -160,8 +160,8 @@ int main(int argc, char **argv)
   if (!action[confnum]) die_badformat();
   confnum += 1 + str_chr(action + confnum + 1,'.');
   if (!action[confnum]) die_badformat();
-  if (!stralloc_copyb(&fnbase,action+start+1,confnum-start-1)) die_nomem();
-  if (!stralloc_0(&fnbase)) die_nomem();
+  stralloc_copyb(&fnbase,action+start+1,confnum-start-1);
+  stralloc_0(&fnbase);
   cookie(hash,key.s,key.len,fnbase.s,"","a");
   if (byte_diff(hash,COOKIE,action+confnum+1))
     die_badformat();

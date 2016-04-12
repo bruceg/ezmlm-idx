@@ -13,14 +13,14 @@ void wrap_execbin(const char *program,
   const char *args[4];
   int i;
 
-  if (!stralloc_copys(&path,auto_bin())) die_nomem();
-  if (!stralloc_cats(&path,program)) die_nomem();
-  if (!stralloc_0(&path)) die_nomem();
+  stralloc_copys(&path,auto_bin());
+  stralloc_cats(&path,program);
+  stralloc_0(&path);
   args[0] = path.s;
 
   i = 1;
   if (opts && opts->len > 1) {
-    if (!stralloc_0(opts)) die_nomem();
+    stralloc_0(opts);
     args[i++] = opts->s;
   }
 

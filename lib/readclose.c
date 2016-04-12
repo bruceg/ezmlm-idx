@@ -8,7 +8,7 @@ int readclose_append(int fd,stralloc *sa,unsigned int bufsize)
 {
   int r;
   for (;;) {
-    if (!stralloc_readyplus(sa,bufsize)) { close(fd); return -1; }
+    stralloc_readyplus(sa,bufsize);
     r = read(fd,sa->s + sa->len,bufsize);
     if (r == -1) if (errno == error_intr) continue;
     if (r <= 0) { close(fd); return r; }
@@ -18,6 +18,6 @@ int readclose_append(int fd,stralloc *sa,unsigned int bufsize)
 
 int readclose(int fd,stralloc *sa,unsigned int bufsize)
 {
-  if (!stralloc_copys(sa,"")) { close(fd); return -1; }
+  stralloc_copys(sa,"");
   return readclose_append(fd,sa,bufsize);
 }

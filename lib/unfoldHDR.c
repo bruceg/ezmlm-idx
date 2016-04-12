@@ -147,8 +147,8 @@ int unfoldHDR(char *indata,
   cp = indata;		/* JIS X 0201 -> ISO646 us-ascii */
   cpend = cp + n - 1;
   cpnext = cp;
-  if (!stralloc_copys(&tmpdata,"")) die_nomem();
-  if (!stralloc_ready(&tmpdata,n)) die_nomem();
+  stralloc_copys(&tmpdata,"");
+  stralloc_ready(&tmpdata,n);
 
   if(!case_diffb(charset,11,"iso-2022-jp")) {
 	/* iso-2022-jp-2 (rfc1554) and its subset iso-2022-jp. The reg #s */
@@ -197,20 +197,20 @@ int unfoldHDR(char *indata,
         if (++cp >= cpend) break;	/* skip space */
       if (*cp == ESC)			/* maybe another G0 designation */
         if (*(cp+1) == '(' || *(cp+1) == '$') {	 /* yep! */
-          if (!stralloc_catb(&tmpdata,cpnext,cpesc-cpnext)) die_nomem();
+          stralloc_catb(&tmpdata,cpnext,cpesc-cpnext);
           cpnext = cp;
 	  continue;
       }
       if (reg == newreg) {
-        if (!stralloc_catb(&tmpdata,cpnext,cpesc-cpnext)) die_nomem();
+        stralloc_catb(&tmpdata,cpnext,cpesc-cpnext);
         cpnext = cp;
       } else {
         reg = newreg;
       }		/* copy remainder of line */
     }
-    if (!stralloc_catb(&tmpdata,cpnext,cpend - cpnext + 1)) die_nomem();
+    stralloc_catb(&tmpdata,cpnext,cpend - cpnext + 1);
     if (reg != 6) {	/* need to return to us-ascii at the end of the line */
-      if (!stralloc_cats(&tmpdata,TOASCII)) die_nomem();
+      stralloc_cats(&tmpdata,TOASCII);
     } else {		/* maybe "-Reply at the end?" */
       r = trimend(tmpdata.s,&(tmpdata.len));
     }
@@ -229,7 +229,7 @@ int unfoldHDR(char *indata,
     while (++cp <= cpend) {
       if (*cp == SI || *cp == SO) {
         if (state == *cp) {		 /* already in state. Skip shift seq */
-          if (!stralloc_catb(&tmpdata,cpnext,cp-cpnext-1)) die_nomem();
+          stralloc_catb(&tmpdata,cpnext,cp-cpnext-1);
           cpnext = cp;
         } else				/* set new state */
           state = *cp;
@@ -251,7 +251,7 @@ int unfoldHDR(char *indata,
 		|| (newcset == cset)) {
 			/* skip if a second SO-designation right after or */
 			/* this SO-designation is already active, skip */
-        if (!stralloc_catb(&tmpdata,cpnext,cpesc-cpnext)) die_nomem();
+        stralloc_catb(&tmpdata,cpnext,cpesc-cpnext);
         --cp;		/* "unpeek" so that next iteration will see char */
         cpnext = cpesc + 4;
         continue;
@@ -261,16 +261,16 @@ int unfoldHDR(char *indata,
       }
     }
 			/* get remainder of line */
-    if (!stralloc_catb(&tmpdata,cpnext,cpend - cpnext + 1)) die_nomem();
+    stralloc_catb(&tmpdata,cpnext,cpend - cpnext + 1);
     if (state != SI) {	/* need to end in ascii */
-      if (!stralloc_cats(&tmpdata,TOSI)) die_nomem();
+      stralloc_cats(&tmpdata,TOSI);
     }
     else		/* ascii end; maybe "-Reply" at the end? */
       r = trimend(tmpdata.s,&(tmpdata.len));
 
   } else {		/* other character sets = no special treatment */
     r = trimend(cp,&n);		/* -reply */
-    if (!stralloc_copyb(&tmpdata,cp,n)) die_nomem();
+    stralloc_copyb(&tmpdata,cp,n);
   }
 
   cp = tmpdata.s;
@@ -282,8 +282,8 @@ int unfoldHDR(char *indata,
   }
 			/* there shouldn't be '\0' or '\n', but make sure as */
 			/* it would break the message index */
-  if (!stralloc_copys(outdata,"")) die_nomem();
-  if (!stralloc_ready(outdata,n)) die_nomem();
+  stralloc_copys(outdata,"");
+  stralloc_ready(outdata,n);
   outdata->len = n;
   cpout = outdata->s;
   while (n--) {		/* '\n' and '\0' would break the subject index */

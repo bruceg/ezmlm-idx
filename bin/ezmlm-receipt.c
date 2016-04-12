@@ -80,9 +80,9 @@ static void doit(const char *workdir,const char *addr,unsigned long msgnum,unsig
   unsigned int no;
   char strnum[FMT_ULONG];
 
-  if (!stralloc_copys(&fndir,workdir)) die_nomem();
-  if (!stralloc_cats(&fndir,"/bounce")) die_nomem();
-  if (!stralloc_0(&fndir)) die_nomem();
+  stralloc_copys(&fndir,workdir);
+  stralloc_cats(&fndir,"/bounce");
+  stralloc_0(&fndir);
   bouncedir = opendir(fndir.s);
   if (!bouncedir)
     if (errno != error_noent)
@@ -100,21 +100,20 @@ static void doit(const char *workdir,const char *addr,unsigned long msgnum,unsig
   if (!no)			/* max no of bounces exceeded */
     strerr_die2x(0,INFO,MSG(ERR_MAX_BOUNCE));
 				/* save bounce */
-  if (!stralloc_copys(&fndate,workdir)) die_nomem();
-  if (!stralloc_cats(&fndate,"/bounce/d")) die_nomem();
+  stralloc_copys(&fndate,workdir);
+  stralloc_cats(&fndate,"/bounce/d");
   pos = fndate.len - 1;
-  if (!stralloc_catb(&fndate,strnum,fmt_ulong(strnum,when))) die_nomem();
-  if (!stralloc_cats(&fndate,".")) die_nomem();
-  if (!stralloc_catb(&fndate,strnum,fmt_ulong(strnum,(unsigned long) getpid())))
-	 die_nomem();
+  stralloc_catb(&fndate,strnum,fmt_ulong(strnum,when));
+  stralloc_cats(&fndate,".");
+  stralloc_catb(&fndate,strnum,fmt_ulong(strnum,(unsigned long) getpid()));
   if (addrno) {	/* so that pre-VERP bounces make a d... file per address */
 		/* for the first one we use the std-style fname */
-    if (!stralloc_cats(&fndate,".")) die_nomem();
-    if (!stralloc_catb(&fndate,strnum,fmt_ulong(strnum,addrno))) die_nomem();
+    stralloc_cats(&fndate,".");
+    stralloc_catb(&fndate,strnum,fmt_ulong(strnum,addrno));
   }
   addrno++;	/* get ready for next */
-  if (!stralloc_0(&fndate)) die_nomem();
-  if (!stralloc_copy(&fndatenew,&fndate)) die_nomem();
+  stralloc_0(&fndate);
+  stralloc_copy(&fndatenew,&fndate);
   fndatenew.s[pos] = 'D';
 
   fd = open_trunc(fndatenew.s);
@@ -127,7 +126,7 @@ static void doit(const char *workdir,const char *addr,unsigned long msgnum,unsig
   if (substdio_put(&ssout,"",1) == -1) die_datenew();
 
   if (substdio_puts(&ssout,"Return-Path: <") == -1) die_datenew();
-  if (!quote2(&quoted,sender)) die_nomem();
+  quote2(&quoted,sender);
   if (substdio_put(&ssout,quoted.s,quoted.len) == -1) die_datenew();
   if (substdio_puts(&ssout,">\n") == -1) die_datenew();
   if (substdio_put(&ssout,bounce->s,bounce->len) == -1) die_datenew();
@@ -189,11 +188,11 @@ int main(int argc,char **argv)
 	flagdig = 2;
   }
   if (flagdig) {
-    if (!stralloc_copys(&ddir,dir)) die_nomem();
-    if (!stralloc_cats(&ddir,"/digest")) die_nomem();
-    if (!stralloc_0(&ddir)) die_nomem();
+    stralloc_copys(&ddir,dir);
+    stralloc_cats(&ddir,"/digest");
+    stralloc_0(&ddir);
     workdir = ddir.s;
-    if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
+    stralloc_cats(&outlocal,"-digest");
   }
   if (!*action) die_trash();
 
@@ -211,10 +210,10 @@ int main(int argc,char **argv)
         if (!scan_ulong(cp + 8,&msgnum))
           strerr_die2x(100,FATAL,"bad VERP format for receipt");
          *cp = '\0';
-        if (!stralloc_copys(&listaddr,sender)) die_nomem();
-        if (!stralloc_append(&listaddr,'@')) die_nomem();
-        if (!stralloc_cats(&listaddr,host)) die_nomem();
-        if (!stralloc_0(&listaddr)) die_nomem();
+        stralloc_copys(&listaddr,sender);
+        stralloc_append(&listaddr,'@');
+        stralloc_cats(&listaddr,host);
+        stralloc_0(&listaddr);
         break;
       }
     }
@@ -226,7 +225,7 @@ int main(int argc,char **argv)
       if (line.len == 1) break;
       if (case_startb(line.s,line.len,TXT_TAG)) {
 	len = str_len(TXT_TAG);
-        if (!stralloc_catb(&tagline,line.s +len,line.len - len -1)) die_nomem();
+        stralloc_catb(&tagline,line.s +len,line.len - len -1);
 		/* NOTE: tagline is dirty! We quote it for sql and rely on */
 		/* std log clean for maillog */
         break;
@@ -252,7 +251,7 @@ int main(int argc,char **argv)
     if (!match) break;
     if (case_startb(line.s,line.len,TXT_TAG)) {
       len = str_len(TXT_TAG);
-      if (!stralloc_catb(&tagline,line.s +len,line.len - len -1)) die_nomem();
+      stralloc_catb(&tagline,line.s +len,line.len - len -1);
 		/* NOTE: tagline is dirty! We quote it for sql and rely on */
 		/* std log clean for maillog */
       break;
@@ -266,12 +265,12 @@ int main(int argc,char **argv)
 
     if (slurpclose(0,&bounce,1024) == -1) die_msgin();
     i = str_rchr(action,'=');
-    if (!stralloc_copyb(&listaddr,action,i)) die_nomem();
+    stralloc_copyb(&listaddr,action,i);
     if (action[i]) {
-      if (!stralloc_cats(&listaddr,"@")) die_nomem();
-      if (!stralloc_cats(&listaddr,action + i + 1)) die_nomem();
+      stralloc_cats(&listaddr,"@");
+      stralloc_cats(&listaddr,action + i + 1);
     }
-    if (!stralloc_0(&listaddr)) die_nomem();
+    stralloc_0(&listaddr);
 		/* don't check for sub, since issub() doesn't see sublists */
     switch (subreceipt(workdir,msgnum,&tagline,listaddr.s,-1,INFO,FATAL)) {
 	case -1: strerr_die2x(0,INFO,MSG(ERR_COOKIE));
@@ -286,17 +285,17 @@ int main(int argc,char **argv)
   flaghaveintro = 0;
 
   for (;;) {
-    if (!stralloc_copys(&paragraph,"")) die_nomem();
+    stralloc_copys(&paragraph,"");
     for (;;) {
       if (getln(&ssin,&line,&match,'\n') == -1)
         strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
       if (!match) die_trash();
-      if (!stralloc_cat(&paragraph,&line)) die_nomem();
+      stralloc_cat(&paragraph,&line);
       if (line.len <= 1) break;
     }
 
     if (!flaghaveheader) {
-      if (!stralloc_copy(&header,&paragraph)) die_nomem();
+      stralloc_copy(&header,&paragraph);
       flaghaveheader = 1;
       continue;
     }
@@ -306,7 +305,7 @@ int main(int argc,char **argv)
         continue;		/* skip MIME boundary if it exists */
       if (paragraph.len < 15) die_trash();
       if (str_diffn(paragraph.s,"Hi. This is the",15)) die_trash();
-      if (!stralloc_copy(&intro,&paragraph)) die_nomem();
+      stralloc_copy(&intro,&paragraph);
       flaghaveintro = 1;
       continue;
     }
@@ -315,18 +314,18 @@ int main(int argc,char **argv)
       break;
 
     if (paragraph.s[0] == '<') {	/* find address */
-      if (!stralloc_copy(&failure,&paragraph)) die_nomem();
+      stralloc_copy(&failure,&paragraph);
 
-      if (!stralloc_copy(&bounce,&header)) die_nomem();
-      if (!stralloc_cat(&bounce,&intro)) die_nomem();
-      if (!stralloc_cat(&bounce,&failure)) die_nomem();
+      stralloc_copy(&bounce,&header);
+      stralloc_cat(&bounce,&intro);
+      stralloc_cat(&bounce,&failure);
 
       i = byte_chr(failure.s,failure.len,'\n');
       if (i < 3) die_trash();
 
-      if (!stralloc_copyb(&listaddr,failure.s + 1,i - 3)) die_nomem();
+      stralloc_copyb(&listaddr,failure.s + 1,i - 3);
       if (byte_chr(listaddr.s,listaddr.len,'\0') == listaddr.len) {
-        if (!stralloc_0(&listaddr)) die_nomem();
+        stralloc_0(&listaddr);
         if (subreceipt(workdir,msgnum,&tagline,listaddr.s,-1,INFO,FATAL) == 0)
 	  doit(workdir,listaddr.s,msgnum,when,&bounce);
       }

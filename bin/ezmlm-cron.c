@@ -53,7 +53,7 @@ static struct option options[] = {
 
 static void die_syntax(stralloc *line)
 {
-  if (!stralloc_0(line)) die_nomem();
+  stralloc_0(line);
   strerr_die4x(100,FATAL,MSG1(ERR_SYNTAX,TXT_EZCRONRC),": ",line->s);
 }
 
@@ -174,14 +174,14 @@ int main(int argc,char **argv)
     strerr_die2x(100,FATAL,MSG(ERR_SUID));
   if (!(ppasswd = getpwuid(uid)))
     strerr_die2x(100,FATAL,MSG(ERR_UID));
-  if (!stralloc_copys(&user,ppasswd->pw_name)) die_nomem();
-  if (!stralloc_0(&user)) die_nomem();
+  stralloc_copys(&user,ppasswd->pw_name);
+  stralloc_0(&user);
   if (!(ppasswd = getpwuid(euid)))
     strerr_die2x(100,FATAL,MSG(ERR_EUID));
-  if (!stralloc_copys(&dir,ppasswd->pw_dir)) die_nomem();
-  if (!stralloc_0(&dir)) die_nomem();
-  if (!stralloc_copys(&euser,ppasswd->pw_name)) die_nomem();
-  if (!stralloc_0(&euser)) die_nomem();
+  stralloc_copys(&dir,ppasswd->pw_dir);
+  stralloc_0(&dir);
+  stralloc_copys(&euser,ppasswd->pw_name);
+  stralloc_0(&euser);
 
   wrap_chdir(dir.s);
 
@@ -192,7 +192,7 @@ int main(int argc,char **argv)
     lenlocal = 0;
     lenhost = 0;
   } else {
-    if (!stralloc_copys(&listaddr,local)) die_nomem();
+    stralloc_copys(&listaddr,local);
     if (!isclean(local,1))
       die_argument();
     pos = str_chr(local,'@');
@@ -224,7 +224,7 @@ int main(int argc,char **argv)
   line.s[line.len - 1] = '\0';
   if (!isclean(line.s,0))	 /* host for bounces */
     strerr_die2x(100,FATAL,MSG1(ERR_CFHOST,TXT_EZCRONRC));
-  if (!stralloc_copys(&rp,line.s)) die_nomem();
+  stralloc_copys(&rp,line.s);
 
   match = 1;
   for(;;) {
@@ -314,8 +314,8 @@ int main(int argc,char **argv)
   }
 	/* assemble correct line */
   if (!flaglist) {
-    if (!stralloc_copyb(&addr,strnum,fmt_ulong(strnum,mm))) die_nomem();
-    if (!stralloc_cats(&addr," ")) die_nomem();
+    stralloc_copyb(&addr,strnum,fmt_ulong(strnum,mm));
+    stralloc_cats(&addr," ");
     dh = 0L;
     if (deltah <= 3L) dh = deltah;
     else if (deltah <= 6L) dh = 6L;
@@ -329,32 +329,32 @@ int main(int argc,char **argv)
     if (dow[0] == '*') dow = "1";
 
     if (!dh) {
-      if (!stralloc_cats(&addr,"*")) die_nomem();
+      stralloc_cats(&addr,"*");
     } else {
-      if (!stralloc_catb(&addr,strnum,fmt_ulong(strnum,hh))) die_nomem();
+      stralloc_catb(&addr,strnum,fmt_ulong(strnum,hh));
       for (t = hh + dh; t < hh + 24L; t+=dh) {
-        if (!stralloc_cats(&addr,",")) die_nomem();
-        if (!stralloc_catb(&addr,strnum,fmt_ulong(strnum,t % 24L))) die_nomem();
+        stralloc_cats(&addr,",");
+        stralloc_catb(&addr,strnum,fmt_ulong(strnum,t % 24L));
       }
     }
-    if (!stralloc_cats(&addr," * * ")) die_nomem();
-    if (!stralloc_cats(&addr,dow)) die_nomem();
-    if (!stralloc_cats(&addr," ")) die_nomem();
-    if (!stralloc_cats(&addr,auto_qmail)) die_nomem();
-    if (!stralloc_cats(&addr,qmail_inject)) die_nomem();
-    if (!stralloc_cats(&addr,local)) die_nomem();
-    if (!stralloc_cats(&addr,"-dig-")) die_nomem();
-    if (!stralloc_cats(&addr,code)) die_nomem();
-    if (!stralloc_cats(&addr,"@")) die_nomem();
-    if (!stralloc_cats(&addr,host)) die_nomem();
+    stralloc_cats(&addr," * * ");
+    stralloc_cats(&addr,dow);
+    stralloc_cats(&addr," ");
+    stralloc_cats(&addr,auto_qmail);
+    stralloc_cats(&addr,qmail_inject);
+    stralloc_cats(&addr,local);
+    stralloc_cats(&addr,"-dig-");
+    stralloc_cats(&addr,code);
+    stralloc_cats(&addr,"@");
+    stralloc_cats(&addr,host);
 		/* feed 'Return-Path: <user@host>' to qmail-inject */
-    if (!stralloc_cats(&addr,"%Return-path: <")) die_nomem();
-    if (!stralloc_cats(&addr,user.s)) die_nomem();
-    if (!stralloc_cats(&addr,"@")) die_nomem();
-    if (!stralloc_cat(&addr,&rp)) die_nomem();
-    if (!stralloc_cats(&addr,">\n")) die_nomem();
+    stralloc_cats(&addr,"%Return-path: <");
+    stralloc_cats(&addr,user.s);
+    stralloc_cats(&addr,"@");
+    stralloc_cat(&addr,&rp);
+    stralloc_cats(&addr,">\n");
   }
-  if (!stralloc_0(&addr)) die_nomem();
+  stralloc_0(&addr);
 
   if (!flaglist) {
 	/* now to rewrite crontab we need to lock */
@@ -463,11 +463,11 @@ int main(int argc,char **argv)
   sendargs[0] = "sh";
   sendargs[1] = "-c";
 
-  if (!stralloc_copys(&line,auto_cron)) die_nomem();
-  if (!stralloc_cats(&line,"/crontab '")) die_nomem();
-  if (!stralloc_cats(&line,dir.s)) die_nomem();
-  if (!stralloc_cats(&line,"/crontab'")) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copys(&line,auto_cron);
+  stralloc_cats(&line,"/crontab '");
+  stralloc_cats(&line,dir.s);
+  stralloc_cats(&line,"/crontab'");
+  stralloc_0(&line);
   sendargs[2] = line.s;
   sendargs[3] = 0;
   if ((child = wrap_fork()) == 0) {

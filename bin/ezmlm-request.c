@@ -309,10 +309,10 @@ int main(int argc,char **argv)
       _exit(0);					/* not for us */
   }
 
-  if (!stralloc_copy(&listname,&outlocal)) die_nomem();
-  if (!stralloc_copy(&hostname,&outhost)) die_nomem();
-  if (!stralloc_0(&listname)) die_nomem();
-  if (!stralloc_0(&hostname)) die_nomem();
+  stralloc_copy(&listname,&outlocal);
+  stralloc_copy(&hostname,&outhost);
+  stralloc_0(&listname);
+  stralloc_0(&hostname);
 
   sender = get_sender();
   if (!sender) strerr_die2x(99,INFO,MSG(ERR_NOSENDER));
@@ -329,12 +329,11 @@ int main(int argc,char **argv)
     getconf(&headerremove,"headerremove",1);
   constmap_init(&headerremovemap,headerremove.s,headerremove.len,0);
 
-  if (!stralloc_copys(&mydtline,
-       "Delivered-To: request processor for ")) die_nomem();
-  if (!stralloc_cat(&mydtline,&outlocal)) die_nomem();
-  if (!stralloc_cats(&mydtline,"@")) die_nomem();
-  if (!stralloc_cat(&mydtline,&outhost)) die_nomem();
-  if (!stralloc_cats(&mydtline,"\n")) die_nomem();
+  stralloc_copys(&mydtline,"Delivered-To: request processor for ");
+  stralloc_cat(&mydtline,&outlocal);
+  stralloc_cats(&mydtline,"@");
+  stralloc_cat(&mydtline,&outhost);
+  stralloc_cats(&mydtline,"\n");
 
   flagnosubject = 1;
   if (action[0]) {	/* mainly to allow ezmlm-lists or ezmlm-which with */
@@ -378,7 +377,7 @@ int main(int argc,char **argv)
     }
     if (!cfname) {		 /* listserv@/majordomo@ ignore */
       char ch;
-      if (!stralloc_0(&subject)) die_nomem();
+      stralloc_0(&subject);
       ch = *subject.s;		/* valid commands/list names start w letter */
       if ((ch <= 'z' && ch >= 'a') || (ch <= 'Z' && ch >= 'A') || ch == '_') {
         parseline(subject.s);
@@ -415,7 +414,7 @@ int main(int argc,char **argv)
           continue;				/* skip if not letter pos 1 */
         }
 			/* Here we have a body line with something */
-        if (!stralloc_copy(&subject,&line)) die_nomem();	/* save it */
+        stralloc_copy(&subject,&line);	/* save it */
         subject.s[subject.len-1] = '\0';
         parseline(subject.s);
         break;
@@ -423,14 +422,14 @@ int main(int argc,char **argv)
     }
   }
 	/* Do command substitution */
-  if (!stralloc_copys(&cmds,cmdstring)) die_nomem();
-  if (!stralloc_0(&cmds)) die_nomem();
+  stralloc_copys(&cmds,cmdstring);
+  stralloc_0(&cmds);
   psz = cmds.s;
   while (*psz) {
     if (*psz == '\\') *psz = '\0';
     ++psz;
   }
-  if (!constmap_init(&commandmap,cmds.s,cmds.len,0)) die_nomem();
+  constmap_init(&commandmap,cmds.s,cmds.len,0);
   cmdidx = cmdxlate[constmap_index(&commandmap,command,str_len(command))];
   if (cmdidx == EZREQ_BAD) {	/* recognized, but not supported -> help */
     listlocal = 0;		/* needed 'cause arguments are who-knows-what */
@@ -453,8 +452,8 @@ int main(int argc,char **argv)
 	/* Things handled elsewhere. We do want to handle a simple HELP */
 	/* without arguments for e.g. majordomo@ from our own help file */
 
-    if (!stralloc_copys(&from,sender)) die_nomem();
-    if (!stralloc_0(&from)) die_nomem();
+    stralloc_copys(&from,sender);
+    stralloc_0(&from);
     if (!listlocal) {
       if (cfname)
         strerr_die1x(100,MSG(ERR_REQ_LISTNAME));
@@ -484,8 +483,8 @@ int main(int argc,char **argv)
         if ((pos < line.len) && (line.s[pos] == '@') &&
 		!byte_diff(line.s,pos,listlocal)) {
           last = byte_chr(line.s,line.len,':');
-          if (!stralloc_copyb(&lhost,line.s+pos+1,last-pos-1)) die_nomem();
-          if (!stralloc_0(&lhost)) die_nomem();
+          stralloc_copyb(&lhost,line.s+pos+1,last-pos-1);
+          stralloc_0(&lhost);
           if (listhost) {
             if (!case_diffs(listhost,lhost.s)) {
               flagok = 1;
@@ -506,8 +505,8 @@ int main(int argc,char **argv)
     if (!listhost)
       listhost = hostname.s;
     if (!userlocal) {
-      if (!stralloc_copys(&usr,sender)) die_nomem();
-      if (!stralloc_0(&usr)) die_nomem();
+      stralloc_copys(&usr,sender);
+      stralloc_0(&usr);
       userlocal = usr.s;
       userhost = usr.s + byte_rchr(usr.s,usr.len-1,'@');
       if (!*userhost)
@@ -518,23 +517,22 @@ int main(int argc,char **argv)
       }
     }
 
-    if (!stralloc_copys(&to,listlocal)) die_nomem();
-    if (!stralloc_cats(&to,"-")) die_nomem();
+    stralloc_copys(&to,listlocal);
+    stralloc_cats(&to,"-");
     if (cmdidx) {			/* recognized - substitute */
-      if (!stralloc_cats(&to,constmap_get(&commandmap,cmdidx)))
-		 die_nomem();
+      stralloc_cats(&to,constmap_get(&commandmap,cmdidx));
     } else				/* not recognized - use as is */
-      if (!stralloc_cats(&to,command)) die_nomem();
+      stralloc_cats(&to,command);
 
-    if (!stralloc_cats(&to,"-")) die_nomem();
-    if (!stralloc_cats(&to,userlocal)) die_nomem();
+    stralloc_cats(&to,"-");
+    stralloc_cats(&to,userlocal);
     if (userhost) {			/* doesn't exist for e.g. -get */
-      if (!stralloc_cats(&to,"=")) die_nomem();
-      if (!stralloc_cats(&to,userhost)) die_nomem();
+      stralloc_cats(&to,"=");
+      stralloc_cats(&to,userhost);
     }
-    if (!stralloc_cats(&to,"@")) die_nomem();
-    if (!stralloc_cats(&to,listhost)) die_nomem();
-    if (!stralloc_0(&to)) die_nomem();
+    stralloc_cats(&to,"@");
+    stralloc_cats(&to,listhost);
+    stralloc_0(&to);
 
     qmail_put(&qq,mydtline.s,mydtline.len);
 
@@ -570,22 +568,22 @@ int main(int argc,char **argv)
       userhost = listhost; listhost = 0;
       initsub(0);
     }
-    if (!stralloc_copy(&from,&outlocal)) die_nomem();
-    if (!stralloc_cats(&from,"-return-@")) die_nomem();
-    if (!stralloc_cat(&from,&outhost)) die_nomem();
-    if (!stralloc_0(&from)) die_nomem();
+    stralloc_copy(&from,&outlocal);
+    stralloc_cats(&from,"-return-@");
+    stralloc_cat(&from,&outhost);
+    stralloc_0(&from);
 
     if (userlocal) {
-      if (!stralloc_copys(&to,userlocal)) die_nomem();
-      if (!stralloc_cats(&to,"@")) die_nomem();
+      stralloc_copys(&to,userlocal);
+      stralloc_cats(&to,"@");
       if (userhost) {
-        if (!stralloc_cats(&to,userhost)) die_nomem();
+        stralloc_cats(&to,userhost);
        } else {
-        if (!stralloc_cat(&to,&outhost)) die_nomem();
+        stralloc_cat(&to,&outhost);
       }
     } else
-      if (!stralloc_copys(&to,sender)) die_nomem();
-    if (!stralloc_0(&to)) die_nomem();
+      stralloc_copys(&to,sender);
+    stralloc_0(&to);
 
 					/* we don't want to be send to a list*/
     hdr_adds("Mailing-List: ezmlm-request");
@@ -594,7 +592,7 @@ int main(int argc,char **argv)
     hdr_datemsgid(now());
     hdr_from((cmdidx == EZREQ_HELP) ? "-return-" : "-help");
     qmail_put(&qq,mydtline.s,mydtline.len);
-    if (!quote2(&line,to.s)) die_nomem();
+    quote2(&line,to.s);
     hdr_add2("To: ",line.s,line.len);
     hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
     hdr_subject(MSG(SUB_RESULTS));
@@ -624,7 +622,7 @@ int main(int argc,char **argv)
           break;
         if (line.len <= 1 || line.s[0] == '#')
           continue;
-        if (!stralloc_0(&line)) die_nomem();
+        stralloc_0(&line);
         pos = str_chr(line.s,':');
         if (!line.s[pos])
           break;
@@ -673,7 +671,7 @@ int main(int argc,char **argv)
       qmail_puts(&qq,"\n");
     }
     qmail_puts(&qq,"Return-Path: <");
-    if (!quote2(&line,sender)) die_nomem();
+    quote2(&line,sender);
     qmail_put(&qq,line.s,line.len);
     qmail_puts(&qq,">\n");
     if (seek_begin(0) == -1)

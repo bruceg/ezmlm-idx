@@ -3,7 +3,7 @@
 
 #include "stralloc.h"
 
-int stralloc_catulong0(stralloc *sa,unsigned long u,unsigned int n)
+void stralloc_catulong0(stralloc *sa,unsigned long u,unsigned int n)
 {
   unsigned int len;
   unsigned long q;
@@ -14,19 +14,17 @@ int stralloc_catulong0(stralloc *sa,unsigned long u,unsigned int n)
   while (q > 9) { ++len; q /= 10; }
   if (len < n) len = n;
 
-  if (!stralloc_readyplus(sa,len)) return 0;
+  stralloc_readyplus(sa,len);
   s = sa->s + sa->len;
   sa->len += len;
   while (len) { s[--len] = '0' + (u % 10); u /= 10; }
-
-  return 1;
 }
 
-int stralloc_catlong0(stralloc *sa,long l,unsigned int n)
+void stralloc_catlong0(stralloc *sa,long l,unsigned int n)
 {
   if (l < 0) {
-    if (!stralloc_append(sa,'-')) return 0;
+    stralloc_append(sa,'-');
     l = -l;
   }
-  return stralloc_catulong0(sa,l,n);
+  stralloc_catulong0(sa,l,n);
 }

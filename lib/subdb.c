@@ -35,8 +35,8 @@ static void parsesubdb(const char *plugin_name)
 
 		/* [plugin:]host:port:db:table:user:pw:name */
   port = 0;
-  if (!stralloc_append(&line,'\n')) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_append(&line,'\n');
+  stralloc_0(&line);
   if (line.s[j = str_chr(line.s,'\n')])
     line.s[j] = '\0';
 						/* get connection parameters */
@@ -268,14 +268,14 @@ void initsub(const char *subdbline)
 	parsesubdb("std");
   }
   else {
-    if (!stralloc_copys(&line,subdbline)) die_nomem();
+    stralloc_copys(&line,subdbline);
     parsesubdb(0);
   }
-  if (!stralloc_copys(&path,auto_lib())) die_nomem();
-  if (!stralloc_cats(&path,"/sub-")) die_nomem();
-  if (!stralloc_cats(&path,info.plugin)) die_nomem();
-  if (!stralloc_cats(&path,".so")) die_nomem();
-  if (!stralloc_0(&path)) die_nomem();
+  stralloc_copys(&path,auto_lib());
+  stralloc_cats(&path,"/sub-");
+  stralloc_cats(&path,info.plugin);
+  stralloc_cats(&path,".so");
+  stralloc_0(&path);
   if ((handle = dlopen(path.s, RTLD_NOW | RTLD_LOCAL)) == 0)
     /* FIXME: should use MSG functions */
     strerr_die5x(111,FATAL,"Could not load plugin ",path.s,": ",

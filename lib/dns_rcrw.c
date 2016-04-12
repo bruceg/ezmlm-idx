@@ -18,7 +18,7 @@ static int init(stralloc *rules)
   unsigned int j;
   int k;
 
-  if (!stralloc_copys(rules,"")) return -1;
+  stralloc_copys(rules,"");
 
   x = env_get("DNSREWRITEFILE");
   if (!x) x = "/etc/dnsrewrite";
@@ -27,11 +27,11 @@ static int init(stralloc *rules)
   if (k == -1) return -1;
 
   if (k) {
-    if (!stralloc_append(&data,'\n')) return -1;
+    stralloc_append(&data,'\n');
     i = 0;
     for (j = 0;j < data.len;++j)
       if (data.s[j] == '\n') {
-        if (!stralloc_catb(rules,data.s + i,j - i)) return -1;
+        stralloc_catb(rules,data.s + i,j - i);
         while (rules->len) {
           if (rules->s[rules->len - 1] != ' ')
           if (rules->s[rules->len - 1] != '\t')
@@ -39,7 +39,7 @@ static int init(stralloc *rules)
             break;
           --rules->len;
         }
-        if (!stralloc_0(rules)) return -1;
+        stralloc_0(rules);
         i = j + 1;
       }
     return 0;
@@ -47,19 +47,19 @@ static int init(stralloc *rules)
 
   x = env_get("LOCALDOMAIN");
   if (x) {
-    if (!stralloc_copys(&data,x)) return -1;
-    if (!stralloc_append(&data,' ')) return -1;
-    if (!stralloc_copys(rules,"?:")) return -1;
+    stralloc_copys(&data,x);
+    stralloc_append(&data,' ');
+    stralloc_copys(rules,"?:");
     i = 0;
     for (j = 0;j < data.len;++j)
       if (data.s[j] == ' ') {
-        if (!stralloc_cats(rules,"+.")) return -1;
-        if (!stralloc_catb(rules,data.s + i,j - i)) return -1;
+        stralloc_cats(rules,"+.");
+        stralloc_catb(rules,data.s + i,j - i);
         i = j + 1;
       }
-    if (!stralloc_0(rules)) return -1;
-    if (!stralloc_cats(rules,"*.:")) return -1;
-    if (!stralloc_0(rules)) return -1;
+    stralloc_0(rules);
+    stralloc_cats(rules,"*.:");
+    stralloc_0(rules);
     return 0;
   }
 
@@ -67,24 +67,24 @@ static int init(stralloc *rules)
   if (k == -1) return -1;
 
   if (k) {
-    if (!stralloc_append(&data,'\n')) return -1;
+    stralloc_append(&data,'\n');
     i = 0;
     for (j = 0;j < data.len;++j)
       if (data.s[j] == '\n') {
         if (byte_equal("search ",7,data.s + i) || byte_equal("search\t",7,data.s + i) || byte_equal("domain ",7,data.s + i) || byte_equal("domain\t",7,data.s + i)) {
-          if (!stralloc_copys(rules,"?:")) return -1;
+          stralloc_copys(rules,"?:");
           i += 7;
           while (i < j) {
             k = byte_chr(data.s + i,j - i,' ');
             k = byte_chr(data.s + i,k,'\t');
             if (!k) { ++i; continue; }
-            if (!stralloc_cats(rules,"+.")) return -1;
-            if (!stralloc_catb(rules,data.s + i,k)) return -1;
+            stralloc_cats(rules,"+.");
+            stralloc_catb(rules,data.s + i,k);
             i += k;
           }
-          if (!stralloc_0(rules)) return -1;
-          if (!stralloc_cats(rules,"*.:")) return -1;
-          if (!stralloc_0(rules)) return -1;
+          stralloc_0(rules);
+          stralloc_cats(rules,"*.:");
+          stralloc_0(rules);
           return 0;
         }
         i = j + 1;
@@ -96,12 +96,12 @@ static int init(stralloc *rules)
   host[(sizeof host) - 1] = 0;
   i = str_chr(host,'.');
   if (host[i]) {
-    if (!stralloc_copys(rules,"?:")) return -1;
-    if (!stralloc_cats(rules,host + i)) return -1;
-    if (!stralloc_0(rules)) return -1;
+    stralloc_copys(rules,"?:");
+    stralloc_cats(rules,host + i);
+    stralloc_0(rules);
   }
-  if (!stralloc_cats(rules,"*.:")) return -1;
-  if (!stralloc_0(rules)) return -1;
+  stralloc_cats(rules,"*.:");
+  stralloc_0(rules);
 
   return 0;
 }
@@ -128,6 +128,6 @@ int dns_resolvconfrewrite(stralloc *out)
   }
 
   --uses;
-  if (!stralloc_copy(out,&rules)) return -1;
+  stralloc_copy(out,&rules);
   return 0;
 }

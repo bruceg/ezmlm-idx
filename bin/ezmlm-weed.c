@@ -153,7 +153,7 @@ int main(void)
 		dsnline.s[j] !=';')
 	    if (++j >= dsnline.len) break;
 	}				/* got boundary */
-	if (!stralloc_copyb(&boundary,dsnline.s+i,j-i)) die_nomem();
+	stralloc_copyb(&boundary,dsnline.s+i,j-i);
       }
     }
   }

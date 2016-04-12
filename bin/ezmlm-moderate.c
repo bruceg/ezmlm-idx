@@ -94,27 +94,27 @@ static int checkfile(const char *fn)
 {
   struct stat st;
   
-  if (!stralloc_copys(&fnmsg,"mod/pending/")) die_nomem();
-  if (!stralloc_cats(&fnmsg,fn)) die_nomem();
-  if (!stralloc_0(&fnmsg)) die_nomem();
+  stralloc_copys(&fnmsg,"mod/pending/");
+  stralloc_cats(&fnmsg,fn);
+  stralloc_0(&fnmsg);
   if (stat(fnmsg.s,&st) == -1) {
     if (errno != error_noent)
       strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fnmsg.s));
   } else
       return 1;
 
-  if (!stralloc_copys(&fnmsg,"mod/accepted/")) die_nomem();
-  if (!stralloc_cats(&fnmsg,fn)) die_nomem();
-  if (!stralloc_0(&fnmsg)) die_nomem();
+  stralloc_copys(&fnmsg,"mod/accepted/");
+  stralloc_cats(&fnmsg,fn);
+  stralloc_0(&fnmsg);
   if (stat(fnmsg.s,&st) == -1) {
     if (errno != error_noent)
       strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fnmsg.s));
   } else
       return -1;
 
-  if (!stralloc_copys(&fnmsg,"mod/rejected/")) die_nomem();
-  if (!stralloc_cats(&fnmsg,fn)) die_nomem();
-  if (!stralloc_0(&fnmsg)) die_nomem();
+  stralloc_copys(&fnmsg,"mod/rejected/");
+  stralloc_cats(&fnmsg,fn);
+  stralloc_0(&fnmsg);
   if (stat(fnmsg.s,&st) == -1) {
     if (errno != error_noent)
       strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fnmsg.s));
@@ -135,8 +135,8 @@ static void maketo(void)
       if (x != line.len) {
         y = byte_rchr(line.s + x,line.len-x,'>');
         if (y + x != line.len) {
-          if (!stralloc_copyb(&to,line.s+x+1,y-1)) die_nomem();
-          if (!stralloc_0(&to)) die_nomem();
+          stralloc_copyb(&to,line.s+x+1,y-1);
+          stralloc_0(&to);
         }		/* no return path-> no addressee. A NUL in the sender */
       }			/* is no worse than a faked sender, so no problem */
     }
@@ -174,7 +174,7 @@ int main(int argc,char **argv)
   sig_pipeignore();
   when = now();
 
-  if (!stralloc_copys(&sendopt,"-")) die_nomem();
+  stralloc_copys(&sendopt,"-");
   opt = getconfopt(argc,argv,options,1,&dir);
 
   sender = get_sender();
@@ -207,8 +207,8 @@ int main(int argc,char **argv)
   if (!action[confnum]) die_badformat();
   confnum += 1 + str_chr(action + confnum + 1,'.');
   if (!action[confnum]) die_badformat();
-  if (!stralloc_copyb(&fnbase,action+start+1,confnum-start-1)) die_nomem();
-  if (!stralloc_0(&fnbase)) die_nomem();
+  stralloc_copyb(&fnbase,action+start+1,confnum-start-1);
+  stralloc_0(&fnbase);
   cookie(hash,key.s,key.len,fnbase.s,"","a");
   if (byte_diff(hash,COOKIE,action+confnum+1))
     die_badformat();
@@ -274,8 +274,8 @@ int main(int argc,char **argv)
     copy(&qq,"text/mod-reject",flagcd);
 
     flaginheader = 1;
-    if (!stralloc_copys(&text,"")) die_nomem();
-    if (!stralloc_ready(&text,1024)) die_nomem(); 
+    stralloc_copys(&text,"");
+    stralloc_ready(&text,1024); 
     for (;;) {		/* copy moderator's rejection comment */
       if (getln(subfdin,&line,&match,'\n') == -1)
         strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
@@ -292,19 +292,18 @@ int main(int argc,char **argv)
         if (line.len == 1)
           flaginheader = 0;
       } else
-        if (!stralloc_cat(&text,&line)) die_nomem();
+        stralloc_cat(&text,&line);
     }	/* got body */
     if (encin) {
       if (encin == 'B')
         decodeB(text.s,text.len,&line);
       else
         decodeQ(text.s,text.len,&line);
-      if (!stralloc_copy(&text,&line)) die_nomem();
+      stralloc_copy(&text,&line);
     }
     cp = text.s;
     cpafter = text.s + text.len;
-    if (!stralloc_copys(&line,"\n>>>>> -------------------- >>>>>\n"))
-			die_nomem();
+    stralloc_copys(&line,"\n>>>>> -------------------- >>>>>\n");
     flaggoodfield = 0;
     flagdone = 0;
     while ((cpnext = cp + byte_chr(cp,cpafter-cp,'\n')) != cpafter) {
@@ -313,7 +312,7 @@ int main(int argc,char **argv)
 				/* max 5 "quote characters" and space for %%% */
         if (cp[i+1] == '%' && cp[i+2] == '%') {
           if (!flaggoodfield) {					/* Start tag */
-            if (!stralloc_copyb(&quoted,cp,i)) die_nomem();	/* quote chars*/
+            stralloc_copyb(&quoted,cp,i);	/* quote chars*/
             flaggoodfield = 1;
             cp = cpnext + 1;
             continue;
@@ -335,14 +334,14 @@ int main(int argc,char **argv)
         i = cplast - cp + 1;
         if (quoted.len && quoted.len <= i &&
 		!str_diffn(cp,quoted.s,quoted.len)) {	/* quote chars */
-          if (!stralloc_catb(&line,cp+quoted.len,i-quoted.len)) die_nomem();
+          stralloc_catb(&line,cp+quoted.len,i-quoted.len);
         } else
-          if (!stralloc_catb(&line,cp,i)) die_nomem();	/* no quote chars */
+          stralloc_catb(&line,cp,i);	/* no quote chars */
       }
       cp = cpnext + 1;
     }
     if (flagdone == 2) {
-    if (!stralloc_cats(&line,"<<<<< -------------------- <<<<<\n")) die_nomem();
+    stralloc_cats(&line,"<<<<< -------------------- <<<<<\n");
       code_qput(line.s,line.len);
     }
     if (flagcd == 'B') {
@@ -365,17 +364,17 @@ int main(int argc,char **argv)
     if (flagmime)
       hdr_boundary(1);
 
-    if (!stralloc_copy(&line,&outlocal)) die_nomem();
-    if (!stralloc_cats(&line,"-return-@")) die_nomem();
-    if (!stralloc_cat(&line,&outhost)) die_nomem();
-    if (!stralloc_0(&line)) die_nomem();
+    stralloc_copy(&line,&outlocal);
+    stralloc_cats(&line,"-return-@");
+    stralloc_cat(&line,&outhost);
+    stralloc_0(&line);
     qmail_from(&qq,line.s);
     if (to.len)
       qmail_to(&qq,to.s);
 
-    if (!stralloc_copys(&fnnew,"mod/rejected/")) die_nomem();
-    if (!stralloc_cats(&fnnew,fnbase.s)) die_nomem();
-    if (!stralloc_0(&fnnew)) die_nomem();
+    stralloc_copys(&fnnew,"mod/rejected/");
+    stralloc_cats(&fnnew,fnbase.s);
+    stralloc_0(&fnnew);
 
 /* this is strictly to track what happended to a message to give informative */
 /* messages to the 2nd-nth moderator that acts on the same message. Since    */
@@ -424,10 +423,10 @@ int main(int argc,char **argv)
       /* parent */
       close(fd);
       wrap_exitcode(child);
-      if (!stralloc_copys(&fnnew,"mod/accepted/")) die_nomem();
+      stralloc_copys(&fnnew,"mod/accepted/");
 
-      if (!stralloc_cats(&fnnew,fnbase.s)) die_nomem();
-      if (!stralloc_0(&fnnew)) die_nomem();
+      stralloc_cats(&fnnew,fnbase.s);
+      stralloc_0(&fnnew);
 /* ignore errors */
       fd = open_trunc(fnnew.s);
       if (fd != -1)

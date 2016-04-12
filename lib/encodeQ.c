@@ -19,8 +19,8 @@ void encodeQ(const char *indata,unsigned int n,stralloc *outdata)
   cpin = indata;
   i = 0;
 	/* max 3 outchars per inchar  & 2 char newline per 72 chars */
-  if (!stralloc_copys(outdata,"")) die_nomem();
-  if (!stralloc_ready(outdata,n * 3 + n/36)) die_nomem();	/* worst case */
+  stralloc_copys(outdata,"");
+  stralloc_ready(outdata,n * 3 + n/36);	/* worst case */
   cpout = outdata->s;
   while (n--) {
     ch = *cpin++;

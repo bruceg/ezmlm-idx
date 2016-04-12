@@ -14,7 +14,7 @@ int dns_name_packet(stralloc *out,const char *buf,unsigned int len)
   uint16 numanswers;
   uint16 datalen;
 
-  if (!stralloc_copys(out,"")) return -1;
+  stralloc_copys(out,"");
 
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) return -1;
   uint16_unpack_big(header + 6,&numanswers);
@@ -28,7 +28,7 @@ int dns_name_packet(stralloc *out,const char *buf,unsigned int len)
     if (byte_equal(header,2,DNS_T_PTR))
       if (byte_equal(header + 2,2,DNS_C_IN)) {
 	if (!dns_packet_getname(buf,len,pos,&q)) return -1;
-	if (!dns_domain_todot_cat(out,q)) return -1;
+	dns_domain_todot_cat(out,q);
 	return 0;
       }
     pos += datalen;

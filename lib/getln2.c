@@ -17,7 +17,7 @@ int getln2(substdio *ss,stralloc *sa,
     x = substdio_PEEK(ss);
     i = byte_chr(x,n,sep);
     if (i < (unsigned int)n) { substdio_SEEK(ss,*clen = i + 1); *cont = x; return 0; }
-    if (!stralloc_readyplus(sa,n)) return -1;
+    stralloc_readyplus(sa,n);
     i = sa->len;
     sa->len = i + substdio_get(ss,sa->s + i,n);
   }

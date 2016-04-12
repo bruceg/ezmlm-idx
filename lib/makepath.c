@@ -7,14 +7,13 @@ void makepath(stralloc *fn,
 	      const char *append,
 	      char ch)
 {
-  if (!stralloc_copys(fn,
-		      (subdir != 0
-		       && subdir[0] != 0
-		       && (subdir[0] != '.' || subdir[1] != 0))
-		      ? subdir : "."))
-    die_nomem();
-  if (!stralloc_cats(fn,append)) die_nomem();
+  stralloc_copys(fn,
+                 (subdir != 0
+                  && subdir[0] != 0
+                  && (subdir[0] != '.' || subdir[1] != 0))
+                 ? subdir : ".");
+  stralloc_cats(fn,append);
   if (ch > 0)
-    if (!stralloc_catb(fn,&ch,1)) die_nomem();
-  if (!stralloc_0(fn)) die_nomem();
+    stralloc_catb(fn,&ch,1);
+  stralloc_0(fn);
 }

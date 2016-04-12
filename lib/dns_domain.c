@@ -25,18 +25,16 @@ void dns_domain_free(char **out)
   }
 }
 
-int dns_domain_copy(char **out,const char *in)
+void dns_domain_copy(char **out,const char *in)
 {
   unsigned int len;
   char *x;
 
   len = dns_domain_length(in);
   x = alloc(len);
-  if (!x) return 0;
   byte_copy(x,len,in);
   if (*out) alloc_free(*out);
   *out = x;
-  return 1;
 }
 
 int dns_domain_equal(const char *dn1,const char *dn2)

@@ -37,16 +37,13 @@ static int openone(unsigned long outnum)
   static stralloc fnadir = {0};
   char strnum[FMT_ULONG];
   int fd;
-  if (!stralloc_copys(&fnadir,"archive/")) die_nomem();
-  if (!stralloc_catb(&fnadir,strnum,
-		     fmt_ulong(strnum,outnum / 100))) die_nomem();
-  if (!stralloc_copy(&fnaf,&fnadir)) die_nomem();
-  if (!stralloc_cats(&fnaf,"/")) die_nomem();
-  if (!stralloc_catb(&fnaf,strnum,
-		     fmt_uint0(strnum,(unsigned int)(outnum % 100),2)))
-    die_nomem();
-  if (!stralloc_0(&fnadir)) die_nomem();
-  if (!stralloc_0(&fnaf)) die_nomem();
+  stralloc_copys(&fnadir,"archive/");
+  stralloc_catb(&fnadir,strnum,fmt_ulong(strnum,outnum / 100));
+  stralloc_copy(&fnaf,&fnadir);
+  stralloc_cats(&fnaf,"/");
+  stralloc_catb(&fnaf,strnum,fmt_uint0(strnum,(unsigned int)(outnum % 100),2));
+  stralloc_0(&fnadir);
+  stralloc_0(&fnaf);
 
   if (mkdir(fnadir.s,0755) == -1)
     if (errno != error_exist)

@@ -22,8 +22,7 @@ int getconf(stralloc *sa,const char *fn,int flagrequired)
   unsigned int j;
   int k;
 
-  if (!stralloc_copys(&data,""))
-    die_nomem();
+  stralloc_copys(&data,"");
   switch (alt_slurp(fn,&data,128)) {
     case -1:
       strerr_die2sys(111,FATAL,MSG1(ERR_READ,fn));
@@ -32,17 +31,17 @@ int getconf(stralloc *sa,const char *fn,int flagrequired)
 	return 0;
       strerr_die5x(100,FATAL,listdir,"/",fn,MSG(ERR_NOEXIST));
   }
-  if (!stralloc_append(&data,'\n')) die_nomem();
+  stralloc_append(&data,'\n');
   copy_xlate(&xdata,&data,0,'H');
-  if (!stralloc_copys(sa,"")) die_nomem();
+  stralloc_copys(sa,"");
   i = 0;
   for (j = 0;j < xdata.len;++j)
     if (xdata.s[j] == '\n') {
       k = j;
       while ((k > i) && ((xdata.s[k-1] == ' ') || (xdata.s[k-1] == '\t'))) --k;
       if ((k > i) && (xdata.s[i] != '#')) {
-        if (!stralloc_catb(sa,xdata.s + i,k - i)) die_nomem();
-        if (!stralloc_0(sa)) die_nomem();
+        stralloc_catb(sa,xdata.s + i,k - i);
+        stralloc_0(sa);
       }
       i = j + 1;
     }

@@ -63,7 +63,7 @@ const char *constmap(struct constmap *cm,const char *s,int len)
   return 0;
 }
 
-int constmap_init(struct constmap *cm,const char *s,int len,int splitchar)
+void constmap_init(struct constmap *cm,const char *s,int len,int splitchar)
 /* if splitchar is set, we process only the stuff before that character
  * on each line. Otherwise, it's the entire line. Still, the entire line
  * is stored! */
@@ -83,39 +83,32 @@ int constmap_init(struct constmap *cm,const char *s,int len,int splitchar)
   cm->mask = h - 1;
  
   cm->first = (int *) alloc(sizeof(int) * h);
-  if (cm->first) {
-    cm->entries = alloc(cm->num * sizeof *cm->entries);
-    if (cm->entries) {
-      for (h = 0;h <= cm->mask;++h)
-	cm->first[h] = -1;
-      pos = 0;
-      i = 0;
-      for (j = 0;j < len;++j)
-	if (!s[j]) {
-	  k = j - i;
-	  if (splitchar) {
-	    for (k = i;k < j;++k)
-	      if (s[k] == splitchar)
-		break;
-	    if (k >= j) { i = j + 1; continue; }
-	    k -= i;
-	  }
-	  h = hash(s + i,k);
-	  e = &cm->entries[pos];
-	  e->input = s + i;
-	  e->inputlen = k;
-	  e->hash = h;
-	  h &= cm->mask;
-	  e->next = cm->first[h];
-	  cm->first[h] = pos;
-	  ++pos;
-	  i = j + 1;
-	}
-      return 1;
+  cm->entries = alloc(cm->num * sizeof *cm->entries);
+  for (h = 0;h <= cm->mask;++h)
+    cm->first[h] = -1;
+  pos = 0;
+  i = 0;
+  for (j = 0;j < len;++j)
+    if (!s[j]) {
+      k = j - i;
+      if (splitchar) {
+        for (k = i;k < j;++k)
+          if (s[k] == splitchar)
+            break;
+        if (k >= j) { i = j + 1; continue; }
+        k -= i;
+      }
+      h = hash(s + i,k);
+      e = &cm->entries[pos];
+      e->input = s + i;
+      e->inputlen = k;
+      e->hash = h;
+      h &= cm->mask;
+      e->next = cm->first[h];
+      cm->first[h] = pos;
+      ++pos;
+      i = j + 1;
     }
-    alloc_free(cm->first);
-  }
-  return 0;
 }
 
 void constmap_free(struct constmap *cm)

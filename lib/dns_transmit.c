@@ -205,7 +205,6 @@ int dns_transmit_start(struct dns_transmit *d,const char servers[64],int flagrec
   len = dns_domain_length(q);
   d->querylen = len + 18;
   d->query = alloc(d->querylen);
-  if (!d->query) return -1;
 
   uint16_pack_big(d->query,len + 16);
   byte_copy(d->query + 2,12,flagrecursive ? "\0\0\1\0\0\1\0\0\0\0\0\0" : "\0\0\0\0\0\1\0\0\0\0\0\0gcc-bug-workaround");
@@ -279,7 +278,6 @@ have sent query to curserver on UDP socket s
 
     d->packetlen = r;
     d->packet = alloc(d->packetlen);
-    if (!d->packet) { dns_transmit_free(d); return -1; }
     byte_copy(d->packet,d->packetlen,udpbuf);
     queryfree(d);
     return 1;
@@ -339,7 +337,6 @@ have received one byte of packet length into packetlen
     d->tcpstate = 5;
     d->pos = 0;
     d->packet = alloc(d->packetlen);
-    if (!d->packet) { dns_transmit_free(d); return -1; }
     return 0;
   }
 

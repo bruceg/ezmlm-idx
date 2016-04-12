@@ -109,12 +109,12 @@ static void doit(int flagdig, int flagw)
   if (!match) { close(fd); return; }
   if (!issub(workdir,addr.s,0)) { close(fd); /*XXX*/unlink(fn.s); return; }
   cookie(hash,"",0,"",addr.s,"");
-  if (!stralloc_copys(&fnhash,workdir)) die_nomem();
-  if (!stralloc_cats(&fnhash,"/bounce/h/")) die_nomem();
-  if (!stralloc_catb(&fnhash,hash,1)) die_nomem();
-  if (!stralloc_cats(&fnhash,"/h")) die_nomem();
-  if (!stralloc_catb(&fnhash,hash+1,COOKIE-1)) die_nomem();
-  if (!stralloc_0(&fnhash)) die_nomem();
+  stralloc_copys(&fnhash,workdir);
+  stralloc_cats(&fnhash,"/bounce/h/");
+  stralloc_catb(&fnhash,hash,1);
+  stralloc_cats(&fnhash,"/h");
+  stralloc_catb(&fnhash,hash+1,COOKIE-1);
+  stralloc_0(&fnhash);
 
   if (qmail_open(&qq) == -1)
     strerr_die2sys(111,FATAL,MSG(ERR_QMAIL_QUEUE));
@@ -124,10 +124,10 @@ static void doit(int flagdig, int flagw)
     hdr_add2("\nList-ID: ",listid.s,listid.len);
   hdr_datemsgid(now());
   if (flagcd) {
-    if (!stralloc_0(&line)) die_nomem();
+    stralloc_0(&line);
   }
   hdr_from("-help");
-  if (!quote2(&quoted,addr.s)) die_nomem();
+  quote2(&quoted,addr.s);
   hdr_add2("To: ",quoted.s,quoted.len);
   /* to accomodate transfer-encoding */
   hdr_mime(flagcd ? CTYPE_MULTIPART : CTYPE_TEXT);
@@ -164,7 +164,7 @@ static void doit(int flagdig, int flagw)
       }
       close(fdhash);
     } else {
-      if (!stralloc_copys(&line,"")) die_nomem();	/* slurp adds! */
+      stralloc_copys(&line,"");	/* slurp adds! */
       if (slurp(fnhash.s,&line,256) < 0)
         strerr_die2sys(111,FATAL,MSG1(ERR_OPEN,fnhash.s));
       code_qput(line.s,line.len);
@@ -189,22 +189,21 @@ static void doit(int flagdig, int flagw)
 
   strnum[fmt_ulong(strnum,when)] = 0;
   cookie(hash,key.s,key.len,strnum,addr.s,flagw ? "P" : "W");
-  if (!stralloc_copy(&line,&outlocal)) die_nomem();
-  if (!stralloc_cats(&line,flagw ? "-return-probe-" : "-return-warn-"))
-	die_nomem();
-  if (!stralloc_cats(&line,strnum)) die_nomem();
-  if (!stralloc_cats(&line,".")) die_nomem();
-  if (!stralloc_catb(&line,hash,COOKIE)) die_nomem();
-  if (!stralloc_cats(&line,"-")) die_nomem();
+  stralloc_copy(&line,&outlocal);
+  stralloc_cats(&line,flagw ? "-return-probe-" : "-return-warn-");
+  stralloc_cats(&line,strnum);
+  stralloc_cats(&line,".");
+  stralloc_catb(&line,hash,COOKIE);
+  stralloc_cats(&line,"-");
   i = str_chr(addr.s,'@');
-  if (!stralloc_catb(&line,addr.s,i)) die_nomem();
+  stralloc_catb(&line,addr.s,i);
   if (addr.s[i]) {
-    if (!stralloc_cats(&line,"=")) die_nomem();
-    if (!stralloc_cats(&line,addr.s + i + 1)) die_nomem();
+    stralloc_cats(&line,"=");
+    stralloc_cats(&line,addr.s + i + 1);
   }
-  if (!stralloc_cats(&line,"@")) die_nomem();
-  if (!stralloc_cat(&line,&outhost)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_cats(&line,"@");
+  stralloc_cat(&line,&outhost);
+  stralloc_0(&line);
   qmail_from(&qq,line.s);
 
   qmail_to(&qq,addr.s);
@@ -238,12 +237,12 @@ static void dodir(int flagdig)
 
   workdir = flagdig ? "digest" : ".";
 
-  if (!stralloc_copys(&fnlastd,workdir)) die_nomem();
-  if (!stralloc_cats(&fnlastd,"/bounce/lastd")) die_nomem();
-  if (!stralloc_0(&fnlastd)) die_nomem();
+  stralloc_copys(&fnlastd,workdir);
+  stralloc_cats(&fnlastd,"/bounce/lastd");
+  stralloc_0(&fnlastd);
   if (slurp(fnlastd.s,&lastd,16) == -1)		/* last time d was scanned */
       strerr_die2sys(111,FATAL,MSG1(ERR_READ,fnlastd.s));
-  if (!stralloc_0(&lastd)) die_nomem();
+  stralloc_0(&lastd);
   (void) scan_ulong(lastd.s,&ld);
   if (!lockout)
     lockout = bouncetimeout / 50;		/* 5.6 h for default timeout */
@@ -251,20 +250,20 @@ static void dodir(int flagdig)
     return;		/* exit silently. Second check is to prevent lockup */
 			/* if lastd gets corrupted */
 
-  if (!stralloc_copy(&fnlasth,&fnlastd)) die_nomem();
+  stralloc_copy(&fnlasth,&fnlastd);
   fnlasth.s[fnlasth.len - 2] = 'h';		/* bad, but feels good ... */
 
   if (flagdig)
-    if (!stralloc_cats(&outlocal,"-digest")) die_nomem();
+    stralloc_cats(&outlocal,"-digest");
 
-  if (!stralloc_copys(&line,workdir)) die_nomem();
-  if (!stralloc_cats(&line,"/lockbounce")) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copys(&line,workdir);
+  stralloc_cats(&line,"/lockbounce");
+  stralloc_0(&line);
   lockfile(line.s);
 
-  if (!stralloc_copys(&line,workdir)) die_nomem();
-  if (!stralloc_cats(&line,"/bounce/d")) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copys(&line,workdir);
+  stralloc_cats(&line,"/bounce/d");
+  stralloc_0(&line);
   bouncedir = opendir(line.s);
   if (!bouncedir) {
     if (errno != error_noent)
@@ -286,10 +285,10 @@ static void dodir(int flagdig)
 	/* that setting still processes _all_ bounces. */
     if (bouncetimeout) ++bouncedate;
     if (when >= bouncedate * 10000 + bouncetimeout) {
-      if (!stralloc_copys(&bdname,workdir)) die_nomem();
-      if (!stralloc_cats(&bdname,"/bounce/d/")) die_nomem();
-      if (!stralloc_cats(&bdname,d->d_name)) die_nomem();
-      if (!stralloc_0(&bdname)) die_nomem();
+      stralloc_copys(&bdname,workdir);
+      stralloc_cats(&bdname,"/bounce/d/");
+      stralloc_cats(&bdname,d->d_name);
+      stralloc_0(&bdname);
       bsdir = opendir(bdname.s);
       if (!bsdir) {
 	if (errno != error_notdir)
@@ -303,10 +302,10 @@ static void dodir(int flagdig)
       while ((ds = readdir(bsdir))) {			/* dxxxx/yyyy */
 	if (str_equal(ds->d_name,".")) continue;
 	if (str_equal(ds->d_name,"..")) continue;
-	if (!stralloc_copy(&fn,&bdname)) die_nomem();	/* '\0' at end */
+	stralloc_copy(&fn,&bdname);	/* '\0' at end */
 	  fn.s[fn.len - 1] = '/';
-	if (!stralloc_cats(&fn,ds->d_name)) die_nomem();
-	if (!stralloc_0(&fn)) die_nomem();
+	stralloc_cats(&fn,ds->d_name);
+	stralloc_0(&fn);
 	if ((ds->d_name[0] == 'd') || (ds->d_name[0] == 'w'))
 	  doit(flagdig, ds->d_name[0] == 'w');
         else				/* other stuff is junk */
@@ -321,7 +320,7 @@ static void dodir(int flagdig)
   }
   closedir(bouncedir);
 
-  if (!stralloc_copy(&line,&fnlastd)) die_nomem();
+  stralloc_copy(&line,&fnlastd);
   line.s[line.len - 2] = 'D';
   fd = open_trunc(line.s);			/* write lastd. Do safe */
 						/* since we read before lock*/
@@ -351,17 +350,17 @@ static void dodir(int flagdig)
 
   if (slurp(fnlasth.s,&lasth,16) == -1)		/* last h cleaned */
       strerr_die2sys(111,FATAL,MSG1(ERR_READ,fnlasth.s));
-  if (!stralloc_0(&lasth)) die_nomem();
+  stralloc_0(&lasth);
   ch = lasth.s[0];				 /* clean h */
   if (ch >= 'a' && ch <= 'o')
     ++ch;
   else
     ch = 'a';
   lasth.s[0] = ch;
-  if (!stralloc_copys(&line,workdir)) die_nomem();
-  if (!stralloc_cats(&line,"/bounce/h/")) die_nomem();
-  if (!stralloc_catb(&line,lasth.s,1)) die_nomem();
-  if (!stralloc_0(&line)) die_nomem();
+  stralloc_copys(&line,workdir);
+  stralloc_cats(&line,"/bounce/h/");
+  stralloc_catb(&line,lasth.s,1);
+  stralloc_0(&line);
   hdir = opendir(line.s);		/* clean ./h/xxxxxx */
 
   if (!hdir) {
@@ -372,10 +371,10 @@ static void dodir(int flagdig)
     while ((d = readdir(hdir))) {
       if (str_equal(d->d_name,".")) continue;
       if (str_equal(d->d_name,"..")) continue;
-      if (!stralloc_copys(&fn,line.s)) die_nomem();
-      if (!stralloc_append(&fn,'/')) die_nomem();
-      if (!stralloc_cats(&fn,d->d_name)) die_nomem();
-      if (!stralloc_0(&fn)) die_nomem();
+      stralloc_copys(&fn,line.s);
+      stralloc_append(&fn,'/');
+      stralloc_cats(&fn,d->d_name);
+      stralloc_0(&fn);
       if (stat(fn.s,&st) == -1) {
 	if (errno == error_noent) continue;
 	strerr_die2sys(111,FATAL,MSG1(ERR_STAT,fn.s));

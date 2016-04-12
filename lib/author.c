@@ -27,7 +27,7 @@ void author_name(stralloc *out,const char *s,unsigned int l)
   char *cpout;
 
   if (!s || !l)		/* Yuck - pass the buck */
-    if (!stralloc_copyb(out,"",0)) die_nomem();
+    stralloc_copyb(out,"",0);
   cp = s; len = l;
 
   while (len--) {
@@ -118,7 +118,7 @@ void author_addr(stralloc *out,const char *s,unsigned int l)
   const char *cplast = 0;
 
   if (!s || !l)		/* Yuck - pass the buck */
-    if (!stralloc_copyb(out,"",0)) die_nomem();
+    stralloc_copyb(out,"",0);
   cp = s; len = l;
   cplast = s + len;
 

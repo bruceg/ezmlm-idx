@@ -194,18 +194,17 @@ int main(int argc,char **argv)
     startup(dir);
     flagparsemime = 1;		/* only if dir do we have mimeremove/reject */
     if (getconf_line(&line,"msgsize",0)) {
-      if (!stralloc_0(&line)) die_nomem();
+      stralloc_0(&line);
       len = scan_ulong(line.s,&maxmsgsize);
       if (line.s[len] == ':')
         scan_ulong(line.s+len+1,&minmsgsize);
     }
     if (flagforward) {
-      if (!stralloc_copys(&mydtline,"Delivered-To: command forwarder for "))
-	die_nomem();
-      if (!stralloc_catb(&mydtline,outlocal.s,outlocal.len)) die_nomem();
-      if (!stralloc_cats(&mydtline,"@")) die_nomem();
-      if (!stralloc_catb(&mydtline,outhost.s,outhost.len)) die_nomem();
-      if (!stralloc_cats(&mydtline,"\n")) die_nomem();
+      stralloc_copys(&mydtline,"Delivered-To: command forwarder for ");
+      stralloc_catb(&mydtline,outlocal.s,outlocal.len);
+      stralloc_cats(&mydtline,"@");
+      stralloc_catb(&mydtline,outhost.s,outhost.len);
+      stralloc_cats(&mydtline,"\n");
     }
   } else {
     flagtook = 1;		/* if no "dir" we can't get outlocal/outhost */
@@ -243,7 +242,7 @@ int main(int argc,char **argv)
     cp = line.s; len = line.len;
       if (!flagtook &&
 		(case_startb(cp,len,"to:") || case_startb(cp,len,"cc:"))) {
-        if (!stralloc_catb(&to,line.s + 3,line.len - 4)) die_nomem();
+        stralloc_catb(&to,line.s + 3,line.len - 4);
       } else if ((flagneedsubject || flagrejectcommands) &&
 			 case_startb(cp,len,"subject:")) {
 	concatHDR(cp+8,len-8,&subject);
@@ -306,10 +305,10 @@ int main(int argc,char **argv)
 	strerr_die2sys(111,FATAL,MSG(ERR_SEEK_INPUT));
       if (qmail_copy(&qq,&ssin2,copylines) != 0)
 	strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
-      if (!stralloc_copy(&to,&outlocal)) die_nomem();
-      if (!stralloc_cats(&to,"-request@")) die_nomem();
-      if (!stralloc_cat(&to,&outhost)) die_nomem();
-      if (!stralloc_0(&to)) die_nomem();
+      stralloc_copy(&to,&outlocal);
+      stralloc_cats(&to,"-request@");
+      stralloc_cat(&to,&outhost);
+      stralloc_0(&to);
       qmail_from(&qq,sender);
       qmail_to(&qq,to.s);
       if (*(err = qmail_close(&qq)) == '\0') {
@@ -358,9 +357,8 @@ int main(int argc,char **argv)
           while (cp < cpafter &&
              *cp != ';' && *cp != ' ' && *cp != '\t') ++cp;
         }
-        if (!stralloc_copys(&boundary,"--")) die_nomem();
-        if (!stralloc_catb(&boundary,cpstart,cp-cpstart))
-		die_nomem();
+        stralloc_copys(&boundary,"--");
+        stralloc_catb(&boundary,cpstart,cp-cpstart);
 	break;
       }
     }		/* got boundary, now parse for parts */

@@ -68,7 +68,7 @@ unsigned int dns_packet_getname(const char *buf,unsigned int len,unsigned int po
     }
   }
 
-  if (!dns_domain_copy(d,name)) return 0;
+  dns_domain_copy(d,name);
 
   if (firstcompress) return firstcompress;
   return pos;

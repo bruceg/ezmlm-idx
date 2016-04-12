@@ -6,30 +6,30 @@
 #include "str.h"
 #include "dns.h"
 
-static int doit(stralloc *work,const char *rule)
+static void doit(stralloc *work,const char *rule)
 {
   char ch;
   unsigned int colon;
   unsigned int prefixlen;
 
   ch = *rule++;
-  if ((ch != '?') && (ch != '=') && (ch != '*') && (ch != '-')) return 1;
+  if ((ch != '?') && (ch != '=') && (ch != '*') && (ch != '-')) return;
   colon = str_chr(rule,':');
-  if (!rule[colon]) return 1;
+  if (!rule[colon]) return;
 
-  if (work->len < colon) return 1;
+  if (work->len < colon) return;
   prefixlen = work->len - colon;
-  if ((ch == '=') && prefixlen) return 1;
-  if (case_diffb(rule,colon,work->s + prefixlen)) return 1;
+  if ((ch == '=') && prefixlen) return;
+  if (case_diffb(rule,colon,work->s + prefixlen)) return;
   if (ch == '?') {
-    if (byte_chr(work->s,prefixlen,'.') < prefixlen) return 1;
-    if (byte_chr(work->s,prefixlen,'[') < prefixlen) return 1;
-    if (byte_chr(work->s,prefixlen,']') < prefixlen) return 1;
+    if (byte_chr(work->s,prefixlen,'.') < prefixlen) return;
+    if (byte_chr(work->s,prefixlen,'[') < prefixlen) return;
+    if (byte_chr(work->s,prefixlen,']') < prefixlen) return;
   }
 
   work->len = prefixlen;
   if (ch == '-') work->len = 0;
-  return stralloc_cats(work,rule + colon + 1);
+  stralloc_cats(work,rule + colon + 1);
 }
 
 int dns_ip4_qualify_rules(stralloc *out,stralloc *fqdn,const stralloc *in,const stralloc *rules)
@@ -39,11 +39,11 @@ int dns_ip4_qualify_rules(stralloc *out,stralloc *fqdn,const stralloc *in,const 
   unsigned int plus;
   unsigned int fqdnlen;
 
-  if (!stralloc_copy(fqdn,in)) return -1;
+  stralloc_copy(fqdn,in);
 
   for (j = i = 0;j < rules->len;++j)
     if (!rules->s[j]) {
-      if (!doit(fqdn,rules->s + i)) return -1;
+      doit(fqdn,rules->s + i);
       i = j + 1;
     }
 
