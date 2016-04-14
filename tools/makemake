@@ -102,11 +102,11 @@ class Target:
         self.formake('./{} {} {}'.format(command, self.target, ' '.join(objs + dashl + libscat)))
 
     def choose(self, modes, tryfn):
-        self.dependon('choose')
+        self.dependon('build/choose')
         if 'c' in modes: self.dependon('compile')
         if 'l' in modes: self.dependon('load')
         self.dependon(tryfn+'.c', self.target+'1', self.target+'2')
-        self.formake('./choose {modes} {tryfn} {target}1 {target}2 > {target}', modes=modes, tryfn=tryfn)
+        self.formake('build/choose {modes} {tryfn} {target}1 {target}2 > {target}', modes=modes, tryfn=tryfn)
 
 class NoSuchTarget(Exception):
     pass
