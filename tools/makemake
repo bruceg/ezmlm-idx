@@ -125,7 +125,7 @@ def runit(t, filename, **kw):
 
 def target(name, parent=None):
     debug('target(name={!r}, parent={!r})'.format(name, parent and parent.target))
-    if os.path.exists(name) and not os.path.exists(name+'.do'):
+    if os.path.exists(name) and not (os.path.exists('build/{}.do'.format(name)) or os.path.exists('{}.do'.format(name))):
         debug('  SOURCES.add({!r})'.format(name))
         SOURCES.add(name)
     elif name in TARGETS or name in SOURCES or (parent and parent.has_parent(name)):
@@ -134,7 +134,10 @@ def target(name, parent=None):
     else:
         target = Target(name, parent)
         base,ext = split(name)
-        for dofile in [ name+'.do', 'default.{}.do'.format(ext), 'default.do' ]:
+        for dofile in [ '{}.do'.format(name),
+                        'build/{}.do'.format(name),
+                        'build/default.{}.do'.format(ext),
+                        'build/default.do' ]:
             if os.path.exists(dofile):
                 runit(target, dofile, base=base, ext=ext, target=name)
                 break
