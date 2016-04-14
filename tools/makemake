@@ -9,6 +9,11 @@ errors = False
 SOURCES = set(['SOURCES','TARGETS','Makefile'])
 TARGETS = dict()
 
+debug_flag = 'DEBUG' in os.environ
+def debug(*args):
+    if debug_flag:
+        print(*args)
+
 def c(*args):
     print(' '.join(args))
 
@@ -38,6 +43,7 @@ class Target:
         return False
 
     def dependon(self, *args):
+        debug("[{}] dependon{}".format(self.target, args))
         self.deps.extend(args)
         for dep in args:
             target(dep, self)
@@ -60,6 +66,7 @@ class Target:
         return self._dependcc(match, dirname)
 
     def _dependcc(self, source, dirname):
+        debug('[{}] _dependcc(source={!r}, dirname={!r})'.format(self.target, source, dirname))
         target(source, self)
         deps = [ source ]
         if os.path.exists(source):
@@ -68,6 +75,7 @@ class Target:
         return deps
 
     def dependcc(self, source):
+        debug('[{}] dependcc(source={!r})'.format(self.target, source))
         dirname = os.path.dirname(source)
         if dirname:
             dirname += '/'
@@ -94,11 +102,11 @@ class Target:
         self.formake('./{} {} {}'.format(command, self.target, ' '.join(objs + dashl + libscat)))
 
     def choose(self, modes, tryfn):
-        self.dependon('choose')
+        self.dependon('build/choose')
         if 'c' in modes: self.dependon('compile')
         if 'l' in modes: self.dependon('load')
         self.dependon(tryfn+'.c', self.target+'1', self.target+'2')
-        self.formake('./choose {modes} {tryfn} {target}1 {target}2 > {target}', modes=modes, tryfn=tryfn)
+        self.formake('build/choose {modes} {tryfn} {target}1 {target}2 > {target}', modes=modes, tryfn=tryfn)
 
 class NoSuchTarget(Exception):
     pass
@@ -116,14 +124,20 @@ def runit(t, filename, **kw):
         return exec(code, global_vars, kw)
 
 def target(name, parent=None):
-    if os.path.exists(name) and not os.path.exists(name+'.do'):
+    debug('target(name={!r}, parent={!r})'.format(name, parent and parent.target))
+    if os.path.exists(name) and not (os.path.exists('build/{}.do'.format(name)) or os.path.exists('{}.do'.format(name))):
+        debug('  SOURCES.add({!r})'.format(name))
         SOURCES.add(name)
     elif name in TARGETS or name in SOURCES or (parent and parent.has_parent(name)):
+        debug('  in TARGETS or SOURCES or parent')
         pass
     else:
         target = Target(name, parent)
         base,ext = split(name)
-        for dofile in [ name+'.do', 'default.{}.do'.format(ext), 'default.do' ]:
+        for dofile in [ '{}.do'.format(name),
+                        'build/{}.do'.format(name),
+                        'build/default.{}.do'.format(ext),
+                        'build/default.do' ]:
             if os.path.exists(dofile):
                 runit(target, dofile, base=base, ext=ext, target=name)
                 break
