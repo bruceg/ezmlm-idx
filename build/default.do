@@ -26,15 +26,15 @@ elif target.startswith('lang/') and target.endswith('/text/messages'):
     formake('sh build/make-messages.sh < lang/{lang}/messages > lang/{lang}/text/messages', lang=lang)
 
 elif target == 'lib/auto_version.c':
-    dependon('auto-str','VERSION')
-    formake('./auto-str auto_version < VERSION > {target}')
+    dependon('build/auto-str','VERSION')
+    formake('build/auto-str auto_version < VERSION > {target}')
 
 elif target in ['lib/auto_bin.c', 'lib/auto_lib.c', 'lib/auto_etc.c']:
     base = target[9:-2]
-    dependon('auto-str','conf-'+base)
-    formake('./auto-str auto_{base} EZMLM_{ubase} < conf-{base} > {target}', base=base, ubase=base.upper())
+    dependon('build/auto-str','conf-'+base)
+    formake('build/auto-str auto_{base} EZMLM_{ubase} < conf-{base} > {target}', base=base, ubase=base.upper())
 
 elif target.startswith('lib/auto_') and target.endswith('.c'):
     base = target[9:-2]
-    dependon('auto-str','conf-'+base)
-    formake('./auto-str auto_{base} < conf-{base} > {target}', base=base)
+    dependon('build/auto-str','conf-'+base)
+    formake('build/auto-str auto_{base} < conf-{base} > {target}', base=base)

@@ -13,7 +13,7 @@ auto_cron.c
 auto_etc.c
 auto_lib.c
 auto_qmail.c
-auto-str
+build/auto-str
 auto_version.c
 choose
 compile
