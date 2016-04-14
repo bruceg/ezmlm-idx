@@ -17,8 +17,8 @@ elif target in ['compile', 'libcompile', 'load', 'makelib', 'makeso']:
 
 elif target.startswith('lang/') and target.endswith('/ezmlmrc'):
     lang = target[5:-8]
-    dependon('makelang.sh','ezmlmrc')
-    formake('sh makelang.sh '+lang)
+    dependon('build/makelang.sh','ezmlmrc')
+    formake('sh build/makelang.sh '+lang)
 
 elif target.startswith('lang/') and target.endswith('/text/messages'):
     lang = target[5:-14]

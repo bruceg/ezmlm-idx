@@ -16,6 +16,7 @@ auto_qmail.c
 build/auto-str
 auto_version.c
 build/choose
+build/makelang
 compile
 crypt.lib
 dl.lib
