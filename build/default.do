@@ -7,8 +7,8 @@ elif exists(target+'=s'):
     formake('chmod 755 {target}')
 
 elif exists(target+'.template'):
-    dependon(target+'.template', 'VERSION', 'fill-template.sh')
-    formake('sh fill-template.sh {target}')
+    dependon(target+'.template', 'VERSION', 'build/fill-template.sh')
+    formake('sh build/fill-template.sh {target}')
 
 elif target in ['compile', 'libcompile', 'load', 'makelib', 'makeso']:
     dependon('build/make-{}.sh'.format(target), 'warn-auto.sh', 'systype', 'conf-cc', 'conf-cclo', 'conf-ld', 'conf-ldso')
