@@ -7,28 +7,23 @@ elif exists(target+'=s'):
     formake('chmod 755 {target}')
 
 elif exists(target+'.template'):
-    dependon(target+'.template', 'VERSION', 'fill-template')
-    formake('./fill-template {target}')
+    dependon(target+'.template', 'VERSION', 'fill-template.sh')
+    formake('sh fill-template.sh {target}')
 
 elif target in ['compile', 'libcompile', 'load', 'makelib', 'makeso']:
-    dependon('make-'+target, 'warn-auto.sh', 'systype')
-    formake('( cat warn-auto.sh; ./make-{target} "`cat systype`" ) > {target}')
-    formake('chmod 755 {target}')
-
-elif target.startswith('make-'):
-    dependon(target+'.sh', 'auto-ccld.sh')
-    formake('cat auto-ccld.sh {target}.sh > {target}')
+    dependon('make-{}.sh'.format(target), 'warn-auto.sh', 'systype', 'conf-cc', 'conf-cclo', 'conf-ld', 'conf-ldso')
+    formake('( cat warn-auto.sh; sh make-{target}.sh "`cat systype`" ) > {target}')
     formake('chmod 755 {target}')
 
 elif target.startswith('lang/') and target.endswith('/ezmlmrc'):
     lang = target[5:-8]
-    dependon('makelang','ezmlmrc')
-    formake('./makelang '+lang)
+    dependon('makelang.sh','ezmlmrc')
+    formake('sh makelang.sh '+lang)
 
 elif target.startswith('lang/') and target.endswith('/text/messages'):
     lang = target[5:-14]
-    dependon('make-messages','lang/{}/messages'.format(lang))
-    formake('./make-messages < lang/{lang}/messages > lang/{lang}/text/messages', lang=lang)
+    dependon('make-messages.sh','lang/{}/messages'.format(lang))
+    formake('sh make-messages.sh < lang/{lang}/messages > lang/{lang}/text/messages', lang=lang)
 
 elif target == 'lib/auto_version.c':
     dependon('auto-str','VERSION')
