@@ -40,7 +40,7 @@ either single-level relative paths or absolute paths within DIR.
 
 3. If you were previously using an install of ezmlm-idx that was
 compiled with MySQL or PgSQL support and have set up lists that use this
-SQL support, you will need to build and install the apropriate plugin
+SQL support, you will need to build and install the appropriate plugin
 and make it the default.
 
 The database plugins will get installed in the directory named by
