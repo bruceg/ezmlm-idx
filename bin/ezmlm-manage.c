@@ -198,7 +198,7 @@ void make_verptarget(void)
 void store_from(stralloc *frl,	/* from line */
 		const char *adr)
 /* rewrites the from file removing all that is older than 1000000 secs  */
-/* and add the curent from line (frl). Forget it if there is none there.*/
+/* and add the current from line (frl). Forget it if there is none there.*/
 /* NOTE: This is used only for subscribes to moderated lists!           */
 {
   int fdin;
