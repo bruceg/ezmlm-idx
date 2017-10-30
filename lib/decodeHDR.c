@@ -45,7 +45,7 @@ void decodeHDR(const char *indata,
 	/* result in unreadable subjects, but that's the case even if   */
 	/* no decoding is done. This way, the subject will be optimal   */
 	/* for threading, but charset info is lost. We aim to correctly */
-	/* decode us-ascii and all iso-8859/2022 charsets. Exacly how   */
+	/* decode us-ascii and all iso-8859/2022 charsets. Exactly how  */
 	/* these will be displayed depends on dir/charset.              */
     cp = cpnext;
     			/* scrap lwsp between coded strings */
