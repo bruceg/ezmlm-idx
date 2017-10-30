@@ -95,7 +95,7 @@
 /* ezmlm-store switches -m/-M override */
 #define MOD_MIME 1
 
-/* Used to add "filname=listname.msgno" to digest part content-type line.
+/* Used to add "filename=listname.msgno" to digest part content-type line.
    This confuses the heck out of Outlook Express 5.0. To circumvent this
    bug the addition has been removed. Uncomment the next line to get it
    anyway. */
