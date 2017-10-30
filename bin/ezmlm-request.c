@@ -151,7 +151,7 @@ static void checkarg(const char *s)
   return;
 }
 
-/* parses line poited to by cp into sz:s as per:                        */
+/* parses line pointed to by cp into sz:s as per:                       */
 /* 1. listlocal-command-userlocal=userhost@listhost                     */
 /* 2. command userlocal@userhost                                        */
 /* 3. command userlocal@userhost listlocal@listhost                     */
