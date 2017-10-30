@@ -60,7 +60,7 @@ BNC="bouncer"
 
 if [ ! -x "${EZBIN}/ezmlm-make" ]; then
 	echo "can't execute ${EZBIN}/ezmlm-make. Most likely, you"
-	echo "doen't have execute permission to files in directory"
+	echo "doesn't have execute permission to files in directory"
 	echo "``${EZBIN}''. Adjust permissions or execute the script"
 	echo "as a user with the appropriate permissions."
 	exit 99
