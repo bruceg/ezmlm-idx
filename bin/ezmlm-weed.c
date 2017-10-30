@@ -33,7 +33,7 @@ static stralloc line = {0};
 static stralloc boundary = {0};
 
 static int isboundary(void)
-/* returns 1 if line.len contains the mime bondary, 0 otherwise */
+/* returns 1 if line.len contains the mime boundary, 0 otherwise */
 {
     if (line.s[0] == '-' && line.s[1] == '-' && line.len >= boundary.len + 3)
       if (!byte_diff(line.s + 2,boundary.len,boundary.s))	/* boundary */
