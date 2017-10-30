@@ -24,7 +24,7 @@
 #define MAXEDIT 10240
 
 /* Timeout in seconds before a bounce warning is sent. Default is 10 */
-/* days. Setting it lower reduces the number of messages in the bouce */
+/* days. Setting it lower reduces the number of messages in the bounce */
 /* dir, but makes it more likely that an address is unsubscribed due to */
 /* a temporary error. This compile-time default should rarely need */
 /* changing, as it can be overridden with the ezmlm-warn -t switch */
