@@ -86,7 +86,7 @@
 #define NATIVE 'n'
 /* MIXED => multipart/mixed MIME instead of multipart/digest. Needed to bypass*/
 /* pine bug when content-transfer-encoding is used (pine fails to show the */
-/* initial encoded text/plain part of mulpart/digest, but not of ../mixed) */
+/* initial encoded text/plain part of multipart/digest, but not of ../mixed) */
 #define MIXED 'x'
 /* default output format. */
 #define DEFAULT_FORMAT MIME
