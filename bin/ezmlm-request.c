@@ -65,7 +65,7 @@ static struct constmap headerremovemap;
 static int headerremoveflag = 0;
 static struct constmap commandmap;
 static int flaggotsub = 0;		/* Found a subject */
-	/* cmdstring has all commands seperated by '\'. cmdxlate maps each */
+	/* cmdstring has all commands separated by '\'. cmdxlate maps each */
 	/* command alias to the basic command, which is used to construct  */
 	/* the command address (positive numbers) or handled by this       */
 	/* program (negative numbers). Note: Any command not matched is    */
