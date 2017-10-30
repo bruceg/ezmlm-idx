@@ -377,7 +377,7 @@ ezmlm-idx-5.0.0, 2005-10-03
 
 - Replaced the use of the "config" file in ezmlm-make with individual
   files containing one setting each.  ezmlm-make will still read the
-  config file for now, but it is considered depricated.  Running
+  config file for now, but it is considered deprecated.  Running
   "ezmlm-make -+" on an existing list will upgrade it.
 
 - Added a "conf-etc" config file to allow changing the path to
