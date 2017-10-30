@@ -82,7 +82,7 @@ of the type of entry (probe, manual, `` '' for normal), entry-direction is
 taken from the subscribe confirm message or from ezmlm-sub (if used with -n).
 It is blank for all address removals, and may be blank also for additions. It
 is used by the list-log.xx command. It is trivial to JOIN this table with the
-address table to get e.g. subsciber names, subscription dates, etc. These
+address table to get e.g. subscriber names, subscription dates, etc. These
 tables also have the 32-bit hash ``h'' as an index. Joins should be done on
 ``h'' as well as ``address'' for better performance.
 
