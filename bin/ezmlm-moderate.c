@@ -376,7 +376,7 @@ int main(int argc,char **argv)
     stralloc_cats(&fnnew,fnbase.s);
     stralloc_0(&fnnew);
 
-/* this is strictly to track what happended to a message to give informative */
+/* this is strictly to track what happened to a message to give informative */
 /* messages to the 2nd-nth moderator that acts on the same message. Since    */
 /* this isn't vital we ignore errors. Also, it is no big ideal if unlinking  */
 /* the old file fails. In the worst case it gets acted on again. If we issue */
