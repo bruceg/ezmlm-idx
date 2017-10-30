@@ -409,7 +409,7 @@ void msg_headers(int act)
   qmail_put(&qq,outhost.s,outhost.len);
   qmail_puts(&qq,">\n");
   hdr_datemsgid(when);
-  /* differnt "From:" for help to break auto-responder loops */
+  /* different "From:" for help to break auto-responder loops */
   hdr_from((act == AC_HELP) ? "-return-" : "-help");
   quote2(&quoted,target.s);
   hdr_add2("To: ",quoted.s,quoted.len);

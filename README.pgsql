@@ -68,7 +68,7 @@ list_digest_name	sublist split table for digest list.
 The address tables contain (address,domain,hash,h,num). For normal
 lists only the address field is used. For main->sublist clusters, the other
 fields are used for load splitting. The domain is the first up to 3 characters
-of the last part of the domain name. The hash is a address hash [0-52] differnt
+of the last part of the domain name. The hash is a address hash [0-52] different
 from the one used by ezmlm for splitting within DIR/subscribers. When using
 the address field as a primary key, the size of the index was unreasonable.
 Therefore, ``num'' is used as a dummy primary key, and ``h'' (a 32 bit hash
