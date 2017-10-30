@@ -105,7 +105,7 @@ sublist. domain is the last up to 3 characters of the top domain name for
 addresses served by this list (default = ''). It is is '', the list servers
 all_domains_that_are_not_served_by_another list (in addition to domain '').
 Of the addresses that match the domain criterion, the list serves the subset
-with hash between hash_lo and hash_hi (defaults 0, 52). Any entry is ingnored if
+with hash between hash_lo and hash_hi (defaults 0, 52). Any entry is ignored if
 notuse != 0 OR the current message number is not between msgnum_lo and
 msgnum_hi.
 
