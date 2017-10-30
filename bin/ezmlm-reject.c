@@ -82,7 +82,7 @@ static stralloc precd = {0};
 static stralloc mydtline = {0};
 
 static unsigned int findlocal(const stralloc *sa,unsigned int n)
-	/* n is index of '@' within sa. Returns index to last postition */
+	/* n is index of '@' within sa. Returns index to last position */
 	/* of local, n otherwise. */
 {
   const char *first;
