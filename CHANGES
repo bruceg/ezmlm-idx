@@ -984,7 +984,7 @@ ezmlm-idx-0.301, 1998-05-08 (bug fixes only)
 -Changed ezmlm-get to send digest "To: list@list" from "list-digest@host".
  This way, the list address is one of the "reply-to-all" addresses, just
  as for list messages. (Thanks PH.)
--Corrected ezmlmrc: in some places "d" was used for "n" switch resuling in
+-Corrected ezmlmrc: in some places "d" was used for "n" switch resulting in
  missing dir/text files for editing if editing was enabled and digest
  were not. (Thanks JS.)
 -Corrected ezmlmrc/se/jp to add terminal ';' to list in ezmlm-issubn
