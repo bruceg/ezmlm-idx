@@ -298,7 +298,7 @@ ezmlm-idx-5.1.1, 2006-11-23
   differentiate between moderated (un)subscribe requests and
   (un)subscribe requests iniated and confirmed by a moderator.
 
-- Updated the embeded qmail-verh patch to version 0.07
+- Updated the embedded qmail-verh patch to version 0.07
 
 ezmlm-idx-5.1.0, 2006-08-08
 ===========================
