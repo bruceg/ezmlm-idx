@@ -1222,7 +1222,7 @@
 
   With ezmlm-idx>=0.32 you can use an SQL server for the subscriber
   databases.  Please see the SQL section (``ezmlm support for SQL
-  datbases'').
+  databases'').
 
 
   44..1122..  LLooccaall ccaassee iinn EE--mmaaiill aaddddrreesssseess..
@@ -1874,7 +1874,7 @@
   id.wustl.edu it would be ``edu.wustl''. The domain is considered to
   match if the characters in the split file match. It is advisable to
   use only the last part of the domain for compatibility with the SQL
-  version version  (see section ``ezmlm support for SQL datbases'').
+  version version  (see section ``ezmlm support for SQL databases'').
 
   Thus, any address *@*.domain with a hash between ``lo'' and ``hi''
   inclusive would match the first line and be forwarded to
@@ -1904,7 +1904,7 @@
   after clearing the local subscriber databases use ezmlm-sub(1) to add
   the correct addresses to each new sublist.  The section on SQL support
   describes an alternative way of managing sublists (see section ``ezmlm
-  support for SQL datbases'').
+  support for SQL databases'').
 
   44..2288..  HHooww ttoo sseerrvviiccee ccoommmmaannddss iinn tthhee ssuubbjjeecctt lliinnee..
 
