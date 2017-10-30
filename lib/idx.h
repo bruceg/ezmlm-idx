@@ -56,7 +56,7 @@
 
 /* to get alternative command names, you need to undefine and redefine */
 /* them. Do this within a language block and send it to the author for */
-/* inclusing in future versions. If it's here already, just uncomment the */
+/* including in future versions. If it's here already, just uncomment the */
 /* define for the appropriate language. */
 /* #define LANG_FR 1 */
 
