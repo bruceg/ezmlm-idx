@@ -1,3 +1,5 @@
+- Switched to standard C library functions for byte_* and str_*.
+
 - Fixed tests to work on shells with neither echo -n nor echo \c.
 
 - Moved most source files into subdirectories.
