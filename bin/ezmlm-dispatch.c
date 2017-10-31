@@ -172,7 +172,7 @@ static void dispatch(const char *dir,const char *def)
     return;
   stralloc_append(&basedir,'/');
   stralloc_cats(&basedir,dir);
-  /* FIXME: set up $EXT $EXT2 $EXT3 $EXT4 ?  Is it feasable? */
+  /* FIXME: set up $EXT $EXT2 $EXT3 $EXT4 ?  Is it feasible? */
   if (def == 0 || *def == 0)
     execute("editor",0);
   else if (str_diff(def,"owner") == 0)

@@ -1330,7 +1330,7 @@ int check_boundary()
     tmp = tmp->previous;
   }
   stralloc_copys(&curcharset,charset);
-			/* suprtfluous since header done by now */
+			/* superfluous since header done by now */
   cs = csbase;
   return 0;
 }

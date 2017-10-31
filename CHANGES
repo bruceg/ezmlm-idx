@@ -300,7 +300,7 @@ ezmlm-idx-5.1.1, 2006-11-23
   differentiate between moderated (un)subscribe requests and
   (un)subscribe requests iniated and confirmed by a moderator.
 
-- Updated the embeded qmail-verh patch to version 0.07
+- Updated the embedded qmail-verh patch to version 0.07
 
 ezmlm-idx-5.1.0, 2006-08-08
 ===========================
@@ -379,7 +379,7 @@ ezmlm-idx-5.0.0, 2005-10-03
 
 - Replaced the use of the "config" file in ezmlm-make with individual
   files containing one setting each.  ezmlm-make will still read the
-  config file for now, but it is considered depricated.  Running
+  config file for now, but it is considered deprecated.  Running
   "ezmlm-make -+" on an existing list will upgrade it.
 
 - Added a "conf-etc" config file to allow changing the path to
@@ -986,7 +986,7 @@ ezmlm-idx-0.301, 1998-05-08 (bug fixes only)
 -Changed ezmlm-get to send digest "To: list@list" from "list-digest@host".
  This way, the list address is one of the "reply-to-all" addresses, just
  as for list messages. (Thanks PH.)
--Corrected ezmlmrc: in some places "d" was used for "n" switch resuling in
+-Corrected ezmlmrc: in some places "d" was used for "n" switch resulting in
  missing dir/text files for editing if editing was enabled and digest
  were not. (Thanks JS.)
 -Corrected ezmlmrc/se/jp to add terminal ';' to list in ezmlm-issubn

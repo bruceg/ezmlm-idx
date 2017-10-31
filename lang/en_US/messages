@@ -15,7 +15,7 @@ ERR_BAD_PART|Sorry, a message part has an unacceptable MIME Content-Type: '<#1#>
 ERR_BAD_REQUEST|Illegal request format (#5.7.1)|Illegal request format (#5.7.1)
 ERR_BAD_RETURN_ADDRESS|Invalid bounce or receipt address format (#5.1.1)|Invalid bounce or receipt address format (#5.1.1)
 ERR_BAD_TYPE|Sorry, I don't accept messages of MIME Content-Type '<#1#>' (#5.2.3)|Sorry, I don't accept messages of MIME Content-Type '<#1#>' (#5.2.3)
-ERR_BODYCOMMAND|Sorry, as the message starts with ``[un]subscribe'' it looks like an adminstrative request. Please send a message to the -help address shown in the ``Mailing-List:'' header for [un]subscribe info (#5.7.0)|Sorry, as the message starts with ``[un]subscribe'' it looks like an adminstrative request. Please send a message to the -help address shown in the ``Mailing-List:'' header for [un]subscribe info (#5.7.0)
+ERR_BODYCOMMAND|Sorry, as the message starts with ``[un]subscribe'' it looks like an administrative request. Please send a message to the -help address shown in the ``Mailing-List:'' header for [un]subscribe info (#5.7.0)|Sorry, as the message starts with ``[un]subscribe'' it looks like an administrative request. Please send a message to the -help address shown in the ``Mailing-List:'' header for [un]subscribe info (#5.7.0)
 ERR_BOUNCE|I do not reply to bounce messages (#5.7.2)|I do not reply to bounce messages (#5.7.2)
 ERR_CFHOST|bounce-host required on first line of <#1#>|bounce-host required on first line of <#1#>
 ERR_CHDIR|Unable to change directory to <#1#>|Unable to change directory to <#1#>

@@ -89,7 +89,7 @@ static int findname(void)
   if (!*cpat)
     strerr_die4x(100,FATAL,MSG(ERR_ADDR_AT),": ",target.s);
   cplast = cpat + str_len(cpat) - 1;
-  if (*cplast == '.') --cplast;		/* annonying special case */
+  if (*cplast == '.') --cplast;		/* annoying special case */
   cp1 = cpat + byte_rchr(cpat,cplast - cpat, '.');
   if (cp1 != cplast) {			/* got one '.' */
     stralloc_copyb(&domain,cp1 + 1, cplast - cp1);

@@ -93,10 +93,10 @@ MODSUB=''; MODPOST=''; SPEC=''
 	  fi
 	  ${ECHO}
 	  if [ -e "$1/lock" -a ! -w "$1/lock" ]; then
-	    ${ECHO} "$EZERR User $USER does not have write premission to $1/lock"
+	    ${ECHO} "$EZERR User $USER does not have write permission to $1/lock"
 	  fi
 	  if [ -e "$1/lockbounce" -a ! -w "$1/lockbounce" ]; then
-	    ${ECHO} "$EZERR User $USER does not have write premission to $1/lockbounce"
+	    ${ECHO} "$EZERR User $USER does not have write permission to $1/lockbounce"
 	  fi
 	  if [ ! -r "$1/outlocal" ]; then
 	    ${ECHO} "$EZERR $1/outlocal does not exist"

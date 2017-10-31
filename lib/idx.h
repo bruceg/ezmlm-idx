@@ -24,7 +24,7 @@
 #define MAXEDIT 10240
 
 /* Timeout in seconds before a bounce warning is sent. Default is 10 */
-/* days. Setting it lower reduces the number of messages in the bouce */
+/* days. Setting it lower reduces the number of messages in the bounce */
 /* dir, but makes it more likely that an address is unsubscribed due to */
 /* a temporary error. This compile-time default should rarely need */
 /* changing, as it can be overridden with the ezmlm-warn -t switch */
@@ -56,7 +56,7 @@
 
 /* to get alternative command names, you need to undefine and redefine */
 /* them. Do this within a language block and send it to the author for */
-/* inclusing in future versions. If it's here already, just uncomment the */
+/* including in future versions. If it's here already, just uncomment the */
 /* define for the appropriate language. */
 /* #define LANG_FR 1 */
 
@@ -86,7 +86,7 @@
 #define NATIVE 'n'
 /* MIXED => multipart/mixed MIME instead of multipart/digest. Needed to bypass*/
 /* pine bug when content-transfer-encoding is used (pine fails to show the */
-/* initial encoded text/plain part of mulpart/digest, but not of ../mixed) */
+/* initial encoded text/plain part of multipart/digest, but not of ../mixed) */
 #define MIXED 'x'
 /* default output format. */
 #define DEFAULT_FORMAT MIME
@@ -95,7 +95,7 @@
 /* ezmlm-store switches -m/-M override */
 #define MOD_MIME 1
 
-/* Used to add "filname=listname.msgno" to digest part content-type line.
+/* Used to add "filename=listname.msgno" to digest part content-type line.
    This confuses the heck out of Outlook Express 5.0. To circumvent this
    bug the addition has been removed. Uncomment the next line to get it
    anyway. */

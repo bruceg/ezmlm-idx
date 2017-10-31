@@ -71,7 +71,7 @@ static int isclean(char *addr,
   unsigned int pos;
   char ch;
   char *cp;
-  if (flagaddr) {		/* shoud have one '@' */
+  if (flagaddr) {		/* should have one '@' */
     pos = str_chr(addr,'@');
     if (!pos || !addr[pos])
       return 0;			/* at least 1 char for local */

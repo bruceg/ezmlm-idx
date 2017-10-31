@@ -68,7 +68,7 @@ list_digest_name	sublist split table for digest list.
 The address tables contain (address,domain,hash,h,num). For normal
 lists only the address field is used. For main->sublist clusters, the other
 fields are used for load splitting. The domain is the first up to 3 characters
-of the last part of the domain name. The hash is a address hash [0-52] differnt
+of the last part of the domain name. The hash is a address hash [0-52] different
 from the one used by ezmlm for splitting within DIR/subscribers. When using
 the address field as a primary key, the size of the index was unreasonable.
 Therefore, ``num'' is used as a dummy primary key, and ``h'' (a 32 bit hash
@@ -82,7 +82,7 @@ of the type of entry (probe, manual, `` '' for normal), entry-direction is
 taken from the subscribe confirm message or from ezmlm-sub (if used with -n).
 It is blank for all address removals, and may be blank also for additions. It
 is used by the list-log.xx command. It is trivial to JOIN this table with the
-address table to get e.g. subsciber names, subscription dates, etc. These
+address table to get e.g. subscriber names, subscription dates, etc. These
 tables also have the 32-bit hash ``h'' as an index. Joins should be done on
 ``h'' as well as ``address'' for better performance.
 
@@ -105,7 +105,7 @@ sublist. domain is the last up to 3 characters of the top domain name for
 addresses served by this list (default = ''). It is is '', the list servers
 all_domains_that_are_not_served_by_another list (in addition to domain '').
 Of the addresses that match the domain criterion, the list serves the subset
-with hash between hash_lo and hash_hi (defaults 0, 52). Any entry is ingnored if
+with hash between hash_lo and hash_hi (defaults 0, 52). Any entry is ignored if
 notuse != 0 OR the current message number is not between msgnum_lo and
 msgnum_hi.
 

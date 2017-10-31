@@ -320,7 +320,7 @@ void idx_mkthreads(msgentry **pmsgtable,	/* table of message<->subject */
 	    authlen = dummyind.len;
 	  }
 	}
-			/* allright! Same procedure, but for author */
+			/* alright! Same procedure, but for author */
         for (;;) {	/* search among already known authors */
           res = str_diffn(pautht->auth,auth,HASHLEN);
           if (res < 0) {

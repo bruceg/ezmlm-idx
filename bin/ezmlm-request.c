@@ -65,7 +65,7 @@ static struct constmap headerremovemap;
 static int headerremoveflag = 0;
 static struct constmap commandmap;
 static int flaggotsub = 0;		/* Found a subject */
-	/* cmdstring has all commands seperated by '\'. cmdxlate maps each */
+	/* cmdstring has all commands separated by '\'. cmdxlate maps each */
 	/* command alias to the basic command, which is used to construct  */
 	/* the command address (positive numbers) or handled by this       */
 	/* program (negative numbers). Note: Any command not matched is    */
@@ -90,7 +90,7 @@ static const int cmdxlate[] = { 0,1,2,3,4,5,6,7,8,3,4,4,4,-13,-14,5,7,7,7,7,7,
 
 	/* If there are no arguments (listlocal = 0) then commands are mapped*/
 	/* through this. This way, help, list, query, ... can mean something */
-	/* here even though they have local funcions at the lists if used    */
+	/* here even though they have local functions at the lists if used   */
 	/* with arguments. (Made same lengh as cmdxlate in case of bugs.)    */
 	/* Note: This is used ONLY for the global interface */
 static const int noargsxlate[] = { 0,1,-2,3,4,5,-2,-13,-14,9,10,11,12,13,14,15,16,17,
@@ -151,7 +151,7 @@ static void checkarg(const char *s)
   return;
 }
 
-/* parses line poited to by cp into sz:s as per:                        */
+/* parses line pointed to by cp into sz:s as per:                       */
 /* 1. listlocal-command-userlocal=userhost@listhost                     */
 /* 2. command userlocal@userhost                                        */
 /* 3. command userlocal@userhost listlocal@listhost                     */

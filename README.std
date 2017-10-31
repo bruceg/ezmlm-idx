@@ -9,7 +9,7 @@ and the subscriber from line is logged as well.
 
 searchlog allows access to DIR/Log.
 
-putsubs does all output of subscriber addresses, both to qmail for subscibers,
+putsubs does all output of subscriber addresses, both to qmail for subscribers,
 moderator sendouts, etc, and to list subscribers in reply to the -list command.
 
 Alternative subscriber db interface routines should perform equivalent services,
