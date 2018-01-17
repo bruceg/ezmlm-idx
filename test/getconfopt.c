@@ -1,6 +1,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include "fmt.h"
+#include "sgetopt.h"
 #include "getconfopt.h"
 #include "stralloc.h"
 #include "substdio.h"

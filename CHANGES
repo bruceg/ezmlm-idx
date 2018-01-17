@@ -4,6 +4,9 @@
 
 - Moved most source files into subdirectories.
 
+- Fixed compile failure on Illumos.
+  Thanks Amitai Schleier
+
 ezmlm-idx-7.2.2, 2014-05-14
 ===========================
 

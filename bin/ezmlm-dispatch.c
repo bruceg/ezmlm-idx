@@ -4,6 +4,7 @@
 #include "env.h"
 #include "sender.h"
 #include "strerr.h"
+#include "sgetopt.h"
 #include "getconfopt.h"
 #include "substdio.h"
 #include "subfd.h"
