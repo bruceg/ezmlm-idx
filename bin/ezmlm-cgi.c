@@ -1437,7 +1437,7 @@ void show_part(struct msginfo *infop,int flagshowheaders,int flagstartseen)
 	    }
 	    if (flagobscure && i == HDR_FROM - 1) {
 	      oputs(" ");
-	      author_name(&decline,line.s,line.len);
+	      author_name(&decline,line.s,line.len,0);
 	      html_put(decline.s,decline.len);
 	    } else {
 	      decodeHDR(hdr[i].s,hdr[i].len,&decline);

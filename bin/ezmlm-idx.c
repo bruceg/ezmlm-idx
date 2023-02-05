@@ -245,7 +245,7 @@ int main(int argc,char **argv)
       mkauthhash(lines.s,lines.len,hash);
       stralloc_catb(&line,hash,HASHLEN);
 
-      author_name(&author,lines.s,lines.len);
+      author_name(&author,lines.s,lines.len,0);
 
       (void) unfoldHDR(author.s,author.len,&lines,charset.s,&prefix,0);
 

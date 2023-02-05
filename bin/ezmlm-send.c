@@ -298,7 +298,7 @@ int idx_copy_insertsubject(void)
   stralloc_catb(&qline,hash,HASHLEN);
   stralloc_cats(&qline," ");
 
-  author_name(&from,lines.s,lines.len);
+  author_name(&from,lines.s,lines.len,0);
 
   (void) unfoldHDR(from.s,from.len,&lines,charset.s,&dcprefix,0);
   stralloc_cat(&qline,&lines);
@@ -335,14 +335,14 @@ static void rewrite_from()
 
   if (flagrewritefrom) {
     concatHDR(from.s,from.len,&lines);
-    author_name(&author,lines.s,lines.len);
+    author_name(&author,lines.s,lines.len,1);
     stralloc_0(&author);
     stralloc_copy(&dummy,&outlocal);
     stralloc_0(&dummy);
 
-    stralloc_copyb(&line,"From: \"",7);
+    stralloc_copyb(&line,"From: ",6);
     stralloc_cats(&line,MSG2(AUTHOR_VIA_LIST,author.s,dummy.s));
-    stralloc_catb(&line,"\" <",3);
+    stralloc_catb(&line," <",2);
     stralloc_catb(&line,outlocal.s,outlocal.len);
     stralloc_catb(&line,"@",1);
     stralloc_catb(&line,outhost.s,outhost.len);
