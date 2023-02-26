@@ -22,6 +22,16 @@ fatal() {
   exit 100;
 }
 
+unfoldhdrs() {
+  (cat "$QQHDR"; echo) |
+  sed -e '/^\([^ \t]\|$\)/x'            -e '# new header; swap hold/pattern'   \
+      -e '/^$/d'                        -e '# ignore initial empty hold'       \
+      -e '/^[ \t]/{' -e H -e d -e }     -e '# append continuation to hold'     \
+      -e 's/[ \t]*\n[ \t]*/ /g'         -e '# unfold concatenated header'      \
+    >"${TMP}hdr"
+  mv -f "${TMP}hdr" "$QQHDR"
+}
+
 grephdr() {
   # Search for the header line, and produce an error if it didn't match.
   egrep "^$*$" "$QQHDR" >/dev/null 2>&1 || \
@@ -34,6 +44,17 @@ grephdr() {
   # Remove any found lines from the header file
   grep -iv "^$1" "$QQHDR" >"${TMP}hdr"
   mv -f "${TMP}hdr" "$QQHDR"
+}
+
+singlehdr() {
+  # Search for the header and ensure it appears exactly once.
+  count=$(grep -i -c "^$1" "$QQHDR")
+  if [ "$count" -ne 1 ]; then
+    [ "$count" -eq 0 ] && echo "Missing $1 line."
+    [ "$count" -gt 1 ] && echo "Multiple $1 lines:" && grep -i "^$1" "$QQHDR"
+    BUG="${BUG} headers"
+    prompt "..............: "
+  fi
 }
 
 grepbody() {
