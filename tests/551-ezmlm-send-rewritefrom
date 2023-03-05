@@ -110,6 +110,34 @@ grephdr Reply-To: "<${LIST}@${HOST}>"
 singlehdr Cc:
 grephdr Cc: '"Carbon Copy 15" <cc15@example.org>, <cc15-addtl@example.org>, My Test 15 <test15@example.org>'
 
+cat >"$TMP" <<EOF
+From: test16@example.org
+To: ${LIST}@${HOST}
+Cc: cc16@example.org
+Subject: multipart/alternative MIME message
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="0000000062ea6ef9772a44f3a30a"
+
+--0000000062ea6ef9772a44f3a30a
+Content-Type: text/plain; charset="US-ASCII"
+
+Hello, world!
+
+--0000000062ea6ef9772a44f3a30a
+Content-Type: text/html; charset="US-ASCII"
+
+Hello, world!<br/> 
+--0000000062ea6ef9772a44f3a30a--
+EOF
+${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+    fatal "failed to produce post"
+unfoldhdrs
+grephdr From: "\"test16@example.org\" via ${LIST} <${LIST}@${HOST}>$"
+singlehdr Reply-To:
+grephdr Reply-To: "<${LIST}@${HOST}>"
+singlehdr Cc:
+grephdr Cc: 'cc16@example.org, test16@example.org'
+
 rm -f "$DIR"/rewritefrom "$DIR"/replytolist
 
 echo OK
