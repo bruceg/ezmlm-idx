@@ -46,6 +46,7 @@ c:::644:/cat1/:ezmlm-checksub.0:bin/ezmlm-checksub.0
 c:::644:/cat1/:ezmlm-clean.0:bin/ezmlm-clean.0
 c:::644:/cat1/:ezmlm-confirm.0:bin/ezmlm-confirm.0
 c:::644:/cat1/:ezmlm-cron.0:bin/ezmlm-cron.0
+c:::644:/cat1/:ezmlm-dispatch.0:bin/ezmlm-dispatch.0
 c:::644:/cat1/:ezmlm-gate.0:bin/ezmlm-gate.0
 c:::644:/cat1/:ezmlm-get.0:bin/ezmlm-get.0
 c:::644:/cat1/:ezmlm-glconf.0:bin/ezmlm-glconf.0
