@@ -8,11 +8,13 @@ lang/*/text/messages
 SOURCES
 TARGETS
 auto_bin.c
+auto_bin.sh
 auto-ccld.sh
 auto_cron.c
 auto_etc.c
 auto_lib.c
 auto_qmail.c
+auto_qmail.sh
 build/auto-str
 auto_version.c
 build/choose
