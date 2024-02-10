@@ -138,6 +138,23 @@ grephdr Reply-To: "<${LIST}@${HOST}>"
 singlehdr Cc:
 grephdr Cc: 'cc16@example.org, test16@example.org'
 
+cat >"$TMP" <<EOF
+From:"My Test 17" <test17@example.org>
+To:${LIST}@${HOST}
+Cc:cc17@example.org
+Subject:carbon-copied test post no spaces in headers
+
+message goes here
+EOF
+${EZBIN}/ezmlm-send "$DIR" <"$TMP" >"$ERR" 2>&1 || \
+    fatal "failed to produce post"
+unfoldhdrs
+grephdr From: "\"My Test 17\" via ${LIST} <${LIST}@${HOST}>$"
+singlehdr Reply-To:
+grephdr Reply-To: "<${LIST}@${HOST}>"
+singlehdr Cc:
+grephdr 'Cc:cc17@example.org, "My Test 17" <test17@example.org>'
+
 rm -f "$DIR"/rewritefrom "$DIR"/replytolist
 
 echo OK

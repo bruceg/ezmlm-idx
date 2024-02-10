@@ -354,7 +354,7 @@ static void rewrite_from()
     if (flagreplytolist) {
       if (cc.s) {
         --cc.len;	/* remove '\n' */
-        stralloc_catb(&cc,",\n",2);
+        stralloc_catb(&cc,",\n ",3);
       }
       stralloc_catb(&cc,from.s,from.len);
     } else if (!flaghavereplyto) {
