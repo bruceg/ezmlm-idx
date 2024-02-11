@@ -1,9 +1,11 @@
   prompt "ezmlm-send:           "
 
   sendfrom() {
-    cat >"$TMP" <<EOF
-From: $1
-Reply-To: $1
+    echo "From: $1" >"$TMP"
+    if [ -n "$2" ]; then
+        echo "Reply-To: $2" >>"$TMP"
+    fi
+    cat >>"$TMP" <<EOF
 Subject: test post
 X-Test-Header: one
 Content-Length: zip
@@ -26,7 +28,6 @@ EOF
   grephdr Subject: '\[PFX\] test post'
   grephdr X-Test-Header: one
   grephdr Sender: "<${LIST}@${HOST}>"
-  grephdr Reply-To: test1@example.org
   grephdr_empty
 
   grepbody Local: "$LOCAL"
@@ -40,7 +41,7 @@ EOF
   grephdr Subject: 'test post'
 
   touch "$DIR"/replytolist
-  sendfrom test2@example.org
+  sendfrom test2@example.org test2@example.org
 
   grephdr_list 1
   grephdr Precedence: bulk

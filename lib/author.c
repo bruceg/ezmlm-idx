@@ -1,16 +1,22 @@
 #include "die.h"
 #include "mime.h"
 
-void author_name(stralloc *out,const char *s,unsigned int l)
+void author_name(stralloc *out,const char *s,unsigned int l,int hdrprep)
 /* s is a string that contains a from: line argument\n. We parse */
-/* s as follows: If there is an unquoted '<' we eliminate everything after */
-/* it else if there is a unquoted ';' we eliminate everything after it.    */
-/* Then, we eliminate LWSP and '"' from the beginning and end. Note that   */
-/* this is not strict rfc822, but all we need is a display handle that     */
-/* doesn't show the address. If in the remaining text there is a '@' we put*/
-/* in a '.' instead. Also, there are some non-rfc822 from lines out there  */
-/* and we still want to maximize the chance of getting a handle, even if it*/
-/* costs a little extra work.*/
+/* s as follows: If there is a quoted string use its content as the name.  */
+/* Else if there is an unquoted '<', use the text before it as the name.   */
+/* Else if there is comment text in parens use that. Failing all of the    */
+/* previous conditions, use the entire line. Then we eliminate LWSP and any*/
+/* bracketing '<' and '>' from the beginning and end. Note that this is not*/
+/* strict rfc822, but all we need is a display handle that doesn't show the*/
+/* address. If in the remaining text there is a '@' we put in a '.'        */
+/* instead. Also, there are some non-rfc822 from lines out there and we    */
+/* still want to maximize the chance of getting a handle, even if it costs */
+/* a little extra work.*/
+/* When hdrprep is true, out is prepared for use in a header line rather   */
+/* than the index. Rfc2047 encoded words are not decoded and '@' characters*/
+/* are not replaced. Text from bare addresses, quoted strings, and comments*/
+/* is quoted.*/
 {
   int squote = 0;
   int dquote = 0;
@@ -89,22 +95,28 @@ void author_name(stralloc *out,const char *s,unsigned int l)
     flagdone = 1;
   }
 
-  decodeHDR(cpfirst,cp - cpfirst + 1,out);
-  for (cpout = out->s, len = out->len; len > 0; --len, ++cpout)
-    if (*cpout == '@')
-      *cpout = '.';
+  if (hdrprep) {
+    stralloc_copyb(out,"",0);
+    if (!cplt)
+      stralloc_catb(out,"\"",1);
+    stralloc_catb(out,cpfirst,cp - cpfirst + 1);
+    if (!cplt)
+      stralloc_catb(out,"\"",1);
+  } else {
+    decodeHDR(cpfirst,cp - cpfirst + 1,out);
+    for (cpout = out->s, len = out->len; len > 0; --len, ++cpout)
+      if (*cpout == '@')
+        *cpout = '.';
+  }
 }
 
 void author_addr(stralloc *out,const char *s,unsigned int l)
 /* s is a string that contains a from: line argument\n. We parse */
-/* s as follows: If there is an unquoted '<' we eliminate everything after */
-/* it else if there is a unquoted ';' we eliminate everything after it.    */
-/* Then, we eliminate LWSP and '"' from the beginning and end. Note that   */
-/* this is not strict rfc822, but all we need is a display handle that     */
-/* doesn't show the address. If in the remaining text there is a '@' we put*/
-/* in a '.' instead. Also, there are some non-rfc822 from lines out there  */
-/* and we still want to maximize the chance of getting a handle, even if it*/
-/* costs a little extra work.*/
+/* s as follows: Ignore ';' and everything after it. If there are unquoted */
+/* and uncommented '<' and '>' characters use the text they bracket as the */
+/* address. Else if there is an unquoted/uncommented '@', use the non-     */
+/* whitespace characters surrounding it. Otherwise we couldn't find an     */
+/* address and return an empty string.                                     */
 {
   int squote = 0;
   int dquote = 0;

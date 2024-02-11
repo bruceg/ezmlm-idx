@@ -22,8 +22,7 @@ ezmlm-test \- test ezmlm programs
 .B ezmlm-test
 is run from the ezmlm build directory. It will test most of the
 functions of most of the programs in ezmlm-idx. The program prints
-status and error messages to stdout. It requires that qmail runs on the
-host and that mail delivery to a local user functions. The invoking user
+status and error messages to stdout. The invoking user
 should have read and execute permission to the files in the build
 directory, and write permission in the current directory.
 
@@ -32,10 +31,9 @@ the default connection information.
 
 .B ezmlm-test
 creates a test list in the directory ``__TSTDIR'' (in the current
-directory). This directory and ``dot.qmail-__tstlist*'' will be
-overwritten/removed by the program. In addition, the file
-``__TSTDIR_err'' is created. In cases of error, it often contains the
-error message from the failing program.
+directory). This directory will be overwritten/removed by the program.
+In addition, the file ``__TSTDIR_err'' is created. In cases of error,
+it often contains the error message from the failing program.
 
 .B ezmlm-test
 should complete without error.

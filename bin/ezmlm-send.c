@@ -81,6 +81,7 @@ static stralloc lines = {0};
 static stralloc subject = {0};
 static stralloc from = {0};
 static stralloc received = {0};
+static stralloc cc = {0};
 static stralloc prefix = {0};
 static stralloc content = {0};
 stralloc boundary = {0};
@@ -111,6 +112,7 @@ static int flagfoundokpart;		/* Found something to pass on. If multipart */
 					/* we set to 0 and then set to 1 for any */
 					/* acceptable mime part. If 0 -> reject */
 static int flagsawreceived;
+static int flaghavereplyto;
 static int flagprefixed;
 static unsigned int serial = 0;
 static int flagarchived;
@@ -298,7 +300,7 @@ int idx_copy_insertsubject(void)
   stralloc_catb(&qline,hash,HASHLEN);
   stralloc_cats(&qline," ");
 
-  author_name(&from,lines.s,lines.len);
+  author_name(&from,lines.s,lines.len,0);
 
   (void) unfoldHDR(from.s,from.len,&lines,charset.s,&dcprefix,0);
   stralloc_cat(&qline,&lines);
@@ -318,6 +320,8 @@ static void rewrite_from()
   unsigned int at;
   int r;
 
+  stralloc_copyb(&line,"",0);
+
   /* If not unconditionally rewriting headers, turn it on for this
    * message if DMARC would prevent us from sending as-is. */
   if (!flagrewritefrom) {
@@ -335,21 +339,39 @@ static void rewrite_from()
 
   if (flagrewritefrom) {
     concatHDR(from.s,from.len,&lines);
-    author_name(&author,lines.s,lines.len);
+    author_name(&author,lines.s,lines.len,1);
     stralloc_0(&author);
     stralloc_copy(&dummy,&outlocal);
     stralloc_0(&dummy);
 
-    stralloc_copyb(&line,"From: \"",7);
+    stralloc_copyb(&line,"From: ",6);
     stralloc_cats(&line,MSG2(AUTHOR_VIA_LIST,author.s,dummy.s));
-    stralloc_catb(&line,"\" <",3);
+    stralloc_catb(&line," <",2);
     stralloc_catb(&line,outlocal.s,outlocal.len);
     stralloc_catb(&line,"@",1);
     stralloc_catb(&line,outhost.s,outhost.len);
     stralloc_catb(&line,">\n",2);
-    stralloc_cats(&line,flagreplytolist ? "Cc:" : "Reply-To:");
+    if (flagreplytolist) {
+      if (cc.s) {
+        --cc.len;	/* remove '\n' */
+        stralloc_catb(&cc,",\n ",3);
+      }
+      stralloc_catb(&cc,from.s,from.len);
+    } else if (!flaghavereplyto) {
+      stralloc_catb(&line,"Reply-To:",9);
+      stralloc_catb(&line,from.s,from.len);
+    }
+  } else {
+    stralloc_copyb(&line,"From:",5);
     stralloc_catb(&line,from.s,from.len);
   }
+
+  if (cc.s) {
+    stralloc_catb(&line,"Cc:",3);
+    stralloc_catb(&line,cc.s,cc.len);
+  }
+
+  stralloc_catb(&line,"\n",1);
 }
 
 int main(int argc,char **argv)
@@ -513,12 +535,14 @@ int main(int argc,char **argv)
   flagbadpart = 0;
   flagseenext = 0;
   flagsawreceived = 0;
+  flaghavereplyto = 0;
   flagarchiveonly = 0;
   for (;;) {
     if (gethdrln(subfdin,&line,&match,'\n') == -1)
       strerr_die2sys(111,FATAL,MSG(ERR_READ_INPUT));
     if (flaginheader && match) {
       if (line.len == 1) {		/* end of header */
+        rewrite_from();
 	flaginheader = 0;
         if (flagindexed)		/* std entry */
           r = idx_copy_insertsubject();	/* all indexed lists */
@@ -578,7 +602,7 @@ int main(int argc,char **argv)
 	       flagfoundokpart = 0;
                constmap_init(&mimeremovemap,mimeremove.s,mimeremove.len,0);
                flagbadpart = 1;		/* skip before first boundary */
-               qa_puts("\n");		/* to make up for the lost '\n' */
+               qa_put(line.s,line.len);	/* but we still need the current line */
             }
           }
         }
@@ -624,9 +648,14 @@ int main(int argc,char **argv)
           else if (case_startb(cp,cpafter-cp,"Quoted-Printable")) encin = 'Q';
         } else if (flaglistid && case_startb(line.s,line.len,"list-id:"))
 	  flagbadfield = 1;		/* suppress if we added our own */
-	else if (case_startb(line.s,line.len,"From:")) {
+        else if (!flagbadfield && case_startb(line.s,line.len,"Reply-To:"))
+          flaghavereplyto = 1;
+        else if (case_startb(line.s,line.len,"Cc:")) {
+          stralloc_copyb(&cc,line.s+3,line.len-3);
+          flagbadfield = 1;		/* written/adjusted by rewrite_from() */
+        } else if (case_startb(line.s,line.len,"From:")) {
 	  stralloc_copyb(&from,line.s+5,line.len-5);
-	  rewrite_from();
+          flagbadfield = 1;		/* written/adjusted by rewrite_from() */
         } else if (line.len == mydtline.len)
 	  if (!byte_diff(line.s,line.len,mydtline.s))
             strerr_die2x(100,FATAL,MSG(ERR_LOOPING));
