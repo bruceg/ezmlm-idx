@@ -81,6 +81,14 @@ class Target:
             dirname += '/'
         self.deps.extend(self._dependcc(source, dirname))
 
+    def depends(self, source):
+        deps = ['warn-auto.sh']
+        deps.extend(line.strip() for line in open(source))
+        deps.append(self.target+'.sh')
+        self.dependon(*deps)
+        self.formake('cat {} > {}', ' '.join(deps), self.target)
+        self.formake('chmod 755 {target}')
+
     def dependx(self, source, command, *deps):
         libs = []
         libscat = []

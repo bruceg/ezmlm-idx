@@ -2,9 +2,7 @@ if exists(target+'=x'):
     dependx(target+'=x','load',target+'.o')
 
 elif exists(target+'=s'):
-    dependon('warn-auto.sh',target+'.sh')
-    formake('cat warn-auto.sh {target}.sh > {target}')
-    formake('chmod 755 {target}')
+    depends(target+'=s')
 
 elif exists(target+'.template'):
     dependon(target+'.template', 'VERSION', 'build/fill-template.sh')
@@ -33,6 +31,14 @@ elif target in ['lib/auto_bin.c', 'lib/auto_lib.c', 'lib/auto_etc.c']:
     base = target[9:-2]
     dependon('build/auto-str','conf-'+base)
     formake('build/auto-str auto_{base} EZMLM_{ubase} < conf-{base} > {target}', base=base, ubase=base.upper())
+
+elif target == 'lib/auto_bin.sh':
+    dependon('build/auto-sh-str.sh', 'conf-bin')
+    formake('sh build/auto-sh-str.sh EZPATH EZMLM_BIN < conf-bin > {target}')
+
+elif target == 'lib/auto_qmail.sh':
+    dependon('build/auto-sh-str.sh', 'conf-qmail')
+    formake('sh build/auto-sh-str.sh QMPATH < conf-qmail > {target}')
 
 elif target.startswith('lib/auto_') and target.endswith('.c'):
     base = target[9:-2]
